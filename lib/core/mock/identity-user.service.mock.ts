@@ -15,153 +15,251 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityGroupModel } from '../models/identity-group.model';
-import { IdentityJoinGroupRequestModel } from '../services/identity-user.service.interface';
+import { Injectable } from '@angular/core';
+import {
+    IdentityGroupModel,
+    IdentityRoleModel,
+    IdentityUserModel,
+    mockIdentityGroups,
+    IdentityJoinGroupRequestModel,
+    IdentityUserServiceInterface,
+    IdentityUserPasswordModel,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserQueryResponse
+} from '@alfresco/adf-core';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentityUser1, mockIdentityUsers } from './identity-user.mock';
 
-export const mockIdentityUser1: IdentityUserModel = { id: 'mock-user-id-1', username: 'userName1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' };
-export const mockIdentityUser2: IdentityUserModel = { id: 'mock-user-id-2', username: 'userName2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'};
-export const mockIdentityUser3: IdentityUserModel = { id: 'mock-user-id-3', username: 'userName3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' };
-export const mockIdentityUser4: IdentityUserModel = { id: 'mock-user-id-4', username: 'userName4', firstName: 'first-name-4', lastName: 'last-name-4', email: 'abcde@xyz.com' };
-export let  mockIdentityUser5: IdentityUserModel = { id: 'mock-user-id-5', username: 'userName5', firstName: 'first-name-5', lastName: 'last-name-5', email: 'abcde@xyz.com' };
+@Injectable({
+    providedIn: 'root'
+})
+export class IdentityUserServiceMock implements IdentityUserServiceInterface {
 
-export const mockIdentityUsers: IdentityUserModel[] = [
-    mockIdentityUser1,
-    mockIdentityUser2,
-    mockIdentityUser3,
-    mockIdentityUser4,
-    mockIdentityUser5
-];
-
-export const mockIdentityRole  = new IdentityRoleModel({ id: 'id-1', name: 'MOCK-ADMIN-ROLE'});
-
-export const mockAvailableRoles = [
-    new IdentityRoleModel({ id: 'mock-role-id-1', name: 'MOCK-ADMIN-ROLE'}),
-    new IdentityRoleModel({ id: 'mock-role-id-2', name: 'MOCK-USER-ROLE'}),
-    new IdentityRoleModel({ id: 'mock-role-id-3', name: 'MOCK_MODELER-ROLE' }),
-    new IdentityRoleModel({ id: 'mock-role-id-5', name: 'MOCK-ROLE-2'})
-];
-
-export const mockAssignedRoles = [
-    new IdentityRoleModel({ id: 'mock-role-id-1', name: 'MOCK-ADMIN-ROLE'}),
-    new IdentityRoleModel({ id: 'mock-role-id-2', name: 'MOCK_MODELER-ROLE' }),
-    new IdentityRoleModel({ id: 'mock-role-id-3', name: 'MOCK-ROLE-1' })
-];
-
-export const mockEffectiveRoles = [
-    new IdentityRoleModel({id: 'mock-role-id-1', name: 'MOCK-ACTIVE-ADMIN-ROLE'}),
-    new IdentityRoleModel({id: 'mock-role-id-2', name: 'MOCK-ACTIVE-USER-ROLE'}),
-    new IdentityRoleModel({id: 'mock-role-id-3', name: 'MOCK-ROLE-1'})
-];
-
-export const mockJoinGroupRequest: IdentityJoinGroupRequestModel = {userId: 'mock-hser-id', groupId: 'mock-group-id', realm: 'mock-realm-name'};
-
-export const mockGroup1 = <IdentityGroupModel> {
-    id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
-};
-
-export const mockGroup2 = <IdentityGroupModel> {
-    id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
-};
-
-export const mockGroups = [
-    <IdentityGroupModel> { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] },
-    <IdentityGroupModel> { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] }
-];
-
-export const queryUsersMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockIdentityUsers);
-        }
+    getCurrentUserInfo(): IdentityUserModel {
+        return mockIdentityUser1;
     }
-};
 
-export const createUserMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
+    findUsersByName(search: string): Observable<IdentityUserModel[]> {
+        if (search === '') {
+            return of([]);
         }
-    }
-};
 
-export const updateUserMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        return of(mockIdentityUsers.filter(user =>
+            user.username.toUpperCase().includes(search.toUpperCase())
+        ));
     }
-};
 
-export const deleteUserMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
+    findUserByUsername(username: string): Observable<IdentityUserModel[]> {
+        if (username === '') {
+            return of([]);
         }
-    }
-};
 
-export const getInvolvedGroupsMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockGroups);
-        }
+        return of(mockIdentityUsers.filter(user => user.username === username));
     }
-};
 
-export const joinGroupMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
+    findUserByEmail(email: string): Observable<IdentityUserModel[]> {
+        if (email === '') {
+            return of([]);
         }
-    }
-};
 
-export const leaveGroupMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        return of(mockIdentityUsers.filter(user => user.email === email));
     }
-};
 
-export const getAvailableRolesMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockAvailableRoles);
+    findUserById(id: string): Observable<any> {
+        if (id === '') {
+            return of([]);
         }
-    }
-};
 
-export const getAssignedRolesMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockAssignedRoles);
-        }
+        return of(mockIdentityUsers.find(user => user.id === id));
     }
-};
 
-export const getEffectiveRolesMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockEffectiveRoles);
+    getClientRoles(userId: string, _clientId: string): Observable<any[]> {
+        if (userId === 'mock-user-id-1') {
+            return of([{ id: 'id-1', name: 'MOCK-ADMIN-ROLE' }]);
         }
-    }
-};
 
-export const assignRolesMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        return of([{ id: 'id-2', name: 'MOCK-USER-ROLE' }]);
     }
-};
 
-export const removeRolesMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+    checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles) => clientRoles.length > 0)
+        );
     }
-};
+
+    checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find(({ name }) => name === roleName);
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
+    }
+
+    getClientIdByApplicationName(_applicationName: string): Observable<string> {
+        return of('mock-user-id-1');
+    }
+
+    checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasClientApp(userId, clientId);
+            })
+        );
+    }
+
+    checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasAnyClientAppRole(userId, clientId, roleNames);
+            })
+        );
+    }
+
+    getUsers(): Observable<IdentityUserModel[]> {
+        return of(mockIdentityUsers);
+    }
+
+    getUserRoles(_userId: string): Observable<IdentityRoleModel[]> {
+        return of(mockAvailableRoles);
+    }
+
+    async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
+        const filteredUsers: IdentityUserModel[] = [];
+        if (roleNames && roleNames.length > 0) {
+            const users = await this.getUsers().toPromise();
+
+            for (let i = 0; i < users.length; i++) {
+                const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
+                if (hasAnyRole) {
+                    filteredUsers.push(users[i]);
+                }
+            }
+        }
+
+        return filteredUsers;
+    }
+
+    async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
+        const filteredUsers: IdentityUserModel[] = [];
+        if (roleNames && roleNames.length > 0) {
+            const currentUser = this.getCurrentUserInfo();
+            let users = await this.getUsers().toPromise();
+
+            users = users.filter(({ username }) => username !== currentUser.username);
+
+            for (let i = 0; i < users.length; i++) {
+                const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
+                if (hasAnyRole) {
+                    filteredUsers.push(users[i]);
+                }
+            }
+        }
+
+        return filteredUsers;
+    }
+
+    private async userHasAnyRole(userId: string, roleNames: string[]): Promise<boolean> {
+        const userRoles = await this.getUserRoles(userId).toPromise();
+        const hasAnyRole = roleNames.some((roleName) => {
+            const filteredRoles = userRoles.filter((userRole) => {
+                return userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase();
+            });
+
+            return filteredRoles.length > 0;
+        });
+
+        return hasAnyRole;
+    }
+
+    checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean> {
+        return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
+            let hasRole = false;
+            if (userRoles && userRoles.length > 0) {
+                roleNames.forEach((roleName: string) => {
+                    const role = userRoles.find(({ name }) => roleName === name);
+                    if (role) {
+                        hasRole = true;
+                        return;
+                    }
+                });
+            }
+            return hasRole;
+        }));
+    }
+
+    queryUsers(_requestQuery: IdentityUserQueryCloudRequestModel): Observable<IdentityUserQueryResponse> {
+        return of();
+    }
+
+    getTotalUsersCount(): Observable<number> {
+        return of(mockIdentityUsers.length);
+    }
+
+    createUser(newUser: IdentityUserModel): Observable<any> {
+        window.alert(`Create new user: ${newUser}`);
+        return of([]);
+    }
+
+    updateUser(userId: string, updatedUser: IdentityUserModel): Observable<any> {
+        window.alert(`Update user: ${updatedUser} with ID: ${userId}`);
+        return of([]);
+    }
+
+    deleteUser(userId: string): Observable<any> {
+        window.alert(`Delete user with ID: ${userId}`);
+        return of([]);
+    }
+
+    changePassword(userId: string, newPassword: IdentityUserPasswordModel): Observable<any> {
+        window.alert(`New password: ${newPassword} for user with ID: ${userId}`);
+        return of([]);
+    }
+
+    getInvolvedGroups(_userId: string): Observable<IdentityGroupModel[]> {
+        return of(mockIdentityGroups);
+    }
+
+    joinGroup(joinGroupRequest: IdentityJoinGroupRequestModel): Observable<any> {
+        window.alert(`Join group request: ${joinGroupRequest}`);
+        return of([]);
+    }
+
+    leaveGroup(userId: any, groupId: string): Observable<any> {
+        window.alert(`Leave group: ${groupId} for user with ID: ${userId}`);
+        return of([]);
+    }
+
+    getAvailableRoles(_userId: string): Observable<IdentityRoleModel[]> {
+        return of(mockAvailableRoles);
+    }
+
+    getAssignedRoles(_userId: string): Observable<IdentityRoleModel[]> {
+        return of(mockAssignedRoles);
+    }
+
+    getEffectiveRoles(_userId: string): Observable<IdentityRoleModel[]> {
+        return of(mockEffectiveRoles);
+    }
+
+    assignRoles(userId: string, roles: IdentityRoleModel[]): Observable<any> {
+        window.alert(`Assign roles: ${roles} for user with ID: ${userId}`);
+        return of([]);
+    }
+
+    removeRoles(userId: string, removedRoles: IdentityRoleModel[]): Observable<any> {
+        window.alert(`Remove roles: ${removedRoles} for user with ID: ${userId}`);
+        return of([]);
+    }
+}
