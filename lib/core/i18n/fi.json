@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Poista",
       "UPLOAD": "Lataa",
       "REQUIRED": "*Pakollinen",
+      "FILE_NAME": "Tiedostonimi",
+      "DEPENDS_ON": "Riippuu kohteesta: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
       "VALIDATOR": {
         "INVALID_NUMBER": "Käytä toista numeromuotoa",

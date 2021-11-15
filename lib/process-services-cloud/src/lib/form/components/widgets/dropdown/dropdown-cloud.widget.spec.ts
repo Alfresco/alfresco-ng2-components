@@ -30,6 +30,7 @@ import {
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockConditionalEntries, mockRestDropdownOptions } from '../../../mocks/linked-dropdown.mock';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -146,11 +147,11 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should load data from restUrl and populate options', async () => {
-                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
@@ -166,9 +167,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const optOne = fixture.debugElement.queryAll(By.css('[id="option_1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="option_2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="option_3"]'));
+                const optOne = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
                 const allOptions = fixture.debugElement.queryAll(By.css('mat-option'));
 
                 expect(jsonDataSpy).toHaveBeenCalled();
@@ -185,7 +186,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
@@ -195,7 +196,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     }
                 });
 
-                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -223,14 +224,14 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
                     value: 'opt1'
                 });
 
-                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -254,129 +255,267 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             });
 
-            it('should map properties if restResponsePath is set', (done) => {
+            it('should update the form values when a preselected value is loaded', (done) => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
-                    restResponsePath: 'path'
+                    value: 'opt1'
                 });
 
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
-                        { id: 'opt_1', name: 'option_1' },
-                        { id: 'opt_2', name: 'option_2' },
-                        { id: 'opt_3', name: 'option_3' }],
-                    name: ''
-                }));
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ]));
 
                 widget.ngOnInit();
                 fixture.detectChanges();
 
-                openSelect('#dropdown-id');
+                openSelect();
+                fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
+                    const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                    expect(options[0].nativeElement.innerText).toBe('default1_value');
+                    expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
                     done();
                 });
             });
+        });
+    });
 
-            it('should map correct label if restLabelProperty is set', (done) => {
+    describe('multiple selection', () => {
+
+        it('should show preselected option', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown',
+                readOnly: 'false',
+                options: fakeOptionList,
+                selectionType: 'multiple',
+                value: [
+                    { id: 'opt_1', name: 'option_1' },
+                    { id: 'opt_2', name: 'option_2' }
+                ]
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
+            expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_1, option_2');
+
+            openSelect('#dropdown-id');
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
+            expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
+                .toEqual(['option_1', 'option_2']);
+        });
+
+        it('should support multiple options', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown',
+                readOnly: 'false',
+                selectionType: 'multiple',
+                options: fakeOptionList
+            });
+            fixture.detectChanges();
+            openSelect('#dropdown-id');
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const optionOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
+            const optionTwo = fixture.debugElement.query(By.css('[id="opt_2"]'));
+            optionOne.triggerEventHandler('click', null);
+            optionTwo.triggerEventHandler('click', null);
+            expect(widget.field.value).toEqual([
+                { id: 'opt_1', name: 'option_1' },
+                { id: 'opt_2', name: 'option_2' }
+            ]);
+        });
+    });
+
+    describe('Linked Dropdown', () => {
+
+        describe('Rest URL options', () => {
+
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown', validate: () => true });
+            beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown-cloud',
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
                     readOnly: 'false',
-                    restUrl: 'fake-rest-url',
                     optionType: 'rest',
-                    restResponsePath: 'path',
-                    restLabelProperty: 'first_name'
+                    restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: null
+                    }
                 });
-
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
-                        { id: 'opt_1', first_name: 'option_1' },
-                        { id: 'opt_2', first_name: 'option_2' },
-                        { id: 'opt_3', first_name: 'option_3' }],
-                    name: ''
-                }));
-
-                widget.ngOnInit();
+                widget.field.form.id = 'fake-form-id';
                 fixture.detectChanges();
-
-                openSelect('#dropdown-id');
-
-                fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
-                    done();
-                });
             });
 
-            it('should map correct id if restIdProperty is set', (done) => {
+            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
+                widget.field.options = mockConditionalEntries[1].options;
+                parentDropdown.value = 'empty';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+
+                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(defaultOption.context.value).toBe('empty');
+                expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+
+            it('should fetch the options from a rest url for a linked dropdown', async () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                parentDropdown.value = 'UK';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
+
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
+                expect(optOne.context.value).toBe('LO');
+                expect(optOne.context.viewValue).toBe('LONDON');
+                expect(optTwo.context.value).toBe('MA');
+                expect(optTwo.context.viewValue).toBe('MANCHESTER');
+            });
+        });
+
+        describe('Manual options', () => {
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+
+            beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown-cloud',
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
                     readOnly: 'false',
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest',
-                    restResponsePath: 'path',
-                    restIdProperty: 'my_id'
+                    optionType: 'manual',
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: mockConditionalEntries
+                    }
                 });
+                fixture.detectChanges();
+            });
 
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
-                        { my_id: 'opt_1', name: 'option_1' },
-                        { my_id: 'opt_2', name: 'option_2' },
-                        { my_id: 'opt_3', name: 'option_3' }],
-                    name: ''
-                }));
+            it('Should display the options for a linked dropdown based on the parent dropdown selection', async () => {
+                parentDropdown.value = 'GR';
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
 
-                widget.ngOnInit();
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne: any = fixture.debugElement.query(By.css('[id="empty"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="ATH"]'));
+                const optThree: any = fixture.debugElement.query(By.css('[id="SKG"]'));
+
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+                expect(optOne.context.value).toBe('empty');
+                expect(optOne.context.viewValue).toBe('Choose one...');
+                expect(optTwo.context.value).toBe('ATH');
+                expect(optTwo.context.viewValue).toBe('Athens');
+                expect(optThree.context.value).toBe('SKG');
+                expect(optThree.context.viewValue).toBe('Thessaloniki');
+            });
+
+            it('should reset the options for a linked dropdown when the parent dropdown selection changes to empty', async () => {
+                widget.field.options = mockConditionalEntries[1].options;
+                parentDropdown.value = 'empty';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                await fixture.whenStable();
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+
+                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(defaultOption.context.value).toBe('empty');
+                expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+        });
+
+        describe('Load selection for linked dropdown (i.e. saved, completed forms)', () => {
+
+            it('should load the selection of a manual type linked dropdown', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    optionType: 'manual',
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: mockConditionalEntries
+                    }
+                });
+                const updateFormSpy = spyOn(widget.field, 'updateForm');
+                const mockParentDropdown = { id: 'parentDropdown', value: 'IT' };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 fixture.detectChanges();
 
-                openSelect('#dropdown-id');
+                expect(updateFormSpy).toHaveBeenCalled();
+                expect(widget.field.options).toEqual(mockConditionalEntries[1].options);
+            });
 
-                fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
-                    done();
+            it('should load the selection of a rest type linked dropdown', () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    restUrl: 'mock-url.com/country=${country}',
+                    optionType: 'rest',
+                    rule: {
+                        ruleOn: 'country',
+                        entries: null
+                    }
                 });
+                widget.field.form.id = 'fake-form-id';
+                const updateFormSpy = spyOn(widget.field, 'updateForm');
+                const mockParentDropdown = { id: 'country', value: 'UK' };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                fixture.detectChanges();
+
+                expect(updateFormSpy).toHaveBeenCalled();
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { country: 'UK' });
+                expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
         });
     });

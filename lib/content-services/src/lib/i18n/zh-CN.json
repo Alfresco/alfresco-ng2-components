@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "上传新版本",
         "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本",
-        "MAJOR": "主要更改 (2.0)",
-        "MINOR": "次要更改 (1.1)",
+        "MAJOR": "主要更改 ({{version}})",
+        "MINOR": "次要更改 ({{version}})",
         "COMMENT": "发表评论",
         "ADD": "添加新版本",
         "CANCEL": "取消"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "将所有角色设置为"
     },
     "LABELS": {
+      "HIDE": "隐藏",
+      "SHOW": "显示",
       "ON": "开启",
       "OFF": "关闭",
       "DIRECT-PERMISSIONS": "直接应用权限",

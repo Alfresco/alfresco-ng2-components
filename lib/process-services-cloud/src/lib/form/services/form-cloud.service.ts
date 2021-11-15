@@ -21,7 +21,8 @@ import {
     FormValues,
     AppConfigService,
     FormOutcomeModel,
-    FormModel
+    FormModel,
+    FormFieldOption
 } from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -30,11 +31,12 @@ import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
+import { FormCloudServiceInterface } from './form-cloud.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormCloudService extends BaseCloudService {
+export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
 
     private _uploadApi;
     get uploadApi(): UploadApi {
@@ -190,13 +192,10 @@ export class FormCloudService extends BaseCloudService {
         return this.get(url);
     }
 
-    /**
-     * Parses JSON data to create a corresponding form.
-     * @param url String data to make the request
-     * @returns Array of FormFieldOption object
-     */
-    getDropDownJsonData(url: string): Observable<any> {
-        return this.get<any>(url);
+    getRestWidgetData(formName: string, widgetId: string, body: any = {}): Observable<FormFieldOption[]> {
+        const appName = this.appConfigService.get('alfresco-deployed-apps')[0]?.name;
+        const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formName}/values/${widgetId}`;
+        return this.post(apiUrl, body);
     }
 
     /**

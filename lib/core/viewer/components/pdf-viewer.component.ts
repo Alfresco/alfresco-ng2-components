@@ -34,7 +34,7 @@ import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
 import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
-import { catchError, delay, takeUntil } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -121,7 +121,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
         this.currentScale = this.getUserScaling();
-        this.pdfjsWorkerDestroy$.pipe(catchError(() => null), delay(700), takeUntil(this.onDestroy$)).subscribe(() => this.destroyPdJsWorker());
+        this.pdfjsWorkerDestroy$.pipe(catchError(() => null), delay(700)).subscribe(() => this.destroyPdJsWorker());
     }
 
     getUserScaling(): number {

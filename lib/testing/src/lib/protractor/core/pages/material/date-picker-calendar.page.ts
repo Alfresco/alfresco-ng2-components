@@ -19,13 +19,14 @@ import { element, by, $ } from 'protractor';
 import { DateUtil } from '../../utils/date-util';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
+import { TestElement } from '../../test-element';
 
 export class DatePickerCalendarPage {
 
-    datePicker = $('mat-calendar');
+    datePicker = $('mat-calendar[id*="mat-datepicker"]');
     nextMonthButton = $('button[class*="mat-calendar-next-button"]');
     previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
-    todayDate = $('.mat-calendar-body-today');
+    todayDate = TestElement.byCss('div.mat-calendar-body-today');
     periodButton = $('button[class*=mat-calendar-period-button]');
 
     async getSelectedDate(): Promise<string> {
@@ -55,8 +56,8 @@ export class DatePickerCalendarPage {
     }
 
     async selectTodayDate(): Promise<void> {
-        await this.checkDatePickerIsDisplayed();
-        await BrowserActions.click(this.todayDate);
+        await this.todayDate.waitPresent();
+        await this.todayDate.click();
         await this.checkDatePickerIsNotDisplayed();
     }
 

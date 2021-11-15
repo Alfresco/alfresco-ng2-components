@@ -74,6 +74,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
+    displayedColumns = ['icon', 'fileName', 'action'];
 
     constructor(
         formService: FormService,
@@ -95,6 +96,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
+        this.field.params.displayableCMProperties = this.field.params.displayableCMProperties ?? [];
+        this.displayedColumns.splice(2, 0, ...this.field.params.displayableCMProperties?.map(property => property?.name));
     }
 
     isPathStaticType(): boolean {
@@ -219,10 +222,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     getWidgetIcon(): string {
         return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
-    }
-
-    displayMenuOption(option: string): boolean {
-        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
     }
 
     onRowClicked(file?: Node) {

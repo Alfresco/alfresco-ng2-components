@@ -25,7 +25,7 @@ import { TaskHeaderCloudComponent } from './components/task-header-cloud.compone
     imports: [
         CommonModule,
         MaterialModule,
-        CoreModule
+        CoreModule.forChild()
     ],
     declarations: [
         TaskHeaderCloudComponent

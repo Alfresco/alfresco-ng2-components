@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser, $$, $ } from 'protractor';
+import { browser, $$, $, by, element } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 import { DatePickerPage } from '../../core/pages/material/date-picker.page';
+import { TestElement } from '../../core/test-element';
 
 export interface FilterProps {
     name?: string;
@@ -52,7 +53,7 @@ export class EditProcessFilterCloudComponentPage {
     private locatorCompletedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`);
 
     private locatorSuspendedDateRangeWithin = $(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`);
-    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
+    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -77,6 +78,10 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
+    async isDropdownFilterDisplayed(): Promise<boolean> {
+        return this.content.isVisible(250);
+    }
+
     async openFilter() {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
@@ -85,7 +90,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async checkHeaderIsExpanded() {
         await BrowserVisibility.waitUntilElementIsVisible(this.expansionPanelExtended);
-        await BrowserVisibility.waitUntilElementIsVisible(this.content);
+        await this.content.waitVisible();
     }
 
     async closeFilter() {
@@ -95,7 +100,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async checkHeaderIsCollapsed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.expansionPanelExtended, 1000);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.content, 1000);
+        await this.content.waitNotVisible(1000);
     }
 
     async setStatusFilterDropDown(option: string) {
@@ -267,5 +272,10 @@ export class EditProcessFilterCloudComponentPage {
         if (props.processName) { await this.setProcessName(props.processName);   }
         if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
         await this.closeFilter();
+    }
+
+    async isCustomFilterNameDisplayed(name: string): Promise<boolean> {
+        const title = element(by.cssContainingText(`[id='adf-edit-process-filter-title-id']`, name));
+        return BrowserVisibility.waitUntilElementIsVisible(title);
     }
 }

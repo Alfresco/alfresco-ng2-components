@@ -27,6 +27,14 @@
         </div>
 
         <div>
+            <label>Change header text color</label>
+            <input type="text" name="headerColor" (keyup.enter)="submitHeaderTextColor($any($event).target.value)"
+                   placeholder="{{ 'APP_LAYOUT.HEADER_TEXT_COLOR' | translate}}">
+            <p>*press enter for submitting new color text</p>
+            <p>*hex color</p>
+        </div>
+
+        <div>
             <label>Change logo</label>
             <input type="text" placeholder="URL path" (keyup.enter)="submitLogo($any($event).target.value)">
             <p>*press enter for submitting new logo</p>

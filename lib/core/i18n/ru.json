@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Удалить",
       "UPLOAD": "Загрузить",
       "REQUIRED": "*Обязательное поле",
+      "FILE_NAME": "Имя файла",
+      "DEPENDS_ON": "Зависит от: {{widgetId}}",
       "NO_FILE_ATTACHED": "Вложенные файлы отсутствуют",
       "VALIDATOR": {
         "INVALID_NUMBER": "Используйте другой формат числа",

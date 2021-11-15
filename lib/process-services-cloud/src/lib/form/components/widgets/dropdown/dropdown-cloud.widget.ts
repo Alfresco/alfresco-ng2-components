@@ -16,10 +16,19 @@
  */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import {
+    WidgetComponent,
+    FormService,
+    LogService,
+    FormFieldOption,
+    FormFieldEvent,
+    FormFieldModel,
+    FormFieldTypes,
+    RuleEntry
+} from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 /* tslint:disable:component-selector  */
 
@@ -41,6 +50,10 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+    static DEFAULT_OPTION = {
+        id: 'empty',
+        name: 'Choose one...'
+    };
 
     typeId = 'DropdownCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
@@ -52,41 +65,154 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.field && this.field.restUrl) {
-            this.getValuesFromRestApi();
+        if (this.hasRestUrl() && !this.isLinkedWidget()) {
+            this.persistFieldOptionsFromRestApi();
+        }
+
+        if (this.isLinkedWidget()) {
+            this.loadFieldOptionsForLinkedWidget();
+
+            this.formService.formFieldValueChanged
+                .pipe(
+                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
+                    takeUntil(this.onDestroy$))
+                .subscribe((event: FormFieldEvent) => {
+                    const valueOfParentWidget = event.field.value;
+                    this.parentValueChanged(valueOfParentWidget);
+                });
         }
     }
 
-    getValuesFromRestApi() {
+    private persistFieldOptionsFromRestApi() {
         if (this.isValidRestType()) {
-            this.formCloudService.getDropDownJsonData(this.field.restUrl)
+            const bodyParam = this.buildBodyParam();
+            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
-                    this.field.options = this.mapJsonData(result);
+                    this.field.options = result;
+                    this.field.updateForm();
                 }, (err) => this.handleError(err));
         }
     }
 
-    mapJsonData(data: any[]): FormFieldOption[] {
-        const dataToMap: any[] = this.field.restResponsePath ? data[this.field.restResponsePath] : data;
-        const idProperty = this.field.restIdProperty || 'id';
-        const restLabelProperty = this.field.restLabelProperty || 'name';
-
-        return dataToMap.map((value: any) => {
-            return {
-                name: value[restLabelProperty],
-                id: value[idProperty]
-            };
-        });
+    private buildBodyParam(): any {
+        const bodyParam = Object.assign({});
+        if (this.isLinkedWidget()) {
+            const parentWidgetValue = this.getParentWidgetValue();
+            const parentWidgetId = this.getLinkedWidgetId();
+            bodyParam[parentWidgetId] = parentWidgetValue;
+        }
+        return bodyParam;
     }
 
-    compareDropdownValues(opt1: string, opt2: FormFieldOption | string): boolean {
-        return opt1 && opt2 && typeof opt2 !== 'string' ? (opt1 === opt2.id || opt1 === opt2.name) : opt1 === opt2;
+    private loadFieldOptionsForLinkedWidget() {
+        const parentWidgetValue = this.getParentWidgetValue();
+        this.parentValueChanged(parentWidgetValue);
     }
 
-    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+    private getParentWidgetValue(): string {
+        const parentWidgetId = this.getLinkedWidgetId();
+        const parentWidget = this.getFormFieldById(parentWidgetId);
+        return parentWidget?.value;
+    }
+
+    private parentValueChanged(value: string) {
+        if (this.isValidValue(value)) {
+            this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
+        } else if (this.isDefaultValue(value)) {
+            this.addDefaultOption();
+        }
+    }
+
+    private isValidValue(value: string): boolean {
+        return !!value && value !== DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
+    }
+
+    private isDefaultValue(value: string): boolean {
+        return value === DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
+    }
+
+    private getFormFieldById(fieldId): FormFieldModel {
+        return this.field.form.getFormFields().filter((field: FormFieldModel) => field.id === fieldId)[0];
+    }
+
+    private persistFieldOptionsFromManualList(value: string) {
+        if (this.hasRuleEntries()) {
+            const rulesEntries = this.getRuleEntries();
+            rulesEntries.forEach((ruleEntry: RuleEntry) => {
+                if (ruleEntry.key === value) {
+                    this.field.options = ruleEntry.options;
+                    this.field.updateForm();
+                }
+            });
+        }
+    }
+
+    private getRuleEntries(): RuleEntry[] {
+        return this.field.rule.entries;
+    }
+
+    private hasRuleEntries(): boolean {
+        return !!this.getRuleEntries().length;
+    }
+
+    private addDefaultOption() {
+        this.field.options = [DropdownCloudWidgetComponent.DEFAULT_OPTION];
+    }
+
+    selectionChangedForField(field: FormFieldModel) {
+        const formFieldValueChangedEvent = new FormFieldEvent(field.form, field);
+        this.formService.formFieldValueChanged.next(formFieldValueChangedEvent);
+        this.onFieldChanged(field);
+    }
+
+    private isParentFormFieldEvent(event: FormFieldEvent): boolean {
+        return event.field.id === this.getLinkedWidgetId();
+    }
+
+    private isFormFieldEventOfTypeDropdown(event: FormFieldEvent): boolean {
+        return event.field.type === FormFieldTypes.DROPDOWN;
+    }
+
+    private hasRestUrl(): boolean {
+        return !!this.field?.restUrl;
+    }
+
+    isLinkedWidget(): boolean {
+        return !!this.getLinkedWidgetId();
+    }
+
+    getLinkedWidgetId(): string {
+        return this.field?.rule?.ruleOn;
+    }
+
+    compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
+        if (!opt1 || !opt2) {
+            return false;
+        }
+
+        if (typeof opt1 === 'string' && typeof opt2 === 'object') {
+            return opt1 === opt2.id || opt1 === opt2.name;
+        }
+
+        if (typeof opt1 === 'object' && typeof opt2 === 'string') {
+            return opt1.id === opt2 || opt1.name === opt2;
+        }
+
+        if (typeof opt1 === 'object' && typeof opt2 === 'object') {
+            return  opt1.id === opt2.id || opt1.name === opt2.name;
+        }
+
+        return opt1 === opt2;
+    }
+
+    getOptionValue(option: FormFieldOption, fieldValue: string): string | FormFieldOption {
+        if (this.field.hasMultipleValues) {
+            return option;
+        }
+
         let optionValue: string = '';
-        if (option.id === 'empty' || option.name !== fieldValue) {
+        if (option.id === DropdownCloudWidgetComponent.DEFAULT_OPTION.id || option.name !== fieldValue) {
             optionValue = option.id;
         } else {
             optionValue = option.name;
@@ -94,11 +220,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return optionValue;
     }
 
-    isValidRestType(): boolean {
+    private isValidRestType(): boolean {
         return this.field.optionType === 'rest' && !!this.field.restUrl;
     }
 
-    handleError(error: any) {
+    private handleError(error: any) {
         this.logService.error(error);
     }
 

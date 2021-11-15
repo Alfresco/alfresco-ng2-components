@@ -108,7 +108,7 @@ You can also use `*` wildcard to register a single component that opens all file
       "content": [
         {
           "id": "dev.tools.viewer.viewer",
-          "fileExtension": ["*"],
+          "fileExtension": "*",
           "component": "your-extension.main.component"
         }
       ]

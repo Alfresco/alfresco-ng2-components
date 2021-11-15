@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Aplikacja",
+    "HEADER_TEXT_COLOR": "Kolor tekstu nagłówka",
     "APP_NAME": "Wersja demonstracyjna aplikacji ADF",
     "FILTERED_SEARCH": "Nagłówek filtra",
     "HOME": "Strona główna",

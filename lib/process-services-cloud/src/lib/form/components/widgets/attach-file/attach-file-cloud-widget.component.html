@@ -1,64 +1,40 @@
-<div class="adf-attach-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
-    [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}
-        <span *ngIf="isRequired()">*</span>
-    </label>
-    <div class="adf-attach-widget-container">
-        <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">
-            <button (click)="openSelectDialog()" mat-raised-button color="primary" [id]="field.id"
-                [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000">
-                {{ 'FORM.FIELD.ATTACH' | translate }}
-                <mat-icon>{{getWidgetIcon()}}</mat-icon>
-            </button>
+<div class="adf-attach-file-widget-container">
+    <div class="adf-attach-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
+        [class.adf-readonly]="field.readOnly">
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}
+            <span *ngIf="isRequired()">*</span>
+        </label>
+        <div class="adf-attach-widget-container">
+            <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">
+                <button (click)="openSelectDialog()" mat-raised-button color="primary" [id]="field.id"
+                    [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000">
+                    {{ 'FORM.FIELD.ATTACH' | translate }}
+                    <mat-icon>{{getWidgetIcon()}}</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="adf-attach-widget-readonly-list">
-    <mat-list *ngIf="hasFile">
-        <mat-list-item
-            [ngClass]="{'adf-attach-files-row': true, 'adf-attach-selected-file-row': displayMenuOption('retrieveMetadata') && selectedNode && file.id === selectedNode.id}"
-            *ngFor="let file of uploadedFiles">
-            <mat-icon mat-list-icon class="adf-datatable-selected" *ngIf="selectedNode && file.id === selectedNode.id" (click)="onRowClicked(file)">
-                check_circle
-            </mat-icon>
-            <img mat-list-icon class="adf-attach-widget__icon" *ngIf="!selectedNode || file.id !== selectedNode.id" [id]="'file-'+file?.id+'-icon'" (click)="onRowClicked(file)"
-                    [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file['mimeType'])" [alt]="mimeTypeIcon"
-                    role="button" tabindex="0" />
-            <span matLine id="{{'file-'+file?.id}}" role="button" tabindex="0" class="adf-file" (click)="onRowClicked(file)">{{file.name}}</span>
-            <button id="{{'file-'+file?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu" *ngIf="!!file.content?.mimeType">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #fileActionMenu="matMenu" xPosition="before">
-                <button *ngIf="displayMenuOption('show') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-show-file'}}"
-                        mat-menu-item (click)="onAttachFileClicked(file)">
-                    <mat-icon>visibility</mat-icon>
-                    <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
-                </button>
-                <button *ngIf="displayMenuOption('download') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-download-file'}}"
-                        mat-menu-item (click)="downloadContent(file)">
-                    <mat-icon>file_download</mat-icon>
-                    <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
-                </button>
-                <button *ngIf="displayMenuOption('retrieveMetadata') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-retrieve-file-metadata'}}"
-                        mat-menu-item (click)="contentModelFormFileHandler(file)">
-                    <mat-icon class="mat-24">low_priority</mat-icon>
-                    <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
-                </button>
-                <button *ngIf="!field.readOnly && displayMenuOption('remove')" id="{{'file-'+file?.id+'-remove-file'}}"
-                        mat-menu-item [id]="'file-'+file?.id+'-remove'"
-                        (click)="onRemoveAttachFile(file);" (keyup.enter)="onRemoveAttachFile(file);">
-                    <mat-icon class="mat-24">highlight_off</mat-icon>
-                    <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
-                </button>
-            </mat-menu>
-        </mat-list-item>
-    </mat-list>
-    <div *ngIf="!hasFile && field.readOnly" id="{{'adf-attach-empty-list-'+field.id}}">
-        {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
+    <div id="adf-attach-widget-readonly-list" class="adf-attach-widget-readonly-table">
+        <adf-cloud-file-properties-table
+            [uploadedFiles]="uploadedFiles"
+            [hasFile]="hasFile"
+            [selectedNode]="selectedNode"
+            [field]="field"
+            [displayedColumns]="displayedColumns"
+            [mimeTypeIcon]="mimeTypeIcon"
+            (rowClick)="onRowClicked($event)"
+            (attachFileClick)="onAttachFileClicked($event)"
+            (downloadFile)="downloadContent($event)"
+            (contentModelFileHandler)="contentModelFormFileHandler($event)"
+            (removeAttachFile)="onRemoveAttachFile($event)"
+        ></adf-cloud-file-properties-table>
+        <div *ngIf="!hasFile && field.readOnly" id="{{'adf-attach-empty-list-'+field.id}}">
+            {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
+        </div>
+
     </div>
 
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
-
-<error-widget [error]="field.validationSummary"></error-widget>
-<error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

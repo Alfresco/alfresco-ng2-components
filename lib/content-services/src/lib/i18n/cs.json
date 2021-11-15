@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Odeslat novou verzi",
         "TOOLTIP": "Omezení: Pokud chcete vytvořit novou verzi souboru, musíte nahrát soubor se stejným názvem",
-        "MAJOR": "hlavní změny (2.0)",
-        "MINOR": "vedlejší změny (1.1)",
+        "MAJOR": "hlavní změny ({{version}})",
+        "MINOR": "vedlejší změny ({{version}})",
         "COMMENT": "Vložit komentář",
         "ADD": "Přidat novou verzi",
         "CANCEL": "Zrušit"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Nastavit všechny role na"
     },
     "LABELS": {
+      "HIDE": "Skrýt",
+      "SHOW": "Zobrazit",
       "ON": "Zapnuto",
       "OFF": "Vypnuto",
       "DIRECT-PERMISSIONS": "Přímo použité oprávnění",

@@ -17,6 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
+import { DisplayableCMProperties } from './displayable-cm-properties.model';
 import { FormFieldFileSource } from './form-field-file-source';
 
 export interface FormFieldMetadata {
@@ -35,4 +36,5 @@ export interface FormFieldMetadata {
         retrieveMetadata?: boolean,
         remove?: boolean
     };
+    displayableCMProperties?: DisplayableCMProperties[];
 }

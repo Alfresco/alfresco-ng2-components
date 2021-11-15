@@ -51,7 +51,7 @@ export class ContentMetadataConfigFactory {
         return this.createConfig(presetConfig);
     }
 
-    private createConfig(presetConfig: PresetConfig): ContentMetadataConfig {
+    public createConfig(presetConfig: PresetConfig): ContentMetadataConfig {
         let config: ContentMetadataConfig;
 
         if (this.isLayoutOrientedPreset(presetConfig)) {

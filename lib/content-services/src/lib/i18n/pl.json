@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Prześlij nową wersję",
         "TOOLTIP": "Ograniczenie: aby utworzyć nową wersję pliku, należy przesłać plik o tej samej nazwie.",
-        "MAJOR": "istotne zmiany (2.0)",
-        "MINOR": "drobne zmiany (1.1)",
+        "MAJOR": "istotne zmiany ({{version}})",
+        "MINOR": "drobne zmiany ({{version}})",
         "COMMENT": "Pozostaw komentarz",
         "ADD": "Dodaj nową wersję",
         "CANCEL": "Anuluj"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Ustaw wszystkie role na"
     },
     "LABELS": {
+      "HIDE": "Ukryj",
+      "SHOW": "Pokaż",
       "ON": "Wł.",
       "OFF": "Wył.",
       "DIRECT-PERMISSIONS": "Uprawnienie stosowane bezpośrednio",

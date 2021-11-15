@@ -28,6 +28,7 @@ export * from './components/widgets/date/date-cloud.widget';
 export * from './components/widgets/dropdown/dropdown-cloud.widget';
 export * from './components/widgets/group/group-cloud.widget';
 export * from './components/widgets/people/people-cloud.widget';
+export * from './components/widgets/properties-viewer/properties-viewer.widget';
 
 export * from './services/content-cloud-node-selector.service';
 export * from './services/form-cloud.service';

@@ -110,6 +110,15 @@ describe('New Process Filters', () => {
     });
 
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
+        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
+            'appId': null,
+            'name': processFilter.new_icon,
+            'icon': 'glyphicon-cloud',
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+        });
+
+        filterId = customProcessFilter.id;
+
         await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
             'appId': null,
             'name': processFilter.edited,

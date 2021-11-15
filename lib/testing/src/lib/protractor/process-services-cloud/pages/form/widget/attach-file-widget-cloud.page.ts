@@ -19,6 +19,7 @@ import { by, ElementFinder, browser, $ } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { Logger } from '../../../../core/utils/logger';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
+import { TestElement } from '../../../../core/test-element';
 
 export class AttachFileWidgetCloudPage {
 
@@ -29,8 +30,8 @@ export class AttachFileWidgetCloudPage {
     }
 
     getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
-        const filesListLocator = 'div[id="adf-attach-widget-readonly-list"]';
-        return this.widget.$(filesListLocator).element(by.cssContainingText('mat-list-item span ', text));
+        const filesListLocator = 'div[class="adf-file-properties-table"]';
+        return this.widget.$(filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
     }
 
     assignWidget(fieldId: string): void {
@@ -61,6 +62,12 @@ export class AttachFileWidgetCloudPage {
         for (const fileName of filesName) {
             await this.checkFileIsAttached(fileName);
         }
+    }
+
+    async checkNoFileIsAttached(): Promise<void> {
+        const filesListLocator = 'div[class="adf-file-properties-table"]';
+        const fileItem = new TestElement(this.widget.$(filesListLocator).$('table'));
+        await fileItem.waitNotVisible();
     }
 
     async checkFileIsNotAttached(name): Promise<void> {

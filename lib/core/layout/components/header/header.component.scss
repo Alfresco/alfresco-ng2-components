@@ -1,6 +1,7 @@
-adf-layout-header .mat-toolbar-single-row {
 
-    color: var(--theme-primary-color-default-contrast) !important;
+adf-layout-header .mat-toolbar-single-row {
+    color: var(--adf-header-text-color) !important;
+    background-color: var(--adf-header-background-color);
     position: relative;
     padding: 0 24px;
 
@@ -17,7 +18,6 @@ adf-layout-header .mat-toolbar-single-row {
     .adf-app-logo {
         position: relative;
         height: 28px;
-        width: 28px;
         vertical-align: middle;
         margin-top: -3px;
     }
@@ -26,6 +26,10 @@ adf-layout-header .mat-toolbar-single-row {
         cursor: pointer;
         letter-spacing: -0.3px;
         font-weight: 100;
+    }
+
+    .adf-toolbar--spacer {
+        flex: 1 1 auto;
     }
 
     .adf-toolbar-divider {

@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Aplicativo",
+    "HEADER_TEXT_COLOR": "Cor do texto do cabeçalho",
     "APP_NAME": "Aplicativo Demo ADF",
     "FILTERED_SEARCH": "Filtros",
     "HOME": "Página Inicial",

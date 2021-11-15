@@ -299,6 +299,30 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
+        it('should load the group properties when preset config is provided on node change', () => {
+            const presetConfig = [
+                {
+                    title: 'My custom preset',
+                    items: [
+                        {
+                            type: 'my:type',
+                            properties: '*'
+                        },
+                        {
+                            aspect: 'my:aspect',
+                            properties: '*'
+                        }
+                    ]
+                }
+            ];
+            component.preset = presetConfig;
+            spyOn(contentMetadataService, 'getGroupedProperties');
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, presetConfig);
+        });
+
         it('should pass through the loaded group properties to the card view', async () => {
             const expectedProperties = [];
             component.expanded = true;

@@ -273,5 +273,49 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
         });
-   });
+    });
+
+    describe('Provided preset config', () => {
+       it('should create the metadata config on the fly when preset config is provided', async(done) => {
+            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+
+            const customLayoutOrientedScheme = [
+                {
+                    'id': 'app.content.metadata.customGroup',
+                    'title': 'Exif',
+                    'items': [
+                        {
+                            'id': 'app.content.metadata.exifAspect2',
+                            'aspect': 'exif:exif',
+                            'properties': '*'
+                        }
+                    ]
+                },
+                {
+                    'id': 'app.content.metadata.customGroup2',
+                    'title': 'Properties',
+                    'items': [
+                        {
+                            'id': 'app.content.metadata.content',
+                            'aspect': 'cm:content',
+                            'properties': '*'
+                        }
+                    ]
+                }
+            ];
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
+
+            service.getGroupedProperties(fakeNode, customLayoutOrientedScheme).subscribe(
+                (res) => {
+                    expect(res.length).toEqual(1);
+                    expect(res[0].title).toEqual('Properties');
+                    done();
+                }
+            );
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+        });
+    });
 });

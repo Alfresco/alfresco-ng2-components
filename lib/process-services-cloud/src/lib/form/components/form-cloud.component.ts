@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnDestroy
+    Output, SimpleChanges, OnDestroy, HostListener
 } from '@angular/core';
 import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil, map } from 'rxjs/operators';
@@ -125,6 +125,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.form.addValuesNotPresent(valuesToSetIfNotPresent);
                 this.onFormDataRefreshed(this.form);
             });
+    }
+
+    @HostListener('keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        event.cancelBubble = true;
     }
 
     ngOnChanges(changes: SimpleChanges) {

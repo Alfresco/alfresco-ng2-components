@@ -117,7 +117,7 @@ jobs:
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
-              - NODE_OPTIONS=--max_old_space_size=8192 nx run process-services-cloud:build-storybook --configuration ci
+              - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:

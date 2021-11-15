@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Remover",
       "UPLOAD": "Carregar",
       "REQUIRED": "*Obrigatório",
+      "FILE_NAME": "Nome de arquivo",
+      "DEPENDS_ON": "Depende de: {{widgetId}}",
       "NO_FILE_ATTACHED": "Nenhum arquivo anexado",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use um formato de número diferente",
@@ -279,7 +281,7 @@
       "REMEMBER": "Lembrar-me"
     },
     "ARIA-LABEL": {
-      "SHOW-PASSWORD": "Exibir senha",
+      "SHOW-PASSWORD": "Mostrar senha",
       "HIDE-PASSWORD": "Ocultar senha"
     },
     "MESSAGES": {

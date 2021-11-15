@@ -30,7 +30,7 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 
 @Component({
@@ -68,9 +68,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     multi = false;
 
-    /** Name of the metadata preset, which defines aspects and their properties */
+    /** Name or configuration of the metadata preset, which defines aspects and their properties */
     @Input()
-    preset: string;
+    preset: string | PresetConfig;
 
     /** Toggles whether the metadata properties should be shown */
     @Input()

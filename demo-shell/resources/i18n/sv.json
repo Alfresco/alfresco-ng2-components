@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Program",
+    "HEADER_TEXT_COLOR": "Rubrikens textfärg",
     "APP_NAME": "ADF-demoprogram",
     "FILTERED_SEARCH": "Filter sidhuvud",
     "HOME": "Hem",

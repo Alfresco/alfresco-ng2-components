@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Laster opp",
       "REQUIRED": "*Påkrevd",
+      "FILE_NAME": "Filnavn",
+      "DEPENDS_ON": "Avhenger av: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ingen fil vedlagt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Bruk et annet nummerformat",

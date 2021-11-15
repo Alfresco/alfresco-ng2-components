@@ -1,16 +1,25 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+    <div class="adf-dropdown-widget-top-labels">
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
+            *ngIf="isRequired()">*</span></label>
+        <label class="adf-label adf-dropdown-widget-linked"
+               *ngIf="isLinkedWidget()"
+               [attr.for]="field.id">
+            {{ 'FORM.FIELD.DEPENDS_ON' | translate: { widgetId: getLinkedWidgetId() } }}
+        </label>
+    </div>
     <mat-form-field>
         <mat-select class="adf-select"
                     [id]="field.id"
                     [(ngModel)]="field.value"
                     [disabled]="field.readOnly"
                     [compareWith]="compareDropdownValues"
-                    (ngModelChange)="onFieldChanged(field)"
+                    (ngModelChange)="selectionChangedForField(field)"
                     [matTooltip]="field.tooltip"
                     matTooltipPosition="above"
-                    matTooltipShowDelay="1000">
+                    matTooltipShowDelay="1000"
+                    [multiple]="field.hasMultipleValues">
             <mat-option *ngFor="let opt of field.options"
                         [value]="getOptionValue(opt, field.value)"
                         [id]="opt.id">{{opt.name}}

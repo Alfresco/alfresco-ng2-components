@@ -23,14 +23,14 @@ import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-tas
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
+import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task.model';
+import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudService extends BaseCloudService {
+export class TaskCloudService extends BaseCloudService implements TaskCloudServiceInterface {
 
-    static TASK_ASSIGNED_STATE = 'ASSIGNED';
     dataChangesDetected$ = new Subject();
 
     constructor(
@@ -67,7 +67,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -76,12 +76,12 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     isAssigneePropertyClickable(taskDetails: TaskDetailsCloudModel, candidateUsers: CardViewArrayItem[], candidateGroups: CardViewArrayItem[]): boolean {
         let isClickable = false;
-        const states = [TaskCloudService.TASK_ASSIGNED_STATE];
+        const states = [TASK_ASSIGNED_STATE];
         if (candidateUsers?.length || candidateGroups?.length) {
             isClickable = states.includes(taskDetails.status);
         }
@@ -94,7 +94,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === 'CREATED';
+        return taskDetails && taskDetails.status === TASK_CREATED_STATE;
     }
 
     /**
@@ -104,7 +104,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
+        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
     }
 
     /**

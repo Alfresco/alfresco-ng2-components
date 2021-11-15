@@ -178,10 +178,16 @@ export class WidgetVisibilityService {
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {
-                valueFound = valueList[labelFilterByName].name;
+                if (Array.isArray(valueList[labelFilterByName])) {
+                    valueFound = valueList[labelFilterByName].map(({name}) => name);
+                } else {
+                    valueFound = valueList[labelFilterByName].name;
+                }
             }
         } else if (valueList[fieldId] && valueList[fieldId].id) {
             valueFound = valueList[fieldId].id;
+        } else if (valueList[fieldId] && Array.isArray(valueList[fieldId])) {
+            valueFound = valueList[fieldId].map(({id}) => id);
         } else {
             valueFound = valueList[fieldId];
         }
@@ -315,10 +321,18 @@ export class WidgetVisibilityService {
                 return leftValue ? leftValue === '' : true;
             case '!empty':
                 return leftValue ? leftValue !== '' : false;
+            case 'contains':
+                return this.contains(leftValue, rightValue);
+            case '!contains':
+                return !this.contains(leftValue, rightValue);
             default:
                 this.logService.error(`Invalid operator: ${operator}`);
                 return undefined;
         }
+    }
+
+    private contains(leftValue: any, rightValue: any) {
+        return Array.isArray(leftValue) && Array.isArray(rightValue) && rightValue.every((element) => leftValue.includes(element));
     }
 
     cleanProcessVariable() {

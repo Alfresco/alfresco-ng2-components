@@ -20,6 +20,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ratingOneMock, ratingThreeMock } from '../mock/rating-response.mock';
 
 declare let jasmine: any;
 
@@ -58,14 +59,7 @@ describe('Rating service', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
-            responseText: {
-                'entry': {
-                    myRating: '1',
-                    'ratedAt': '2017-04-06T14:34:28.061+0000',
-                    'id': 'fiveStar',
-                    'aggregate': {'numberOfRatings': 1, 'average': 1.0}
-                }
-            }
+            responseText: ratingOneMock
         });
     });
 
@@ -81,14 +75,7 @@ describe('Rating service', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
-            responseText: {
-                'entry': {
-                    'myRating': '3',
-                    'ratedAt': '2017-04-06T14:36:40.731+0000',
-                    'id': 'fiveStar',
-                    'aggregate': {'numberOfRatings': 1, 'average': 3.0}
-                }
-            }
+            responseText: ratingThreeMock
         });
     });
 });

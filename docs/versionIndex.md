@@ -12,6 +12,8 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v4.7.0](#v470)
+-   [v4.6.0](#v460)
 -   [v4.5.0](#v450)
 -   [v4.4.0](#v440)
 -   [v4.3.0](#v430)
@@ -36,6 +38,20 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v4.7.0
+
+<!--v470 start-->
+
+-   [Properties viewer widget](process-services-cloud/widgets/properties-viewer.widget.md)
+
+<!--v470 end-->
+
+## v4.6.0
+
+<!--v460 start-->
+
+<!--v460 end-->
 
 ## v4.5.0
 

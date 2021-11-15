@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "تطبيق",
+    "HEADER_TEXT_COLOR": "لون نص العنوان",
     "APP_NAME": "تطبيق ADF التوضيحي",
     "FILTERED_SEARCH": "عنوان عامل التصفية",
     "HOME": "رئيسية",
