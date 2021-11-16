@@ -20,7 +20,7 @@ import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { FormDefinitionSelectorCloudService } from './form-definition-selector-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { responseBody } from '../mocks/form-representation.mock';
+import { mockFormRepresentations } from '../mocks/form-representation.mock';
 
 declare let jasmine: any;
 
@@ -52,7 +52,7 @@ describe('Form Definition Selector Cloud Service', () => {
     });
 
     it('should fetch all the forms when getForms is called', (done) => {
-        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(mockFormRepresentations));
 
         service.getForms(appName).subscribe((result) => {
             expect(result).toBeDefined();
@@ -62,7 +62,7 @@ describe('Form Definition Selector Cloud Service', () => {
     });
 
     it('should fetch only standalone enabled forms when getStandaloneTaskForms is called', (done) => {
-        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(mockFormRepresentations));
 
         service.getStandAloneTaskForms(appName).subscribe((result) => {
             expect(result).toBeDefined();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const responseBody = [
+export const mockFormRepresentations = [
     {
         formRepresentation: {
             id: 'form-de8895be-d0d7-4434-beef-559b15305d72',

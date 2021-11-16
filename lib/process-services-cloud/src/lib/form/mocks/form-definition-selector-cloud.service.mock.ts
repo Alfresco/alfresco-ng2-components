@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
 import { FormDefinitionSelectorCloudServiceInterface } from '../services/form-definition-selector-cloud.service.interface';
-import { responseBody } from './form-representation.mock';
+import { mockFormRepresentations } from './form-representation.mock';
 
 @Injectable({
     providedIn: 'root'
@@ -27,10 +27,10 @@ import { responseBody } from './form-representation.mock';
 export class FormDefinitionSelectorCloudServiceMock implements FormDefinitionSelectorCloudServiceInterface {
 
     getForms(_appName: string): Observable<FormRepresentation[]> {
-        return of(responseBody.map(response => <FormRepresentation> response.formRepresentation));
+        return of(mockFormRepresentations.map(response => <FormRepresentation> response.formRepresentation));
     }
 
     getStandAloneTaskForms(_appName: string): Observable<FormRepresentation[]> {
-        return of(responseBody.map(response => <FormRepresentation> response.formRepresentation).filter((form: any) => form.standalone ? form : undefined));
+        return of(mockFormRepresentations.map(response => <FormRepresentation> response.formRepresentation).filter((form: any) => form.standalone ? form : undefined));
     }
 }
