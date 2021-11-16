@@ -21,7 +21,7 @@ import { Observable, of, Subject, throwError } from 'rxjs';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { ApplicationVersionModel } from '../../models/application-version.model';
-import { processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
+import { processInstancePlaceholdersCloudMock, processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
 import { fakeProcessDefinitions } from '../start-process/mock/start-process.component.mock';
 import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.mock';
 import { ProcessCloudInterface } from '../services/process-cloud.interface';
@@ -36,6 +36,10 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
     constructor(private logService: LogService) { }
 
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+        if (appName === 'app-placeholders' && processInstanceId) {
+            return of(processInstancePlaceholdersCloudMock);
+        }
+
         if (appName && processInstanceId) {
             return of(processInstanceDetailsCloudMock);
 

@@ -47,6 +47,12 @@ primary.args = {
     processInstanceId: 'mock-process-id'
 };
 
+export const noParentAndBusinessAndName = template.bind({});
+noParentAndBusinessAndName.args = {
+    appName: 'app-placeholders',
+    processInstanceId: 'mock-process-id'
+};
+
 export const invalidOrMissingAppName = template.bind({});
 invalidOrMissingAppName.args = {
     appName: undefined,

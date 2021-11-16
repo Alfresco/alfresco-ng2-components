@@ -28,3 +28,15 @@ export const processInstanceDetailsCloudMock: ProcessInstanceCloud = {
     startDate: new Date(1552152187080),
     status: 'RUNNING'
 };
+
+export const processInstancePlaceholdersCloudMock: ProcessInstanceCloud = {
+    appName: 'app-placeholders',
+    businessKey: '',
+    id: '00fcc4ab-4290-11e9-b133-0a586460016a',
+    initiator: 'devopsuser',
+    lastModified: new Date(1552152187081),
+    name: '',
+    parentId: '',
+    startDate: new Date(1552152187080),
+    status: 'RUNNING'
+};
