@@ -37,9 +37,9 @@ import { LocalPreferenceCloudService } from '../../../services/local-preference-
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
-import { ApplicationVersionModel } from '../../../models/application-version.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
+import { mockAppVersions } from '../mock/process-filters-cloud.mock';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -603,23 +603,8 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should fetch appVersionMultiple options when appVersionMultiple filter property is set', async () => {
-        const mockAppVersion1: ApplicationVersionModel = {
-            entry: {
-                id: 'mock-version-1-id',
-                name: 'mock-version-1-name',
-                version: '1'
-            }
-        };
 
-        const mockAppVersion2: ApplicationVersionModel = {
-            entry: {
-                id: 'mock-version-2-id',
-                name: 'mock-version-2-name',
-                version: '2'
-            }
-        };
-
-        const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.returnValue(of([mockAppVersion1, mockAppVersion2]));
+        const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.returnValue(of(mockAppVersions));
         fixture.detectChanges();
 
         component.filterProperties = ['appVersionMultiple'];
