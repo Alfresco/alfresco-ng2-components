@@ -49,10 +49,11 @@ describe('Form Field Component - Dropdown Widget', () => {
 
     const dropdown = widget.dropdown();
 
-    let runningProcessInstance, testUser, groupInfo, tasklist, task;
+    let runningProcessInstance, runningProcessInstanceMultiselect, testUser, groupInfo, tasklist, tasklistMulti, taskMulti, task;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
+        const { processes } = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP;
         await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
@@ -61,16 +62,20 @@ describe('Form Field Component - Dropdown Widget', () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.username, testUser.password);
 
-        const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownOptionsProcess, simpleApp);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName(processes.dropdownOptionsProcess, simpleApp);
+        const processDefinitionMultiselect = await processDefinitionService.getProcessDefinitionByName(processes['multiselect-dropdown'], simpleApp);
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-
+        await processInstancesService.createProcessInstance(processDefinitionMultiselect.entry.key, simpleApp);
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        runningProcessInstanceMultiselect = await processInstancesService.createProcessInstance(processDefinitionMultiselect.entry.key, simpleApp);
 
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
         task = await tasklist.list.entries[0];
+        tasklistMulti = await queryService.getProcessInstanceTasks(runningProcessInstanceMultiselect.entry.id, simpleApp);
+        taskMulti = await tasklistMulti.list.entries[0];
         await tasksService.claimTask(task.entry.id, simpleApp);
+        await tasksService.claimTask(taskMulti.entry.id, simpleApp);
 
         await loginSSOPage.login(testUser.username, testUser.password);
     });
@@ -84,6 +89,37 @@ describe('Form Field Component - Dropdown Widget', () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
+    });
+
+    it('Should be able to finish task with mulitselect dropdown form field', async () => {
+        const optionsToSelect = ['First', 'Third'];
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+
+        await taskList.checkContentIsDisplayedByName(taskMulti.entry.name);
+        await taskList.selectRow(taskMulti.entry.name);
+
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+        await dropdown.openDropdown('#DropdownMultiselect');
+        await dropdown.selectMultipleOptions(optionsToSelect);
+        await dropdown.closeDropdown();
+
+        let optionsSelected = [await dropdown.getSelectedOptionText('DropdownMultiselect')];
+
+        await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
+        await taskFormCloudComponent.clickCompleteButton();
+        await taskFilter.clickTaskFilter('completed-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+
+        await taskList.checkContentIsDisplayedByName(taskMulti.entry.name);
+        await taskList.selectRow(taskMulti.entry.name);
+
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownMultiselect');
+
+        optionsSelected.push(await dropdown.getSelectedOptionText('DropdownMultiselect'));
+
+        await expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
     });
 
     it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {

@@ -128,6 +128,7 @@ export const ACTIVITI_CLOUD_APPS = {
             multiinstancedmnsequence: 'multiinstance-dmnsequence',
             multiinstancemanualtask: 'multiinstance-manualtask',
             multiinstancesubprocess: 'multiinstance-subprocess',
+            'multiselect-dropdown': 'multiselect-dropdown',
             calledprocess: 'calledprocess',
             booleanvisibilityprocess: 'booleanvisibilityprocess',
             numbervisibilityprocess: 'numbervisibilityprocess',

@@ -16,8 +16,9 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, $ } from 'protractor';
+import { by, element, $, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { TestElement } from '../../../test-element';
 
 export class DropdownWidgetPage {
 
@@ -31,6 +32,16 @@ export class DropdownWidgetPage {
         await this.openDropdown(locator);
         const row = element(by.cssContainingText('mat-option span', option));
         await BrowserActions.click(row);
+    }
+
+    async selectMultipleOptions(options: string[]): Promise<void> {
+        for (const option of options) {
+            await TestElement.byText('mat-option span', option).click();
+        }
+    }
+
+    async closeDropdown(): Promise<void> {
+        await $('body').sendKeys(protractor.Key.ESCAPE);
     }
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {
