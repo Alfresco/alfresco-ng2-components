@@ -21,8 +21,7 @@ import { AboutModule } from './about.module';
 import { AuthenticationService, DiscoveryApiService } from '../services';
 import { AppConfigServiceMock, AuthenticationMock } from '../mock';
 import { DiscoveryApiServiceMock } from '../mock/discovery-api.service.mock';
-import { AppExtensionService } from '@alfresco/adf-extensions';
-import { AppExtensionServiceMock } from '@alfresco/adf-extensions';
+import { AppExtensionService, AppExtensionServiceMock } from '@alfresco/adf-extensions';
 import { AppConfigService } from '../app-config';
 import { CoreStoryModule } from '../testing/core.story.module';
 
@@ -36,7 +35,7 @@ export default {
                 { provide: AuthenticationService, useClass: AuthenticationMock },
                 { provide: DiscoveryApiService, useClass: DiscoveryApiServiceMock },
                 { provide: AppExtensionService, useClass: AppExtensionServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         })
     ]
@@ -52,16 +51,17 @@ devAbout.args = {
     dev: true,
     pkg: {
         name: 'My Storybook App', commit: 'my-commit-value', version: '1.0.0', dependencies: {
-            "@alfresco/adf-content-services": "4.7.0",
-            "@alfresco/adf-core": "4.7.0",
-            "@alfresco/adf-extensions": "4.7.0",
-            "@alfresco/adf-process-services": "4.7.0",
-            "@alfresco/adf-process-services-cloud": "4.7.0",
-            "@alfresco/js-api": "4.7.0-3976"
-        }}
-    };
+            '@alfresco/adf-content-services': '4.7.0',
+            '@alfresco/adf-core': '4.7.0',
+            '@alfresco/adf-extensions': '4.7.0',
+            '@alfresco/adf-process-services': '4.7.0',
+            '@alfresco/adf-process-services-cloud': '4.7.0',
+            '@alfresco/js-api': '4.7.0-3976'
+        }
+    }
+};
 
-    export const prodAbout = template.bind({});
-    prodAbout.args = {
-        dev: false
-    };
+export const prodAbout = template.bind({});
+prodAbout.args = {
+    dev: false
+};

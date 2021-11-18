@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { PackageInfo } from '../about.component';
 

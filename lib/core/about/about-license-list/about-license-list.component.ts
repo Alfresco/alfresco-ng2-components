@@ -24,7 +24,7 @@ import { LicenseData } from '../about.component';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutLicenseList {
+export class AboutLicenseListComponent {
     columns = [
         {
             columnDef: 'property',

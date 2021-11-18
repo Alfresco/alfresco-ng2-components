@@ -23,7 +23,7 @@ import { DataTableModule } from '../datatable/datatable.module';
 import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
 import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
-import { AboutLicenseList } from './about-license-list/about-license-list.component';
+import { AboutLicenseListComponent } from './about-license-list/about-license-list.component';
 import { PackageListComponent } from './about-package/package-list.component';
 import { AboutStatusListComponent } from './about-status-list/about-status-list.component';
 import { ModuleListComponent } from './about-module-list/module-list.component';
@@ -35,7 +35,7 @@ import { AboutComponent } from './about.component';
         CommonModule,
         MaterialModule,
         TranslateModule,
-        DataTableModule,
+        DataTableModule
     ],
     declarations: [
         AboutComponent,
@@ -43,7 +43,7 @@ import { AboutComponent } from './about.component';
         AboutGithubLinkComponent,
         AboutServerSettingsComponent,
         AboutExtensionListComponent,
-        AboutLicenseList,
+        AboutLicenseListComponent,
         PackageListComponent,
         AboutStatusListComponent,
         ModuleListComponent

@@ -59,10 +59,10 @@ export class AboutComponent implements OnInit {
     dependencies: string;
     application: string;
 
-    /** If active show more information about the app and the platform useful in debug*/
+    /** If active show more information about the app and the platform useful in debug. */
     @Input() dev: boolean = false;
 
-    /** pkg json*/
+    /** pkg json. */
     @Input() pkg: any;
 
     /** Regular expression for filtering dependencies packages. */
@@ -133,6 +133,5 @@ export class AboutComponent implements OnInit {
             this.bpmVersion = bpmVersion;
         });
     }
-
 
 }

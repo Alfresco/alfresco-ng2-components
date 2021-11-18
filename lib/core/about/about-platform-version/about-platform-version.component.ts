@@ -29,11 +29,11 @@ import { Observable } from 'rxjs';
 })
 export class AboutPlatformVersionComponent {
 
-    /** repository info*/
+    /** repository info. */
     @Input()
     repository: RepositoryInfo = null;
 
-    /** process info*/
+    /** process info. */
     @Input()
     process: BpmProductVersionModel = null;
 
