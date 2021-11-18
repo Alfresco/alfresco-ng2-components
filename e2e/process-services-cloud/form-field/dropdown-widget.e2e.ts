@@ -104,7 +104,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.selectMultipleOptions(optionsToSelect);
         await dropdown.closeDropdown();
 
-        let optionsSelected = [await dropdown.getSelectedOptionText('DropdownMultiselect')];
+        const optionsSelected = [await dropdown.getSelectedOptionText('DropdownMultiselect')];
 
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();
