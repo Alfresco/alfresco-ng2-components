@@ -90,7 +90,7 @@ After starting the app, if everything is working fine, that's all and you don't 
 
 ### Style Update
 
-Some change has been necessary in order to preper ADF for the next versions of Angular. Check the update theming page in to check how to update your custom style:
-https://github.com/Alfresco/alfresco-ng2-components/blob/develop/docs/user-guide/theming.md
+Some change has been necessary in order to preper ADF for the next versions of Angular. Check the update theming page in to check how to update your custom style
+[custom style](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/docs/user-guide/theming.md)
 
     
