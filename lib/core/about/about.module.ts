@@ -54,7 +54,7 @@ import { AboutComponent } from './about.component';
         AboutGithubLinkComponent,
         AboutServerSettingsComponent,
         AboutExtensionListComponent,
-        AboutLicenseList,
+        AboutLicenseListComponent,
         PackageListComponent,
         AboutStatusListComponent,
         ModuleListComponent
