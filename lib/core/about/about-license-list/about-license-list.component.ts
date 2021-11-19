@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { LicenseData } from '../about.component';
+import { LicenseData } from '../interfaces';
 
 @Component({
     selector: 'adf-about-license-list',

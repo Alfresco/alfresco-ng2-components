@@ -17,10 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
-import { BpmProductVersionModel } from '../models/product-version.model';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
 import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+
+import { BpmProductVersionModel } from '../models/product-version.model';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({

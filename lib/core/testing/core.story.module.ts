@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { TRANSLATION_PROVIDER } from '../../dist/core';
+import { TRANSLATION_PROVIDER } from '../services/translation.service';
 
 @NgModule({
     imports: [

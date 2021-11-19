@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { StatusData } from '../about.component';
+import { StatusData } from '../interfaces';
 
 @Component({
     selector: 'adf-about-status-list',

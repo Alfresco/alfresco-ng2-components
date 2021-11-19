@@ -16,10 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { VersionInfo, RepositoryInfo } from '@alfresco/js-api';
+
+import { DiscoveryApiService } from './discovery-api.service';
 
 @Injectable({
     providedIn: 'root'

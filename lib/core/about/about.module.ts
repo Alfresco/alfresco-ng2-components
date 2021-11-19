@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { DataTableModule } from '../datatable/datatable.module';
+
 import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
 import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
@@ -34,8 +34,7 @@ import { AboutComponent } from './about.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
-        DataTableModule
+        TranslateModule
     ],
     declarations: [
         AboutComponent,

@@ -16,28 +16,15 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
+import { Observable } from 'rxjs';
+import { AppConfigService } from '../app-config/app-config.service';
+import { RepositoryInfo } from '@alfresco/js-api';
+
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { DiscoveryApiService } from '../services/discovery-api.service';
-import { RepositoryInfo } from '@alfresco/js-api/typings/src/api/discovery-rest-api/model/repositoryInfo';
-import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
-import { Observable } from 'rxjs';
-import { AppConfigService } from '../app-config';
-
-export interface PackageInfo {
-    name: string;
-    version: string;
-}
-
-export interface StatusData {
-    property: string;
-    value: string;
-}
-
-export interface LicenseData {
-    property: string;
-    value: string;
-}
+import { LicenseData, PackageInfo, StatusData } from './interfaces';
 
 @Component({
     selector: 'adf-about',

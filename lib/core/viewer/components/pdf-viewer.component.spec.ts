@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { take } from 'rxjs/operators';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 

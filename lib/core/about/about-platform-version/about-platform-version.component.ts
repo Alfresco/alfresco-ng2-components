@@ -16,11 +16,12 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { BpmProductVersionModel } from '../../models/product-version.model';
 import { RepositoryInfo } from '@alfresco/js-api';
-import { AaeInfoService, ActivitiDependencyInfo } from '../services/aae-info.service';
-import { AppConfigService } from '../../app-config';
 import { Observable } from 'rxjs';
+
+import { BpmProductVersionModel } from '../../models/product-version.model';
+import { AaeInfoService, ActivitiDependencyInfo } from '../services/aae-info.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-about-platform-version',

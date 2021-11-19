@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { PackageInfo } from '../about.component';
+import { PackageInfo } from '../interfaces';
 
 @Component({
   selector: 'adf-about-package-list',

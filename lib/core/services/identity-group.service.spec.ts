@@ -16,7 +16,11 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService, IdentityGroupService, IdentityGroupSearchParam } from '@alfresco/adf-core';
+import { setupTestBed } from '../testing/setup-test-bed';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { IdentityGroupService } from './identity-group.service';
+import { IdentityGroupSearchParam } from '../models/identity-group.model';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
