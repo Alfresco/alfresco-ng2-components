@@ -23,7 +23,7 @@ import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator } from '../../validators/card-view-item-float.validator';
-import { CardViewItemIntValidator} from '../../validators/card-view-item-int.validator';
+import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
 import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
 import { MatChipsModule } from '@angular/material/chips';
