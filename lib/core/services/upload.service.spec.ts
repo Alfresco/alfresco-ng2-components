@@ -24,7 +24,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { AssocChildBody, AssociationBody, VersionInfo } from '@alfresco/js-api';
+import { AssocChildBody, AssociationBody, RepositoryInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { DiscoveryApiService } from './discovery-api.service';
 import { BehaviorSubject } from 'rxjs';
@@ -36,7 +36,7 @@ describe('UploadService', () => {
     let appConfigService: AppConfigService;
     let uploadFileSpy: jasmine.Spy;
 
-    const mockProductInfo = new BehaviorSubject<VersionInfo>(null);
+    const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
     setupTestBed({
         imports: [
@@ -81,7 +81,7 @@ describe('UploadService', () => {
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
         jasmine.Ajax.install();
-        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as VersionInfo);
+        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as RepositoryInfo);
     });
 
     afterEach(() => {
@@ -538,7 +538,7 @@ describe('UploadService', () => {
     });
 
     it('Should not pass rendition if it is disabled', () => {
-        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as VersionInfo);
+        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as RepositoryInfo);
 
         const filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
