@@ -31,7 +31,7 @@ import { UserPreferencesService } from '../../../services/user-preferences.servi
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
-import { setupTestBed } from 'testing/setup-test-bed';
+import { setupTestBed } from '../../../testing/setup-test-bed';
 
 @Component({
     selector: 'adf-layout-container',
