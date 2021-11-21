@@ -22,12 +22,12 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { VersionInfo } from '@alfresco/js-api';
+import { RepositoryInfo } from '@alfresco/js-api';
 
 describe('VersionCompatibilityService', () => {
     let versionCompatibilityService: VersionCompatibilityService;
     let discoveryApiService: DiscoveryApiService;
-    const mockProductInfo = new BehaviorSubject<VersionInfo>(null);
+    const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
     const acsResponceMock = {
         version: {
@@ -56,7 +56,7 @@ describe('VersionCompatibilityService', () => {
     beforeEach(async () => {
         discoveryApiService = TestBed.inject(DiscoveryApiService);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
-        mockProductInfo.next(acsResponceMock as VersionInfo);
+        mockProductInfo.next(acsResponceMock as RepositoryInfo);
         versionCompatibilityService = new VersionCompatibilityService(discoveryApiService);
     });
 
