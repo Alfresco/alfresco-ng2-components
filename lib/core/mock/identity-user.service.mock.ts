@@ -16,17 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
+import { IdentityGroupModel } from '../models/identity-group.model';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 import {
-    IdentityGroupModel,
-    IdentityRoleModel,
-    IdentityUserModel,
-    mockIdentityGroups,
-    IdentityJoinGroupRequestModel,
     IdentityUserServiceInterface,
-    IdentityUserPasswordModel,
     IdentityUserQueryCloudRequestModel,
-    IdentityUserQueryResponse
-} from '@alfresco/adf-core';
+    IdentityUserQueryResponse,
+    IdentityUserPasswordModel,
+    IdentityJoinGroupRequestModel
+} from '../services/identity-user.service.interface';
+import { mockIdentityGroups } from '../mock/identity-group.mock';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentityUser1, mockIdentityUsers } from './identity-user.mock';
