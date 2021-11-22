@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { mockIdentityGroups, mockIdentityRoles } from './identity-group.mock';
+import { mockIdentityGroups, mockIdentityGroupsCount, mockIdentityRoles } from './identity-group.mock';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IdentityGroupServiceInterface } from '../services/identity-group.interface';
@@ -61,7 +61,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     }
 
     getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
-        return of({ count: mockIdentityGroups.length });
+        return of(mockIdentityGroupsCount);
     }
 
     createGroup(_newGroup: IdentityGroupModel): Observable<any> {
@@ -93,7 +93,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
         return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
-            if (groupRoles && groupRoles.length > 0) {
+            if (groupRoles?.length > 0) {
                 roleNames.forEach((roleName: string) => {
                     const role = groupRoles.find(({ name }) => roleName === name);
                     if (role) {

@@ -17,6 +17,7 @@
 
 import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
+import { IdentityJoinGroupRequestModel } from '../services/identity-user.service.interface';
 
 export const mockIdentityGroup1 = <IdentityGroupModel> {
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
@@ -44,8 +45,6 @@ export const mockIdentityGroups = [
     mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup4, mockIdentityGroup5
 ];
 
-export const mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
-
 export const roleMappingMock = [
     { id: 'role-id-1', name: 'role-name-1' }, { id: 'role-id-2', name: 'role-name-2' }
 ];
@@ -59,4 +58,19 @@ export const mockIdentityRoles = [
 export const clientRoles: IdentityRoleModel[] = [
     new IdentityRoleModel({ name: 'MOCK-ADMIN-ROLE' }),
     new IdentityRoleModel({ name: 'MOCK-USER-ROLE' })
+];
+
+export const mockJoinGroupRequest: IdentityJoinGroupRequestModel = {userId: 'mock-hser-id', groupId: 'mock-group-id', realm: 'mock-realm-name'};
+
+export const mockGroup1 = <IdentityGroupModel> {
+    id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
+};
+
+export const mockGroup2 = <IdentityGroupModel> {
+    id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
+};
+
+export const mockGroups = [
+    <IdentityGroupModel> { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] },
+    <IdentityGroupModel> { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] }
 ];

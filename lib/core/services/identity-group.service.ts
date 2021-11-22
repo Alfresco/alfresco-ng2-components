@@ -210,7 +210,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
         return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
-            if (groupRoles && groupRoles.length > 0) {
+            if (groupRoles?.length > 0) {
                 roleNames.forEach((roleName: string) => {
                     const role = groupRoles.find(({ name }) => roleName === name);
                     if (role) {

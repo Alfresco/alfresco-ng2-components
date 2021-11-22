@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { mockApplicationDetails, mockIdentityGroups, roleMappingMock } from './identity-group.mock';
-import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockGroups, mockIdentityUsers } from './identity-user.mock';
+import { mockGroups, mockIdentityGroups, roleMappingMock } from './identity-group.mock';
+import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentityUsers } from './identity-user.mock';
 
 export const queryUsersMockApi: any = {
     oauth2Auth: {
@@ -165,7 +165,7 @@ export const deleteGroupMappingApi: any = {
 export const applicationDetailsMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
-            return Promise.resolve([mockApplicationDetails]);
+            return Promise.resolve([{id: 'mock-app-id', name: 'mock-app-name'}]);
         }
     }
 };

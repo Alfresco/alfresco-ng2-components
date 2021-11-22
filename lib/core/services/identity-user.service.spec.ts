@@ -22,9 +22,9 @@ import {
     mockIdentityUser1,
     mockIdentityUser2,
     mockIdentityRole,
-    mockIdentityUsers,
-    mockJoinGroupRequest
-} from 'core/mock/identity-user.mock';
+    mockIdentityUsers
+} from '../mock/identity-user.mock';
+import { mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
