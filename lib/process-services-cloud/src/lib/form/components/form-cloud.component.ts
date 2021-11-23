@@ -81,6 +81,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Output()
     formSaved = new EventEmitter<FormModel>();
 
+    /** The form render supports 4 different appearance variants 'legacy', 'standard', 'fill', 'outline'  check the angular documentation to see the differences. */
+    @Input()
+    appearance: 'legacy' | 'standard' | 'fill' | 'outline' = 'fill';
+
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
     formCompleted = new EventEmitter<FormModel>();

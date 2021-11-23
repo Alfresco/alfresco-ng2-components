@@ -62,6 +62,9 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      @Input()
     enableFixedSpacedForm: boolean = true;
 
+    @Input()
+    appearance: 'legacy' | 'standard' | 'fill' | 'outline' = 'fill';
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -191,6 +194,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                     .getTaskForm(taskId)
                     .subscribe(
                         (form) => {
+                            form.appearance = this.appearance;
                             const parsedForm = this.parseForm(form);
                             this.visibilityService.refreshVisibility(parsedForm);
                             parsedForm.validateForm();
@@ -213,6 +217,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
             .subscribe(
                 (form) => {
                     this.formName = form.name;
+                    form.appearance = this.appearance;
                     this.form = this.parseForm(form);
                     this.visibilityService.refreshVisibility(this.form);
                     this.form.validateForm();
@@ -231,6 +236,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                 (id) => {
                     this.formService.getFormDefinitionById(id).subscribe(
                         (form) => {
+                            form.appearance = this.appearance;
                             this.form = this.parseForm(form);
                             this.visibilityService.refreshVisibility(this.form);
                             this.form.validateForm();

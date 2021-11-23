@@ -69,6 +69,7 @@ export class FormModel {
     readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
 
+    appearance: 'legacy' | 'standard' | 'fill' | 'outline' = 'fill';
     json: any;
     nodeId: string;
     values: FormValues = {};
@@ -99,7 +100,8 @@ export class FormModel {
             this.className = json.className || '';
             this.variables = json.variables || [];
             this.processVariables = json.processVariables || [];
-            this.enableFixedSpace = enableFixedSpace ? true : false;
+            this.enableFixedSpace = enableFixedSpace;
+            this.appearance = json.appearance || this.appearance;
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 

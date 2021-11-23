@@ -4,7 +4,7 @@
      [class.adf-readonly]="field.readOnly"
      id="functional-group-div">
 
-    <mat-form-field>
+    <mat-form-field [appearance]="field.appearance">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <input matInput
                class="adf-input"

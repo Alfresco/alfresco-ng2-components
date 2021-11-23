@@ -1,5 +1,5 @@
 <div class="{{field.className}}" id="data-time-widget" [class.adf-invalid]="!field.isValid">
-    <mat-form-field class="adf-date-time-widget">
+    <mat-form-field [appearance]="field.appearance" class="adf-date-time-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
         <input matInput
                [id]="field.id"

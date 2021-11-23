@@ -29,8 +29,13 @@
             height: 4px;
         }
 
-        & .mat-form-field-wrapper {
-            margin: 0 12px 0 0;
+        .mat-form-field-infix {
+            border-top: 0;
+            padding: 0 0 0.25em 0.25em;
+        }
+
+        .mat-form-field-flex {
+            padding: 0 0 0 0;
         }
 
     }
@@ -69,7 +74,7 @@
 
         & .adf-invalid-color {
             color: var(--theme-warn-color);
-            }
+        }
     }
 
     &-form-hide-button {

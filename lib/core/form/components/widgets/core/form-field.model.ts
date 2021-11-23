@@ -84,6 +84,8 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
+    appearance: 'legacy' | 'standard' | 'fill' | 'outline' = 'fill';
+
     get value(): any {
         return this._value;
     }
@@ -181,6 +183,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.tooltip = json.tooltip;
             this.selectionType = json.selectionType;
             this.rule = json.rule;
+            this.appearance = form.appearance;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
