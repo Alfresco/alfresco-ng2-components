@@ -1,6 +1,0 @@
-{
-  "port": 4344,
-  "server": {
-    "baseDir": "./lib/coverage/"
-  }
-}

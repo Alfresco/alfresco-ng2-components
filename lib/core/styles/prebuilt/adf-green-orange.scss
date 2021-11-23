@@ -6,7 +6,12 @@
 $primary: mat-palette($alfresco-bpm-green);
 $accent:  mat-palette($alfresco-accent-orange);
 $warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+$theme:   mat-light-theme((
+    color: (
+        primary: $primary,
+        accent: $accent,
+    )
+));
 
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);

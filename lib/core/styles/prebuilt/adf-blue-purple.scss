@@ -3,10 +3,15 @@
 
 @include mat-core($alfresco-typography);
 
-$primary: mat-palette($alfresco-ecm-blue);
+$primary: mat-palette($mat-pink, 700, 500, 900);
 $accent:  mat-palette($alfresco-accent-purple);
 $warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+$theme:   mat-light-theme((
+    color: (
+        primary: $primary,
+        accent: $accent,
+    )
+));
 
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);

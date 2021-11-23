@@ -28,5 +28,12 @@ cp -R ./lib/core/app-config/schema.json lib/dist/core/app.config.schema.json
 echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
-npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
-rm ./lib/dist/core/prebuilt-themes/*.js
+echo "====== Bundle prebuilt styles ======"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-blue-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-blue-purple.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-cyan-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-cyan-purple.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-green-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-green-purple.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-pink-bluegrey.scss" -o "./lib/dist/core/prebuilt-themes/adf-pink-bluegrey.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-cyan-orange.scss" -o "./lib/dist/core/prebuilt-themes/adf-cyan-orange.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-green-orange.scss" -o ".lib/dist/core/prebuilt-themes/adf-green-orange.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-indigo-pink.scss" -o "./lib/dist/core/prebuilt-themes/adf-indigo-pink.scss" -p "./"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-purple-green.scss" -o "./lib/dist/core/prebuilt-themes/adf-purple-green.scss" -p "./"
