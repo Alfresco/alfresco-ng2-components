@@ -17,10 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
-import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { AboutApi, DiscoveryApi, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+
+import { BpmProductVersionModel } from '../models/product-version.model';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -31,7 +32,7 @@ export class DiscoveryApiService {
     /**
      * Gets product information for Content Services.
      */
-    ecmProductInfo$ = new Subject<EcmProductVersionModel>();
+    ecmProductInfo$ = new Subject<RepositoryInfo>();
 
     constructor(
         private apiService: AlfrescoApiService,
@@ -50,12 +51,12 @@ export class DiscoveryApiService {
      * Gets product information for Content Services.
      * @returns ProductVersionModel containing product details
      */
-    public getEcmProductInfo(): Observable<EcmProductVersionModel> {
+    public getEcmProductInfo(): Observable<RepositoryInfo> {
         const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
 
         return from(discoveryApi.getRepositoryInformation())
             .pipe(
-                map((res) => new EcmProductVersionModel(res)),
+                map((res) => res.entry.repository),
                 catchError((err) => throwError(err))
             );
     }

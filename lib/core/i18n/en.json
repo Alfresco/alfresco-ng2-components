@@ -44,7 +44,7 @@
       "REQUIRED": "*Required",
       "FILE_NAME": "File Name",
       "DEPENDS_ON": "Depends on: {{widgetId}}",
-      "NO_FILE_ATTACHED" : "No file attached",
+      "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
         "INVALID_DATE": "Use a different date format",
@@ -55,7 +55,7 @@
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
       "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
-      "ATTACH":"Attach"
+      "ATTACH": "Attach"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nameless task"
@@ -186,7 +186,7 @@
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "Client ID",
-      "PUBLIC_URLS" : "Public urls silent Login"
+      "PUBLIC_URLS": "Public urls silent Login"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -220,15 +220,15 @@
         "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
-        "DIALOG" :{
-          "TITLE" : "Change content type",
+        "DIALOG": {
+          "TITLE": "Change content type",
           "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
           "CONFIRM": "Are you sure you want to change the content type?",
           "CANCEL": "CANCEL",
           "APPLY": "Save Changes",
           "VIEW_DETAILS": "View details",
-          "PROPERTY" :{
-            "NAME" : "Name",
+          "PROPERTY": {
+            "NAME": "Name",
             "DESCRIPTION": "Description",
             "DATA_TYPE": "Data type"
           }
@@ -493,14 +493,17 @@
     "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Server settings",
-      "DESCRIPTION": "The values below are taken from the AppConfigService",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Product Versions",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modeling Services",
+      "DEPLOYMENT_SERVICE": "Deployment Services",
+      "QUERY_SERVICE": "Deployment Services",
+      "RB": "Runtime",
       "LABELS": {
         "EDITION": "Edition",
         "VERSION": "Version",
@@ -515,33 +518,8 @@
     },
     "PACKAGES": {
       "TITLE": "Packages",
-      "DESCRIPTION": "Current project is using the following ADF libraries:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Title",
-        "DESCRIPTION": "Description",
-        "INSTALL_DATE": "Install Date",
-        "INSTALL_STATE": "Install State",
-        "VERSION_MIN": "Version Minor",
-        "VERSION_MAX": "Version Max"
-      },
-      "STATUS": {
-        "READ_ONLY": "ReadOnly",
-        "AUDIT_ENABLED": "Is Audit Enabled",
-        "QUICK_SHARE_ENABLED": "Is Quick Shared Enabled",
-        "THUMBNAIL_ENABLED": "Thumbnail Generation"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Issued At",
-        "EXPIRES_AT": "Expires At",
-        "REMAINING_DAYS": "Remaining Days",
-        "HOLDER": "Holder",
-        "MODE": "Mode",
-        "CLUSTER_ENABLED": "Is Cluster Enabled",
-        "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
-      }
+      "NAME": "Name",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
       "TITLE": "Plugins",
@@ -554,6 +532,26 @@
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Description"
       }
+    },
+    "LICENSE": {
+      "TITLE": "License",
+      "PROPERTY": "Property",
+      "VALUE": "Value"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Property",
+      "VALUE": "Value"
+    },
+    "MODULES": {
+      "TITLE": "Modules",
+      "NAME": "Name",
+      "VERSION": "Version"
+    },
+    "PLUGINS": {
+      "TITLE": "Plugins",
+      "NAME": "Name",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {

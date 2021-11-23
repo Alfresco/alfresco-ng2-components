@@ -19,12 +19,23 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { TRANSLATION_PROVIDER } from '../services/translation.service';
 
 @NgModule({
     imports: [
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         BrowserAnimationsModule
+    ],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'adf-core',
+                source: 'assets/adf-core'
+            }
+        }
     ]
 })
 export class CoreStoryModule { }

@@ -41,3 +41,5 @@ export * from './lib/store/states/repository.state';
 
 export * from './lib/components/public-api';
 export * from './lib/extensions.module';
+
+export * from './lib/mock/public-api';

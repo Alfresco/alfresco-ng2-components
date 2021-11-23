@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';

@@ -22,7 +22,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { VersionCompatibilityService } from '../services/version-compatibility.service';
-import { VersionModel } from '../models/product-version.model';
+import { VersionInfo } from '@alfresco/js-api';
 
 @Component({
     template: `
@@ -52,7 +52,7 @@ describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let versionCompatibilityService: VersionCompatibilityService;
 
-    const acsResponceMock = new VersionModel({
+    const acsResponceMock = new VersionInfo({
         display: '7.0.1',
         major: '7',
         minor: '0',

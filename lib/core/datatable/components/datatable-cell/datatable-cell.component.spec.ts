@@ -17,7 +17,7 @@
 
 import { DateCellComponent } from '../date-cell/date-cell.component';
 import { Subject } from 'rxjs';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '../../../app-config/app-config.service';
 import { Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../testing';

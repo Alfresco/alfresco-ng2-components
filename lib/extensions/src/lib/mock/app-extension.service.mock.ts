@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import pkg from '../../../../../package.json';
+import { Injectable } from '@angular/core';
+import { ExtensionRef } from '../config/extension.config';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ViewerExtensionRef } from '../config/viewer.extensions';
 
-@Component({
-    selector: 'app-about-page',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss']
+@Injectable({
+    providedIn: 'root'
 })
-export class AboutComponent {
-    pkg: any;
-    dev: true;
+export class AppExtensionServiceMock {
+    private _references = new BehaviorSubject<ExtensionRef[]>([]);
+
+    references$: Observable<ExtensionRef[]>;
 
     constructor() {
-        this.pkg = pkg;
+        this.references$ = this._references.asObservable();
+    }
+
+    getViewerExtensions(): ViewerExtensionRef[] {
+        return [];
     }
 
 }

@@ -19,30 +19,44 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { DataTableModule } from '../datatable/datatable.module';
-import { AboutApplicationModulesComponent } from './about-application-modules/about-application-modules.component';
-import { AboutProductVersionComponent } from './about-product-version/about-product-version.component';
+
 import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
+import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
+import { AboutLicenseListComponent } from './about-license-list/about-license-list.component';
+import { PackageListComponent } from './about-package/package-list.component';
+import { AboutStatusListComponent } from './about-status-list/about-status-list.component';
+import { ModuleListComponent } from './about-module-list/module-list.component';
+import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
+import { AboutComponent } from './about.component';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule,
-        DataTableModule
+        TranslateModule
     ],
     declarations: [
-        AboutApplicationModulesComponent,
-        AboutProductVersionComponent,
+        AboutComponent,
+        AboutPlatformVersionComponent,
         AboutGithubLinkComponent,
-        AboutServerSettingsComponent
+        AboutServerSettingsComponent,
+        AboutExtensionListComponent,
+        AboutLicenseListComponent,
+        PackageListComponent,
+        AboutStatusListComponent,
+        ModuleListComponent
     ],
     exports: [
-        AboutApplicationModulesComponent,
-        AboutProductVersionComponent,
+        AboutComponent,
+        AboutPlatformVersionComponent,
         AboutGithubLinkComponent,
-        AboutServerSettingsComponent
+        AboutServerSettingsComponent,
+        AboutExtensionListComponent,
+        AboutLicenseListComponent,
+        PackageListComponent,
+        AboutStatusListComponent,
+        ModuleListComponent
     ]
 })
 export class AboutModule {}

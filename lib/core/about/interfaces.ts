@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import pkg from '../../../../../package.json';
+export interface PackageInfo {
+    name: string;
+    version: string;
+}
 
-@Component({
-    selector: 'app-about-page',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss']
-})
-export class AboutComponent {
-    pkg: any;
-    dev: true;
+export interface StatusData {
+    property: string;
+    value: string;
+}
 
-    constructor() {
-        this.pkg = pkg;
-    }
-
+export interface LicenseData {
+    property: string;
+    value: string;
 }

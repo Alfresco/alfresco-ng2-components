@@ -15,20 +15,4 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import pkg from '../../../../../package.json';
-
-@Component({
-    selector: 'app-about-page',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss']
-})
-export class AboutComponent {
-    pkg: any;
-    dev: true;
-
-    constructor() {
-        this.pkg = pkg;
-    }
-
-}
+export * from './app-extension.service.mock';

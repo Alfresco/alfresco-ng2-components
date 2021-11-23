@@ -20,7 +20,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ContentService } from '../../services/content.service';
 import { ImgViewerComponent } from './img-viewer.component';
 import { setupTestBed, CoreTestingModule } from '../../testing';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 
