@@ -15,104 +15,131 @@
  * limitations under the License.
  */
 
-import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
+import { Injectable } from '@angular/core';
+import { mockIdentityGroups, mockIdentityGroupsCount, mockIdentityRoles } from './identity-group.mock';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { IdentityGroupServiceInterface } from '../services/identity-group.interface';
+import {
+    IdentityGroupModel,
+    IdentityGroupQueryResponse,
+    IdentityGroupQueryCloudRequestModel,
+    IdentityGroupSearchParam,
+    IdentityGroupCountModel
+} from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
-export const mockIdentityGroup1 = <IdentityGroupModel> {
-    id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
-};
+Injectable({ providedIn: 'root' });
+export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
 
-export const mockIdentityGroup2 = <IdentityGroupModel> {
-    id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
-};
-
-export const mockIdentityGroup3 = <IdentityGroupModel> {
-  id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: []
-};
-
-export const mockIdentityGroup4 = <IdentityGroupModel> {
-    id: 'mock-group-id-4', name: 'Mock Group 4', path: '', subGroups: []
-};
-
-export const mockIdentityGroup5 = <IdentityGroupModel> {
-    id: 'mock-group-id-5', name: 'Mock Group 5', path: '', subGroups: []
-};
-
-export const mockIdentityGroupsCount = <IdentityGroupCountModel> { count: 10 };
-
-export const mockIdentityGroups = [
-    mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup4, mockIdentityGroup5
-];
-
-export const mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
-
-export const roleMappingMock = [
-    { id: 'role-id-1', name: 'role-name-1' }, { id: 'role-id-2', name: 'role-name-2' }
-];
-
-export const roleMappingApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(roleMappingMock);
-        }
+    getGroups(): Observable<IdentityGroupModel[]> {
+        return of(mockIdentityGroups);
     }
-};
 
-export const noRoleMappingApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve([]);
-        }
+    getAvailableRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+        return of(mockIdentityRoles);
     }
-};
 
-export const groupsMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockIdentityGroups);
-        }
+    getAssignedRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+        return of(mockIdentityRoles);
     }
-};
 
-export const createGroupMappingApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+    assignRoles(_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
+        return of();
     }
-};
 
-export const updateGroupMappingApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+    removeRoles(_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
+        return of();
     }
-};
 
-export const deleteGroupMappingApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+    getEffectiveRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+        return of(mockIdentityRoles);
     }
-};
 
-export const applicationDetailsMockApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve([mockApplicationDetails]);
-        }
+    queryGroups(_requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
+        return of();
     }
-};
 
-export const mockIdentityRoles = [
-    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ADMIN-ROLE'}),
-    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-USER-ROLE'}),
-    new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ROLE-1'})
-];
+    getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
+        return of(mockIdentityGroupsCount);
+    }
 
-export const clientRoles: IdentityRoleModel[] = [
-    new IdentityRoleModel({ name: 'MOCK-ADMIN-ROLE' }),
-    new IdentityRoleModel({ name: 'MOCK-USER-ROLE' })
-];
+    createGroup(_newGroup: IdentityGroupModel): Observable<any> {
+        return of();
+    }
+
+    updateGroup(_groupId: string, _updatedGroup: IdentityGroupModel): Observable<any> {
+        return of();
+    }
+
+    deleteGroup(_groupId: string): Observable<any> {
+        return of();
+    }
+
+    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
+        if (searchParams.name === '') {
+            return of([]);
+        }
+
+        return of(mockIdentityGroups.filter(group =>
+            group.name.toUpperCase().includes(searchParams.name.toUpperCase())
+        ));
+    }
+
+    getGroupRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+        return of(mockIdentityRoles);
+    }
+
+    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
+        return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
+            let hasRole = false;
+            if (groupRoles?.length > 0) {
+                roleNames.forEach((roleName: string) => {
+                    const role = groupRoles.find(({ name }) => roleName === name);
+                    if (role) {
+                        hasRole = true;
+                        return;
+                    }
+                });
+            }
+            return hasRole;
+        }));
+    }
+
+    getClientIdByApplicationName(_applicationName: string): Observable<string> {
+        return of('fake-client-id');
+    }
+
+    getClientRoles(groupId: string, _clientId: string): Observable<IdentityRoleModel[]> {
+        if (['mock-group-id-1', 'mock-group-id-2'].includes(groupId)) {
+            return of([{ id: 'mock-role-id', name: 'MOCK-ADMIN-ROLE' }]);
+        }
+
+        return of([{ id: 'mock-role-id', name: 'MOCK-USER-ROLE' }]);
+    }
+
+    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
+            map((response) => response && response.length > 0)
+        );
+    }
+
+    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find(({ name }) => name === roleName);
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
+    }
+}

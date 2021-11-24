@@ -19,24 +19,12 @@ import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
-    queryUsersMockApi,
-    createUserMockApi,
     mockIdentityUser1,
-    updateUserMockApi,
     mockIdentityUser2,
-    deleteUserMockApi,
-    getInvolvedGroupsMockApi,
-    joinGroupMockApi,
-    leaveGroupMockApi,
-    getAvailableRolesMockApi,
-    getAssignedRolesMockApi,
-    getEffectiveRolesMockApi,
-    assignRolesMockApi,
     mockIdentityRole,
-    removeRolesMockApi,
-    mockIdentityUsers,
-    mockJoinGroupRequest
-} from 'core/mock/identity-user.service.mock';
+    mockIdentityUsers
+} from '../mock/identity-user.mock';
+import { mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -44,6 +32,20 @@ import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+    assignRolesMockApi,
+    createUserMockApi,
+    deleteUserMockApi,
+    getAssignedRolesMockApi,
+    getAvailableRolesMockApi,
+    getEffectiveRolesMockApi,
+    getInvolvedGroupsMockApi,
+    joinGroupMockApi,
+    leaveGroupMockApi,
+    queryUsersMockApi,
+    removeRolesMockApi,
+    updateUserMockApi
+} from '../mock/oauth2.service.mock';
 
 describe('IdentityUserService', () => {
 

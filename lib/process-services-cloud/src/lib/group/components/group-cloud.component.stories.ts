@@ -16,10 +16,9 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { IdentityGroupService, mockIdentityGroups } from '@alfresco/adf-core';
+import { IdentityGroupService, mockIdentityGroups, IdentityGroupServiceMock } from '@alfresco/adf-core';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import { IdentityGroupServiceMock } from '../mock/identity-group.service.mock';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 
 export default {

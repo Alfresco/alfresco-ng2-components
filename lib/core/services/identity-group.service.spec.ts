@@ -24,20 +24,22 @@ import { IdentityGroupSearchParam } from '../models/identity-group.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
-    noRoleMappingApi,
     mockIdentityRoles,
-    groupsMockApi,
-    roleMappingApi,
     clientRoles,
-    applicationDetailsMockApi,
     mockIdentityGroup1,
-    createGroupMappingApi,
-    updateGroupMappingApi,
-    deleteGroupMappingApi,
     mockIdentityGroupsCount
-} from '../mock/identity-group.service.mock';
+} from '../mock/identity-group.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+    applicationDetailsMockApi,
+    createGroupMappingApi,
+    deleteGroupMappingApi,
+    groupsMockApi,
+    noRoleMappingApi,
+    roleMappingApi,
+    updateGroupMappingApi
+} from '../mock/oauth2.service.mock';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;

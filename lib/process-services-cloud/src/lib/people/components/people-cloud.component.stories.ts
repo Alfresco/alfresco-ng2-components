@@ -16,11 +16,9 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { IdentityUserService } from '@alfresco/adf-core';
+import { IdentityUserService, IdentityUserServiceMock, mockIdentityUsers } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { PeopleCloudModule } from '../people-cloud.module';
-import { IdentityUserServiceMock } from '../mock/identity-user.service.mock';
-import { mockUsers } from '../mock/user-cloud.mock';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 
 export default {
@@ -73,7 +71,7 @@ validPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectUsers: mockUsers
+    preSelectUsers: mockIdentityUsers
 };
 
 export const mandatoryPreselectedUsers = template.bind({});
@@ -81,8 +79,8 @@ mandatoryPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectUsers: [{ id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com', readonly: true },
-                     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com' }]
+    preSelectUsers: [{ id: 'mock-user-id-1', username: 'userName1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com', readonly: true },
+                     { id: 'mock-user-id-2', username: 'userName2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com' }]
 };
 
 export const invalidPreselectedUsers = template.bind({});
@@ -97,8 +95,8 @@ export const excludedUsers = template.bind({});
 excludedUsers.args = {
     ...primary.args,
     excludedUsers: [
-        { id: 'fake-id-2' },
-        { id: 'fake-id-3' }
+        { id: 'mock-user-id-2' },
+        { id: 'mock-user-id-3' }
     ]
 };
 
@@ -111,7 +109,7 @@ adminRoleUser.args = {
 export const noUsers = template.bind({});
 noUsers.args = {
     ...primary.args,
-    excludedUsers: mockUsers
+    excludedUsers: mockIdentityUsers
 };
 
 export const invalidOrEmptyAppName = template.bind({});
