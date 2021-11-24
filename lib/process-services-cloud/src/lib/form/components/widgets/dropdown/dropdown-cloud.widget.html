@@ -17,10 +17,13 @@
                     [compareWith]="compareDropdownValues"
                     (ngModelChange)="selectionChangedForField(field)"
                     [matTooltip]="field.tooltip"
+                    panelClass="adf-select-filter"
                     matTooltipPosition="above"
                     matTooltipShowDelay="1000"
                     [multiple]="field.hasMultipleValues">
-            <mat-option *ngFor="let opt of field.options"
+            <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)"></adf-select-filter-input>
+
+            <mat-option *ngFor="let opt of list$ | async"
                         [value]="getOptionValue(opt, field.value)"
                         [id]="opt.id">{{opt.name}}
             </mat-option>

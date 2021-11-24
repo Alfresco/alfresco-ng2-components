@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-    WidgetComponent,
-    FormService,
-    LogService,
-    FormFieldOption,
+    AppConfigService,
     FormFieldEvent,
     FormFieldModel,
+    FormFieldOption,
     FormFieldTypes,
-    RuleEntry
+    FormService,
+    LogService,
+    RuleEntry,
+    WidgetComponent
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
 /* tslint:disable:component-selector  */
 
@@ -56,16 +57,22 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     };
 
     typeId = 'DropdownCloudWidgetComponent';
+    HIDE_FILTER_LIMIT = 5;
+    showInputFilter = false;
+    list$: Observable<FormFieldOption[]>;
+    filter$ = new BehaviorSubject<string>('');
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
-                private logService: LogService) {
+                private logService: LogService,
+                private appConfig: AppConfigService) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.hasRestUrl() && !this.isLinkedWidget()) {
+        if (this.field.restUrl && !this.isLinkedWidget()) {
             this.persistFieldOptionsFromRestApi();
         }
 
@@ -81,6 +88,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     this.parentValueChanged(valueOfParentWidget);
                 });
         }
+        this.updateOptions();
     }
 
     private persistFieldOptionsFromRestApi() {
@@ -90,6 +98,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
                     this.field.options = result;
+                    this.updateOptions();
                     this.field.updateForm();
                 }, (err) => this.handleError(err));
         }
@@ -138,26 +147,24 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private persistFieldOptionsFromManualList(value: string) {
         if (this.hasRuleEntries()) {
-            const rulesEntries = this.getRuleEntries();
+            const rulesEntries = this.field.rule.entries;
             rulesEntries.forEach((ruleEntry: RuleEntry) => {
                 if (ruleEntry.key === value) {
                     this.field.options = ruleEntry.options;
+                    this.updateOptions();
                     this.field.updateForm();
                 }
             });
         }
     }
 
-    private getRuleEntries(): RuleEntry[] {
-        return this.field.rule.entries;
-    }
-
     private hasRuleEntries(): boolean {
-        return !!this.getRuleEntries().length;
+        return !!this.field.rule.entries.length;
     }
 
     private addDefaultOption() {
         this.field.options = [DropdownCloudWidgetComponent.DEFAULT_OPTION];
+        this.updateOptions();
     }
 
     selectionChangedForField(field: FormFieldModel) {
@@ -172,10 +179,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private isFormFieldEventOfTypeDropdown(event: FormFieldEvent): boolean {
         return event.field.type === FormFieldTypes.DROPDOWN;
-    }
-
-    private hasRestUrl(): boolean {
-        return !!this.field?.restUrl;
     }
 
     isLinkedWidget(): boolean {
@@ -200,7 +203,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         if (typeof opt1 === 'object' && typeof opt2 === 'object') {
-            return  opt1.id === opt2.id || opt1.name === opt2.name;
+            return opt1.id === opt2.id || opt1.name === opt2.name;
         }
 
         return opt1 === opt2;
@@ -235,5 +238,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    updateOptions(): void {
+        this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', this.HIDE_FILTER_LIMIT);
+        this.list$ = combineLatest([of(this.field.options), this.filter$])
+            .pipe(
+                map(([items, search]) => {
+                    if (!search) {
+                        return items;
+                    }
+                    return items.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
+                }),
+                takeUntil(this.onDestroy$)
+            );
     }
 }
