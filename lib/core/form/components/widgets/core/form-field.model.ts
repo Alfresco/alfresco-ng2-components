@@ -74,6 +74,7 @@ export class FormFieldModel extends FormWidgetModel {
     dateDisplayFormat: string = this.defaultDateFormat;
     selectionType: 'single' | 'multiple' = null;
     rule?: FormFieldRule;
+    selectLoggedUser: boolean;
 
     // container model members
     numberOfColumns: number = 1;
@@ -181,6 +182,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.tooltip = json.tooltip;
             this.selectionType = json.selectionType;
             this.rule = json.rule;
+            this.selectLoggedUser = json.selectLoggedUser;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
