@@ -827,7 +827,6 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
 
-
         it('should set the process name on init when a process definition name is present',  () => {
             const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
             const fakeTransformedName = 'fake-transformed-name';

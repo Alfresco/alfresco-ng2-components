@@ -145,7 +145,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.processDefinition.markAsDirty();
             this.processDefinition.markAsTouched();
 
-          this.setDefaultProcessName(this.processDefinitionName);
+            this.setDefaultProcessName(this.processDefinitionName);
         }
     }
 
