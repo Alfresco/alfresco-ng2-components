@@ -33,6 +33,7 @@ export class SelectFilterInputComponent implements OnDestroy {
     @Output() change = new EventEmitter<string>();
 
     term = '';
+    private previousSelected: any[];
     private onDestroy$ = new Subject<void>();
 
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
@@ -53,6 +54,33 @@ export class SelectFilterInputComponent implements OnDestroy {
                     this.selectFilterInput.nativeElement.focus();
                 } else {
                     this.change.next('');
+                }
+            });
+
+        this.previousSelected = this.matSelect.ngControl.value;
+        this.matSelect.ngControl.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((values) => {
+                let restoreSelected = false;
+                if (this.matSelect.multiple) {
+                    if (this.previousSelected && Array.isArray(this.previousSelected)) {
+                        if (!values || !Array.isArray(values)) {
+                            values = [];
+                        }
+                        const optionValues = this.matSelect.options.map(option => option.value);
+                        this.previousSelected.forEach(previous => {
+                            if (!values.some(current => this.matSelect.compareWith(current, previous))
+                                && !optionValues.some(current => this.matSelect.compareWith(current, previous))) {
+                                values.push(previous);
+                                restoreSelected = true;
+                            }
+                        });
+                    }
+                }
+                this.previousSelected = values;
+
+                if (restoreSelected) {
+                    this.matSelect._onChange(values);
                 }
             });
     }
