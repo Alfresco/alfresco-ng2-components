@@ -830,7 +830,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should set the process name on init when a process definition name is present',  () => {
             const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
-            const fakeTransformedName =  'fake-transformed-name'
+            const fakeTransformedName = 'fake-transformed-name';
             spyOn(processNameCloudPipe, 'transform').and.returnValue(fakeTransformedName);
 
             component.processDefinitionName = 'fake-name';
