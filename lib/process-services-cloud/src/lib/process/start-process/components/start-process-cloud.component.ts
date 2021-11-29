@@ -144,6 +144,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.processDefinition.setValue(this.processDefinitionName);
             this.processDefinition.markAsDirty();
             this.processDefinition.markAsTouched();
+
+            this.setDefaultProcessName(this.processDefinitionName);
         }
     }
 
@@ -384,13 +386,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
         if (processDefinition) {
-            const processInstanceDetails: ProcessInstanceCloud = { processDefinitionName: processDefinition.name };
-            const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
-            this.processInstanceName.setValue(defaultProcessName);
-            this.processInstanceName.markAsDirty();
-            this.processInstanceName.markAsTouched();
+            this.setDefaultProcessName(processDefinition.name);
             this.processDefinitionSelection.emit(processDefinition);
         }
+    }
+
+    setDefaultProcessName(processDefinitionName: string): void {
+        const processInstanceDetails: ProcessInstanceCloud = { processDefinitionName };
+        const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
+        this.processInstanceName.setValue(defaultProcessName);
+        this.processInstanceName.markAsDirty();
+        this.processInstanceName.markAsTouched();
     }
 
     ngOnDestroy() {

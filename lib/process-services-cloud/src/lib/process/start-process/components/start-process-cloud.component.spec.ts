@@ -827,6 +827,19 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
 
+        it('should set the process name on init when a process definition name is present',  () => {
+            const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
+            const fakeTransformedName = 'fake-transformed-name';
+            spyOn(processNameCloudPipe, 'transform').and.returnValue(fakeTransformedName);
+
+            component.processDefinitionName = 'fake-name';
+            component.ngOnInit();
+
+            expect(component.processInstanceName.dirty).toBe(true);
+            expect(component.processInstanceName.touched).toBe(true);
+            expect(component.processInstanceName.value).toEqual(fakeTransformedName);
+        });
+
         it('should cancel bubbling a keydown event ()', () => {
             const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
