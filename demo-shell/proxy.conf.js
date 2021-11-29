@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var PROXY_HOST_ADF = process.env.PROXY_HOST_ADF;
-
+console.log('PROXY_HOST_ADF' + PROXY_HOST_ADF);
 module.exports = {
     "/alfresco": {
         "target": (PROXY_HOST_ADF || "http://localhost:8080"),

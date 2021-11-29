@@ -70,20 +70,23 @@ When you want more customization than a pre-built theme offers, you can create y
 /*
  *  Include only packages that you are using (and core by default)
  */
-@import '~@alfresco/adf-core/theming';
-
 @import '~@angular/material/theming';
+@import '~@alfresco/adf-core/theming';
 
 @include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
 $accent:  mat-palette($alfresco-accent-purple);
 $warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+$theme:   mat-light-theme((
+    color: (
+        primary: $primary,
+        accent: $accent,
+    )
+));
 
 @include angular-material-theme($theme);
-
-@include adf-core-theme($theme);
+@include alfresco-material-theme($theme);
 ```
 
 Notes: if you are using the Generator or the demo shell you need only to change the`/src/custom-style.scss` with your set of colors
@@ -95,27 +98,33 @@ You can create multiple themes for your application:
 #### Example of defining multiple themes
 
 ```scss
-@import '~@alfresco/adf-content-services/theming';
-@import '~@alfresco/adf-process-services/theming';
-@import '~@alfresco/adf-insights/theming';
-@import '~@alfresco/adf-core/theming';
 @import '~@angular/material/theming';
-...
+@import '~@alfresco/adf-core/theming';
 
-@include mat-core();
+@include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
 $accent:  mat-palette($alfresco-accent-purple);
 $warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme((
+    color: (
+        primary: $primary,
+        accent: $accent,
+    )
+));
 
-$theme:   mat-light-theme($primary, $accent, $warn);
-$dark-theme:   mat-dark-theme($primary, $accent, $warn);
+$dark-theme:   mat-dark-theme((
+    color: (
+        primary: $primary,
+        accent: $accent,
+    )
+));
 
-@include adf-core-theme($theme);
+@include alfresco-material-theme($theme);
 ...like above
 
 .adf-dark-theme {
-    @include adf-core-theme($dark-theme);
+    @include alfresco-material-theme($dark-theme);
     ...like above
 }
 ```

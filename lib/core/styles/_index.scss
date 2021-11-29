@@ -6,6 +6,10 @@
 @import './material.theme';
 @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
+@mixin alfresco-material-theme($theme) {
+    @include adf-core-theme($theme);
+}
+
 @mixin adf-core-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
