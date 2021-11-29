@@ -16,9 +16,9 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
 import { AppListCloudComponent } from './app-list-cloud.component';
-import { ProcessServicesCloudStoryModule } from '../../process-services-cloud-story.module';
 
 export default {
     component: AppListCloudComponent,
