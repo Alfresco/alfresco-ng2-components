@@ -1,6 +1,6 @@
 <div class="adf-multiline-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <mat-form-field floatPlaceholder="never">
+    <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <textarea matInput class="adf-input"
                   [matTextareaAutosize]="true"

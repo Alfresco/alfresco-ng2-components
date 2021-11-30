@@ -122,7 +122,7 @@ describe('AmountWidgetComponent - rendering', () => {
         const requiredAsteriscElement = fixture.nativeElement.querySelector('.mat-placeholder-required');
         expect(requiredAsteriscElement.textContent).toContain('*');
         const widgetPlaceholder = fixture.nativeElement.querySelector('label.mat-form-field-label');
-        expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text *');
+        expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text');
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
         const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
