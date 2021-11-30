@@ -119,8 +119,6 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const requiredAsteriscElement = fixture.nativeElement.querySelector('.mat-placeholder-required');
-        expect(requiredAsteriscElement.textContent).toContain('*');
         const widgetPlaceholder = fixture.nativeElement.querySelector('label.mat-form-field-label');
         expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text');
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
