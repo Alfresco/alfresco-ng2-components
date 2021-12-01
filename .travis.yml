@@ -1,6 +1,6 @@
 import:
   - source: Alfresco/alfresco-build-tools:.travis.docker_hub_login.yml@v1.1.1
-  
+
 git:
   depth: 3
   quiet: true
@@ -52,7 +52,7 @@ stages:
   - name: "Build lib"
     if: tag IS blank
   - name: "Check bundle"
-    if: type = push AND tag IS blank
+    if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Trigger Alpha ADF child build"
     if: branch = develop AND (type = cron || type = api)
   - name: "Build Demo shell"
