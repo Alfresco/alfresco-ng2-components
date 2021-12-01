@@ -29,6 +29,7 @@ echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
 echo "====== Bundle prebuilt styles ======"
+npx scss-bundle -e "./lib/core/styles/prebuilt/adf-blue-orange.scss" -o "./lib/dist/core/prebuilt-themes/adf-blue-orange.scss" -p "./"
 npx scss-bundle -e "./lib/core/styles/prebuilt/adf-blue-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-blue-purple.scss" -p "./"
 npx scss-bundle -e "./lib/core/styles/prebuilt/adf-cyan-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-cyan-purple.scss" -p "./"
 npx scss-bundle -e "./lib/core/styles/prebuilt/adf-green-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-green-purple.scss" -p "./"
