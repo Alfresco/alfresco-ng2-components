@@ -67,4 +67,12 @@ export class LocalStorageUtil {
         );
     }
 
+    static async getResources(): Promise<any> {
+        return browser.executeScript(`return performance.getEntriesByType('resource')`);
+    }
+
+    static async clearResources() {
+        return browser.executeScript('performance.clearResourceTimings()');
+    }
+
 }

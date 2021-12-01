@@ -22,6 +22,8 @@ import { Logger } from './logger';
 import * as path from 'path';
 import * as fs from 'fs';
 import { ApiUtil } from '../../../shared/api/api.util';
+import { LocalStorageUtil } from './local-storage.util';
+import pTimeout from 'p-timeout';
 
 export class BrowserActions {
 
@@ -203,6 +205,78 @@ export class BrowserActions {
     static async closeDisabledMenu(): Promise<void> {
         // if the opened menu has only disabled items, pressing escape to close it won't work
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
+    static async waitFor(condition: any, options?: any) {
+
+        options = {
+            interval: 20,
+            log: false,
+            param: false,
+            timeout: 25000,
+            reject: false,
+            ...options,
+        };
+
+        let retryTimeout: any;
+
+        (options.log && Logger.log(`waiting for condition`));
+
+        const promise = new Promise(async (resolve, reject) => {
+            const check = async () => {
+                try {
+                    let value: any;
+                    (options.param) ? value = await condition(options.param) : value = await condition();
+                    if (typeof value !== 'boolean') {
+                        throw new TypeError('Expected condition to return a boolean');
+                    }
+                    (value) ? resolve(value) : retryTimeout = setTimeout(check, options.interval);
+                } catch (error) {
+                    !(options.reject) && reject(error);
+                    await options.reject && Logger.log(`Timeout exceeded without any result, but I will continue ${error}`)
+                    return options.reject;
+                }
+            };
+            return check();
+        });
+
+        if (options.timeout !== Infinity) {
+            try {
+                return pTimeout(promise, options.timeout);
+            } catch (error) {
+                if (retryTimeout) {
+                    clearTimeout(retryTimeout);
+                }
+                throw error;
+            }
+        }
+
+        return promise;
+    }
+
+    static async waitForRequest(endpoint: RegExp) {
+        const func = (async () => {
+            const p: any = await LocalStorageUtil.getResources();
+            for (const el of p) {
+                if (el.name === undefined) {
+                    const timeout = 250;
+                    Logger.log(`Can't match the endpoint. Waiting ${timeout} ms.`);
+                    await browser.sleep(timeout);
+                    return true;
+                }
+
+                const element = await el.name.match(endpoint);
+                if (element) {
+                    Logger.log('Request is here!');
+                    await LocalStorageUtil.clearResources();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return BrowserActions.waitFor(func);
+
     }
 
     static async takeScreenshot(screenshotFilePath: string, fileName: string) {
