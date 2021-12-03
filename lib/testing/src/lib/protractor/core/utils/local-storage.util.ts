@@ -71,8 +71,8 @@ export class LocalStorageUtil {
         return browser.executeScript(`return performance.getEntriesByType('resource')`);
     }
 
-    static async clearResources() {
-        return browser.executeScript('performance.clearResourceTimings()');
+    static async clearResources(): Promise<void> {
+        await browser.executeScript('performance.clearResourceTimings()');
     }
 
 }

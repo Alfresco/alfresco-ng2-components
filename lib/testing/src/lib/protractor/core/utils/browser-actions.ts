@@ -25,6 +25,13 @@ import { ApiUtil } from '../../../shared/api/api.util';
 import { LocalStorageUtil } from './local-storage.util';
 import pTimeout from 'p-timeout';
 
+type Options = {
+    interval: number,
+    log: boolean,
+    param: boolean,
+    timeout: number,
+    reject: boolean,
+}
 export class BrowserActions {
 
     static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
@@ -207,7 +214,7 @@ export class BrowserActions {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    static async waitFor(condition: any, options?: any) {
+    static async waitFor(condition: any, options?: Partial<Options>) {
 
         options = {
             interval: 20,
@@ -230,10 +237,10 @@ export class BrowserActions {
                     if (typeof value !== 'boolean') {
                         throw new TypeError('Expected condition to return a boolean');
                     }
-                    (value) ? resolve(value) : retryTimeout = setTimeout(check, options.interval);
+                    return (value) ? resolve(value) : retryTimeout = setTimeout(check, options.interval);
                 } catch (error) {
                     !(options.reject) && reject(error);
-                    await options.reject && Logger.log(`Timeout exceeded without any result, but I will continue ${error}`)
+                    options.reject && Logger.log(`Timeout exceeded without any result, but I will continue ${error}`)
                     return options.reject;
                 }
             };
