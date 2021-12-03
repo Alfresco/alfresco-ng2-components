@@ -656,16 +656,26 @@ you can also define your own actions. See the
 [Content Action component](content-action.component.md)
 for more information and examples.
 
-You can also use the [Context Menu directive](../../core/directives/context-menu.directive.md) from the
-ADF Core library to show the
-actions you have defined in a context menu:
-
 ```ts
 @Component({
     selector: 'my-view',
     template: `
-        <adf-document-list [contextMenuActions]="true">...</adf-document-list>
-        <adf-context-menu-holder></context-menu-holder>
+        <adf-document-list [contextMenuActions]="true">
+            <content-actions>
+                <content-action
+                    title="Copy"
+                    permission="update"
+                    [disableWithNoPermission]="true"
+                    handler="copy">
+                </content-action>
+                <content-action
+                    title="Delete"
+                    permission="delete"
+                    disableWithNoPermission="true"
+                    handler="delete">
+                </content-action>
+            </content-actions>
+        </adf-document-list>
     `
 })
 export class MyView {
