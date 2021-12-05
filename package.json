@@ -117,7 +117,7 @@
     "@storybook/addon-essentials": "~6.3.0",
     "@storybook/angular": "~6.3.0",
     "@storybook/builder-webpack5": "~6.3.0",
-    "@storybook/manager-webpack5": "~6.4.0",
+    "@storybook/manager-webpack5": "~6.4.7",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/minimatch": "^3.0.3",
