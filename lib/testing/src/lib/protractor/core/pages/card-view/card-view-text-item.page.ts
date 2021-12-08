@@ -50,7 +50,7 @@ export class CardTextItemPage {
 
     async enterTextField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.textField));
-        await BrowserActions.clearSendKeys(this.rootElement.$(this.textField), text, 500);
+        await BrowserActions.clearSendKeys(this.rootElement.$(this.textField), text, 50);
         await this.rootElement.$(this.textField).sendKeys(Key.TAB);
     }
 
