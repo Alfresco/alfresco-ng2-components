@@ -62,27 +62,6 @@ describe('Datatable component', () => {
             await dataTablePage.dataTable.waitForTableBody();
         });
 
-        it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
-            await dataTablePage.mouseOverIdColumn('1');
-            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await dataTablePage.mouseOverNameColumn('Name 2');
-            await dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-        });
-
-        it('[C307045] No tooltip is displayed when hover over a column with copyContent set to false', async () => {
-            await dataTablePage.mouseOverNameColumn('Name 2');
-            await dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-            await dataTablePage.clickOnNameColumn('Name 2');
-            await notificationHistoryPage.checkNotifyNotContains('Name 2');
-        });
-
-        it('[C307046] No tooltip is displayed when hover over a column that has default value for copyContent property', async () => {
-            await dataTablePage.mouseOverCreatedByColumn('Created One');
-            await dataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-            await dataTablePage.clickOnCreatedByColumn('Created One');
-            await notificationHistoryPage.checkNotifyNotContains('Created One');
-        });
-
         it('[C307040] A column value with copyContent set to true is copied when clicking on it', async () => {
             await dataTablePage.mouseOverIdColumn('1');
             await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
@@ -92,27 +71,6 @@ describe('Datatable component', () => {
             await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
             await dataTablePage.pasteClipboard();
             await expect(await dataTablePage.getClipboardInputText()).toEqual('2');
-        });
-
-        it('[C307072] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
-            await copyContentDataTablePage.mouseOverIdColumn('1');
-            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await copyContentDataTablePage.mouseOverNameColumn('First');
-            await copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-        });
-
-        it('[C307074] No tooltip is displayed when hover over a column with copyContent set to false', async () => {
-            await copyContentDataTablePage.mouseOverNameColumn('Second');
-            await copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-            await copyContentDataTablePage.clickOnNameColumn('Second');
-            await notificationHistoryPage.checkNotifyNotContains('Second');
-        });
-
-        it('[C307075] No tooltip is displayed when hover over a column that has default value for copyContent property', async () => {
-            await copyContentDataTablePage.mouseOverCreatedByColumn('Created one');
-            await copyContentDataTablePage.dataTable.copyContentTooltipIsNotDisplayed();
-            await copyContentDataTablePage.clickOnCreatedByColumn('Created one');
-            await notificationHistoryPage.checkNotifyNotContains('Created One');
         });
 
         it('[C307073] A column value with copyContent set to true is copied when clicking on it', async () => {
