@@ -28,6 +28,7 @@ export class JwtHelperService {
     static GIVEN_NAME = 'given_name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
+    static USER_ID_TOKEN = 'id_token';
     static REALM_ACCESS = 'realm_access';
     static RESOURCE_ACCESS = 'resource_access';
     static USER_PREFERRED_USERNAME = 'preferred_username';
@@ -77,6 +78,15 @@ export class JwtHelperService {
     }
 
     /**
+     * Gets a named value from the user access or id token.
+     * @param key Key name of the field to retrieve
+     * @returns Value from the token
+     */
+     getValueFromLocalToken<T>(key: string): T {
+        return this.getValueFromToken(this.getAccessToken(), key) || this.getValueFromToken(this.getIdToken(), key);
+    }
+
+    /**
      * Gets a named value from the user access token.
      * @param key Key name of the field to retrieve
      * @returns Value from the token
@@ -94,15 +104,32 @@ export class JwtHelperService {
     }
 
     /**
+     * Gets a named value from the user id token.
+     * @param key Key name of the field to retrieve
+     * @returns Value from the token
+     */
+     getValueFromLocalIdToken<T>(key: string): T {
+        return this.getValueFromToken(this.getIdToken(), key);
+    }
+
+    /**
+     * Gets id token
+     * @returns id token
+     */
+     getIdToken(): string {
+        return this.storageService.getItem(JwtHelperService.USER_ID_TOKEN);
+    }
+
+    /**
      * Gets a named value from the user access token.
      * @param accessToken your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-    getValueFromToken<T>(accessToken: string, key: string): T {
+    getValueFromToken<T>(token: string, key: string): T {
         let value;
-        if (accessToken) {
-            const tokenPayload = this.decodeToken(accessToken);
+        if (token) {
+            const tokenPayload = this.decodeToken(token);
             value = tokenPayload[key];
         }
         return <T> value;
