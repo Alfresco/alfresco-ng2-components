@@ -82,7 +82,7 @@
     "@angular/platform-browser": "^10.0.4",
     "@angular/platform-browser-dynamic": "^10.0.4",
     "@angular/router": "^10.0.4",
-    "@apollo/client": "^3.5.5",
+    "@apollo/client": "^3.5.6",
     "@mat-datetimepicker/core": "^5.1.1",
     "@mat-datetimepicker/moment": "^5.1.1",
     "@ngx-translate/core": "^13.0.0",
