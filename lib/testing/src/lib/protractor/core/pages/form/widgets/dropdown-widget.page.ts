@@ -16,8 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, $, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { $, by, protractor } from 'protractor';
 import { TestElement } from '../../../test-element';
 
 export class DropdownWidgetPage {
@@ -26,14 +25,14 @@ export class DropdownWidgetPage {
 
     readonly searchElementLocator = TestElement.byCss('[aria-label="Search options"]');
 
-    getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
+    async getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
         return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
     }
 
     async selectOption(option: string, locator: string = '#dropdown'): Promise<void> {
         await this.openDropdown(locator);
-        const row = element(by.cssContainingText('mat-option span', option));
-        await BrowserActions.click(row);
+        const row = TestElement.byText('mat-option span', option);
+        await row.click();
     }
 
     async selectMultipleOptions(options: string[]): Promise<void> {
@@ -50,8 +49,8 @@ export class DropdownWidgetPage {
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {
         await this.checkDropdownIsDisplayed(locator);
-        const dropdown = locator ? $(`${locator}`) : $(`#dropdown`);
-        await BrowserActions.click(dropdown);
+        const dropdown = TestElement.byCss(`${locator}`);
+        await dropdown.click();
     }
 
     async searchAndChooseOptionFromList(name: string): Promise<void> {
@@ -67,15 +66,15 @@ export class DropdownWidgetPage {
     }
 
     async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
-        const dropdown = $(`${locator}`);
-        await BrowserVisibility.waitUntilElementIsVisible(dropdown);
+        const dropdown = TestElement.byCss(`${locator}`);
+        await dropdown.waitVisible();
     }
 
-    async isWidgetVisible(fieldId): Promise<void> {
+    async isWidgetVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async isWidgetHidden(fieldId): Promise<void> {
+    async isWidgetHidden(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
     }
 
