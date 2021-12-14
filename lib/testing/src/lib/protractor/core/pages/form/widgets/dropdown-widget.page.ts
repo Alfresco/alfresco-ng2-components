@@ -16,13 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, $, protractor } from 'protractor';
+import { by, element, $, protractor, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { TestElement } from '../../../test-element';
 
 export class DropdownWidgetPage {
 
     formFields: FormFields = new FormFields();
+
+    readonly searchElementLocator = TestElement.byCss('[aria-label="Search options"]');
 
     getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
         return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
@@ -36,18 +38,31 @@ export class DropdownWidgetPage {
 
     async selectMultipleOptions(options: string[]): Promise<void> {
         for (const option of options) {
-            await TestElement.byText('mat-option span', option).click();
+            await this.clickOption(option);
         }
     }
 
     async closeDropdown(): Promise<void> {
         await $('body').sendKeys(protractor.Key.ESCAPE);
+        await browser.sleep(250);
     }
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {
         await this.checkDropdownIsDisplayed(locator);
         const dropdown = locator ? $(`${locator}`) : $(`#dropdown`);
         await BrowserActions.click(dropdown);
+    }
+
+    async searchAndChooseOptionFromList(name: string): Promise<void> {
+        await this.searchElementLocator.typeText(name);
+        await this.clickOption(name);
+    }
+
+    async searchAndChooseOptionsFromList(...names: string[]): Promise<void> {
+        for (const name of names) {
+            await this.searchElementLocator.typeText(name);
+            await this.clickOption(name);
+        }
     }
 
     async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
@@ -61,5 +76,10 @@ export class DropdownWidgetPage {
 
     async isWidgetHidden(fieldId): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
+    }
+
+    private async clickOption(name: string): Promise<void> {
+        const optionLocator = TestElement.byText('mat-option span', name)
+        await optionLocator.click();
     }
 }

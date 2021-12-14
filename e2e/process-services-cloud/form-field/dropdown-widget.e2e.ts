@@ -49,33 +49,30 @@ describe('Form Field Component - Dropdown Widget', () => {
 
     const dropdown = widget.dropdown();
 
-    let runningProcessInstance, runningProcessInstanceMultiselect, testUser, groupInfo, tasklist, tasklistMulti, taskMulti, task;
+    let testUser: { idIdentityService: string, username: string, password: string };
+    const runningTasks = {};
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
         const { processes } = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP;
+        let runningProcessInstance: Record<string, any>;
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+        const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.username, testUser.password);
 
-        const processDefinition = await processDefinitionService.getProcessDefinitionByName(processes.dropdownOptionsProcess, simpleApp);
-        const processDefinitionMultiselect = await processDefinitionService.getProcessDefinitionByName(processes['multiselect-dropdown'], simpleApp);
+        const processesData = ['dropdownOptionsProcess', 'multiselect-dropdown', 'dropdown-search'];
 
-        await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        await processInstancesService.createProcessInstance(processDefinitionMultiselect.entry.key, simpleApp);
-        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        runningProcessInstanceMultiselect = await processInstancesService.createProcessInstance(processDefinitionMultiselect.entry.key, simpleApp);
-
-        tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
-        task = await tasklist.list.entries[0];
-        tasklistMulti = await queryService.getProcessInstanceTasks(runningProcessInstanceMultiselect.entry.id, simpleApp);
-        taskMulti = await tasklistMulti.list.entries[0];
-        await tasksService.claimTask(task.entry.id, simpleApp);
-        await tasksService.claimTask(taskMulti.entry.id, simpleApp);
+        for (const process of processesData) {
+            const processDef = await processDefinitionService.getProcessDefinitionByName(processes[process], simpleApp);
+            await processInstancesService.createProcessInstance(processDef.entry.key, simpleApp);
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDef.entry.key, simpleApp);
+            const tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
+            await tasksService.claimTask(tasklist.list.entries[0].entry.id, simpleApp);
+            runningTasks[process] = tasklist.list.entries[0].entry;
+        }
 
         await loginSSOPage.login(testUser.username, testUser.password);
     });
@@ -91,13 +88,15 @@ describe('Form Field Component - Dropdown Widget', () => {
         await appListCloudComponent.goToApp(simpleApp);
     });
 
-    it('Should be able to finish task with mulitselect dropdown form field', async () => {
+    it('[C601606] Should be able to finish task with multiselect dropdown form field', async () => {
         const optionsToSelect = ['First', 'Third'];
+        const { name: multiselectTaskName } = runningTasks['multiselect-dropdown'];
+
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await taskList.checkContentIsDisplayedByName(taskMulti.entry.name);
-        await taskList.selectRow(taskMulti.entry.name);
+        await taskList.checkContentIsDisplayedByName(multiselectTaskName);
+        await taskList.selectRow(multiselectTaskName);
 
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await dropdown.openDropdown('#DropdownMultiselect');
@@ -111,8 +110,8 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFilter.clickTaskFilter('completed-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await taskList.checkContentIsDisplayedByName(taskMulti.entry.name);
-        await taskList.selectRow(taskMulti.entry.name);
+        await taskList.checkContentIsDisplayedByName(multiselectTaskName);
+        await taskList.selectRow(multiselectTaskName);
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownMultiselect');
@@ -123,11 +122,12 @@ describe('Form Field Component - Dropdown Widget', () => {
     });
 
     it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
+        const { name: dropdownOptionTaskName } = runningTasks['dropdownOptionsProcess'];
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await taskList.checkContentIsDisplayedByName(task.entry.name);
-        await taskList.selectRow(task.entry.name);
+        await taskList.checkContentIsDisplayedByName(dropdownOptionTaskName);
+        await taskList.selectRow(dropdownOptionTaskName);
 
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
@@ -147,14 +147,14 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
-        await taskList.checkContentIsNotDisplayedByName(task.entry.name);
+        await taskList.checkContentIsNotDisplayedByName(dropdownOptionTaskName);
         await notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
 
         await taskFilter.clickTaskFilter('completed-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await taskList.checkContentIsDisplayedByName(task.entry.name);
-        await taskList.selectRow(task.entry.name);
+        await taskList.checkContentIsDisplayedByName(dropdownOptionTaskName);
+        await taskList.selectRow(dropdownOptionTaskName);
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
@@ -162,5 +162,69 @@ describe('Form Field Component - Dropdown Widget', () => {
         await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
+    });
+
+    it('[C601606] Should be able to search and select multiple options from multiple choice dropdown', async () => {
+        const { name: dropdownOptionTaskName } = runningTasks['dropdown-search'];
+        const expectedOptions = ['Albania', 'Colombia', 'Italy', 'Poland', 'United Kingdom of Great Britain and Northern Ireland'];
+        const dropdownId = 'DropdownCountriesMultiple';
+
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+
+        await taskList.checkContentIsDisplayedByName(dropdownOptionTaskName);
+        await taskList.selectRow(dropdownOptionTaskName);
+
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await dropdown.openDropdown(`#${dropdownId}`);
+        await dropdown.searchAndChooseOptionsFromList(...expectedOptions);
+        await dropdown.closeDropdown();
+
+        const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
+        await expect(actualSelectedOptions).toEqual(expectedOptions.join(", "))
+    });
+
+    it('[C601606] Should be able to search and select single options from the single choice dropdown', async () => {
+        const { name: dropdownOptionTaskName } = runningTasks['dropdown-search'];
+        const firstOption = 'Mauritius';
+        const expectedOption = 'Namibia';
+        const dropdownId = 'DropdownCountriesSingle';
+
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+
+        await taskList.checkContentIsDisplayedByName(dropdownOptionTaskName);
+        await taskList.selectRow(dropdownOptionTaskName);
+
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await dropdown.openDropdown(`#${dropdownId}`);
+        await dropdown.searchAndChooseOptionFromList(firstOption);
+        await dropdown.openDropdown(`#${dropdownId}`);
+        await dropdown.searchAndChooseOptionFromList(expectedOption);
+
+        const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
+        await expect(actualSelectedOptions).toEqual(expectedOption)
+    });
+
+    it('[C601606] Should not be able to search if there is less than 6 options to choose', async () => {
+        const { name: dropdownOptionTaskName } = runningTasks['dropdown-search'];
+        const dropdownId = 'DropdownSingleFive';
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+
+        await taskList.checkContentIsDisplayedByName(dropdownOptionTaskName);
+        await taskList.selectRow(dropdownOptionTaskName);
+
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+        await taskFormCloudComponent.formFields().checkFormIsDisplayed();
+        await dropdown.openDropdown(`#${dropdownId}`);
+
+        const searchDropdownFieldIsPresent = await dropdown.searchElementLocator.isPresent(1000);
+        await expect(searchDropdownFieldIsPresent).toBeFalsy();
     });
 });
