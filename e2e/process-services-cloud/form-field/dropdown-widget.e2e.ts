@@ -183,7 +183,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.closeDropdownFor(dropdownId);
 
         const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
-        await expect(actualSelectedOptions).toEqual(expectedOptions.join(", "))
+        await expect(actualSelectedOptions).toEqual(expectedOptions.join(', '));
     });
 
     it('[C601606] Should be able to search and select single options from the single choice dropdown', async () => {
@@ -207,7 +207,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.searchAndChooseOptionFromList(expectedOption);
 
         const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
-        await expect(actualSelectedOptions).toEqual(expectedOption)
+        await expect(actualSelectedOptions).toEqual(expectedOption);
     });
 
     it('[C601606] Should not be able to search if there is less than 6 options to choose', async () => {

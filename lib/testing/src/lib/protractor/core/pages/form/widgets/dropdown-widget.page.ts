@@ -42,7 +42,7 @@ export class DropdownWidgetPage {
     }
 
     async closeDropdownFor(dropdownId: string): Promise<void> {
-        const dropdownElement = TestElement.byCss(`#${dropdownId}-panel`)
+        const dropdownElement = TestElement.byCss(`#${dropdownId}-panel`);
         await $('body').sendKeys(protractor.Key.ESCAPE);
         await dropdownElement.waitNotPresent();
     }
@@ -79,7 +79,7 @@ export class DropdownWidgetPage {
     }
 
     private async clickOption(name: string): Promise<void> {
-        const optionLocator = TestElement.byText('mat-option span', name)
+        const optionLocator = TestElement.byText('mat-option span', name);
         await optionLocator.click();
     }
 }
