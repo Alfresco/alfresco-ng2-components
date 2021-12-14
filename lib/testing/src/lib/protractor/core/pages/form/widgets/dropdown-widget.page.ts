@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, $, protractor, browser } from 'protractor';
+import { by, element, $, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { TestElement } from '../../../test-element';
 
@@ -42,9 +42,10 @@ export class DropdownWidgetPage {
         }
     }
 
-    async closeDropdown(): Promise<void> {
+    async closeDropdownFor(dropdownId: string): Promise<void> {
+        const dropdownElement = TestElement.byCss(`#${dropdownId}-panel`)
         await $('body').sendKeys(protractor.Key.ESCAPE);
-        await browser.sleep(250);
+        await dropdownElement.waitNotPresent();
     }
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {

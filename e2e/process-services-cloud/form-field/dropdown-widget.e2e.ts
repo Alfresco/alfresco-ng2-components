@@ -101,7 +101,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await dropdown.openDropdown('#DropdownMultiselect');
         await dropdown.selectMultipleOptions(optionsToSelect);
-        await dropdown.closeDropdown();
+        await dropdown.closeDropdownFor('DropdownMultiselect');
 
         const optionsSelected = [await dropdown.getSelectedOptionText('DropdownMultiselect')];
 
@@ -180,7 +180,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await dropdown.openDropdown(`#${dropdownId}`);
         await dropdown.searchAndChooseOptionsFromList(...expectedOptions);
-        await dropdown.closeDropdown();
+        await dropdown.closeDropdownFor(dropdownId);
 
         const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
         await expect(actualSelectedOptions).toEqual(expectedOptions.join(", "))
