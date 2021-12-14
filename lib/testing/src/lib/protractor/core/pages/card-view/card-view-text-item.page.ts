@@ -48,9 +48,9 @@ export class CardTextItemPage {
         await BrowserVisibility.waitUntilElementIsVisible(labelElement);
     }
 
-    async enterTextField(text: string): Promise<void> {
+    async enterTextField(text: string, sleepTime = 500): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.textField));
-        await BrowserActions.clearSendKeys(this.rootElement.$(this.textField), text, 500);
+        await BrowserActions.clearSendKeys(this.rootElement.$(this.textField), text, sleepTime);
         await this.rootElement.$(this.textField).sendKeys(Key.TAB);
     }
 

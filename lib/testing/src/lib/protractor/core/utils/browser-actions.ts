@@ -23,15 +23,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { ApiUtil } from '../../../shared/api/api.util';
 import { LocalStorageUtil } from './local-storage.util';
-import pTimeout from 'p-timeout';
 
-type Options = {
-    interval: number,
-    log: boolean,
-    param: boolean,
-    timeout: number,
-    reject: boolean,
-}
 export class BrowserActions {
 
     static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
@@ -214,51 +206,15 @@ export class BrowserActions {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    static async waitFor(condition: any, options?: Partial<Options>) {
+    static async takeScreenshot(screenshotFilePath: string, fileName: string) {
+        const pngData = await browser.takeScreenshot();
+        const filenameWithExt = `${fileName}.png`;
+        Logger.info('Taking screenshot: ', filenameWithExt);
 
-        options = {
-            interval: 20,
-            log: false,
-            param: false,
-            timeout: 25000,
-            reject: false,
-            ...options,
-        };
-
-        let retryTimeout: any;
-
-        (options.log && Logger.log(`waiting for condition`));
-
-        const promise = new Promise(async (resolve, reject) => {
-            const check = async () => {
-                try {
-                    let value: any;
-                    (options.param) ? value = await condition(options.param) : value = await condition();
-                    if (typeof value !== 'boolean') {
-                        throw new TypeError('Expected condition to return a boolean');
-                    }
-                    return (value) ? resolve(value) : retryTimeout = setTimeout(check, options.interval);
-                } catch (error) {
-                    !(options.reject) && reject(error);
-                    options.reject && Logger.log(`Timeout exceeded without any result, but I will continue ${error}`)
-                    return options.reject;
-                }
-            };
-            return check();
-        });
-
-        if (options.timeout !== Infinity) {
-            try {
-                return pTimeout(promise, options.timeout);
-            } catch (error) {
-                if (retryTimeout) {
-                    clearTimeout(retryTimeout);
-                }
-                throw error;
-            }
-        }
-
-        return promise;
+        const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
+        const stream = fs.createWriteStream(fileWithPath);
+        stream.write(Buffer.from(pngData, 'base64'));
+        stream.end();
     }
 
     static async waitForRequest(endpoint: RegExp) {
@@ -282,18 +238,8 @@ export class BrowserActions {
             return false;
         });
 
-        return BrowserActions.waitFor(func);
+        return ApiUtil.waitForApi(func, () => true, 100, 250);
 
     }
 
-    static async takeScreenshot(screenshotFilePath: string, fileName: string) {
-        const pngData = await browser.takeScreenshot();
-        const filenameWithExt = `${fileName}.png`;
-        Logger.info('Taking screenshot: ', filenameWithExt);
-
-        const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
-        const stream = fs.createWriteStream(fileWithPath);
-        stream.write(Buffer.from(pngData, 'base64'));
-        stream.end();
-    }
 }
