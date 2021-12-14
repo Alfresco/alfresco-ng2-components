@@ -25,7 +25,8 @@ import {
     mockIdentityUsers
 } from '../mock/identity-user.mock';
 import { mockJoinGroupRequest } from '../mock/identity-group.mock';
-import { IdentityUserService } from '../services/identity-user.service';
+import { IdentityUserService } from './identity-user.service';
+import { JwtHelperService } from './jwt-helper.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
@@ -83,8 +84,18 @@ describe('IdentityUserService', () => {
         });
     });
 
-    it('should fetch identity user info from Jwt token', () => {
-        localStorage.setItem('access_token', mockToken);
+    it('should fetch identity user info from Jwt id token', () => {
+        localStorage.setItem(JwtHelperService.USER_ID_TOKEN, mockToken);
+        const user = service.getCurrentUserInfo();
+        expect(user).toBeDefined();
+        expect(user.firstName).toEqual('John');
+        expect(user.lastName).toEqual('Doe');
+        expect(user.email).toEqual('johnDoe@gmail.com');
+        expect(user.username).toEqual('johnDoe1');
+    });
+
+    it('should fallback on Jwt access token for identity user info', () => {
+        localStorage.setItem(JwtHelperService.USER_ACCESS_TOKEN, mockToken);
         const user = service.getCurrentUserInfo();
         expect(user).toBeDefined();
         expect(user.firstName).toEqual('John');
