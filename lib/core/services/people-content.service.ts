@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination } from '@alfresco/js-api';
+import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
@@ -112,6 +112,20 @@ export class PeopleContentService {
      */
     createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
+            map((res: PersonEntry) => <EcmUserModel> res?.entry),
+            catchError((error) => this.handleError(error))
+        );
+    }
+
+    /**
+     * Updates the person details
+     * @param personId The identifier of a person
+     * @param details The person details
+     * @param opts Optional parameters
+     * @returns Updated person model
+     */
+    updatePerson(personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
+        return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(
             map((res: PersonEntry) => <EcmUserModel> res?.entry),
             catchError((error) => this.handleError(error))
         );
