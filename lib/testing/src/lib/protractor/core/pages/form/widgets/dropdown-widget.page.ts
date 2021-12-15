@@ -16,50 +16,70 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, $, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { $, by, protractor } from 'protractor';
 import { TestElement } from '../../../test-element';
 
 export class DropdownWidgetPage {
 
     formFields: FormFields = new FormFields();
 
-    getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
+    readonly searchElementLocator = TestElement.byCss('[aria-label="Search options"]');
+
+    async getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
         return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
     }
 
     async selectOption(option: string, locator: string = '#dropdown'): Promise<void> {
         await this.openDropdown(locator);
-        const row = element(by.cssContainingText('mat-option span', option));
-        await BrowserActions.click(row);
+        const row = TestElement.byText('mat-option span', option);
+        await row.click();
     }
 
     async selectMultipleOptions(options: string[]): Promise<void> {
         for (const option of options) {
-            await TestElement.byText('mat-option span', option).click();
+            await this.clickOption(option);
         }
     }
 
-    async closeDropdown(): Promise<void> {
+    async closeDropdownFor(dropdownId: string): Promise<void> {
+        const dropdownElement = TestElement.byCss(`#${dropdownId}-panel`);
         await $('body').sendKeys(protractor.Key.ESCAPE);
+        await dropdownElement.waitNotPresent();
     }
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {
         await this.checkDropdownIsDisplayed(locator);
-        const dropdown = locator ? $(`${locator}`) : $(`#dropdown`);
-        await BrowserActions.click(dropdown);
+        const dropdown = TestElement.byCss(`${locator}`);
+        await dropdown.click();
+    }
+
+    async searchAndChooseOptionFromList(name: string): Promise<void> {
+        await this.searchElementLocator.typeText(name);
+        await this.clickOption(name);
+    }
+
+    async searchAndChooseOptionsFromList(...names: string[]): Promise<void> {
+        for (const name of names) {
+            await this.searchElementLocator.typeText(name);
+            await this.clickOption(name);
+        }
     }
 
     async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
-        const dropdown = $(`${locator}`);
-        await BrowserVisibility.waitUntilElementIsVisible(dropdown);
+        const dropdown = TestElement.byCss(`${locator}`);
+        await dropdown.waitVisible();
     }
 
-    async isWidgetVisible(fieldId): Promise<void> {
+    async isWidgetVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async isWidgetHidden(fieldId): Promise<void> {
+    async isWidgetHidden(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
+    }
+
+    private async clickOption(name: string): Promise<void> {
+        const optionLocator = TestElement.byText('mat-option span', name);
+        await optionLocator.click();
     }
 }
