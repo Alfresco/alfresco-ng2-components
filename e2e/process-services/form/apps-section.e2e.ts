@@ -132,7 +132,9 @@ describe('Modify applications', () => {
                     'models': [firstApp.definition.models[0]], 'theme': 'theme-4',
                     'icon': 'glyphicon-user'
                 }
-            }, 'publish': true
+            },
+            'publish': true,
+            'force': true
         };
 
         await appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
