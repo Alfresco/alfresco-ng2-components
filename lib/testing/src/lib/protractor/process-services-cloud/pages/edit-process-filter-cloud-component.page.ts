@@ -113,6 +113,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async setSortFilterDropDown(option) {
         await this.sortDropdown.selectDropdownOption(option);
+        await browser.sleep(500);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -120,7 +121,7 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(sortLocator);
     }
 
-    async setOrderFilterDropDown(option) {
+    async setOrderFilterDropDown(option: string) {
         await this.orderDropdown.selectDropdownOption(option);
         await browser.sleep(1500);
     }
