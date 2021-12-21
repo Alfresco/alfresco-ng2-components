@@ -103,6 +103,7 @@
     "rxjs": "^6.6.3",
     "subscriptions-transport-ws": "^0.9.19",
     "tslib": "^2.3.0",
+    "tui-editor": "^1.4.10",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

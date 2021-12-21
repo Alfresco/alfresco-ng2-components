@@ -48,6 +48,7 @@ export class FormRenderingService extends DynamicComponentMapper {
         'document': DynamicComponentResolver.fromType(widgets.DocumentWidgetComponent),
         'upload':  DynamicComponentResolver.fromType(widgets.UploadWidgetComponent),
         'datetime':  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
-        'file-viewer': DynamicComponentResolver.fromType(widgets.FileViewerWidgetComponent)
+        'file-viewer': DynamicComponentResolver.fromType(widgets.FileViewerWidgetComponent),
+        'wysiwyg': DynamicComponentResolver.fromType(widgets.WysiwygWidgetComponent)
     };
 }
