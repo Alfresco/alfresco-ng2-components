@@ -4,7 +4,6 @@ $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
 $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
 
 .adf {
-
     &-search-result-autocomplete {
         @include mat-overridable-elevation(2);
 
@@ -12,9 +11,8 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
         max-width: $mat-menu-overlay-max-width;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-
         transform-origin: top left;
-        transform:translateX(-40px);
+        transform: translateX(-40px);
         position: absolute;
         max-height: 400px;
         margin-left: 45px;
@@ -33,7 +31,6 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
     }
 
     &-search-autocomplete-item {
-
         &:hover {
             background-color: var(--theme-bg-hover-color);
             opacity: 1;

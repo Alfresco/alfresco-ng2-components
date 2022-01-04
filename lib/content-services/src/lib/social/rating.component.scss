@@ -2,15 +2,15 @@ $adf-rated-star-color: #ffe944;
 $adf-average-star-color: #808080;
 
 .adf-rating-container {
-        display: flex;
-        overflow: hidden;
-        width: 100%;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
 
-        .adf-rating-counter-container {
-            display: flex;
-            align-items: center;
-            padding: 0 6px;
-        }
+    .adf-rating-counter-container {
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+    }
 
     .adf-rating-left {
         padding: 0 6px;
@@ -36,14 +36,13 @@ $adf-average-star-color: #808080;
         color: $adf-rated-star-color;
     }
 
-    .adf-grey-star, .adf-average-star {
+    .adf-grey-star,
+    .adf-average-star {
         color: $adf-average-star-color !important;
     }
-
 }
 
 [dir='rtl'] .adf-rating-container {
-
     .adf-rating-star {
         transform: rotate(145deg);
     }

@@ -1,4 +1,4 @@
-$file-uploading-row-hover-color: #eeeeee !default;
+$file-uploading-row-hover-color: #eee !default;
 
 adf-file-uploading-list-row:not(:first-child) {
     display: block;
@@ -23,7 +23,9 @@ adf-file-uploading-list-row:not(:first-child) {
         padding: 0 1em 0 0.5em;
     }
 
-    &__group, &__block, &__file-version {
+    &__group,
+    &__block,
+    &__file-version {
         min-width: 100px;
         display: flex !important;
         justify-content: flex-end;
@@ -34,7 +36,7 @@ adf-file-uploading-list-row:not(:first-child) {
 
     &__group--toggle {
         cursor: pointer;
-        display:flex;
+        display: flex;
         align-items: center;
         height: 40px;
         line-height: 40px;

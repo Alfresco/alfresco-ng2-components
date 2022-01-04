@@ -1,17 +1,18 @@
+/* stylelint-disable no-descending-specificity */
 @import '~@angular/material/theming';
 @import '../../../../styles/mixins';
 
 $dynamic-table-font-size: 14px !default;
 $dynamic-table-header-font-size: 12px !default;
 $dynamic-table-header-sort-icon-size: 16px !default;
-$dynamic-table-hover-color: #eeeeee !default;
+$dynamic-table-hover-color: #eee !default;
 $dynamic-table-selection-color: #e0f7fa !default;
 $dynamic-table-row-height: 56px !default;
 $dynamic-table-column-spacing: 36px !default;
 $dynamic-table-column-padding: $dynamic-table-column-spacing / 2;
 $dynamic-table-card-padding: 24px !default;
 $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
-$dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
+$dynamic-table-drag-border: 1px dashed rgb(68 138 255);
 
 dynamic-table-widget .adf-label {
     width: auto;
@@ -19,7 +20,6 @@ dynamic-table-widget .adf-label {
 }
 
 .adf {
-
     &-dynamic-table-scrolling {
         overflow: auto;
     }
@@ -43,25 +43,29 @@ dynamic-table-widget .adf-label {
             tr {
                 position: relative;
                 height: $dynamic-table-row-height;
+
                 @include material-animation-default(0.28s);
+
                 transition-property: background-color;
 
                 &:hover {
                     background-color: $dynamic-table-hover-color;
                 }
 
-                &.adf-is-selected, &.adf-is-selected:hover {
+                &.adf-is-selected,
+                &.adf-is-selected:hover {
                     background-color: $dynamic-table-selection-color;
                 }
 
                 &:focus {
                     outline-offset: -1px;
-                    outline: rgb(68, 138, 255) solid 1px;
+                    outline: rgb(68 138 255) solid 1px;
                 }
             }
         }
 
-        td, th {
+        td,
+        th {
             padding: 0 $dynamic-table-column-padding 12px $dynamic-table-column-padding;
             text-align: center;
 
@@ -85,11 +89,13 @@ dynamic-table-widget .adf-label {
             box-sizing: border-box;
 
             @include adf-no-select;
+
             cursor: default;
         }
 
         th {
             @include adf-no-select;
+
             cursor: pointer;
             position: relative;
             vertical-align: bottom;
@@ -105,6 +111,7 @@ dynamic-table-widget .adf-label {
 
             &.adf-sortable {
                 @include adf-no-select;
+
                 &:hover {
                     cursor: pointer;
                 }
@@ -113,20 +120,25 @@ dynamic-table-widget .adf-label {
             &.adf-dynamic-table__header--sorted-asc,
             &.adf-dynamic-table__header--sorted-desc {
                 color: var(--theme-text-fg-color);
+
                 &::before {
                     @include typo-icon;
+
                     font-size: $dynamic-table-header-sort-icon-size;
                     content: '\e5d8';
                     margin-right: 5px;
                     vertical-align: sub;
                 }
+
                 &:hover {
                     cursor: pointer;
+
                     &::before {
                         color: var(--theme-disabled-text-color);
                     }
                 }
             }
+
             &.adf-dynamic-table__header--sorted-desc::before {
                 content: '\e5db';
             }

@@ -24,5 +24,12 @@
   "scss.validate": false,
   "stylelint.config": {
       "extends": "./stylelint-config"
-  }
+  },
+  "stylelint.configFile": "stylelint-config.json",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss"
+  ]
 }

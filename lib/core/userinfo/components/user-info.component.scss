@@ -1,5 +1,4 @@
 .adf {
-
     &-userinfo-container {
         display: flex;
         align-items: center;
@@ -91,8 +90,6 @@
         line-height: 18px;
         overflow: hidden;
         padding: 32px;
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
         column-count: 2;
         display: flex;
         justify-content: space-between;
@@ -147,7 +144,7 @@
     &-userinfo-profile-initials {
         text-transform: uppercase;
         background-size: cover;
-        background: var(--adf-user-info-color);
+        background-color: var(--adf-user-info-color);
         border-radius: 50%;
         height: 80px;
         width: 80px;
@@ -175,7 +172,6 @@
     &-hide-tab .mat-tab-label-active {
         display: none !important;
     }
-
 }
 
 @media only screen and (min-device-width: 480px) {
@@ -190,4 +186,3 @@
 .mat-menu-panel.adf-userinfo-menu .mat-menu-content {
     padding: 0;
 }
-

@@ -1,5 +1,4 @@
 @mixin adf-material-theme() {
-
     .mat-expansion-panel {
         & .mat-expansion-panel-header.cdk-keyboard-focused,
         & .mat-expansion-panel-header.cdk-program-focused,
@@ -20,6 +19,7 @@
                 }
             }
         }
+
         .mat-calendar-content {
             .mat-calendar-table-header th {
                 color: var(--theme-text-color);

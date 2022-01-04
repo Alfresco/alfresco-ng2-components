@@ -1,9 +1,16 @@
+/* stylelint-disable no-descending-specificity */
 .adf-property-list {
     .adf-property {
         margin-bottom: 20px;
 
         .adf-property-value-padding-top {
             margin-top: 6px;
+        }
+
+        .adf-property-read-only {
+            .mat-form-field-underline {
+                display: none;
+            }
         }
 
         .adf-property-field {
@@ -22,12 +29,6 @@
                 .mat-form-field-underline {
                     display: none;
                 }
-            }
-        }
-
-        .adf-property-read-only {
-            .mat-form-field-underline {
-                display: none;
             }
         }
 

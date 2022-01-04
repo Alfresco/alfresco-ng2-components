@@ -17,7 +17,7 @@
 
     &-cancel-edit-mode,
     &-claim-controls {
-        color: rgb(131, 131, 131);
+        color: rgb(131 131 131);
     }
 
     &-task-header-loading {
@@ -26,15 +26,10 @@
     }
 }
 
-@media screen and  (max-width: 959px) {
+@media screen and (max-width: 959px) {
     adf-card-view .adf-property-value {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
     }
-}
-
-.adf-task-header-loading {
-    display: flex;
-    justify-content: center;
 }

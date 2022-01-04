@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 $content-node-selector-thumbnail-width: 35px !default;
 
 .adf-search-results-label {
@@ -22,7 +23,6 @@ $content-node-selector-thumbnail-width: 35px !default;
 }
 
 .adf-content-node-selector {
-
     &-search-panel-container {
         display: flex;
     }
@@ -66,12 +66,12 @@ $content-node-selector-thumbnail-width: 35px !default;
             .mat-select-trigger {
                 font-size: 14px;
             }
-
         }
 
         &-breadcrumb {
             .adf-dropdown-breadcrumb-trigger {
                 outline: none;
+
                 .mat-icon {
                     color: var(--adf-node-selector-base-color);
 
@@ -145,8 +145,7 @@ $content-node-selector-thumbnail-width: 35px !default;
                 .adf-datatable-body .adf-datatable-row {
                     min-height: 40px;
 
-                    @media screen and (-ms-high-contrast: active),
-                    screen and (-ms-high-contrast: none) {
+                    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
                         padding-top: 15px;
                     }
 

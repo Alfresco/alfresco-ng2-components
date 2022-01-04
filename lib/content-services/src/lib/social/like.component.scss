@@ -17,6 +17,7 @@
     .adf-like-select {
         cursor: pointer;
         color: #2196f3;
+
         &:hover {
             color: #808080;
         }
@@ -25,9 +26,9 @@
     .adf-like-grey {
         cursor: pointer;
         color: #808080;
+
         &:hover {
             color: #2196f3;
         }
     }
-
 }

@@ -5,13 +5,15 @@
     justify-content: space-around;
 }
 
-.adf-version-current, .adf-version-new {
+.adf-version-current,
+.adf-version-new {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.adf-version-current img, .adf-version-new img {
+.adf-version-current img,
+.adf-version-new img {
     width: 100px;
 }
 
@@ -19,7 +21,8 @@
     font-size: var(--theme-display-4-font-size);
 }
 
-.adf-version-comparison-node-name, .adf-version-comparison-file-name {
+.adf-version-comparison-node-name,
+.adf-version-comparison-file-name {
     width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;

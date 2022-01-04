@@ -50,6 +50,7 @@
     &-permission-role-column-header {
         position: relative !important;
         height: 40px;
+
         .mat-form-field-infix {
             border: none;
         }
@@ -88,7 +89,6 @@
     .adf-pop-over-card {
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 8px 9px -5px var(--theme-fg-divider),
-        0 15px 22px 2px var(--theme-fg-divider);
+        box-shadow: 0 8px 9px -5px var(--theme-fg-divider), 0 15px 22px 2px var(--theme-fg-divider);
     }
 }

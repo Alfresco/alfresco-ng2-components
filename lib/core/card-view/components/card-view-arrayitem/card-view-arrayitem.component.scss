@@ -8,7 +8,8 @@
         color: var(--adf-card-view-text-color);
     }
 
-    &-array-item-action:hover, &-array-item-action:focus {
+    &-array-item-action:hover,
+    &-array-item-action:focus {
         color: var(--theme-text-fg-color);
     }
 
@@ -22,9 +23,6 @@
     &-array-item-more-chip-container {
         &.mat-card {
             box-shadow: none;
-        }
-
-        &.mat-card {
             max-height: 300px;
             overflow-y: auto;
         }
@@ -40,6 +38,7 @@
             padding-top: 6px;
             cursor: pointer;
         }
+
         .mat-chip {
             cursor: pointer;
         }

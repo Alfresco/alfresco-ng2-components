@@ -1,5 +1,6 @@
 .app-content {
     padding: 10px;
+
     .mat-card {
         padding: 16px 24px;
         max-width: 100% !important;
@@ -13,7 +14,9 @@
                 font-weight: bold;
             }
 
-            .mat-form-field, input, select {
+            .mat-form-field,
+            input,
+            select {
                 display: block;
                 width: 100%;
                 height: 30px;

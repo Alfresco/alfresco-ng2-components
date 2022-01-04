@@ -38,6 +38,7 @@
 
     &-menu + * .mat-menu-panel {
         @include mat-elevation(2);
+
         border-radius: 6px;
 
         .mat-menu-content {

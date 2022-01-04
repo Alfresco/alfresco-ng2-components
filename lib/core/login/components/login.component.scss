@@ -64,7 +64,7 @@
     .adf-login-card-wide {
         border-radius: 8px;
         background-color: var(--theme-dialog-bg-color);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0 0 0 24%), 0 0 2px 0 rgba(0 0 0 12%);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
@@ -83,10 +83,8 @@
 
     .adf-error-message {
         display: flex;
-        box-orient: horizontal;
         flex-direction: row;
         justify-content: flex-start;
-
         color: var(--theme-warn-color);
         padding: 0;
         margin-bottom: 4px;
@@ -144,20 +142,8 @@
     }
 
     .adf-interactive-login-label {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
         display: flex;
-
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
         flex-direction: row;
-
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        box-pack: center;
         justify-content: center;
     }
 
@@ -168,7 +154,6 @@
 
     .adf-login-checking-spinner > svg > circle {
         stroke-width: 16% !important;
-
     }
 
     .adf-login-controls {
@@ -179,24 +164,13 @@
 
     .adf-login-action {
         margin-top: 20px;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
         display: flex;
-
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
         flex-direction: row;
-
-        -webkit-box-pack: space-between;
-        -moz-box-pack: space-between;
-        box-pack: space-between;
         justify-content: space-between;
     }
 
-    .adf-login-action-left a, .adf-login-action-right a {
+    .adf-login-action-left a,
+    .adf-login-action-right a {
         text-decoration: none;
     }
 
@@ -226,8 +200,10 @@
     }
 
     .adf-login__field input:-webkit-autofill {
+        /* stylelint-disable */
         -webkit-box-shadow: 0 0 0 1000px var(--theme-dialog-bg-color) inset;
         -webkit-text-fill-color: var(--theme-text-fg-color) !important;
+        /* stylelint-enable */
     }
 
     .adf-login-validation {
@@ -268,7 +244,7 @@
     }
 
     .adf-login-action-container {
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(0 0 0 1%);
         margin-top: 23px;
     }
 }

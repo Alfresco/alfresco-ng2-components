@@ -32,9 +32,10 @@ adf-content-node-selector {
         adf-upload-drag-area {
             adf-empty-list {
                 .adf-empty-folder-drag-drop {
-                    min-height:46px;
+                    min-height: 46px;
                     font-size: 40px;
                 }
+
                 .adf-empty-folder-image {
                     height: 100px;
                     width: 460px;
@@ -92,7 +93,6 @@ adf-content-node-selector {
         }
 
         .adf-choose-action {
-
             &[disabled] {
                 color: var(--theme-secondary-text-color);
             }
