@@ -18,7 +18,7 @@
         position: relative;
         height: 100%;
         width: 190px;
-        background-color: rgba(0 0 0 12%);
+        background-color: rgba(0, 0, 0, 0.12);
     }
 
     .adf-thumbnails-template {
@@ -64,7 +64,7 @@
             background-color: var(--theme-card-bg-color);
             border-width: 0;
             border-radius: 2px;
-            box-shadow: 0 2px 2px 0 rgba(0 0 0 24%), 0 0 2px 0 rgba(0 0 0 12%);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 20.4), 0 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         &-page-selector {

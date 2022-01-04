@@ -64,7 +64,7 @@
     .adf-login-card-wide {
         border-radius: 8px;
         background-color: var(--theme-dialog-bg-color);
-        box-shadow: 0 2px 2px 0 rgba(0 0 0 24%), 0 0 2px 0 rgba(0 0 0 12%);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
@@ -244,7 +244,7 @@
     }
 
     .adf-login-action-container {
-        border-top: 1px solid rgba(0 0 0 1%);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
         margin-top: 23px;
     }
 }

@@ -36,7 +36,8 @@
             background-color: var(--theme-card-bg-color);
             border-width: 0;
             border-radius: 2px;
-            box-shadow: 0 2px 2px 0 rgba(0 0 0 24%), 0 0 2px 0 rgba(0 0 0 12%);
+            /* stylelint-disable-next-line */
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         .adf-main-toolbar {

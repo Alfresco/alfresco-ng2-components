@@ -14,7 +14,7 @@ $adf-info-drawer-icon-size: 48px !default;
         overflow: auto;
         width: 100%;
         background-color: var(--theme-background-color);
-        box-shadow: 0 2px 4px 0 rgba(0 0 0 27%);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
         & .mat-tab-label {
             font-weight: bold;

@@ -22,7 +22,7 @@
     }
 
     &-diagram-tooltip-header {
-        background-color: rgba(43 65 79 95%);
+        background-color: rgba(43, 65, 79, 0.95);
         color: #fff;
         padding: 8px;
         font-weight: bold;
@@ -32,7 +32,7 @@
 
     &-diagram-tooltip-body {
         color: #4a4a4a;
-        background-color: rgba(255 255 255 95%);
+        background-color: rgba(255, 255, 255, 0.95);
     }
 
     &-diagram-tooltip-body > div {
