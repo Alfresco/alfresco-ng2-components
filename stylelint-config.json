@@ -1,5 +1,7 @@
 {
+  "extends": ["stylelint-config-standard-scss"],
   "rules": {
+    "indentation": 4,
     "color-hex-case": "lower",
     "color-no-invalid-hex": true,
     "function-calc-no-unspaced-operator": true,
