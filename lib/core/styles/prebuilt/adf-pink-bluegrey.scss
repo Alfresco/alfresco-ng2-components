@@ -1,17 +1,19 @@
+/* stylelint-disable value-keyword-case */
 @import '../theming';
 @import './all-theme';
-
 @include mat-core($alfresco-typography);
 
 $primary: mat-palette($mat-pink, 700, 500, 900);
-$accent:  mat-palette($mat-blue-grey, A200, A100, A400);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-dark-theme((
-    color: (
-        primary: $primary,
-        accent: $accent,
+$accent: mat-palette($mat-blue-grey, A200, A100, A400);
+$warn: mat-palette($alfresco-warn);
+$theme: mat-dark-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+        )
     )
-));
+);
 
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);

@@ -3,7 +3,6 @@
 }
 
 .adf-share-link-dialog {
-
     .adf-share-link {
         &__dialog-content {
             display: flex;
@@ -34,6 +33,7 @@
         &--row {
             display: flex;
             flex-direction: row;
+            /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
             flex-wrap: wrap;
             align-items: center;
         }

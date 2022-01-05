@@ -18,7 +18,7 @@
     }
 
     &-diagram-tooltip.adf-is-active {
-        animation: tooltipAnimation 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+        animation: tooltip-animation 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
     }
 
     &-diagram-tooltip-header {
@@ -57,14 +57,16 @@
     }
 }
 
-@keyframes tooltipAnimation {
+@keyframes tooltip-animation {
     0% {
         transform: scale(0);
         opacity: 0;
     }
+
     50% {
         transform: scale(0.99);
     }
+
     100% {
         transform: scale(1);
         opacity: 1;

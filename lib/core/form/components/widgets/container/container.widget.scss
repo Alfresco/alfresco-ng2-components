@@ -7,14 +7,7 @@
     padding-bottom: 10px;
     cursor: default;
     user-select: none;
-    -webkit-user-select: none;
-    /* Chrome/Safari/Opera */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE/Edge */
-    -webkit-touch-callout: none;
-    /* iOS Safari */
+
     &.adf-collapsible {
         cursor: pointer;
     }
@@ -90,7 +83,6 @@ container-widget {
     }
 
     .mat-focused {
-
         label {
             transform: scaleX(1);
             transition: transform 150ms linear;
@@ -111,5 +103,4 @@ container-widget {
     adf-form-field {
         width: 100%;
     }
-
 }

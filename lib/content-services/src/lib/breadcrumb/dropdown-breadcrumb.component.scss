@@ -1,4 +1,4 @@
-$dropdownHorizontalOffset: 30px;
+$dropdown-horizontal-offset: 30px;
 
 .adf {
     &-dropdown-breadcrumb {
@@ -81,20 +81,20 @@ $dropdownHorizontalOffset: 30px;
 
 [dir='ltr'] .adf {
     &-dropdown-breadcrumb-path {
-        margin-left: -$dropdownHorizontalOffset;
+        margin-left: -$dropdown-horizontal-offset;
     }
 
     &-current-folder {
-        margin-left: $dropdownHorizontalOffset;
+        margin-left: $dropdown-horizontal-offset;
     }
 }
 
 [dir='rtl'] .adf {
     &-dropdown-breadcrumb-path {
-        margin-right: -$dropdownHorizontalOffset;
+        margin-right: -$dropdown-horizontal-offset;
     }
 
     &-current-folder {
-        margin-right: $dropdownHorizontalOffset;
+        margin-right: $dropdown-horizontal-offset;
     }
 }

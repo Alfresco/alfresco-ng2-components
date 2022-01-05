@@ -19,9 +19,11 @@
         text-align: right;
         padding: 5px 0;
         margin-top: 5px;
+
         > button {
             opacity: 0.54;
             font-weight: bolder;
+
             &:hover {
                 color: var(--theme-primary-color);
             }

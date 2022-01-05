@@ -1,10 +1,11 @@
+/* stylelint-disable no-descending-specificity */
 .adf-upload-dialog {
     background: var(--theme-dialog-bg-color);
     color: var(--theme-text-color);
     position: fixed;
     bottom: 20px;
     width: 40%;
-    box-shadow: 1px 5px 15px #888888;
+    box-shadow: 1px 5px 15px #888;
     z-index: 999;
 
     &--padding {
@@ -77,5 +78,6 @@
         }
     }
 }
+
 [adfUploadDialogLeft] .adf-upload-dialog { left: 25px; }
-[adfUploadDialogRight] .adf-upload-dialog { right: 25px;}
+[adfUploadDialogRight] .adf-upload-dialog { right: 25px; }

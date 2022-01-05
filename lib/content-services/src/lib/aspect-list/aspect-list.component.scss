@@ -1,5 +1,4 @@
 .adf {
-
     &-aspect-list-spinner {
         display: flex;
         align-items: center;
@@ -8,7 +7,6 @@
     }
 
     &-aspect-list-container {
-
         padding-top: 3px;
         height: 400px;
         overflow: auto;
@@ -26,7 +24,6 @@
         }
 
         .adf-accordion-aspect-list {
-
             .mat-expansion-panel-spacing {
                 margin: 0;
             }

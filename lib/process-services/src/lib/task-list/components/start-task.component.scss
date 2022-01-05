@@ -1,6 +1,8 @@
+/* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
     padding-top: 12px;
     border-bottom: 1px solid var(--theme-fg-divider);
+
     .mat-card-title {
         font-weight: bold;
         font-size: 18px;
@@ -26,13 +28,13 @@
 }
 
 adf-start-task {
-
     .mat-button.adf-uppercase {
         text-transform: uppercase;
     }
 
     people-widget {
         width: 100%;
+
         .mat-form-field-label-wrapper {
             top: -14px !important;
         }
@@ -42,9 +44,11 @@ adf-start-task {
         .mat-form-field {
             width: 100%;
         }
+
         .adf-label {
             line-height: 0;
         }
+
         .adf-error-text-container {
             margin-top: -10px;
         }
@@ -83,11 +87,10 @@ adf-start-task {
         }
 
         &-label {
-            color: rgb(186, 186, 186);;
+            color: rgb(186, 186, 186);
         }
 
         &-invalid {
-
             .mat-form-field-underline {
                 background-color: #f44336 !important;
             }
@@ -106,6 +109,7 @@ adf-start-task {
 
             .adf-label {
                 color: var(--theme-warn-color);
+
                 &::after {
                     background-color: var(--theme-warn-color);
                 }

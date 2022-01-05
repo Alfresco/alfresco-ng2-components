@@ -3,7 +3,6 @@
 }
 
 .adf {
-
     &-comment-img-container {
         float: left;
         width: 40px;
@@ -25,14 +24,16 @@
         background-position: center;
 
         &:hover {
-        background: var(--adf-comment-list-primary-color)
-        radial-gradient(circle, transparent 1%, var(--adf-comment-list-primary-color) 1%)
-        center/15000%;
+            background:
+                var(--adf-comment-list-primary-color)
+                radial-gradient(circle, transparent 1%, var(--adf-comment-list-primary-color) 1%)
+                center/15000%;
         }
+
         &:active {
-        background-color: var(--adf-comment-list-ripple-color);
-        background-size: 100%;
-        transition: background 0s;
+            background-color: var(--adf-comment-list-ripple-color);
+            background-size: 100%;
+            transition: background 0s;
         }
     }
 
@@ -91,5 +92,4 @@
         height: 40px;
         vertical-align: middle;
     }
-
 }

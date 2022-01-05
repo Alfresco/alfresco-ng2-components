@@ -1,20 +1,18 @@
-
 .app {
-
     &-task-detail-container {
         display: flex;
     }
 
     &-task-title {
-        margin-left:15px;
+        margin-left: 15px;
     }
 
     &-task-control {
-        width:70%;
+        width: 70%;
     }
 
     &-demop-card-container {
-        width:30%;
+        width: 30%;
         font-family: inherit;
     }
 }

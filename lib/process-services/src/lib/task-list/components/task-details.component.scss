@@ -16,9 +16,6 @@
     margin: 8px 0 16px;
     cursor: pointer;
     user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
 }
 
 .adf-activiti-task-details__action-button {
@@ -30,8 +27,7 @@
     width: auto;
 }
 
-adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep
-.adf-property[data-automation-id='header-assignee'] {
+adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id='header-assignee'] {
     display: none;
 }
 
@@ -47,9 +43,6 @@ adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep
             height: 23px;
             cursor: pointer;
             user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
         }
     }
 

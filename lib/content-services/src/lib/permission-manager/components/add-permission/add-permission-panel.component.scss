@@ -1,7 +1,6 @@
 $search-result-height: calc(100% - 75px);
 
 .adf {
-
     &-permission-result-list {
         display: flex;
         height: $search-result-height;
@@ -68,6 +67,7 @@ $search-result-height: calc(100% - 75px);
         &[disabled] {
             opacity: 0.6;
         }
+
         &:enabled {
             color: var(--theme-primary-color);
         }

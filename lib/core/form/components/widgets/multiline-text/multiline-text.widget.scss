@@ -1,7 +1,7 @@
 .adf {
-
     &-multiline-text-widget {
         width: 100%;
+
         .mat-form-field-label-wrapper {
             top: 20px;
         }
@@ -26,5 +26,4 @@
     &-multiline-required-message {
         display: flex;
     }
-
 }

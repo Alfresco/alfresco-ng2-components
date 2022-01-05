@@ -1,10 +1,9 @@
 @import '~@angular/material/theming';
 
 .adf-search-filter-chip {
-
     &.mat-chip {
         border: 2px solid transparent;
-        transition : border 500ms ease-in-out;
+        transition: border 500ms ease-in-out;
         max-width: 320px;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -53,6 +52,7 @@
     &-menu + * .cdk-overlay-pane .mat-menu-panel {
         min-width: 320px;
         border-radius: 12px;
+
         @include mat-elevation(2);
     }
 }

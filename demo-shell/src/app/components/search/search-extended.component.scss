@@ -11,9 +11,12 @@ div.app-search-results-container {
     :host .app-col-display-name {
         min-width: 100px;
     }
-    :host .app-col-modified-at, :host .app-col-modified-by {
+
+    :host .app-col-modified-at,
+    :host .app-col-modified-by {
         display: none;
     }
+
     :host div.app-search-results-container table {
         width: 100%;
     }

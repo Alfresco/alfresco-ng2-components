@@ -2,7 +2,6 @@
 @import '../../../styles/mixins';
 
 .adf-sidenav-layout {
-
     &-full-space {
         display: flex;
         flex-direction: column;
@@ -14,6 +13,7 @@
     }
 
     @include flex-column;
+
     width: 100%;
 
     .adf-layout__content {
@@ -33,6 +33,7 @@
 
     .mat-drawer-content {
         @include flex-column;
+
         position: unset;
         overflow: auto;
     }

@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 @import '~@angular/material/theming';
 @import '../../../styles/mixins';
 
@@ -10,8 +11,8 @@ $data-table-card-padding: 24px !default;
 $data-table-cell-top: $data-table-card-padding / 2;
 $data-table-thumbnail-width: 50px !default;
 $data-table-cell-min-width: 50px !default;
-$data-table-cell-min-width--no-grow: 100px !default;
-$data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
+$data-table-cell-min-width-no-grow: 100px !default;
+$data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
 .adf-datatable {
     overflow-y: scroll;
@@ -28,9 +29,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
     .adf-datatable-body {
         flex-flow: row wrap;
         display: flex;
-
         width: 100%;
-
         justify-content: space-evenly;
         align-content: flex-start;
         align-items: flex-start;
@@ -41,13 +40,10 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             display: flex;
             flex-direction: column;
             flex: 0 1 24%;
-
             width: 288px !important;
             max-width: 288px !important;
             min-width: 288px !important;
-
             height: 200px;
-
             overflow: hidden !important;
             margin: 6px;
             padding: 15px;
@@ -165,14 +161,12 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         .adf-datatable-checkbox {
             margin: 8px;
         }
-
     }
 
     .adf-datatable-header {
         margin-right: 18px;
         float: right;
     }
-
 }
 
 .adf-datatable-list {
@@ -201,7 +195,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
 
         .adf-datatable-center-img-ie {
-            padding:0;
+            padding: 0;
             min-width: 0;
             width: 24px;
             height: 56px;
@@ -221,7 +215,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
     }
 
     .adf-datatable-row {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             background-color: var(--theme-bg-hover-color);
         }
 
@@ -230,7 +225,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             outline: 1px solid var(--theme-accent-color-a200);
         }
 
-        .adf-cell-value, .adf-datatable-cell-header {
+        .adf-cell-value,
+        .adf-datatable-cell-header {
             &:focus {
                 outline-offset: -1px;
                 outline: 1px solid var(--theme-accent-color-a200);
@@ -247,6 +243,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
         .adf-datatable-row {
             @include material-animation-default(0.28s);
+
             transition-property: background-color;
             border-top: 1px solid var(--theme-border-color);
             min-height: $data-table-row-height;
@@ -254,7 +251,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
             @include adf-no-select;
 
-            &.adf-is-selected, &.adf-is-selected:hover {
+            &.adf-is-selected,
+            &.adf-is-selected:hover {
                 background-color: var(--theme-selected-button-bg-color);
             }
 
@@ -264,6 +262,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
     }
 
+    /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-row {
         display: flex;
         align-items: center;
@@ -275,7 +274,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             width: $data-table-thumbnail-width;
         }
 
-        /* query for Microsoft IE 11*/
+        /* query for Microsoft IE 11 */
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
             .adf-datatable-checkbox {
                 padding-top: 15px;
@@ -283,7 +282,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
     }
 
-    .adf-datatable-cell, .adf-datatable-cell-header {
+    .adf-datatable-cell,
+    .adf-datatable-cell-header {
         text-align: left;
         box-sizing: border-box;
         min-width: $data-table-cell-min-width;
@@ -311,12 +311,13 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
 
         &--fileSize {
-            min-width: $data-table-cell-min-width--fileSize;
+            min-width: $data-table-cell-min-width-file-size;
         }
     }
 
     .adf-datatable-cell-header {
         @include adf-no-select;
+
         cursor: pointer;
         position: relative;
         vertical-align: bottom;
@@ -333,9 +334,11 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
         &.adf-sortable {
             @include adf-no-select;
+
             &:hover {
                 cursor: pointer;
             }
+
             display: flex;
             align-items: center;
         }
@@ -343,8 +346,10 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         &.adf-datatable__header--sorted-asc,
         &.adf-datatable__header--sorted-desc {
             color: var(--theme-text-fg-color);
+
             &::before {
                 @include typo-icon;
+
                 font-size: $data-table-header-sort-icon-size;
                 content: '\e5d8';
                 left: 5px;
@@ -353,9 +358,11 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
                 vertical-align: sub;
             }
         }
+
         &.adf-datatable__header--sorted-desc::before {
             content: '\e5db';
         }
+
         &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
         &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
             left: -3px;
@@ -368,32 +375,40 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
     }
 
-    .adf-datatable-cell-header.adf-expand-cell-1, .adf-datatable-cell.adf-expand-cell-1 {
+    .adf-datatable-cell-header.adf-expand-cell-1,
+    .adf-datatable-cell.adf-expand-cell-1 {
         flex-grow: 1;
     }
 
-    .adf-datatable-cell-header.adf-expand-cell-2, .adf-datatable-cell.adf-expand-cell-2 {
+    .adf-datatable-cell-header.adf-expand-cell-2,
+    .adf-datatable-cell.adf-expand-cell-2 {
         flex-grow: 2;
     }
 
-    .adf-datatable-cell-header.adf-expand-cell-3, .adf-datatable-cell.adf-expand-cell-3 {
+    .adf-datatable-cell-header.adf-expand-cell-3,
+    .adf-datatable-cell.adf-expand-cell-3 {
         flex-grow: 3;
     }
 
-    .adf-datatable-cell-header.adf-expand-cell-4, .adf-datatable-cell.adf-expand-cell-4 {
+    .adf-datatable-cell-header.adf-expand-cell-4,
+    .adf-datatable-cell.adf-expand-cell-4 {
         flex-grow: 4;
     }
 
-    .adf-datatable-cell-header.adf-expand-cell-5, .adf-datatable-cell.adf-expand-cell-5 {
+    .adf-datatable-cell-header.adf-expand-cell-5,
+    .adf-datatable-cell.adf-expand-cell-5 {
         flex-grow: 5;
     }
 
-    .adf-datatable-cell-header.adf-no-grow-cell, .adf-datatable-cell.adf-no-grow-cell {
+    .adf-datatable-cell-header.adf-no-grow-cell,
+    .adf-datatable-cell.adf-no-grow-cell {
         flex-grow: 0;
-        min-width: $data-table-cell-min-width--no-grow;
+        min-width: $data-table-cell-min-width-no-grow;
     }
 
-    .adf-datatable-cell, .adf-datatable-cell-header {
+    /* stylelint-disable-next-line no-duplicate-selectors */
+    .adf-datatable-cell,
+    .adf-datatable-cell-header {
         flex: 1;
         padding: 0;
         align-items: center;
@@ -413,11 +428,11 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             padding: 10px;
             display: block;
 
-            @media screen and (-ms-high-contrast: active),
-            screen and (-ms-high-contrast: none) {
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
                 padding: 17px 10px 10px;
             }
         }
+
         &--fileSize .adf-datatable-cell-value {
             padding: 0 10px 0 0;
         }
@@ -431,7 +446,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         width: 100%;
     }
 
-    .adf-datatable__actions-cell, .adf-datatable-cell--image {
+    .adf-datatable__actions-cell,
+    .adf-datatable-cell--image {
         max-width: $data-table-thumbnail-width;
         display: flex;
     }
@@ -490,6 +506,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
     }
 
+    /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-cell,
     .adf-datatable-cell-header {
         .adf-datatable-link .adf-datatable-cell-value {
@@ -515,12 +532,13 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
                 text-overflow: ellipsis;
             }
         }
+
         .adf-datatable-content-cell {
             overflow: unset;
             position: absolute;
         }
 
-        /* query for Microsoft IE 11*/
+        /* query for Microsoft IE 11 */
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
             .adf-cell-value {
                 top: 100%;
@@ -569,7 +587,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
         }
     }
 
-        /* Utils */
+    /* Utils */
     .adf-hidden {
         display: none;
     }
@@ -586,7 +604,6 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             display: none !important;
         }
     }
-
 }
 
 /* [Accessibility] Material checkbox labels */
@@ -637,6 +654,7 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
 .adf-datatable--empty {
     @include flex-column;
+
     justify-content: center;
     align-items: center;
     height: inherit;
@@ -647,7 +665,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             background-color: var(--theme-card-bg-color);
             border: none !important;
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 background-color: unset;
                 cursor: default;
             }
@@ -656,13 +675,13 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 }
 
 .adf-datatable--empty--header-visible {
-
     .adf-datatable-header {
         border: 1px solid var(--theme-border-color);
     }
 
     .adf-datatable-body {
         @include flex-column;
+
         justify-content: center;
         align-items: center;
 
@@ -671,7 +690,8 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
             background-color: var(--theme-card-bg-color);
             border: none !important;
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 background-color: unset;
                 cursor: default;
             }

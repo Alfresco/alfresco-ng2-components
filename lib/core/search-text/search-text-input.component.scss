@@ -15,7 +15,6 @@
 }
 
 .adf {
-
     &-search-fixed-text {
         line-height: normal;
     }
@@ -23,10 +22,12 @@
     &-input-form-field-divider {
         .mat-form-field-underline {
             background-color: var(--adf-search-input-bg-color);
+
             .mat-form-field-ripple {
                 background-color: var(--adf-search-input-bg-color);
             }
         }
+
         font-size: 16px;
     }
 }

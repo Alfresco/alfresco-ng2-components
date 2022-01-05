@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 ul > li > form-field > .adf-focus {
     .adf-label {
         color: var(--theme-primary-color);
@@ -5,7 +6,6 @@ ul > li > form-field > .adf-focus {
 }
 
 .adf {
-
     &-error-text-container {
         height: 20px;
         margin-top: -12px;
@@ -27,31 +27,30 @@ ul > li > form-field > .adf-focus {
     }
 
     &-label {
-        color: rgb(186, 186, 186);;
+        color: rgb(186, 186, 186);
     }
 
     &-invalid {
-
         .mat-form-field-underline {
             background-color: #f44336 !important;
         }
 
         .mat-checkbox {
             color: var(--theme-warn-color);
+
             .mat-checkbox-frame {
                 border-color: var(--theme-warn-color);
             }
         }
 
         .mat-select {
-
             &-value {
                 color: var(--theme-warn-color);
             }
+
             &-arrow {
                 color: var(--theme-warn-color);
             }
-
         }
 
         .adf-file {
@@ -68,6 +67,7 @@ ul > li > form-field > .adf-focus {
 
         .adf-label {
             color: var(--theme-warn-color);
+
             &::after {
                 background-color: var(--theme-warn-color);
             }
@@ -75,11 +75,12 @@ ul > li > form-field > .adf-focus {
     }
 }
 
-
-/* query for Microsoft IE 11*/
+/* query for Microsoft IE 11 */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     adf-form-field {
-        .mat-input-element, .mat-select, .mat-form-field {
+        .mat-input-element,
+        .mat-select,
+        .mat-form-field {
             display: block !important;
         }
     }

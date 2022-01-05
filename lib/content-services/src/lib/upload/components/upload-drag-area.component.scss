@@ -1,10 +1,11 @@
+/* stylelint-disable no-descending-specificity */
 $adf-upload-dragging-color: #2196f3 !default;
 $adf-upload-dragging-border: 1px dashed #2196f3 !default;
 $adf-upload-dragging-background: #e3f2fd !default;
 $adf-upload-dragging-level1-color: #2196f3 !default;
 $adf-upload-dragging-level1-border: 1px dashed #2196f3 !default;
 
-@mixin file-draggable__input-focus($text-color, $border) {
+@mixin file-draggable-input-focus($text-color, $border) {
     color: $text-color;
     border: $border !important;
     margin-left: 0 !important;
@@ -30,12 +31,13 @@ adf-upload-drag-area {
         box-sizing: border-box;
     }
 
-    .adf-file-draggable__input-focus {
+    .adf-file-draggable-input-focus {
         color: $adf-upload-dragging-color;
         border: $adf-upload-dragging-border;
 
         adf-document-list {
             background: $adf-upload-dragging-background;
+
             adf-datatable > table {
                 background: inherit;
             }
@@ -63,11 +65,8 @@ adf-upload-drag-area {
     &:first-child {
         & > div {
             adf-upload-drag-area {
-                .adf-file-draggable__input-focus {
-                    @include file-draggable__input-focus(
-                            $adf-upload-dragging-color,
-                            $adf-upload-dragging-border
-                    );
+                .adf-file-draggable-input-focus {
+                    @include file-draggable-input-focus($adf-upload-dragging-color, $adf-upload-dragging-border);
                 }
             }
         }
@@ -77,17 +76,14 @@ adf-upload-drag-area {
             text-align: inherit !important;
         }
 
-        .adf-file-draggable__input-focus {
+        .adf-file-draggable-input-focus {
             color: $adf-upload-dragging-level1-color !important;
             border: $adf-upload-dragging-level1-border !important;
             margin-left: 0 !important;
 
             adf-upload-drag-area {
                 & > div {
-                    @include file-draggable__input-focus(
-                            $adf-upload-dragging-color,
-                            $adf-upload-dragging-border
-                    );
+                    @include file-draggable-input-focus($adf-upload-dragging-color, $adf-upload-dragging-border);
                 }
             }
         }

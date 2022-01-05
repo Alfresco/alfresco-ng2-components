@@ -21,16 +21,19 @@
     padding: 5px;
 }
 
-.app-mobile-settings, .app-mobile-setting-button {
+.app-mobile-settings,
+.app-mobile-setting-button {
     display: none;
 }
 
 @media screen and (max-width: 959px) {
-    .app-settings, .app-setting-button.mat-fab.mat-accent {
+    .app-settings,
+    .app-setting-button.mat-fab.mat-accent {
         display: none;
     }
 
-    .app-mobile-settings, .app-mobile-setting-button {
+    .app-mobile-settings,
+    .app-mobile-setting-button {
         display: block;
     }
 

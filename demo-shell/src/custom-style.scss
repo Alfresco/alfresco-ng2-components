@@ -1,22 +1,24 @@
 @import '~@angular/material/theming';
 @import '~@alfresco/adf-core/theming';
-
 @include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme((
-    color: (
-        primary: $primary,
-        accent: $accent,
+$accent: mat-palette($alfresco-accent-purple);
+$warn: mat-palette($alfresco-warn);
+$theme: mat-light-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+        )
     )
-));
+);
 
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);
 
-body, html {
+body,
+html {
     margin: 0;
     height: 100%;
     overflow: hidden;

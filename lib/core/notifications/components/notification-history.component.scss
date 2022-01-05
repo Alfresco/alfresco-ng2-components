@@ -25,7 +25,8 @@
             background-color: var(--theme-bg-hover-color);
         }
 
-        &-message, &-no-message {
+        &-message,
+        &-no-message {
             font-size: 13px !important;
         }
 
@@ -36,7 +37,6 @@
         &-initiator {
             margin: 4px;
         }
-
     }
 
     &-notification-initiator-pic {

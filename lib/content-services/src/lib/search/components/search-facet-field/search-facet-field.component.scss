@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .adf-search-filter-facet {
     .adf-checklist {
         display: flex;
@@ -43,6 +44,7 @@
             .adf-facet-search-icon {
                 width: 27px;
                 margin-top: -4px;
+
                 .mat-icon {
                     font-size: 15px;
                 }
@@ -83,5 +85,4 @@
     .mat-radio-label {
         color: var(--theme-text-color);
     }
-
 }
