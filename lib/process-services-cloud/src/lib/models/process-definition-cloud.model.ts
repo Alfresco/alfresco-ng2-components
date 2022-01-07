@@ -23,6 +23,8 @@ export class ProcessDefinitionCloud {
     appVersion: number;
     version: number;
     name: string;
+    category: string;
+    description: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -32,5 +34,7 @@ export class ProcessDefinitionCloud {
         this.formKey = obj && obj.formKey || null;
         this.version = obj && obj.version || 0;
         this.appVersion = obj && obj.appVersion || 0;
+        this.category = obj && obj?.category || '';
+        this.description = obj && obj?.description || '';
     }
 }
