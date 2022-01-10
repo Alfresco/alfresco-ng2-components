@@ -2,11 +2,7 @@
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
     <div class="adf-dropdown-widget-top-labels">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
-            *ngIf="isRequired()">*</span></label>
-        <label class="adf-label adf-dropdown-widget-linked"
-               *ngIf="isLinkedWidget()"
-               [attr.for]="field.id">
-            {{ 'FORM.FIELD.DEPENDS_ON' | translate: { widgetId: getLinkedWidgetId() } }}
+            *ngIf="isRequired()">*</span>
         </label>
     </div>
     <mat-form-field>

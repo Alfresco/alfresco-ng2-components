@@ -12,17 +12,6 @@
             font-size: 14px;
         }
 
-        &-top-labels {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            height: 16px;
-
-            .adf-dropdown-widget-linked {
-                display: contents;
-            }
-        }
-
         &-select {
             width: 100%;
         }
