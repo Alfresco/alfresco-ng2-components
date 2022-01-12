@@ -89,6 +89,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     placeholder: string = '';
 
+    /** Hint label */
+    @Input()
+    hintLabel = '';
+
     /** Emitted when the search term is changed. The search term is provided
      * in the 'value' property of the returned object.  If the term is less
      * than three characters in length then it is truncated to an empty
