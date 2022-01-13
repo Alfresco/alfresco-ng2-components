@@ -59,6 +59,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     typeId = 'DropdownCloudWidgetComponent';
     HIDE_FILTER_LIMIT = 5;
     showInputFilter = false;
+    isRestApiFailed = false;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
 
@@ -97,10 +98,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
+                    this.isRestApiFailed = false;
                     this.field.options = result;
                     this.updateOptions();
                     this.field.updateForm();
-                }, (err) => this.handleError(err));
+                }, (err) => {
+                    this.resetRestApiOptions();
+                    this.handleError(err)
+                });
         }
     }
 
@@ -252,5 +257,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 }),
                 takeUntil(this.onDestroy$)
             );
+    }
+
+    resetRestApiOptions() {
+        this.field.options = [];
+        this.isRestApiFailed = true;
+        this.updateOptions();
+        this.field.updateForm();
     }
 }
