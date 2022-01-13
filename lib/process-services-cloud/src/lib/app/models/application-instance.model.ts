@@ -38,6 +38,7 @@ export interface Descriptor {
     infrastructure?: DescriptorInfrastructure;
     variables?: DescriptorVariables;
     version?: string;
+    runtimeBundleVersion?: string;
 }
 
 export interface DescriptorSecurity {
