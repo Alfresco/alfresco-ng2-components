@@ -27,6 +27,7 @@ enum TARGETS {
     Link = 'link'
 }
 
+const DOCKER_FILENAME = 'Dockerfile';
 export interface PublishArgs {
     tag?: string;
     loginCheck?: boolean;
@@ -37,6 +38,7 @@ export interface PublishArgs {
     buildArgs?: string[];
     dockerTags?: string;
     pathProject: string;
+    fileName: string;
 }
 
 function loginPerform(args: PublishArgs) {
@@ -58,7 +60,7 @@ function buildImagePerform(args: PublishArgs, tag: string) {
         });
     }
 
-    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, args.pathProject], {});
+    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, `-f=${args.fileName}`, args.pathProject], {});
     logger.info(response);
 }
 
@@ -102,6 +104,7 @@ function main(args) {
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')
         .option('--buildArgs [type...]', 'buildArgs')
+        .option('--fileName [type...]', 'Docker file name', DOCKER_FILENAME)
         .option('--target [type]', 'target: publish or link', TARGETS.Publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
@@ -129,6 +132,10 @@ function main(args) {
 
     if (args.pathProject === undefined) {
         args.pathProject = resolve('./');
+    }
+
+    if (args.fileName === undefined) {
+        args.fileName = DOCKER_FILENAME;
     }
 
     if (args.loginCheck === true) {
