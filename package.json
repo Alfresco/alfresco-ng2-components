@@ -164,7 +164,7 @@
     "rimraf": "^3.0.2",
     "rxjs-tslint-rules": "^4.34.7",
     "sass-loader": "10.1.1",
-    "selenium-webdriver": "4.1.0",
+    "selenium-webdriver": "4.1.1",
     "stylelint": "^14.2.0",
     "stylelint-config-standard-scss": "^3.0.0",
     "ts-node": "^10.4.0",
