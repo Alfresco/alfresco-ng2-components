@@ -19,9 +19,17 @@
                         [matAutocomplete]="auto"
                         id="processDefinitionName">
                     <div class="adf-process-input-autocomplete">
-                        <mat-autocomplete #auto="matAutocomplete" id="processDefinitionOptions" [displayWith]="displayProcessNameOnDropdown" (optionSelected)="setProcessDefinitionOnForm($event.option.value)" >
-                            <mat-option *ngFor="let processDef of filteredProcesses" [value]="getProcessDefinitionValue(processDef)"
-                                        (click)="processDefinitionSelectionChanged(processDef)">
+                        <mat-autocomplete
+                            #auto="matAutocomplete"
+                            id="processDefinitionOptions"
+                            [displayWith]="displayProcessNameOnDropdown"
+                            (optionSelected)="setProcessDefinitionOnForm($event.option.value)"
+                        >
+                            <mat-option
+                                *ngFor="let processDef of filteredProcesses"
+                                [value]="getProcessDefinitionValue(processDef)"
+                                (click)="processDefinitionSelectionChanged(processDef)"
+                            >
                                 {{ getProcessDefinitionValue(processDef) }}
                             </mat-option>
                         </mat-autocomplete>
@@ -56,8 +64,8 @@
                 <adf-cloud-form
                     [appName]="appName"
                     [appVersion]="processDefinitionCurrent.appVersion"
-                    [data]="values"
                     [formId]="processDefinitionCurrent.formKey"
+                    [data]="values"
                     [showSaveButton]="false"
                     [showCompleteButton]="false"
                     [showRefreshButton]="false"
