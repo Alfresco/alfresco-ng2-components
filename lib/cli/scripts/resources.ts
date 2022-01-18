@@ -19,7 +19,7 @@
 export const ACTIVITI_CLOUD_APPS: any = {
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/subprocessapp.zip?raw=true`,
         processes: {
             processchild: 'processchild',
             processparent: 'processparent'
@@ -31,7 +31,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
     },
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
         processes: {
             candidateUserProcess: 'candidateuserprocess',
             candidateGroupProcess: 'candidategroupprocess',
@@ -74,7 +74,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
     },
     SIMPLE_APP: {
         name: 'simpleapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/simpleapp.zip?raw=true',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/simpleapp.zip?raw=true`,
         processes: {
             processwithvariables: 'processwithvariables',
             simpleProcess: 'simpleprocess',

@@ -41,6 +41,7 @@ export interface ConfigArgs {
     clientId: string;
     host: string;
     identityHost: boolean;
+    tag: string;
 }
 
 export const AAE_MICROSERVICES = [
@@ -240,7 +241,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     return new AlfrescoApi(config);
 }
 
-async function deployMissingApps() {
+async function deployMissingApps(tag?: string) {
     const deployedApps = await getApplicationByStatus('');
     findMissingApps(deployedApps.list.entries);
     findFailingApps(deployedApps.list.entries);
@@ -253,14 +254,14 @@ async function deployMissingApps() {
         process.exit(1);
     } else if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(absentApps);
+        await checkIfAppIsReleased(absentApps, tag);
     } else {
         const reset = '\x1b[0m', green = '\x1b[32m';
         logger.info(`${green}All the apps are correctly deployed${reset}`);
     }
 }
 
-async function checkIfAppIsReleased(missingApps: any []) {
+async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
     const projectList = await getProjects();
     let TIME = 5000;
     let noError = true;
@@ -278,7 +279,7 @@ async function checkIfAppIsReleased(missingApps: any []) {
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
             try {
-                projectRelease = await importProjectAndRelease(currentAbsentApp);
+                projectRelease = await importProjectAndRelease(currentAbsentApp, tag);
             } catch (error) {
                 logger.info(`error status ${error.status}`);
 
@@ -348,8 +349,10 @@ async function checkDescriptorExist(name: string) {
     return false;
 }
 
-async function importProjectAndRelease(app: any) {
-    await getFileFromRemote(app.file_location, app.name);
+async function importProjectAndRelease(app: any, tag?: string) {
+    const appLocationReplaced = app.file_location(tag);
+    logger.warn('App fileLocation ' + appLocationReplaced);
+    await getFileFromRemote(appLocationReplaced, app.name);
     logger.warn('Project imported ' + app.name);
     const projectRelease = await importAndReleaseProject(`${app.name}.zip`);
     await deleteLocalFile(`${app.name}`);
@@ -427,6 +430,7 @@ async function main(configArgs: ConfigArgs) {
         .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
         .option('--devopsPassword [type]', 'devops password')
+        .option('--tag [type]', 'tag name of the codebase')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -459,7 +463,7 @@ async function main(configArgs: ConfigArgs) {
             process.exit(1);
         });
 
-        await deployMissingApps();
+        await deployMissingApps(args.tag);
     } else {
         logger.error('The environment is not up');
         process.exit(1);
