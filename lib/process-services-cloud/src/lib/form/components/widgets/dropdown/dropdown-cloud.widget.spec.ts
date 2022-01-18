@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { FormFieldModel, FormModel, FormService, setupTestBed } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -30,6 +30,7 @@ import {
     mockRestDropdownOptions
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { mockSecondRestDropdownOptions } from '../../../mocks/dropdown.mock';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -157,6 +158,28 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(optOne.nativeElement.innerText).toEqual('option_1');
             expect(optTwo.nativeElement.innerText).toEqual('option_2');
             expect(optThree.nativeElement.innerText).toEqual('option_3');
+        });
+
+        it('should show error message if the restUrl failed to fetch options', async () => {
+            const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+            widget.field.restUrl = 'fake-rest-url';
+            widget.field.optionType = 'rest';
+            widget.field.restIdProperty = 'name';
+
+            widget.ngOnInit();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dropdown = fixture.debugElement.query(By.css('mat-select'));
+            dropdown.nativeElement.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+
+            expect(jsonDataSpy).toHaveBeenCalled();
+            expect(widget.isRestApiFailed).toBe(true);
+            expect(widget.field.options.length).toEqual(0);
+            expect(failedErrorMsgElement.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed',  async () => {
@@ -366,6 +389,44 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(optOne.context.viewValue).toBe('LONDON');
                 expect(optTwo.context.value).toBe('MA');
                 expect(optTwo.context.viewValue).toBe('MANCHESTER');
+            });
+
+            it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
+                let jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+
+                function selectParentOption(parentOptionName: string) {
+                    parentDropdown.value = parentOptionName;
+                    widget.selectionChangedForField(parentDropdown);
+                    fixture.detectChanges();
+                }
+
+                selectParentOption('UK');
+                await openSelect('child-dropdown-id');
+                const failedErrorMsgElement1 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+
+                expect(widget.isRestApiFailed).toBe(false);
+                expect(widget.field.options.length).toBe(2);
+                expect(failedErrorMsgElement1).toBeNull();
+
+                jsonDataSpy.and.returnValue(throwError('Failed to fetch options'));
+                selectParentOption('GR');
+                await openSelect('child-dropdown-id');
+                const failedErrorMsgElement2 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+
+                expect(widget.isRestApiFailed).toBe(true);
+                expect(widget.field.options.length).toBe(0);
+                expect(failedErrorMsgElement2.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
+
+                jsonDataSpy.and.returnValue(of(mockSecondRestDropdownOptions));
+                selectParentOption('IT');
+                await openSelect('child-dropdown-id');
+                const failedErrorMsgElement3 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+
+                expect(widget.isRestApiFailed).toBe(false);
+                expect(widget.field.options.length).toBe(2);
+                expect(failedErrorMsgElement3).toBeNull();
             });
         });
 

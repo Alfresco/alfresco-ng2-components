@@ -29,6 +29,6 @@
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
                   required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <error-widget class="adf-dropdown-required-message" *ngIf="isRestApiFailed"
-                  required="{{ 'Api Failed' | translate }}"></error-widget>
+    <error-widget class="adf-dropdown-failed-message" *ngIf="isRestApiFailed"
+                  required="{{ 'FORM.FIELD.REST_API_FAILED' | translate }}"></error-widget>
 </div>

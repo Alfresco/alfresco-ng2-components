@@ -84,6 +84,11 @@ export const mockRestDropdownOptions: FormFieldOption[] = [
     { id: 'MA', name: 'MANCHESTER' }
 ];
 
+export const mockSecondRestDropdownOptions: FormFieldOption[] = [
+    { id: 'MI', name: 'MILAN' },
+    { id: 'RM', name: 'ROME' }
+];
+
 export const fakeOptionList: FormFieldOption[] = [
     { id: 'opt_1', name: 'option_1' },
     { id: 'opt_2', name: 'option_2' },
