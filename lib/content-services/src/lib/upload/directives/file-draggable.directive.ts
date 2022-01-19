@@ -20,6 +20,9 @@
 import { FileUtils } from '@alfresco/adf-core';
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
+export const INPUT_FOCUS_CSS_CLASS = 'adf-file-draggable-input-focus';
+export const DROP_EFFECT = 'copy';
+
 @Directive({
     selector: '[adf-file-draggable]'
 })
@@ -39,7 +42,6 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     folderEntityDropped = new EventEmitter<any>();
 
-    private cssClassName = 'adf-file-draggable__input-focus';
     private element: HTMLElement;
 
     constructor(el: ElementRef, private ngZone: NgZone) {
@@ -71,7 +73,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
             this.preventDefault(event);
 
             // Chrome, Edge, Firefox, Opera (Files + Folders)
-            const items = event.dataTransfer.items;
+            const items = event.dataTransfer?.items;
             if (items) {
                 const files: File[] = [];
 
@@ -95,13 +97,13 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                 if (files.length > 0) {
                     this.filesDropped.emit(files);
                 }
-            } else {
+            } else if (event.dataTransfer?.files) {
                 // IE, Safari, Chrome, Edge, Firefox, Opera (Files only)
                 const files = FileUtils.toFileArray(event.dataTransfer.files);
                 this.filesDropped.emit(files);
             }
 
-            this.element.classList.remove(this.cssClassName);
+            this.element.classList.remove(INPUT_FOCUS_CSS_CLASS);
         }
     }
 
@@ -113,8 +115,12 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     onDragEnter(event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
-            event.dataTransfer.dropEffect = 'copy';
-            this.element.classList.add(this.cssClassName);
+
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = DROP_EFFECT;
+            }
+
+            this.element.classList.add(INPUT_FOCUS_CSS_CLASS);
         }
     }
 
@@ -126,7 +132,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     onDragLeave(event: Event): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
-            this.element.classList.remove(this.cssClassName);
+            this.element.classList.remove(INPUT_FOCUS_CSS_CLASS);
         }
     }
 
@@ -138,8 +144,12 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     onDragOver(event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
-            event.dataTransfer.dropEffect = 'copy';
-            this.element.classList.add(this.cssClassName);
+
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = DROP_EFFECT;
+            }
+
+            this.element.classList.add(INPUT_FOCUS_CSS_CLASS);
         }
     }
 
