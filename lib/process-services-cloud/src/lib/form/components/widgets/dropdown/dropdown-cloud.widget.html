@@ -30,5 +30,5 @@
     <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
                   required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     <error-widget class="adf-dropdown-failed-message" *ngIf="isRestApiFailed"
-                  required="{{ 'FORM.FIELD.REST_API_FAILED' | translate }}"></error-widget>
+                  required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"></error-widget>
 </div>
