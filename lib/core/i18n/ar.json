@@ -43,7 +43,6 @@
       "UPLOAD": "تحميل",
       "REQUIRED": "*مطلوب",
       "FILE_NAME": "اسم الملف",
-      "DEPENDS_ON": "يعتمد على: {{widgetId}}",
       "NO_FILE_ATTACHED": "لا ملف مرفق",
       "VALIDATOR": {
         "INVALID_NUMBER": "استخدم تنسيق رقم مختلفًا",
@@ -493,14 +492,17 @@
     "VERSION": "الإصدار",
     "SERVER_SETTINGS": {
       "TITLE": "إعدادات الخادم",
-      "DESCRIPTION": "تم أخذ القيم أدناه من AppConfigService",
       "CONTENT_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "إصدارات المنتج",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "خدمات التصميم",
+      "DEPLOYMENT_SERVICE": "خدمات النشر",
+      "QUERY_SERVICE": "خدمات النشر",
+      "RB": "وقت التشغيل",
       "LABELS": {
         "EDITION": "الإصدار",
         "VERSION": "الإصدار",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "حزم",
-      "DESCRIPTION": "يستخدم المشروع الحالي مكتبات ADF التالية:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "المعرف",
-        "TITLE": "العنوان",
-        "DESCRIPTION": "الوصف",
-        "INSTALL_DATE": "تاريخ التثبيت",
-        "INSTALL_STATE": "حالة التثبيت",
-        "VERSION_MIN": "أقل إصدار",
-        "VERSION_MAX": "أقصى إصدار"
-      },
-      "STATUS": {
-        "READ_ONLY": "للقراءة فقط",
-        "AUDIT_ENABLED": "تم تمكين التدقيق",
-        "QUICK_SHARE_ENABLED": "تم تمكين المشاركة السريعة",
-        "THUMBNAIL_ENABLED": "إنشاء صورة مصغرة"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "تم الإصدار في",
-        "EXPIRES_AT": "تنتهي الصلاحية في",
-        "REMAINING_DAYS": "الأيام المتبقية",
-        "HOLDER": "الحامل",
-        "MODE": "الوضع",
-        "CLUSTER_ENABLED": "تم تمكين الكتلة",
-        "CRYPTODOC_ENABLED": "تم تمكين مستند تشفير"
-      }
+      "NAME": "الاسم",
+      "VERSION": "الإصدار"
     },
     "EXTENSIONS": {
       "TITLE": "مكونات إضافية",
@@ -554,6 +531,26 @@
         "RUNTIME": "وقت التشغيل",
         "DESCRIPTION": "الوصف"
       }
+    },
+    "LICENSE": {
+      "TITLE": "الترخيص",
+      "PROPERTY": "الملكية",
+      "VALUE": "القيمة"
+    },
+    "STATUS": {
+      "TITLE": "الحالة",
+      "PROPERTY": "الملكية",
+      "VALUE": "القيمة"
+    },
+    "MODULES": {
+      "TITLE": "وحدات",
+      "NAME": "الاسم",
+      "VERSION": "الإصدار"
+    },
+    "PLUGINS": {
+      "TITLE": "مكونات إضافية",
+      "NAME": "الاسم",
+      "VERSION": "الإصدار"
     }
   },
   "CLIPBOARD": {

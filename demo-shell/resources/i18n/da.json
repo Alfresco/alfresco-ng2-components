@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Udv. model"
+    },
     "INFO_DRAWER": {
       "TITLE": "Detaljer",
       "COMMENTS": "Kommentarer",
@@ -61,7 +64,7 @@
     "HOME": "Hjem",
     "NODE-SELECTOR": "Nodevælger",
     "SITES": "Websteder",
-    "CONTENT_SERVICES": "Indholdstjenester",
+    "CONTENT_SERVICES": "Content Services",
     "BREADCRUMB": "Brødkrumme",
     "NOTIFICATIONS": "Meddelelser",
     "TASK_LIST": "Opgaveliste",
@@ -231,7 +234,7 @@
     "SELECT_PLACEHOLDER": "Rulleliste"
   },
   "LOGIN": {
-    "CONTENT_SERVICES": "Indholdstjenester",
+    "CONTENT_SERVICES": "Content Services",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN_FOOTER": "Sidefod til login",
     "SHOW_REMEMBERME": "Vis Husk mig",
@@ -265,7 +268,7 @@
     "RATING": "Bedømmelse-komponent"
   },
   "TAG": {
-    "LIST": "Vis indholdstjenester for tags",
+    "LIST": "Listetags Content Services",
     "INSERT": "Indsæt node-id",
     "NODE_LIST": "Tagliste efter node-id"
   },

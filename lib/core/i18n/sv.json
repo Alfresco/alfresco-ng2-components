@@ -43,7 +43,6 @@
       "UPLOAD": "Ladda upp",
       "REQUIRED": "*Obligatorisk",
       "FILE_NAME": "Filnamn",
-      "DEPENDS_ON": "Beror på: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ingen fil bifogad",
       "VALIDATOR": {
         "INVALID_NUMBER": "Använd ett annat nummerformat",
@@ -493,14 +492,17 @@
     "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinställningar",
-      "DESCRIPTION": "Värdena nedan tas från AppConfigService",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Produktversioner",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelleringstjänster",
+      "DEPLOYMENT_SERVICE": "Distribueringstjänster",
+      "QUERY_SERVICE": "Distribueringstjänster",
+      "RB": "Runtime",
       "LABELS": {
         "EDITION": "Version",
         "VERSION": "Version",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Paket",
-      "DESCRIPTION": "Det aktuella projektet använder följande ADF-bibliotek:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Titel",
-        "DESCRIPTION": "Beskrivning",
-        "INSTALL_DATE": "Installationsdatum",
-        "INSTALL_STATE": "Installationstillstånd",
-        "VERSION_MIN": "Version mindre",
-        "VERSION_MAX": "Version max"
-      },
-      "STATUS": {
-        "READ_ONLY": "Skrivskyddad",
-        "AUDIT_ENABLED": "Är Revision aktiverad",
-        "QUICK_SHARE_ENABLED": "Är Snabbdelad aktiverad",
-        "THUMBNAIL_ENABLED": "Miniatyrbildsgenerering"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Utgiven den",
-        "EXPIRES_AT": "Löper ut den",
-        "REMAINING_DAYS": "Kvarvarande dagar",
-        "HOLDER": "Innehavare",
-        "MODE": "Läge",
-        "CLUSTER_ENABLED": "Är Kluster aktiverat",
-        "CRYPTODOC_ENABLED": "Är Cryptodoc aktiverat"
-      }
+      "NAME": "Namn",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
       "TITLE": "Plugins",
@@ -554,6 +531,26 @@
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Beskrivning"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licens",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Värde"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Värde"
+    },
+    "MODULES": {
+      "TITLE": "Moduler",
+      "NAME": "Namn",
+      "VERSION": "Version"
+    },
+    "PLUGINS": {
+      "TITLE": "Plugins",
+      "NAME": "Namn",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {

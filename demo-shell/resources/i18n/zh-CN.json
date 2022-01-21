@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Dev 模式"
+    },
     "INFO_DRAWER": {
       "TITLE": "详细信息",
       "COMMENTS": "注释",
@@ -327,7 +330,7 @@
     "ALL_PRESELECTED_GROUPS": "所有预选组",
     "INVALID_USERS": "无效用户",
     "INVALID_GROUPS": "无效组",
-    "READONLY_MODE": "Read-only（只读）模式"
+    "READONLY_MODE": "只读模式"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "多重选择",

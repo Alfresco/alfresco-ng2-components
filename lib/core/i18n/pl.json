@@ -43,7 +43,6 @@
       "UPLOAD": "Prześlij",
       "REQUIRED": "*Wymagane",
       "FILE_NAME": "Nazwa pliku",
-      "DEPENDS_ON": "Zależy od: {{widgetId}}",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",
@@ -493,14 +492,17 @@
     "VERSION": "Wersja",
     "SERVER_SETTINGS": {
       "TITLE": "Ustawienia serwera",
-      "DESCRIPTION": "Wartości widoczne poniżej pochodzą z usługi AppConfigService",
       "CONTENT_SERVICE_HOST": "Adres URL rozwiązania Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "Adres URL rozwiązania Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Wersje produktu",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Usługi modelowania",
+      "DEPLOYMENT_SERVICE": "Usługi wdrożeniowe",
+      "QUERY_SERVICE": "Usługi wdrożeniowe",
+      "RB": "Środowisko uruchomieniowe",
       "LABELS": {
         "EDITION": "Wydanie",
         "VERSION": "Wersja",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Pakiety",
-      "DESCRIPTION": "Bieżący projekt korzysta z następujących bibliotek ADF:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "Identyfikator",
-        "TITLE": "Tytuł",
-        "DESCRIPTION": "Opis",
-        "INSTALL_DATE": "Data instalacji",
-        "INSTALL_STATE": "Stan instalacji",
-        "VERSION_MIN": "Wersja pomocnicza",
-        "VERSION_MAX": "Wersja główna"
-      },
-      "STATUS": {
-        "READ_ONLY": "Tylko do odczytu",
-        "AUDIT_ENABLED": "Czy inspekcja jest włączona",
-        "QUICK_SHARE_ENABLED": "Czy funkcja Quick Share jest włączona",
-        "THUMBNAIL_ENABLED": "Generowanie miniatur"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Wystawiono dnia",
-        "EXPIRES_AT": "Wygasa dnia",
-        "REMAINING_DAYS": "Pozostało dni",
-        "HOLDER": "Posiadacz",
-        "MODE": "Tryb",
-        "CLUSTER_ENABLED": "Czy klaster jest włączony",
-        "CRYPTODOC_ENABLED": "Czy funkcja Cryptodoc jest włączona"
-      }
+      "NAME": "Nazwa",
+      "VERSION": "Wersja"
     },
     "EXTENSIONS": {
       "TITLE": "Dodatki typu plugin",
@@ -554,6 +531,26 @@
         "RUNTIME": "Środowisko uruchomieniowe",
         "DESCRIPTION": "Opis"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licencja",
+      "PROPERTY": "Właściwość",
+      "VALUE": "Wartość"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Właściwość",
+      "VALUE": "Wartość"
+    },
+    "MODULES": {
+      "TITLE": "Moduły",
+      "NAME": "Nazwa",
+      "VERSION": "Wersja"
+    },
+    "PLUGINS": {
+      "TITLE": "Dodatki typu plugin",
+      "NAME": "Nazwa",
+      "VERSION": "Wersja"
     }
   },
   "CLIPBOARD": {

@@ -43,7 +43,6 @@
       "UPLOAD": "Importer",
       "REQUIRED": "*Obligatoire",
       "FILE_NAME": "Nom de fichier",
-      "DEPENDS_ON": "Dépend de: {{widgetId}}",
       "NO_FILE_ATTACHED": "Aucun fichier joint",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utiliser un format de numéro différent",
@@ -493,14 +492,17 @@
     "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Paramètres du serveur",
-      "DESCRIPTION": "Les valeurs ci-dessous proviennent d'AppConfigService",
       "CONTENT_SERVICE_HOST": "URL d'Alfresco Content Services : {{ value }}",
       "PROCESS_SERVICE_HOST": "URL d'Alfresco Process Services : {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Versions du produit",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Services de modélisation",
+      "DEPLOYMENT_SERVICE": "Services de déploiement",
+      "QUERY_SERVICE": "Services de déploiement",
+      "RB": "Runtime",
       "LABELS": {
         "EDITION": "Edition",
         "VERSION": "Version",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Packages",
-      "DESCRIPTION": "Le projet actuel utilise les bibliothèques ADF suivantes :"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Titre",
-        "DESCRIPTION": "Description",
-        "INSTALL_DATE": "Date d'installation",
-        "INSTALL_STATE": "Statut de l'installation",
-        "VERSION_MIN": "Version mineure",
-        "VERSION_MAX": "Version majeure"
-      },
-      "STATUS": {
-        "READ_ONLY": "Lecture seule",
-        "AUDIT_ENABLED": "L'audit est-il activé",
-        "QUICK_SHARE_ENABLED": "Quick Share est-il activé",
-        "THUMBNAIL_ENABLED": "Création de miniature"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Accordée le",
-        "EXPIRES_AT": "Expire le",
-        "REMAINING_DAYS": "Jours restants",
-        "HOLDER": "Titulaire",
-        "MODE": "Mode",
-        "CLUSTER_ENABLED": "Le cluster est-il activé",
-        "CRYPTODOC_ENABLED": "Cryptodoc est-il activé"
-      }
+      "NAME": "Nom",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
       "TITLE": "Plugins",
@@ -551,9 +528,29 @@
         "VERSION": "Version",
         "VENDOR": "Fournisseur",
         "LICENSE": "Licence",
-        "RUNTIME": "Java Runtime",
+        "RUNTIME": "Runtime",
         "DESCRIPTION": "Description"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licence",
+      "PROPERTY": "Propriété",
+      "VALUE": "Valeur"
+    },
+    "STATUS": {
+      "TITLE": "Statut",
+      "PROPERTY": "Propriété",
+      "VALUE": "Valeur"
+    },
+    "MODULES": {
+      "TITLE": "Modules",
+      "NAME": "Nom",
+      "VERSION": "Version"
+    },
+    "PLUGINS": {
+      "TITLE": "Plugins",
+      "NAME": "Nom",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {

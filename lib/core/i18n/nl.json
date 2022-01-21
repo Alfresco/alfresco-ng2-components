@@ -43,7 +43,6 @@
       "UPLOAD": "Uploaden",
       "REQUIRED": "*Vereist",
       "FILE_NAME": "Bestandsnaam",
-      "DEPENDS_ON": "Is afhankelijk van: {{widgetId}}",
       "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Gebruik een andere getalnotatie",
@@ -493,14 +492,17 @@
     "VERSION": "Versie",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinstellingen",
-      "DESCRIPTION": "De onderstaande waarden zijn afkomstig uit de AppConfigService",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Productversies",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelleringsservices",
+      "DEPLOYMENT_SERVICE": "Implementatieservices",
+      "QUERY_SERVICE": "Implementatieservices",
+      "RB": "Runtime",
       "LABELS": {
         "EDITION": "Editie",
         "VERSION": "Versie",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Pakketten",
-      "DESCRIPTION": "Voor het huidige project worden de volgende ADF-bibliotheken gebruikt:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "Id",
-        "TITLE": "Titel",
-        "DESCRIPTION": "Beschrijving",
-        "INSTALL_DATE": "Installatiedatum",
-        "INSTALL_STATE": "Installatiestatus",
-        "VERSION_MIN": "Versie met kleine wijzigingen",
-        "VERSION_MAX": "Versie met belangrijke wijzigingen"
-      },
-      "STATUS": {
-        "READ_ONLY": "Alleen-lezen",
-        "AUDIT_ENABLED": "Is ingeschakeld voor audits",
-        "QUICK_SHARE_ENABLED": "Is ingeschakeld voor Quick Share",
-        "THUMBNAIL_ENABLED": "Miniatuurgeneratie"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Verleend op",
-        "EXPIRES_AT": "Vervalt op",
-        "REMAINING_DAYS": "Resterende dagen",
-        "HOLDER": "Houder",
-        "MODE": "Modus",
-        "CLUSTER_ENABLED": "Is ingeschakeld voor clusters",
-        "CRYPTODOC_ENABLED": "Is ingeschakeld voor Cryptodoc"
-      }
+      "NAME": "Naam",
+      "VERSION": "Versie"
     },
     "EXTENSIONS": {
       "TITLE": "Plug-ins",
@@ -554,6 +531,26 @@
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Beschrijving"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licentie",
+      "PROPERTY": "Eigenschap",
+      "VALUE": "Waarde"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Eigenschap",
+      "VALUE": "Waarde"
+    },
+    "MODULES": {
+      "TITLE": "Modules",
+      "NAME": "Naam",
+      "VERSION": "Versie"
+    },
+    "PLUGINS": {
+      "TITLE": "Plug-ins",
+      "NAME": "Naam",
+      "VERSION": "Versie"
     }
   },
   "CLIPBOARD": {

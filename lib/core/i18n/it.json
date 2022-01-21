@@ -43,7 +43,6 @@
       "UPLOAD": "Carica",
       "REQUIRED": "*Obbligatorio",
       "FILE_NAME": "Nome file",
-      "DEPENDS_ON": "Dipende da: {{widgetId}}",
       "NO_FILE_ATTACHED": "Nessun file allegato",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizzare un formato numerico diverso",
@@ -493,14 +492,17 @@
     "VERSION": "Versione",
     "SERVER_SETTINGS": {
       "TITLE": "Impostazioni server",
-      "DESCRIPTION": "I valori seguenti sono stati recuperati dal servizio di configurazione dell'applicazione",
       "CONTENT_SERVICE_HOST": "URL di Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL di Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Versioni prodotto",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Servizi di modellazione",
+      "DEPLOYMENT_SERVICE": "Servizi di distribuzione",
+      "QUERY_SERVICE": "Servizi di distribuzione",
+      "RB": "Runtime",
       "LABELS": {
         "EDITION": "Edizione",
         "VERSION": "Versione",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Pacchetti",
-      "DESCRIPTION": "Il progetto corrente usa le seguenti librerie di ADF:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Titolo",
-        "DESCRIPTION": "Descrizione",
-        "INSTALL_DATE": "Data installazione",
-        "INSTALL_STATE": "Stato installazione",
-        "VERSION_MIN": "Minimo versioni",
-        "VERSION_MAX": "Massimo versioni"
-      },
-      "STATUS": {
-        "READ_ONLY": "Sola lettura",
-        "AUDIT_ENABLED": "Audit abilitato?",
-        "QUICK_SHARE_ENABLED": "Quick Share abilitata",
-        "THUMBNAIL_ENABLED": "Generazione miniatura"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Emissione",
-        "EXPIRES_AT": "Scade il",
-        "REMAINING_DAYS": "Giorni residui",
-        "HOLDER": "Titolare",
-        "MODE": "Modo",
-        "CLUSTER_ENABLED": "Cluster abilitato",
-        "CRYPTODOC_ENABLED": "Crittografia documenti abilitata"
-      }
+      "NAME": "Nome",
+      "VERSION": "Versione"
     },
     "EXTENSIONS": {
       "TITLE": "Plug-in",
@@ -554,6 +531,26 @@
         "RUNTIME": "Runtime",
         "DESCRIPTION": "Descrizione"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licenza",
+      "PROPERTY": "Proprietà",
+      "VALUE": "Valore"
+    },
+    "STATUS": {
+      "TITLE": "Stato",
+      "PROPERTY": "Proprietà",
+      "VALUE": "Valore"
+    },
+    "MODULES": {
+      "TITLE": "Moduli",
+      "NAME": "Nome",
+      "VERSION": "Versione"
+    },
+    "PLUGINS": {
+      "TITLE": "Plug-in",
+      "NAME": "Nome",
+      "VERSION": "Versione"
     }
   },
   "CLIPBOARD": {

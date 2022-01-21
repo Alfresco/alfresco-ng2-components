@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Režim pro vývojáře"
+    },
     "INFO_DRAWER": {
       "TITLE": "Podrobnosti",
       "COMMENTS": "Poznámky",

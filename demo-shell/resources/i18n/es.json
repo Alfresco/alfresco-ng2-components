@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Modo Dev"
+    },
     "INFO_DRAWER": {
       "TITLE": "Detalles",
       "COMMENTS": "Comentarios",
@@ -249,7 +252,7 @@
       "CREATED": "5:Creados"
     },
     "FACET_QUERIES": {
-      "MY_FACET_QUERIES": "Mis consultas de faceta",
+      "MY_FACET_QUERIES": "Mis consultas por filtros",
       "CREATED_THIS_YEAR": "1.Creadas este año",
       "MIMETYPE": "2.Tipo: HTML",
       "XTRASMALL": "3.Tamaño: extrapequeño",

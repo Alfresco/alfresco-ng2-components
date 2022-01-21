@@ -43,7 +43,6 @@
       "UPLOAD": "Upload",
       "REQUIRED": "*Påkrævet",
       "FILE_NAME": "Filnavn",
-      "DEPENDS_ON": "Afhænger af: {{widgetId}}",
       "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
       "VALIDATOR": {
         "INVALID_NUMBER": "Brug et andet talformat",
@@ -173,10 +172,10 @@
       "IMPLICIT-FLOW": "Implicit flow",
       "PROVIDER": "Udbyder",
       "REQUIRED": "Dette felt er påkrævet",
-      "CS_URL_ERROR": "Adressen til indholdstjenesterne matcher ikke URL-adresseformatet",
+      "CS_URL_ERROR": "Content Services-adressen matcher ikke URL-formatet",
       "PS_URL_ERROR": "Process Services-adressen matcher ikke URL-adresseformatet",
       "TITLE": "Indstillinger",
-      "CS-HOST": "URL-adresse til indholdstjenester",
+      "CS-HOST": "Content Services-URL",
       "BP-HOST": "URL-adresse til Process Services",
       "BACK": "Tilbage",
       "APPLY": "Anvend",
@@ -362,7 +361,7 @@
       }
     },
     "TAB": {
-      "CS": "Indholdstjenester",
+      "CS": "Content Services",
       "PS": "Process Services"
     }
   },
@@ -493,14 +492,17 @@
     "VERSION": "Version",
     "SERVER_SETTINGS": {
       "TITLE": "Serverindstillinger",
-      "DESCRIPTION": "Nedenstående værdier er taget fra AppConfigService",
       "CONTENT_SERVICE_HOST": "URL-adresse til Alfresco-indholdstjenester: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL-adresse til Alfresco-procestjenester: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Produktversioner",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelleringstjenester",
+      "DEPLOYMENT_SERVICE": "Udrulningstjenester",
+      "QUERY_SERVICE": "Udrulningstjenester",
+      "RB": "Kørselstidspunkt",
       "LABELS": {
         "EDITION": "Version",
         "VERSION": "Version",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Pakker",
-      "DESCRIPTION": "Det aktuelle projekt bruger følgende ADF-biblioteker:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "Id",
-        "TITLE": "Titel",
-        "DESCRIPTION": "Beskrivelse",
-        "INSTALL_DATE": "Installationsdato",
-        "INSTALL_STATE": "Installationstilstand",
-        "VERSION_MIN": "Mindre version",
-        "VERSION_MAX": "Maksimumversion"
-      },
-      "STATUS": {
-        "READ_ONLY": "Skrivebeskyttet",
-        "AUDIT_ENABLED": "Er aktiveret til overvågning",
-        "QUICK_SHARE_ENABLED": "Er aktiveret til hurtig deling",
-        "THUMBNAIL_ENABLED": "Miniaturegeneration"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Udstedt den",
-        "EXPIRES_AT": "Udløber den",
-        "REMAINING_DAYS": "Resterende dage",
-        "HOLDER": "Holder",
-        "MODE": "Tilstand",
-        "CLUSTER_ENABLED": "Er aktiveret til klynge",
-        "CRYPTODOC_ENABLED": "Er aktiveret til kryptodok"
-      }
+      "NAME": "Navn",
+      "VERSION": "Version"
     },
     "EXTENSIONS": {
       "TITLE": "Plug-ins",
@@ -554,6 +531,26 @@
         "RUNTIME": "Kørselstidspunkt",
         "DESCRIPTION": "Beskrivelse"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licens",
+      "PROPERTY": "Egenskab",
+      "VALUE": "Værdi"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Egenskab",
+      "VALUE": "Værdi"
+    },
+    "MODULES": {
+      "TITLE": "Moduler",
+      "NAME": "Navn",
+      "VERSION": "Version"
+    },
+    "PLUGINS": {
+      "TITLE": "Plug-ins",
+      "NAME": "Navn",
+      "VERSION": "Version"
     }
   },
   "CLIPBOARD": {
