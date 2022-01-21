@@ -79,7 +79,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 name: 'date-name',
                 type: 'dropdown',
                 readOnly: false,
-                restUrl: 'fake-rest-url'
+                restUrl: 'https://fake-rest-url'
             });
             widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
             widget.field.isVisible = true;
@@ -135,7 +135,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should load data from restUrl and populate options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
-            widget.field.restUrl = 'fake-rest-url';
+            widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.restIdProperty = 'name';
 
@@ -162,7 +162,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should show error message if the restUrl failed to fetch options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
-            widget.field.restUrl = 'fake-rest-url';
+            widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.restIdProperty = 'name';
 
@@ -183,7 +183,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed',  async () => {
-            widget.field.restUrl = 'fake-rest-url';
+            widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.value = {
                 id: 'opt1',
@@ -211,7 +211,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should preselect dropdown widget value when String (defined value) passed ', async () => {
-            widget.field.restUrl = 'fake-rest-url';
+            widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.value = 'opt1';
 

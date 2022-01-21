@@ -276,6 +276,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private getRestUrlHostName(): string {
-        return new URL(this.field?.restUrl).hostname;
+        try {
+            return new URL(this.field?.restUrl).hostname;
+        } catch {
+            return this.field?.restUrl;
+        }
     }
 }
