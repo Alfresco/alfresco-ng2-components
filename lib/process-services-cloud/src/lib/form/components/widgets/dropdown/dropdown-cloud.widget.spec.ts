@@ -27,10 +27,10 @@ import {
     fakeOptionList,
     filterOptionList,
     mockConditionalEntries,
-    mockRestDropdownOptions
+    mockRestDropdownOptions,
+    mockSecondRestDropdownOptions
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { mockSecondRestDropdownOptions } from '../../../mocks/dropdown.mock';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -392,7 +392,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
-                let jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 

@@ -106,7 +106,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     this.field.updateForm();
                 }, (err) => {
                     this.resetRestApiOptions();
-                    this.handleError(err)
+                    this.handleError(err);
                 });
         }
     }
