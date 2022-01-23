@@ -111,6 +111,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
+    resetRestApiOptions() {
+        this.field.options = [];
+        this.resetValue();
+    }
+
     private buildBodyParam(): any {
         const bodyParam = Object.assign({});
         if (this.isLinkedWidget()) {
@@ -133,16 +138,16 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private parentValueChanged(value: string) {
-        if (this.isValidValue(value)) {
+        if (value && !this.isDefaultValue(value)) {
             this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isDefaultValue(value)) {
             this.resetRestApiErrorMessage();
             this.addDefaultOption();
+            this.resetInvalidValue();
+        } else {
+            this.field.options = [];
+            this.resetInvalidValue();
         }
-    }
-
-    private isValidValue(value: string): boolean {
-        return !!value && value !== DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
     }
 
     private isDefaultValue(value: string): boolean {
@@ -159,11 +164,35 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             rulesEntries.forEach((ruleEntry: RuleEntry) => {
                 if (ruleEntry.key === value) {
                     this.field.options = ruleEntry.options;
-                    this.updateOptions();
-                    this.field.updateForm();
+                    this.resetInvalidValue();
                 }
             });
         }
+    }
+
+    private resetInvalidValue() {
+        if (!this.isValidValue()) {
+            this.resetValue();
+        }
+    }
+
+    private resetValue() {
+        this.field.value = '';
+        this.selectionChangedForField(this.field);
+        this.updateOptions();
+        this.field.updateForm();
+    }
+
+    private isValidValue(): boolean {
+        return this.fieldValue && !this.isDefaultValue(this.fieldValue) && this.isSelectedValueInOptions();
+    }
+
+    private isSelectedValueInOptions(): boolean {
+        return [...this.field.options].map(option => option.id).includes(this.fieldValue);
+    }
+
+    get fieldValue(): string {
+        return this.field.value;
     }
 
     private hasRuleEntries(): boolean {

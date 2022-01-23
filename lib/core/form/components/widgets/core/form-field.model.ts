@@ -293,17 +293,14 @@ export class FormFieldModel extends FormWidgetModel {
         if (json.type === FormFieldTypes.DROPDOWN) {
 
             if (json.options) {
-                const options = <FormFieldOption[]> json.options || [];
-                if (options.length > 0) {
-                    if (json.hasEmptyValue) {
-                        const emptyOption = json.options[0];
-                        if (value === '' || value === emptyOption.id || value === emptyOption.name) {
-                            value = emptyOption.id;
-                        }
-                    } else {
-                        if (value?.id && value?.name) {
-                            value = value.id;
-                        }
+                if (json.hasEmptyValue) {
+                    const emptyOption = json.options[0];
+                    if (value === '' || value === emptyOption.id || value === emptyOption.name) {
+                        value = emptyOption.id;
+                    }
+                } else {
+                    if (value?.id && value?.name) {
+                        value = value.id;
                     }
                 }
             }
@@ -371,7 +368,7 @@ export class FormFieldModel extends FormWidgetModel {
 
                 if (typeof this.value === 'string') {
                     if (this.value === 'empty' || this.value === '') {
-                        this.form.values[this.id] = {};
+                        delete this.form.values[this.id];
                         break;
                     }
 
