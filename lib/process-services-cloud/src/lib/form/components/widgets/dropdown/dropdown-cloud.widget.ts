@@ -59,6 +59,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     typeId = 'DropdownCloudWidgetComponent';
     HIDE_FILTER_LIMIT = 5;
     showInputFilter = false;
+    isRestApiFailed = false;
+    restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
 
@@ -93,14 +95,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private persistFieldOptionsFromRestApi() {
         if (this.isValidRestType()) {
+            this.resetRestApiErrorMessage();
             const bodyParam = this.buildBodyParam();
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
+                    this.resetRestApiErrorMessage();
                     this.field.options = result;
                     this.updateOptions();
                     this.field.updateForm();
-                }, (err) => this.handleError(err));
+                }, (err) => {
+                    this.resetRestApiOptions();
+                    this.handleError(err);
+                });
         }
     }
 
@@ -129,6 +136,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         if (this.isValidValue(value)) {
             this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isDefaultValue(value)) {
+            this.resetRestApiErrorMessage();
             this.addDefaultOption();
         }
     }
@@ -252,5 +260,26 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 }),
                 takeUntil(this.onDestroy$)
             );
+    }
+
+    resetRestApiErrorMessage() {
+        this.isRestApiFailed = false;
+        this.restApiHostName = '';
+    }
+
+    resetRestApiOptions() {
+        this.field.options = [];
+        this.isRestApiFailed = true;
+        this.restApiHostName = this.getRestUrlHostName();
+        this.updateOptions();
+        this.field.updateForm();
+    }
+
+    private getRestUrlHostName(): string {
+        try {
+            return new URL(this.field?.restUrl).hostname;
+        } catch {
+            return this.field?.restUrl;
+        }
     }
 }
