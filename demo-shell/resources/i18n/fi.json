@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Kehitystapa"
+    },
     "INFO_DRAWER": {
       "TITLE": "Tiedot",
       "COMMENTS": "Kommentit",

@@ -43,7 +43,6 @@
       "UPLOAD": "上传",
       "REQUIRED": "*必需",
       "FILE_NAME": "文件名",
-      "DEPENDS_ON": "取决于: {{widgetId}}",
       "NO_FILE_ATTACHED": "无附加文件",
       "VALIDATOR": {
         "INVALID_NUMBER": "使用其他数字格式",
@@ -493,14 +492,17 @@
     "VERSION": "版本",
     "SERVER_SETTINGS": {
       "TITLE": "服务器设置",
-      "DESCRIPTION": "以下值均取自 AppConfigService",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL：{{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL：{{ value }}"
     },
     "VERSIONS": {
       "TITLE": "产品版本",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "建模服务",
+      "DEPLOYMENT_SERVICE": "部署服务",
+      "QUERY_SERVICE": "部署服务",
+      "RB": "运行时",
       "LABELS": {
         "EDITION": "版本",
         "VERSION": "版本",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "软件包",
-      "DESCRIPTION": "当前项目正在使用以下 ADF 库："
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "标题",
-        "DESCRIPTION": "说明",
-        "INSTALL_DATE": "安装日期",
-        "INSTALL_STATE": "安装状态",
-        "VERSION_MIN": "次要版本",
-        "VERSION_MAX": "最新版本"
-      },
-      "STATUS": {
-        "READ_ONLY": "只读",
-        "AUDIT_ENABLED": "是否已启用审计",
-        "QUICK_SHARE_ENABLED": "是否已启用 Quick Share",
-        "THUMBNAIL_ENABLED": "缩略图生成"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "发布时间",
-        "EXPIRES_AT": "过期时间",
-        "REMAINING_DAYS": "剩余天数",
-        "HOLDER": "占位符",
-        "MODE": "模式",
-        "CLUSTER_ENABLED": "是否已启用群集",
-        "CRYPTODOC_ENABLED": "是否已启用 Cryptodoc"
-      }
+      "NAME": "名称",
+      "VERSION": "版本"
     },
     "EXTENSIONS": {
       "TITLE": "插件",
@@ -554,6 +531,26 @@
         "RUNTIME": "运行时",
         "DESCRIPTION": "说明"
       }
+    },
+    "LICENSE": {
+      "TITLE": "许可证",
+      "PROPERTY": "属性",
+      "VALUE": "值"
+    },
+    "STATUS": {
+      "TITLE": "状态",
+      "PROPERTY": "属性",
+      "VALUE": "值"
+    },
+    "MODULES": {
+      "TITLE": "模块",
+      "NAME": "名称",
+      "VERSION": "版本"
+    },
+    "PLUGINS": {
+      "TITLE": "插件",
+      "NAME": "名称",
+      "VERSION": "版本"
     }
   },
   "CLIPBOARD": {

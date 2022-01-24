@@ -43,7 +43,6 @@
       "UPLOAD": "Cargar",
       "REQUIRED": "*Obligatorio",
       "FILE_NAME": "Nombre del fichero",
-      "DEPENDS_ON": "Depende de: {{widgetId}}",
       "NO_FILE_ATTACHED": "Sin fichero adjunto",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizar un formato de número diferente",
@@ -493,14 +492,17 @@
     "VERSION": "Versión",
     "SERVER_SETTINGS": {
       "TITLE": "Configuración del servidor",
-      "DESCRIPTION": "Los valores siguientes se han tomado de AppConfigService",
       "CONTENT_SERVICE_HOST": "URL de Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL de Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Versiones de productos",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Servicios de modelado",
+      "DEPLOYMENT_SERVICE": "Servicios de implementación",
+      "QUERY_SERVICE": "Servicios de implementación",
+      "RB": "Tiempo de ejecución",
       "LABELS": {
         "EDITION": "Edición",
         "VERSION": "Versión",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Paquetes",
-      "DESCRIPTION": "El proyecto actual utiliza las bibliotecas ADF siguientes:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Título",
-        "DESCRIPTION": "Descripción",
-        "INSTALL_DATE": "Fecha de instalación",
-        "INSTALL_STATE": "Estado de instalación",
-        "VERSION_MIN": "Versión menor",
-        "VERSION_MAX": "Versión mayor"
-      },
-      "STATUS": {
-        "READ_ONLY": "Solo lectura",
-        "AUDIT_ENABLED": "Compatible con auditoría",
-        "QUICK_SHARE_ENABLED": "Compatible con Quick Share",
-        "THUMBNAIL_ENABLED": "Generación de miniatura"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Expedida el",
-        "EXPIRES_AT": "Caduca el",
-        "REMAINING_DAYS": "Días restantes",
-        "HOLDER": "Titular",
-        "MODE": "Modo",
-        "CLUSTER_ENABLED": "Compatible con clústeres",
-        "CRYPTODOC_ENABLED": "Compatible con Cryptodoc"
-      }
+      "NAME": "Nombre",
+      "VERSION": "Versión"
     },
     "EXTENSIONS": {
       "TITLE": "Complementos",
@@ -554,6 +531,26 @@
         "RUNTIME": "Tiempo de ejecución",
         "DESCRIPTION": "Descripción"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licencia",
+      "PROPERTY": "Propiedad",
+      "VALUE": "Valor"
+    },
+    "STATUS": {
+      "TITLE": "Estado",
+      "PROPERTY": "Propiedad",
+      "VALUE": "Valor"
+    },
+    "MODULES": {
+      "TITLE": "Módulos",
+      "NAME": "Nombre",
+      "VERSION": "Versión"
+    },
+    "PLUGINS": {
+      "TITLE": "Complementos",
+      "NAME": "Nombre",
+      "VERSION": "Versión"
     }
   },
   "CLIPBOARD": {

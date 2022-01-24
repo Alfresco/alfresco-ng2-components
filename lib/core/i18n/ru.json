@@ -43,7 +43,6 @@
       "UPLOAD": "Загрузить",
       "REQUIRED": "*Обязательное поле",
       "FILE_NAME": "Имя файла",
-      "DEPENDS_ON": "Зависит от: {{widgetId}}",
       "NO_FILE_ATTACHED": "Вложенные файлы отсутствуют",
       "VALIDATOR": {
         "INVALID_NUMBER": "Используйте другой формат числа",
@@ -493,14 +492,17 @@
     "VERSION": "Версия",
     "SERVER_SETTINGS": {
       "TITLE": "Параметры сервера",
-      "DESCRIPTION": "Значения ниже получены из AppConfigService",
       "CONTENT_SERVICE_HOST": "URL-адрес Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL-адрес Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Версии продукта",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Сервисы моделирования",
+      "DEPLOYMENT_SERVICE": "Сервисы развертывания",
+      "QUERY_SERVICE": "Сервисы развертывания",
+      "RB": "Среда выполнения",
       "LABELS": {
         "EDITION": "Издание",
         "VERSION": "Версия",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Пакеты",
-      "DESCRIPTION": "Текущий проект использует следующие библиотеки ADF:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "Идентификатор",
-        "TITLE": "Заголовок",
-        "DESCRIPTION": "Описание",
-        "INSTALL_DATE": "Дата установки",
-        "INSTALL_STATE": "Состояние установки",
-        "VERSION_MIN": "Младшая версия",
-        "VERSION_MAX": "Макс. версия"
-      },
-      "STATUS": {
-        "READ_ONLY": "Только для чтения",
-        "AUDIT_ENABLED": "Аудит включен",
-        "QUICK_SHARE_ENABLED": "Quick Share включен",
-        "THUMBNAIL_ENABLED": "Создание эскизов"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Дата выдачи",
-        "EXPIRES_AT": "Дата истечения",
-        "REMAINING_DAYS": "Осталось дней",
-        "HOLDER": "Держатель",
-        "MODE": "Режим",
-        "CLUSTER_ENABLED": "Кластер включен",
-        "CRYPTODOC_ENABLED": "Cryptodoc включен"
-      }
+      "NAME": "Имя",
+      "VERSION": "Версия"
     },
     "EXTENSIONS": {
       "TITLE": "Подключаемые модули",
@@ -554,6 +531,26 @@
         "RUNTIME": "Среда выполнения",
         "DESCRIPTION": "Описание"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Лицензия",
+      "PROPERTY": "Свойство",
+      "VALUE": "Значение"
+    },
+    "STATUS": {
+      "TITLE": "Статус",
+      "PROPERTY": "Свойство",
+      "VALUE": "Значение"
+    },
+    "MODULES": {
+      "TITLE": "Модули",
+      "NAME": "Имя",
+      "VERSION": "Версия"
+    },
+    "PLUGINS": {
+      "TITLE": "Подключаемые модули",
+      "NAME": "Имя",
+      "VERSION": "Версия"
     }
   },
   "CLIPBOARD": {

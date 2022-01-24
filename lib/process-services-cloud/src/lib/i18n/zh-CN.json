@@ -174,7 +174,7 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "自定义您的筛选器",
-    "FILTER_NAME": "过滤器名称",
+    "FILTER_NAME": "筛选器名称",
     "TOOL_TIP": {
       "SAVE": "保存筛选器",
       "SAVE_AS": "另存筛选器为",
@@ -230,7 +230,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "自定义您的筛选器",
-    "FILTER_NAME": "过滤器名称",
+    "FILTER_NAME": "筛选器名称",
     "LABEL": {
       "APP_NAME": "应用程序名称",
       "PROCESS_INS_ID": "流程实例 ID",

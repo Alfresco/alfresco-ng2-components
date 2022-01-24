@@ -43,7 +43,6 @@
       "UPLOAD": "Laster opp",
       "REQUIRED": "*Påkrevd",
       "FILE_NAME": "Filnavn",
-      "DEPENDS_ON": "Avhenger av: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ingen fil vedlagt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Bruk et annet nummerformat",
@@ -493,14 +492,17 @@
     "VERSION": "Versjon",
     "SERVER_SETTINGS": {
       "TITLE": "Serverinnstillinger",
-      "DESCRIPTION": "Verdiene nedenfor er tatt fra AppConfigService",
       "CONTENT_SERVICE_HOST": "URL til Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL til Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Produktversjoner",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelleringstjenester",
+      "DEPLOYMENT_SERVICE": "Distribusjonstjenester",
+      "QUERY_SERVICE": "Distribusjonstjenester",
+      "RB": "Kjøretid",
       "LABELS": {
         "EDITION": "Utgave",
         "VERSION": "Versjon",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Pakker",
-      "DESCRIPTION": "Gjeldende prosjekt bruker følgende ADF-biblioteker:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Tittel",
-        "DESCRIPTION": "Beskrivelse",
-        "INSTALL_DATE": "Installasjonsdato",
-        "INSTALL_STATE": "Installeringstilstand",
-        "VERSION_MIN": "Mindre versjon",
-        "VERSION_MAX": "Maks versjon"
-      },
-      "STATUS": {
-        "READ_ONLY": "Skrivebeskyttet",
-        "AUDIT_ENABLED": "Er aktivert for revisjon",
-        "QUICK_SHARE_ENABLED": "Er aktivert for Quick Share",
-        "THUMBNAIL_ENABLED": "Generering av miniatyrbilde"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Utstedt",
-        "EXPIRES_AT": "Utløper",
-        "REMAINING_DAYS": "Gjenstående dager",
-        "HOLDER": "Innehaver",
-        "MODE": "Modus",
-        "CLUSTER_ENABLED": "Er klyngeaktivert",
-        "CRYPTODOC_ENABLED": "Er Cryptodoc-aktivert"
-      }
+      "NAME": "Navn",
+      "VERSION": "Versjon"
     },
     "EXTENSIONS": {
       "TITLE": "Plugin-moduler",
@@ -554,6 +531,26 @@
         "RUNTIME": "Kjøretid",
         "DESCRIPTION": "Beskrivelse"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Lisens",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi"
+    },
+    "STATUS": {
+      "TITLE": "Status",
+      "PROPERTY": "Egenskap",
+      "VALUE": "Verdi"
+    },
+    "MODULES": {
+      "TITLE": "Moduler",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
+    },
+    "PLUGINS": {
+      "TITLE": "Plugin-moduler",
+      "NAME": "Navn",
+      "VERSION": "Versjon"
     }
   },
   "CLIPBOARD": {

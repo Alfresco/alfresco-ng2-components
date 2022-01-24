@@ -43,7 +43,6 @@
       "UPLOAD": "Lataa",
       "REQUIRED": "*Pakollinen",
       "FILE_NAME": "Tiedostonimi",
-      "DEPENDS_ON": "Riippuu kohteesta: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
       "VALIDATOR": {
         "INVALID_NUMBER": "Käytä toista numeromuotoa",
@@ -493,14 +492,17 @@
     "VERSION": "Versio",
     "SERVER_SETTINGS": {
       "TITLE": "Palvelinasetukset",
-      "DESCRIPTION": "Alla olevat arvot on otettu sovellusmäärityspalvelusta",
       "CONTENT_SERVICE_HOST": "Alfresco Content Servicesin URL-osoite: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Servicesin URL-osoite: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Tuoteversiot",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Mallinnuspalvelu",
+      "DEPLOYMENT_SERVICE": "Käyttöönottopalvelu",
+      "QUERY_SERVICE": "Käyttöönottopalvelu",
+      "RB": "Suorituspalvelu",
       "LABELS": {
         "EDITION": "Versio",
         "VERSION": "Versio",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Paketit",
-      "DESCRIPTION": "Nykyinen projekti käyttää seuraavia ADF-kirjastoja:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "Tunnus",
-        "TITLE": "Otsikko",
-        "DESCRIPTION": "Kuvaus",
-        "INSTALL_DATE": "Asennuspäivämäärä",
-        "INSTALL_STATE": "Asennustila",
-        "VERSION_MIN": "Versio (ala)",
-        "VERSION_MAX": "Versio (pää)"
-      },
-      "STATUS": {
-        "READ_ONLY": "Vain luku",
-        "AUDIT_ENABLED": "Tarkastus on käytössä",
-        "QUICK_SHARE_ENABLED": "Pikajako on käytössä",
-        "THUMBNAIL_ENABLED": "Pikkukuvan luominen"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Myönnetty",
-        "EXPIRES_AT": "Vanhentuu",
-        "REMAINING_DAYS": "Päiviä jäljellä",
-        "HOLDER": "Haltija",
-        "MODE": "Tila",
-        "CLUSTER_ENABLED": "Klusteri on käytössä",
-        "CRYPTODOC_ENABLED": "Asiakirjasalaus on käytössä"
-      }
+      "NAME": "Nimi",
+      "VERSION": "Versio"
     },
     "EXTENSIONS": {
       "TITLE": "Lisäosat",
@@ -554,6 +531,26 @@
         "RUNTIME": "Suorituspalvelu",
         "DESCRIPTION": "Kuvaus"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Käyttöoikeus",
+      "PROPERTY": "Ominaisuus",
+      "VALUE": "Arvo"
+    },
+    "STATUS": {
+      "TITLE": "Tila",
+      "PROPERTY": "Ominaisuus",
+      "VALUE": "Arvo"
+    },
+    "MODULES": {
+      "TITLE": "Moduulit",
+      "NAME": "Nimi",
+      "VERSION": "Versio"
+    },
+    "PLUGINS": {
+      "TITLE": "Lisäosat",
+      "NAME": "Nimi",
+      "VERSION": "Versio"
     }
   },
   "CLIPBOARD": {

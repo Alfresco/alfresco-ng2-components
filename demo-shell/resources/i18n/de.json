@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "Entwicklermodus"
+    },
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Kommentare",

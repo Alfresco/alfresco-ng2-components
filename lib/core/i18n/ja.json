@@ -43,7 +43,6 @@
       "UPLOAD": "アップロード",
       "REQUIRED": "*必須",
       "FILE_NAME": "ファイル名",
-      "DEPENDS_ON": "依存: {{widgetId}}",
       "NO_FILE_ATTACHED": "ファイルが添付されていません",
       "VALIDATOR": {
         "INVALID_NUMBER": "別の番号形式を使用してください",
@@ -493,14 +492,17 @@
     "VERSION": "バージョン",
     "SERVER_SETTINGS": {
       "TITLE": "サーバーの設定",
-      "DESCRIPTION": "下の値は AppConfigService から取得されたものです",
       "CONTENT_SERVICE_HOST": "Alfresco Content Services の URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services の URL: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "製品のバージョン",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "モデリングサービス",
+      "DEPLOYMENT_SERVICE": "展開サービス",
+      "QUERY_SERVICE": "展開サービス",
+      "RB": "ランタイム",
       "LABELS": {
         "EDITION": "エディション",
         "VERSION": "バージョン",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "パッケージ",
-      "DESCRIPTION": "現在のプロジェクトは次の ADF ライブラリを使用しています:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "タイトル",
-        "DESCRIPTION": "説明",
-        "INSTALL_DATE": "インストール日",
-        "INSTALL_STATE": "インストール状態",
-        "VERSION_MIN": "小さな変更",
-        "VERSION_MAX": "大きな変更"
-      },
-      "STATUS": {
-        "READ_ONLY": "読み取り専用",
-        "AUDIT_ENABLED": "監査 - 有効",
-        "QUICK_SHARE_ENABLED": "Quick Share - 有効",
-        "THUMBNAIL_ENABLED": "サムネイルの生成"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "発行日時",
-        "EXPIRES_AT": "有効期限",
-        "REMAINING_DAYS": "残り日数",
-        "HOLDER": "所有者",
-        "MODE": "モード",
-        "CLUSTER_ENABLED": "クラスタ - 有効",
-        "CRYPTODOC_ENABLED": "Cryptodoc - 有効"
-      }
+      "NAME": "名前",
+      "VERSION": "バージョン"
     },
     "EXTENSIONS": {
       "TITLE": "プラグイン",
@@ -554,6 +531,26 @@
         "RUNTIME": "ランタイム",
         "DESCRIPTION": "説明"
       }
+    },
+    "LICENSE": {
+      "TITLE": "ライセンス",
+      "PROPERTY": "プロパティ",
+      "VALUE": "値"
+    },
+    "STATUS": {
+      "TITLE": "ステータス",
+      "PROPERTY": "プロパティ",
+      "VALUE": "値"
+    },
+    "MODULES": {
+      "TITLE": "モジュール",
+      "NAME": "名前",
+      "VERSION": "バージョン"
+    },
+    "PLUGINS": {
+      "TITLE": "プラグイン",
+      "NAME": "名前",
+      "VERSION": "バージョン"
     }
   },
   "CLIPBOARD": {

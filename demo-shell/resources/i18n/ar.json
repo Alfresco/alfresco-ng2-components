@@ -1,5 +1,8 @@
 {
   "APP": {
+    "ABOUT": {
+      "DEVELOPMENT": "وضع التطوير"
+    },
     "INFO_DRAWER": {
       "TITLE": "التفاصيل",
       "COMMENTS": "تعليقات",

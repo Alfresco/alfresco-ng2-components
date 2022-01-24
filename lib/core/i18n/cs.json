@@ -43,7 +43,6 @@
       "UPLOAD": "Odeslat",
       "REQUIRED": "*Požadováno",
       "FILE_NAME": "Název souboru",
-      "DEPENDS_ON": "Závisí na: {{widgetId}}",
       "NO_FILE_ATTACHED": "Není připojen žádný soubor",
       "VALIDATOR": {
         "INVALID_NUMBER": "Použijte jiný formát čísla",
@@ -493,14 +492,17 @@
     "VERSION": "Verze",
     "SERVER_SETTINGS": {
       "TITLE": "Nastavení serveru",
-      "DESCRIPTION": "Následující hodnoty pochází z AppConfigService",
       "CONTENT_SERVICE_HOST": "Adresa URL pro Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "Adresa URL pro Alfresco Process Services: {{ value }}"
     },
     "VERSIONS": {
       "TITLE": "Verze produktu",
-      "CONTENT_SERVICE": "ECM",
-      "PROCESS_SERVICE": "BPM",
+      "CONTENT_SERVICE": "Content Services",
+      "PROCESS_SERVICE": "Process Services",
+      "MODELING_SERVICE": "Modelovací služby",
+      "DEPLOYMENT_SERVICE": "Služby nasazení",
+      "QUERY_SERVICE": "Služby nasazení",
+      "RB": "Délka",
       "LABELS": {
         "EDITION": "Edice",
         "VERSION": "Verze",
@@ -515,33 +517,8 @@
     },
     "PACKAGES": {
       "TITLE": "Balíčky",
-      "DESCRIPTION": "Aktuální projekt používá následující knihovny ADF:"
-    },
-    "TABLE_HEADERS": {
-      "MODULES": {
-        "ID": "ID",
-        "TITLE": "Označení",
-        "DESCRIPTION": "Popis",
-        "INSTALL_DATE": "Datum instalace",
-        "INSTALL_STATE": "Stav instalace",
-        "VERSION_MIN": "Vedlejší verze",
-        "VERSION_MAX": "Hlavní verze"
-      },
-      "STATUS": {
-        "READ_ONLY": "Pouze ke čtení",
-        "AUDIT_ENABLED": "Je povolen audit",
-        "QUICK_SHARE_ENABLED": "Je povoleno rychlé sdílení",
-        "THUMBNAIL_ENABLED": "Vytváření miniatury"
-      },
-      "LICENSE": {
-        "ISSUES_AT": "Vydáno:",
-        "EXPIRES_AT": "Vyprší:",
-        "REMAINING_DAYS": "Zbývající dny",
-        "HOLDER": "Držitel",
-        "MODE": "Režim",
-        "CLUSTER_ENABLED": "Je povolen cluster",
-        "CRYPTODOC_ENABLED": "Je povolen Cryptodoc"
-      }
+      "NAME": "Název",
+      "VERSION": "Verze"
     },
     "EXTENSIONS": {
       "TITLE": "Doplňky",
@@ -554,6 +531,26 @@
         "RUNTIME": "Délka",
         "DESCRIPTION": "Popis"
       }
+    },
+    "LICENSE": {
+      "TITLE": "Licence",
+      "PROPERTY": "Vlastnost",
+      "VALUE": "Hodnota"
+    },
+    "STATUS": {
+      "TITLE": "Stav",
+      "PROPERTY": "Vlastnost",
+      "VALUE": "Hodnota"
+    },
+    "MODULES": {
+      "TITLE": "Moduly",
+      "NAME": "Název",
+      "VERSION": "Verze"
+    },
+    "PLUGINS": {
+      "TITLE": "Doplňky",
+      "NAME": "Název",
+      "VERSION": "Verze"
     }
   },
   "CLIPBOARD": {
