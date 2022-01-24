@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -428,6 +428,25 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.field.options.length).toBe(2);
                 expect(failedErrorMsgElement3).toBeNull();
             });
+
+            describe('Rest - On parent value changes (chain)', () => {
+                it('should fire a form field value changed event when the value gets reset (notify children on the chain to reset)', () => {
+                    spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+                    widget.field.options = mockConditionalEntries[1].options;
+                    widget.field.value = 'MI';
+                    fixture.detectChanges();
+
+                    const formFieldValueChangedSpy = spyOn(formService.formFieldValueChanged, 'next').and.callThrough();
+                    const formFieldValueChangedEvent = new FormFieldEvent(widget.field.form, widget.field);
+
+                    parentDropdown.value = 'GR';
+                    widget.selectionChangedForField(parentDropdown);
+                    fixture.detectChanges();
+
+                    expect(formFieldValueChangedSpy).toHaveBeenCalledWith(formFieldValueChangedEvent);
+                    expect(widget.field.options).toEqual([]);
+                });
+            });
         });
 
         describe('Manual options', () => {
@@ -479,6 +498,49 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
                 expect(defaultOption.context.value).toBe('empty');
                 expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+
+            describe('Manual - On parent value changes (chain)', () => {
+                it('should reset the current value when it not part of the available options', () => {
+                    widget.field.options = mockConditionalEntries[1].options;
+                    widget.field.value = 'non-existent-value';
+                    fixture.detectChanges();
+
+                    parentDropdown.value = 'GR';
+                    widget.selectionChangedForField(parentDropdown);
+                    fixture.detectChanges();
+
+                    expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+                    expect(widget.fieldValue).toEqual('');
+                });
+
+                it('should not reset the current value when it is part of the available options', () => {
+                    widget.field.options = mockConditionalEntries[1].options;
+                    widget.field.value = 'ATH';
+                    fixture.detectChanges();
+
+                    parentDropdown.value = 'GR';
+                    widget.selectionChangedForField(parentDropdown);
+                    fixture.detectChanges();
+
+                    expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
+                    expect(widget.fieldValue).toEqual('ATH');
+                });
+
+                it('should fire a form field value changed event when the value gets reset (notify children on the chain to reset)', () => {
+                    widget.field.options = mockConditionalEntries[1].options;
+                    widget.field.value = 'non-existent-value';
+                    fixture.detectChanges();
+
+                    const formFieldValueChangedSpy = spyOn(formService.formFieldValueChanged, 'next').and.callThrough();
+                    const formFieldValueChangedEvent = new FormFieldEvent(widget.field.form, widget.field);
+
+                    parentDropdown.value = 'GR';
+                    widget.selectionChangedForField(parentDropdown);
+                    fixture.detectChanges();
+
+                    expect(formFieldValueChangedSpy).toHaveBeenCalledWith(formFieldValueChangedEvent);
+                });
             });
         });
 
