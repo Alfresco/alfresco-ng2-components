@@ -114,13 +114,16 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C292004] Filter by appName', async () => {
             await expect(await editTaskFilter.getAppNameDropDownValue()).toEqual(simpleApp);
+            await editTaskFilter.closeFilter();
 
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
             await taskList.checkContentIsNotDisplayedByName(notDisplayedTask.entry.name);
 
+            await editTaskFilter.openFilter();
             await editTaskFilter.setAppNameDropDown(candidateBaseApp);
             await expect(await editTaskFilter.getAppNameDropDownValue()).toEqual(candidateBaseApp);
 
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(notDisplayedTask.entry.name);
             await taskList.checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
@@ -128,6 +131,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C291906] Should be able to see only the task with specific taskId when typing it in the task Id field', async () => {
             await editTaskFilter.setId(createdTask.entry.id);
             await expect(await editTaskFilter.getId()).toEqual(createdTask.entry.id);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedById(createdTask.entry.id);
             await taskList.getRowsWithSameId(createdTask.entry.id).then(async (list) => {
                 await expect(list.length).toEqual(1);
@@ -138,12 +142,14 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setId('invalidId');
             await expect(await editTaskFilter.getId()).toEqual('invalidId');
 
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
         it('[C297476] Filter by taskName', async () => {
             await editTaskFilter.setTaskName(createdTask.entry.name);
             await expect(await editTaskFilter.getTaskName()).toEqual(createdTask.entry.name);
+            await editTaskFilter.closeFilter();
             await taskList.getRowsWithSameName(createdTask.entry.name).then(async (list) => {
                 await expect(list.length).toEqual(1);
             });
@@ -152,6 +158,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C297613] Should be able to see No tasks found when typing a task name that does not exist', async () => {
             await editTaskFilter.setTaskName('invalidName');
             await expect(await editTaskFilter.getTaskName()).toEqual('invalidName');
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
@@ -159,6 +166,7 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setProcessInstanceId(processInstance.entry.id);
             await editTaskFilter.setStatusFilterDropDown('All');
             await editTaskFilter.clearAssignee();
+            await editTaskFilter.closeFilter();
 
             await expect(await taskList.getDataTable().getNumberOfRows()).toBe(1);
 
@@ -167,39 +175,39 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297684] Should be able to see No tasks found when typing an invalid processInstanceId', async () => {
             await editTaskFilter.setProcessInstanceId('invalidTaskId');
-
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
         it('[C297478] Should be able to see only tasks that are assigned to a specific user when assignee is set', async () => {
             await editTaskFilter.setAssignee(testUser.username);
-
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
             await taskList.checkContentIsNotDisplayedByName(notAssigned.entry.name);
         });
 
         it('[C297686] Should be able to see No tasks found when typing an invalid user to assignee field', async () => {
             await editTaskFilter.setAssignee('invalid');
-
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
         it('[C297482] Should be able to see only tasks with specific priority when priority is set', async () => {
             await editTaskFilter.setPriority('Low');
-
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(priorityTask.entry.name);
             await taskList.checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
         it('[C297687] Should be able to see No tasks found when typing unused value for priority field', async () => {
             await editTaskFilter.setPriority('Normal');
-
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
         it('[C297481] Should be able to see only tasks with specific parentTaskId when parentTaskId is set', async () => {
             await editTaskFilter.setParentTaskId(subTask.entry.parentTaskId);
-
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(subTask.entry.name);
             await taskList.checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
@@ -208,40 +216,49 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setStatusFilterDropDown('All');
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setOwner(testUser.username);
-
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(notAssigned.entry.name);
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
-
+            await editTaskFilter.openFilter();
             await editTaskFilter.setOwner('invalid');
+            await editTaskFilter.closeFilter();
 
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
         it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
             await editTaskFilter.setLastModifiedFrom(beforeDate);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
 
+            await editTaskFilter.openFilter();
             await editTaskFilter.setLastModifiedFrom(afterDate);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
         it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
             await editTaskFilter.setLastModifiedFrom(currentDate);
             await editTaskFilter.setTaskName(simpleTask.entry.name);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsNotDisplayedByName(simpleTask.entry.name);
         });
 
         it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', async () => {
             await editTaskFilter.setLastModifiedTo(afterDate);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
 
+            await editTaskFilter.openFilter();
             await editTaskFilter.setLastModifiedTo(beforeDate);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
         it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
             await editTaskFilter.setLastModifiedTo(currentDate);
             await editTaskFilter.setTaskName(simpleTask.entry.name);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsNotDisplayedByName(simpleTask.entry.name);
         });
 
@@ -250,6 +267,7 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setLastModifiedFrom(beforeDate);
             await editTaskFilter.setLastModifiedTo(beforeDate);
             await editTaskFilter.setTaskName(createdTask.entry.name);
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
@@ -258,6 +276,7 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setLastModifiedFrom(beforeDate);
             await editTaskFilter.setLastModifiedTo(afterDate);
             await editTaskFilter.setTaskName(createdTask.entry.name);
+            await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
         });
 
@@ -265,6 +284,7 @@ describe('Edit task filters and task list properties', () => {
             'and into lastModifiedTo a date after', async () => {
             await editTaskFilter.setLastModifiedFrom(afterDate);
             await editTaskFilter.setLastModifiedTo(afterDate);
+            await editTaskFilter.closeFilter();
             await expect(await taskList.getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
     });
