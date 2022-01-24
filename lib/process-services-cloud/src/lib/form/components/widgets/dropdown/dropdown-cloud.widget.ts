@@ -111,11 +111,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    resetRestApiOptions() {
-        this.field.options = [];
-        this.resetValue();
-    }
-
     private buildBodyParam(): any {
         const bodyParam = Object.assign({});
         if (this.isLinkedWidget()) {
@@ -298,10 +293,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     resetRestApiOptions() {
         this.field.options = [];
+        this.resetValue();
         this.isRestApiFailed = true;
         this.restApiHostName = this.getRestUrlHostName();
-        this.updateOptions();
-        this.field.updateForm();
     }
 
     private getRestUrlHostName(): string {
