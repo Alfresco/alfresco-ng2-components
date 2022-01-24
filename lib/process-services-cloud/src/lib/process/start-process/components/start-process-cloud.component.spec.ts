@@ -44,6 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { ProcessDefinitionCloud } from 'process-services-cloud';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -827,17 +828,32 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
 
-        it('should set the process name on init when a process definition name is present',  () => {
+        it('should set the process name on when a process definition name is present',  (done) => {
+            const definitions: ProcessDefinitionCloud[] = [{
+                appName: 'app',
+                appVersion: 1,
+                category: '',
+                description: '',
+                id: 'id',
+                key: 'key',
+                name: 'fake-name',
+                version: 1
+            }];
+
+            component.processInstanceName.valueChanges.subscribe((value) => {
+                expect(value).toBe(fakeTransformedName);
+                done();
+            });
+
+            getDefinitionsSpy.and.returnValue(of(definitions));
+
             const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
             const fakeTransformedName = 'fake-transformed-name';
             spyOn(processNameCloudPipe, 'transform').and.returnValue(fakeTransformedName);
 
             component.processDefinitionName = 'fake-name';
-            component.ngOnInit();
-
-            expect(component.processInstanceName.dirty).toBe(true);
-            expect(component.processInstanceName.touched).toBe(true);
-            expect(component.processInstanceName.value).toEqual(fakeTransformedName);
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ 'appName': change });
         });
 
         it('should cancel bubbling a keydown event ()', () => {

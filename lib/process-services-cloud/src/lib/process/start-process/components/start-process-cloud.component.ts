@@ -139,14 +139,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                 this.currentCreatedProcess = res;
                 this.disableStartButton = false;
             });
-
-        if (this.processDefinitionName) {
-            this.processDefinition.setValue(this.processDefinitionName);
-            this.processDefinition.markAsDirty();
-            this.processDefinition.markAsTouched();
-
-            this.setDefaultProcessName(this.processDefinitionName);
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -197,6 +189,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
+
         if (this.isProcessFormValid() &&
             this.filteredProcesses && this.filteredProcesses.length === 1) {
             this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);
@@ -252,6 +245,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                         this.selectDefaultProcessDefinition();
                     } else if (this.processDefinitionName) {
                         this.processDefinition.setValue(this.processDefinitionName);
+
+                        const processDefinition = this.processDefinitionList.find(process => process.name === this.processDefinitionName);
+                        if (processDefinition) {
+                            this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinition.name);
+                            this.setProcessDefinitionOnForm(processDefinition.name);
+                            this.processDefinitionSelectionChanged(processDefinition);
+                        }
                     }
                 },
                 () => {
