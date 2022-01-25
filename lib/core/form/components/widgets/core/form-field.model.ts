@@ -335,10 +335,10 @@ export class FormFieldModel extends FormWidgetModel {
                 if (NumberFieldValidator.isNumber(value)) {
                     dateValue = moment(value);
                 } else {
-                    dateValue = this.isDateTimeField(json) ? moment(value, 'YYYY-MM-DD hh:mm A') : moment(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
                 }
                 if (dateValue && dateValue.isValid()) {
-                    value = dateValue.format(this.dateDisplayFormat);
+                    value = dateValue.utc().format(this.dateDisplayFormat);
                 }
             }
         }
@@ -415,13 +415,13 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.DATETIME:
                 if (typeof this.value === 'string' && this.value === 'now') {
-                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                    this.value = moment(new Date()).utc().format(this.dateDisplayFormat);
                 }
 
-                const dateTimeValue = moment(this.value, this.dateDisplayFormat, true).utc();
+                const dateTimeValue = moment.utc(this.value, this.dateDisplayFormat, true);
                 if (dateTimeValue && dateTimeValue.isValid()) {
                     /* cspell:disable-next-line */
-                    this.form.values[this.id] = `${dateTimeValue.format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
+                    this.form.values[this.id] = `${dateTimeValue.utc().format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;

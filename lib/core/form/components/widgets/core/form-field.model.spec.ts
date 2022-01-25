@@ -305,7 +305,7 @@ describe('FormFieldModel', () => {
         });
 
         const currentDateTime = moment(new Date());
-        const expectedDateTime = moment(currentDateTime).format('YYYY-MM-DD HH:mm');
+        const expectedDateTime = moment.utc(currentDateTime).format('YYYY-MM-DD HH:mm');
         const expectedDateTimeFormat = `${currentDateTime.utc().format('YYYY-MM-DDTHH:mm:00')}.000Z`;
 
         expect(field.value).toBe(expectedDateTime);
