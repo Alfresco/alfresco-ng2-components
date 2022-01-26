@@ -16,14 +16,13 @@
  */
 
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
-import { FormModel } from '../components/widgets/core/form.model';
 import { FormFieldEvent } from './form-field.event';
 
 export class ValidateFormFieldEvent extends FormFieldEvent {
 
     isValid = true;
 
-    constructor(form: FormModel, field: FormFieldModel) {
+    constructor(form: any, field: FormFieldModel) {
         super(form, field);
     }
 

@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { FormModel } from '../components/widgets/core/form.model';
-
 export class FormEvent {
 
     private isDefaultPrevented: boolean = false;
 
-    readonly form: FormModel;
+    readonly form: any;
 
-    constructor(form: FormModel) {
+    constructor(form: any) {
         this.form = form;
     }
 

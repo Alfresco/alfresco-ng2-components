@@ -16,14 +16,13 @@
  */
 
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
-import { FormModel } from '../components/widgets/core/form.model';
 import { FormEvent } from './form.event';
 
 export class FormFieldEvent extends FormEvent {
 
     readonly field: FormFieldModel;
 
-    constructor(form: FormModel, field: FormFieldModel) {
+    constructor(form: any, field: FormFieldModel) {
         super(form);
         this.field = field;
     }
