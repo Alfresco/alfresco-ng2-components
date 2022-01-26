@@ -23,10 +23,10 @@ import { ErrorMessageModel } from './error-message.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormFieldRule } from './form-field-rule';
 import { ProcessFormModel } from './process-form-model.interface';
+import { isNumberValue } from './form-field-utils';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -332,7 +332,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
-                if (NumberFieldValidator.isNumber(value)) {
+                if (isNumberValue(value)) {
                     dateValue = moment(value);
                 } else {
                     dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');

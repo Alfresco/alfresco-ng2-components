@@ -42,3 +42,4 @@ export * from './process-variable.model';
 export * from './upload-widget-content-link.model';
 export * from './form-field-file-source';
 export * from './form-field-rule';
+export * from './form-field-utils';
