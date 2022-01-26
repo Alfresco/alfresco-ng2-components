@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FormModel } from './../components/widgets/core/index';
 import { FormEvent } from './form.event';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
+import { FormModel } from '../components/widgets/core/form.model';
 
 export class ValidateFormEvent extends FormEvent {
 

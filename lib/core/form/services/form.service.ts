@@ -23,11 +23,6 @@ import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import {
-    FormErrorEvent, FormEvent, FormFieldEvent,
-    ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
-} from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
@@ -43,6 +38,16 @@ import {
     UsersApi,
     ActivitiGroupsApi
 } from '@alfresco/js-api';
+import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
+import { FormValues } from '../components/widgets/core/form-values';
+import { FormModel } from '../components/widgets/core/form.model';
+import { FormOutcomeModel } from '../components/widgets/core/form-outcome.model';
+import { FormEvent } from '../events/form.event';
+import { FormFieldEvent } from '../events/form-field.event';
+import { FormErrorEvent } from '../events/form-error.event';
+import { ValidateFormEvent } from '../events/validate-form.event';
+import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
+import { ValidateDynamicTableRowEvent } from '../events/validate-dynamic-table-row.event';
 
 @Injectable({
     providedIn: 'root'
