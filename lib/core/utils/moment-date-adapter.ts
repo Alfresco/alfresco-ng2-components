@@ -136,7 +136,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         displayFormat = this.overrideDisplayFormat ? this.overrideDisplayFormat : displayFormat;
 
         if (date && date.format) {
-            return date.utc().local().format(this.overrideDisplayFormat);
+            return date.utc().local().format(displayFormat);
         } else {
             return '';
         }

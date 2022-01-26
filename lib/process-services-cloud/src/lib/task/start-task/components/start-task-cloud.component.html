@@ -44,7 +44,6 @@
                 <mat-form-field fxFlex>
                     <input matInput
                            [matDatepicker]="taskDatePicker"
-                           (keydown)="true"
                            (focusout)="onDateChanged($any($event).srcElement.value)"
                            placeholder="{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                            [(ngModel)]="dueDate"
