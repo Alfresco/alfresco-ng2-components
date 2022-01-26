@@ -17,8 +17,6 @@
 
  /* tslint:disable:component-selector  */
 
-import { FormModel } from './form.model';
-
 export abstract class FormWidgetModel {
 
     readonly fieldType: string;
@@ -31,7 +29,7 @@ export abstract class FormWidgetModel {
     readonly json: any;
     readonly field: any;
 
-    protected constructor(form: FormModel, json: any) {
+    protected constructor(form: any, json: any) {
         this.form = form;
         this.json = json;
 
