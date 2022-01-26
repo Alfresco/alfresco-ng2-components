@@ -32,6 +32,7 @@ import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validato
 import { FormFieldTemplates } from './form-field-templates';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { FormValidationService } from '../../../services/form-validation-service.interface';
+import { ProcessFormModel } from './process-form-model.interface';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -54,7 +55,7 @@ export interface FormRepresentationModel {
     };
 }
 
-export class FormModel {
+export class FormModel implements ProcessFormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
