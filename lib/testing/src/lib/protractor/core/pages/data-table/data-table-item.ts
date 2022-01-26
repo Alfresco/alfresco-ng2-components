@@ -64,6 +64,7 @@ export class DataTableItem {
     async clickAndEnterOnRow(columnName: string, columnValue: string): Promise<void> {
         const row = await this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
+        await this.checkRowIsSelected(columnName, columnValue);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
