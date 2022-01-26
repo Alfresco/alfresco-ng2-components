@@ -16,8 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { LanguageItem, LanguageService } from '../services/language.service';
+import { LanguageService } from '../services/language.service';
 import { Observable } from 'rxjs';
+import { LanguageItem } from '../services/language-item.interface';
 
 @Component({
     selector: 'adf-language-menu',

@@ -19,10 +19,10 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { LanguageItem } from './language.service';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { LanguageItem } from './language-item.interface';
 
 export enum UserPreferenceValues {
     PaginationSize = 'paginationSize',

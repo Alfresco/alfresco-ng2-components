@@ -16,16 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Direction } from '@angular/cdk/bidi';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { LanguageItem } from './language-item.interface';
 import { UserPreferencesService } from './user-preferences.service';
-
-export interface LanguageItem {
-    key: string;
-    label: string;
-    direction?: Direction;
-}
 
 @Injectable({providedIn: 'root'})
 export class LanguageService {
