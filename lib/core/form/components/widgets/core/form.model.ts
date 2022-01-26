@@ -18,7 +18,6 @@
 import { FormFieldEvent } from './../../../events/form-field.event';
 import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
 import { ValidateFormEvent } from './../../../events/validate-form.event';
-import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
@@ -32,6 +31,7 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
 import { FormFieldTemplates } from './form-field-templates';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
+import { FormValidationService } from '../../../services/form-validation-service.interface';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -84,7 +84,7 @@ export class FormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService, enableFixedSpace?: boolean) {
+    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormValidationService, enableFixedSpace?: boolean) {
         this.readOnly = readOnly;
         this.json = json;
 

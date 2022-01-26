@@ -48,11 +48,12 @@ import { FormErrorEvent } from '../events/form-error.event';
 import { ValidateFormEvent } from '../events/validate-form.event';
 import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { ValidateDynamicTableRowEvent } from '../events/validate-dynamic-table-row.event';
+import { FormValidationService } from './form-validation-service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormService {
+export class FormService implements FormValidationService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
