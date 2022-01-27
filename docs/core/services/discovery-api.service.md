@@ -20,9 +20,9 @@ Gets version and license information for Process Services and Content Services.
 -   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Process Services.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
--   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
+-   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RepositoryInfo`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/discovery-rest-api/model/repositoryInfo.ts)`>`<br/>
     Gets product information for Content Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RepositoryInfo`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/discovery-rest-api/model/repositoryInfo.ts)`>` - ProductVersionModel containing product details
 
 ## Details
 

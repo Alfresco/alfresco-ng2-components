@@ -24,15 +24,24 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
     Gets Client roles.
     -   _clientName:_ `string`  - 
     -   **Returns** `string[]` - Array of client roles
+-   **getIdToken**(): `string`<br/>
+    Gets id token
+    -   **Returns** `string` - id token
 -   **getRealmRoles**(): `string[]`<br/>
     Gets realm roles.
     -   **Returns** `string[]` - Array of realm roles
 -   **getValueFromLocalAccessToken**(key: `string`)<br/>
     Gets a named value from the user access token.
     -   _key:_ `string`  - Key name of the field to retrieve
--   **getValueFromToken**(accessToken: `string`, key: `string`)<br/>
+-   **getValueFromLocalIdToken**(key: `string`)<br/>
+    Gets a named value from the user id token.
+    -   _key:_ `string`  - Key name of the field to retrieve
+-   **getValueFromLocalToken**(key: `string`)<br/>
+    Gets a named value from the user access or id token.
+    -   _key:_ `string`  - Key name of the field to retrieve
+-   **getValueFromToken**(token: `string`, key: `string`)<br/>
     Gets a named value from the user access token.
-    -   _accessToken:_ `string`  - your SSO access token where the value is encode
+    -   _token:_ `string`  - 
     -   _key:_ `string`  - Key name of the field to retrieve
 -   **hasClientRole**(clientName: `string`, role: `string`): `boolean`<br/>
     Checks for client role.
