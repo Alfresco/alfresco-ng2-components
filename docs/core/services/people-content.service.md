@@ -33,6 +33,12 @@ Gets information about a Content Services user.
     Gets a list of people.
     -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>` - Response containing pagination and list of entries
+-   **updatePerson**(personId: `string`, details: [`PersonBodyUpdate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/personBodyUpdate.ts), opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+    Updates the person details
+    -   _personId:_ `string`  - The identifier of a person
+    -   _details:_ [`PersonBodyUpdate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/personBodyUpdate.ts)  - The person details
+    -   _opts:_ `any`  - (Optional) Optional parameters
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Updated person model
 
 ## Details
 

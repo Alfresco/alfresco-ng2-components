@@ -48,16 +48,19 @@ class MyComponent {
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
 
--   **getDropDownJsonData**(url: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
-    Parses JSON data to create a corresponding form.
-    -   _url:_ `string`  - String data to make the request
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Array of FormFieldOption object
 -   **getForm**(appName: `string`, formKey: `string`, version?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormContent`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>`<br/>
     Gets a form definition.
     -   _appName:_ `string`  - Name of the app
     -   _formKey:_ `string`  - key of the target task
     -   _version:_ `number`  - (Optional) Version of the form
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormContent`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` - Form definition
+-   **getRestWidgetData**(formName: `string`, widgetId: `string`, body: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts)`[]>`<br/>
+
+    -   _formName:_ `string`  - 
+    -   _widgetId:_ `string`  - 
+    -   _body:_ `any`  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts)`[]>` - 
+
 -   **getTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task
     -   _appName:_ `string`  - Name of the app

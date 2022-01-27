@@ -35,6 +35,7 @@ Displays a input text that supports autocompletion
 | defaultState | `SearchTextStateEnum` |  | Default state expanded or Collapsed. |
 | expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
 | focusListener | [`Observable`](http://reactivex.io/documentation/observable.html)`<FocusEvent>` |  | Listener for results-list events (focus, blur and focusout). |
+| hintLabel | `string` | "" | Hint label |
 | inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
 | liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
 | placeholder | `string` | "" | Placeholder text to show in the input field |
