@@ -17,12 +17,10 @@
 
 /* tslint:disable:component-selector  */
 
-import { FormFieldModel } from './form-field.model';
-
 export class ContainerColumnModel {
 
     size: number = 12;
-    fields: FormFieldModel[] = [];
+    fields: any[] = [];
     colspan: number = 1;
     rowspan: number = 1;
 
