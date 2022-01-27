@@ -15,10 +15,39 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+import { StringUtil } from '@alfresco/adf-testing';
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+export class FolderModel {
+
+    id = StringUtil.generateRandomString();
+    name = StringUtil.generateRandomString();
+    shortName = this.name;
+    tooltip = this.name;
+    location = '';
+    description = '';
+
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getShortName() {
+        return this.shortName;
+    }
+
+    getTooltip() {
+        return this.tooltip;
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getLocation() {
+        return this.location;
+    }
+
+}

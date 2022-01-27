@@ -16,7 +16,6 @@
  */
 
 import { StringUtil } from '../../../shared/utils/string.util';
-import { browser } from 'protractor';
 import { UserRepresentation } from '@alfresco/js-api';
 
 export class UserModel {
@@ -33,7 +32,7 @@ export class UserModel {
     id: number;
 
     constructor(details: any = {}) {
-        const EMAIL_DOMAIN = browser.params?.testConfig?.projectName ? browser.params.testConfig.projectName : 'alfresco';
+        const EMAIL_DOMAIN = 'alfresco';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
 

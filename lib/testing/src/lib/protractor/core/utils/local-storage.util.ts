@@ -15,55 +15,55 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { ADFPage } from '../../page';
 
-export class LocalStorageUtil {
+export class LocalStorageUtil extends ADFPage {
 
-    static async getConfigField(field: string): Promise<any> {
-        return browser.executeScript(
-            'return window.adf ? window.adf.getConfigField(`' + field + '`) : null;'
+    async getConfigField(field: string): Promise<any> {
+        return this.page.evaluate(() =>
+            window.adf ? window.adf.getConfigField(field) : null
         );
     }
 
-    static async setConfigField(field: string, value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
+    async setConfigField(field: string, value: string): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.setConfigField(field, value)
         );
     }
 
-    static async setStorageItem(field: string, value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
+    async setStorageItem(field: string, value: string): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.setStorageItem(field, value)
         );
     }
 
-    static async removeStorageItem(field: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.removeStorageItem(`' + field + '`);'
+    async removeStorageItem(field: string): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.removeStorageItem(field)
         );
     }
 
-    static async getStorageItem(field: string): Promise<any> {
-        return browser.executeScript(
-            'return window.adf ? window.adf.getStorageItem(`' + field + '`) : null;'
+    async getStorageItem(field: string): Promise<any> {
+        return this.page.evaluate(() =>
+            window.adf ? window.adf.getStorageItem(field) : null
         );
     }
 
-    static async setUserPreference(field: string, value: any): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'
+    async setUserPreference(field: string, value: any): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.setUserPreference(field, value)
         );
     }
 
-    static async clearStorage(): Promise<void> {
-        await browser.executeScript(
-            'window.adf.clearStorage();'
+    async clearStorage(): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.clearStorage()
         );
     }
 
-    static async apiReset(): Promise<void> {
-        await browser.executeScript(
-            `window.adf.apiReset();`
+    async apiReset(): Promise<void> {
+        await this.page.evaluate(() =>
+            window.adf.apiReset()
         );
     }
 

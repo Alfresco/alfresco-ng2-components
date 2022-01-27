@@ -22,8 +22,15 @@ import { Logger } from './logger';
 import * as path from 'path';
 import * as fs from 'fs';
 import { ApiUtil } from '../../../shared/api/api.util';
+import { Page } from '@playwright/test';
 
 export class BrowserActions {
+
+    readonly page: Page;
+
+    constructor(private page: Page) {
+        this.page = page;
+    }
 
     static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
         Logger.info(`Click until element is not present: ${elementToClick.locator().toString()}`);
@@ -46,19 +53,11 @@ export class BrowserActions {
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
     }
 
-    static async click(elementToClick: ElementFinder): Promise<void> {
-        try {
-            Logger.info(`Click element: ${elementToClick.locator().toString()}`);
-            await BrowserVisibility.waitUntilElementIsVisible(elementToClick);
-            await BrowserVisibility.waitUntilElementIsClickable(elementToClick);
-            await elementToClick.click();
-        } catch (clickErr) {
-            Logger.warn(`click error element ${elementToClick.locator().toString()} consider to use directly clickScript`);
-            await this.clickScript(elementToClick);
-        }
+    static async click(elementToClick: any): Promise<void> {
+        await elementToClick.click();
     }
 
-    static async clickScript(elementToClick: ElementFinder): Promise<void> {
+    static async clickScript(elementToClick: any): Promise<void> {
         Logger.info(`Click script ${elementToClick.locator().toString()}`);
 
         await browser.executeScript(`arguments[0].scrollIntoView();`, elementToClick);
@@ -86,9 +85,9 @@ export class BrowserActions {
         await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
     }
 
-    static async getUrl(url: string, timeout: number = 10000): Promise<any> {
+    static async getUrl(url: string, timeout: number = 10000): Promise<void> {
         Logger.info(`Get URL ${url}`);
-        return browser.get(url, timeout);
+        await this.page.goto(url, { timeout: timeout });
     }
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
@@ -97,7 +96,7 @@ export class BrowserActions {
         return attributeValue || '';
     }
 
-    static async getText(elementFinder: ElementFinder): Promise<string> {
+    static async getText(elementFinder: any): Promise<string> {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
@@ -136,17 +135,17 @@ export class BrowserActions {
         }
     }
 
-    static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {
+    static async getArrayText(elementFinders: any): Promise<string> {
         return elementFinders.getText();
     }
 
-    static async getColor(elementFinder: ElementFinder): Promise<string> {
+    static async getColor(elementFinder: any): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const webElem = await elementFinder.getWebElement();
         return webElem.getCssValue('color');
     }
 
-    static async clearWithBackSpace(elementFinder: ElementFinder, sleepTime: number = 0) {
+    static async clearWithBackSpace(elementFinder: any, sleepTime: number = 0) {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.click();
         await elementFinder.sendKeys(protractor.Key.END);
@@ -160,7 +159,7 @@ export class BrowserActions {
         }
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string = '', sleepTime: number = 0): Promise<void> {
+    static async clearSendKeys(elementFinder: any, text: string = '', sleepTime: number = 0): Promise<void> {
         Logger.info(`Clear and sendKeys text:${text} locator:${elementFinder.locator().toString()}`);
 
         await this.click(elementFinder);

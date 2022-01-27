@@ -15,27 +15,28 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor, $ } from 'protractor';
+import { browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { Logger } from '../utils/logger';
+import { ADFPage } from '../../page';
 
-export class LoginPage {
+export class LoginPage extends ADFPage {
 
-    loginUrl = `${browser.baseUrl}/login`;
+    loginUrl = `/login`;
 
-    ssoButton = $(`[data-automation-id="login-button-sso"]`);
-    usernameField = $('#username');
-    passwordField = $('#password');
-    loginButton = $('input[type="submit"]');
-    header = element(by.tagName('adf-layout-header'));
-    loginError = $(`div[data-automation-id="login-error"]`);
-    visibilityLabel = $('#v');
+    ssoButton = this.page.$(`[data-automation-id="login-button-sso"]`);
+    usernameField = this.page.$('#username');
+    passwordField = this.page.$('#password');
+    loginButton = this.page.$('input[type="submit"]');
+    header = this.page.$('adf-layout-header');
+    loginError = this.page.$(`div[data-automation-id="login-error"]`);
+    visibilityLabel = this.page.$('#v');
 
-    txtUsernameBasicAuth = $('input[id="username"]');
-    txtPasswordBasicAuth = $('input[id="password"]');
-    signInButtonBasicAuth = $('#login-button');
+    txtUsernameBasicAuth = this.page.$('input[id="username"]');
+    txtPasswordBasicAuth = this.page.$('input[id="password"]');
+    signInButtonBasicAuth = this.page.$('#login-button');
 
     async goToLoginPage(): Promise<void> {
         let currentUrl;
@@ -65,7 +66,8 @@ export class LoginPage {
     async login(username: string, password: string) {
         Logger.log('Login With ' + username);
 
-        const authType = await LocalStorageUtil.getConfigField('authType');
+        const localStorageUtil = new LocalStorageUtil(this.page);
+        const authType = await localStorageUtil.getConfigField('authType');
 
         if (!authType || authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password);
@@ -77,24 +79,20 @@ export class LoginPage {
     }
 
     async loginSSOIdentityService(username: string, password: string) {
-        browser.ignoreSynchronization = true;
+        const localStorageUtil = new LocalStorageUtil(this.page);
+        const oauth2 = await localStorageUtil.getConfigField('oauth2');
 
-        const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
-
-        const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
-        await BrowserActions.getUrl(loginURL);
+        await this.page.goto('https://adfdev.envalfresco.com/adf');
 
         if (oauth2 && oauth2.silentLogin === false) {
             await this.clickOnSSOButton();
         }
 
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.displayPassword();
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header, BrowserVisibility.DEFAULT_TIMEOUT * 2);
+        await this.page.keyboard.press(protractor.Key.ENTER);
     }
 
     async loginBasicAuth(username: string, password: string): Promise<void> {
@@ -143,8 +141,9 @@ export class LoginPage {
     }
 
     async displayPassword(): Promise<void> {
+        (await this.visibilityLabel).isVisible();
         await BrowserActions.click(this.visibilityLabel);
-        const passwordInputTypeText = $(`input[name="password"][type="text"]`);
+        const passwordInputTypeText = this.page.$(`input[name="password"][type="text"]`);
         await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
 

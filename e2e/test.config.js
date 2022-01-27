@@ -38,6 +38,8 @@ const E2E_LOG_LEVEL = process.env.E2E_LOG_LEVEL || 'ERROR';
 
 const appConfig = {
     "log": E2E_LOG_LEVEL,
+    "hostEcm": HOST_ECM,
+    "hostBpm": HOST_ECM,
     "ecmHost": HOST_ECM,
     "bpmHost": HOST_BPM,
     "identityHost": `${HOST_SSO}/auth/admin/realms/alfresco`,
@@ -61,6 +63,34 @@ const appConfig = {
     }
 };
 
+const users = {
+
+    admin: {
+        username: USERNAME_ADF,
+            password: PASSWORD_ADF
+    },
+
+    superadmin: {
+        username: USERNAME_SUPER_ADMIN_ADF,
+            password: PASSWORD_SUPER_ADMIN_ADF
+    },
+
+    identityAdmin: {
+        username: IDENTITY_ADMIN_EMAIL,
+            password: IDENTITY_ADMIN_PASSWORD
+    },
+
+    hrUser: {
+        username: HR_USER,
+            password: HR_USER_PASSWORD
+    },
+
+    screenshot: {
+        username: USERNAME_ADF,
+            password: PASSWORD_ADF
+    },
+};
+
 if (LOG) {
     console.log('======= test.config.js hostBPM ====== ');
     console.log('hostBPM : ' + HOST_ECM);
@@ -82,33 +112,7 @@ module.exports = {
         rootPath: __dirname
     },
 
-    users: {
-
-        admin: {
-            username: USERNAME_ADF,
-            password: PASSWORD_ADF
-        },
-
-        superadmin: {
-            username: USERNAME_SUPER_ADMIN_ADF,
-            password: PASSWORD_SUPER_ADMIN_ADF
-        },
-
-        identityAdmin: {
-            username: IDENTITY_ADMIN_EMAIL,
-            password: IDENTITY_ADMIN_PASSWORD
-        },
-
-        hrUser: {
-            username: HR_USER,
-            password: HR_USER_PASSWORD
-        },
-
-        screenshot: {
-            username: USERNAME_ADF,
-            password: PASSWORD_ADF
-        },
-    },
+    users: users,
 
     screenshot: {
         url: HOST_ECM,

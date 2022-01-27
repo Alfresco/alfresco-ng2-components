@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+/**
+ * App definition publish representation JSON Object
+ *
+ * @param details - JSON object used to overwrite the default values
+ * @constructor
+ */
+var AppPublish = function (details) {
+    this.comment = '';
+    this.force = true;
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+    Object.assign(this, details);
+};
+
+module.exports = AppPublish;

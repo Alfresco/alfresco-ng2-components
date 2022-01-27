@@ -15,10 +15,35 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+var TaskAssigneeModel = function (details) {
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+    this.id;
+    this.firstName;
+    this.lastName;
+    this.email;
+
+    this.getFirstName = function () {
+        return this.firstName;
+    };
+
+    this.getId = function () {
+        return this.id;
+    };
+
+    this.getLastName = function () {
+        return this.lastName;
+    };
+
+    this.getEmail = function () {
+        return this.email;
+    };
+
+    this.getEntireName = function() {
+        return this.firstName + " " + this.getLastName();
+    };
+
+    Object.assign(this, details);
+
+};
+
+module.exports = TaskAssigneeModel;

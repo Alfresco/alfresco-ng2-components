@@ -1,0 +1,29 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "../out-tsc/e2e",
+    "baseUrl": ".",
+    "module": "commonjs",
+    "target": "es5",
+    "types": [
+      "jasmine",
+      "jasminewd2",
+      "node"
+    ],
+    "paths": {
+      "@alfresco/adf-testing": [
+        "../lib/testing"
+      ],
+      "@alfresco/adf-process-services-cloud": [
+        "../lib/process-services-cloud"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

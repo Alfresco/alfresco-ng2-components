@@ -15,10 +15,24 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+var ContentPropertiesModel = function (details) {
+    this['cm:author'] = '';
+    this['cm:description'] = '';
+    this['cm:title'] = '';
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+    this.getAuthor = function () {
+        return this['cm:author'];
+    };
+
+    this.getDescription = function () {
+        return this['cm:description'];
+    };
+
+    this.getTitle = function () {
+        return this['cm:title'];
+    };
+
+    Object.assign(this, details);
+
+};
+module.exports = ContentPropertiesModel;

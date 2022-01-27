@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+/**
+ * Create and manage task JSON Object
+ *
+ * @param details - JSON object used to overwrite the default values
+ * @constructor
+ */
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+var Task = function (details) {
+
+    this.processInstanceId;
+    this.sort;
+
+    Object.assign(this, details);
+};
+module.exports = Task;

@@ -15,10 +15,15 @@
  * limitations under the License.
  */
 
-import { GenericLogger } from '../../../shared/utils/logger';
-import { browser } from 'protractor';
+import { $ } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
+import { ADFPage } from '../../../lib/testing/src/lib/protractor/page';
 
-// This was previously a static class, that is why we need this constant starting with uppercase
-// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
-export const Logger = new GenericLogger('TRACE');
+export class LogoutPage extends ADFPage {
+
+    logoutSection = this.page.$('div[data-automation-id="adf-logout-section"]');
+
+    async checkLogoutSectionIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+    }
+}

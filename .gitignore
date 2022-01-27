@@ -30,3 +30,5 @@ out-tsc
 e2e-result-*
 licenses.txt
 .DS_Store
+test-results/
+playwright-report/
