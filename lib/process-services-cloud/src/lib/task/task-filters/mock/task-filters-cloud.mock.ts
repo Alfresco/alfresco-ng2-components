@@ -287,3 +287,36 @@ export const taskCloudEngineEventsMock = {
         engineEvents: taskNotifications
     }
 };
+
+export const defaultTaskFiltersMock = [
+    {
+        name: 'CREATED_TASK_FILTER',
+        id: '1',
+        key: 'created',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'CREATED',
+        order: 'DESC'
+    },
+    {
+        name: 'ASSIGNED_TASK_FILTER',
+        id: '2',
+        key: 'assigned',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'ASSIGNED',
+        order: 'DESC'
+    },
+    {
+        name: 'COMPLETED_TASK_FILTER',
+        id: '3',
+        key: 'complete-fake-task',
+        icon: 'adjust',
+        appName: 'fakeAppName',
+        sort: 'startDate',
+        status: 'COMPLETED',
+        order: 'DESC'
+    }
+];
