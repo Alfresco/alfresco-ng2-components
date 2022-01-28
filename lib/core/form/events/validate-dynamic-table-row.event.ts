@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { FormFieldModel } from '../components/widgets/core/form-field.model';
+import { FormModel } from '../components/widgets/core/form.model';
 import { DynamicRowValidationSummary } from '../components/widgets/dynamic-table/dynamic-row-validation-summary.model';
 import { DynamicTableRow } from '../components/widgets/dynamic-table/dynamic-table-row.model';
-
-import { FormFieldModel, FormModel } from './../components/widgets/core/index';
 import { FormFieldEvent } from './form-field.event';
 
 export class ValidateDynamicTableRowEvent extends FormFieldEvent {

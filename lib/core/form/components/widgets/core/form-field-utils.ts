@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export * from './content-type.service';
-export * from './content-type-metadata.interface';
-export * from './content-type-dialog.component';
+export const isNumberValue = (value: any): boolean => {
+    if (value === null || value === undefined || value === '') {
+        return false;
+    }
 
-export * from './content-type.module';
+    return !isNaN(+value);
+};

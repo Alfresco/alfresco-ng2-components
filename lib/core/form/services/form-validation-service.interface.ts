@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
-export * from './content-type.service';
-export * from './content-type-metadata.interface';
-export * from './content-type-dialog.component';
+import { Subject } from 'rxjs';
+import { FormFieldEvent } from '../events/form-field.event';
+import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
+import { ValidateFormEvent } from '../events/validate-form.event';
 
-export * from './content-type.module';
+export interface FormValidationService {
+    formFieldValueChanged: Subject<FormFieldEvent>;
+    validateForm: Subject<ValidateFormEvent>;
+    validateFormField: Subject<ValidateFormFieldEvent>;
+}

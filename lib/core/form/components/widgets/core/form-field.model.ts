@@ -23,10 +23,10 @@ import { ErrorMessageModel } from './error-message.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
 import { FormFieldRule } from './form-field-rule';
+import { ProcessFormModel } from './process-form-model.interface';
+import { isNumberValue } from './form-field-utils';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -143,7 +143,7 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
-    constructor(form: FormModel, json?: any) {
+    constructor(form: any, json?: any) {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
@@ -247,7 +247,7 @@ export class FormFieldModel extends FormWidgetModel {
         return name + '_LABEL';
     }
 
-    private getProcessVariableValue(field: any, form: FormModel): any {
+    private getProcessVariableValue(field: any, form: ProcessFormModel): any {
         let fieldName = field.name;
         if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
@@ -255,7 +255,7 @@ export class FormFieldModel extends FormWidgetModel {
         return form.getProcessVariableValue(fieldName);
     }
 
-    private containerFactory(json: any, form: FormModel): void {
+    private containerFactory(json: any, form: any): void {
         this.numberOfColumns = <number> json.numberOfColumns || 1;
 
         this.fields = json.fields;
@@ -332,7 +332,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
-                if (NumberFieldValidator.isNumber(value)) {
+                if (isNumberValue(value)) {
                     dateValue = moment(value);
                 } else {
                     dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');

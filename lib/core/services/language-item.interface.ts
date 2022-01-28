@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export * from './content-type.service';
-export * from './content-type-metadata.interface';
-export * from './content-type-dialog.component';
+import { Direction } from '@angular/cdk/bidi';
 
-export * from './content-type.module';
+export interface LanguageItem {
+    key: string;
+    label: string;
+    direction?: Direction;
+}
