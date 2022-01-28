@@ -21,4 +21,4 @@ export const isNumberValue = (value: any): boolean => {
     }
 
     return !isNaN(+value);
-}
+};
