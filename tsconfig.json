@@ -1,3 +1,55 @@
 {
-  "extends": "./tsconfig.base.json"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "module": "esnext",
+    "rootDir": ".",
+    "outDir": "./dist/out-tsc",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "target": "es2015",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": ["jasmine", "node", "jasminewd2"],
+    "lib": [
+      "es2018",
+      "esnext.array",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "paths": {
+      "@alfresco/js-api": ["node_modules/@alfresco/js-api"],
+      "@alfresco/adf-extensions": ["lib/extensions"],
+      "@alfresco/adf-core": ["lib/core"],
+      "@alfresco/adf-content-services": ["lib/content-services"],
+      "@alfresco/adf-process-services": ["lib/process-services"],
+      "@alfresco/adf-insights": ["lib/insights"],
+      "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud"],
+      "@alfresco/adf-testing": ["lib/testing"]
+    }
+  },
+  "exclude": [
+    "lib/config",
+    "integration",
+    "scripts",
+    "assets",
+    "tools",
+    "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "strictTemplates": true
+  }
 }

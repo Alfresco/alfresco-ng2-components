@@ -1,10 +1,10 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true
-    
+
   },
-  
+
   "exclude": ["../**/*.spec.ts" ],
   "include": ["../src/**/*", "*.js"]
 }
