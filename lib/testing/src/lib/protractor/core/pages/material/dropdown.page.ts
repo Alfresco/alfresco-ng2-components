@@ -53,6 +53,10 @@ export class DropdownPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.dropDownElement);
     }
 
+    async checkDropdownIsNotVisible(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.dropDownElement);
+    }
+
     async checkDropdownIsClickable(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.dropDownElement);
     }

@@ -40,6 +40,18 @@ export class BreadcrumbDropdownPage {
         await this.breadCrumbDropdown.checkDropdownIsVisible();
     }
 
+    async checkBreadCrumbDropdownIsNotDisplayed(): Promise<void> {
+        await this.breadCrumbDropdown.checkDropdownIsNotVisible();
+    }
+
+    async checkBreadCrumbOptionIsDisplayed(optionName: string): Promise<void> {
+        await this.breadCrumbDropdown.checkOptionIsDisplayed(optionName);
+    }
+
+    async checkBreadCrumbOptionIsNotDisplayed(optionName: string): Promise<void> {
+        await this.breadCrumbDropdown.checkOptionIsNotDisplayed(optionName);
+    }
+
     async getTextOfCurrentFolder(): Promise<string> {
         return BrowserActions.getText(this.currentFolder);
     }

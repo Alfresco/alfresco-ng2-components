@@ -35,4 +35,8 @@ export class TabPage {
     async checkTabIsNotDisplayedByLabel(tabLabel): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.mat-tab-label-content', tabLabel)));
     }
+
+    async checkWarningIconIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]')));
+    }
 }
