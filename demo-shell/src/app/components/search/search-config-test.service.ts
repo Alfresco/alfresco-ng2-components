@@ -33,7 +33,7 @@ export class TestSearchConfigurationService implements SearchConfigurationInterf
                 skipCount: skipCount
             },
             filterQueries: [
-                /*tslint:disable-next-line */
+                /* eslint-disable-next-line */
                 { query: "TYPE:'cm:folder'" },
                 { query: 'NOT cm:creator:System' }]
         };

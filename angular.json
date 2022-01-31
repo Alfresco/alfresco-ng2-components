@@ -124,47 +124,47 @@
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
-                "bundleName" : "adf-blue-orange"
+                "bundleName": "adf-blue-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
-                "bundleName" : "adf-blue-purple"
+                "bundleName": "adf-blue-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
-                "bundleName" : "adf-cyan-orange"
+                "bundleName": "adf-cyan-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
-                "bundleName" : "adf-cyan-purple"
+                "bundleName": "adf-cyan-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
-                "bundleName" : "adf-green-orange"
+                "bundleName": "adf-green-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
-                "bundleName" : "adf-green-purple"
+                "bundleName": "adf-green-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
-                "bundleName" : "adf-indigo-pink"
+                "bundleName": "adf-indigo-pink"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
-                "bundleName" : "adf-pink-bluegrey"
+                "bundleName": "adf-pink-bluegrey"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
-                "bundleName" : "adf-purple-green"
+                "bundleName": "adf-purple-green"
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
@@ -355,15 +355,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.dev.json"
-            ],
-            "exclude": [
-              "**/node_modules/**/*",
-              "**/lib/**/*",
-              "package.json"
+            "lintFilePatterns": [
+              "demo-shell/**/*.ts",
+              "demo-shell/**/*.html"
             ]
           }
         }
