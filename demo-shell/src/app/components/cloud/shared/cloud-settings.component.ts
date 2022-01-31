@@ -114,7 +114,7 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
     }
 
     addAction() {
-        this.actions.push(<ActionMenuModel> this.actionMenuForm.value);
+        this.actions.push(this.actionMenuForm.value);
         this.actionMenuForm.get('key').reset();
         this.actionMenuForm.get('title').reset();
         this.actionMenuForm.get('icon').reset();

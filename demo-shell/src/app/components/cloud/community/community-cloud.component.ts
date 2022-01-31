@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 
@@ -31,7 +31,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
       `],
     encapsulation: ViewEncapsulation.None
 })
-export class CommunityCloudComponent  {
+export class CommunityCloudComponent implements OnInit {
 
     constructor(
         private router: Router,

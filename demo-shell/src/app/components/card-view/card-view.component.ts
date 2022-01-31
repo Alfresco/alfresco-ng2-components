@@ -231,6 +231,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 value: of([
                     { icon: 'directions_bike', value: 'Zlatan' },
                     { icon: 'directions_bike', value: 'Lionel Messi' },
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     { value: 'Mohamed', directions_bike: 'save' },
                     { value: 'Ronaldo' }
                 ]),

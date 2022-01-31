@@ -30,7 +30,7 @@ export class TestSearchConfigurationService implements SearchConfigurationInterf
             include: ['path', 'allowableOperations'],
             paging: {
                 maxItems: maxResults,
-                skipCount: skipCount
+                skipCount
             },
             filterQueries: [
                 /* eslint-disable-next-line */

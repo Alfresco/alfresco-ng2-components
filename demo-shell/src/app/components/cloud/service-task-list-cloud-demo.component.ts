@@ -22,15 +22,12 @@ import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layou
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-service-task-filter';
+
 @Component({
     templateUrl: './service-task-list-cloud-demo.component.html'
 })
 export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
-
-    public static ACTION_SAVE_AS = 'saveAs';
-    public static ACTION_DELETE = 'delete';
-    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-service-task-filter';
-
     @ViewChild('taskCloud')
     taskCloud: ServiceTaskListCloudComponent;
 
@@ -49,8 +46,8 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     actionMenu: boolean;
     contextMenu: boolean;
     actions: any[] = [];
-    selectedAction: { id: number, name: string, actionType: string};
-    selectedContextAction: { id: number, name: string, actionType: string};
+    selectedAction: { id: number; name: string; actionType: string};
+    selectedContextAction: { id: number; name: string; actionType: string};
     selectionMode: string;
     filterId: string;
 
@@ -61,7 +58,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         private userPreference: UserPreferencesService,
         private appConfig: AppConfigService) {
 
-        const properties = this.appConfig.get<Array<any>>(ServiceTaskListCloudDemoComponent.TASK_FILTER_PROPERTY_KEYS);
+        const properties = this.appConfig.get<Array<any>>(TASK_FILTER_PROPERTY_KEYS);
         if (properties === this.taskFilterProperties) {
             this.taskFilterProperties = properties;
         }

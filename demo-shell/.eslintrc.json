@@ -11,8 +11,8 @@
       "parserOptions": {
         "project": [
           "demo-shell/tsconfig.app.json",
-          "demo-shell/tsconfig.spec.json",
-          "demo-shell/e2e/tsconfig.json"
+          "demo-shell/src/tsconfig.spec.json",
+          "demo-shell/e2e/tsconfig.e2e.json"
         ],
         "createDefaultProgram": true
       },

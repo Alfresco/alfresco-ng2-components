@@ -262,10 +262,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         if (!this.pagination) {
-            this.pagination = <Pagination> {
+            this.pagination = {
                 maxItems: this.preference.paginationSize,
                 skipCount: 0
-            };
+            } as Pagination;
         }
 
         if (this.route) {
@@ -345,7 +345,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodeResult && changes.nodeResult.currentValue) {
-            this.nodeResult = <NodePaging> changes.nodeResult.currentValue;
+            this.nodeResult = changes.nodeResult.currentValue;
             this.pagination = this.nodeResult.list.pagination;
         }
         if (!this.pagination) {
@@ -354,12 +354,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     giveDefaultPaginationWhenNotDefined() {
-        this.pagination = <Pagination> {
+        this.pagination = {
             maxItems: this.preference.paginationSize,
             skipCount: 0,
             totalItems: 0,
             hasMoreItems: false
-        };
+        } as Pagination;
     }
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
@@ -650,8 +650,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
                 data: {
-                    contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload,
-                    newFileVersion: newFileVersion, showComparison: true
+                    contentEntry,
+                    showComments,
+                    allowDownload,
+                    newFileVersion,
+                    showComparison: true
                 },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'

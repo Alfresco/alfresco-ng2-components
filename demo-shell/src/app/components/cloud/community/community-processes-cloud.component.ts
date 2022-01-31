@@ -31,13 +31,13 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
 
+const PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
+const ACTION_SAVE_AS = 'saveAs';
+
 @Component({
     templateUrl: './community-processes-cloud.component.html'
 })
 export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
-    public static ACTION_SAVE_AS = 'saveAs';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
-
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
 
@@ -66,7 +66,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private processFilterCloudService: ProcessFilterCloudService,
         private appConfig: AppConfigService) {
         const properties = this.appConfig.get<Array<any>>(
-            CommunityProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS
+            PROCESS_FILTER_PROPERTY_KEYS
         );
 
         if (properties) {
@@ -138,7 +138,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     onProcessFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
-        if (filterAction.actionType === CommunityProcessesCloudDemoComponent.ACTION_SAVE_AS) {
+        if (filterAction.actionType === ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/community/processes/`], { queryParams: filterAction.filter });
         }
     }

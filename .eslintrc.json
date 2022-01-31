@@ -63,6 +63,10 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
+
+        "@typescript-eslint/member-ordering": "off",
+        "prefer-arrow/prefer-arrow-functions": "off",
+
         "brace-style": [
           "error",
           "1tbs"

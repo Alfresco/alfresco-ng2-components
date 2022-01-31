@@ -106,7 +106,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
         const fileReader = new FileReader();
         fileReader.onload = () => {
-            this.formConfig = <string> fileReader.result;
+            this.formConfig = fileReader.result as string;
         };
         fileReader.readAsText(file);
 

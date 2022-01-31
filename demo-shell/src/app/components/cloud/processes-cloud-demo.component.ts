@@ -41,8 +41,8 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     actionMenu: boolean;
     contextMenu: boolean;
     actions: any[] = [];
-    selectedAction: { id: number, name: string, actionType: string};
-    selectedContextAction: { id: number, name: string, actionType: string};
+    selectedAction: { id: number; name: string; actionType: string};
+    selectedContextAction: { id: number; name: string; actionType: string};
 
     filterProperties: string[];
     filterSortProperties: string[];
@@ -145,14 +145,12 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onShowRowContextMenu(event: DataCellEvent) {
-        event.value.actions = this.actions.map((action) => {
-            return {
+        event.value.actions = this.actions.map((action) => ({
                 data: event.value.row['obj'],
                 model: action,
                 subject: this.performAction$
 
-            };
-        });
+        }));
     }
 
     onExecuteRowAction(row: any) {
