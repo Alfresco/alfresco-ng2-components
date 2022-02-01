@@ -210,7 +210,7 @@ export class ThumbnailService {
      */
     public getMimeTypeIcon(mimeType: string): string {
         const icon = this.mimeTypeIcons[mimeType];
-        return (icon || this.DEFAULT_ICON);
+        return (icon || DEFAULT_ICON);
     }
 
     /**
@@ -218,6 +218,6 @@ export class ThumbnailService {
      * @returns URL string
      */
     public getDefaultMimeTypeIcon(): string {
-        return this.DEFAULT_ICON;
+        return DEFAULT_ICON;
     }
 }
