@@ -24,15 +24,20 @@ import { TestElement } from '../../../../core/test-element';
 export class AttachFileWidgetCloudPage {
 
     widget: ElementFinder;
+    filesListLocator: string = 'div[class="adf-file-properties-table"]';
 
     constructor(fieldId: string) {
         this.assignWidget(fieldId);
     }
 
-    getFileAttachedLocatorByContainingText = async (text: string): Promise<ElementFinder> => {
-        const filesListLocator = 'div[class="adf-file-properties-table"]';
-        return this.widget.$(filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
-    };
+    async isFileTablePropertiesDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.widget.$(this.filesListLocator));
+    }
+
+    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
+        await this.isFileTablePropertiesDisplayed();
+        return this.widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
+    }
 
     assignWidget(fieldId: string): void {
         this.widget = $(`adf-form-field div[id='field-${fieldId}-container']`);
@@ -65,8 +70,7 @@ export class AttachFileWidgetCloudPage {
     }
 
     async checkNoFileIsAttached(): Promise<void> {
-        const filesListLocator = 'div[class="adf-file-properties-table"]';
-        const fileItem = new TestElement(this.widget.$(filesListLocator).$('table'));
+        const fileItem = new TestElement(this.widget.$(this.filesListLocator).$('table'));
         await fileItem.waitNotVisible();
     }
 
