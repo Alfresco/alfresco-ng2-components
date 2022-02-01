@@ -74,7 +74,9 @@ describe('PeopleContentService', () => {
     it('should be able to list people', (done) => {
         spyOn(service['peopleApi'], 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         service.listPeople().subscribe((response: PeopleContentQueryResponse) => {
-            const people = response.entries, pagination = response.pagination;
+            const people = response.entries;
+            const pagination = response.pagination;
+
             expect(people).toBeDefined();
             expect(people[0].id).toEqual('fake-id');
             expect(people[1].id).toEqual('another-fake-id');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { LogService } from '../../../../services/log.service';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';

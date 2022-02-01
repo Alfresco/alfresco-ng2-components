@@ -23,7 +23,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy {
 
     @Input()

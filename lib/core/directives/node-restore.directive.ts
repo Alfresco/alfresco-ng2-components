@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
@@ -194,6 +194,7 @@ export class NodeRestoreDirective {
             return this.translation.instant(
                 'CORE.RESTORE_NODE.PARTIAL_PLURAL',
                 {
+                    // eslint-disable-next-line id-blacklist
                     number: status.fail.length
                 }
             );

@@ -20,7 +20,7 @@ import { EventEmitter, Input, Output, Directive } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
 
     static SAVE_OUTCOME_ID: string = '$save';

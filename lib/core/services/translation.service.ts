@@ -122,7 +122,7 @@ export class TranslationService {
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
+    get(key: string | Array<string>, interpolateParams?: any): Observable<string | any> {
         return this.translate.get(key, interpolateParams);
     }
 
@@ -132,7 +132,7 @@ export class TranslationService {
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+    instant(key: string | Array<string>, interpolateParams?: any): string | any {
         return key ? this.translate.instant(key, interpolateParams) : '';
     }
 }

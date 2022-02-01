@@ -49,7 +49,8 @@ describe('SearchService', () => {
     });
 
     it('should call search API with additional options', (done) => {
-        const searchTerm = 'searchTerm63688', options = {
+        const searchTerm = 'searchTerm63688';
+        const options = {
             include: [ 'path' ],
             rootNodeId: '-root-',
             nodeType: 'cm:content'

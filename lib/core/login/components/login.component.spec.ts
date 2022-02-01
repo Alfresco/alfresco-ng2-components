@@ -43,7 +43,8 @@ describe('LoginComponent', () => {
     let appConfigService: AppConfigService;
     let alfrescoApiService: AlfrescoApiService;
 
-    let usernameInput, passwordInput;
+    let usernameInput;
+    let passwordInput;
 
     const getLoginErrorElement = () => {
         return element.querySelector('#login-error');

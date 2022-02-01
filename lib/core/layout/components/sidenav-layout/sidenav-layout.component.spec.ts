@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-/*tslint:disable: ban*/
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
-import { Component, Input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MaterialModule } from '../../../material.module';
@@ -78,10 +76,10 @@ export class SidenavLayoutTesterComponent {}
 
 describe('SidenavLayoutComponent', () => {
 
-    let fixture: ComponentFixture<any>,
-        mediaMatcher: MediaMatcher,
-        mediaQueryList: any,
-        component: SidenavLayoutComponent;
+    let fixture: ComponentFixture<any>;
+    let mediaMatcher: MediaMatcher;
+    let mediaQueryList: any;
+    let component: SidenavLayoutComponent;
 
     setupTestBed({
         imports: [
@@ -100,6 +98,9 @@ describe('SidenavLayoutComponent', () => {
         providers: [
             MediaMatcher,
             { provide: UserPreferencesService, useValue: { select: () => of() } }
+        ],
+        schemas: [
+            CUSTOM_ELEMENTS_SCHEMA
         ]
     });
 
@@ -107,7 +108,9 @@ describe('SidenavLayoutComponent', () => {
         mediaQueryList = {
             mediaFn: null,
             matches: false,
-            addListener:  function (mediaFn) { this.mediaFn = mediaFn; },
+            addListener(mediaFn) {
+                this.mediaFn = mediaFn;
+            },
             removeListener: () => {}
         };
 

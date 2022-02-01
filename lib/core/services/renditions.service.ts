@@ -154,7 +154,7 @@ export class RenditionsService {
      * @param encoding Name of the rendition encoding
      * @returns Null response to indicate completion
      */
-    createRendition(nodeId: string, encoding: string): Observable<{}> {
+    createRendition(nodeId: string, encoding: string): Observable<any> {
         return from(this.renditionsApi.createRendition(nodeId, { id: encoding }));
     }
 

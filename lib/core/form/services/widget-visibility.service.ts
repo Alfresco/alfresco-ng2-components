@@ -157,7 +157,7 @@ export class WidgetVisibilityService {
 
     getFormValue(form: FormModel, fieldId: string): any {
         const formField = this.getFormFieldById(form, fieldId);
-        let value = undefined;
+        let value;
 
         if (this.isFormFieldValid(formField)) {
             value = this.getFieldValue(form.values, fieldId);
@@ -174,7 +174,8 @@ export class WidgetVisibilityService {
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
-        let labelFilterByName, valueFound;
+        let labelFilterByName;
+        let valueFound;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {

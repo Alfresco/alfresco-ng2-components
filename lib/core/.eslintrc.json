@@ -1,7 +1,7 @@
 {
-  "root": true,
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
-    "projects/**/*"
+    "!**/*"
   ],
   "overrides": [
     {
@@ -10,21 +10,29 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "lib/core/tsconfig.lib.json",
+          "lib/core/tsconfig.spec.json"
         ],
         "createDefaultProgram": true
       },
-      "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
       "plugins": [
         "eslint-plugin-unicorn",
         "eslint-plugin-rxjs"
       ],
       "rules": {
+        "jsdoc/newline-after-description": "warn",
+        "@typescript-eslint/naming-convention": "warn",
+        "@typescript-eslint/consistent-type-assertions": "warn",
+        "@typescript-eslint/prefer-for-of": "warn",
+        "no-underscore-dangle": "warn",
+        "no-shadow": "warn",
+        "quote-props": "warn",
+        "object-shorthand": "warn",
+        "prefer-const": "warn",
+        "arrow-body-style": "warn",
+        "@angular-eslint/no-output-native": "warn",
+        "space-before-function-paren": "warn",
+
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -60,13 +68,10 @@
             "accessibility": "explicit"
           }
         ],
+        "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
-
-        "@typescript-eslint/member-ordering": "warn",
-        "prefer-arrow/prefer-arrow-functions": "warn",
-
         "brace-style": [
           "error",
           "1tbs"
@@ -96,10 +101,12 @@
       "files": [
         "*.html"
       ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/no-autofocus": "error",
+        "@angular-eslint/template/no-positive-tabindex": "error",
+
+        "@angular-eslint/template/no-negated-async": "off"
+      }
     }
   ]
 }

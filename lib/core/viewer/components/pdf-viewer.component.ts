@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @angular-eslint/no-output-native */
+
 import {
     Component,
     TemplateRef,
@@ -360,7 +364,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             if (!this.isSameScale(this.currentScale, newScale)) {
                 this.currentScale = newScale;
 
-                this.pdfViewer._pages.forEach(function (currentPage) {
+                this.pdfViewer._pages.forEach(function(currentPage) {
                     currentPage.update(newScale);
                 });
             }
@@ -539,8 +543,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';

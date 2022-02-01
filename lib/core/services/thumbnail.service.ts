@@ -22,13 +22,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { ContentApi, NodeEntry } from '@alfresco/js-api';
 
+const DEFAULT_ICON = './assets/images/ft_ic_miscellaneous.svg';
+
 @Injectable({
     providedIn: 'root'
 })
 export class ThumbnailService {
-
-    DEFAULT_ICON: string = './assets/images/ft_ic_miscellaneous.svg';
-
     mimeTypeIcons: any = {
         'image/png': './assets/images/ft_ic_raster_image.svg',
         'image/jpeg': './assets/images/ft_ic_raster_image.svg',
@@ -201,7 +200,7 @@ export class ThumbnailService {
             resultUrl = this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
         }
 
-        return resultUrl || this.DEFAULT_ICON;
+        return resultUrl || DEFAULT_ICON;
     }
 
     /**

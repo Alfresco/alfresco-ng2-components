@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
-/* tslint:disable:rxjs-no-subject-value */
+/* eslint-disable @angular-eslint/no-input-rename */
+/* eslint-disable rxjs/no-subject-value */
 
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,

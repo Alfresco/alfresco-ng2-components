@@ -320,7 +320,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private emitVisibilitySearch() {
-        this.isSearchBarActive() ? this.searchVisibility.emit(true) : this.searchVisibility.emit(false);
+        this.searchVisibility.emit(this.isSearchBarActive());
     }
-
 }

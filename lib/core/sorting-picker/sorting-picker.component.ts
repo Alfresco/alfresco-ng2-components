@@ -28,7 +28,7 @@ export class SortingPickerComponent {
 
     /** Available sorting options */
     @Input()
-    options: Array<{key: string, label: string}> = [];
+    options: Array<{key: string; label: string}> = [];
 
     /** Currently selected option key */
     @Input()

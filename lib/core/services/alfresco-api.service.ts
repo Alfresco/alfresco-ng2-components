@@ -22,8 +22,6 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
 
-/* tslint:disable:adf-file-name */
-
 @Injectable({
     providedIn: 'root'
 })

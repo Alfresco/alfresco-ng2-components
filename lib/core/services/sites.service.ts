@@ -84,7 +84,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns Information about the site
      */
-    getSite(siteId: string, opts?: any): Observable<SiteEntry | {}> {
+    getSite(siteId: string, opts?: any): Observable<SiteEntry | any> {
         return from(this.sitesApi.getSite(siteId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -111,7 +111,7 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site content
      */
-    getSiteContent(siteId: string): Observable<SiteEntry | {}> {
+    getSiteContent(siteId: string): Observable<SiteEntry | any> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
@@ -120,7 +120,7 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site members
      */
-    getSiteMembers(siteId: string): Observable<SiteEntry | {}> {
+    getSiteMembers(siteId: string): Observable<SiteEntry | any> {
         return this.getSite(siteId, { relations: ['members'] });
     }
 

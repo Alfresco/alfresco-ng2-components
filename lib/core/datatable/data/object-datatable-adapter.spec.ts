@@ -136,12 +136,16 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should fail getting value with row not defined', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        expect(() => { adapter.getValue(null, null); }).toThrowError('Row not found');
+        expect(() => {
+            adapter.getValue(null, null);
+        }).toThrowError('Row not found');
     });
 
     it('should fail getting value with column not defined', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        expect(() => { adapter.getValue(<DataRow> {}, null); }).toThrowError('Column not found');
+        expect(() => {
+            adapter.getValue(<DataRow> {}, null);
+        }).toThrowError('Column not found');
     });
 
     it('should get value from row with column key', () => {
@@ -300,7 +304,9 @@ describe('ObjectDataTableAdapter', () => {
 describe('ObjectDataRow', () => {
 
     it('should require object source', () => {
-        expect(() => { return new ObjectDataRow(null); }).toThrowError('Object source not found');
+        expect(() => {
+            return new ObjectDataRow(null);
+        }).toThrowError('Object source not found');
     });
 
     it('should get top level property value', () => {

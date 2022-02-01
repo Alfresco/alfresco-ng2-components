@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';

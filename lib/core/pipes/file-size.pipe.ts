@@ -41,11 +41,10 @@ export class FileSizePipe implements PipeTransform {
             return '0 ' + this.translation.instant('CORE.FILE_SIZE.BYTES');
         }
 
-        const k = 1024,
-            dm = decimals || 2,
-            sizes = ['BYTES', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            i = Math.floor(Math.log(bytes) / Math.log(k));
-
+        const k = 1024;
+        const dm = decimals || 2;
+        const sizes = ['BYTES', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
         const i18nSize = this.translation.instant(`CORE.FILE_SIZE.${sizes[i]}`);
 
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + i18nSize;

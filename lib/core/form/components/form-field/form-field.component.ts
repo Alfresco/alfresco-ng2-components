@@ -35,7 +35,7 @@ import { WidgetVisibilityService } from './../../services/widget-visibility.serv
 import { FormFieldModel } from './../widgets/core/form-field.model';
 import { WidgetComponent } from './../widgets/widget.component';
 
-declare var adf: any;
+declare const adf: any;
 
 @Component({
     selector: 'adf-form-field',
@@ -63,7 +63,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     @Input()
     field: FormFieldModel = null;
 
-    componentRef: ComponentRef<{}>;
+    componentRef: ComponentRef<any>;
 
     focus: boolean = false;
 

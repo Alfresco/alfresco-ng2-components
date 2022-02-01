@@ -27,7 +27,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class SharedLinksApiService {
 
-    error = new Subject<{ statusCode: number, message: string }>();
+    error = new Subject<{ statusCode: number; message: string }>();
 
     _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {

@@ -30,23 +30,23 @@ export type PaginationAction =
     | 'CHANGE_PAGE_SIZE'
     | 'CHANGE_PAGE_NUMBER';
 
+export const DEFAULT_PAGINATION: PaginationModel = {
+    skipCount: 0,
+    maxItems: 25,
+    totalItems: 0,
+    count: 0,
+    hasMoreItems: false
+};
+
 @Component({
     selector: 'adf-pagination',
-    host: { 'class': 'adf-pagination' },
+    host: { class: 'adf-pagination' },
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
-    static DEFAULT_PAGINATION: PaginationModel = {
-        skipCount: 0,
-        maxItems: 25,
-        totalItems: 0,
-        count: 0,
-        hasMoreItems: false
-    };
-
     private _pagination: PaginationModel;
     private _isEmpty = true;
     private _hasItems = false;
@@ -66,7 +66,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     /** Pagination object. */
     @Input()
     set pagination(value: PaginationModel) {
-        value = value || PaginationComponent.DEFAULT_PAGINATION;
+        value = value || DEFAULT_PAGINATION;
 
         this._pagination = value;
         this._hasItems = value && value.count > 0;
@@ -83,6 +83,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     }
 
     /** Emitted when pagination changes in any way. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     change = new EventEmitter<PaginationModel>();
 
@@ -118,7 +119,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(maxItems => {
                 this.pagination = {
-                    ...PaginationComponent.DEFAULT_PAGINATION,
+                    ...DEFAULT_PAGINATION,
                     ...this.pagination,
                     maxItems
                 };
@@ -144,7 +145,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
         if (!this.pagination) {
             this.pagination = {
-                ...PaginationComponent.DEFAULT_PAGINATION
+                ...DEFAULT_PAGINATION
             };
         }
     }

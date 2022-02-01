@@ -38,7 +38,7 @@ export class AuthenticationMock {
     }
 
     // TODO: real auth service returns Observable<string>
-    login(username: string, password: string): Observable<{ type: string, ticket: any }> {
+    login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
             return of({ type: 'type', ticket: 'ticket' });
         }

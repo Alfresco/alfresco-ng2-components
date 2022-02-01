@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
+
 import {
     ViewChildren, QueryList, HostListener,
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy, AfterViewInit
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -57,7 +59,7 @@ export enum ShowHeaderMode {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable' }
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -122,7 +124,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: { [key: string]: any; };
+    rowStyle: { [key: string]: any };
 
     /** The CSS class to apply to every row. */
     @Input()
@@ -203,7 +205,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private click$: Observable<DataRowEvent>;
 
     private differ: any;
-    private rowMenuCache: object = {};
+    private rowMenuCache: any = {};
 
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
@@ -856,7 +858,7 @@ export interface DataTableDropEvent {
         target: 'cell' | 'header';
         event: Event;
         column: DataColumn;
-        row?: DataRow
+        row?: DataRow;
     };
 
     preventDefault(): void;

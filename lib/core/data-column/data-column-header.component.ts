@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector no-input-rename  */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ContentChild, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, TemplateRef } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
     selector: 'adf-data-column-header',
     template: ''
 })
-export class DateColumnHeaderComponent {
+export class DateColumnHeaderComponent implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     public header: TemplateRef<any>;

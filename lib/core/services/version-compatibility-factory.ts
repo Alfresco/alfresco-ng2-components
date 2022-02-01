@@ -17,6 +17,6 @@
 
 import { VersionCompatibilityService } from './version-compatibility.service';
 
-export function versionCompatibilityFactory(
-    versionCompatibilityService: VersionCompatibilityService
-): Function { return () => versionCompatibilityService; }
+export function versionCompatibilityFactory(versionCompatibilityService: VersionCompatibilityService) {
+    return () => versionCompatibilityService;
+}

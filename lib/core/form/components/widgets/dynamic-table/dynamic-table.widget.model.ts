@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import moment from 'moment-es6';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';

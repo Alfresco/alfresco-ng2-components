@@ -47,8 +47,12 @@ describe('TypeaheadWidgetComponent', () => {
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         translationService = TestBed.inject(TranslateService);
-        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
-        spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
+        spyOn(translationService, 'instant').and.callFake((key) => {
+            return key;
+        });
+        spyOn(translationService, 'get').and.callFake((key) => {
+            return of(key);
+        });
 
         formService = new FormService(null, alfrescoApiService, null);
         widget = new TypeaheadWidgetComponent(formService, null);

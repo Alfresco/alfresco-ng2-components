@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
@@ -30,7 +30,7 @@ import { takeUntil, map } from 'rxjs/operators';
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss']
 })
-export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnChanges, OnDestroy {
+export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
     static HIDE_FILTER_LIMIT = 5;
 
     @Input() editable: boolean = false;

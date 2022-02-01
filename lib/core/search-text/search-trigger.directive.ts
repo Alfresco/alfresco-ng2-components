@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable: no-input-rename no-use-before-declare no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import {
@@ -45,7 +45,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    // tslint:disable-next-line:directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
         'role': 'combobox',
@@ -139,11 +139,11 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         Promise.resolve(null).then(() => this.setTriggerValue(value));
     }
 
-    registerOnChange(fn: (value: any) => {}): void {
+    registerOnChange(fn: (value: any) => any): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => {}) {
+    registerOnTouched(fn: () => any) {
         this.onTouched = fn;
     }
 

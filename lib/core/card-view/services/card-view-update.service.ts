@@ -29,10 +29,10 @@ export interface ClickNotification {
     target: any;
 }
 
-export function transformKeyToObject(key: string, value): Object {
+export function transformKeyToObject(key: string, value): any {
     const objectLevels: string[] = key.split('.').reverse();
 
-    return objectLevels.reduce<{}>((previousValue, currentValue) => {
+    return objectLevels.reduce<any>((previousValue, currentValue) => {
         return { [currentValue]: previousValue};
     }, value);
 }

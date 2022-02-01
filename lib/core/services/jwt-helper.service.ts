@@ -41,7 +41,7 @@ export class JwtHelperService {
      * @param token Token in encoded form
      * @returns Decoded token data object
      */
-    decodeToken(token): Object {
+    decodeToken(token): any {
         const parts = token.split('.');
 
         if (parts.length !== 3) {

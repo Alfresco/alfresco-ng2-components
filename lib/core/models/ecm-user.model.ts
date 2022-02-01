@@ -39,7 +39,7 @@ export class EcmUserModel {
     enabled: boolean;
     emailNotificationsEnabled?: boolean;
     aspectNames?: string[];
-    properties?: { [key: string]: string; };
+    properties?: { [key: string]: string };
     capabilities?: Capabilities;
 
     constructor(obj?: any) {

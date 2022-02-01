@@ -1090,7 +1090,7 @@ describe('DataTable', () => {
         const column = <DataColumn> {};
 
         const row: any = {
-            getValue: function () {
+            getValue: function() {
                 return 'material-icons://android';
             }
         };
@@ -1102,7 +1102,7 @@ describe('DataTable', () => {
         const column = <DataColumn> {};
 
         const row: any = {
-            getValue: function () {
+            getValue: function() {
                 return 'http://www.google.com';
             }
         };
@@ -1114,7 +1114,7 @@ describe('DataTable', () => {
         const column = <DataColumn> {};
 
         const row: any = {
-            getValue: function () {
+            getValue: function() {
                 return 'material-icons://android';
             }
         };
@@ -1126,7 +1126,7 @@ describe('DataTable', () => {
         const column = <DataColumn> {};
 
         const row: any = {
-            getValue: function () {
+            getValue: function() {
                 return 'http://www.google.com';
             }
         };
@@ -1229,7 +1229,7 @@ describe('DataTable', () => {
 
         const column = <DataColumn> {};
         const row: any = {
-            getValue: function () {
+            getValue: function() {
                 return 'id';
             }
         };
