@@ -142,7 +142,9 @@ export class FolderDialogComponent implements OnInit {
     submit() {
         const { form, dialog, editing } = this;
 
-        if (!form.valid) { return; }
+        if (!form.valid) {
+            return;
+        }
 
         (editing ? this.edit() : this.create())
             .subscribe(

@@ -44,7 +44,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
                 skipCount: skipCount
             },
             filterQueries: [
-                /*tslint:disable-next-line */
+                /* eslint-disable-next-line */
                 { query: "TYPE:'cm:authority'" }]
         };
 

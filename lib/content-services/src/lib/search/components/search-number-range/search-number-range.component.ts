@@ -86,7 +86,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : {'mismatch': true};
     }
 
-    apply(model: { from: string, to: string }, isValid: boolean) {
+    apply(model: { from: string; to: string }, isValid: boolean) {
         if (isValid && this.id && this.context && this.field) {
             this.updateDisplayValue();
             this.isActive = true;

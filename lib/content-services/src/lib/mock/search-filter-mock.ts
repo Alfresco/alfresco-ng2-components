@@ -42,8 +42,8 @@ export const disabledCategories = [
                 'field': null,
                 'pageSize': 5,
                 'options': [
-                    { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
-                    { 'name': 'Document', 'value': "TYPE:'cm:content'" }
+                    { 'name': 'Folder', 'value': `TYPE:'cm:folder'` },
+                    { 'name': 'Document', 'value': `TYPE:'cm:content'` }
                 ]
             }
         }
@@ -62,8 +62,8 @@ export const expandedCategories = [
                 'field': null,
                 'pageSize': 5,
                 'options': [
-                    { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
-                    { 'name': 'Document', 'value': "TYPE:'cm:content'" }
+                    { 'name': 'Folder', 'value': `TYPE:'cm:folder'` },
+                    { 'name': 'Document', 'value': `TYPE:'cm:content'` }
                 ]
             }
         }
@@ -94,8 +94,8 @@ export const simpleCategories: SearchCategory[] = [
                 'field': 'check-list',
                 'pageSize': 5,
                 'options': [
-                    { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
-                    { 'name': 'Document', 'value': "TYPE:'cm:content'" }
+                    { 'name': 'Folder', 'value': `TYPE:'cm:folder'` },
+                    { 'name': 'Document', 'value': `TYPE:'cm:content'` }
                 ]
             }
         }
@@ -132,7 +132,7 @@ export const searchFilter = {
     'resetButton': true,
     'filterQueries': [
         {
-            'query': "TYPE:'cm:folder' OR TYPE:'cm:content'"
+            'query': `TYPE:'cm:folder' OR TYPE:'cm:content'`
         },
         {
             'query': 'NOT cm:creator:System'
@@ -321,7 +321,7 @@ export const searchFilter = {
             'component': {
                 'selector': 'text',
                 'settings': {
-                    'pattern': "cm:name:'(.*?)'",
+                    'pattern': `cm:name:'(.*?)'`,
                     'field': 'cm:name',
                     'placeholder': 'Enter the name'
                 }

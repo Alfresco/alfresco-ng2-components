@@ -19,12 +19,12 @@ export class ContentActionModel {
     icon: string;
     title: string;
     handler: ContentActionHandler;
-    execute: Function;
+    execute: (...args) => void;
     target: string;
     permission: string;
     disableWithNoPermission: boolean = false;
-    disabled: boolean | Function = false;
-    visible: boolean | Function = true;
+    disabled: boolean | ((...args) => boolean) = false;
+    visible: boolean | ((...args) => boolean) = true;
 
     constructor(obj?: any) {
         if (obj) {

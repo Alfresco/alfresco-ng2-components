@@ -224,7 +224,7 @@ export class NodePermissionService {
             'filterQueries': [
                 {
                     'query':
-                        "TYPE:'st:site'"
+                        `TYPE:'st:site'`
                 }
             ]
         };
@@ -307,8 +307,9 @@ export class NodePermissionService {
         );
     }
 
-    transformNodeToUserPerson(node: Node): { person: EcmUserModel, group: Group } {
-        let person = null, group = null;
+    transformNodeToUserPerson(node: Node): { person: EcmUserModel; group: Group } {
+        let person = null;
+        let group = null;
         if (node.nodeType === 'cm:person') {
             const firstName = node.properties['cm:firstName'];
             const lastName = node.properties['cm:lastName'];

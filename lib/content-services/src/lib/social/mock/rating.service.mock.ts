@@ -26,7 +26,7 @@ import { RatingServiceInterface } from '../services/rating.service.interface';
 })
 export class RatingServiceMock implements RatingServiceInterface {
 
-    getRating(nodeId: string, _ratingType: any): Observable<RatingEntry | {}> {
+    getRating(nodeId: string, _ratingType: any): Observable<RatingEntry | any> {
         if (nodeId === 'fake-like-node-id') {
             return of(ratingOneMock);
         }
@@ -34,7 +34,7 @@ export class RatingServiceMock implements RatingServiceInterface {
         return of(ratingThreeMock);
     }
 
-    postRating(nodeId: string, _ratingType: string, _vote: any): Observable<RatingEntry | {}> {
+    postRating(nodeId: string, _ratingType: string, _vote: any): Observable<RatingEntry | any> {
         if (nodeId === 'ratingOneMock') {
             ratingOneMock.entry.aggregate.numberOfRatings = 1;
             ratingOneMock.entry.aggregate.average = 1.0;

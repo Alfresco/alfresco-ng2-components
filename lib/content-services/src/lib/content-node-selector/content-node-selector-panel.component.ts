@@ -197,7 +197,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     set showFilesInResult(value: boolean) {
         if (value !== undefined && value !== null) {
-            const showFilesQuery = `TYPE:'cm:folder'${value ? " OR TYPE:'cm:content'" : ''}`;
+            const showFilesQuery = `TYPE:'cm:folder'${value ? ` OR TYPE:'cm:content'` : ''}`;
             this.queryBuilderService.addFilterQuery(showFilesQuery);
         }
     }

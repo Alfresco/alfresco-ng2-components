@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';

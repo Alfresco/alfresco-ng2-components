@@ -24,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchComponent', () => {
 
-    let fixture: ComponentFixture<SimpleSearchTestComponent>, element: HTMLElement;
+    let fixture: ComponentFixture<SimpleSearchTestComponent>;
+    let element: HTMLElement;
     let component: SimpleSearchTestComponent;
     let searchService: SearchService;
 

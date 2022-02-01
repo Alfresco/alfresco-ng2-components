@@ -241,7 +241,9 @@ describe('DocumentList', () => {
                 previousValue: undefined,
                 currentValue: mockPreselectedNodes,
                 firstChange: true,
-                isFirstChange(): boolean { return this.firstChange; }
+                isFirstChange(): boolean {
+                    return this.firstChange;
+                }
             }
         };
         documentList.ngOnChanges(changes);
@@ -258,7 +260,9 @@ describe('DocumentList', () => {
                 previousValue: undefined,
                 currentValue: ['mockChangeValue'],
                 firstChange: true,
-                isFirstChange(): boolean { return this.firstChange; }
+                isFirstChange(): boolean {
+                    return this.firstChange;
+                }
             }
         };
         documentList.ngOnChanges(changes);

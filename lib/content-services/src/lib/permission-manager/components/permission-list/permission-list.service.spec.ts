@@ -71,8 +71,9 @@ describe('PermissionListService', () => {
 
     describe('toggle permission', () => {
 
-        it('should show error if user doesn\'t have permission to update node', () => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
+        it('should show error if user does not have permission to update node', () => {
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
+            const event = { source: { checked: false } };
             node.allowableOperations = [];
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
             spyOn(nodesApiService, 'updateNode').and.stub();
@@ -83,7 +84,8 @@ describe('PermissionListService', () => {
         });
 
         it('should include the local permission before toggle', (done) => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
+            const event = { source: { checked: false } };
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(null));
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(JSON.parse(JSON.stringify(fakeNodeLocalSiteManager))));
@@ -104,7 +106,8 @@ describe('PermissionListService', () => {
         });
 
         it('should not update local permission before toggle', () => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
+            const event = { source: { checked: false } };
             const updateNode = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
             node.permissions.locallySet = [{
                 'authorityId': 'GROUP_site_testsite_SiteManager',
@@ -124,7 +127,8 @@ describe('PermissionListService', () => {
         });
 
         it('should show message for errored toggle', () => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
+            const event = { source: { checked: false } };
             node.permissions.isInheritanceEnabled = true;
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError('Failed to update'));
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));

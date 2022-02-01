@@ -20,7 +20,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-// import { fakeNodePaging } from './../../../mock/document-list.component.mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
@@ -36,7 +35,7 @@ const mockCategory: SearchCategory = {
     'component': {
         'selector': 'text',
         'settings': {
-            'pattern': "cm:name:'(.*?)'",
+            'pattern': `cm:name:'(.*?)'`,
             'field': 'cm:name',
             'placeholder': 'Enter the name'
         }

@@ -37,7 +37,7 @@ describe('SearchTextComponent', () => {
         component = fixture.componentInstance;
         component.id = 'text';
         component.settings = {
-            'pattern': "cm:name:'(.*?)'",
+            'pattern': `cm:name:'(.*?)'`,
             'field': 'cm:name',
             'placeholder': 'Enter the name'
         };
@@ -49,7 +49,7 @@ describe('SearchTextComponent', () => {
     });
 
     it('should parse value from the context at startup', () => {
-        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
         fixture.detectChanges();
 
         expect(component.value).toEqual('secret.pdf');
@@ -57,7 +57,7 @@ describe('SearchTextComponent', () => {
 
     it('should not parse value when pattern not defined', () => {
         component.settings.pattern = null;
-        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
         fixture.detectChanges();
 
         expect(component.value).toEqual('');
@@ -73,7 +73,7 @@ describe('SearchTextComponent', () => {
         });
 
         expect(component.value).toBe('top-secret.doc');
-        expect(component.context.queryFragments[component.id]).toBe("cm:name:'top-secret.doc'");
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'top-secret.doc'`);
         expect(component.context.update).toHaveBeenCalled();
     });
 
@@ -85,7 +85,7 @@ describe('SearchTextComponent', () => {
         });
 
         expect(component.value).toBe('top-secret.doc');
-        expect(component.context.queryFragments[component.id]).toBe("cm:name:'top-secret.doc'");
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'top-secret.doc'`);
 
         component.onChangedHandler({
             target: {
@@ -98,7 +98,7 @@ describe('SearchTextComponent', () => {
     });
 
     it('should show the custom/default name', async () => {
-        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.value).toEqual('secret.pdf');
@@ -107,7 +107,7 @@ describe('SearchTextComponent', () => {
     });
 
     it('should be able to reset by clicking clear button',  async () => {
-        component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
+        component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
         fixture.detectChanges();
         await fixture.whenStable();
         const clearElement = fixture.debugElement.nativeElement.querySelector('button');

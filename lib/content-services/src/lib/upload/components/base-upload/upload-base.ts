@@ -22,7 +22,7 @@ import { UploadFilesEvent } from '../upload-files.event';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class UploadBase implements OnInit, OnDestroy {
 
     /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.

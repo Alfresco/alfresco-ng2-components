@@ -17,7 +17,7 @@
 
 import { ObjectDataRow } from '@alfresco/adf-core';
 import { PermissionElement } from '@alfresco/js-api';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { PermissionListService } from './permission-list.service';
 
@@ -27,7 +27,7 @@ import { PermissionListService } from './permission-list.service';
     styleUrls: ['./permission-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PermissionListComponent {
+export class PermissionListComponent implements OnInit {
     /** ID of the node whose permissions you want to show. */
     @Input()
     nodeId: string;

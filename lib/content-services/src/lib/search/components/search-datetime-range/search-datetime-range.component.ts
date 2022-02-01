@@ -129,7 +129,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.onDestroy$.complete();
     }
 
-    apply(model: { from: string, to: string }, isValid: boolean) {
+    apply(model: { from: string; to: string }, isValid: boolean) {
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 

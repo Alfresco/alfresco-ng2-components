@@ -42,7 +42,7 @@ export class RatingService implements RatingServiceInterface {
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
      * @returns The rating value
      */
-    getRating(nodeId: string, ratingType: any): Observable<RatingEntry | {}> {
+    getRating(nodeId: string, ratingType: any): Observable<RatingEntry | any> {
         return from(this.ratingsApi.getRating(nodeId, ratingType))
             .pipe(
                 catchError(this.handleError)
@@ -56,7 +56,7 @@ export class RatingService implements RatingServiceInterface {
      * @param vote Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
      * @returns Details about the rating, including the new value
      */
-    postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | {}> {
+    postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | any> {
         const ratingBody: RatingBody = new RatingBody({
             'id': ratingType,
             'myRating': vote

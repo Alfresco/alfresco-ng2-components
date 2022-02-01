@@ -42,8 +42,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should setup options from settings', () => {
         const options: any = [
-            { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
-            { 'name': 'Document', 'value': "TYPE:'cm:content'" }
+            { 'name': 'Folder', 'value': `TYPE:'cm:folder'` },
+            { 'name': 'Document', 'value': `TYPE:'cm:content'` }
         ];
         component.settings = <any> { options: options };
         component.ngOnInit();
@@ -53,8 +53,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should handle enter key as click on checkboxes', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: false }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
 
         component.ngOnInit();
@@ -83,8 +83,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should update query builder on checkbox change', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: false }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
 
         component.id = 'checklist';
@@ -116,8 +116,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should reset selected boxes', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: true }
         ]);
 
         component.reset();
@@ -138,8 +138,8 @@ describe('SearchCheckListComponent', () => {
 
         component.ngOnInit();
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: true }
         ]);
 
         component.reset();
