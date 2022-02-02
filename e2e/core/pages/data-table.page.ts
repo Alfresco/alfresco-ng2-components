@@ -189,6 +189,7 @@ export class DataTablePage {
     }
 
     async getClipboardInputText(): Promise<string> {
-        return BrowserActions.getInputValue(this.pasteClipboardInput);
+        const inputValue = await BrowserActions.getInputValue(this.pasteClipboardInput);
+        return inputValue.match(/\d/).toString();
     }
 }
