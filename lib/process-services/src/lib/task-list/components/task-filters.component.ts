@@ -39,19 +39,19 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter is being clicked from the UI. */
     @Output()
-    filterClicked: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClicked = new EventEmitter<FilterRepresentationModel>();
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
-    filterSelected: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterSelected = new EventEmitter<FilterRepresentationModel>();
 
     /** Emitted when the list is loaded. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when an error occurs during loading. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Display filters available to the current user for the application with the specified ID. */
     @Input()
@@ -97,15 +97,21 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the task list filtered by appId or by appName
+     *
      * @param appId
      * @param appName
      */
     getFilters(appId?: number, appName?: string) {
-        appName ? this.getFiltersByAppName(appName) : this.getFiltersByAppId(appId);
+        if (appName) {
+            this.getFiltersByAppName(appName);
+        } else {
+            this.getFiltersByAppId(appId);
+        }
     }
 
     /**
      * Return the filter list filtered by appId
+     *
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
@@ -128,6 +134,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appName
+     *
      * @param appName
      */
     getFiltersByAppName(appName: string) {
@@ -142,6 +149,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Create default filters by appId
+     *
      * @param appId
      */
     createFiltersByAppId(appId?: number) {
@@ -160,6 +168,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
+     *
      * @param newFilter
      */
     public selectFilter(newFilter: FilterParamsModel) {
@@ -188,6 +197,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select filter with task
+     *
      * @param taskId
      */
     public selectFilterWithTask(taskId: string) {
@@ -209,7 +219,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select as default task filter the first in the list
-     * @param filteredFilterList
      */
     public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {

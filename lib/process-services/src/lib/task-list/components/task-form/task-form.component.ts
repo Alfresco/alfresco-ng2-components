@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
 import {
   FormModel,
   ContentLinkModel,
@@ -36,7 +36,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./task-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent implements OnInit, OnChanges {
 
   /** (**required**) The id of the task whose details we are asking for. */
   @Input()

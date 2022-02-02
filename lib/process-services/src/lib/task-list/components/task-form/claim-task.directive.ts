@@ -20,27 +20,28 @@ import {
     Input,
     Output,
     EventEmitter,
-    HostListener
+    HostListener,
+    OnInit
 } from '@angular/core';
 import { TaskListService } from '../../services/tasklist.service';
 import { LogService } from '@alfresco/adf-core';
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-claim-task]'
 })
-export class ClaimTaskDirective {
+export class ClaimTaskDirective implements OnInit {
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
 
     /** Emitted when the task is claimed. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when the task cannot be claimed. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     invalidParams: string[] = [];
 
@@ -69,16 +70,16 @@ export class ClaimTaskDirective {
     }
 
     @HostListener('click')
-    async onClick() {
+    onClick() {
         try {
-            await this.claimTask();
+            this.claimTask();
         } catch (error) {
             this.error.emit(error);
         }
     }
 
-    private async claimTask() {
-        await this.taskListService.claimTask(this.taskId).subscribe(
+    private claimTask() {
+        this.taskListService.claimTask(this.taskId).subscribe(
             () => {
                 this.logService.info('Task claimed');
                 this.success.emit(this.taskId);

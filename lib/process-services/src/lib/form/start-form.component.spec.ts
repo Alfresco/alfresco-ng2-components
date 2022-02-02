@@ -60,8 +60,12 @@ describe('StartFormComponent', () => {
             processDefinitionName: 'my:process'
         }));
 
-        spyOn(translate, 'instant').and.callFake((key) => { return key; });
-        spyOn(translate, 'get').and.callFake((key) => { return of(key); });
+        spyOn(translate, 'instant').and.callFake((key) => {
+            return key;
+        });
+        spyOn(translate, 'get').and.callFake((key) => {
+            return of(key);
+        });
     });
 
     afterEach(() => {
