@@ -17,7 +17,7 @@
 
 import { Anchor } from './anchor';
 
-/* tslint:disable */
+/* eslint-disable */
 export class Polyline {
 
     id: any = null;

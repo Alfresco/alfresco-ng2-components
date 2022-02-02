@@ -18,7 +18,7 @@
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges, Directive } from '@angular/core';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class WidgetComponent implements OnChanges {
 
     /** field. */
