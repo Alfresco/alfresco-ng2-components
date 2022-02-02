@@ -26,7 +26,7 @@ import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
-import { fakeGlobalFilter, taskNotifications } from '../mock/task-filters-cloud.mock';
+import { fakeGlobalFilter, taskNotifications, defaultTaskFiltersMock } from '../mock/task-filters-cloud.mock';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFiltersCloudComponent', () => {
@@ -356,4 +356,78 @@ describe('TaskFiltersCloudComponent', () => {
             expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
         });
     }));
+
+    describe('Highlight Selected Filter', () => {
+
+        const assignedTasksFilterKey = defaultTaskFiltersMock[1].key;
+        const queuedTasksFilterKey = defaultTaskFiltersMock[0].key;
+        const completedTasksFilterKey = defaultTaskFiltersMock[2].key;
+
+        function getActiveFilterElement(filterKey: string): Element {
+            const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
+            return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
+        }
+
+        async function clickOnFilter(filterKey: string) {
+            fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`).click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+        }
+
+        it('Should highlight task filter on filter click', async () => {
+            getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
+            component.appName = 'mock-app-name';
+            const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+            component.ngOnChanges({ 'appName': appNameChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await clickOnFilter(assignedTasksFilterKey);
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+
+            await clickOnFilter(queuedTasksFilterKey);
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+
+            await clickOnFilter(completedTasksFilterKey);
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeDefined();
+        });
+
+        it('Should highlight task filter when filterParam input changed', async () => {
+            getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
+            fixture.detectChanges();
+
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: assignedTasksFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: queuedTasksFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
+
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: completedTasksFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(assignedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedTasksFilterKey)).toBeDefined();
+        });
+    });
 });

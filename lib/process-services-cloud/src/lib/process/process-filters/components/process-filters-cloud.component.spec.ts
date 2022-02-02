@@ -289,4 +289,75 @@ describe('ProcessFiltersCloudComponent', () => {
         component.selectFilter({ id: filter.id });
         expect(component.getCurrentFilter()).toBe(filter);
     });
+
+    describe('Highlight Selected Filter', () => {
+
+        const allProcessesFilterKey = mockProcessFilters[0].key;
+        const runningProcessesFilterKey = mockProcessFilters[1].key;
+        const completedProcessesFilterKey = mockProcessFilters[2].key;
+
+        function getActiveFilterElement(filterKey: string): Element {
+            const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
+            return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
+        }
+
+        async function clickOnFilter(filterKey: string) {
+            fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`).click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+        }
+
+        it('should apply active CSS class on filter click', async () => {
+            component.appName = 'mock-app-name';
+            const appNameChange = new SimpleChange(null, 'mock-app-name', true);
+            component.ngOnChanges({ 'appName': appNameChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            await clickOnFilter(allProcessesFilterKey);
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
+
+            await clickOnFilter(runningProcessesFilterKey);
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
+
+            await clickOnFilter(completedProcessesFilterKey);
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeDefined();
+        });
+
+        it('Should apply active CSS class when filterParam input changed', async () => {
+            fixture.detectChanges();
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: allProcessesFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
+
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: runningProcessesFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeDefined();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeNull();
+
+            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: completedProcessesFilterKey }, true) });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getActiveFilterElement(allProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(runningProcessesFilterKey)).toBeNull();
+            expect(getActiveFilterElement(completedProcessesFilterKey)).toBeDefined();
+        });
+    });
 });
