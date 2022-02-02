@@ -31,10 +31,11 @@ export class FormCloudService {
             const path = '/' + appName + '/form/v1/forms/' + formId + '/submit';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {
-                'values': values,
-                'taskId': taskId,
-                'processInstanceId': processInstanceId
+            const queryParams = {};
+            const postBody = {
+                values,
+                taskId,
+                processInstanceId
             };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
@@ -50,7 +51,8 @@ export class FormCloudService {
             const path = '/' + appName + '/form/v1/forms';
             const method = 'GET';
 
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
@@ -62,12 +64,8 @@ export class FormCloudService {
     }
 
     async getIdByFormName(appName: string, formName: string): Promise<string> {
-
         const forms = await this.getForms(appName);
-
-        const formEntry = forms.find((currentForm) => {
-            return currentForm.formRepresentation.name === formName;
-        });
+        const formEntry = forms.find((currentForm) => currentForm.formRepresentation.name === formName);
 
         if (formEntry.formRepresentation) {
             return formEntry.formRepresentation.id;

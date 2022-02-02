@@ -23,7 +23,7 @@ export class MultilineTextWidgetPage {
     formFields: FormFields = new FormFields();
 
     valueLocator: Locator = by.css('textarea');
-    labelLocator: Locator = by.css("label[class*='adf-label']");
+    labelLocator: Locator = by.css(`label[class*='adf-label']`);
 
     getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId, this.valueLocator);

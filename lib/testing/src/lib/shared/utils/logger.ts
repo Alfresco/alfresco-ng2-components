@@ -31,7 +31,7 @@ export class LogLevelsEnum extends Number {
     static SILENT: number = 0;
 }
 
-export let logLevels: { level: LogLevelsEnum, name: LOG_LEVEL }[] = [
+export let logLevels: { level: LogLevelsEnum; name: LOG_LEVEL }[] = [
     { level: LogLevelsEnum.TRACE, name: 'TRACE' },
     { level: LogLevelsEnum.DEBUG, name: 'DEBUG' },
     { level: LogLevelsEnum.INFO, name: 'INFO' },
@@ -47,7 +47,7 @@ export interface LoggerLike {
     error(...messages: string[]): void;
 }
 
-/* tslint:disable:no-console */
+/* eslint-disable no-console */
 export class GenericLogger implements LoggerLike {
 
     private level: LogLevelsEnum;

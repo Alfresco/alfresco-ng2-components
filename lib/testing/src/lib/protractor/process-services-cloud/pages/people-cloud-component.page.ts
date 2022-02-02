@@ -27,7 +27,7 @@ export class PeopleCloudComponentPage {
     assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
     selectionReady = $('div[data-automation-id="adf-people-cloud-row"]');
     formFields = new FormFields();
-    labelLocator: Locator = by.css("label[class*='adf-label']");
+    labelLocator: Locator = by.css(`label[class*='adf-label']`);
     inputLocator: Locator = by.css('input');
     assigneeChipList = $('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]');
     noOfUsersDisplayed = $$('mat-option span.adf-people-label-name');

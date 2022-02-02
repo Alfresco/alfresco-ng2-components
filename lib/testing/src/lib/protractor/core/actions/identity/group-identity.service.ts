@@ -62,15 +62,14 @@ export class GroupIdentityService {
     async getGroupInfoByGroupName(groupName: string): Promise<any> {
         Logger.log(`Get GroupInfoByGroupName ${groupName}`);
 
-        const predicate = (result: any) => {
-            return !!result;
-        };
+        const predicate = (result: any) => !!result;
 
         const apiCall = async () => {
             try {
                 const path = `/groups`;
                 const method = 'GET';
-                const queryParams = { search: groupName }, postBody = {};
+                const queryParams = { search: groupName };
+                const postBody = {};
 
                 const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
 
@@ -99,6 +98,7 @@ export class GroupIdentityService {
 
     /**
      * Add client roles.
+     *
      * @param groupId ID of the target group
      * @param clientId ID of the client
      * @param roleId ID of the clientRole
@@ -122,6 +122,7 @@ export class GroupIdentityService {
 
     /**
      * Gets the client ID using the app name.
+     *
      * @param applicationName Name of the app
      * @returns client ID string
      */

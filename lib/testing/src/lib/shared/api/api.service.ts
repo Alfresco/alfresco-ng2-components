@@ -68,7 +68,8 @@ export class ApiService {
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.appConfig.hostBpm + path;
-            const pathParams = {}, formParams = {};
+            const pathParams = {};
+            const formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];
 
@@ -86,9 +87,9 @@ export class ApiService {
     /** @deprecated */
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
-
             const uri = this.config.appConfig.oauth2.host.replace('/realms', '/admin/realms') + path;
-            const pathParams = {}, formParams = {};
+            const pathParams = {};
+            const formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];
 
@@ -107,7 +108,8 @@ export class ApiService {
     async performECMOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.appConfig.hostEcm + path;
-            const pathParams = {}, formParams = {};
+            const pathParams = {};
+            const formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];
 

@@ -271,6 +271,7 @@ export const ACTIVITI_CLOUD_APPS = {
             poolForm: {
                 name: 'pool-usertaskform',
                 widgets: {
+                    // eslint-disable-next-line id-blacklist
                     string: 'Text0rfn8p'
                 }
             },

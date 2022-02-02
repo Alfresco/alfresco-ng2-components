@@ -108,7 +108,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getStateFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($("mat-form-field[data-automation-id='status'] span"));
+        return BrowserActions.getText($(`mat-form-field[data-automation-id='status'] span`));
     }
 
     async setSortFilterDropDown(option) {
@@ -117,7 +117,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
-        const sortLocator = $$("mat-form-field[data-automation-id='sort'] span").first();
+        const sortLocator = $$(`mat-form-field[data-automation-id='sort'] span`).first();
         return BrowserActions.getText(sortLocator);
     }
 
@@ -127,7 +127,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($("mat-form-field[data-automation-id='order'] span"));
+        return BrowserActions.getText($(`mat-form-field[data-automation-id='order'] span`));
     }
 
     async setAppNameDropDown(option: string) {
@@ -265,13 +265,27 @@ export class EditProcessFilterCloudComponentPage {
 
     async setFilter(props: FilterProps) {
         await this.openFilter();
-        if (props.name) { await this.setProcessName(props.name); }
-        if (props.status) { await this.setStatusFilterDropDown(props.status); }
-        if (props.sort) { await this.setSortFilterDropDown(props.sort);     }
-        if (props.order) { await this.setOrderFilterDropDown(props.order);   }
-        if (props.initiator) { await this.setInitiator(props.initiator);   }
-        if (props.processName) { await this.setProcessName(props.processName);   }
-        if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
+        if (props.name) {
+            await this.setProcessName(props.name);
+        }
+        if (props.status) {
+            await this.setStatusFilterDropDown(props.status);
+        }
+        if (props.sort) {
+            await this.setSortFilterDropDown(props.sort);
+        }
+        if (props.order) {
+            await this.setOrderFilterDropDown(props.order);
+        }
+        if (props.initiator) {
+            await this.setInitiator(props.initiator);
+        }
+        if (props.processName) {
+            await this.setProcessName(props.processName);
+        }
+        if (props.suspendedDateRange) {
+            await this.setSuspendedDateRangeDropDown(props.suspendedDateRange);
+        }
         await this.closeFilter();
     }
 

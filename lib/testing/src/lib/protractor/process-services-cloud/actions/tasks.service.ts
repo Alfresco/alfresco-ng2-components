@@ -26,11 +26,12 @@ export class TasksService {
         this.api = api;
     }
 
-    async createStandaloneTask(taskName: string, appName: string, options?: Object): Promise<any> {
+    async createStandaloneTask(taskName: string, appName: string, options?: any): Promise<any> {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {}, postBody = {
+        const queryParams = {};
+        const postBody = {
             name: taskName,
             payloadType: 'CreateTaskPayload',
             ...options
@@ -42,7 +43,7 @@ export class TasksService {
             });
     }
 
-    async createStandaloneTaskWithForm(taskName: string, appName: string, formKey: string, options?: Object): Promise<any> {
+    async createStandaloneTaskWithForm(taskName: string, appName: string, formKey: string, options?: any): Promise<any> {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
@@ -50,7 +51,7 @@ export class TasksService {
         const postBody = {
             name: taskName,
             payloadType: 'CreateTaskPayload',
-            formKey: formKey,
+            formKey,
             ...options
         };
 
@@ -64,7 +65,8 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
         const method = 'POST';
 
-        const queryParams = {}, postBody = { payloadType: 'CompleteTaskPayload' };
+        const queryParams = {};
+        const postBody = { payloadType: 'CompleteTaskPayload' };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -122,7 +124,8 @@ export class TasksService {
         const path = '/' + appName + '/query/v1/tasks';
         const method = 'GET';
 
-        const queryParams = { name: taskName }, postBody = {};
+        const queryParams = { name: taskName };
+        const postBody = {};
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -135,8 +138,8 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {},
-            postBody = { name: name, parentTaskId: parentTaskId, payloadType: 'CreateTaskPayload' };
+        const queryParams = {};
+        const postBody = { name, parentTaskId, payloadType: 'CreateTaskPayload' };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {

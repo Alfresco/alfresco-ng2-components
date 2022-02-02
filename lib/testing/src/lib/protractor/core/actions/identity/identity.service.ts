@@ -59,7 +59,8 @@ export class IdentityService {
             const path = '/users';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {
+            const queryParams = {};
+            const postBody = {
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -76,7 +77,8 @@ export class IdentityService {
     async deleteUser(userId: string): Promise<any> {
         const path = `/users/${userId}`;
         const method = 'DELETE';
-        const queryParams = {}, postBody = {};
+        const queryParams = {};
+        const postBody = {};
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
 
@@ -93,8 +95,8 @@ export class IdentityService {
     async resetPassword(id: string, password: string): Promise<any> {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
-        const queryParams = {},
-            postBody = { type: 'password', value: password, temporary: false };
+        const queryParams = {};
+        const postBody = { type: 'password', value: password, temporary: false };
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
@@ -106,7 +108,7 @@ export class IdentityService {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';
             const queryParams = {};
-            const postBody = { realm: 'alfresco', userId: userId, groupId: groupId };
+            const postBody = { realm: 'alfresco', userId, groupId };
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
@@ -125,8 +127,9 @@ export class IdentityService {
 
     async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/users/${userId}/role-mappings/clients/${clientId}`;
-        const method = 'DELETE', queryParams = {},
-            postBody = [{
+        const method = 'DELETE';
+        const queryParams = {};
+            const postBody = [{
                 id: roleId,
                 name: roleName,
                 composite: false,
@@ -135,5 +138,4 @@ export class IdentityService {
             }];
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
     }
-
 }

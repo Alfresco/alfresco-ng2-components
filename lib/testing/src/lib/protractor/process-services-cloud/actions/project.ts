@@ -122,12 +122,9 @@ export class Project {
     });
   }
 
-  private async retrySearchProject(modelId: string): Promise<{}> {
+  private async retrySearchProject(modelId: string): Promise<any> {
     const predicate = (result: ResultSetPaging) => {
-      const foundModel = result.list.entries.find(model => {
-        return model.entry.id === modelId;
-      });
-
+      const foundModel = result.list.entries.find(model => model.entry.id === modelId);
       return !!foundModel;
     };
     const apiCall = () => this.searchProjects();

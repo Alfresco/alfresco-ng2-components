@@ -23,7 +23,7 @@ import { EditJsonDialog } from '../../../dialog/public-api';
 export class DisplayValueWidgetPage {
 
     formFields: FormFields = new FormFields();
-    labelLocator: Locator = by.css("label[class*='adf-label']");
+    labelLocator: Locator = by.css(`label[class*='adf-label']`);
     inputLocator: Locator = by.css('input');
     editJsonDialog = new EditJsonDialog();
 
@@ -61,7 +61,7 @@ export class DisplayValueWidgetPage {
     }
 
     async getDisplayJsonValueDialogContent(): Promise<any> {
-        return JSON.parse(await (<any> this.editJsonDialog.getDialogContent()));
+        return JSON.parse(await this.editJsonDialog.getDialogContent());
     }
 
     async closeDisplayJsonValuedDialog() {

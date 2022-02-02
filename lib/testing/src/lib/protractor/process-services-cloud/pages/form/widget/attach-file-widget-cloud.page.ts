@@ -29,10 +29,10 @@ export class AttachFileWidgetCloudPage {
         this.assignWidget(fieldId);
     }
 
-    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
+    getFileAttachedLocatorByContainingText = async (text: string): Promise<ElementFinder> => {
         const filesListLocator = 'div[class="adf-file-properties-table"]';
         return this.widget.$(filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
-    }
+    };
 
     assignWidget(fieldId: string): void {
         this.widget = $(`adf-form-field div[id='field-${fieldId}-container']`);
