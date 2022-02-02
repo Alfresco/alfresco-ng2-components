@@ -102,7 +102,7 @@ export function reduceEmptyMenus(
     return acc.concat(el);
 }
 
-export function mergeObjects(...objects: object[]): any {
+export function mergeObjects(...objects: any[]): any {
     const result = {};
 
     objects.forEach((source) => {

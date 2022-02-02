@@ -17,6 +17,6 @@
 
 import { AppExtensionService } from './app-extension.service';
 
-export function setupExtensions(appExtensionService: AppExtensionService): Function {
+export function setupExtensions(appExtensionService: AppExtensionService) {
     return () => appExtensionService.load();
 }

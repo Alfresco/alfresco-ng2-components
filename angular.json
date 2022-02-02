@@ -748,19 +748,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/extensions/tsconfig.lib.json",
-              "lib/extensions/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/core/**/*",
-              "**/lib/content-services/**/*",
-              "**/lib/process-services/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/insights/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/extensions/**/*.ts",
+              "lib/extensions/**/*.html"
             ]
           }
         }
