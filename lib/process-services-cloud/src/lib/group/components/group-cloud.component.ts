@@ -318,8 +318,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     filterGroupsByRoles(group: IdentityGroupModel): Observable<IdentityGroupModel> {
         return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
             map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
-            filter((filteredGroup: { hasRole: boolean, group: IdentityGroupModel }) => filteredGroup.hasRole),
-            map((filteredGroup: { hasRole: boolean, group: IdentityGroupModel }) => filteredGroup.group));
+            filter((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.hasRole),
+            map((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.group));
     }
 
     onSelect(group: IdentityGroupModel): void {

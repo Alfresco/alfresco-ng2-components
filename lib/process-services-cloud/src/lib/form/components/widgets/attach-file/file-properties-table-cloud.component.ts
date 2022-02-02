@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';

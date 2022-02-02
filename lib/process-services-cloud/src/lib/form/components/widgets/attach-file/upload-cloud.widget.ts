@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';

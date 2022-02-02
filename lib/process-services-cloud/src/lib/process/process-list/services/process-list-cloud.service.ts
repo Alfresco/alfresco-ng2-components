@@ -67,7 +67,7 @@ export class ProcessListCloudService extends BaseCloudService {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    protected buildQueryParams(requestNode: ProcessQueryCloudRequestModel): Object {
+    protected buildQueryParams(requestNode: ProcessQueryCloudRequestModel): any {
         const queryParam = {};
 
         for (const property in requestNode) {

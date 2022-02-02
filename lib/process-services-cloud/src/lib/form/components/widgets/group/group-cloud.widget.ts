@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'group-cloud-widget',
@@ -40,7 +40,7 @@ import { ComponentSelectionMode } from '../../../../types';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
+export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -62,13 +62,12 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.title = this.field.placeholder;
             this.preSelectGroup = this.field.value ? this.field.value : [];
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),
 
         this.search.statusChanges
             .pipe(
-                filter((value: string) => {
-                    return value === 'INVALID';
-                }),
+                filter((value: string) => value === 'INVALID'),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(() => {
@@ -78,9 +77,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
 
         this.search.statusChanges
             .pipe(
-                filter((value: string) => {
-                    return value === 'VALID';
-                }),
+                filter((value: string) => value === 'VALID'),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(() => {

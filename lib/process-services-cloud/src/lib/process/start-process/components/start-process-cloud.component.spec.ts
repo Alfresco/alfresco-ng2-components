@@ -688,7 +688,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should call service to start process with the variables setted', async () => {
-            const inputProcessVariable: Map<string, object>[] = [];
+            const inputProcessVariable: Map<string, any>[] = [];
             inputProcessVariable['name'] = { value: 'Josh' };
 
             component.variables = inputProcessVariable;

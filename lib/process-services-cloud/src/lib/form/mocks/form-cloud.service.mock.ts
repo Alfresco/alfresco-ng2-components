@@ -97,7 +97,7 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
         throw new Error('Method not implemented.');
     }
 
-    getRestWidgetData(_formName: string, _widgetId: string, _body: Map<String, String>): Observable<FormFieldOption[]> {
+    getRestWidgetData(_formName: string, _widgetId: string, _body: Map<string, string>): Observable<FormFieldOption[]> {
         throw new Error('Method not implemented.');
     }
 }

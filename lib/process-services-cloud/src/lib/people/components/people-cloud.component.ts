@@ -265,8 +265,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
         return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
             map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
-            filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
-            map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
+            filter((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.hasRole),
+            map((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.user));
     }
 
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {

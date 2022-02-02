@@ -18,7 +18,7 @@ import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@a
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-cloud-unclaim-task]'
 })
 export class UnClaimTaskCloudDirective implements OnInit {

@@ -106,15 +106,15 @@ export class TaskFilterCloudModel  {
         this._dueDateFrom = dueDateFrom;
     }
 
-    set dueDateTo(dueDateTo: string) {
-        this._dueDateTo = dueDateTo;
-    }
-
     get dueDateFrom() {
         if (this.isDateRangeType(this.dueDateType)) {
             return this._dueDateFrom;
         }
         return this.getStartDate(this.dueDateType);
+    }
+
+    set dueDateTo(dueDateTo: string) {
+        this._dueDateTo = dueDateTo;
     }
 
     get dueDateTo() {
@@ -128,15 +128,15 @@ export class TaskFilterCloudModel  {
         this._completedFrom = completedFrom;
     }
 
-    set completedTo(completedTo: string) {
-        this._completedTo = completedTo;
-    }
-
     get completedFrom(): string {
         if (this.isDateRangeType(this.completedDateType)) {
             return this._completedFrom;
         }
         return this.getStartDate(this.completedDateType);
+    }
+
+    set completedTo(completedTo: string) {
+        this._completedTo = completedTo;
     }
 
     get completedTo(): string {
@@ -150,15 +150,15 @@ export class TaskFilterCloudModel  {
         this._createdFrom = createdFrom;
     }
 
-    set createdTo(createdTo: string) {
-        this._createdTo = createdTo;
-    }
-
     get createdFrom() {
         if (this.isDateRangeType(this.createdDateType)) {
             return this._createdFrom;
         }
         return this.getStartDate(this.createdDateType);
+    }
+
+    set createdTo(createdTo: string) {
+        this._createdTo = createdTo;
     }
 
     get createdTo() {
@@ -237,7 +237,7 @@ export interface TaskFilterProperties {
     type?: string;
     value?: any;
     key?: string;
-    attributes?: { [key: string]: string; };
+    attributes?: { [key: string]: string };
     options?: FilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;

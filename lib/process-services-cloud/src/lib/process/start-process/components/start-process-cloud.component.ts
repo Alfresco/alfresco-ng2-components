@@ -64,7 +64,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Variables to attach to the payload. */
     @Input()
-    variables: {};
+    variables: any;
 
     /** Parameter to pass form field values in the start form if one is associated. */
     @Input()

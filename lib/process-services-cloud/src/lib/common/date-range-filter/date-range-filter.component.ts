@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -27,7 +27,7 @@ import moment from 'moment-es6';
      styleUrls: ['./date-range-filter.component.scss'],
      templateUrl: './date-range-filter.component.html'
  })
- export class DateRangeFilterComponent {
+ export class DateRangeFilterComponent implements OnInit {
 
     @Input()
     processFilterProperty: ProcessFilterProperties;
