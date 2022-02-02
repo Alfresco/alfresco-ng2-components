@@ -45,7 +45,7 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
                 skipCount: skipCount
             },
             filterQueries: [
-                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
                 { query: 'NOT cm:creator:System' }]
         };
 

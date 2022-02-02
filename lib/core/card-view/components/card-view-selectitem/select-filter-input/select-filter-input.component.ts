@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter, OnInit } from '@angular/core';
 import { ESCAPE, TAB } from '@angular/cdk/keycodes';
 import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
     host: { 'class': 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })
-export class SelectFilterInputComponent implements OnDestroy {
+export class SelectFilterInputComponent implements OnInit, OnDestroy {
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 

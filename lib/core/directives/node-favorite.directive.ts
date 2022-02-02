@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';

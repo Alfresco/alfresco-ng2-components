@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { ContainerColumnModel } from './../core/container-column.model';
 import { ContainerModel } from './../core/container.model';

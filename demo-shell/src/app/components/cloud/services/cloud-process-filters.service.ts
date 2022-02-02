@@ -45,11 +45,11 @@ export class CloudProcessFiltersService {
         );
     }
 
-    readQueryParams(obj: Object): ProcessFilterCloudModel {
+    readQueryParams(obj: any): ProcessFilterCloudModel {
         return this.processFilterCloudService.readQueryParams(obj);
     }
 
-    writeQueryParams(value: Object, appName?: string, id?: string): Object {
+    writeQueryParams(value: any, appName?: string, id?: string): any {
         return this.processFilterCloudService.writeQueryParams(value, this.filterProperties, appName, id);
     }
 }

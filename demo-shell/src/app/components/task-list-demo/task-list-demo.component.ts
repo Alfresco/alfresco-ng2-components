@@ -22,6 +22,8 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import moment from 'moment-es6';
 import { Subject } from 'rxjs';
 
+const DEFAULT_SIZE = 20;
+
 @Component({
     selector: 'app-task-list-demo',
     templateUrl: './task-list-demo.component.html',
@@ -29,8 +31,6 @@ import { Subject } from 'rxjs';
 })
 
 export class TaskListDemoComponent implements OnInit, OnDestroy {
-    DEFAULT_SIZE = 20;
-
     taskListForm: FormGroup;
 
     errorMessage: string;
@@ -46,7 +46,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     name: string;
     sort: string;
     start: number;
-    size: number = this.DEFAULT_SIZE;
+    size: number = DEFAULT_SIZE;
     page: number = 0;
     dueAfter: string;
     dueBefore: string;
@@ -184,7 +184,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         this.state = null;
         this.sort = null;
         this.start = null;
-        this.size = this.DEFAULT_SIZE;
+        this.size = DEFAULT_SIZE;
         this.page = null;
         this.dueAfter = null;
         this.dueBefore = null;

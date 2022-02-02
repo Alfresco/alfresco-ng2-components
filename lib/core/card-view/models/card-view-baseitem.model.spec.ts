@@ -95,7 +95,7 @@ describe('CardViewBaseItemModel', () => {
             expect(validator2.isValid).toHaveBeenCalledWith('test-against-this');
         });
 
-        it("should return the registered validators' common decision (case true)", () => {
+        it('should return the registered validators common decision (case true)', () => {
             const validator1: CardViewItemValidator = { isValid: () => true, message: 'validator 1' };
             const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
             properties.validators = [validator1, validator2];
@@ -107,7 +107,7 @@ describe('CardViewBaseItemModel', () => {
             expect(itemModel.getValidationErrors('test-against-this')).toEqual([]);
         });
 
-        it("should return the registered validators' common decision (case false)", () => {
+        it('should return the registered validators common decision (case false)', () => {
             const validator1: CardViewItemValidator = { isValid: () => false, message: 'validator 1' };
             const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
             const validator3: CardViewItemValidator = { isValid: () => false, message: 'validator 3' };

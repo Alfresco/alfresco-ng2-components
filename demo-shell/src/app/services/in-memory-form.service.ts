@@ -24,14 +24,14 @@ import { Observable, Subject } from 'rxjs';
 interface ProcessServiceData {
     rest: {
         fields: Array<{
-            processId?: string,
-            taskId?: string,
-            fieldId?: string,
+            processId?: string;
+            taskId?: string;
+            fieldId?: string;
             values?: Array<{
-                id: string,
-                name: string
-            }>
-        }>
+                id: string;
+                name: string;
+            }>;
+        }>;
     };
 }
 //
@@ -84,7 +84,7 @@ export class InMemoryFormService extends FormService {
             const form = new FormModel(flattenForm, formValues, readOnly, this, prefixedSpace);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(<any> form, {
+                    new FormOutcomeModel(form, {
                         id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true

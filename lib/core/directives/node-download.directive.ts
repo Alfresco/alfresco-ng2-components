@@ -26,7 +26,7 @@ import { DownloadService } from '../services/download.service';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
@@ -110,7 +110,8 @@ export class NodeDownloadDirective {
             // nodeId for Shared node
             const id = (<any> node.entry).nodeId || node.entry.id;
 
-            let url, fileName;
+            let url;
+            let fileName;
             if (this.version) {
                 url = this.contentApi.getVersionContentUrl(id, this.version.entry.id, true);
                 fileName = this.version.entry.name;

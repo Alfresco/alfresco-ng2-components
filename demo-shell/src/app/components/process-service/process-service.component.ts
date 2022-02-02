@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-// tslint:disable-next-line:adf-file-name
+// eslint-disable-next-line
 import {
     AfterViewInit,
     Component,

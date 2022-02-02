@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
-// tslint:disable:component-selector
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'custom-editor-widget',

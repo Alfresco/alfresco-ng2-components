@@ -162,7 +162,7 @@ export class AuthenticationService {
      * @param rememberMe Stores the user's login details if true
      * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
      */
-    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
+    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
         return from(this.alfrescoApi.getInstance().login(username, password))
             .pipe(
                 map((response: any) => {
@@ -313,7 +313,7 @@ export class AuthenticationService {
      * @returns The redirect URL
      */
     getRedirect(): string {
-        const provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
+        const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 

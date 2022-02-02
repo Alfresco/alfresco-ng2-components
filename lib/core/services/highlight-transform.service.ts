@@ -35,8 +35,8 @@ export class HighlightTransformService {
      * @returns New text along with boolean value to indicate whether anything was highlighted
      */
     public highlight(text: string, search: string, wrapperClass: string = 'adf-highlight'): HighlightTransformResult {
-        let isMatching = false,
-            result = text;
+        let isMatching = false;
+        let result = text;
 
         if (search && text) {
             let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');

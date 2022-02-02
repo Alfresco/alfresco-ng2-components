@@ -17,6 +17,6 @@
 
 import { DirectionalityConfigService } from '../services/directionality-config.service';
 
-export function directionalityConfigFactory(
-    directionalityConfigService: DirectionalityConfigService
-): Function { return () => directionalityConfigService; }
+export function directionalityConfigFactory(directionalityConfigService: DirectionalityConfigService) {
+    return () => directionalityConfigService;
+}

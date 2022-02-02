@@ -43,7 +43,7 @@ export interface FormRepresentationModel {
     taskName?: string;
     processDefinitionId?: string;
     customFieldTemplates?: {
-        [key: string]: string
+        [key: string]: string;
     };
     selectedOutcome?: string;
     fields?: any[];

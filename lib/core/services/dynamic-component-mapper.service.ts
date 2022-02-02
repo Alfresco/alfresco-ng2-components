@@ -18,17 +18,17 @@
 import { Type } from '@angular/core';
 import { getType } from './get-type';
 
-export interface DynamicComponentModel { type: string; }
-export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<{}>;
+export interface DynamicComponentModel { type: string }
+export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<any>;
 export class DynamicComponentResolver {
-    static fromType(type: Type<{}>): DynamicComponentResolveFunction {
+    static fromType(type: Type<any>): DynamicComponentResolveFunction {
         return getType(type);
     }
 }
 
 export abstract class DynamicComponentMapper {
 
-    protected defaultValue: Type<{}> = undefined;
+    protected defaultValue: Type<any> = undefined;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {};
 
     /**
@@ -37,7 +37,7 @@ export abstract class DynamicComponentMapper {
      * @param defaultValue Default type returned for types that are not yet mapped
      * @returns Resolver function
      */
-    getComponentTypeResolver(type: string, defaultValue: Type<{}> = this.defaultValue): DynamicComponentResolveFunction {
+    getComponentTypeResolver(type: string, defaultValue: Type<any> = this.defaultValue): DynamicComponentResolveFunction {
         if (type) {
             return this.types[type] || DynamicComponentResolver.fromType(defaultValue);
         }
@@ -84,7 +84,7 @@ export abstract class DynamicComponentMapper {
      * @param defaultValue Default type returned for field types that are not yet mapped.
      * @returns Component type
      */
-    resolveComponentType(model: DynamicComponentModel, defaultValue: Type<{}> = this.defaultValue): Type<{}> {
+    resolveComponentType(model: DynamicComponentModel, defaultValue: Type<any> = this.defaultValue): Type<any> {
         if (model) {
             const resolver = this.getComponentTypeResolver(model.type, defaultValue);
             return resolver(model);

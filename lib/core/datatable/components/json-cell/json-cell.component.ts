@@ -57,7 +57,7 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     view() {
-        const rawValue: string | object = this.data.getValue(this.row, this.column, this.resolverFn);
+        const rawValue: string | any = this.data.getValue(this.row, this.column, this.resolverFn);
         const value = typeof rawValue === 'object'
             ? JSON.stringify(rawValue || {}, null, 2)
             : rawValue;

@@ -30,7 +30,7 @@ import { CardViewArrayItemComponent } from '../components/card-view-arrayitem/ca
 })
 export class CardItemTypeService extends DynamicComponentMapper {
 
-    protected defaultValue: Type<{}> = CardViewTextItemComponent;
+    protected defaultValue: Type<any> = CardViewTextItemComponent;
 
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
         'text': DynamicComponentResolver.fromType(CardViewTextItemComponent),

@@ -25,10 +25,10 @@ import {
     DataColumn,
     AppConfigService,
     PaginatedComponent,
-    PaginationComponent,
     PaginationModel,
     UserPreferencesService,
-    DataCellEvent
+    DataCellEvent,
+    DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
 import {
     AfterContentInit,
@@ -90,7 +90,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /** The number of processes to fetch in each page. */
     @Input()
-    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+    size: number = DEFAULT_PAGINATION.maxItems;
 
     /** Data source to define the datatable. */
     @Input()
@@ -135,10 +135,12 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     rowClick = new EventEmitter<string>();
 
     /** Emitted when the list of process instances has been loaded successfully from the server. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     success = new EventEmitter<ProcessListModel>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<any>();
 

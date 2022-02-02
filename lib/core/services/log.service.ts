@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-console  */
+/* eslint-disable no-console */
 
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';

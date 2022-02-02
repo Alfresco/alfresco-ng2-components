@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable: component-selector no-use-before-declare no-input-rename  */
+ /* eslint-disable @angular-eslint/component-selector, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import {
     Directive,
@@ -46,8 +46,8 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     /** Object defining mask and "reversed" status. */
     @Input('textMask') inputMask: {
-        mask: string,
-        isReversed: boolean
+        mask: string;
+        isReversed: boolean;
     };
 
     private translationMask = {
@@ -66,10 +66,10 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     }
 
     _onChange = (_: any) => {
-    }
+    };
 
     _onTouched = () => {
-    }
+    };
 
     @HostListener('input', ['$event'])
     @HostListener('keyup', ['$event']) onTextInput(event: KeyboardEvent) {
@@ -158,9 +158,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         }
         check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
         while (check) {
-            const maskDigit = mask.charAt(maskIndex),
-                valDigit = value.charAt(valueIndex),
-                translation = this.translationMask[maskDigit];
+            const maskDigit = mask.charAt(maskIndex);
+                const valDigit = value.charAt(valueIndex);
+                const translation = this.translationMask[maskDigit];
 
             if (translation) {
                 if (valDigit.match(translation.pattern)) {

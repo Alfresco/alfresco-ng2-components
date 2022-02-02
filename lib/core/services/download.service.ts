@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class DownloadService {
-    private readonly saveData: Function;
+    private readonly saveData: any;
 
     constructor() {
         this.saveData = (function() {
@@ -44,9 +44,9 @@ export class DownloadService {
                 if (blob) {
                     if (
                         typeof window.navigator !== 'undefined' &&
-                        window.navigator.msSaveOrOpenBlob
+                        window.navigator['msSaveOrOpenBlob']
                     ) {
-                        navigator.msSaveOrOpenBlob(blob, fileName);
+                        window.navigator['msSaveOrOpenBlob'](blob, fileName);
                     } else {
                         const url = window.URL.createObjectURL(blob);
                         a.href = url;

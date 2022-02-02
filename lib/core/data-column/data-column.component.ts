@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector no-input-rename  */
+ /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 
@@ -56,7 +56,7 @@ export class DataColumnComponent implements OnInit {
 
     /** Custom tooltip formatter function. */
     @Input()
-    formatTooltip: Function;
+    formatTooltip: (...args) => string;
 
     /** Title to be used for screen readers. */
     @Input('sr-title')

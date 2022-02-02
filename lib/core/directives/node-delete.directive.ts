@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { NodeEntry, Node, DeletedNodeEntity, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
@@ -185,6 +185,7 @@ export class NodeDeleteDirective implements OnChanges {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.instant(
                 'CORE.DELETE_NODE.ERROR_PLURAL',
+                // eslint-disable-next-line id-blacklist
                 { number: status.failed.length }
             );
         }
@@ -192,6 +193,7 @@ export class NodeDeleteDirective implements OnChanges {
         if (status.allSucceeded && !status.oneSucceeded) {
             return this.translation.instant(
                 'CORE.DELETE_NODE.PLURAL',
+                // eslint-disable-next-line id-blacklist
                 { number: status.success.length }
             );
         }

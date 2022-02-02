@@ -217,14 +217,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     invalidSharedLink = new EventEmitter();
 
-    TRY_TIMEOUT: number = 10000;
-
     viewerType = 'unknown';
     isLoading = false;
     nodeEntry: NodeEntry;
     versionEntry: VersionEntry;
 
-    extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
+    extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     urlFileContent: string;
     otherMenu: any;
     extension: string;
@@ -655,6 +653,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Keyboard event listener
+     *
      * @param  event
      */
     @HostListener('document:keyup', ['$event'])
@@ -730,8 +729,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     this.viewerType = 'image';
                     this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
                 }
-            } catch (error) {
-                this.logService.error(error);
+            } catch (renditionError) {
+                this.logService.error(renditionError);
             }
         }
     }

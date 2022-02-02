@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../../../utils/moment-date-adapter';

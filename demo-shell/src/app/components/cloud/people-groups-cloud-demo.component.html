@@ -27,7 +27,7 @@
                 <input matInput (input)="setPeopleAppName($any($event).target?.value)" data-automation-id="app-people-app-input" />
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ defaultPeoplePlaceholder }}</mat-label>
                 <input matInput (input)="setPeoplePreselectValue($any($event).target?.value)"  data-automation-id="app-people-preselect-input" />
             </mat-form-field>
             <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">{{
@@ -102,7 +102,7 @@
                     data-automation-id="app-group-app-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
-                <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
+                <mat-label>Preselect: {{ defaultGroupPlaceholder }}</mat-label>
                 <input matInput
                     (input)="setGroupsPreselectValue($any($event).target?.value)"
                     data-automation-id="app-group-preselect-input" />

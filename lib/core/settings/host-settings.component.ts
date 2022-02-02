@@ -23,6 +23,8 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { ENTER } from '@angular/cdk/keycodes';
 
+export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
+
 @Component({
     selector: 'adf-host-settings',
     templateUrl: 'host-settings.component.html',
@@ -33,9 +35,6 @@ import { ENTER } from '@angular/cdk/keycodes';
     encapsulation: ViewEncapsulation.None
 })
 export class HostSettingsComponent implements OnInit {
-
-    HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
-
     /**
      * Tells the component which provider options are available. Possible valid values
      * are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO.
@@ -48,6 +47,7 @@ export class HostSettingsComponent implements OnInit {
     form: FormGroup;
 
     /** Emitted when the URL is invalid. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<string>();
 
@@ -56,6 +56,7 @@ export class HostSettingsComponent implements OnInit {
     cancel = new EventEmitter<boolean>();
 
     /** Emitted when the changes are successfully applied. */
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     success = new EventEmitter<boolean>();
 
@@ -137,10 +138,10 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): FormGroup {
-        const oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
+        const oauth = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, {} as any);
 
         return this.formBuilder.group({
-            host: [oauth.host, [Validators.required, Validators.pattern(this.HOST_REGEX)]],
+            host: [oauth.host, [Validators.required, Validators.pattern(HOST_REGEX)]],
             clientId: [oauth.clientId, Validators.required],
             redirectUri: [oauth.redirectUri, Validators.required],
             redirectUriLogout: [oauth.redirectUriLogout],
@@ -153,15 +154,15 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createBPMFormControl(): FormControl {
-        return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(HOST_REGEX)]);
     }
 
     private createIdentityFormControl(): FormControl {
-        return new FormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(HOST_REGEX)]);
     }
 
     private createECMFormControl(): FormControl {
-        return new FormControl(this.appConfig.get<string>(AppConfigValues.ECMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.ECMHOST), [Validators.required, Validators.pattern(HOST_REGEX)]);
     }
 
     onCancel() {

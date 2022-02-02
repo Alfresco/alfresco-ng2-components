@@ -72,7 +72,7 @@
         </mat-expansion-panel-header>
 
         <mat-form-field class="app-input-field">
-            <input matInput placeholder="Number" [(ngModel)]="number">
+            <input matInput placeholder="Number" [(ngModel)]="numberValue">
         </mat-form-field>
         <mat-form-field class="app-input-field">
             <input matInput placeholder="Min Integer Digits" [(ngModel)]="decimalValues.minIntegerDigits">
@@ -93,16 +93,16 @@
         </mat-form-field>
 
         <h3>AdfDecimalNumber Pipe - Default</h3>
-        <div>{{ number | adfDecimalNumber }} </div>
+        <div>{{ numberValue | adfDecimalNumber }} </div>
         <br>
         <h3>AdfDecimalNumber Pipe - Custom digits config</h3>
-        <div>{{ number | adfDecimalNumber : decimalValues }} </div>
+        <div>{{ numberValue | adfDecimalNumber : decimalValues }} </div>
         <br>
         <h3>AdfDecimalNumber Pipe - Custom locale</h3>
-        <div>{{ number | adfDecimalNumber : null : locale }} </div>
+        <div>{{ numberValue | adfDecimalNumber : null : locale }} </div>
         <br>
         <h3>AdfDecimalNumber Pipe - Custom digits config and locale</h3>
-        <div>{{ number | adfDecimalNumber : decimalValues : locale }} </div>
+        <div>{{ numberValue | adfDecimalNumber : decimalValues : locale }} </div>
         <br>
 
     </mat-expansion-panel>

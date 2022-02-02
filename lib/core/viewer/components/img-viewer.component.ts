@@ -23,7 +23,7 @@ import {
     ViewEncapsulation,
     ElementRef,
     Output,
-    EventEmitter, AfterViewInit, ViewChild, HostListener
+    EventEmitter, AfterViewInit, ViewChild, HostListener, OnDestroy
 } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { AppConfigService } from './../../app-config/app-config.service';
@@ -36,7 +36,7 @@ import Cropper from 'cropperjs';
     host: { 'class': 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ImgViewerComponent implements AfterViewInit, OnChanges {
+export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input()
     showToolbar = true;
@@ -53,9 +53,11 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
     @Input()
     nameFile: string;
 
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<any>();
 
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     submit = new EventEmitter<any>();
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { PeopleProcessService } from '../../../../services/people-process.service';
 import { UserProcessModel } from '../../../../models';

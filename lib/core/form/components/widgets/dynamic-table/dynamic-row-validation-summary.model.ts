@@ -17,7 +17,7 @@
 
 import { ErrorMessageModel } from '../core/error-message.model';
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 export class DynamicRowValidationSummary extends ErrorMessageModel {
 

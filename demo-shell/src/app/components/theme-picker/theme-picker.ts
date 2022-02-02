@@ -112,7 +112,7 @@ export class ThemePickerComponent {
     ];
 
     constructor(public styleManager: StyleManager,
-                private _themeStorage: ThemeStorage) {
+                private themeStorage: ThemeStorage) {
 
     }
 
@@ -120,17 +120,17 @@ export class ThemePickerComponent {
         if (theme.isDefault === true) {
             this.styleManager.setStyle('theme', ``);
         } else {
-            this.currentTheme = this._getCurrentThemeFromHref(theme.href);
+            this.currentTheme = this.getCurrentThemeFromHref(theme.href);
 
             this.styleManager.setStyle('theme', theme.href);
 
             if (this.currentTheme) {
-                this._themeStorage.storeTheme(this.currentTheme);
+                this.themeStorage.storeTheme(this.currentTheme);
             }
         }
     }
 
-    private _getCurrentThemeFromHref(href: string): DocsSiteTheme {
+    private getCurrentThemeFromHref(href: string): DocsSiteTheme {
         return this.themes.find((theme) => theme.href === href);
     }
 }

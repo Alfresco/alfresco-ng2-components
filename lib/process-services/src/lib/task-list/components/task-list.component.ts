@@ -17,8 +17,8 @@
 
 import {
     DataRowEvent, DataTableAdapter, DataTableSchema, CustomEmptyContentTemplateDirective, CustomLoadingContentTemplateDirective,
-    AppConfigService, PaginationComponent, PaginatedComponent,
-    UserPreferencesService, UserPreferenceValues, PaginationModel, DataCellEvent } from '@alfresco/adf-core';
+    AppConfigService, PaginatedComponent,
+    UserPreferencesService, UserPreferenceValues, PaginationModel, DataCellEvent, DEFAULT_PAGINATION } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
@@ -161,7 +161,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /** The number of tasks to fetch. Default value: 25. */
     @Input()
-    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
+    size: number = DEFAULT_PAGINATION.maxItems;
 
     /** Filter the tasks. Display only tasks with `created_date` after `dueAfter`. */
     @Input()

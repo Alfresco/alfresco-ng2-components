@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterContentChecked, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormFieldModel, TabModel } from './../core/index';
@@ -44,9 +44,7 @@ export class TabsWidgetComponent implements AfterContentChecked {
     }
 
     filterVisibleTabs() {
-        this.visibleTabs = this.tabs.filter((tab) => {
-            return tab.isVisible;
-        });
+        this.visibleTabs = this.tabs.filter((tab) => tab.isVisible);
     }
 
     tabChanged(field: FormFieldModel) {
