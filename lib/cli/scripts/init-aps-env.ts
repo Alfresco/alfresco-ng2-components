@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
 let fs = require ('fs');
@@ -13,12 +13,12 @@ const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
-/* tslint:enable */
+/* eslint-enable */
 
 let alfrescoJsApi;
 let alfrescoJsApiRepo;
 
-export default async function () {
+export default async function() {
     await main();
 }
 
@@ -336,11 +336,11 @@ async function addContentRepoWithBasic(tenantId, name) {
     const body = {
         alfrescoTenantId: '',
         authenticationType: 'basic',
-        name: name,
+        name,
         repositoryUrl: `${program.host}/alfresco`,
         shareUrl: `${program.host}/share`,
         // sitesFolder: '', not working on activiti 1.11.1.1
-        tenantId: tenantId,
+        tenantId,
         version: '6.1.1'
     };
 
@@ -413,7 +413,7 @@ async function authorizeUserToContentWithBasic(username, contentId) {
     }
 }
 
-/* tslint:disable */
+/* eslint-disable */
 async function downloadLicenseFile(apsLicensePath) {
 
     try {
@@ -428,7 +428,7 @@ async function downloadLicenseFile(apsLicensePath) {
         return false;
     }
 }
-/* tslint:enable */
+/* eslint-enable */
 
 function sleep(delay) {
     const start = new Date().getTime();

@@ -54,7 +54,7 @@ export default function main(_args: string[], workingDir: string) {
     }
 
     return new Promise((resolve, reject) => {
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.log(`Running audit on ${packagePath}`);
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
@@ -75,7 +75,7 @@ export default function main(_args: string[], workingDir: string) {
 
                 fs.writeFileSync(outputFile, mdText);
 
-                // tslint:disable-next-line: no-console
+                // eslint-disable-next-line no-console
                 console.log(`Report saved as ${outputFile}`);
                 resolve(0);
             }

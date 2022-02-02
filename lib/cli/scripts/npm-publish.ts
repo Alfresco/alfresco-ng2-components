@@ -104,7 +104,7 @@ function removeNpmConfig(args: PublishArgs, project: string) {
     }
 }
 
-export default async function (args: PublishArgs) {
+export default async function(args: PublishArgs) {
     await main(args);
 }
 

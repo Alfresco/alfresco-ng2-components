@@ -1,9 +1,9 @@
-/* tslint:disable */
+/* eslint-disable */
 const alfrescoApi = require('@alfresco/js-api');
 const program = require('commander');
 const path = require('path');
 const fs = require('fs');
-/* tslint:enable */
+/* eslint-enable */
 import { logger } from './logger';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;

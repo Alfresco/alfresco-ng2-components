@@ -12,13 +12,14 @@ export class PluginConfiguration {
     }
 
     async callCustomApi(url: string) {
-        const pathParams = {},
-            headerParams = {},
-            formParams = {},
-            bodyParam = {},
-            queryParams = {},
-            contentTypes = ['application/json'],
-            accepts = ['application/json'];
+        const pathParams = {};
+        const headerParams = {};
+        const formParams = {};
+        const bodyParam = {};
+        const queryParams = {};
+        const contentTypes = ['application/json'];
+        const accepts = ['application/json'];
+
         try {
             const response = await this.alfrescoJsApi.oauth2Auth.callCustomApi(
                 url,

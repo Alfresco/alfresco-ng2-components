@@ -803,6 +803,15 @@
               "tsConfig": "lib/cli/tsconfig.lib.prod.json"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "lib/cli/**/*.ts",
+              "lib/cli/**/*.html"
+            ]
+          }
         }
       }
     },

@@ -59,7 +59,7 @@ function deletePod(args: KubeArgs) {
     logger.info(response);
 }
 
-export default function (args: KubeArgs) {
+export default function(args: KubeArgs) {
     main(args);
 }
 
