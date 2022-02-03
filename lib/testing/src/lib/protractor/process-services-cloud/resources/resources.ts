@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export const ACTIVITI_CLOUD_APPS = {
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',

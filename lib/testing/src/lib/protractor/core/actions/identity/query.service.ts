@@ -122,6 +122,7 @@ export class QueryService {
                 const postBody = {};
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                // eslint-disable-next-line @typescript-eslint/prefer-for-of
                 for (let i = 0; i < data.list.entries.length; i++) {
                     if (data.list.entries[i].entry.name === taskName) {
                         return data.list.entries[i];
@@ -148,6 +149,7 @@ export class QueryService {
                 const postBody = {};
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                // eslint-disable-next-line @typescript-eslint/prefer-for-of
                 for (let i = 0; i < data.list.entries.length; i++) {
                     if (data.list.entries[i].entry.name === taskName) {
                         return data.list.entries[i];
@@ -170,6 +172,7 @@ export class QueryService {
         const postBody = {};
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < data.list.entries.length; i++) {
             if (data.list.entries[i].entry.name === taskName) {
                 const task = data.list.entries[i];

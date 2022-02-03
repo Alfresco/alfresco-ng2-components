@@ -32,10 +32,7 @@ export class SearchService {
 
     async isSearchable(name: string): Promise<any> {
         const query = this.createSearchQuery(name);
-
-        const predicate = (result: ResultSetPaging) => {
-            return !!result?.list?.entries?.find(({ entry }) => entry.name === name);
-        };
+        const predicate = (result: ResultSetPaging) => !!result?.list?.entries?.find(({ entry }) => entry.name === name);
 
         return this.performSearch(query, predicate, 'Failed to search folder');
     }
@@ -56,29 +53,27 @@ export class SearchService {
     async isUserSearchable(user: UserModel): Promise<any> {
         const query = this.createUserSearchQuery(user);
 
-        const predicate = (result: ResultSetPaging) => {
-            return result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.properties['cm:email'] === user.email);
-        };
+        const predicate = (result: ResultSetPaging) => result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.properties['cm:email'] === user.email);
 
         return this.performSearch(query, predicate, 'Failed to search user');
     }
 
     private createUserSearchQuery(user: UserModel) {
         return {
-            'query': {
-                'query': `email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*`
+            query: {
+                query: `email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*`
             },
-            'include': [
+            include: [
                 'aspectNames',
                 'properties'
             ],
-            'paging': {
-                'maxItems': 1,
-                'skipCount': 0
+            paging: {
+                maxItems: 1,
+                skipCount: 0
             },
-            'filterQueries': [
+            filterQueries: [
                 {
-                    'query': `TYPE:'cm:authority'`
+                    query: `TYPE:'cm:authority'`
                 }
             ]
         };
@@ -86,28 +81,28 @@ export class SearchService {
 
     private createSearchQuery(name: string) {
         return {
-            'query': {
-                'query': `${name}*`
+            query: {
+                query: `${name}*`
             },
-            'include': [
+            include: [
                 'path',
                 'allowableOperations',
                 'properties'
             ],
-            'paging': {
-                'maxItems': 20,
-                'skipCount': 0
+            paging: {
+                maxItems: 20,
+                skipCount: 0
             },
-            'filterQueries': [
+            filterQueries: [
                 {
-                    'query': `TYPE:'cm:folder' OR TYPE:'cm:content'`
+                    query: `TYPE:'cm:folder' OR TYPE:'cm:content'`
                 },
                 {
-                    'query': 'NOT cm:creator:System'
+                    query: 'NOT cm:creator:System'
                 }
             ],
-            'scope': {
-                'locations': [
+            scope: {
+                locations: [
                     'nodes'
                 ]
             }

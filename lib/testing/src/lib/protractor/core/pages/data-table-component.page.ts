@@ -20,6 +20,8 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { Logger } from '../utils/logger';
 
+const MAX_LOADING_TIME = 120000;
+
 export class DataTableComponentPage {
 
     rootElement: ElementFinder;
@@ -37,8 +39,6 @@ export class DataTableComponentPage {
     noContentContainer: ElementFinder;
 
     rows = `adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
-
-    MAX_LOADING_TIME = 120000;
 
     constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
@@ -375,7 +375,7 @@ export class DataTableComponentPage {
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -389,7 +389,7 @@ export class DataTableComponentPage {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), 2000);
-                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
+                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
             } catch (error) {
             }
 
@@ -398,39 +398,6 @@ export class DataTableComponentPage {
             } else {
                 await this.waitFirstElementPresent();
             }
-        }
-    }
-
-    private async isSpinnerPresent(): Promise<boolean> {
-        let isSpinnerPresent;
-
-        try {
-            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-spinner')).isDisplayed();
-        } catch (error) {
-            isSpinnerPresent = false;
-        }
-
-        return isSpinnerPresent;
-    }
-
-    private async isInfiniteSpinnerPresent(): Promise<boolean> {
-        let isSpinnerPresent;
-
-        try {
-            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-bar')).isDisplayed();
-        } catch (error) {
-            isSpinnerPresent = false;
-        }
-
-        return isSpinnerPresent;
-    }
-
-    private async waitFirstElementPresent(): Promise<void> {
-        try {
-            Logger.log('wait first element is present');
-            await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
-        } catch (error) {
-            Logger.log('Possible empty page');
         }
     }
 
@@ -614,5 +581,38 @@ export class DataTableComponentPage {
             return this.emptyListSubtitle.getText();
         }
         return '';
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
+    }
+
+    private async isInfiniteSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-bar')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
+    }
+
+    private async waitFirstElementPresent(): Promise<void> {
+        try {
+            Logger.log('wait first element is present');
+            await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
+        } catch (error) {
+            Logger.log('Possible empty page');
+        }
     }
 }

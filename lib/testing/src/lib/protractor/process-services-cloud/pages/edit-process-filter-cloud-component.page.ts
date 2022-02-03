@@ -42,33 +42,21 @@ export class EditProcessFilterCloudComponentPage {
     deleteButton = $('button[data-automation-id="adf-filter-action-delete"]');
     filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`);
 
-    private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`);
-    private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`);
-    private locatorSortDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`);
-    private locatorOrderDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`);
-    private locatorProcessDefinitionNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`);
-    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
-    private locatorSuspendedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`);
-    private locatorStartedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`);
-    private locatorCompletedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`);
-
-    private locatorSuspendedDateRangeWithin = $(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`);
-    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
-
-    appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
-    statusDropdown = new DropdownPage(this.locatorStatusDropdown);
-    sortDropdown = new DropdownPage(this.locatorSortDropdown);
-    orderDropdown = new DropdownPage(this.locatorOrderDropdown);
-    processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
-    suspendedDateRangeDropdown = new DropdownPage(this.locatorSuspendedDateRangeDropdown);
-    startedDateRangeDropdown = new DropdownPage(this.locatorStartedDateRangeDropdown);
-    completedDateRangeDropdown = new DropdownPage(this.locatorCompletedDateRangeDropdown);
-
-    suspendedDateRangeWithin = new DatePickerPage(this.locatorSuspendedDateRangeWithin);
+    appNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
+    statusDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
+    sortDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
+    orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
+    processDefinitionNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
+    suspendedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
+    startedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
+    completedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
+    suspendedDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
 
     peopleCloudComponent = new PeopleCloudComponentPage();
-
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
+
+    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
+    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
 
     editProcessFilterDialog(): EditProcessFilterDialogPage {
         return this.editProcessFilterDialogPage;

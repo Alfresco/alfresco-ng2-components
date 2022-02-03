@@ -90,10 +90,8 @@ export class ProcessUtil {
 
     async getProcessDefinitionByName(deploymentId: string, processName: string): Promise<any> {
         try {
-            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: deploymentId });
-            const chosenProcess = processDefinitionList.data.find( (processDefinition) => {
-                return processDefinition.name === processName;
-            });
+            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId });
+            const chosenProcess = processDefinitionList.data.find( (processDefinition) => processDefinition.name === processName);
             return chosenProcess;
         } catch (error) {
             Logger.error('Get ProcessDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)));
@@ -110,14 +108,14 @@ export class ProcessUtil {
 
     async getProcessTaskId(processId: string): Promise<TaskRepresentation> {
         const taskList = await this.tasksApi.listTasks({});
-        let wantedtask;
+        let wantedTask;
 
         taskList.data.forEach((task) => {
             if (task.processInstanceId === processId) {
-                wantedtask = task;
+                wantedTask = task;
             }
         });
-        return wantedtask ? wantedtask : 'null';
+        return wantedTask ? wantedTask : 'null';
     }
 
 }

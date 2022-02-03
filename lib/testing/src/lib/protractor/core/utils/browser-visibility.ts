@@ -20,8 +20,9 @@ import { Logger } from './logger';
 import { falseIfMissing } from 'protractor/built/util';
 
 export class BrowserVisibility {
-
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     static NOT_VISIBLE_DEFAULT_TIMEOUT = BrowserVisibility.getNoVisibleTimeout() ? browser.params.testConfig.timeouts.no_visible_timeout : 10000;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     static DEFAULT_TIMEOUT = BrowserVisibility.getVisibleTimeout() ? browser.params.testConfig.timeouts.visible_timeout : 10000;
 
     static getVisibleTimeout() {
@@ -93,15 +94,6 @@ export class BrowserVisibility {
         return browser.wait(BrowserVisibility.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
     }
 
-    private static textToBePresentInElementValue(elementFinder: ElementFinder, text: string) {
-        const hasText = async () => {
-            return browser.executeScript(`return arguments[0].value`, elementFinder).then((actualText: string) => {
-                return actualText.indexOf(text) > -1;
-            }, falseIfMissing);
-        };
-        return protractor.ExpectedConditions.and(protractor.ExpectedConditions.presenceOf(elementFinder), hasText);
-    }
-
     /*
      * Wait for element to have text
      */
@@ -124,4 +116,10 @@ export class BrowserVisibility {
         await this.waitUntilElementIsNotPresent(dialog);
     }
 
+    private static textToBePresentInElementValue(elementFinder: ElementFinder, text: string) {
+        const hasText = async () => browser.executeScript(`return arguments[0].value`, elementFinder).then(
+            (actualText: string) => actualText.indexOf(text) > -1, falseIfMissing
+        );
+        return protractor.ExpectedConditions.and(protractor.ExpectedConditions.presenceOf(elementFinder), hasText);
+    }
 }

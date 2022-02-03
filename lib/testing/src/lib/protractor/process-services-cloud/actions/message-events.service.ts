@@ -33,9 +33,9 @@ export class MessageEventsService {
 
             const queryParams = {};
             const postBody = {
-                'name': startMessage,
-                'variables': {},
-                'payloadType': 'StartMessagePayload',
+                name: startMessage,
+                variables: {},
+                payloadType: 'StartMessagePayload',
                 ...options
             };
 
@@ -54,9 +54,9 @@ export class MessageEventsService {
 
             const queryParams = {};
             const postBody = {
-                'name': receiveMessage,
-                'variables': {},
-                'payloadType': 'ReceiveMessagePayload',
+                name: receiveMessage,
+                variables: {},
+                payloadType: 'ReceiveMessagePayload',
                 ...options
             };
 
@@ -66,5 +66,4 @@ export class MessageEventsService {
             Logger.error('Receive Message Event Service not working', error.message);
         }
     }
-
 }

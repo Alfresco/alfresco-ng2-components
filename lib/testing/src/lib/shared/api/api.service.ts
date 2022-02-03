@@ -74,6 +74,7 @@ export class ApiService {
             const accepts = ['application/json'];
 
             const headerParams = {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
                 Authorization: 'bearer ' + this.apiService.oauth2Auth.token
             };
 
@@ -94,6 +95,7 @@ export class ApiService {
             const accepts = ['application/json'];
 
             const headerParams = {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
                 Authorization: 'bearer ' + this.apiService.oauth2Auth.token
             };
 
@@ -114,6 +116,7 @@ export class ApiService {
             const accepts = ['application/json'];
 
             const headerParams = {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
                 Authorization: 'bearer ' + this.apiService.oauth2Auth.token
             };
 

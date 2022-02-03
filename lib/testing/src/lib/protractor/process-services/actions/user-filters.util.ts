@@ -32,7 +32,7 @@ export class UserFiltersUtil {
     async createATaskFilter(newTaskFilterName: string, sortType?: string,  stateType?: string, assignmentType?: string, iconName?: string, appId?: number): Promise<any> {
         try {
             return this.userFiltersApi.createUserTaskFilter(new UserTaskFilterRepresentation(
-                {appId: appId, name: newTaskFilterName, icon: iconName, filter: {sort: sortType, state: stateType, assignment: assignmentType}}));
+                {appId, name: newTaskFilterName, icon: iconName, filter: {sort: sortType, state: stateType, assignment: assignmentType}}));
         } catch (error) {
             Logger.error('Create Task Filter - Service error, Response: ', error);
         }
@@ -48,7 +48,7 @@ export class UserFiltersUtil {
 
     async orderUserTaskFilters(filtersIdOrder: number[], appId?: number): Promise<any> {
         try {
-            return this.userFiltersApi.orderUserTaskFilters(new UserFilterOrderRepresentation({appId: appId, order: filtersIdOrder}));
+            return this.userFiltersApi.orderUserTaskFilters(new UserFilterOrderRepresentation({appId, order: filtersIdOrder}));
         } catch (error) {
             Logger.error('Re-order the list of user task filters - Service error, Response: ', error);
         }
@@ -56,7 +56,7 @@ export class UserFiltersUtil {
 
     async getUserTaskFilters(appId?: number): Promise<any> {
         try {
-            return this.userFiltersApi.getUserTaskFilters({appId: appId});
+            return this.userFiltersApi.getUserTaskFilters({appId});
         } catch (error) {
             Logger.error('List task filters - Service error, Response: ', error);
         }
@@ -64,7 +64,7 @@ export class UserFiltersUtil {
 
     async getUserProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         try {
-            return this.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+            return this.userFiltersApi.getUserProcessInstanceFilters({ appId });
         } catch (error) {
             Logger.error('List process filters - Service error, Response: ', error);
             return new ResultListDataRepresentationUserProcessInstanceFilterRepresentation();
@@ -73,10 +73,8 @@ export class UserFiltersUtil {
 
     async getUserTaskFilterByName(taskFilterName: string, appId?: number): Promise<any> {
         try {
-            const taskFiltersList = this.userFiltersApi.getUserTaskFilters({appId: appId});
-            const chosenTaskFilter = (await taskFiltersList).data.find( (taskFilter) => {
-                return taskFilter.name === taskFilterName;
-            });
+            const taskFiltersList = this.userFiltersApi.getUserTaskFilters({appId});
+            const chosenTaskFilter = (await taskFiltersList).data.find( (taskFilter) => taskFilter.name === taskFilterName);
             return chosenTaskFilter;
         } catch (error) {
             Logger.error('Get user task filters by name - Service error, Response: ', error);
@@ -94,7 +92,7 @@ export class UserFiltersUtil {
     async updateUserTaskFilter(filterId: number, updatedTaskFilterName?: string, updatedSortType?: string, updatedStateType?: string, updatedAssignmentType?: string, updatedIconName?: string, appId?: number): Promise<any> {
         try {
             return this.userFiltersApi.updateUserTaskFilter(filterId, new UserTaskFilterRepresentation(
-                {appId: appId, name: updatedTaskFilterName, icon: updatedIconName, filter: {sort: updatedSortType, state: updatedStateType, assignment: updatedAssignmentType}}));
+                {appId, name: updatedTaskFilterName, icon: updatedIconName, filter: {sort: updatedSortType, state: updatedStateType, assignment: updatedAssignmentType}}));
         } catch (error) {
             Logger.error('Update a task filter - Service error, Response: ', error);
         }

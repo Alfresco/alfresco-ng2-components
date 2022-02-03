@@ -22,10 +22,9 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor, $, $$ } from 'protractor';
 import { Logger } from '../utils/logger';
 
+const MAX_LOADING_TIME = 120000;
+
 export class ViewerPage {
-
-    MAX_LOADING_TIME = 120000;
-
     tabsPage = new TabsPage();
     togglePage = new TogglePage();
 
@@ -121,27 +120,15 @@ export class ViewerPage {
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
         } else {
             try {
                 Logger.log('wait spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-spinner')));
-                await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
+                await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
             } catch (error) {
             }
         }
-    }
-
-    private async isSpinnerPresent(): Promise<boolean> {
-        let isSpinnerPresent;
-
-        try {
-            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
-        } catch (error) {
-            isSpinnerPresent = false;
-        }
-
-        return isSpinnerPresent;
     }
 
     async clearPageNumber(): Promise<void> {
@@ -677,5 +664,17 @@ export class ViewerPage {
 
     async expectUrlToContain(text: string): Promise<void> {
         await expect(browser.getCurrentUrl()).toContain(text);
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
     }
 }

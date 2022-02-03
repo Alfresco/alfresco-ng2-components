@@ -25,12 +25,12 @@ import { StringUtil } from '../../../shared/utils/string.util';
 import { Logger } from '../../core/utils/logger';
 
 export class ProcessServices {
+    processInstancesService: ProcessInstancesService;
+    processDefinitionsService: ProcessDefinitionsService;
+    tasksService: TasksService;
+    queryService: QueryService;
 
     private api: ApiService;
-    public processInstancesService: ProcessInstancesService;
-    public processDefinitionsService: ProcessDefinitionsService;
-    public tasksService: TasksService;
-    public queryService: QueryService;
 
     constructor(api: ApiService) {
         this.api = api;
@@ -40,7 +40,7 @@ export class ProcessServices {
         this.queryService = new QueryService(this.api);
     }
 
-    async createProcessInstanceAndClaimFirstTask(processDefName, appName, taskIndex: number = 0, processInstanceName?: string) {
+    async createProcessInstanceAndClaimFirstTask(processDefName: string, appName: string, taskIndex: number = 0, processInstanceName?: string) {
         const processInstance = await this.createProcessInstance(processDefName, appName, processInstanceName);
         const task = await this.queryService.getProcessInstanceTasks(processInstance.entry.id, appName);
         await this.tasksService.claimTask(task.list.entries[taskIndex].entry.id, appName);
@@ -48,7 +48,7 @@ export class ProcessServices {
         return processInstance;
     }
 
-    async createProcessInstance(processDefName, appName, processInstanceName?: string) {
+    async createProcessInstance(processDefName: string, appName: string, processInstanceName?: string) {
         const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
         const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
             name: processInstanceName ? processInstanceName : StringUtil.generateRandomString(),
@@ -58,12 +58,12 @@ export class ProcessServices {
         return processInstance;
     }
 
-    async createProcessInstanceWithVariables(processDefName, appName, variables: any, processInstanceName?: string) {
+    async createProcessInstanceWithVariables(processDefName: string, appName: string, variables: any, processInstanceName?: string) {
         const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
         const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
             name: processInstanceName ? processInstanceName : StringUtil.generateRandomString(),
             businessKey: StringUtil.generateRandomString(),
-            variables: variables
+            variables
         });
 
         return processInstance;

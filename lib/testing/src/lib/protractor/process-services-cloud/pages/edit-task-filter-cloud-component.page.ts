@@ -45,28 +45,22 @@ export class EditTaskFilterCloudComponentPage {
     deleteButton = $('[data-automation-id="adf-filter-action-delete"]');
     filter = $(`adf-cloud-edit-task-filter mat-expansion-panel-header`);
 
-    private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`);
-    private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`);
-    private locatorSortDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`);
-    private locatorOrderDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`);
-    private locatorCompletedDateDropdown = $(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`);
-    private locatorAssignmentDropdown = $(`.adf-task-assignment-filter`);
-    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
-    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
-
-    appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
-    statusDropdown = new DropdownPage(this.locatorStatusDropdown);
-    sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    appNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
+    statusDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
+    sortDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
     priorityDropdown = new DropdownPage(this.priority);
-    orderDropdown = new DropdownPage(this.locatorOrderDropdown);
-    completedDateDropdown = new DropdownPage(this.locatorCompletedDateDropdown);
-    assignmentDropdown = new DropdownPage(this.locatorAssignmentDropdown);
+    orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
+    completedDateDropdown = new DropdownPage($(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
+    assignmentDropdown = new DropdownPage($(`.adf-task-assignment-filter`));
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
     peopleCloudComponent = new PeopleCloudComponentPage();
     groupCloudComponent = new GroupCloudComponentPage();
 
     dataTable = new DataTableComponentPage( $('adf-cloud-task-list'));
+
+    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
+    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
 
     editTaskFilterDialog(): EditTaskFilterDialogPage {
         return this.editTaskFilterDialogPage;
