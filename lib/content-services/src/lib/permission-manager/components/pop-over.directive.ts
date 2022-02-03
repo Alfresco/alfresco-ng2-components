@@ -31,7 +31,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         return this._open;
     }
 
-    @Input('adf-pop-over') popOver!: TemplateRef<object>;
+    @Input('adf-pop-over') popOver!: TemplateRef<any>;
     @Input() target!: HTMLElement;
     @Input() panelClass = 'adf-permission-pop-over';
 

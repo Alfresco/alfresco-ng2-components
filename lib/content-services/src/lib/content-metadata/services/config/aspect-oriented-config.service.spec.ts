@@ -34,10 +34,10 @@ describe('AspectOrientedConfigService', () => {
             expectations: OrganisedPropertyGroup[];
         }
 
-        const property1 = <Property> { name: 'property1' },
-            property2 = <Property> { name: 'property2' },
-            property3 = <Property> { name: 'property3' },
-            property4 = <Property> { name: 'property4' };
+        const property1 = <Property> { name: 'property1' };
+        const property2 = <Property> { name: 'property2' };
+        const property3 = <Property> { name: 'property3' };
+        const property4 = <Property> { name: 'property4' };
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
@@ -177,11 +177,10 @@ describe('AspectOrientedConfigService', () => {
     });
 
     describe('appendAllPreset', () => {
-
-        const property1 = <Property> { name: 'property1' },
-            property2 = <Property> { name: 'property2' },
-            property3 = <Property> { name: 'property3' },
-            property4 = <Property> { name: 'property4' };
+        const property1 = <Property> { name: 'property1' };
+        const property2 = <Property> { name: 'property2' };
+        const property3 = <Property> { name: 'property3' };
+        const property4 = <Property> { name: 'property4' };
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },

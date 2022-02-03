@@ -59,7 +59,7 @@ export class PeopleSelectorComponent {
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
     }
 
-    searchUser(searchWord: string): Observable<{} | UserProcessModel[]> {
+    searchUser(searchWord: string): Observable<any | UserProcessModel[]> {
         return this.peopleProcessService.getWorkflowUsers(undefined, searchWord)
             .pipe(
                 catchError(this.onSearchUserError.bind(this))

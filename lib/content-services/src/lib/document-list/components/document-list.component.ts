@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:rxjs-no-subject-value */
+/* eslint-disable rxjs/no-subject-value */
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
@@ -208,7 +208,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: { [key: string]: any; };
+    rowStyle: { [key: string]: any };
 
     /** The CSS class to apply to every row */
     @Input()
@@ -816,7 +816,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+    onNodeSelect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
@@ -829,7 +829,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
-    onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+    onNodeUnselect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-unselect', {
             detail: {

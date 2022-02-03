@@ -34,7 +34,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     isShared: boolean = false;
 
     /** Node to share. */
-        // tslint:disable-next-line:no-input-rename
+        // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-share')
     node: NodeEntry;
 

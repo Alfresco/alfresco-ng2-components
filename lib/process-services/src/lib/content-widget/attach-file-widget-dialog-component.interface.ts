@@ -29,5 +29,5 @@ export interface AttachFileWidgetDialogComponentData {
     showFilesInResult?: boolean;
     loginOnly?: boolean;
     accountIdentifier?: string;
-    registerExternalHost?: Function;
+    registerExternalHost?: (...args) => void;
 }

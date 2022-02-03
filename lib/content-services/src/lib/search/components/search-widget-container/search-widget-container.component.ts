@@ -107,7 +107,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
         this.componentRef.instance.submitValues();
     }
 
-    setValue(currentValue: string | Object) {
+    setValue(currentValue: string | any) {
         this.componentRef.instance.isActive = true;
         this.componentRef.instance.setValue(currentValue);
     }

@@ -37,7 +37,7 @@ export class ProcessFilterCloudService {
         this.filters$ = this.filtersSubject.asObservable();
     }
 
-    readQueryParams(obj: Object): ProcessFilterCloudModel {
+    readQueryParams(obj: any): ProcessFilterCloudModel {
         const model = Object.assign({}, obj) as ProcessFilterCloudModel;
 
         if (obj.hasOwnProperty('appVersion') && obj['appVersion']) {
@@ -57,7 +57,7 @@ export class ProcessFilterCloudService {
         return model;
     }
 
-    writeQueryParams(value: Object, filterProperties: string[], appName?: string, id?: string): Object {
+    writeQueryParams(value: any, filterProperties: string[], appName?: string, id?: string): any {
         value = value || {};
         const result = {
             appName: appName || value['appName'],
@@ -255,7 +255,7 @@ export class ProcessFilterCloudService {
      * @returns Boolean value if the preference has process instance filters
      */
     private hasProcessFilters(preferences: any, key: string): boolean {
-        const filters = preferences.find((filter: any) => { return filter.entry.key === key; });
+        const filters = preferences.find((filter: any) => filter.entry.key === key);
         return (filters && filters.entry) ? JSON.parse(filters.entry.value).length > 0 : false;
     }
 
@@ -308,7 +308,7 @@ export class ProcessFilterCloudService {
      * @param key
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ProcessFilterCloudModel[] {
-        const result = preferences.find((filter: any) => { return filter.entry.key === key; });
+        const result = preferences.find((filter: any) => filter.entry.key === key);
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }
 

@@ -130,7 +130,9 @@ describe('FolderDialogComponent', () => {
 
             spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
 
-            component.success.subscribe((node) => { expectedNode = node; });
+            component.success.subscribe((node) => {
+                expectedNode = node;
+            });
             component.submit();
 
             fixture.detectChanges();

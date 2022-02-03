@@ -19,7 +19,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/cor
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'adf-properties-viewer-widget',

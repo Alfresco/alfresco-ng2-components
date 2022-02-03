@@ -30,7 +30,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     @ContentChild(CustomEmptyContentTemplateDirective)

@@ -48,7 +48,7 @@ export class PermissionContainerComponent implements OnChanges {
 
     /** Emitted when the permission is updated. */
     @Output()
-    update = new EventEmitter<{role: string, permission: PermissionDisplayModel}>();
+    update = new EventEmitter<{role: string; permission: PermissionDisplayModel}>();
 
     @Output()
     updateAll = new EventEmitter<string>();

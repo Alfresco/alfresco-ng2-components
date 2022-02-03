@@ -85,7 +85,7 @@ function installPerform() {
     exec('curl', [`LO`, `${k8sRelease}`], {});
 }
 
-export default function (args: KubeArgs) {
+export default function(args: KubeArgs) {
     main(args);
 }
 

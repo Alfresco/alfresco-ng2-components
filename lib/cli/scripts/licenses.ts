@@ -108,19 +108,19 @@ export default function main(_args: string[], workingDir: string) {
     }
 
     return new Promise((resolve, reject) => {
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
 
         checker.init({
             start: workingDir,
             production: true,
             failOn: 'GPL'
-        }, function (err: any, packages: any[]) {
+        }, function(err: any, packages: any[]) {
             if (err) {
                 console.error(err);
                 reject(err);
             } else {
-                // tslint:disable-next-line: forin
+                // eslint-disable-next-line guard-for-in
                 for (const packageName in packages) {
                     const pack = packages[packageName];
                     pack['licenseExp'] = pack['licenses'].toString()
@@ -148,7 +148,7 @@ export default function main(_args: string[], workingDir: string) {
                 const packageJson: PackageInfo = getPackageFile(packagePath);
 
                 ejs.renderFile(templatePath, {
-                    packages: packages,
+                    packages,
                     projVersion: packageJson.version,
                     projName: packageJson.name
                 }, {}, (ejsError: any, mdText: string) => {
@@ -160,7 +160,7 @@ export default function main(_args: string[], workingDir: string) {
                         const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
                         fs.writeFileSync(outputFile, mdText);
-                        // tslint:disable-next-line: no-console
+                        // eslint-disable-next-line no-console
                         console.log(`Report saved as ${outputFile}`);
                         resolve(0);
                     }

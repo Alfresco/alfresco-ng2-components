@@ -22,7 +22,7 @@ export class TextWidgetPage {
 
     formFields: FormFields = new FormFields();
 
-    labelLocator: Locator = by.css("label[class*='adf-label']");
+    labelLocator: Locator = by.css(`label[class*='adf-label']`);
 
     getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);

@@ -34,5 +34,5 @@ export interface FormCloudServiceInterface {
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]>;
     getForm(appName: string, formKey: string, version?: number): Observable<FormContent>;
     parseForm(json: any, data?: TaskVariableCloud[], readOnly?: boolean): FormModel;
-    getRestWidgetData(formName: string, widgetId: string, body: Map<String, String>): Observable<FormFieldOption[]>;
+    getRestWidgetData(formName: string, widgetId: string, body: Map<string, string>): Observable<FormFieldOption[]>;
 }

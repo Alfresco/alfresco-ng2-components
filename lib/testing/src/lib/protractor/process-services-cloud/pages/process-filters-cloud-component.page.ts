@@ -27,7 +27,7 @@ const FILTERS = {
 
 export class ProcessFiltersCloudComponentPage {
 
-    processFilters = $("mat-expansion-panel[data-automation-id='Process Filters']");
+    processFilters = $(`mat-expansion-panel[data-automation-id='Process Filters']`);
     activeFilter = $('.adf-active [data-automation-id="adf-filter-label"]');
     processFiltersList = $('adf-cloud-process-filters');
 

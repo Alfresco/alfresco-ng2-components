@@ -20,16 +20,17 @@ import {
     HostListener,
     Input,
     Output,
-    EventEmitter
+    EventEmitter,
+    OnInit
 } from '@angular/core';
 import { TaskListService } from '../../services/tasklist.service';
 import { LogService } from '@alfresco/adf-core';
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-unclaim-task]'
 })
-export class UnclaimTaskDirective {
+export class UnclaimTaskDirective implements OnInit {
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -68,16 +69,16 @@ export class UnclaimTaskDirective {
     }
 
     @HostListener('click')
-    async onClick() {
+    onClick() {
         try {
-            await this.unclaimTask();
+            this.unclaimTask();
         } catch (error) {
             this.error.emit(error);
         }
     }
 
-    private async unclaimTask() {
-        await this.taskListService.unclaimTask(this.taskId).subscribe(
+    private unclaimTask() {
+        this.taskListService.unclaimTask(this.taskId).subscribe(
             () => {
                 this.logService.info('Task unclaimed');
                 this.success.emit(this.taskId);

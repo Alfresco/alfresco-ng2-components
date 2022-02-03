@@ -98,15 +98,15 @@ export class ProcessFilterCloudModel {
         this._completedFrom = completedFrom;
     }
 
-    set completedTo(completedTo: string) {
-        this._completedTo = completedTo;
-    }
-
     get completedFrom() {
         if (this.isDateRangeType(this.completedDateType)) {
             return this._completedFrom;
         }
         return this.getStartDate(this.completedDateType);
+    }
+
+    set completedTo(completedTo: string) {
+        this._completedTo = completedTo;
     }
 
     get completedTo() {
@@ -120,15 +120,15 @@ export class ProcessFilterCloudModel {
         this._startFrom = startFrom;
     }
 
-    set startTo(startTo: string) {
-        this._startTo = startTo;
-    }
-
     get startFrom() {
         if (this.isDateRangeType(this.startedDateType)) {
             return this._startFrom;
         }
         return this.getStartDate(this.startedDateType);
+    }
+
+    set startTo(startTo: string) {
+        this._startTo = startTo;
     }
 
     get startTo() {
@@ -142,15 +142,15 @@ export class ProcessFilterCloudModel {
         this._suspendedFrom = suspendedFrom;
     }
 
-    set suspendedTo(suspendedTo: string) {
-        this._suspendedTo = suspendedTo;
-    }
-
     get suspendedFrom(): string {
         if (this.isDateRangeType(this.suspendedDateType)) {
             return this._suspendedFrom;
         }
         return this.getStartDate(this.suspendedDateType);
+    }
+
+    set suspendedTo(suspendedTo: string) {
+        this._suspendedTo = suspendedTo;
     }
 
     get suspendedTo(): string {
@@ -182,7 +182,7 @@ export interface ProcessFilterAction {
 
 export interface ProcessFilterOptions {
     label?: string;
-    value?: string | object;
+    value?: string | any;
 }
 
 export interface ProcessFilterProperties {
@@ -190,7 +190,7 @@ export interface ProcessFilterProperties {
     type?: string;
     value?: any;
     key?: string;
-    attributes?: { [key: string]: string; };
+    attributes?: { [key: string]: string };
     options?: ProcessFilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
@@ -198,6 +198,6 @@ export interface ProcessFilterProperties {
 
 export interface ProcessSortFilterProperty {
     label: string;
-    value: string | object;
+    value: string | any;
     key: string;
 }

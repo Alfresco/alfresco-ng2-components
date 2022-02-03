@@ -36,7 +36,7 @@ export class PermissionListService {
 
     loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
     error$: Subject<boolean> = new Subject();
-    nodeWithRoles$: Subject<{ node: Node, roles: RoleModel[] }> = new Subject();
+    nodeWithRoles$: Subject<{ node: Node; roles: RoleModel[] }> = new Subject();
     data$: Observable<NodePermissionsModel> = this.nodeWithRoles$.pipe(
         map(({ node, roles}) => {
             const nodeLocalPermissions = this.nodePermissionService.getLocalPermissions(node);
@@ -220,7 +220,8 @@ export class PermissionListService {
 
     getManagerAuthority(node: Node): string {
         const sitePath = node.path.elements.find((path) => path.nodeType === 'st:site');
-        let hasLocalManagerPermission = false, authorityId: string;
+        let hasLocalManagerPermission = false;
+        let authorityId: string;
         if (sitePath) {
             authorityId = `GROUP_site_${sitePath.name}_${this.SITE_MANAGER_ROLE}`;
             hasLocalManagerPermission = !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId && permission.name === this.SITE_MANAGER_ROLE);

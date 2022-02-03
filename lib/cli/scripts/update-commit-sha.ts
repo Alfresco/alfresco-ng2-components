@@ -47,7 +47,7 @@ function replacePerform(args: CommitArgs, sha: string) {
     }
 }
 
-export default function (args: CommitArgs) {
+export default function(args: CommitArgs) {
     main(args);
 }
 

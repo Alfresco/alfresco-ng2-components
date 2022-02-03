@@ -72,6 +72,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     searchTerm: string = '';
 
     /** CSS class for display. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('class')
     set classList(classList: string) {
         if (classList && classList.length) {

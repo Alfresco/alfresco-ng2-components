@@ -102,12 +102,12 @@ describe('LayoutOrientedConfigService', () => {
             expectations: OrganisedPropertyGroup[];
         }
 
-        const property1 = <Property> { name: 'property1' },
-            property2 = <Property> { name: 'property2' },
-            property3 = <Property> { name: 'property3' },
-            property4 = <Property> { name: 'property4' },
-            property5 = <Property> { name: 'property5' },
-            property6 = <Property> { name: 'property6' };
+        const property1 = <Property> { name: 'property1' };
+        const property2 = <Property> { name: 'property2' };
+        const property3 = <Property> { name: 'property3' };
+        const property4 = <Property> { name: 'property4' };
+        const property5 = <Property> { name: 'property5' };
+        const property6 = <Property> { name: 'property6' };
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },

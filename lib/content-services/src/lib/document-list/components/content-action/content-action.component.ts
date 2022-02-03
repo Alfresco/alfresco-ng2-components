@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 
@@ -46,7 +46,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Visibility state (see examples). */
     @Input()
-    visible: boolean | Function = true;
+    visible: boolean | ((...args) => boolean) = true;
 
     /** System actions. Can be "delete", "download", "copy" or "move". */
     @Input()
@@ -66,7 +66,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Is the menu item disabled? */
     @Input()
-    disabled: boolean | Function = false;
+    disabled: boolean | ((...args) => boolean) = false;
 
     /** Emitted when the user selects the action from the menu. */
     @Output()

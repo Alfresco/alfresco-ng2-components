@@ -31,7 +31,7 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'dropdown-cloud-widget',
@@ -135,7 +135,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private parentValueChanged(value: string) {
         if (value && !this.isDefaultValue(value)) {
-            this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
+            if (this.isValidRestType()) {
+                this.persistFieldOptionsFromRestApi();
+            } else {
+                this.persistFieldOptionsFromManualList(value);
+            }
         } else if (this.isDefaultValue(value)) {
             this.resetRestApiErrorMessage();
             this.addDefaultOption();

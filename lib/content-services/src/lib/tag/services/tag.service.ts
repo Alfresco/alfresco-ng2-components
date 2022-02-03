@@ -24,7 +24,7 @@ import { TagBody, TagPaging, TagEntry, TagsApi } from '@alfresco/js-api';
 @Injectable({
     providedIn: 'root'
 })
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class TagService {
 
     _tagsApi: TagsApi;

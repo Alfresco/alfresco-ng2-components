@@ -189,7 +189,9 @@ describe('NodePermissionService', () => {
 
         service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority)
             .subscribe(
-                () => { fail('should throw exception'); },
+                () => {
+                    fail('should throw exception');
+                },
                 (errorMessage) => {
                     expect(errorMessage).not.toBeNull();
                     expect(errorMessage).toBeDefined();

@@ -31,7 +31,7 @@ import { ContentTypePropertiesService } from './content-type-property.service';
 })
 export class ContentMetadataService {
 
-    error = new Subject<{ statusCode: number, message: string }>();
+    error = new Subject<{ statusCode: number; message: string }>();
 
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private contentMetadataConfigFactory: ContentMetadataConfigFactory,

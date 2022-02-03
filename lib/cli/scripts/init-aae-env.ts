@@ -19,13 +19,13 @@
 
 import * as program from 'commander';
 
-/* tslint:disable */
+/* eslint-disable */
 import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi } from '@alfresco/js-api';
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
-/* tslint:enable */
+/* eslint-enable */
 
 let alfrescoJsApiModeler: any;
 let alfrescoJsApiDevops: any;
@@ -53,9 +53,14 @@ export const AAE_MICROSERVICES = [
 async function healthCheck(nameService: string) {
     const url = `${args.host}/${nameService}/actuator/health`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         const health = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -63,7 +68,8 @@ async function healthCheck(nameService: string) {
             logger.error(`${nameService} is DOWN `);
             isValid = false;
         } else {
-            const reset = '\x1b[0m', green = '\x1b[32m';
+            const reset = '\x1b[0m';
+            const green = '\x1b[32m';
             logger.info(`${green}${nameService} is UP!${reset}`);
         }
     } catch (error) {
@@ -75,9 +81,14 @@ async function healthCheck(nameService: string) {
 async function getApplicationByStatus(status: string) {
     const url = `${args.host}/deployment-service/v1/applications/`;
 
-    const pathParams = {}, queryParams = { status: status },
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = { status };
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
 
@@ -95,9 +106,14 @@ async function getApplicationByStatus(status: string) {
 function getDescriptors() {
     const url = `${args.host}/deployment-service/v1/descriptors`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -111,9 +127,14 @@ function getDescriptors() {
 function getProjects() {
     const url = `${args.host}/modeling-service/v1/projects`;
 
-    const pathParams = {}, queryParams = { maxItems: 1000 },
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = { maxItems: 1000 };
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -127,9 +148,14 @@ function getProjects() {
 function getProjectRelease(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -143,9 +169,14 @@ function getProjectRelease(projectId: string) {
 async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -160,9 +191,14 @@ async function releaseProject(projectId: string) {
 function deleteProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -194,9 +230,14 @@ async function importAndReleaseProject(absoluteFilePath: string) {
 function deleteDescriptor(name: string) {
     const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -210,9 +251,14 @@ function deleteDescriptor(name: string) {
 function deploy(model: any) {
     const url = `${args.host}/deployment-service/v1/applications/`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = model,
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = model;
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
     try {
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
@@ -248,7 +294,9 @@ async function deployMissingApps(tag?: string) {
 
     if (failingApps.length > 0) {
         failingApps.forEach( app => {
-            const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
+            const reset = '\x1b[0m';
+            const bright = '\x1b[1m';
+            const red = '\x1b[31m';
             logger.error(`${red}${bright}ERROR: App ${app.entry.name} down or inaccessible ${reset}${red} with status ${app.entry.status}${reset}`);
         });
         process.exit(1);
@@ -256,7 +304,8 @@ async function deployMissingApps(tag?: string) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
         await checkIfAppIsReleased(absentApps, tag);
     } else {
-        const reset = '\x1b[0m', green = '\x1b[32m';
+        const reset = '\x1b[0m';
+        const green = '\x1b[32m';
         logger.info(`${green}All the apps are correctly deployed${reset}`);
     }
 }
@@ -269,9 +318,7 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
     for (let i = 0; i < missingApps.length; i++) {
         noError = true;
         const currentAbsentApp = missingApps[i];
-        const project = projectList.list.entries.find((currentApp: any) => {
-            return currentAbsentApp.name === currentApp.entry.name;
-        });
+        const project = projectList.list.entries.find((currentApp: any) => currentAbsentApp.name === currentApp.entry.name);
         let projectRelease: any;
 
         if (project === undefined) {
@@ -360,11 +407,8 @@ async function importProjectAndRelease(app: any, tag?: string) {
 }
 
 function findMissingApps(deployedApps: any []) {
-
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
-        const isPresent = deployedApps.find((currentApp: any) => {
-            return ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name;
-        });
+        const isPresent = deployedApps.find((currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name);
 
         if (!isPresent) {
             absentApps.push(ACTIVITI_CLOUD_APPS[key]);
@@ -373,11 +417,8 @@ function findMissingApps(deployedApps: any []) {
 }
 
 function findFailingApps(deployedApps: any []) {
-
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
-        const failingApp = deployedApps.filter((currentApp: any) => {
-            return ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Running' !== currentApp.entry.status;
-        });
+        const failingApp = deployedApps.filter((currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Running' !== currentApp.entry.status);
 
         if (failingApp?.length > 0) {
             failingApps.push(...failingApp);
@@ -386,7 +427,7 @@ function findFailingApps(deployedApps: any []) {
 }
 
 async function getFileFromRemote(url: string, name: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         request(url)
             .pipe(fs.createWriteStream(`${name}.zip`))
             .on('finish', () => {
@@ -412,12 +453,11 @@ async function sleep(time: number) {
     return;
 }
 
-export default async function (configArgs: ConfigArgs) {
+export default async function(configArgs: ConfigArgs) {
     await main(configArgs);
 }
 
 async function main(configArgs: ConfigArgs) {
-
     args = configArgs;
 
     program
@@ -445,7 +485,8 @@ async function main(configArgs: ConfigArgs) {
     });
 
     await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
-        const reset = '\x1b[0m', green = '\x1b[32m';
+        const reset = '\x1b[0m';
+        const green = '\x1b[32m';
         logger.info(`${green}login SSO ok${reset}`);
     }, (error) => {
         logger.error(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
@@ -453,7 +494,8 @@ async function main(configArgs: ConfigArgs) {
     });
 
     if (isValid) {
-        const reset = '\x1b[0m', green = '\x1b[32m';
+        const reset = '\x1b[0m';
+        const green = '\x1b[32m';
         logger.info(`${green}The environment is up and running ${reset}`);
         alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword).then(() => {

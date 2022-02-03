@@ -23,16 +23,16 @@ export interface ExtensionComponent {
 
 @Injectable({ providedIn: 'root' })
 export class ComponentRegisterService {
-    components: { [key: string]: Type<{}> } = {};
+    components: { [key: string]: Type<any> } = {};
 
-    setComponents(values: { [key: string]: Type<{}> }) {
+    setComponents(values: { [key: string]: Type<any> }) {
         if (values) {
             this.components = Object.assign({}, this.components, values);
         }
     }
 
     getComponentById<T>(id: string): Type<T> {
-        return <Type<T>> this.components[id];
+        return this.components[id];
     }
 
     hasComponentById(id: string): boolean {

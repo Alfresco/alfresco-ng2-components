@@ -19,6 +19,6 @@
 
 import * as docker from './docker';
 
-export default function (args: any)  {
+export default function(args: any)  {
     docker.default(args);
 }

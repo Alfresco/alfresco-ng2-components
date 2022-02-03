@@ -20,5 +20,5 @@ import { browser } from 'protractor';
 
 // This was previously a static class, that is why we need this constant starting with uppercase
 // Otherwise, feel free to update everywhere in the codebase, where we were using it :)
-/* tslint:disable:variable-name */
+/* eslint-disable @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match */
 export const Logger = new GenericLogger(browser?.params?.testConfig?.appConfig?.log);

@@ -20,9 +20,9 @@
 import * as program from 'commander';
 import moment from 'moment-es6';
 import { exec } from './exec';
-/* tslint:disable */
+/* eslint-disable */
 import { AlfrescoApi } from '@alfresco/js-api';
-/* tslint:enable */
+/* eslint-enable */
 
 import { logger } from './logger';
 
@@ -82,8 +82,11 @@ async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string)
     const pathParams = {};
     const bodyParam = {};
 
-    const headerParams = {}, formParams = {}, queryParams = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const headerParams = {};
+    const formParams = {};
+    const queryParams = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
 
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
@@ -100,8 +103,11 @@ async function deleteProject(args: ConfigArgs, apiService: any, projectId: strin
     const pathParams = {};
     const bodyParam = {};
 
-    const headerParams = {}, formParams = {}, queryParams = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const headerParams = {};
+    const formParams = {};
+    const queryParams = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
 
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
@@ -114,9 +120,13 @@ async function deleteProjectByName(args: ConfigArgs, apiService: any, name: stri
     logger.warn(`Get the project by name ${name}`);
     const url = `${args.host}/modeling-service/v1/projects?name=${name}`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
 
     try {
         const data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
@@ -136,9 +146,13 @@ async function getApplicationsByName(args: ConfigArgs, apiService: any, name: st
     logger.warn(`Get the applications by name ${name}`);
     const url = `${args.host}/deployment-service/v1/applications?name=${name}`;
 
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const pathParams = {};
+    const queryParams = {};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
 
     try {
         const apps =  await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
@@ -158,8 +172,11 @@ async function undeployApplication(args: ConfigArgs, apiService: any, name: stri
     const pathParams = {};
     const bodyParam = {};
 
-    const headerParams = {}, formParams = {}, queryParams = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
+    const headerParams = {};
+    const formParams = {};
+    const queryParams = {};
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
 
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
@@ -192,7 +209,7 @@ function useContext(args: ConfigArgs) {
     logger.info(response);
 }
 
-export default async function (args: ConfigArgs) {
+export default async function(args: ConfigArgs) {
     await main(args);
 }
 

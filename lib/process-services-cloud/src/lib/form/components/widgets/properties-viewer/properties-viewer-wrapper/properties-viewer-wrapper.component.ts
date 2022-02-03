@@ -20,7 +20,7 @@ import { NodesApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { PresetConfig } from '@alfresco/adf-content-services';
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'adf-properties-viewer-wrapper',

@@ -50,9 +50,9 @@ function loginPerform(args: PublishArgs) {
 function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
 
-    let buildArgs = [];
+    const buildArgs = [];
 
-    if (typeof args.buildArgs  === "string") {
+    if (typeof args.buildArgs  === 'string') {
         buildArgs.push(`--build-arg=${args.buildArgs}`);
     } else {
         args.buildArgs.forEach((envVar) => {
@@ -88,7 +88,7 @@ function cleanImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-export default function (args: PublishArgs) {
+export default function(args: PublishArgs) {
     main(args);
 }
 

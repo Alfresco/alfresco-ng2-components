@@ -21,7 +21,7 @@ import { by, Locator } from 'protractor';
 export class DocumentWidgetPage {
 
     formFields: FormFields = new FormFields();
-    fileLocator: Locator = by.css("div [class*='upload-widget__content-text']");
+    fileLocator: Locator = by.css(`div [class*='upload-widget__content-text']`);
 
     getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fileLocator);

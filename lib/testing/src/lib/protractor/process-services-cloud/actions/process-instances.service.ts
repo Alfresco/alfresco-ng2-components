@@ -31,7 +31,8 @@ export class ProcessInstancesService {
             const path = '/' + appName + '/rb/v1/process-instances';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {
+            const queryParams = {};
+            const postBody = {
                 processDefinitionKey: processDefKey,
                 payloadType: 'StartProcessPayload',
                 ...options
@@ -40,7 +41,7 @@ export class ProcessInstancesService {
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             Logger.error('create process-instances Service not working', error.message);
         }
 
@@ -51,12 +52,13 @@ export class ProcessInstancesService {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/suspend';
             const method = 'POST';
 
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             Logger.error('suspend process-instances Service not working', error.message);
         }
     }
@@ -65,13 +67,13 @@ export class ProcessInstancesService {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId;
             const method = 'DELETE';
-
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             Logger.error('delete process-instances Service not working', error.message);
         }
     }
@@ -79,15 +81,14 @@ export class ProcessInstancesService {
     async completeProcessInstance(processInstanceId, appName) {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/complete';
-
             const method = 'POST';
-
-            const queryParams = {}, postBody = {};
+            const queryParams = {};
+            const postBody = {};
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
         } catch (error) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             Logger.error('complete process-instances Service not working', error.message);
         }
     }

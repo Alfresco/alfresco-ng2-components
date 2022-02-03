@@ -49,7 +49,7 @@ export interface DescriptorSecurity {
 
 export interface DescriptorVariables {
     [key: string]: any;
-    connectors?: { [key: string]: any; };
+    connectors?: { [key: string]: any };
 }
 
 export interface DescriptorInfrastructure {

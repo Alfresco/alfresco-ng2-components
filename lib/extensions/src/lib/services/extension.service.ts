@@ -57,7 +57,7 @@ export class ExtensionService {
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
-    authGuards: { [key: string]: Type<{}> } = {};
+    authGuards: { [key: string]: Type<any> } = {};
 
     protected onSetup$ = new BehaviorSubject<ExtensionConfig>(this.config);
     setup$ = this.onSetup$.asObservable();
@@ -72,6 +72,7 @@ export class ExtensionService {
 
     /**
      * Loads and registers an extension config file and plugins (specified by path properties).
+     *
      * @returns The loaded config data
      */
     async load(): Promise<ExtensionConfig> {
@@ -86,6 +87,7 @@ export class ExtensionService {
 
     /**
      * Registers extensions from a config object.
+     *
      * @param config Object with config data
      */
     setup(config: ExtensionConfig) {
@@ -112,6 +114,7 @@ export class ExtensionService {
 
     /**
      * Gets features by key.
+     *
      * @param key Key string, using dot notation
      * @returns Features array found by key
      */
@@ -126,6 +129,7 @@ export class ExtensionService {
 
     /**
      * Adds one or more new rule evaluators to the existing set.
+     *
      * @param values The new evaluators to add
      */
     setEvaluators(values: { [key: string]: RuleEvaluator }) {
@@ -134,9 +138,10 @@ export class ExtensionService {
 
     /**
      * Adds one or more new auth guards to the existing set.
+     *
      * @param values The new auth guards to add
      */
-    setAuthGuards(values: { [key: string]: Type<{}> }) {
+    setAuthGuards(values: { [key: string]: Type<any> }) {
         if (values) {
             this.authGuards = Object.assign({}, this.authGuards, values);
         }
@@ -144,14 +149,16 @@ export class ExtensionService {
 
     /**
      * Adds one or more new components to the existing set.
+     *
      * @param values The new components to add
      */
-    setComponents(values: { [key: string]: Type<{}> }) {
+    setComponents(values: { [key: string]: Type<any> }) {
         this.componentRegister.setComponents(values);
     }
 
     /**
      * Retrieves a route using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The route or null if not found
      */
@@ -161,10 +168,11 @@ export class ExtensionService {
 
     /**
      * Retrieves one or more auth guards using an array of ID values.
+     *
      * @param ids Array of ID value to look for
      * @returns Array of auth guards or empty array if none were found
      */
-    getAuthGuards(ids: string[]): Array<Type<{}>> {
+    getAuthGuards(ids: string[]): Array<Type<any>> {
         return (ids || [])
             .map((id) => this.authGuards[id])
             .filter((guard) => guard);
@@ -172,6 +180,7 @@ export class ExtensionService {
 
     /**
      * Retrieves an action using its ID value.
+     *
      * @param id The ID value to look for
      * @returns Action or null if not found
      */
@@ -181,6 +190,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a RuleEvaluator function using its key name.
+     *
      * @param key Key name to look for
      * @returns RuleEvaluator or null if not found
      */
@@ -190,6 +200,7 @@ export class ExtensionService {
 
     /**
      * Evaluates a rule.
+     *
      * @param ruleId ID of the rule to evaluate
      * @param context Custom rule execution context.
      * @returns True if the rule passed, false otherwise
@@ -200,6 +211,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a registered extension component using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The component or null if not found
      */
@@ -209,6 +221,7 @@ export class ExtensionService {
 
     /**
      * Retrieves a rule using its ID value.
+     *
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */
@@ -218,11 +231,12 @@ export class ExtensionService {
 
     /**
      * Runs a lightweight expression stored in a string.
+     *
      * @param value String containing the expression or literal value
      * @param context Parameter object for the expression with details of app state
      * @returns Result of evaluated expression, if found, or the literal value otherwise
      */
-    runExpression(value: string | {} , context?: any) {
+    runExpression(value: string | any , context?: any) {
         if (typeof value === 'string' ) {
             return this.evaluateExpression(value, context);
         } else {

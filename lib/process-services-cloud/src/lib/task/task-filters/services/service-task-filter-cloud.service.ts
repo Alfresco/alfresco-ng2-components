@@ -77,7 +77,7 @@ export class ServiceTaskFilterCloudService {
      * @returns Boolean value if the preference has task filters
      */
     private hasTaskFilters(preferences: any, key: string): boolean {
-        const filters = preferences.find((filter: any) => { return filter.entry.key === key; });
+        const filters = preferences.find((filter: any) => filter.entry.key === key);
         return (filters && filters.entry) ? JSON.parse(filters.entry.value).length > 0 : false;
     }
 
@@ -245,7 +245,7 @@ export class ServiceTaskFilterCloudService {
      * @returns Array of TaskFilterCloudModel
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ServiceTaskFilterCloudModel[] {
-        const result = preferences.find((filter: any) => { return filter.entry.key === key; });
+        const result = preferences.find((filter: any) => filter.entry.key === key);
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }
 

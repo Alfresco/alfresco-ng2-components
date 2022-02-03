@@ -19,7 +19,7 @@ import moment from 'moment-es6';
 
 export class DateUtil {
 
-    static formatDate(dateFormat: string, date: Date = new Date, days: number | string = 0): string {
+    static formatDate(dateFormat: string, date: Date = new Date(), days: number | string = 0): string {
         return moment(date).add(days, 'days').format(dateFormat);
     }
 

@@ -36,6 +36,7 @@ export class AppsProcessCloudService {
 
     /**
      * Gets a list of deployed apps for this user by status.
+     *
      * @param status Required status value
      * @param role to filter the apps
      * @returns The list of deployed apps
@@ -63,16 +64,18 @@ export class AppsProcessCloudService {
         }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
         const path = this.getApplicationUrl();
-        const pathParams = {}, queryParams = { status: status, roles : role, sort: 'name' },
-            headerParams = {}, formParams = {}, bodyParam = {},
-            contentTypes = ['application/json'], accepts = ['application/json'];
+        const pathParams = {};
+        const queryParams = { status, roles : role, sort: 'name' };
+        const headerParams = {};
+        const formParams = {};
+        const bodyParam = {};
+        const contentTypes = ['application/json'];
+        const accepts = ['application/json'];
 
         return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
-                map((applications: any) => {
-                    return applications.list.entries.map((application) => application.entry);
-                }),
+                map((applications: any) => applications.list.entries.map((application) => application.entry)),
                 catchError((err) => this.handleError(err))
             );
     }

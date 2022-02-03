@@ -469,7 +469,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         // TODO still not working because of the Loading Spinner
-        // tslint:disable-next-line: ban
+        // eslint-disable-next-line
         xit('should render the custom template', (done) => {
             fixtureEmpty.detectChanges();
             fixtureEmpty.whenStable().then(() => {
@@ -534,7 +534,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         // TODO: highly unstable test
-        // tslint:disable-next-line:ban
+        // eslint-disable-next-line
         xit('should show tooltip if config copyContent flag is true', fakeAsync(() => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -556,7 +556,7 @@ describe('TaskListCloudComponent', () => {
         }));
 
         // TODO: highly unstable test
-        // tslint:disable-next-line:ban
+        // eslint-disable-next-line
         xit('should replace priority values', (done) => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             component.presetColumn = 'fakeCustomSchema';

@@ -2,23 +2,28 @@ import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } from
 import * as program from 'commander';
 import { logger } from './logger';
 
-interface PeopleTally { enabled: number; disabled: number; }
-interface RowToPrint { label: string; value: number; }
+interface PeopleTally { enabled: number; disabled: number }
+interface RowToPrint { label: string; value: number }
 
 const MAX_ATTEMPTS = 1;
 const TIMEOUT = 180000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
-const reset = '\x1b[0m', grey = '\x1b[90m', cyan = '\x1b[36m', yellow = '\x1b[33m',
-    bright = '\x1b[1m', red = '\x1b[31m', green = '\x1b[32m';
+const reset = '\x1b[0m';
+const grey = '\x1b[90m';
+const cyan = '\x1b[36m';
+const yellow = '\x1b[33m';
+const bright = '\x1b[1m';
+const red = '\x1b[31m';
+const green = '\x1b[32m';
 
 let jsApiConnection: any;
 let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
 
-    // tslint:disable-next-line: no-console
+    // eslint-disable-next-line no-console
     console.log = () => {};
 
     program
@@ -35,22 +40,19 @@ export default async function main(_args: string[]) {
     const peopleCount = await getPeopleCount();
     rowsToPrint.push({ label: 'Active Users', value: peopleCount.enabled });
     rowsToPrint.push({ label: 'Deactivated Users', value: peopleCount.disabled });
-    rowsToPrint.push({ label: "User's Home Folders", value: await getHomeFoldersCount() });
+    rowsToPrint.push({ label: `User's Home Folders`, value: await getHomeFoldersCount() });
     rowsToPrint.push({ label: 'Groups', value: await getGroupsCount() });
     rowsToPrint.push({ label: 'Sites', value: await getSitesCount() });
     rowsToPrint.push({ label: 'Files', value: await getFilesCount() });
 
     logger.info(generateTable(rowsToPrint));
-
 }
 
 function generateTable(rowsToPrint: Array<RowToPrint>) {
-    const columnWidths = rowsToPrint.reduce((maxWidths, row: RowToPrint) => {
-        return {
+    const columnWidths = rowsToPrint.reduce((maxWidths, row: RowToPrint) => ({
             labelColumn: Math.max(maxWidths.labelColumn, row.label.length),
             valueColumn: Math.max(maxWidths.valueColumn, row.value.toString().length)
-        };
-    }, { labelColumn: 12, valueColumn: 1 });
+        }), { labelColumn: 12, valueColumn: 1 });
 
     const horizontalLine = ''.padEnd(columnWidths.labelColumn + columnWidths.valueColumn + 5, '═');
     const headerText = 'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ')
@@ -134,10 +136,14 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
         const apiResult = await peopleApi.listPeople({
             fields: ['enabled'],
             maxItems: MAX_PEOPLE_PER_PAGE,
-            skipCount: skipCount
+            skipCount
         });
         const result: PeopleTally = apiResult.list.entries.reduce((peopleTally: PeopleTally, currentPerson) => {
-            if (currentPerson.entry.enabled) { peopleTally.enabled++; } else { peopleTally.disabled++; }
+            if (currentPerson.entry.enabled) {
+                peopleTally.enabled++;
+            } else {
+                peopleTally.disabled++;
+            }
             return peopleTally;
         }, { enabled: 0, disabled: 0 });
         if (apiResult.list.pagination.hasMoreItems) {
