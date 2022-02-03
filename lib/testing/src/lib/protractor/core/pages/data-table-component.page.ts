@@ -53,7 +53,7 @@ export class DataTableComponentPage {
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
-        this.noContentContainer = $("div[class*='adf-no-content-container']");
+        this.noContentContainer = $(`div[class*='adf-no-content-container']`);
     }
 
     geCellElementDetail(detail: string): ElementArrayFinder {
