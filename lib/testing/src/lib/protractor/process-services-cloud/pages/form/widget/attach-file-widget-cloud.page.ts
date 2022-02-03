@@ -36,7 +36,7 @@ export class AttachFileWidgetCloudPage {
 
     getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
         return this.widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
-    }
+    };
 
     assignWidget(fieldId: string): void {
         this.widget = $(`adf-form-field div[id='field-${fieldId}-container']`);
