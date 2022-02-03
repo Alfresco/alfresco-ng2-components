@@ -35,7 +35,6 @@ export class AttachFileWidgetCloudPage {
     }
 
     getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
-        await this.isFileTablePropertiesDisplayed();
         return this.widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
     }
 
@@ -60,6 +59,7 @@ export class AttachFileWidgetCloudPage {
 
     async checkFileIsAttached(name): Promise<void> {
         const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
+        await this.isFileTablePropertiesDisplayed();
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
