@@ -840,8 +840,5 @@
       }
     }
   },
-  "defaultProject": "demoshell",
-  "cli": {
-    "analytics": "0ce5075f-0835-439a-bebe-7c41750179a6"
-  }
+  "defaultProject": "demoshell"
 }
