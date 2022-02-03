@@ -65,8 +65,8 @@ export class BarChart extends Chart {
         }
     }
 
-    xAxisTickFormatFunction = function (xAxisType) {
-        return function (value) {
+    xAxisTickFormatFunction(xAxisType) {
+        return (value) => {
             if (xAxisType !== null && xAxisType !== undefined) {
                 if ('date_day' === xAxisType) {
                     return moment(new Date(value)).format('DD');
@@ -80,8 +80,8 @@ export class BarChart extends Chart {
         };
     };
 
-    yAxisTickFormatFunction = function (yAxisType) {
-        return function (value) {
+    yAxisTickFormatFunction(yAxisType) {
+        return (value) => {
             if (yAxisType !== null && yAxisType !== undefined) {
                 if ('count' === yAxisType) {
                     const label = '' + value;

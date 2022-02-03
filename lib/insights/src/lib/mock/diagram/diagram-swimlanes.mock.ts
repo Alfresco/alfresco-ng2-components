@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let pool = {
+export const pool = {
     id: 'sid-0FF10DA3-E2BD-4E6A-9013-6D66FC8A4716',
     name: 'Activiti',
     width: 600,
@@ -25,7 +25,7 @@ export let pool = {
     properties: [{}]
 };
 
-export let poolLanes = {
+export const poolLanes = {
     id: 'sid-0FF10DA3-E2BD-4E6A-9013-6D66FC8A4716',
     name: 'Activiti',
     width: 600,

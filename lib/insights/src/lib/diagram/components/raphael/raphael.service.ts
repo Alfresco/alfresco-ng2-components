@@ -17,20 +17,17 @@
 
 import { Injectable , OnDestroy } from '@angular/core';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
 
 @Injectable({ providedIn: 'root' })
 export class RaphaelService implements OnDestroy {
-
     paper: any;
     width: number = 300;
     height: number = 400;
     private ctx: any;
 
-    constructor() {
-    }
-
-    public getInstance(element: any): any {
+    getInstance(element: any): any {
         if (!this.paper) {
             this.ctx = element.nativeElement;
             this.refresh();
@@ -38,12 +35,7 @@ export class RaphaelService implements OnDestroy {
         return this.paper;
     }
 
-    private refresh(): any {
-        this.ngOnDestroy();
-        this.paper = this.getPaperBuilder(this.ctx);
-    }
-
-    public getPaperBuilder(ctx: any): any {
+    getPaperBuilder(ctx: any): any {
         if (typeof Raphael === 'undefined') {
             throw new Error('insights configuration issue: Embedding Chart.js lib is mandatory');
         }
@@ -51,19 +43,24 @@ export class RaphaelService implements OnDestroy {
         return paper;
     }
 
-    public ngOnDestroy(): any {
+    ngOnDestroy(): any {
         if (this.paper) {
             this.paper.clear();
             this.paper = void 0;
         }
     }
 
-    public setting(width: number, height: number): void {
+    setting(width: number, height: number): void {
         this.width = width;
         this.height = height;
     }
 
-    public reset(): any {
+    reset(): any {
         this.ngOnDestroy();
+    }
+
+    private refresh(): any {
+        this.ngOnDestroy();
+        this.paper = this.getPaperBuilder(this.ctx);
     }
 }

@@ -28,9 +28,7 @@ export class ReportDefinitionModel {
     }
 
     findParam(name: string): ReportParameterDetailsModel {
-        this.parameters.forEach((param) => {
-            return param.type === name ? param : null;
-        });
+        this.parameters.forEach((param) => param.type === name ? param : null);
         return null;
     }
 }

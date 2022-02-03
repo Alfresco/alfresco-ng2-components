@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let throwTimeEvent = {
+export const throwTimeEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'ThrowEvent',
     width: 31,
@@ -26,7 +26,7 @@ export let throwTimeEvent = {
     eventDefinition: {type: 'timer'}
 };
 
-export let throwTimeEventActive = {
+export const throwTimeEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -39,7 +39,7 @@ export let throwTimeEventActive = {
     eventDefinition: {type: 'timer'}
 };
 
-export let throwTimeEventCompleted = {
+export const throwTimeEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -52,7 +52,7 @@ export let throwTimeEventCompleted = {
     eventDefinition: {type: 'timer'}
 };
 
-export let throwErrorEvent = {
+export const throwErrorEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'ThrowEvent',
     width: 31,
@@ -63,7 +63,7 @@ export let throwErrorEvent = {
     eventDefinition: {type: 'error'}
 };
 
-export let throwErrorEventActive = {
+export const throwErrorEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -76,7 +76,7 @@ export let throwErrorEventActive = {
     eventDefinition: {type: 'error'}
 };
 
-export let throwErrorEventCompleted = {
+export const throwErrorEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -89,7 +89,7 @@ export let throwErrorEventCompleted = {
     eventDefinition: {type: 'error'}
 };
 
-export let throwSignalEvent = {
+export const throwSignalEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'ThrowEvent',
     width: 31,
@@ -100,7 +100,7 @@ export let throwSignalEvent = {
     eventDefinition: {type: 'signal'}
 };
 
-export let throwSignalEventActive = {
+export const throwSignalEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -113,7 +113,7 @@ export let throwSignalEventActive = {
     eventDefinition: {type: 'signal'}
 };
 
-export let throwSignalEventCompleted = {
+export const throwSignalEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -126,7 +126,7 @@ export let throwSignalEventCompleted = {
     eventDefinition: {type: 'signal'}
 };
 
-export let throwMessageEvent = {
+export const throwMessageEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'ThrowEvent',
     width: 31,
@@ -137,7 +137,7 @@ export let throwMessageEvent = {
     eventDefinition: {type: 'message'}
 };
 
-export let throwMessageEventActive = {
+export const throwMessageEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -150,7 +150,7 @@ export let throwMessageEventActive = {
     eventDefinition: {type: 'message'}
 };
 
-export let throwMessageEventCompleted = {
+export const throwMessageEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

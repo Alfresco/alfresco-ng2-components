@@ -16,24 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
+import { ACTIVITY_FILL_COLOR, COMPLETED_COLOR, CURRENT_COLOR } from '../constants/diagram-colors';
+
+const TASK_STROKE = 1;
+const TASK_HIGHLIGHT_STROKE = 2;
 
 @Injectable({ providedIn: 'root' })
 export class DiagramColorService {
-
-    static CURRENT_COLOR = '#017501';
-    static COMPLETED_COLOR = '#2632aa';
-    static ACTIVITY_STROKE_COLOR = '#bbbbbb';
-    static MAIN_STROKE_COLOR = '#585858';
-
-    static ACTIVITY_FILL_COLOR = '#f9f9f9';
-
-    static TASK_STROKE = 1;
-    static TASK_HIGHLIGHT_STROKE = 2;
-    static CALL_ACTIVITY_STROKE = 2;
-
     totalColors: any;
 
-    setTotalColors(totalColors) {
+    setTotalColors(totalColors: any) {
         this.totalColors = totalColors;
     }
 
@@ -46,25 +38,25 @@ export class DiagramColorService {
             const colorPercentage = this.totalColors[key];
             return this.convertColorToHsb(colorPercentage);
         } else {
-            return DiagramColorService.ACTIVITY_FILL_COLOR;
+            return ACTIVITY_FILL_COLOR;
         }
     }
 
-    getBpmnColor(data, defaultColor) {
+    getBpmnColor(data: any, defaultColor: any) {
         if (data.current) {
-            return DiagramColorService.CURRENT_COLOR;
+            return CURRENT_COLOR;
         } else if (data.completed) {
-            return DiagramColorService.COMPLETED_COLOR;
+            return COMPLETED_COLOR;
         } else {
             return defaultColor;
         }
     }
 
-    getBpmnStrokeWidth(data) {
+    getBpmnStrokeWidth(data: any) {
         if (data.current || data.completed) {
-            return DiagramColorService.TASK_HIGHLIGHT_STROKE;
+            return TASK_HIGHLIGHT_STROKE;
         } else {
-            return DiagramColorService.TASK_STROKE;
+            return TASK_STROKE;
         }
     }
 

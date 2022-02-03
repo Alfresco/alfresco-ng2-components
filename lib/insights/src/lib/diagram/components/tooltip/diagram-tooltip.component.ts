@@ -18,8 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
-const POSITION = { BOTTOM: 'bottom', LEFT: 'left', RIGHT: 'right', TOP: 'top' };
-const STRATEGY = { CURSOR: 'cursor', ELEMENT: 'element' };
+
+const POSITION = { bottom: 'bottom', left: 'left', right: 'right', top: 'top' };
+const STRATEGY = { cursor: 'cursor', element: 'element' };
 const IS_ACTIVE_CLASS = 'adf-is-active';
 
 @Component({
@@ -28,27 +29,27 @@ const IS_ACTIVE_CLASS = 'adf-is-active';
     styleUrls: ['./diagram-tooltip.component.scss']
 })
 export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
+    @ViewChild('tooltipContent', { static: true })
+    tooltipContent: ElementRef;
+
+    @Input()
+    data: any;
+
+    @Input()
+    position = POSITION.bottom;
+
+    @Input()
+    strategy = STRATEGY.cursor;
 
     private tooltipElement: any;
     private targetElement: any;
     private boundMouseEnterHandler: EventListenerObject;
     private boundMouseLeaveAndScrollHandler: EventListenerObject;
 
-    @ViewChild('tooltipContent', { static: true }) tooltipContent: ElementRef;
-
-    @Input()
-    data: any;
-
-    @Input()
-    position: string = 'bottom';
-
-    @Input()
-    strategy: string = 'cursor';
-
     /**
      * Set up event listeners for the target element (defined in the data.id)
      */
-    public ngAfterViewInit() {
+    ngAfterViewInit() {
         this.tooltipElement = this.tooltipContent.nativeElement;
 
         if (this.data.id) {
@@ -100,7 +101,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     private handleMouseEnter(event): void {
         let props;
 
-        if (this.strategy === STRATEGY.ELEMENT) {
+        if (this.strategy === STRATEGY.element) {
             props = event.target.getBoundingClientRect();
         } else {
             props = { top: (event.pageY - 150), left: event.pageX, width: event.layerX, height: 50 };
@@ -111,7 +112,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
         const marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
         let left = props.left + (props.width / 2);
 
-        if (this.position === POSITION.LEFT || this.position === POSITION.RIGHT) {
+        if (this.position === POSITION.left || this.position === POSITION.right) {
             left = (props.width / 2);
             if (top + marginTop < 0) {
                 this.tooltipElement.style.top = '0';
@@ -130,11 +131,11 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
             }
         }
 
-        if (this.position === POSITION.TOP) {
+        if (this.position === POSITION.top) {
             this.tooltipElement.style.top = props.top - this.tooltipElement.offsetHeight - 10 + 'px';
-        } else if (this.position === POSITION.RIGHT) {
+        } else if (this.position === POSITION.right) {
             this.tooltipElement.style.left = props.left + props.width + 10 + 'px';
-        } else if (this.position === POSITION.LEFT) {
+        } else if (this.position === POSITION.left) {
             this.tooltipElement.style.left = props.left - this.tooltipElement.offsetWidth - 10 + 'px';
         } else {
             this.tooltipElement.style.top = props.top + props.height + 10 + 'px';

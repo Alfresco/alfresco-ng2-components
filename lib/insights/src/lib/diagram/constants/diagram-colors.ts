@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-export const flow = {
-    id: 'sid-5BA99724-A3BD-4F8E-B69F-222F9FF66335',
-    sourceRef: 'startEvent1',
-    targetRef: 'sid-811B9223-E72E-4991-AAA5-4E1A01095D08',
-    type: 'sequenceFlow',
-    waypoints: [{x: 165, y: 122}, {x: 210, y: 122}]
-};
+export const CURRENT_COLOR = '#017501';
+export const COMPLETED_COLOR = '#2632aa';
+export const ACTIVITY_STROKE_COLOR = '#bbbbbb';
+export const ACTIVITY_FILL_COLOR = '#f9f9f9';
+export const MAIN_STROKE_COLOR = '#585858';

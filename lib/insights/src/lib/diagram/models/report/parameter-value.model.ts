@@ -28,7 +28,7 @@ export class ParameterValueModel {
         this.version = obj && obj.version || null;
     }
 
-    get label () {
+    get label() {
         return this.version ? `${this.name} (v ${this.version}) ` : this.name;
     }
 }

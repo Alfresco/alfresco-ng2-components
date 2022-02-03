@@ -22,6 +22,9 @@ import { DiagramColorService } from '../services/diagram-color.service';
 import { DiagramsService } from '../services/diagrams.service';
 import { RaphaelService } from './raphael/raphael.service';
 
+const PADDING_WIDTH: number = 60;
+const PADDING_HEIGHT: number = 60;
+
 @Component({
     selector: 'adf-diagram',
     styleUrls: ['./diagram.component.css'],
@@ -65,9 +68,6 @@ export class DiagramComponent implements OnChanges {
     @Output()
     error = new EventEmitter();
 
-    PADDING_WIDTH: number = 60;
-    PADDING_HEIGHT: number = 60;
-
     diagram: DiagramModel;
 
     constructor(private diagramColorService: DiagramColorService,
@@ -89,8 +89,8 @@ export class DiagramComponent implements OnChanges {
         this.diagramsService.getRunningProcessDefinitionModel(processInstanceId).subscribe(
             (res: any) => {
                 this.diagram = new DiagramModel(res);
-                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
-                                            this.diagram.diagramHeight + this.PADDING_HEIGHT);
+                this.raphaelService.setting(this.diagram.diagramWidth + PADDING_WIDTH,
+                                            this.diagram.diagramHeight + PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
                 this.success.emit(res);
             },
@@ -104,8 +104,8 @@ export class DiagramComponent implements OnChanges {
         this.diagramsService.getProcessDefinitionModel(processDefinitionId).subscribe(
             (res: any) => {
                 this.diagram = new DiagramModel(res);
-                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
-                                            this.diagram.diagramHeight + this.PADDING_HEIGHT);
+                this.raphaelService.setting(this.diagram.diagramWidth + PADDING_WIDTH,
+                                            this.diagram.diagramHeight + PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
                 this.success.emit(res);
             },

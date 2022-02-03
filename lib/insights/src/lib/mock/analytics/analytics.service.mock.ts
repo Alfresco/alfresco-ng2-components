@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let fakeReportList = [
+export const fakeReportList = [
     {
         id: '1',
         name: 'Fake Report 1'
