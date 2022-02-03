@@ -298,7 +298,8 @@ export const ACTIVITI_CLOUD_APPS = {
                 attachFileWidget2: 'Attachfile04mfeb',
                 attachFileLocalChildFolder: 'Attachfilelocalchildfolder',
                 attachFileContentServices: 'Attachfilecontentservices',
-                attachFileLocalMultiple: 'Attachfilelocalmultiple'
+                attachFileLocalMultiple: 'Attachfilelocalmultiple',
+                attachFileInvalidPath: 'Attachfileinvalidpath'
             },
             attachSingleMultiple: {
                 name: 'attach-single-multiple',

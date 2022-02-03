@@ -34,6 +34,7 @@ export class DataTableComponentPage {
     emptyList: ElementFinder;
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
+    noContentContainer: ElementFinder;
 
     rows = `adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
 
@@ -52,6 +53,7 @@ export class DataTableComponentPage {
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
+        this.noContentContainer = $(`div[class*='adf-no-content-container']`);
     }
 
     geCellElementDetail(detail: string): ElementArrayFinder {
@@ -460,6 +462,10 @@ export class DataTableComponentPage {
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible($(`div[data-automation-id="auto_id_entry.${column}"]`));
+    }
+
+    async checkNoContentContainerIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
     }
 
     async getNumberOfColumns(): Promise<number> {
