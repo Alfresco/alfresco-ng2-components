@@ -32,8 +32,8 @@ interface PackageInfo {
 
 const nonStandardLicenses = {
     'public domain': 'PDDL-1.0',
-    'apache': 'Apache-2.0',
-    'bsd': 'BSD-2-Clause'
+    apache: 'Apache-2.0',
+    bsd: 'BSD-2-Clause'
 };
 
 const missingRepositories = {
@@ -44,7 +44,7 @@ const missingRepositories = {
     '@webassemblyjs/leb128': 'https://github.com/xtuc/webassemblyjs',
     'adf-tslint-rules': 'https://github.com/Alfresco/alfresco-ng2-components',
     'adf-monaco-extension': 'https://github.com/eromano/aca-monaco-extension',
-    'indexof': 'https://github.com/component/indexof',
+    indexof: 'https://github.com/component/indexof',
     'rxjs-compat': 'https://github.com/ReactiveX/rxjs/tree/master/compat'
 };
 

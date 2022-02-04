@@ -18,14 +18,11 @@
  */
 
 import * as program from 'commander';
-
-/* eslint-disable */
 import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi } from '@alfresco/js-api';
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
-/* eslint-enable */
 
 let alfrescoJsApiModeler: any;
 let alfrescoJsApiDevops: any;
@@ -369,11 +366,11 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
             await checkDescriptorExist(currentAbsentApp.name);
             await sleep(TIME);
             const deployPayload = {
-                'name': currentAbsentApp.name,
-                'releaseId': projectRelease.entry.id,
-                'security': currentAbsentApp.security,
-                'infrastructure': currentAbsentApp.infrastructure,
-                'variables': currentAbsentApp.variables
+                name: currentAbsentApp.name,
+                releaseId: projectRelease.entry.id,
+                security: currentAbsentApp.security,
+                infrastructure: currentAbsentApp.infrastructure,
+                variables: currentAbsentApp.variables
             };
             await deploy(deployPayload);
         }

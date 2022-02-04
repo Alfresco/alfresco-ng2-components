@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-export function dotenv() {
-    return require('dotenv-expand')(require('dotenv'));
-}
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const expand = require('dotenv-expand');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nodeDotEnv = require('dotenv');
 
-export function dotenvConfig(params?: any) {
-    return require('dotenv-expand')(require('dotenv').config(params));
-}
+export const dotenv = () => expand(nodeDotEnv);
+export const dotenvConfig = (params?: any) => expand(nodeDotEnv.config(params));

@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import * as shell from 'shelljs';
 import * as path from 'path';
 import * as program from 'commander';

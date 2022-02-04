@@ -19,13 +19,9 @@
 
 import * as program from 'commander';
 import moment from 'moment-es6';
-import { exec } from './exec';
-/* eslint-disable */
 import { AlfrescoApi } from '@alfresco/js-api';
-/* eslint-enable */
-
 import { logger } from './logger';
-
+import * as kube from './kube-utils';
 export interface ConfigArgs {
     rancherUsername?: string;
     rancherToken?: string;
@@ -42,7 +38,6 @@ export interface ConfigArgs {
     identityHost: boolean;
     enableLike: boolean;
     intervalTime: string;
-
 }
 
 function getAlfrescoJsApiInstance(args: ConfigArgs) {
@@ -185,36 +180,12 @@ async function undeployApplication(args: ConfigArgs, apiService: any, name: stri
     }
 }
 
-function setCluster(args: ConfigArgs) {
-    logger.info('Perform set-cluster...');
-    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
-    logger.info(response);
-}
-
-function setCredentials(args: ConfigArgs) {
-    logger.info('Perform set-credentials...');
-    const response = exec('kubectl', [`config`, `set-credentials`, `${args.rancherUsername}`, `--token=${args.rancherToken}`], {});
-    logger.info(response);
-}
-
-function setContext(args: ConfigArgs) {
-    logger.info('Perform set-context...');
-    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.rancherUsername}`], {});
-    logger.info(response);
-}
-
-function useContext(args: ConfigArgs) {
-    logger.info('Perform use-context...');
-    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
-    logger.info(response);
-}
-
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export default async function(args: ConfigArgs) {
     await main(args);
 }
 
-async function main(args) {
-
+const main = async (args: ConfigArgs) => {
     program
         .version('0.1.0')
         .description('The following command is in charge of cleaning the releases/application/descriptor related to an app passed as input' +
@@ -254,24 +225,27 @@ async function main(args) {
     });
 
     if (args.apps !== undefined) {
-        setCluster(args);
-        setCredentials(args);
-        setContext(args);
-        useContext(args);
+        kube.setCluster(args.clusterEnv, args.clusterUrl);
+        kube.setCredentials(args.rancherUsername, args.rancherToken);
+        kube.setContext(args.clusterEnv, args.rancherUsername);
+        kube.useContext(args.clusterEnv);
 
         const applications = args.apps.includes(',') ? args.apps.split(',') : [args.apps];
         const interval = args.intervalTime ? args.intervalTime : '30 min';
-        const extractTimeRange = interval.split(' ')[0];
+        const extractTimeRange = parseInt(interval.split(' ')[0], 10);
         logger.info(`Extract time ${extractTimeRange} from interval: ${interval}`);
+
         for (let i = 0; i < applications.length;  i++ ) {
             logger.info(`Perform action on app: ${applications[i]}`);
             if (args.enableLike) {
                 const applicationsByName = await getApplicationsByName(args, alfrescoJsApiDevops, applications[i]);
                 logger.info(`Found  ${applicationsByName.length} apps`);
+
                 for (let y = 0; y < applicationsByName.length;  y++ ) {
                     const application = applicationsByName[y].entry;
                     logger.info(`Analyze app:  ${application.name} `);
                     const diffAsMinutes = moment.duration(moment().diff(moment(application.createdAt))).asMinutes();
+
                     if (diffAsMinutes > extractTimeRange) {
                         logger.info(`The app: ${application} is older than ${interval}. Can delete it`);
                         await undeployApplication(args, alfrescoJsApiDevops, application.name);
@@ -288,5 +262,4 @@ async function main(args) {
             }
         }
     }
-
-}
+};

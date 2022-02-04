@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-shadow
 export enum PluginTarget {
     processService = 'processService',
     processAutomation = 'processAutomation',

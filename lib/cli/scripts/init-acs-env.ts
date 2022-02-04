@@ -1,15 +1,14 @@
-/* eslint-disable */
-let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
-let fs = require ('fs');
+const alfrescoApi = require('@alfresco/js-api');
+const program = require('commander');
+const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { SharedlinksApi, FavoritesApi, NodesApi } = require('@alfresco/js-api');
-let MAX_RETRY = 10;
+const MAX_RETRY = 10;
 let counter = 0;
-let TIMEOUT = 6000;
+const TIMEOUT = 6000;
 const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
-/* eslint-enable */
 
 let alfrescoJsApi;
 

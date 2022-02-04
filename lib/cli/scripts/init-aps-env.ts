@@ -1,19 +1,18 @@
-/* eslint-disable */
-let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
-let fs = require ('fs');
+const alfrescoApi = require('@alfresco/js-api');
+const program = require('commander');
+const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
 const { throwError } = require('rxjs');
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { AppDefinitionsApi, RuntimeAppDefinitionsApi } = require('@alfresco/js-api');
-let MAX_RETRY = 10;
+const MAX_RETRY = 10;
 let counter = 0;
-let TIMEOUT = 6000;
+const TIMEOUT = 6000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
-/* eslint-enable */
 
 let alfrescoJsApi;
 let alfrescoJsApiRepo;
@@ -162,9 +161,9 @@ async function hasDefaultTenant(tenantId, tenantName) {
 
 async function createDefaultTenant(tenantName) {
     const tenantPost = {
-        'active': true,
-        'maxUsers': 10000,
-        'name' : tenantName
+        active: true,
+        maxUsers: 10000,
+        name : tenantName
     };
 
     try {
@@ -180,13 +179,13 @@ async function createUsers(tenandId, user) {
     logger.info(`Create user ${user.email} on tenant: ${tenandId}`);
     const passwordCamelCase = 'Password';
     const userJson = {
-        'email': user.email,
-        'firstName': user.firstName,
-        'lastName': user.lastName,
-        'status': 'active',
-        'type': 'enterprise',
-        'password': passwordCamelCase,
-        'tenantId': tenandId
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        status: 'active',
+        type: 'enterprise',
+        password: passwordCamelCase,
+        tenantId: tenandId
     };
 
     try {

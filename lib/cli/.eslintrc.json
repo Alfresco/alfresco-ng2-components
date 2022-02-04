@@ -19,14 +19,14 @@
         "eslint-plugin-rxjs"
       ],
       "rules": {
-        "prefer-arrow/prefer-arrow-functions": "warn",
-        "@typescript-eslint/no-var-requires": "warn",
+        "prefer-arrow/prefer-arrow-functions": "off",
+        "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/naming-convention": "warn",
         "quote-props": "warn",
         "no-shadow": "warn",
         "@typescript-eslint/consistent-type-assertions": "warn",
-        "@typescript-eslint/prefer-for-of": "warn",
-        "no-underscore-dangle": "warn",
+        "@typescript-eslint/prefer-for-of": "off",
+        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
 
         "@angular-eslint/component-selector": [
           "error",
