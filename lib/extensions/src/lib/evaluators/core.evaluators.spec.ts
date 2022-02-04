@@ -21,7 +21,7 @@ import { RuleParameter } from '../config/rule.extensions';
 describe('Core Evaluators', () => {
 
     const context: any = {
-        getEvaluator(key: string) {
+        getEvaluator: (key: string) => {
             switch (key) {
                 case 'positive':
                     return () => true;

@@ -93,7 +93,7 @@ describe('DynamicExtensionComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
-            expect((<any> componentFactoryResolver.resolveComponentFactory).calls.count()).toBe(1);
+            expect((componentFactoryResolver.resolveComponentFactory as any).calls.count()).toBe(1);
         });
 
         it('should pass through the data', () => {

@@ -25,32 +25,25 @@ import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-export function extensionJsonsFactory() {
-    return [];
-}
+export const extensionJsonsFactory = () => [];
 
 export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons', {
     providedIn: 'root',
     factory: extensionJsonsFactory
 });
 
-export function provideExtensionConfig(jsons: string[]) {
-    return {
-        provide: EXTENSION_JSONS,
-        useValue: jsons,
-        multi: true
-    };
-}
+export const provideExtensionConfig = (jsons: string[]) => ({
+    provide: EXTENSION_JSONS,
+    useValue: jsons,
+    multi: true
+});
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExtensionService {
-
-    protected config: ExtensionConfig = null;
-
     configPath = 'assets/app.extensions.json';
     pluginsPath = 'assets/plugins';
 
@@ -59,8 +52,10 @@ export class ExtensionService {
     features: Array<any> = [];
     authGuards: { [key: string]: Type<any> } = {};
 
+    setup$: Observable<ExtensionConfig>;
+
+    protected config: ExtensionConfig = null;
     protected onSetup$ = new BehaviorSubject<ExtensionConfig>(this.config);
-    setup$ = this.onSetup$.asObservable();
 
     constructor(
         protected loader: ExtensionLoaderService,
@@ -68,6 +63,7 @@ export class ExtensionService {
         protected ruleService: RuleService,
         @Inject(EXTENSION_JSONS) protected extensionJsons: string[]
     ) {
+        this.setup$ = this.onSetup$.asObservable();
     }
 
     /**

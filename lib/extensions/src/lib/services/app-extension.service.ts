@@ -26,9 +26,8 @@ import { DocumentListPresetRef } from '../config/document-list.extensions';
     providedIn: 'root'
 })
 export class AppExtensionService {
-    private _references = new BehaviorSubject<ExtensionRef[]>([]);
-
     references$: Observable<ExtensionRef[]>;
+    private _references = new BehaviorSubject<ExtensionRef[]>([]);
 
     constructor(protected extensionService: ExtensionService) {
         this.references$ = this._references.asObservable();
@@ -46,13 +45,14 @@ export class AppExtensionService {
 
         const references = (config.$references || [])
             .filter((entry) => typeof entry === 'object')
-            .map((entry) => <ExtensionRef> entry);
+            .map((entry) => entry as ExtensionRef);
         this._references.next(references);
     }
 
     /**
      * Provides a collection of document list columns for the particular preset.
      * The result is filtered by the **disabled** state.
+     *
      * @param key Preset key.
      */
     getDocumentListPreset(key: string): DocumentListPresetRef[] {

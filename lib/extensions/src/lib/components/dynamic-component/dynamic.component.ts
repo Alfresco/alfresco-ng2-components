@@ -63,6 +63,13 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
         this.proxy('ngOnChanges', changes);
     }
 
+    ngOnDestroy() {
+        if (this.componentCreated()) {
+            this.componentRef.destroy();
+            this.componentRef = null;
+        }
+    }
+
     private loadComponent() {
         const componentType = this.extensions.getComponentById<ExtensionComponent>(this.id);
         if (componentType) {
@@ -73,13 +80,6 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
                 this.content.clear();
                 this.componentRef = this.content.createComponent(factory, 0);
             }
-        }
-    }
-
-    ngOnDestroy() {
-        if (this.componentCreated()) {
-            this.componentRef.destroy();
-            this.componentRef = null;
         }
     }
 
