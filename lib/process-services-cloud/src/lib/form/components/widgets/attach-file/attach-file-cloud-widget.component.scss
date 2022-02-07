@@ -22,11 +22,11 @@
 
         .mat-raised-button {
             line-height: 28px;
-            font-size: 12px;
+            font-size: var(--theme-caption-font-size);
         }
 
         button span {
-            font-size: 12px;
+            font-size: var(--theme-caption-font-size);
 
             mat-icon {
                 line-height: 12px;
@@ -35,7 +35,7 @@
             }
 
             .material-icons {
-                font-size: 18px;
+                font-size: var(--theme-adf-font-size-2);
             }
         }
     }

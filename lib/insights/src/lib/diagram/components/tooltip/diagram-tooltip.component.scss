@@ -6,7 +6,7 @@
         display: inline-block;
         font-weight: 500;
         line-height: 14px;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         max-width: 300px;
         position: fixed;
         top: -500px;

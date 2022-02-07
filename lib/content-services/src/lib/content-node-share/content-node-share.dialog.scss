@@ -17,7 +17,7 @@
             font-weight: normal;
             font-style: normal;
             font-stretch: normal;
-            font-size: 16px;
+            font-size: var(--theme-subheading-2-font-size);
             color: var(--theme-text-bold-color);
         }
 
@@ -27,7 +27,7 @@
 
         &__info {
             color: var(--theme-text-color);
-            font-size: 13px;
+            font-size: var(--theme-caption-font-size);
         }
 
         &--row {

@@ -39,7 +39,7 @@
     }
 
     &__display-name {
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
         opacity: 0.87;
         line-height: 1.5;
         letter-spacing: -0.4px;
@@ -194,7 +194,7 @@
             cursor: default;
             width: 79px;
             height: 24px;
-            font-size: 14px;
+            font-size: var(--theme-body-1-font-size);
             border: 1px solid var(--theme-border-color);
             text-align: center;
             line-height: 24px;

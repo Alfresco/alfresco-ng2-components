@@ -95,7 +95,7 @@ $tile-themes: (
                 h1 {
                     color: white;
                     width: 80%;
-                    font-size: 24px;
+                    font-size: var(--theme-headline-font-size);
                     margin: 0;
                     line-height: normal;
                     white-space: nowrap;

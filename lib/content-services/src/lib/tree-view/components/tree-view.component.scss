@@ -5,7 +5,7 @@
 
     &-tree-view-node.mat-tree-node {
         min-height: 40px;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         align-items: baseline;
     }
 

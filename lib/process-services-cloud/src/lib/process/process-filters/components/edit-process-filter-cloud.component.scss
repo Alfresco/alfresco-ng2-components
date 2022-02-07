@@ -13,14 +13,14 @@
     .adf-error-text {
         padding-right: 8px;
         height: 16px;
-        font-size: 11px;
+        font-size: var(--theme-caption-font-size);
         line-height: 1.33;
         color: var(--theme-warn-color);
         width: auto;
     }
 
     .adf-error-icon {
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
         color: var(--theme-warn-color);
     }
 }

@@ -10,7 +10,7 @@
 
             .mat-form-field {
                 width: 100%;
-                font-size: 14px;
+                font-size: var(--theme-body-1-font-size);
             }
 
             .mat-form-field-appearance-legacy .mat-form-field-label {

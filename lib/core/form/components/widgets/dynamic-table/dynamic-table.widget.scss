@@ -2,8 +2,8 @@
 @import '~@angular/material/theming';
 @import '../../../../styles/mixins';
 
-$dynamic-table-font-size: 14px !default;
-$dynamic-table-header-font-size: 12px !default;
+$dynamic-table-font-size: var(--theme-body-1-font-size) !default;
+$dynamic-table-header-font-size: var(--theme-caption-font-size) !default;
 $dynamic-table-header-sort-icon-size: 16px !default;
 $dynamic-table-hover-color: #eee !default;
 $dynamic-table-selection-color: #e0f7fa !default;

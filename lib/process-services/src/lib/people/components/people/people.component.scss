@@ -85,7 +85,7 @@ adf-people-list adf-datatable {
     color: #fff;
     text-align: center;
     font-weight: bolder;
-    font-size: 18px;
+    font-size: var(--theme-adf-font-size-2);
     text-transform: uppercase;
     vertical-align: text-bottom;
 }

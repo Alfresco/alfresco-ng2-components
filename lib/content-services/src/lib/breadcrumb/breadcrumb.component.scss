@@ -2,7 +2,7 @@
     display: flex;
     flex: 1;
     line-height: 24px;
-    font-size: 14px;
+    font-size: var(--theme-body-1-font-size);
     font-weight: 600;
     letter-spacing: -0.2px;
     color: var(--theme-text-color);
@@ -48,7 +48,7 @@
             }
 
             &-arrow {
-                font-size: 17px;
+                font-size: var(--theme-adf-font-size-1);
                 position: absolute;
                 left: 4px;
                 top: 4px;
@@ -75,7 +75,7 @@
         overflow: hidden;
         display: flex;
         line-height: 33px;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 600;
         letter-spacing: -0.2px;
         text-align: left;
@@ -97,7 +97,7 @@
         &-chevron {
             opacity: 1;
             margin-top: 9px;
-            font-size: 17px;
+            font-size: var(--theme-adf-font-size-1);
         }
 
         &.mat-primary {

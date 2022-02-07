@@ -2,7 +2,7 @@
     .mat-dialog-title {
         margin-left: 24px;
         margin-right: 24px;
-        font-size: 20px;
+        font-size: var(--theme-title-font-size);
         font-weight: 600;
         font-style: normal;
         font-stretch: normal;

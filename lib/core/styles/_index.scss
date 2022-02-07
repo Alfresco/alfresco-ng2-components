@@ -14,7 +14,7 @@
     @include adf-core-theme($theme);
 }
 
-@mixin adf-core-theme($theme) {
+@mixin adf-core-theme($theme, $custom-css-variables: $adf-custom-theme-sizes) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
     $warn: map-get($theme, warn);
@@ -89,9 +89,14 @@
         --theme-display-4-font-size: mat-font-size($alfresco-typography, display-4),
         --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
         --theme-title-font-size: mat-font-size($alfresco-typography, title),
+        --theme-subheading-1-font-size: mat-font-size($alfresco-typography, subheading-1),
         --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
         --theme-button-font-size: mat-font-size($alfresco-typography, button),
+        --theme-headline-font-size: mat-font-size($alfresco-typography, headline),
         --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
+
+        --theme-adf-font-size-1: map-get($custom-css-variables, 'theme-adf-font-size-1'),
+        --theme-adf-font-size-2: map-get($custom-css-variables, 'theme-adf-font-size-2'),
 
         // specific colors
         --theme-colors-mat-grey: mat-color($mat-grey, A200),
@@ -110,3 +115,8 @@
     @include adf-snackbar-theme;
     @include adf-material-theme;
 }
+
+$adf-custom-theme-sizes: (
+    'theme-adf-font-size-1': 17px,
+    'theme-adf-font-size-2': 18px
+);

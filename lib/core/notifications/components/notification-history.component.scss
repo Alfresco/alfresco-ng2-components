@@ -27,11 +27,11 @@
 
         &-message,
         &-no-message {
-            font-size: 13px !important;
+            font-size: var(--theme-body-1-font-size) !important;
         }
 
         &-date {
-            font-size: 12px !important;
+            font-size: var(--theme-caption-font-size) !important;
         }
 
         &-initiator {
@@ -47,7 +47,7 @@
         border-radius: 100px;
         text-align: center;
         font-weight: bolder;
-        font-size: 18px;
+        font-size: var(--theme-adf-font-size-2);
         text-transform: uppercase;
         vertical-align: middle;
         line-height: 40px;

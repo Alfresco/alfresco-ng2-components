@@ -12,7 +12,7 @@
         margin-top: -20px !important;
         min-height: 24px;
         min-width: 1px;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         line-height: 14px;
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);

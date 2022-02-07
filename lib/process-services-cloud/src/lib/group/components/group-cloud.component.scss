@@ -23,14 +23,14 @@
             &-message {
                 padding-right: 8px;
                 height: 16px;
-                font-size: 12px;
+                font-size: var(--theme-caption-font-size);
                 line-height: 1.33;
                 color: var(--theme-warn-color);
                 width: auto;
             }
 
             &-icon {
-                font-size: 17px;
+                font-size: var(--theme-adf-font-size-1);
                 color: var(--theme-warn-color);
             }
         }
@@ -42,7 +42,7 @@
     width: 40px;
     height: 40px;
     font-weight: bolder;
-    font-size: 18px;
+    font-size: var(--theme-adf-font-size-2);
     box-shadow: none !important;
 
     .mat-button-wrapper {

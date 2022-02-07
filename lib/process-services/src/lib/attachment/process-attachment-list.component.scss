@@ -10,7 +10,7 @@
 .adf-empty-list-header {
     height: 32px;
     opacity: 0.26 !important;
-    font-size: 24px;
+    font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
 }

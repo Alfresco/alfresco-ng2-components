@@ -41,7 +41,7 @@
         letter-spacing: -0.4px;
 
         .mat-menu-item {
-            font-size: 14px;
+            font-size: var(--theme-body-1-font-size);
             color: var(--theme-text-bold-color);
             text-align: left;
             line-height: 1.5;
