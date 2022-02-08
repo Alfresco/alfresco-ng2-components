@@ -76,7 +76,7 @@ describe('UploadService', () => {
 
         service = TestBed.inject(UploadService);
         service.queue = [];
-        service.activeTask = null;
+        // service.activeTask = null;
 
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
