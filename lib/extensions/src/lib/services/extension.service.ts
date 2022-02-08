@@ -27,18 +27,24 @@ import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export const extensionJsonsFactory = () => [];
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function extensionJsonsFactory() {
+    return [];
+};
 
 export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons', {
     providedIn: 'root',
     factory: extensionJsonsFactory
 });
 
-export const provideExtensionConfig = (jsons: string[]) => ({
-    provide: EXTENSION_JSONS,
-    useValue: jsons,
-    multi: true
-});
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function provideExtensionConfig(jsons: string[]) {
+    return {
+        provide: EXTENSION_JSONS,
+        useValue: jsons,
+        multi: true
+    };
+};
 
 @Injectable({
     providedIn: 'root'
