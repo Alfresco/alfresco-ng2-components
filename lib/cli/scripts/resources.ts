@@ -16,6 +16,8 @@
  */
 
 /* cSpell:disable */
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export const ACTIVITI_CLOUD_APPS: any = {
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
@@ -25,8 +27,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             processparent: 'processparent'
         },
         security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
-            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser'] },
+            { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser'] }
         ]
     },
     CANDIDATE_BASE_APP: {
@@ -64,8 +66,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             outputform: 'outputform'
         },
         security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
-            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser', 'salesuser'] }
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
+            { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser', 'salesuser'] }
         ],
         tasks: {
             uploadFileTask: 'UploadFileTask',
@@ -195,8 +197,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             uploadSingleMultipleFiles: 'UploadSingleMultipleFiles'
         },
         security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
-            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'sales', 'testgroup'], 'users': ['hruser'] }
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
+            { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
         infrastructure: {connectors: {restconnector: {}}, bridges: {}}
     }

@@ -22,9 +22,10 @@ import * as program from 'commander';
 import { logger } from './logger';
 import { resolve } from 'path';
 
+// eslint-disable-next-line no-shadow
 enum TARGETS {
-    Publish = 'publish',
-    Link = 'link'
+    publish = 'publish',
+    link = 'link'
 }
 
 const DOCKER_FILENAME = 'Dockerfile';
@@ -105,7 +106,7 @@ function main(args) {
         .option('--sourceTag [type]', 'sourceTag')
         .option('--buildArgs [type...]', 'buildArgs')
         .option('--fileName [type...]', 'Docker file name', DOCKER_FILENAME)
-        .option('--target [type]', 'target: publish or link', TARGETS.Publish)
+        .option('--target [type]', 'target: publish or link', TARGETS.publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .parse(process.argv);
@@ -120,13 +121,13 @@ function main(args) {
         process.exit(1);
     }
 
-    if (program.opts().target === TARGETS.Publish && args.buildArgs === undefined) {
-        logger.error(`error: required option --buildArgs [type] in case the target is ${TARGETS.Publish}`);
+    if (program.opts().target === TARGETS.publish && args.buildArgs === undefined) {
+        logger.error(`error: required option --buildArgs [type] in case the target is ${TARGETS.publish}`);
         process.exit(1);
     }
 
-    if (program.opts().target === TARGETS.Link && args.sourceTag === undefined) {
-        logger.error(`error: required option --sourceTag [type] in case the target is ${TARGETS.Link}`);
+    if (program.opts().target === TARGETS.link && args.sourceTag === undefined) {
+        logger.error(`error: required option --sourceTag [type] in case the target is ${TARGETS.link}`);
         process.exit(1);
     }
 
@@ -147,7 +148,7 @@ function main(args) {
         args.dockerTags.split(',').forEach((tag, index) => {
             if (tag) {
                 logger.info(`Analyzing tag:${tag} ... for target ${program.opts().target}`);
-                if (program.opts().target === TARGETS.Publish) {
+                if (program.opts().target === TARGETS.publish) {
                     if (index === 0) {
                         logger.info(`Build only once`);
                         mainTag = tag;

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { ProcessAutomationHealth } from './process-automation-health';

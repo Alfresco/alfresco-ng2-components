@@ -1,10 +1,10 @@
 import { logger } from './../logger';
 import alfrescoApi = require('@alfresco/js-api');
 
+const TIMEOUT = 6000;
+const MAX_RETRY = 10;
 export class CheckEnv {
     _alfrescoJsApi: any;
-    TIMEOUT = 6000;
-    MAX_RETRY = 10;
     counter = 0;
 
     constructor(
@@ -15,7 +15,7 @@ export class CheckEnv {
 
     async checkEnv() {
         try {
-            this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility(<any> {
+            this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
                 provider: 'ALL',
                 hostBpm: this.host,
                 hostEcm: this.host,
@@ -25,7 +25,7 @@ export class CheckEnv {
                     clientId: 'alfresco',
                     scope: 'openid'
                 }
-            });
+            } as any);
             await this.alfrescoJsApi.login(this.username, this.password);
         } catch (e) {
             if (e.error.code === 'ETIMEDOUT') {
@@ -34,14 +34,14 @@ export class CheckEnv {
             }
             logger.error('Login error environment down or inaccessible');
             this.counter++;
-            if (this.MAX_RETRY === this.counter) {
+            if (MAX_RETRY === this.counter) {
                 logger.error('Give up');
                 process.exit(1);
             } else {
                 logger.error(
                     `Retry in 1 minute at main();tempt N ${this.counter}`
                 );
-                this.sleep(this.TIMEOUT);
+                this.sleep(TIMEOUT);
                 this.checkEnv();
             }
         }
