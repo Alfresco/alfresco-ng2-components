@@ -5,13 +5,11 @@
     <mat-form-field>
       <input
         placeholder="{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}"
-
         required
         matInput
         formControlName="title"
         autocomplete="off"
-      >
-      <mat-label>{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}</mat-label>
+      />
 
       <mat-hint *ngIf="libraryTitleExists">{{
         'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate
