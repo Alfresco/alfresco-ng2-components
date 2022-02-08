@@ -45,8 +45,8 @@ describe('Extension Utils', () => {
         });
 
         it('should not process special properties starting with $', () => {
-            const obj1 = { '$id': 'uid', aHello: 1 };
-            const obj2 = { '$schema': 'schema-id', bWorld: 2 };
+            const obj1 = { $id: 'uid', aHello: 1 };
+            const obj2 = { $schema: 'schema-id', bWorld: 2 };
 
             const result = mergeObjects(obj1, obj2);
 

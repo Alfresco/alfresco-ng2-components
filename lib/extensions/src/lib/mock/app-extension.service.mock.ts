@@ -24,9 +24,8 @@ import { ViewerExtensionRef } from '../config/viewer.extensions';
     providedIn: 'root'
 })
 export class AppExtensionServiceMock {
-    private _references = new BehaviorSubject<ExtensionRef[]>([]);
-
     references$: Observable<ExtensionRef[]>;
+    private _references = new BehaviorSubject<ExtensionRef[]>([]);
 
     constructor() {
         this.references$ = this._references.asObservable();
@@ -35,5 +34,4 @@ export class AppExtensionServiceMock {
     getViewerExtensions(): ViewerExtensionRef[] {
         return [];
     }
-
 }

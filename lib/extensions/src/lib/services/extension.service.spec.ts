@@ -47,10 +47,7 @@ describe('ExtensionService', () => {
     });
 
     it('should load and setup a config', async () => {
-        spyOn(loader, 'load').and.callFake(() => {
-            return Promise.resolve(blankConfig);
-        });
-
+        spyOn(loader, 'load').and.callFake(() => Promise.resolve(blankConfig));
         spyOn(service, 'setup').and.stub();
 
         await service.load();
@@ -82,8 +79,8 @@ describe('ExtensionService', () => {
         const evaluator2 = () => false;
 
         service.setEvaluators({
-            'eval1': evaluator1,
-            'eval2': evaluator2
+            eval1: evaluator1,
+            eval2: evaluator2
         });
 
         expect(service.getEvaluator('eval1')).toBe(evaluator1);
@@ -100,7 +97,7 @@ describe('ExtensionService', () => {
 
         service.setEvaluators({
             'core.every': evaluator1,
-            'eval2': evaluator2
+            eval2: evaluator2
         });
 
         expect(service.getEvaluator('core.every')).toBe(evaluator1);
@@ -111,7 +108,7 @@ describe('ExtensionService', () => {
         const positive = () => true;
 
         service.setEvaluators({
-            'positive': positive
+            positive
         });
 
         let evaluator = service.getEvaluator('positive');
@@ -136,8 +133,8 @@ describe('ExtensionService', () => {
         const guard2: any = {};
 
         service.setAuthGuards({
-            'auth1': guard1,
-            'auth2': guard2
+            auth1: guard1,
+            auth2: guard2
         });
 
         registered = service.getAuthGuards(['auth1', 'auth2']);
@@ -151,13 +148,13 @@ describe('ExtensionService', () => {
         const guard2: any = {};
 
         service.setAuthGuards({
-            'auth': guard1
+            auth: guard1
         });
 
         expect(service.getAuthGuards(['auth'])).toEqual([guard1]);
 
         service.setAuthGuards({
-            'auth': guard2
+            auth: guard2
         });
 
         expect(service.getAuthGuards(['auth'])).toEqual([guard2]);
@@ -167,7 +164,7 @@ describe('ExtensionService', () => {
         const guard1: any = {};
 
         service.setAuthGuards({
-            'auth': guard1
+            auth: guard1
         });
 
         service.setAuthGuards(null);
@@ -184,7 +181,7 @@ describe('ExtensionService', () => {
         const component: any = {};
 
         service.setComponents({
-            'component1': component
+            component1: component
         });
 
         expect(service.getComponentById('component1')).toBe(component);
@@ -195,13 +192,13 @@ describe('ExtensionService', () => {
         const component2: any = {};
 
         service.setComponents({
-            'component': component1
+            component: component1
         });
 
         expect(service.getComponentById('component')).toBe(component1);
 
         service.setComponents({
-            'component': component2
+            component: component2
         });
 
         expect(service.getComponentById('component')).toBe(component2);
@@ -211,7 +208,7 @@ describe('ExtensionService', () => {
         const component: any = {};
 
         service.setComponents({
-            'component1': component
+            component1: component
         });
 
         expect(service.getComponentById('component1')).toBe(component);
@@ -266,9 +263,7 @@ describe('ExtensionService', () => {
         });
 
         const context: any = {
-            getEvaluator(key: string) {
-                return service.getEvaluator(key);
-            }
+            getEvaluator: (key: string) => service.getEvaluator(key)
         };
 
         const result = service.evaluateRule('test.condition', context);
@@ -277,9 +272,7 @@ describe('ExtensionService', () => {
 
     it('should evaluate missing condition as [false]', () => {
         const context: any = {
-            getEvaluator(key: string) {
-                return service.getEvaluator(key);
-            }
+            getEvaluator: (key: string) => service.getEvaluator(key)
         };
 
         const result = service.evaluateRule('missing.condition', context);
@@ -308,9 +301,7 @@ describe('ExtensionService', () => {
         });
 
         const context: any = {
-            getEvaluator(key: string) {
-                return service.getEvaluator(key);
-            }
+            getEvaluator: (key: string) => service.getEvaluator(key)
         };
 
         const result = service.evaluateRule('test.rule', context);
@@ -327,9 +318,7 @@ describe('ExtensionService', () => {
         service.setup(blankConfig);
 
         const context: any = {
-            getEvaluator(key: string) {
-                return service.getEvaluator(key);
-            }
+            getEvaluator: (key: string) => service.getEvaluator(key)
         };
 
         const result = service.evaluateRule('test.rule', context);
@@ -352,9 +341,7 @@ describe('ExtensionService', () => {
         service.setup(blankConfig);
 
         const context: any = {
-            getEvaluator(key: string) {
-                return service.getEvaluator(key);
-            }
+            getEvaluator: (key: string) => service.getEvaluator(key)
         };
 
         const result = service.evaluateRule('test.rule', context);
