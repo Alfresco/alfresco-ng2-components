@@ -95,8 +95,11 @@
         --theme-headline-font-size: mat-font-size($alfresco-typography, headline),
         --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
 
-        --theme-adf-font-size-1: map-get($custom-css-variables, 'theme-adf-font-size-1'),
-        --theme-adf-font-size-2: map-get($custom-css-variables, 'theme-adf-font-size-2'),
+        --theme-adf-icon-1-font-size: map-get($custom-css-variables, 'theme-adf-icon-1-font-size'),
+        --theme-adf-picture-1-font-size: map-get($custom-css-variables, 'theme-adf-picture-1-font-size'),
+
+        --theme-adf-task-footer-1-font-size: map-get($custom-css-variables, 'theme-adf-task-footer-1-font-size'),
+        --theme-adf-task-title-1-font-size: map-get($custom-css-variables, 'theme-adf-task-title-1-font-size'),
 
         // specific colors
         --theme-colors-mat-grey: mat-color($mat-grey, A200),
@@ -117,6 +120,8 @@
 }
 
 $adf-custom-theme-sizes: (
-    'theme-adf-font-size-1': 17px,
-    'theme-adf-font-size-2': 18px
+    'theme-adf-icon-1-font-size': 17px,
+    'theme-adf-picture-1-font-size': 18px,
+    'theme-adf-task-footer-1-font-size': 18px,
+    'theme-adf-task-title-1-font-size': 18px
 );

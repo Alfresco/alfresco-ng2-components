@@ -48,7 +48,7 @@
             }
 
             &-arrow {
-                font-size: var(--theme-adf-font-size-1);
+                font-size: var(--theme-adf-icon-1-font-size);
                 position: absolute;
                 left: 4px;
                 top: 4px;
@@ -97,7 +97,7 @@
         &-chevron {
             opacity: 1;
             margin-top: 9px;
-            font-size: var(--theme-adf-font-size-1);
+            font-size: var(--theme-adf-icon-1-font-size);
         }
 
         &.mat-primary {

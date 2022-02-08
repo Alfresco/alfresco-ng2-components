@@ -4,7 +4,7 @@
 
     .mat-card-title {
         font-weight: bold;
-        font-size: var(--theme-adf-font-size-2);
+        font-size: var(--theme-adf-task-title-1-font-size);
     }
 }
 
@@ -34,14 +34,14 @@
     }
 
     .adf-error-icon {
-        font-size: var(--theme-adf-font-size-1);
+        font-size: var(--theme-adf-icon-1-font-size);
         color: var(--theme-warn-color);
     }
 }
 
 .adf-cloud-start-task-footer {
     padding: 4px;
-    font-size: var(--theme-adf-font-size-2);
+    font-size: var(--theme-adf-task-footer-1-font-size);
     border-top: 1px solid #eee;
 }
 
