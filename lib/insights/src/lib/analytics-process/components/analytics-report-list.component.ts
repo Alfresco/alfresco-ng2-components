@@ -21,6 +21,9 @@ import { ReportParametersModel } from '../../diagram/models/report/report-parame
 import { AnalyticsService } from '../services/analytics.service';
 import { share } from 'rxjs/operators';
 
+export const LAYOUT_LIST = 'LIST';
+export const LAYOUT_GRID = 'GRID';
+
 @Component({
     selector: 'adf-analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
@@ -28,13 +31,9 @@ import { share } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {
-
-    public static LAYOUT_LIST: string = 'LIST';
-    public static LAYOUT_GRID: string = 'GRID';
-
     /** layout Type LIST or GRID. */
     @Input()
-    layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
+    layoutType: string = LAYOUT_LIST;
 
     /** appId ID of the target app. */
     @Input()
@@ -56,12 +55,11 @@ export class AnalyticsReportListComponent implements OnInit {
     @Output()
     error = new EventEmitter();
 
-    private reportObserver: Observer<any>;
     report$: Observable<ReportParametersModel>;
-
     currentReport: any;
-
     reports: ReportParametersModel[] = [];
+
+    private reportObserver: Observer<any>;
 
     constructor(private analyticsService: AnalyticsService) {
         this.report$ = new Observable<ReportParametersModel>((observer) => this.reportObserver = observer)
@@ -141,24 +139,16 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     /**
-     * Reset the list
-     */
-    private reset() {
-        if (!this.isReportsEmpty()) {
-            this.reports = [];
-        }
-    }
-
-    /**
      * Select the current report
+     *
      * @param report
      */
-    public selectReport(report: any) {
+    selectReport(report: any) {
         this.currentReport = report;
         this.reportClick.emit(report);
     }
 
-    public selectReportByReportId(reportId: number) {
+    selectReportByReportId(reportId: number) {
         const reportFound = this.reports.find((report) => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;
@@ -176,10 +166,19 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     isList(): boolean {
-        return this.layoutType === AnalyticsReportListComponent.LAYOUT_LIST;
+        return this.layoutType === LAYOUT_LIST;
     }
 
     isGrid(): boolean {
-        return this.layoutType === AnalyticsReportListComponent.LAYOUT_GRID;
+        return this.layoutType === LAYOUT_GRID;
+    }
+
+    /**
+     * Reset the list
+     */
+    private reset() {
+        if (!this.isReportsEmpty()) {
+            this.reports = [];
+        }
     }
 }

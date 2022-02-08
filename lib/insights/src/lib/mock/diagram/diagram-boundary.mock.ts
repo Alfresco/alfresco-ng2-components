@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let boundaryTimeEvent = {
+export const boundaryTimeEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'BoundaryEvent',
     width: 31,
@@ -26,7 +26,7 @@ export let boundaryTimeEvent = {
     eventDefinition: {type: 'timer'}
 };
 
-export let boundaryTimeEventActive = {
+export const boundaryTimeEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -39,7 +39,7 @@ export let boundaryTimeEventActive = {
     eventDefinition: {type: 'timer'}
 };
 
-export let boundaryTimeEventCompleted = {
+export const boundaryTimeEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -52,7 +52,7 @@ export let boundaryTimeEventCompleted = {
     eventDefinition: {type: 'timer'}
 };
 
-export let boundaryErrorEvent = {
+export const boundaryErrorEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'BoundaryEvent',
     width: 31,
@@ -63,7 +63,7 @@ export let boundaryErrorEvent = {
     eventDefinition: {type: 'error'}
 };
 
-export let boundaryErrorEventActive = {
+export const boundaryErrorEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -76,7 +76,7 @@ export let boundaryErrorEventActive = {
     eventDefinition: {type: 'error'}
 };
 
-export let boundaryErrorEventCompleted = {
+export const boundaryErrorEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -89,7 +89,7 @@ export let boundaryErrorEventCompleted = {
     eventDefinition: {type: 'error'}
 };
 
-export let boundarySignalEvent = {
+export const boundarySignalEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'BoundaryEvent',
     width: 31,
@@ -100,7 +100,7 @@ export let boundarySignalEvent = {
     eventDefinition: {type: 'signal'}
 };
 
-export let boundarySignalEventActive = {
+export const boundarySignalEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -113,7 +113,7 @@ export let boundarySignalEventActive = {
     eventDefinition: {type: 'signal'}
 };
 
-export let boundarySignalEventCompleted = {
+export const boundarySignalEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -126,7 +126,7 @@ export let boundarySignalEventCompleted = {
     eventDefinition: {type: 'signal'}
 };
 
-export let boundaryMessageEvent = {
+export const boundaryMessageEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'BoundaryEvent',
     width: 31,
@@ -137,7 +137,7 @@ export let boundaryMessageEvent = {
     eventDefinition: {type: 'message'}
 };
 
-export let boundaryMessageEventActive = {
+export const boundaryMessageEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -150,7 +150,7 @@ export let boundaryMessageEventActive = {
     eventDefinition: {type: 'message'}
 };
 
-export let boundaryMessageEventCompleted = {
+export const boundaryMessageEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

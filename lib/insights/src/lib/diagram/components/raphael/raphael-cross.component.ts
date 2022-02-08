@@ -55,12 +55,16 @@ export class RaphaelCrossDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-
-        const opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
+        const opts = {
+            'stroke-width': this.strokeWidth,
+            fill: this.fillColors,
+            stroke: this.stroke,
+            'fill-opacity': this.fillOpacity
+        };
         this.draw(this.center, this.width, this.height, opts);
     }
 
-    public draw(center: Point, width: number, height: number, opts?: any) {
+    draw(center: Point, width: number, height: number, opts?: any) {
         const quarterWidth = width / 4;
         const quarterHeight = height / 4;
 

@@ -40,6 +40,8 @@ import { AnalyticsService } from '../services/analytics.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
+
 @Component({
     selector: 'adf-analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
@@ -47,9 +49,6 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterContentChecked {
-
-    public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
-
     /** appId ID of the target app. */
     @Input()
     appId: number;
@@ -90,24 +89,18 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     reportNameDialog: any;
 
     onDropdownChanged = new EventEmitter();
-
     successReportParams = new EventEmitter<ReportParametersModel>();
-
     successParamOpt = new EventEmitter();
 
     reportParameters: ReportParametersModel;
-
     reportForm: FormGroup;
-
     action: string;
-
     isEditable: boolean = false;
-
     reportName: string;
-
     reportParamQuery: ReportQuery;
-    private hideParameters: boolean = true;
     formValidState: boolean = false;
+
+    private hideParameters: boolean = true;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private analyticsService: AnalyticsService,
@@ -115,7 +108,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private logService: LogService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
-
     }
 
     ngOnInit() {
@@ -160,58 +152,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
-        const formBuilderGroup: any = {};
-        parameters.forEach((param: ReportParameterDetailsModel) => {
-            switch (param.type) {
-                case 'dateRange':
-                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
-                    break;
-                case 'processDefinition':
-                    formBuilderGroup.processDefGroup = new FormGroup({
-                        processDefinitionId: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'duration':
-                    formBuilderGroup.durationGroup = new FormGroup({
-                        duration: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'dateInterval':
-                    formBuilderGroup.dateIntervalGroup = new FormGroup({
-                        dateRangeInterval: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'boolean':
-                    formBuilderGroup.typeFilteringGroup = new FormGroup({
-                        typeFiltering: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'task':
-                    formBuilderGroup.taskGroup = new FormGroup({
-                        taskName: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'integer':
-                    formBuilderGroup.processInstanceGroup = new FormGroup({
-                        slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                case 'status':
-                    formBuilderGroup.statusGroup = new FormGroup({
-                        status: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
-                    break;
-                default:
-                    return;
-            }
-        });
-        this.reportForm = this.formBuilder.group(formBuilderGroup);
-        this.reportForm.valueChanges.subscribe((data) => this.onValueChanged(data));
-        this.reportForm.statusChanges.subscribe(() => this.onStatusChanged());
-    }
-
-    public getReportParams(reportId: string) {
+    getReportParams(reportId: string) {
         this.analyticsService.getReportParams(reportId).subscribe(
             (res: ReportParametersModel) => {
                 this.reportParameters = res;
@@ -226,20 +167,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.error.emit(err);
             }
         );
-    }
-
-    private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
-        parameters.forEach((param) => {
-            this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
-                (opts: ParameterValueModel[]) => {
-                    param.options = opts;
-                    this.successParamOpt.emit(opts);
-                },
-                (err: any) => {
-                    this.error.emit(err);
-                }
-            );
-        });
     }
 
     onProcessDefinitionChanges(field: any) {
@@ -266,16 +193,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    public convertMomentDate(date: string) {
-        return moment(date, AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI, true)
-            .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    convertMomentDate(date: string) {
+        return moment(date, FORMAT_DATE_ACTIVITI, true).format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
-    public getTodayDate() {
-        return moment().format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI);
+    getTodayDate() {
+        return moment().format(FORMAT_DATE_ACTIVITI);
     }
 
-    public convertNumber(value: string): number {
+    convertNumber(value: string): number {
         return value != null ? parseInt(value, 10) : 0;
     }
 
@@ -314,15 +240,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.onDestroy$.complete();
     }
 
-    public editEnable() {
+    editEnable() {
         this.isEditable = true;
     }
 
-    public editDisable() {
+    editDisable() {
         this.isEditable = false;
     }
 
-    public editTitle() {
+    editTitle() {
         this.analyticsService
             .updateReport(`${this.reportParameters.id}`, this.reportParameters.name)
             .subscribe(
@@ -336,7 +262,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             );
     }
 
-    public showDialog(event: string) {
+    showDialog(event: string) {
         this.dialog.open(this.reportNameDialog, { width: '500px' });
         this.action = event;
         this.reportName = this.reportParameters.name + ' ( ' + this.getTodayDate() + ' )';
@@ -434,5 +360,70 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     get processInstanceGroup(): FormGroup {
         return this.reportForm.controls.processInstanceGroup as FormGroup;
+    }
+
+    private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
+        const formBuilderGroup: any = {};
+        parameters.forEach((param: ReportParameterDetailsModel) => {
+            switch (param.type) {
+                case 'dateRange':
+                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
+                    break;
+                case 'processDefinition':
+                    formBuilderGroup.processDefGroup = new FormGroup({
+                        processDefinitionId: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'duration':
+                    formBuilderGroup.durationGroup = new FormGroup({
+                        duration: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'dateInterval':
+                    formBuilderGroup.dateIntervalGroup = new FormGroup({
+                        dateRangeInterval: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'boolean':
+                    formBuilderGroup.typeFilteringGroup = new FormGroup({
+                        typeFiltering: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'task':
+                    formBuilderGroup.taskGroup = new FormGroup({
+                        taskName: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'integer':
+                    formBuilderGroup.processInstanceGroup = new FormGroup({
+                        slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                case 'status':
+                    formBuilderGroup.statusGroup = new FormGroup({
+                        status: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
+                    break;
+                default:
+                    return;
+            }
+        });
+        this.reportForm = this.formBuilder.group(formBuilderGroup);
+        this.reportForm.valueChanges.subscribe((data) => this.onValueChanged(data));
+        this.reportForm.statusChanges.subscribe(() => this.onStatusChanged());
+    }
+
+    private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
+        parameters.forEach((param) => {
+            this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
+                (opts: ParameterValueModel[]) => {
+                    param.options = opts;
+                    this.successParamOpt.emit(opts);
+                },
+                (err: any) => {
+                    this.error.emit(err);
+                }
+            );
+        });
     }
 }

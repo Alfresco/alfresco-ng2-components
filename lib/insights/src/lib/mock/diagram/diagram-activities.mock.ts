@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let userTask = {
+export const userTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake User task',
     type: 'UserTask',
@@ -26,7 +26,7 @@ export let userTask = {
     properties: [{}]
 };
 
-export let userTaskActive = {
+export const userTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -39,7 +39,7 @@ export let userTaskActive = {
     properties: [{}]
 };
 
-export let userTaskCompleted = {
+export const userTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -52,7 +52,7 @@ export let userTaskCompleted = {
     properties: [{}]
 };
 
-export let manualTask = {
+export const manualTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Manual task',
     type: 'ManualTask',
@@ -63,7 +63,7 @@ export let manualTask = {
     properties: [{}]
 };
 
-export let manualTaskActive = {
+export const manualTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -76,7 +76,7 @@ export let manualTaskActive = {
     properties: [{}]
 };
 
-export let manualTaskCompleted = {
+export const manualTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -89,7 +89,7 @@ export let manualTaskCompleted = {
     properties: [{}]
 };
 
-export let serviceTask = {
+export const serviceTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Service task',
     type: 'ServiceTask',
@@ -100,7 +100,7 @@ export let serviceTask = {
     properties: [{}]
 };
 
-export let serviceTaskActive = {
+export const serviceTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -113,7 +113,7 @@ export let serviceTaskActive = {
     properties: [{}]
 };
 
-export let serviceTaskCompleted = {
+export const serviceTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -126,7 +126,7 @@ export let serviceTaskCompleted = {
     properties: [{}]
 };
 
-export let receiveTask = {
+export const receiveTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Receive task',
     type: 'ReceiveTask',
@@ -137,7 +137,7 @@ export let receiveTask = {
     properties: [{}]
 };
 
-export let receiveTaskActive = {
+export const receiveTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -150,7 +150,7 @@ export let receiveTaskActive = {
     properties: [{}]
 };
 
-export let receiveTaskCompleted = {
+export const receiveTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -163,7 +163,7 @@ export let receiveTaskCompleted = {
     properties: [{}]
 };
 
-export let scriptTask = {
+export const scriptTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Script task',
     type: 'ScriptTask',
@@ -174,7 +174,7 @@ export let scriptTask = {
     properties: [{}]
 };
 
-export let scriptTaskActive = {
+export const scriptTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -187,7 +187,7 @@ export let scriptTaskActive = {
     properties: [{}]
 };
 
-export let scriptTaskCompleted = {
+export const scriptTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -200,7 +200,7 @@ export let scriptTaskCompleted = {
     properties: [{}]
 };
 
-export let businessRuleTask = {
+export const businessRuleTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake BusinessRule task',
     type: 'BusinessRuleTask',
@@ -211,7 +211,7 @@ export let businessRuleTask = {
     properties: [{}]
 };
 
-export let businessRuleTaskActive = {
+export const businessRuleTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -224,7 +224,7 @@ export let businessRuleTaskActive = {
     properties: [{}]
 };
 
-export let businessRuleTaskCompleted = {
+export const businessRuleTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -237,7 +237,7 @@ export let businessRuleTaskCompleted = {
     properties: [{}]
 };
 
-export let mailTask = {
+export const mailTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Mail task',
     type: 'ServiceTask',
@@ -249,7 +249,7 @@ export let mailTask = {
     taskType: 'mail'
 };
 
-export let mailTaskActive = {
+export const mailTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -263,7 +263,7 @@ export let mailTaskActive = {
     taskType: 'mail'
 };
 
-export let mailTaskCompleted = {
+export const mailTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -277,7 +277,7 @@ export let mailTaskCompleted = {
     taskType: 'mail'
 };
 
-export let camelTask = {
+export const camelTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Camel task',
     type: 'ServiceTask',
@@ -289,7 +289,7 @@ export let camelTask = {
     taskType: 'camel'
 };
 
-export let camelTaskActive = {
+export const camelTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -303,7 +303,7 @@ export let camelTaskActive = {
     taskType: 'camel'
 };
 
-export let camelTaskCompleted = {
+export const camelTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -317,7 +317,7 @@ export let camelTaskCompleted = {
     taskType: 'camel'
 };
 
-export let restCallTask = {
+export const restCallTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Rest Call task',
     type: 'ServiceTask',
@@ -329,7 +329,7 @@ export let restCallTask = {
     taskType: 'rest_call'
 };
 
-export let restCallTaskActive = {
+export const restCallTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -343,7 +343,7 @@ export let restCallTaskActive = {
     taskType: 'rest_call'
 };
 
-export let restCallTaskCompleted = {
+export const restCallTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -357,7 +357,7 @@ export let restCallTaskCompleted = {
     taskType: 'rest_call'
 };
 
-export let muleTask = {
+export const muleTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Mule task',
     type: 'ServiceTask',
@@ -369,7 +369,7 @@ export let muleTask = {
     taskType: 'mule'
 };
 
-export let muleTaskActive = {
+export const muleTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -383,7 +383,7 @@ export let muleTaskActive = {
     taskType: 'mule'
 };
 
-export let muleTaskCompleted = {
+export const muleTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -397,7 +397,7 @@ export let muleTaskCompleted = {
     taskType: 'mule'
 };
 
-export let alfrescoPublishTask = {
+export const alfrescoPublishTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Alfresco Publish task',
     type: 'ServiceTask',
@@ -409,7 +409,7 @@ export let alfrescoPublishTask = {
     taskType: 'alfresco_publish'
 };
 
-export let alfrescoPublishTaskActive = {
+export const alfrescoPublishTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -423,7 +423,7 @@ export let alfrescoPublishTaskActive = {
     taskType: 'alfresco_publish'
 };
 
-export let alfrescoPublishTaskCompleted = {
+export const alfrescoPublishTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -437,7 +437,7 @@ export let alfrescoPublishTaskCompleted = {
     taskType: 'alfresco_publish'
 };
 
-export let googleDrivePublishTask = {
+export const googleDrivePublishTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Google Drive Publish task',
     type: 'ServiceTask',
@@ -449,7 +449,7 @@ export let googleDrivePublishTask = {
     taskType: 'google_drive_publish'
 };
 
-export let googleDrivePublishTaskActive = {
+export const googleDrivePublishTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -463,7 +463,7 @@ export let googleDrivePublishTaskActive = {
     taskType: 'google_drive_publish'
 };
 
-export let googleDrivePublishTaskCompleted = {
+export const googleDrivePublishTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -477,7 +477,7 @@ export let googleDrivePublishTaskCompleted = {
     taskType: 'google_drive_publish'
 };
 
-export let boxPublishTask = {
+export const boxPublishTask = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     name: 'Fake Box Publish task',
     type: 'ServiceTask',
@@ -489,7 +489,7 @@ export let boxPublishTask = {
     taskType: 'box_publish'
 };
 
-export let boxPublishTaskActive = {
+export const boxPublishTaskActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -503,7 +503,7 @@ export let boxPublishTaskActive = {
     taskType: 'box_publish'
 };
 
-export let boxPublishTaskCompleted = {
+export const boxPublishTaskCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

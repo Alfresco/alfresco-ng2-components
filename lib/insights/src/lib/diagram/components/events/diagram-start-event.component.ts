@@ -18,6 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
@@ -41,7 +42,7 @@ export class DiagramStartEventComponent implements OnInit {
 
         this.options.radius = 15;
         this.options.strokeWidth = 1;
-        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, MAIN_STROKE_COLOR);
         this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
         this.options.fillOpacity = this.diagramColorService.getFillOpacity();
 

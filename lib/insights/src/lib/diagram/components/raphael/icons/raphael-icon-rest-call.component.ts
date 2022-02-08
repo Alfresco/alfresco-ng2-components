@@ -70,8 +70,8 @@ export class RaphaelIconRestCallDirective extends RaphaelBase implements OnInit 
          0.349146,0.04476 l 3.437744,-2.005351 q 0.125335,-0.08953 0.143239,-0.232763 l 0.17905,-3.392986 q 1.02058,-0.859435
          1.745729,-1.575629 1.67411,-1.6830612 2.309735,-3.2049805 0.635625,-1.5219191 0.635625,-3.8585111 0,-0.1253369 -0.08505,-0.2148575
          -0.08505,-0.089526 -0.201431,-0.089526 z`).attr({
-            'stroke': this.stroke,
-            'fill': this.fillColors
+            stroke: this.stroke,
+            fill: this.fillColors
         });
         return path1.transform('T' + position.x + ',' + position.y);
     }

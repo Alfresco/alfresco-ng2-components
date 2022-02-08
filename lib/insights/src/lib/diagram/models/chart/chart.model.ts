@@ -45,6 +45,34 @@ export class Chart {
         }
     }
 
+    hasData(): boolean {
+        return this.data && this.data.length > 0;
+    }
+
+    hasDatasets(): boolean {
+        return this.datasets && this.datasets.length > 0;
+    }
+
+    hasDetailsTable(): boolean {
+        return !!this.detailsTable;
+    }
+
+    hasZeroValues(): boolean {
+        let isZeroValues = false;
+
+        if (this.hasData()) {
+            isZeroValues = true;
+
+            this.data.forEach((value) => {
+                if (value.toString() !== '0') {
+                    isZeroValues = false;
+                }
+            });
+        }
+
+        return isZeroValues;
+    }
+
     private convertType(type: string) {
         let chartType = '';
         switch (type) {
@@ -105,33 +133,5 @@ export class Chart {
                 break;
         }
         return typeIcon;
-    }
-
-    hasData(): boolean {
-        return this.data && this.data.length > 0;
-    }
-
-    hasDatasets(): boolean {
-        return this.datasets && this.datasets.length > 0;
-    }
-
-    hasDetailsTable(): boolean {
-        return !!this.detailsTable;
-    }
-
-    hasZeroValues(): boolean {
-        let isZeroValues = false;
-
-        if (this.hasData()) {
-            isZeroValues = true;
-
-            this.data.forEach((value) => {
-                if (value.toString() !== '0') {
-                    isZeroValues = false;
-                }
-            });
-        }
-
-        return isZeroValues;
     }
 }

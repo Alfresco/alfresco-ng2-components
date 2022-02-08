@@ -61,7 +61,7 @@ describe('AnalyticsService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeReportList)
             });
@@ -78,7 +78,7 @@ describe('AnalyticsService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeReportList)
             });
