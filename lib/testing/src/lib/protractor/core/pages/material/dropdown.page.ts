@@ -44,6 +44,10 @@ export class DropdownPage {
         return BrowserActions.getText($('mat-form-field span'));
     }
 
+    async getDropdownOptionList(): Promise<string> {
+        return BrowserActions.getArrayText(this.dropDownElement.$$(`[role*='option']`));
+    }
+
     async getNumberOfOptions(): Promise<number> {
         const dropdownOptions = $$('.mat-select-panel mat-option');
         return dropdownOptions.count();
