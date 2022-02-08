@@ -28,7 +28,7 @@
         border-radius: 100px;
         color: var(--theme-text-fg-color);
         font-weight: bolder;
-        font-size: 18px;
+        font-size: var(--theme-adf-picture-1-font-size);
         text-transform: uppercase;
     }
 
@@ -40,14 +40,14 @@
         &-message {
             padding-right: 8px;
             height: 16px;
-            font-size: 12px;
+            font-size: var(--theme-caption-font-size);
             line-height: 1.33;
             color: var(--theme-warn-color);
             width: auto;
         }
 
         &-icon {
-            font-size: 17px;
+            font-size: var(--theme-adf-icon-1-font-size);
             color: var(--theme-warn-color);
         }
     }

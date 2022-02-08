@@ -5,7 +5,7 @@ $dropdown-horizontal-offset: 30px;
         display: flex;
         flex: 1;
         line-height: 24px;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 600;
         letter-spacing: -0.2px;
         color: var(--theme-text-color);
@@ -67,7 +67,7 @@ $dropdown-horizontal-offset: 30px;
         height: 28px;
         line-height: 28px;
         padding: 0 12px;
-        font-size: 13px;
+        font-size: var(--theme-caption-font-size);
     }
 
     &-dropdown-breadcrumb-path-option.mat-option:first-child {

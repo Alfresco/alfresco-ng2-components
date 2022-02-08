@@ -9,7 +9,7 @@
 .adf-activiti-task-details__header {
     align-self: flex-end;
     display: flex;
-    font-size: 24px;
+    font-size: var(--theme-headline-font-size);
     font-weight: 300;
     line-height: normal;
     overflow: hidden;

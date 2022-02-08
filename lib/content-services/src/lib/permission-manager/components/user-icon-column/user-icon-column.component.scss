@@ -9,7 +9,7 @@
         height: 40px;
         color: var(--theme-primary-color-default-contrast) !important;
         font-weight: bolder;
-        font-size: 18px;
+        font-size: var(--theme-adf-picture-1-font-size);
         text-transform: uppercase;
     }
 
@@ -21,7 +21,7 @@
         padding: 10px;
         color: var(--theme-primary-color-default-contrast) !important;
         font-weight: bolder;
-        font-size: 20px;
+        font-size: var(--theme-title-font-size);
     }
 
     &-people-select-icon {

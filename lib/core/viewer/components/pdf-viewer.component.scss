@@ -70,13 +70,13 @@
         &-page-selector {
             padding-left: 10px;
             padding-right: 10px;
-            font-size: 14px;
+            font-size: var(--theme-body-1-font-size);
 
             & > input {
                 border: 1px solid var(--theme-border-color);
                 background-color: var(--theme-card-bg-color);
                 color: inherit;
-                font-size: 14px;
+                font-size: var(--theme-body-1-font-size);
                 padding: 5px;
                 height: 24px;
                 line-height: 24px;

@@ -1,6 +1,6 @@
 @import '../styles/mixins';
 
-$adf-info-drawer-layout-title-font-size: 20px !default;
+$adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
 
 .adf {

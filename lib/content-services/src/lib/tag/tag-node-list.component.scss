@@ -17,7 +17,7 @@
     }
 
     .adf-tag-chips-delete-icon {
-        font-size: 20px;
+        font-size: var(--theme-title-font-size);
         background-repeat: no-repeat;
         display: inline-block;
         fill: currentColor;

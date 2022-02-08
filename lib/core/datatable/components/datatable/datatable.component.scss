@@ -2,12 +2,12 @@
 @import '~@angular/material/theming';
 @import '../../../styles/mixins';
 
-$data-table-header-font-size: 12px !default;
-$data-table-header-sort-icon-size: 16px !default;
-$data-table-row-height: 56px !default;
+$data-table-header-font-size: var(--theme-caption-font-size) !default;
+$data-table-header-sort-icon-size: var(--theme-subheading-2-font-size) !default;
+$data-table-row-height: var(--theme-display-3-font-size) !default;
 $data-table-column-spacing: 36px !default;
 $data-table-column-padding: $data-table-column-spacing / 2;
-$data-table-card-padding: 24px !default;
+$data-table-card-padding: var(--theme-headline-line-height) !default;
 $data-table-cell-top: $data-table-card-padding / 2;
 $data-table-thumbnail-width: 50px !default;
 $data-table-cell-min-width: 50px !default;

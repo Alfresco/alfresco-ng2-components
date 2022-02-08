@@ -5,7 +5,7 @@
 
     .mat-card-title {
         font-weight: bold;
-        font-size: 18px;
+        font-size: var(--theme-adf-task-title-font-size);
     }
 }
 
@@ -19,7 +19,7 @@
 
 .adf-new-task-footer {
     padding: 4px;
-    font-size: 18px;
+    font-size: var(--theme-adf-task-footer-font-size);
     border-top: 1px solid #eee;
 }
 
@@ -75,14 +75,14 @@ adf-start-task {
         &-error-text {
             padding-right: 8px;
             height: 16px;
-            font-size: 12px;
+            font-size: var(--theme-caption-font-size);
             line-height: 1.33;
             color: var(--theme-warn-color);
             width: auto;
         }
 
         &-error-icon {
-            font-size: 17px;
+            font-size: var(--theme-adf-icon-1-font-size);
             color: var(--theme-warn-color);
         }
 

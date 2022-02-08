@@ -10,7 +10,7 @@
 
         .adf-list-tag {
             display: block;
-            font-size: 16px;
+            font-size: var(--theme-subheading-2-font-size);
 
             .mat-chip {
                 color: var(--theme-primary-color-default-contrast);

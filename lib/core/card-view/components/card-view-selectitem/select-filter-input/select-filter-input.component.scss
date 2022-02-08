@@ -10,7 +10,7 @@ $select-filter-height: 4em !default;
         width: 100%;
         display: flex;
         z-index: 100;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         color: var(--theme-text-bold-color);
         line-height: 3em;
         height: $select-filter-height;

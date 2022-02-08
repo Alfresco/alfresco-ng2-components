@@ -64,7 +64,7 @@
             z-index: 7;
 
             .adf-application-title {
-                font-size: 24px;
+                font-size: var(--theme-headline-font-size);
                 margin: 0;
             }
         }

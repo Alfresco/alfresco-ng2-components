@@ -16,7 +16,7 @@
     }
 
     &__title {
-        font-size: 18px;
+        font-size: var(--theme-adf-task-title-font-size);
         font-weight: 600;
         line-height: 0;
         white-space: normal;
@@ -26,7 +26,7 @@
 
     &__subtitle,
     &__text {
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 300;
         line-height: inherit;
         white-space: normal;
