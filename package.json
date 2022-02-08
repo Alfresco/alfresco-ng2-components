@@ -178,7 +178,7 @@
     "eslint-plugin-prefer-arrow": "1.2.2",
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
-    "@angular-eslint/eslint-plugin-template": "1.2.0",
+    "@angular-eslint/eslint-plugin-template": "13.0.1",
     "@angular-eslint/schematics": "1.2.0",
     "@angular-eslint/template-parser": "1.2.0",
     "@typescript-eslint/eslint-plugin": "4.3.0",
