@@ -91,6 +91,10 @@ export class UploadService {
             });
     }
 
+    clearCache() {
+        this.cache = {};
+    }
+
     /**
      * Checks whether the service still has files uploading or awaiting upload.
      *
@@ -137,8 +141,8 @@ export class UploadService {
 
         if (files && files.length > 0) {
             for (const file of files) {
-                console.log(`Uploading: ${file.name}`);
                 this.onUploadStarting(file);
+
                 const promise = this.beginUpload(file, successEmitter, errorEmitter);
                 this.cache[file.name] = promise;
 

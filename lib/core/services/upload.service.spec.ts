@@ -77,6 +77,7 @@ describe('UploadService', () => {
         service = TestBed.inject(UploadService);
         service.queue = [];
         // service.activeTask = null;
+        service.clearCache();
 
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
@@ -455,7 +456,8 @@ describe('UploadService', () => {
         );
     });
 
-    it('should start downloading the next one if a file of the list is aborted', (done) => {
+    // not needed for now as all files start downloading as soon as queued
+    xit('should start downloading the next one if a file of the list is aborted', (done) => {
         service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
         });
