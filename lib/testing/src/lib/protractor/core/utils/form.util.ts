@@ -47,8 +47,6 @@ export class FormUtil {
         // @ts-ignore
         const forms: any = await this.editorApi.getForms();
 
-        return forms.data.find((currentForm) => {
-            return currentForm.name === name;
-        });
+        return forms.data.find((currentForm) => currentForm.name === name);
     }
 }

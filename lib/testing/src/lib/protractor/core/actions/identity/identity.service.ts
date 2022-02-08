@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { ApiService } from '../../../../shared/api/api.service';
 import { UserModel } from '../../models/user.model';
 import { RolesService } from './roles.service';
@@ -33,6 +35,7 @@ export class IdentityService {
     async createIdentityUserWithRole(roles: string[]): Promise<any> {
         const rolesService = new RolesService(this.api);
         const user = await this.createIdentityUser();
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < roles.length; i++) {
             const roleId = await rolesService.getRoleIdByRoleName(roles[i]);
             await this.assignRole(user.idIdentityService, roleId, roles[i]);

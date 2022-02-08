@@ -104,9 +104,7 @@ export class ApplicationsUtil {
     async getAppDefinitionByName(appName: string): Promise<AppDefinitionRepresentation> {
         try {
             const appDefinitionsList = await this.appsApi.getAppDefinitions();
-            return appDefinitionsList.data.find((currentApp) => {
-                return currentApp.name === appName;
-            });
+            return appDefinitionsList.data.find((currentApp) => currentApp.name === appName);
         } catch (error) {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
             return {};

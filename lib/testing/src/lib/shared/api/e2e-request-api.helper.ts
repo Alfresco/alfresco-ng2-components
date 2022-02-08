@@ -31,18 +31,16 @@ export interface E2eRequestApiHelperOptions {
     responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
 }
 
-function getDefaultOptions(): E2eRequestApiHelperOptions {
-    return {
-        pathParams: {},
-        queryParams: {},
-        headerParams: {},
-        formParams: {},
-        bodyParam: {},
-        contentTypes: ['application/json'],
-        accepts: ['application/json'],
-        returnType: undefined
-    };
-}
+const getDefaultOptions = (): E2eRequestApiHelperOptions => ({
+    pathParams: {},
+    queryParams: {},
+    headerParams: {},
+    formParams: {},
+    bodyParam: {},
+    contentTypes: ['application/json'],
+    accepts: ['application/json'],
+    returnType: undefined
+});
 
 export class E2eRequestApiHelper {
 
@@ -50,14 +48,6 @@ export class E2eRequestApiHelper {
 
     constructor(backend: ApiService) {
         this.api = backend.apiService;
-    }
-
-    private buildUrl(endPoint: string): string {
-        const trimSlash = (str: string) => str.replace(/^\/|\/$/g, '');
-        const host = this.api.config.hostBpm;
-        const path = '/' + trimSlash(endPoint);
-
-        return `${host}${path}`;
     }
 
     public get<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
@@ -74,6 +64,14 @@ export class E2eRequestApiHelper {
 
     public delete<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
         return this.request<T>('DELETE', endPoint, overriddenOptions);
+    }
+
+    private buildUrl(endPoint: string): string {
+        const trimSlash = (str: string) => str.replace(/^\/|\/$/g, '');
+        const host = this.api.config.hostBpm;
+        const path = '/' + trimSlash(endPoint);
+
+        return `${host}${path}`;
     }
 
     private request<T>(httpMethod: string, endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {

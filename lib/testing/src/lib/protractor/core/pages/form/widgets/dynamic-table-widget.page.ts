@@ -20,7 +20,6 @@ import { Locator, by, element, protractor, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidgetPage {
-
     formFields = new FormFields();
 
     labelLocator: Locator = by.css('dynamic-table-widget div div');
@@ -35,8 +34,6 @@ export class DynamicTableWidgetPage {
     errorMessage = $('.adf-error-text');
     dateWidget = $$('mat-datepicker-toggle button').first();
     tableRow = $$('tbody tr');
-
-    private getTableRowByIndex = (idx: string) => $(`#dynamictable-row-${idx}`);
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -125,4 +122,6 @@ export class DynamicTableWidgetPage {
         const present = await BrowserVisibility.waitUntilElementIsVisible(row);
         await expect(present).toBe(true);
     }
+
+    private getTableRowByIndex = (idx: string) => $(`#dynamictable-row-${idx}`);
 }

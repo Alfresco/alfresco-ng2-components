@@ -27,10 +27,7 @@ export class BrowserActions {
 
     static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
         Logger.info(`Click until element is not present: ${elementToClick.locator().toString()}`);
-
-        const predicate = (isVisible: boolean) => {
-            return isVisible;
-        };
+        const predicate = (isVisible: boolean) => isVisible;
 
         const apiCall = async () => {
             await this.click(elementToClick);
@@ -119,11 +116,6 @@ export class BrowserActions {
         }
     }
 
-    // Don't make it pub,ic use getText
-    private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
-        return browser.executeScript(`return arguments[0].textContent`, elementFinder);
-    }
-
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Input value ${elementFinder.locator().toString()}`);
 
@@ -170,6 +162,7 @@ export class BrowserActions {
         if (sleepTime === 0) {
             await elementFinder.sendKeys(text);
         } else {
+            // eslint-disable-next-line @typescript-eslint/prefer-for-of
             for (let i = 0; i < text.length; i++) {
                 await elementFinder.sendKeys(text[i]);
                 await browser.sleep(sleepTime);
@@ -214,5 +207,10 @@ export class BrowserActions {
         const stream = fs.createWriteStream(fileWithPath);
         stream.write(Buffer.from(pngData, 'base64'));
         stream.end();
+    }
+
+    // Don't make it pub,ic use getText
+    private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
+        return browser.executeScript(`return arguments[0].textContent`, elementFinder);
     }
 }

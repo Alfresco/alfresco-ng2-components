@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export const infoColor = '\x1b[36m%s\x1b[0m';
 export const logColor = '\x1b[35m%s\x1b[0m';
 export const warnColor = '\x1b[33m%s\x1b[0m';
@@ -31,7 +33,7 @@ export class LogLevelsEnum extends Number {
     static SILENT: number = 0;
 }
 
-export let logLevels: { level: LogLevelsEnum; name: LOG_LEVEL }[] = [
+export const logLevels: { level: LogLevelsEnum; name: LOG_LEVEL }[] = [
     { level: LogLevelsEnum.TRACE, name: 'TRACE' },
     { level: LogLevelsEnum.DEBUG, name: 'DEBUG' },
     { level: LogLevelsEnum.INFO, name: 'INFO' },

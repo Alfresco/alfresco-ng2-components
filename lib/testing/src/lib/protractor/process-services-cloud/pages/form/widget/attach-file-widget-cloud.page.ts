@@ -34,9 +34,7 @@ export class AttachFileWidgetCloudPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.widget.$(this.filesListLocator));
     }
 
-    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
-        return this.widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
-    };
+    getFileAttachedLocatorByContainingText = async (text: string): Promise<ElementFinder> => this.widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', text));
 
     assignWidget(fieldId: string): void {
         this.widget = $(`adf-form-field div[id='field-${fieldId}-container']`);

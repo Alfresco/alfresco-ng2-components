@@ -139,10 +139,12 @@ export class UserInfoPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.initialImage);
     }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     async ACSProfileImageNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.acsImage);
     }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     async APSProfileImageNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.apsImage);
     }

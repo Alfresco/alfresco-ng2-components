@@ -20,9 +20,9 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 const FILTERS = {
-    ALL: 'all-processes',
-    COMPLETED: 'completed-processes',
-    RUNNING: 'running-processes'
+    all: 'all-processes',
+    completed: 'completed-processes',
+    running: 'running-processes'
 };
 
 export class ProcessFiltersCloudComponentPage {
@@ -44,32 +44,32 @@ export class ProcessFiltersCloudComponentPage {
     }
 
     async clickAllProcessesFilter(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.ALL);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.all);
         await BrowserActions.click(filter);
     }
 
     async clickCompletedProcessesFilter(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.COMPLETED);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.completed);
         await BrowserActions.click(filter);
     }
 
     async clickRunningProcessesFilter(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.RUNNING);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.running);
         await BrowserActions.click(filter);
     }
 
     async checkAllProcessesFilterIsDisplayed(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.ALL);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.all);
         await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async checkCompletedProcessesFilterIsDisplayed(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.COMPLETED);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.completed);
         await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async checkRunningProcessesFilterIsDisplayed(): Promise<void> {
-        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.RUNNING);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.running);
         await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 

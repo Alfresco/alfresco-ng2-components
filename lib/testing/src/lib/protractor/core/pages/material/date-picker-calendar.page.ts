@@ -83,6 +83,19 @@ export class DatePickerCalendarPage {
         await this.checkDatePickerIsNotDisplayed();
     }
 
+    async selectExactDate(date: Date): Promise<void> {
+        await this.checkDatePickerIsDisplayed();
+        await this.setDateUsingPeriodButton(date);
+        await this.checkDatePickerIsNotDisplayed();
+    }
+
+    async selectExactDateRange(start: Date, end: Date): Promise<void> {
+        await this.checkDatePickerIsDisplayed();
+        await this.setDateUsingPeriodButton(start);
+        await this.setDateUsingPeriodButton(end);
+        await this.checkDatePickerIsNotDisplayed();
+    }
+
     private async setDateUsingPeriodButton(date: Date) {
         const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
         const year = date.getFullYear();
@@ -96,18 +109,5 @@ export class DatePickerCalendarPage {
         await BrowserActions.click(yearElement);
         await BrowserActions.click(monthElement);
         await BrowserActions.click(dayElement);
-    }
-
-    async selectExactDate(date: Date): Promise<void> {
-        await this.checkDatePickerIsDisplayed();
-        await this.setDateUsingPeriodButton(date);
-        await this.checkDatePickerIsNotDisplayed();
-    }
-
-    async selectExactDateRange(start: Date, end: Date): Promise<void> {
-        await this.checkDatePickerIsDisplayed();
-        await this.setDateUsingPeriodButton(start);
-        await this.setDateUsingPeriodButton(end);
-        await this.checkDatePickerIsNotDisplayed();
     }
 }
