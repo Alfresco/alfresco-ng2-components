@@ -97,8 +97,8 @@
 
         --theme-adf-icon-1-font-size: map-get($custom-css-variables, 'theme-adf-icon-1-font-size'),
         --theme-adf-picture-1-font-size: map-get($custom-css-variables, 'theme-adf-picture-1-font-size'),
-        --theme-adf-task-footer-1-font-size: map-get($custom-css-variables, 'theme-adf-task-footer-1-font-size'),
-        --theme-adf-task-title-1-font-size: map-get($custom-css-variables, 'theme-adf-task-title-1-font-size'),
+        --theme-adf-task-footer-font-size: map-get($custom-css-variables, 'theme-adf-task-footer-font-size'),
+        --theme-adf-task-title-font-size: map-get($custom-css-variables, 'theme-adf-task-title-font-size'),
 
         // specific colors
         --theme-colors-mat-grey: mat-color($mat-grey, A200),
@@ -121,6 +121,6 @@
 $adf-custom-theme-sizes: (
     'theme-adf-icon-1-font-size': 17px,
     'theme-adf-picture-1-font-size': 18px,
-    'theme-adf-task-footer-1-font-size': 18px,
-    'theme-adf-task-title-1-font-size': 18px
+    'theme-adf-task-footer-font-size': 18px,
+    'theme-adf-task-title-font-size': 18px
 );
