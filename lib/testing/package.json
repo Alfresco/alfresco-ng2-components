@@ -11,7 +11,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "peerDependencies": {
-    "@alfresco/js-api": "4.9.0-4135"
+    "@alfresco/js-api": "4.9.0-4148"
   },
   "keywords": [
     "testing",
