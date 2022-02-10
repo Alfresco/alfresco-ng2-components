@@ -119,3 +119,18 @@ It is also possible to provide the `versioningEnabled` value as part of the [`Fi
 
 > Note: When creating a new node using multipart/form-data by default versioning is enabled and set to MAJOR Version.
 > Since Alfresco 6.2.3 versioningEnabled flag was introduced offering better control over the new node Versioning.
+
+### Concurrent Uploads
+
+By default, the Upload Service processes one file at a time.
+You can increase the number of concurrent threads by changing the `upload.threads` configuration parameter:
+
+**app.config.json**
+
+```json
+{
+    "upload": {
+        "threads": 2
+    }
+}
+```
