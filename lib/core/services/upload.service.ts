@@ -38,7 +38,6 @@ const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
     providedIn: 'root'
 })
 export class UploadService {
-    // activeTask: Promise<any> = null;
     queue: FileModel[] = [];
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -96,6 +95,15 @@ export class UploadService {
     }
 
     /**
+     * Returns the number of concurrent threads for uploading.
+     *
+     * @returns Number of concurrent threads (default 1)
+     */
+    getThreadsCount(): number {
+        return this.appConfigService.get<number>('upload.threads', 1);
+    }
+
+    /**
      * Checks whether the service still has files uploading or awaiting upload.
      *
      * @returns True if files in the queue are still uploading, false otherwise
@@ -136,8 +144,7 @@ export class UploadService {
      * @param errorEmitter Emitter to invoke on file error status change
      */
     uploadFilesInTheQueue(successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): void {
-        const cached = Object.keys(this.cache);
-        const files = this.queue.filter(toUpload => !cached.includes(toUpload.name) && toUpload.status === FileUploadStatus.Pending);
+        const files = this.getFilesToUpload();
 
         if (files && files.length > 0) {
             for (const file of files) {
@@ -238,6 +245,21 @@ export class UploadService {
                 opts
             );
         }
+    }
+
+    private getFilesToUpload(): FileModel[] {
+        const cached = Object.keys(this.cache);
+        const threadsCount = this.getThreadsCount();
+
+        if (cached.length >= threadsCount) {
+            return [];
+        }
+
+        const files = this.queue
+            .filter(toUpload => !cached.includes(toUpload.name) && toUpload.status === FileUploadStatus.Pending)
+            .slice(0, threadsCount);
+
+        return files;
     }
 
     private beginUpload(file: FileModel, successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): any {
@@ -447,11 +469,4 @@ export class UploadService {
             }).length === 0
         );
     }
-
-    // private isUploadingFile(filePath: string): boolean {
-    //     if (Object.keys(this.activeTasks).includes(filePath)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 }
