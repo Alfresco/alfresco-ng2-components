@@ -37,17 +37,26 @@ export class UnclaimTaskDirective implements OnInit {
 
     /** Emitted when the task is released. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when the task cannot be released. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     invalidParams: string[] = [];
 
     constructor(
         private taskListService: TaskListService,
         private logService: LogService) {}
+
+    @HostListener('click')
+    onClick() {
+        try {
+            this.unclaimTask();
+        } catch (error) {
+            this.error.emit(error);
+        }
+    }
 
     ngOnInit() {
         this.validateInputs();
@@ -66,15 +75,6 @@ export class UnclaimTaskDirective implements OnInit {
 
     isTaskValid(): boolean {
         return this.taskId && this.taskId.length > 0;
-    }
-
-    @HostListener('click')
-    onClick() {
-        try {
-            this.unclaimTask();
-        } catch (error) {
-            this.error.emit(error);
-        }
     }
 
     private unclaimTask() {

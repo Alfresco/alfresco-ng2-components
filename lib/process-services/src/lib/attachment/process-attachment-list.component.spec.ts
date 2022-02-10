@@ -100,7 +100,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+        const overlayContainers = window.document.querySelectorAll('.cdk-overlay-container');
 
         overlayContainers.forEach((overlayContainer) => {
             overlayContainer.innerHTML = '';
@@ -109,7 +109,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should load attachments when processInstanceId specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         expect(getProcessRelatedContentSpy).toHaveBeenCalled();
     });
 
@@ -117,7 +117,7 @@ describe('ProcessAttachmentListComponent', () => {
         const emitSpy = spyOn(component.error, 'emit');
         getProcessRelatedContentSpy.and.returnValue(throwError({}));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
@@ -128,7 +128,7 @@ describe('ProcessAttachmentListComponent', () => {
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });
 
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
     });
 
     it('should not attach when no processInstanceId is specified', () => {
@@ -138,7 +138,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should display attachments when the process has attachments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
@@ -146,7 +146,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should display all actions if attachments are not read only', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -166,7 +166,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should not display remove action if attachments are read only', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -186,13 +186,13 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should show the empty list component when the attachments list is empty', async () => {
         getProcessRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
@@ -200,13 +200,13 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should not show the empty list drag and drop component when is disabled', async () => {
         getProcessRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -217,13 +217,13 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should show the empty list component when the attachments list is empty for completed process', async () => {
         getProcessRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -236,7 +236,7 @@ describe('ProcessAttachmentListComponent', () => {
     it('should not show the empty list component when the attachments list is not empty for completed process', async () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -248,7 +248,7 @@ describe('ProcessAttachmentListComponent', () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
         const isRelatedContent = 'true';
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         expect(getProcessRelatedContentSpy).toHaveBeenCalled();
         expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('123', { isRelatedContent });
     });
@@ -265,7 +265,7 @@ describe('ProcessAttachmentListComponent', () => {
         });
 
         it('should fetch new attachments when processInstanceId changed', () => {
-            component.ngOnChanges({ 'processInstanceId': change });
+            component.ngOnChanges({ processInstanceId: change });
             const isRelatedContent = 'true';
             expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456', { isRelatedContent });
         });
@@ -276,7 +276,7 @@ describe('ProcessAttachmentListComponent', () => {
         });
 
         it('should NOT fetch new attachments when processInstanceId changed to null', () => {
-            component.ngOnChanges({ 'processInstanceId': nullChange });
+            component.ngOnChanges({ processInstanceId: nullChange });
             expect(getProcessRelatedContentSpy).not.toHaveBeenCalled();
         });
     });

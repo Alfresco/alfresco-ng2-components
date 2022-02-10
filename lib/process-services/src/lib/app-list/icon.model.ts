@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+const DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
+
 /* spellchecker: disable */
 export class IconModel {
-    public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
-
     private iconsMDL: Map<string, string>;
 
     constructor() {
@@ -26,7 +26,7 @@ export class IconModel {
     }
 
     mapGlyphiconToMaterialDesignIcons(icon: string) {
-        return this.iconsMDL.get(icon) ? this.iconsMDL.get(icon) : IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON;
+        return this.iconsMDL.get(icon) ? this.iconsMDL.get(icon) : DEFAULT_TASKS_APP_MATERIAL_ICON;
     }
 
     /**
@@ -114,51 +114,51 @@ export class IconModel {
         this.iconsMDL.set('glyphicon-eye-close', 'remove_red_eye');
         this.iconsMDL.set('glyphicon-warning-sign', 'warning');
         this.iconsMDL.set('glyphicon-plane', 'airplanemode_active');
-        this.iconsMDL.set('glyphicon-calendar', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-calendar', DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-random', 'shuffle');
-        this.iconsMDL.set('glyphicon-comment', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-magnet', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-retweet', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-shopping-cart', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-folder-close', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-folder-open', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-hdd', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-bullhorn', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-bell', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-certificate', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-thumbs-up', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-thumbs-down', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-hand-left', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-globe', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-wrench', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-tasks', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-filter', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-briefcase', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-dashboard', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-paperclip', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-link', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-phone', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-pushpin', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-usd', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-gbp', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-sort', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-flash', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-comment', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-magnet', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-retweet', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-shopping-cart', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-folder-close', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-folder-open', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-hdd', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-bullhorn', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-bell', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-certificate', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-thumbs-up', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-thumbs-down', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-hand-left', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-globe', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-wrench', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-tasks', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-filter', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-briefcase', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-dashboard', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-paperclip', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-link', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-phone', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-pushpin', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-usd', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-gbp', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-sort', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-flash', DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-record', 'radio_button_checked');
-        this.iconsMDL.set('glyphicon-save', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-open', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-saved', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-save', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-open', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-saved', DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-send', 'send');
-        this.iconsMDL.set('glyphicon-floppy-disk', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-credit-card', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-cutlery', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-earphone', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-phone-alt', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-tower', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-stats', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-cloud-download', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-cloud-upload', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-tree-conifer', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-tree-deciduous', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-floppy-disk', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-credit-card', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-cutlery', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-earphone', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-phone-alt', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-tower', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-stats', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-cloud-download', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-cloud-upload', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-tree-conifer', DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-tree-deciduous', DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-align-left', 'format_align_left');
     }
 }

@@ -17,7 +17,7 @@
 
 import { CommentModel } from '@alfresco/adf-core';
 
-export let mockProcessInstanceComments = [
+export const mockProcessInstanceComments = [
     new CommentModel({ message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }),
     new CommentModel({ message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }),
     new CommentModel({ message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} })

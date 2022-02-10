@@ -22,7 +22,7 @@ import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
-import { AppsListComponent } from './apps-list.component';
+import { AppsListComponent, LAYOUT_GRID, LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -181,14 +181,14 @@ describe('AppsListComponent', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = AppsListComponent.LAYOUT_GRID;
+            component.layoutType = LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
         });
 
         it('should display a list when configured to', () => {
-            component.layoutType = AppsListComponent.LAYOUT_LIST;
+            component.layoutType = LAYOUT_LIST;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);

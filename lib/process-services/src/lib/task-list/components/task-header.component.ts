@@ -58,13 +58,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
-    private currentUserId: number;
-
     properties: any [] = [];
     inEdit: boolean = false;
     displayDateClearAction = false;
     dateFormat: string;
     dateLocale: string;
+
+    private currentUserId: number;
 
     constructor(private bpmUserService: BpmUserService,
                 private translationService: TranslationService,
@@ -85,6 +85,120 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         } else {
             this.refreshData();
         }
+    }
+
+    /**
+     * Refresh the card data
+     */
+    initData() {
+        if (this.taskDetails) {
+            const parentInfoMap = this.getParentInfo();
+            const defaultProperties = this.initDefaultProperties(parentInfoMap);
+            const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
+            this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
+        }
+    }
+
+    /**
+     * Refresh the card data
+     */
+    refreshData() {
+        this.properties = this.properties.map((cardItem) => {
+            if (cardItem.key === 'formName' && cardItem.value !== this.formName) {
+                return new CardViewTextItemModel({
+                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                    value: this.formName,
+                    key: 'formName',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                    clickable: this.isFormClickable(),
+                    icon: 'create'
+                });
+            } else {
+                return cardItem;
+            }
+        });
+    }
+
+    /**
+     * Return the process parent information
+     */
+    getParentInfo(): Map<string, string> {
+        if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
+            return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
+        }
+        return new Map();
+    }
+
+    /**
+     * Does the task have an assignee
+     */
+    hasAssignee(): boolean {
+        return !!this.taskDetails.assignee;
+    }
+
+    /**
+     * Returns true if the task is assigned to logged in user
+     */
+    isAssignedTo(userId: number): boolean {
+        return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
+    }
+
+    /**
+     * Return true if the task assigned
+     */
+    isAssignedToCurrentUser(): boolean {
+        return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
+    }
+
+    /**
+     * Return true if the user is a candidate member
+     */
+    isCandidateMember(): boolean {
+        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
+    }
+
+    /**
+     * Return true if the task claimable
+     */
+    isTaskClaimable(): boolean {
+        return !this.hasAssignee() && this.isCandidateMember();
+    }
+
+    /**
+     * Return true if the task claimed by candidate member.
+     */
+    isTaskClaimedByCandidateMember(): boolean {
+        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
+    }
+
+    /**
+     * Returns task's status
+     */
+    getTaskStatus(): string {
+        return (this.taskDetails && this.taskDetails.isCompleted()) ? 'Completed' : 'Running';
+    }
+
+    onClaimTask(taskId: string) {
+        this.claim.emit(taskId);
+    }
+
+    onUnclaimTask(taskId: string) {
+        this.unclaim.emit(taskId);
+    }
+
+    /**
+     * Returns true if the task is completed
+     */
+    isCompleted(): boolean {
+        return this.taskDetails && !!this.taskDetails.endDate;
+    }
+
+    isFormClickable(): boolean {
+        return !!this.formName && !this.isCompleted();
+    }
+
+    getTaskDuration(): string {
+        return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 
     private initDefaultProperties(parentInfoMap): any[] {
@@ -206,38 +320,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         ];
     }
 
-    /**
-     * Refresh the card data
-     */
-    initData() {
-        if (this.taskDetails) {
-            const parentInfoMap = this.getParentInfo();
-            const defaultProperties = this.initDefaultProperties(parentInfoMap);
-            const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
-            this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
-        }
-    }
-
-    /**
-     * Refresh the card data
-     */
-    refreshData() {
-        this.properties = this.properties.map((cardItem) => {
-            if (cardItem.key === 'formName' && cardItem.value !== this.formName) {
-                return new CardViewTextItemModel({
-                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
-                    value: this.formName,
-                    key: 'formName',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
-                    clickable: this.isFormClickable(),
-                    icon: 'create'
-                });
-            } else {
-                return cardItem;
-            }
-        });
-    }
-
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
@@ -249,87 +331,5 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
             this.currentUserId = res ? +res.id : null;
         });
-    }
-
-    /**
-     * Return the process parent information
-     */
-    getParentInfo(): Map<string, string> {
-        if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
-            return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
-        }
-        return new Map();
-    }
-
-    /**
-     * Does the task have an assignee
-     */
-    public hasAssignee(): boolean {
-        return !!this.taskDetails.assignee;
-    }
-
-    /**
-     * Returns true if the task is assigned to logged in user
-     */
-    public isAssignedTo(userId: number): boolean {
-        return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
-    }
-
-    /**
-     * Return true if the task assigned
-     */
-    public isAssignedToCurrentUser(): boolean {
-        return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
-    }
-
-    /**
-     * Return true if the user is a candidate member
-     */
-    isCandidateMember(): boolean {
-        return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
-    }
-
-    /**
-     * Return true if the task claimable
-     */
-    public isTaskClaimable(): boolean {
-        return !this.hasAssignee() && this.isCandidateMember();
-    }
-
-    /**
-     * Return true if the task claimed by candidate member.
-     */
-    public isTaskClaimedByCandidateMember(): boolean {
-        return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
-    }
-
-    /**
-     * Returns task's status
-     */
-    getTaskStatus(): string {
-        return (this.taskDetails && this.taskDetails.isCompleted()) ? 'Completed' : 'Running';
-    }
-
-    onClaimTask(taskId: string) {
-        this.claim.emit(taskId);
-    }
-
-    onUnclaimTask(taskId: string) {
-        this.unclaim.emit(taskId);
-    }
-
-    /**
-     * Returns true if the task is completed
-     */
-    isCompleted(): boolean {
-        return this.taskDetails && !!this.taskDetails.endDate;
-    }
-
-    isFormClickable(): boolean {
-        return !!this.formName && !this.isCompleted();
-    }
-
-    getTaskDuration(): string {
-        return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 }

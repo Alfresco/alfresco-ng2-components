@@ -94,7 +94,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   /** Emitted when the form associated with the form task is attached. */
   @Output()
-  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+  showAttachForm = new EventEmitter<void>();
 
   /** Emitted when any outcome is executed. Default behaviour can be prevented
    * via `event.preventDefault()`.
@@ -108,7 +108,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   /** Emitted when the supplied form values have a validation error. */
   @Output()
-  formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
+  formError = new EventEmitter<FormFieldModel[]>();
 
   /** Emitted when an error occurs. */
   @Output()
@@ -246,22 +246,10 @@ export class TaskFormComponent implements OnInit, OnChanges {
     return !!this.taskDetails.assignee;
   }
 
-  private hasEmailAddress(): boolean {
-        return this.taskDetails.assignee.email ? true : false;
-  }
-
   isAssignedToMe(): boolean {
       return this.isAssigned() && this.hasEmailAddress() ?
           this.isEmailEqual() :
           this.isExternalIdEqual();
-  }
-
-  private isEmailEqual(): boolean {
-    return (this.taskDetails.assignee && this.currentLoggedUser) && ( this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase());
-  }
-
-  private isExternalIdEqual(): boolean {
-    return (this.taskDetails.assignee && this.currentLoggedUser) && (this.taskDetails.assignee.externalId === this.currentLoggedUser.externalId);
   }
 
   isCompleteButtonEnabled(): boolean {
@@ -356,5 +344,17 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   onUnclaimTaskError(error: any) {
     this.error.emit(error);
+  }
+
+  private hasEmailAddress(): boolean {
+    return this.taskDetails.assignee.email ? true : false;
+  }
+
+  private isEmailEqual(): boolean {
+    return (this.taskDetails.assignee && this.currentLoggedUser) && ( this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase());
+  }
+
+  private isExternalIdEqual(): boolean {
+    return (this.taskDetails.assignee && this.currentLoggedUser) && (this.taskDetails.assignee.externalId === this.currentLoggedUser.externalId);
   }
 }

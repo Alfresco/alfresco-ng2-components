@@ -70,7 +70,7 @@ describe('ProcessFiltersComponent', () => {
 
         spyOn(filterList, 'getFiltersByAppId').and.callThrough();
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -90,7 +90,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -107,7 +107,7 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         await fixture.whenStable();
     });
@@ -135,7 +135,7 @@ describe('ProcessFiltersComponent', () => {
         filterList.currentFilter = nonExistingFilterParam;
         filterList.filterParam = new FilterProcessRepresentationModel(nonExistingFilterParam);
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -147,7 +147,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const change = new SimpleChange(null, 'test', true);
-        filterList.ngOnChanges({ 'appName': change });
+        filterList.ngOnChanges({ appName: change });
 
         filterList.success.subscribe((res) => {
             const deployApp: any = appsProcessService.getDeployedApplicationsByName;
@@ -167,7 +167,7 @@ describe('ProcessFiltersComponent', () => {
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
@@ -185,7 +185,7 @@ describe('ProcessFiltersComponent', () => {
 
         const appId = 'fake-app';
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appName': change });
+        filterList.ngOnChanges({ appName: change });
 
         filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
@@ -217,7 +217,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = '1';
 
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
@@ -227,7 +227,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = null;
 
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
@@ -237,7 +237,7 @@ describe('ProcessFiltersComponent', () => {
         const appName = 'fake-app-name';
 
         const change = new SimpleChange(null, appName, true);
-        filterList.ngOnChanges({ 'appName': change });
+        filterList.ngOnChanges({ appName: change });
 
         expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
     });
@@ -260,7 +260,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -280,7 +280,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
 
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -296,7 +296,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = true;
         const change = new SimpleChange(undefined, 1, true);
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -314,7 +314,7 @@ describe('ProcessFiltersComponent', () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = false;
         const change = new SimpleChange(undefined, 1, true);
-        filterList.ngOnChanges({ 'appId': change });
+        filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();

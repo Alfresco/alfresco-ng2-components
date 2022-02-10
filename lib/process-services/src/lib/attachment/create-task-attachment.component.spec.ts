@@ -52,13 +52,13 @@ describe('AttachmentComponent', () => {
 
     it('should not call createTaskRelatedContent service when taskId changed', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
         expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
     it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
         const customEvent: any = {
             detail: {
                 files: []
@@ -70,7 +70,7 @@ describe('AttachmentComponent', () => {
 
     it('should call createTaskRelatedContent service when there is a file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
         const file = new File([new Blob()], 'Test');
         const customEvent = {
             detail: {

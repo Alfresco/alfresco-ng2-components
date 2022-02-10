@@ -74,15 +74,13 @@ describe('AttachFileWidgetDialogComponent', () => {
         matDialogRef = fixture.debugElement.injector.get(MatDialogRef);
         apiService = fixture.debugElement.injector.get(AlfrescoApiService);
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
         spyOn(nodeService, 'getNode').and.returnValue(of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
         spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
-        spyOn(widget, 'isLoggedIn').and.callFake(() => {
-            return isLogged;
-        });
+        spyOn(widget, 'isLoggedIn').and.callFake(() => isLogged);
     });
 
     afterEach(() => {

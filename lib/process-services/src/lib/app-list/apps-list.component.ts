@@ -22,6 +22,14 @@ import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
 
+export const DEFAULT_TASKS_APP: string = 'tasks';
+export const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
+export const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
+export const DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
+export const DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
+export const LAYOUT_LIST: string = 'LIST';
+export const LAYOUT_GRID: string = 'GRID';
+
 @Component({
     selector: 'adf-apps',
     templateUrl: './apps-list.component.html',
@@ -31,14 +39,6 @@ import { share, takeUntil, finalize } from 'rxjs/operators';
 })
 export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
-    public static LAYOUT_LIST: string = 'LIST';
-    public static LAYOUT_GRID: string = 'GRID';
-    public static DEFAULT_TASKS_APP: string = 'tasks';
-    public static DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
-    public static DEFAULT_TASKS_APP_THEME: string = 'theme-2';
-    public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
-    public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -46,7 +46,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      * values, "GRID" and "LIST".
      */
     @Input()
-    layoutType: string = AppsListComponent.LAYOUT_GRID;
+    layoutType: string = LAYOUT_GRID;
 
     /** Provides a way to filter the apps to show. */
     @Input()
@@ -54,22 +54,20 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     /** Emitted when an app entry is clicked. */
     @Output()
-    appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
+    appClick = new EventEmitter<AppDefinitionRepresentationModel>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
-    private appsObserver: Observer<AppDefinitionRepresentationModel>;
     apps$: Observable<AppDefinitionRepresentationModel>;
     currentApp: AppDefinitionRepresentationModel;
     appList: AppDefinitionRepresentationModel [] = [];
-
-    private iconsMDL: IconModel;
-
     loading: boolean = false;
     hasEmptyCustomContentTemplate: boolean = false;
 
+    private appsObserver: Observer<AppDefinitionRepresentationModel>;
+    private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
@@ -103,6 +101,79 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         }
     }
 
+    isDefaultApp(app) {
+        return app.defaultAppId === DEFAULT_TASKS_APP;
+    }
+
+    getAppName(app) {
+        return this.isDefaultApp(app)
+            ? this.translationService.get(DEFAULT_TASKS_APP_NAME)
+            : of(app.name);
+    }
+
+    /**
+     * Pass the selected app as next
+     *
+     * @param app
+     */
+    selectApp(app: AppDefinitionRepresentationModel) {
+        this.currentApp = app;
+        this.appClick.emit(app);
+    }
+
+    /**
+     * Return true if the appId is the current app
+     *
+     * @param appId
+     */
+    isSelected(appId: number): boolean {
+        return (this.currentApp !== undefined && appId === this.currentApp.id);
+    }
+
+    /**
+     * Check if the value of the layoutType property is an allowed value
+     */
+    isValidType(): boolean {
+        return this.layoutType && (this.layoutType === LAYOUT_LIST || this.layoutType === LAYOUT_GRID);
+    }
+
+    /**
+     * Assign the default value to LayoutType
+     */
+    setDefaultLayoutType(): void {
+        this.layoutType = LAYOUT_GRID;
+    }
+
+    /**
+     * Return true if the layout type is LIST
+     */
+    isList(): boolean {
+        return this.layoutType === LAYOUT_LIST;
+    }
+
+    /**
+     * Return true if the layout type is GRID
+     */
+    isGrid(): boolean {
+        return this.layoutType === LAYOUT_GRID;
+    }
+
+    isEmpty(): boolean {
+        return this.appList.length === 0;
+    }
+
+    isLoading(): boolean {
+        return this.loading;
+    }
+
+    getTheme(app: AppDefinitionRepresentationModel): string {
+        return app.theme ? app.theme : '';
+    }
+
+    getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
+    }
+
     private load() {
         this.loading = true;
         this.appsProcessService
@@ -112,8 +183,8 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
                 (res: AppDefinitionRepresentationModel[]) => {
                     this.filterApps(res).forEach((app) => {
                         if (this.isDefaultApp(app)) {
-                            app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
-                            app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
+                            app.theme = DEFAULT_TASKS_APP_THEME;
+                            app.icon = DEFAULT_TASKS_APP_ICON;
                             this.appsObserver.next(app);
                         } else if (app.deploymentId) {
                             this.appsObserver.next(app);
@@ -124,33 +195,6 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
                     this.error.emit(err);
                 }
             );
-    }
-
-    isDefaultApp(app) {
-        return app.defaultAppId === AppsListComponent.DEFAULT_TASKS_APP;
-    }
-
-    getAppName(app) {
-        return this.isDefaultApp(app)
-            ? this.translationService.get(AppsListComponent.DEFAULT_TASKS_APP_NAME)
-            : of(app.name);
-    }
-
-    /**
-     * Pass the selected app as next
-     * @param app
-     */
-    public selectApp(app: AppDefinitionRepresentationModel) {
-        this.currentApp = app;
-        this.appClick.emit(app);
-    }
-
-    /**
-     * Return true if the appId is the current app
-     * @param appId
-     */
-    isSelected(appId: number): boolean {
-        return (this.currentApp !== undefined && appId === this.currentApp.id);
     }
 
     private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
@@ -173,49 +217,4 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         }
         return filteredApps;
     }
-
-    /**
-     * Check if the value of the layoutType property is an allowed value
-     */
-    isValidType(): boolean {
-        return this.layoutType && (this.layoutType === AppsListComponent.LAYOUT_LIST || this.layoutType === AppsListComponent.LAYOUT_GRID);
-    }
-
-    /**
-     * Assign the default value to LayoutType
-     */
-    setDefaultLayoutType(): void {
-        this.layoutType = AppsListComponent.LAYOUT_GRID;
-    }
-
-    /**
-     * Return true if the layout type is LIST
-     */
-    isList(): boolean {
-        return this.layoutType === AppsListComponent.LAYOUT_LIST;
-    }
-
-    /**
-     * Return true if the layout type is GRID
-     */
-    isGrid(): boolean {
-        return this.layoutType === AppsListComponent.LAYOUT_GRID;
-    }
-
-    isEmpty(): boolean {
-        return this.appList.length === 0;
-    }
-
-    isLoading(): boolean {
-        return this.loading;
-    }
-
-    getTheme(app: AppDefinitionRepresentationModel): string {
-        return app.theme ? app.theme : '';
-    }
-
-    getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
-        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
-    }
-
 }

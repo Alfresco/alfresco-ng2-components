@@ -106,7 +106,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(0).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
@@ -114,7 +114,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(1).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
@@ -122,7 +122,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(2).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false
@@ -149,7 +149,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(0).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
@@ -157,7 +157,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(1).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
@@ -165,7 +165,7 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(2).respondWith({
-                    'status': 200,
+                    status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
                         appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false

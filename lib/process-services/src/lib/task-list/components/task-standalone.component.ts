@@ -49,15 +49,15 @@ export class TaskStandaloneComponent {
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
-    cancel: EventEmitter<void> = new EventEmitter<void>();
+    cancel = new EventEmitter<void>();
 
     /** Emitted when the form associated with the task is completed. */
     @Output()
-    complete: EventEmitter<void> = new EventEmitter<void>();
+    complete = new EventEmitter<void>();
 
     /** Emitted when the form associated with the form task is attached. */
     @Output()
-    showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+    showAttachForm = new EventEmitter<void>();
 
     constructor() { }
 

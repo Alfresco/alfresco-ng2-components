@@ -31,7 +31,7 @@ describe('CreateProcessAttachmentComponent', () => {
     let element: HTMLElement;
 
     const file = new File([new Blob()], 'Test');
-    const fileObj = { entry: null, file: file, relativeFolder: '/' };
+    const fileObj = { entry: null, file, relativeFolder: '/' };
     const customEvent = { detail: { files: [fileObj] } };
 
     const fakeUploadResponse = {
@@ -76,7 +76,7 @@ describe('CreateProcessAttachmentComponent', () => {
         component.processInstanceId = null;
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         expect(component.processInstanceId).toBe('123');
     });
@@ -92,14 +92,14 @@ describe('CreateProcessAttachmentComponent', () => {
         component.onFileUpload(customEvent);
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeUploadResponse)
         });
     });
 
     it('should allow user to upload files via button', (done) => {
-        const buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
+        const buttonUpload = element.querySelector<HTMLElement>('#add_new_process_content_button');
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
 
@@ -115,7 +115,7 @@ describe('CreateProcessAttachmentComponent', () => {
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeUploadResponse)
         });

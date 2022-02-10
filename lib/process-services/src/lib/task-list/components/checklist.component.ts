@@ -45,7 +45,7 @@ export class ChecklistComponent implements OnChanges {
 
     /** Emitted when a new checklist task is created. */
     @Output()
-    checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+    checklistTaskCreated = new EventEmitter<TaskDetailsModel>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
@@ -53,7 +53,7 @@ export class ChecklistComponent implements OnChanges {
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     @ViewChild('dialog', { static: true })
     addNewDialog: any;
@@ -62,11 +62,6 @@ export class ChecklistComponent implements OnChanges {
 
     checklist: TaskDetailsModel [] = [];
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     */
     constructor(private activitiTaskList: TaskListService,
                 private dialog: MatDialog) {
     }

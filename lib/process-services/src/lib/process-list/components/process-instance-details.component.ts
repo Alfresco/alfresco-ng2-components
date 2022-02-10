@@ -62,14 +62,15 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @Output()
     taskClick = new EventEmitter<TaskDetailsEvent>();
 
-    processInstanceDetails: ProcessInstance;
-
     /** Emitted when the "show diagram" button is clicked. */
     @Output()
     showProcessDiagram = new EventEmitter<any>();
 
+    processInstanceDetails: ProcessInstance;
+
     /**
      * Constructor
+     *
      * @param translate Translation service
      * @param activitiProcess   Process service
      */

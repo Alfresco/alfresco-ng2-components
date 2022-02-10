@@ -101,7 +101,7 @@ describe('StartFormComponent', () => {
                 fixture.detectChanges();
                 component.name = 'My new process';
                 const change = new SimpleChange(null, 123, true);
-                component.ngOnChanges({ 'appId': change });
+                component.ngOnChanges({ appId: change });
                 fixture.detectChanges();
             });
 
@@ -163,7 +163,7 @@ describe('StartFormComponent', () => {
                 fixture.detectChanges();
                 getDefinitionsSpy.and.returnValue(of(testProcessDefWithForm));
                 const change = new SimpleChange(null, 123, true);
-                component.ngOnChanges({ 'appId': change });
+                component.ngOnChanges({ appId: change });
             });
 
             it('should initialize start form', async () => {
@@ -242,7 +242,7 @@ describe('StartFormComponent', () => {
 
             it('Should get the alfrescoRepositoryName from the config json', async () => {
                 appConfig.config = Object.assign(appConfig.config, {
-                    'alfrescoRepositoryName': 'alfresco-123'
+                    alfrescoRepositoryName: 'alfresco-123'
                 });
 
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
@@ -341,7 +341,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([]));
             component.appId = 123;
             const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -367,7 +367,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
             const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -379,7 +379,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             component.appId = 123;
             const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -562,7 +562,7 @@ describe('StartFormComponent', () => {
 
             component.appId = 123;
             const appIdChange = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': appIdChange });
+            component.ngOnChanges({ appId: appIdChange });
             fixture.detectChanges();
 
             selectOptionByName(testProcessDef.name);
@@ -626,7 +626,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
 
             const change = new SimpleChange(null, 3, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
             const lableElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
@@ -653,7 +653,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
 
             const change = new SimpleChange(null, 3, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
 
             expect(component.appId).toBe(component.selectedApplication.id);
@@ -668,7 +668,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of([ { id: 'my:process 3', name: 'My Process 3', hasStartForm: true } ]));
             fixture.detectChanges();
 
-            const newApplication = <MatSelectChange> { value: deployedApps[1] };
+            const newApplication = { value: deployedApps[1] } as MatSelectChange;
             component.onAppSelectionChange(newApplication);
             fixture.detectChanges();
 
@@ -685,20 +685,20 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
 
             const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toEqual(1);
             expect(component.selectedApplication.name).toEqual('App1');
         });
 
-        it('[C333511] Should be able to preselect single app deployed with single process and start event Form', async() => {
+        it('[C333511] Should be able to preselect single app deployed with single process and start event Form', async () => {
             getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
             getDefinitionsSpy.and.returnValues(of(testProcessDefWithForm));
 
             const change = new SimpleChange(null, 123, true);
             component.appId = 123;
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -725,13 +725,13 @@ describe('StartFormComponent', () => {
             expect(cancelButton).not.toBeNull();
         });
 
-        it('[C333511] Should be able to preselect single app deployed with single process and no form', async() => {
+        it('[C333511] Should be able to preselect single app deployed with single process and no form', async () => {
             getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
             getDefinitionsSpy.and.returnValues(of(testProcessDefinitions));
 
             const change = new SimpleChange(null, 123, true);
             component.appId = 123;
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -762,7 +762,7 @@ describe('StartFormComponent', () => {
         it('Should be able to pre-select an application from the apps based given appId', () => {
             component.appId = 2;
             const change = new SimpleChange(null, 2, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toEqual(6);
@@ -774,7 +774,7 @@ describe('StartFormComponent', () => {
         it('Should be able to disable process name and definitions inputs if there is no application selected by default', () => {
             component.appId = 12345;
             const change = new SimpleChange(null, 12345, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toEqual(6);
@@ -790,7 +790,7 @@ describe('StartFormComponent', () => {
         it('Should be able to enable process name and definitions inputs if the application selected by given appId', () => {
             component.appId = 2;
             const change = new SimpleChange(null, 2, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toEqual(6);
@@ -806,7 +806,7 @@ describe('StartFormComponent', () => {
         it('Should be able to enable process name and definitions inputs when the application selected from the apps drop-down', () => {
             component.appId = 12345;
             const change = new SimpleChange(null, 12345, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toEqual(6);
@@ -837,7 +837,7 @@ describe('StartFormComponent', () => {
             getDeployedApplicationsSpy.and.returnValues(of([singleDeployedApp]));
 
             const change = new SimpleChange(null, mockAppid, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
 
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
@@ -864,10 +864,10 @@ describe('StartFormComponent', () => {
             expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithNoStartForm.hasStartForm);
         });
 
-        it('[C333522] Should be able to list multiple deployed apps with multiple process', async() => {
+        it('[C333522] Should be able to list multiple deployed apps with multiple process', async () => {
 
             const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
             fixture.detectChanges();
 
             const application1 =  deployedApps[0];
@@ -878,7 +878,7 @@ describe('StartFormComponent', () => {
 
             const processDefWithStartForm = testProcessDefWithForm[0];
             getDefinitionsSpy.and.returnValues(of([processDefWithStartForm]));
-            component.onAppSelectionChange(<MatSelectChange> { value: application1 });
+            component.onAppSelectionChange({ value: application1 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -892,7 +892,7 @@ describe('StartFormComponent', () => {
             expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithStartForm.hasStartForm);
 
             getDefinitionsSpy.and.returnValues(of(testMultipleProcessDefs));
-            component.onAppSelectionChange(<MatSelectChange> { value: application2 });
+            component.onAppSelectionChange({ value: application2 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -902,7 +902,7 @@ describe('StartFormComponent', () => {
 
             const processDefWithNoStartForm = testMultipleProcessDefs[0];
             getDefinitionsSpy.and.returnValues(of([processDefWithNoStartForm]));
-            component.onAppSelectionChange(<MatSelectChange> { value: application3 });
+            component.onAppSelectionChange({ value: application3 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -920,7 +920,7 @@ describe('StartFormComponent', () => {
 
     describe('Empty Template', () => {
 
-        it('[333510] Should be able to show empty template when no applications deployed', async() => {
+        it('[333510] Should be able to show empty template when no applications deployed', async () => {
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of([]));
 
             component.showSelectApplicationDropdown = true;
@@ -944,7 +944,7 @@ describe('StartFormComponent', () => {
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });
 
-        it('Should be able to show empty template if processDefinitions are empty', async() => {
+        it('Should be able to show empty template if processDefinitions are empty', async () => {
             getDefinitionsSpy.and.returnValue(of([]));
 
             component.appId = 1;
@@ -965,7 +965,7 @@ describe('StartFormComponent', () => {
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });
 
-        it('should show no process definition selected template if there is no process definition selected', async() => {
+        it('should show no process definition selected template if there is no process definition selected', async () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
 
@@ -980,7 +980,7 @@ describe('StartFormComponent', () => {
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED');
         });
 
-        it('should show no start form template if selected process definition does not have start form', async() => {
+        it('should show no start form template if selected process definition does not have start form', async () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
 
@@ -1007,7 +1007,7 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should emit error event in case loading process definitions failed', async() => {
+        it('should emit error event in case loading process definitions failed', async () => {
             const errorSpy = spyOn(component.error, 'emit');
             getDefinitionsSpy.and.returnValue(throwError(processDefError));
 
@@ -1019,7 +1019,7 @@ describe('StartFormComponent', () => {
             expect(errorSpy).toHaveBeenCalledWith(processDefError);
         });
 
-        it('should emit error event in case loading applications failed', async() => {
+        it('should emit error event in case loading applications failed', async () => {
             const errorSpy = spyOn(component.error, 'emit');
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(throwError(applicationsError));
 
@@ -1032,7 +1032,7 @@ describe('StartFormComponent', () => {
             expect(errorSpy).toHaveBeenCalledWith(applicationsError);
         });
 
-        it('should emit error event in case start process failed', async() => {
+        it('should emit error event in case start process failed', async () => {
             const errorSpy = spyOn(component.error, 'emit');
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));

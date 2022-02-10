@@ -51,7 +51,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should load comments when processInstanceId specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
         fixture.detectChanges();
         expect(getCommentsSpy).toHaveBeenCalled();
     });
@@ -61,7 +61,7 @@ describe('ProcessCommentsComponent', () => {
         getCommentsSpy.and.returnValue(throwError({}));
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should display comments when the process has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -85,7 +85,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should display comments count when the process has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -96,7 +96,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should not display comments when the process has no comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         getCommentsSpy.and.returnValue(of([]));
 
@@ -108,7 +108,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should not display comments input by default', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'processInstanceId': change });
+        component.ngOnChanges({ processInstanceId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();

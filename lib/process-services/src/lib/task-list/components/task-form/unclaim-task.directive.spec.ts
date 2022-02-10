@@ -29,9 +29,10 @@ describe('UnclaimTaskDirective', () => {
         template: '<button adf-unclaim-task [taskId]="taskId" (success)="onUnclaim($event)">Unclaim</button>'
     })
     class TestComponent {
-        taskId = 'test1234';
         @Output()
-        unclaim: EventEmitter<any> = new EventEmitter<any>();
+        unclaim = new EventEmitter<any>();
+
+        taskId = 'test1234';
 
         onUnclaim(event) {
             this.unclaim.emit(event);
@@ -65,7 +66,7 @@ describe('UnclaimTaskDirective', () => {
         expect(claimTaskSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
 
-    it('Should be able to catch success event on click of unclaim button', async() => {
+    it('Should be able to catch success event on click of unclaim button', async () => {
         spyOn(taskListService, 'unclaimTask').and.returnValue(of(null));
         const unclaimSpy = spyOn(fixture.componentInstance.unclaim, 'emit');
 

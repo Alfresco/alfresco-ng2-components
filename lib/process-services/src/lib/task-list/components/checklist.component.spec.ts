@@ -75,7 +75,7 @@ describe('ChecklistComponent', () => {
             checklistComponent.readOnly = true;
 
             fixture.detectChanges();
-            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            showChecklistDialog = element.querySelector<HTMLElement>('#add-checklist');
         });
 
         it('should NOT show add checklist button', () => {
@@ -98,7 +98,7 @@ describe('ChecklistComponent', () => {
             }));
 
             fixture.detectChanges();
-            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            showChecklistDialog = element.querySelector<HTMLElement>('#add-checklist');
         });
 
         it('should show add checklist button', () => {
@@ -117,7 +117,7 @@ describe('ChecklistComponent', () => {
             checklistComponent.checklist = [];
 
             fixture.detectChanges();
-            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            showChecklistDialog = element.querySelector<HTMLElement>('#add-checklist');
         });
 
         it('should show dialog when clicked on add', (done) => {
@@ -139,11 +139,11 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.checklist = [];
             fixture.detectChanges();
-            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            showChecklistDialog = element.querySelector<HTMLElement>('#add-checklist');
         });
 
         afterEach(() => {
-            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+            const overlayContainers = window.document.querySelectorAll('.cdk-overlay-container');
             overlayContainers.forEach((overlayContainer) => {
                 overlayContainer.innerHTML = '';
             });
@@ -182,7 +182,7 @@ describe('ChecklistComponent', () => {
             })));
 
             showChecklistDialog.click();
-            const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
+            const addButtonDialog = window.document.querySelector<HTMLElement>('#add-check');
             addButtonDialog.click();
 
             fixture.detectChanges();
@@ -204,7 +204,7 @@ describe('ChecklistComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            const checklistElementRemove = element.querySelector<HTMLElement>('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
@@ -227,7 +227,7 @@ describe('ChecklistComponent', () => {
             await fixture.whenStable();
 
             expect(checklistComponent.checklist.length).toBe(1);
-            const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            const checklistElementRemove = element.querySelector<HTMLElement>('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
@@ -290,7 +290,7 @@ describe('ChecklistComponent', () => {
                 done();
             });
             showChecklistDialog.click();
-            const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
+            const addButtonDialog = window.document.querySelector<HTMLElement>('#add-check');
             addButtonDialog.click();
         });
     });

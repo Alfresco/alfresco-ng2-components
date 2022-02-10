@@ -32,6 +32,8 @@ import moment from 'moment-es6';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { TaskDetailsModel } from '../models/task-details.model';
 
+export const PRESET_KEY = 'adf-task-list.presets';
+
 @Component({
     selector: 'adf-tasklist',
     templateUrl: './task-list.component.html',
@@ -39,15 +41,11 @@ import { TaskDetailsModel } from '../models/task-details.model';
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
-    static PRESET_KEY = 'adf-task-list.presets';
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
-
-    requestNode: TaskQueryRequestRepresentationModel;
 
     /** The id of the app. */
     @Input()
@@ -151,10 +149,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Output()
     error = new EventEmitter<any>();
 
-    currentInstanceId: string;
-    selectedInstances: any[];
-    pagination: BehaviorSubject<PaginationModel>;
-
     /** The page number of the tasks to fetch. */
     @Input()
     page: number = 0;
@@ -171,6 +165,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     dueBefore: string;
 
+    requestNode: TaskQueryRequestRepresentationModel;
+    currentInstanceId: string;
+    selectedInstances: any[];
+    pagination: BehaviorSubject<PaginationModel>;
     rows: any[] = [];
     isLoading: boolean = true;
     sorting: any[] = ['created', 'desc'];
@@ -189,9 +187,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     constructor(private taskListService: TaskListService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService, TaskListComponent.PRESET_KEY, taskPresetsDefaultModel);
+        super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);
 
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+        this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -242,28 +240,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    private isSortChanged(changes: SimpleChanges): boolean {
-        const actualSort = changes['sort'];
-        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
-    }
-
-    private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = true;
-
-        const landingTaskId = changes['landingTaskId'];
-        const page = changes['page'];
-        const size = changes['size'];
-        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = false;
-        } else if (page && page.currentValue !== page.previousValue) {
-            changed = true;
-        } else if (size && size.currentValue !== size.previousValue) {
-            changed = true;
-        }
-
-        return changed;
-    }
-
     reload(): void {
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();
@@ -271,34 +247,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         } else {
             this.isLoading = false;
         }
-    }
-
-    private load() {
-        this.isLoading = true;
-
-        this.loadTasksByState()
-            .pipe(finalize(() => this.isLoading = false))
-            .subscribe(
-                tasks => {
-                    this.rows = this.optimizeTaskDetails(tasks.data);
-                    this.selectTask(this.landingTaskId);
-                    this.success.emit(tasks);
-                    this.pagination.next({
-                        count: tasks.data.length,
-                        maxItems: this.size,
-                        skipCount: this.page * this.size,
-                        totalItems: tasks.total
-                    });
-                },
-                error => {
-                    this.error.emit(error);
-                });
-    }
-
-    private loadTasksByState(): Observable<TaskListModel> {
-        return this.requestNode.state === 'all'
-            ? this.taskListService.findAllTasksWithoutState(this.requestNode)
-            : this.taskListService.findTasksByState(this.requestNode);
     }
 
     /**
@@ -309,9 +257,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             let dataRow = null;
 
             if (taskIdSelected) {
-                dataRow = this.rows.find((currentRow: any) => {
-                    return currentRow['id'] === taskIdSelected;
-                });
+                dataRow = this.rows.find((currentRow: any) => currentRow['id'] === taskIdSelected);
             }
 
             if (!dataRow && this.selectFirstRow) {
@@ -336,6 +282,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Check if the taskId is the same of the selected task
+     *
      * @param taskId
      */
     isEqualToCurrentId(taskId: string): boolean {
@@ -377,8 +324,74 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.showRowContextMenu.emit(event);
     }
 
+    updatePagination(params: PaginationModel) {
+        const needsReload = params.maxItems || params.skipCount;
+
+        this.size = params.maxItems;
+        this.page = this.currentPage(params.skipCount, params.maxItems);
+
+        if (needsReload) {
+            this.reload();
+        }
+    }
+
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+    }
+
+    private isSortChanged(changes: SimpleChanges): boolean {
+        const actualSort = changes['sort'];
+        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
+    }
+
+    private isPropertyChanged(changes: SimpleChanges): boolean {
+        let changed: boolean = true;
+
+        const landingTaskId = changes['landingTaskId'];
+        const page = changes['page'];
+        const size = changes['size'];
+        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
+            changed = false;
+        } else if (page && page.currentValue !== page.previousValue) {
+            changed = true;
+        } else if (size && size.currentValue !== size.previousValue) {
+            changed = true;
+        }
+
+        return changed;
+    }
+
+    private load() {
+        this.isLoading = true;
+
+        this.loadTasksByState()
+            .pipe(finalize(() => this.isLoading = false))
+            .subscribe(
+                tasks => {
+                    this.rows = this.optimizeTaskDetails(tasks.data);
+                    this.selectTask(this.landingTaskId);
+                    this.success.emit(tasks);
+                    this.pagination.next({
+                        count: tasks.data.length,
+                        maxItems: this.size,
+                        skipCount: this.page * this.size,
+                        totalItems: tasks.total
+                    });
+                },
+                error => {
+                    this.error.emit(error);
+                });
+    }
+
+    private loadTasksByState(): Observable<TaskListModel> {
+        return this.requestNode.state === 'all'
+            ? this.taskListService.findAllTasksWithoutState(this.requestNode)
+            : this.taskListService.findTasksByState(this.requestNode);
+    }
+
     /**
      * Optimize name field
+     *
      * @param instances
      */
     private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
@@ -409,20 +422,5 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             includeProcessInstance: this.includeProcessInstance
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    updatePagination(params: PaginationModel) {
-        const needsReload = params.maxItems || params.skipCount;
-
-        this.size = params.maxItems;
-        this.page = this.currentPage(params.skipCount, params.maxItems);
-
-        if (needsReload) {
-            this.reload();
-        }
-    }
-
-    currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
 }

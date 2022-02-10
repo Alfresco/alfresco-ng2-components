@@ -29,7 +29,7 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
     selector: 'adf-people-selector',
     templateUrl: './people-selector.component.html',
     styleUrls: ['./people-selector.component.scss'],
-    host: { 'class': 'adf-people-selector' },
+    host: { class: 'adf-people-selector' },
     encapsulation: ViewEncapsulation.None
 })
 
@@ -66,17 +66,17 @@ export class PeopleSelectorComponent {
             );
     }
 
-    private onSearchUserError(): Observable<UserProcessModel[]> {
-        this.logService.error('getWorkflowUsers threw error');
-        return of([]);
-    }
-
     userSelected(user: UserProcessModel): void {
         this.updateUserSelection(user);
     }
 
     userDeselected(): void {
         this.updateUserSelection(undefined);
+    }
+
+    private onSearchUserError(): Observable<UserProcessModel[]> {
+        this.logService.error('getWorkflowUsers threw error');
+        return of([]);
     }
 
     private updateUserSelection(user: UserProcessModel): void {

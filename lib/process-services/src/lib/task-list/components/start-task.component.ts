@@ -30,6 +30,9 @@ import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
 
+const FORMAT_DATE = 'DD/MM/YYYY';
+const MAX_LENGTH = 255;
+
 @Component({
     selector: 'adf-start-task',
     templateUrl: './start-task.component.html',
@@ -40,10 +43,6 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
-
-    public FORMAT_DATE: string = 'DD/MM/YYYY';
-    MAX_LENGTH: number = 255;
-
     /** (required) The id of the app. */
     @Input()
     appId: number;
@@ -54,15 +53,15 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     /** Emitted when the task is successfully created. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when the cancel button is clicked by the user. */
     @Output()
-    cancel: EventEmitter<void> = new EventEmitter<void>();
+    cancel = new EventEmitter<void>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     taskDetailsModel: TaskDetailsModel = new TaskDetailsModel();
     forms$: Observable<Form[]>;
@@ -70,17 +69,11 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     field: FormFieldModel;
     taskForm: FormGroup;
     dateError: boolean = false;
-    maxTaskNameLength: number = this.MAX_LENGTH;
+    maxTaskNameLength: number = MAX_LENGTH;
     loading = false;
 
     private onDestroy$ = new Subject<boolean>();
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param taskService
-     */
     constructor(private taskService: TaskListService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
@@ -127,7 +120,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isValid =  control.value.length === 0 || !isWhitespace;
-            return isValid ? null : { 'whitespace': true };
+            return isValid ? null : { whitespace: true };
         }
         return null;
     }
@@ -176,36 +169,12 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.assigneeId = userId;
     }
 
-    private attachForm(taskId: string, formKey: string): Observable<any> {
-        let response = of();
-        if (taskId && formKey) {
-            response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
-        }
-        return response;
-    }
-
-    private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
-        let response = of();
-        if (taskId && userId) {
-            response = this.taskService.assignTaskByUserId(taskId, userId);
-        }
-        return response;
-    }
-
     onCancel(): void {
         this.cancel.emit();
     }
 
-    private loadFormsTask(): void {
-        this.forms$ = this.taskService.getFormList();
-    }
-
     isUserNameEmpty(user: UserProcessModel): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
-    }
-
-    private isEmpty(data: string): boolean {
-        return data === undefined || data === null || data.trim().length === 0;
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
@@ -221,7 +190,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             let momentDate: moment.Moment;
 
             if (typeof newDateValue === 'string') {
-                momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+                momentDate = moment(newDateValue, FORMAT_DATE, true);
             } else {
                 momentDate = newDateValue;
             }
@@ -238,9 +207,9 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     }
 
     private validateMaxTaskNameLength() {
-        if (this.maxTaskNameLength > this.MAX_LENGTH) {
-            this.maxTaskNameLength = this.MAX_LENGTH;
-            this.logService.log(`the task name length cannot be greater than ${this.MAX_LENGTH}`);
+        if (this.maxTaskNameLength > MAX_LENGTH) {
+            this.maxTaskNameLength = MAX_LENGTH;
+            this.logService.log(`the task name length cannot be greater than ${MAX_LENGTH}`);
         }
     }
 
@@ -254,5 +223,29 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     get formKeyController(): AbstractControl {
         return this.taskForm.get('formKey');
+    }
+
+    private attachForm(taskId: string, formKey: string): Observable<any> {
+        let response = of();
+        if (taskId && formKey) {
+            response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
+        }
+        return response;
+    }
+
+    private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
+        let response = of();
+        if (taskId && userId) {
+            response = this.taskService.assignTaskByUserId(taskId, userId);
+        }
+        return response;
+    }
+
+    private loadFormsTask(): void {
+        this.forms$ = this.taskService.getFormList();
+    }
+
+    private isEmpty(data: string): boolean {
+        return data === undefined || data === null || data.trim().length === 0;
     }
 }

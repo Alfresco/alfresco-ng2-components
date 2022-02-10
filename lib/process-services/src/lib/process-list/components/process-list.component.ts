@@ -47,14 +47,14 @@ import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
 import { finalize } from 'rxjs/operators';
 
+const PRESET_KEY = 'adf-process-list.presets';
+
 @Component({
     selector: 'adf-process-instance-list',
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })
 export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
-
-    static PRESET_KEY = 'adf-process-list.presets';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
@@ -154,10 +154,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     constructor(private processService: ProcessService,
                 private userPreferences: UserPreferencesService,
                 appConfig: AppConfigService) {
-        super(appConfig, ProcessInstanceListComponent.PRESET_KEY, processPresetsDefaultModel);
+        super(appConfig, PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+        this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -188,6 +188,98 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         if (presetColumnChanges && !presetColumnChanges.firstChange) {
             this.columns = this.mergeJsonAndHtmlSchema();
         }
+    }
+
+    reload() {
+        this.requestNode = this.createRequestNode();
+        this.load(this.requestNode);
+    }
+
+    /**
+     * Select the first instance of a list if present
+     */
+    selectFirst() {
+        if (this.selectFirstRow) {
+            if (!this.isListEmpty()) {
+                const dataRow = this.rows[0];
+                dataRow.isSelected = true;
+                this.currentInstanceId = dataRow['id'];
+            } else {
+                this.currentInstanceId = null;
+            }
+        }
+    }
+
+    /**
+     * Return the current id
+     */
+    getCurrentId(): string {
+        return this.currentInstanceId;
+    }
+
+    /**
+     * Check if the list is empty
+     */
+    isListEmpty(): boolean {
+        return !this.rows || this.rows.length === 0;
+    }
+
+    /**
+     * Emit the event rowClick passing the current task id when the row is clicked
+     *
+     * @param event
+     */
+    onRowClick(event: DataRowEvent) {
+        const item = event;
+
+        this.currentInstanceId = item.value.getValue('id');
+        this.rowClick.emit(this.currentInstanceId);
+    }
+
+    /**
+     * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
+     *
+     * @param event
+     */
+    onRowKeyUp(event: CustomEvent<any>) {
+        if (event.detail.keyboardEvent.key === 'Enter') {
+            event.preventDefault();
+
+            this.currentInstanceId = event.detail.row.getValue('id');
+            this.rowClick.emit(this.currentInstanceId);
+        }
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        this.showRowContextMenu.emit(event);
+    }
+
+    updatePagination(params: PaginationModel) {
+        const needsReload = params.maxItems || params.skipCount;
+
+        this.size = params.maxItems;
+        this.page = this.currentPage(params.skipCount, params.maxItems);
+
+        if (needsReload) {
+            this.reload();
+        }
+    }
+
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+    }
+
+    private createRequestNode(): ProcessFilterParamRepresentationModel {
+        return new ProcessFilterParamRepresentationModel({
+            appDefinitionId: this.appId,
+            processDefinitionId: this.processDefinitionId,
+            processInstanceId: this.processInstanceId,
+            state: this.state,
+            sort: this.sort,
+            page: this.page,
+            size: this.size,
+            start: 0
+        });
     }
 
     private isSortChanged(changes: SimpleChanges): boolean {
@@ -224,11 +316,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         return changed;
     }
 
-    public reload() {
-        this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
-    }
-
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
         this.processService.getProcesses(requestNode)
@@ -249,90 +336,5 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                     this.error.emit(error);
                 }
             );
-    }
-
-    /**
-     * Select the first instance of a list if present
-     */
-    selectFirst() {
-        if (this.selectFirstRow) {
-            if (!this.isListEmpty()) {
-                const dataRow = this.rows[0];
-                dataRow.isSelected = true;
-                this.currentInstanceId = dataRow['id'];
-            } else {
-                this.currentInstanceId = null;
-            }
-        }
-    }
-
-    /**
-     * Return the current id
-     */
-    getCurrentId(): string {
-        return this.currentInstanceId;
-    }
-
-    /**
-     * Check if the list is empty
-     */
-    isListEmpty(): boolean {
-        return !this.rows || this.rows.length === 0;
-    }
-
-    /**
-     * Emit the event rowClick passing the current task id when the row is clicked
-     * @param event
-     */
-    onRowClick(event: DataRowEvent) {
-        const item = event;
-
-        this.currentInstanceId = item.value.getValue('id');
-        this.rowClick.emit(this.currentInstanceId);
-    }
-
-    /**
-     * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
-     * @param event
-     */
-    onRowKeyUp(event: CustomEvent<any>) {
-        if (event.detail.keyboardEvent.key === 'Enter') {
-            event.preventDefault();
-
-            this.currentInstanceId = event.detail.row.getValue('id');
-            this.rowClick.emit(this.currentInstanceId);
-        }
-    }
-
-    onShowRowContextMenu(event: DataCellEvent) {
-        this.showRowContextMenu.emit(event);
-    }
-
-    private createRequestNode(): ProcessFilterParamRepresentationModel {
-        return new ProcessFilterParamRepresentationModel({
-            appDefinitionId: this.appId,
-            processDefinitionId: this.processDefinitionId,
-            processInstanceId: this.processInstanceId,
-            state: this.state,
-            sort: this.sort,
-            page: this.page,
-            size: this.size,
-            start: 0
-        });
-    }
-
-    updatePagination(params: PaginationModel) {
-        const needsReload = params.maxItems || params.skipCount;
-
-        this.size = params.maxItems;
-        this.page = this.currentPage(params.skipCount, params.maxItems);
-
-        if (needsReload) {
-            this.reload();
-        }
-    }
-
-    currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
 }

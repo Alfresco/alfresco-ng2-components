@@ -28,7 +28,7 @@ const PDF_FORMAT: string = 'pdf';
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'button[adf-process-audit]',
     host: {
-        'role': 'button',
+        role: 'button',
         '(click)': 'onClickAudit()'
     }
 })

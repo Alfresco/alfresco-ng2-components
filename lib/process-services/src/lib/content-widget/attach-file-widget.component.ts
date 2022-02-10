@@ -165,7 +165,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation) {
         if (this.isTemporaryFile(file)) {
-            this.tempFilesList.splice(this.tempFilesList.indexOf((<RelatedContentRepresentation> file).contentBlob), 1);
+            this.tempFilesList.splice(this.tempFilesList.indexOf((file as RelatedContentRepresentation).contentBlob), 1);
         }
         this.removeFile(file);
     }
@@ -184,7 +184,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     downloadContent(file: any | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
-            const fileBlob = (<RelatedContentRepresentation> file).contentBlob;
+            const fileBlob = (file as RelatedContentRepresentation).contentBlob;
             if (fileBlob) {
                 this.downloadService.downloadBlob(fileBlob, file.name);
             } else {
@@ -204,9 +204,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 this.downloadService.downloadUrl(nodeUrl, file.name);
             }
         } else {
-            this.processContentService.getFileRawContent((<any> file).id).subscribe(
+            this.processContentService.getFileRawContent(file.id).subscribe(
                 (blob: Blob) => {
-                    this.downloadService.downloadBlob(blob, (<any> file).name);
+                    this.downloadService.downloadBlob(blob, file.name);
                 },
                 () => {
                     this.logger.error('Impossible retrieve content for download');

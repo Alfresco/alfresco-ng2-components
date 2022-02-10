@@ -49,6 +49,15 @@ export class ClaimTaskDirective implements OnInit {
         private taskListService: TaskListService,
         private logService: LogService) {}
 
+    @HostListener('click')
+    onClick() {
+        try {
+            this.claimTask();
+        } catch (error) {
+            this.error.emit(error);
+        }
+    }
+
     ngOnInit() {
         this.validateInputs();
     }
@@ -67,15 +76,6 @@ export class ClaimTaskDirective implements OnInit {
 
     isTaskValid(): boolean {
         return this.taskId && this.taskId.length > 0;
-    }
-
-    @HostListener('click')
-    onClick() {
-        try {
-            this.claimTask();
-        } catch (error) {
-            this.error.emit(error);
-        }
     }
 
     private claimTask() {
