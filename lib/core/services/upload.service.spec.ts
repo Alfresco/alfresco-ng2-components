@@ -455,7 +455,6 @@ describe('UploadService', () => {
         );
     });
 
-    // not needed for now as all files start downloading as soon as queued
     it('should start downloading the next one if a file of the list is aborted', (done) => {
         service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
