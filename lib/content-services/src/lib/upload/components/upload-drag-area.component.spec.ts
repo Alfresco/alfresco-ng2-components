@@ -89,7 +89,7 @@ function getFakeFileShareRow(allowableOperations = ['delete', 'update', 'create'
     };
 }
 
-fdescribe('UploadDragAreaComponent', () => {
+describe('UploadDragAreaComponent', () => {
 
     let component: UploadDragAreaComponent;
     let fixture: ComponentFixture<UploadDragAreaComponent>;
