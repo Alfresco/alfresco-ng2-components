@@ -30,7 +30,7 @@ describe('SortByCategoryMapperService', () => {
         'DefaultCategory1',
         'DefaultCategory2',
         'DefaultCategory3'
-      ];
+    ];
 
     beforeEach(() => {
         mapper = new SortByCategoryMapperService();
@@ -38,16 +38,20 @@ describe('SortByCategoryMapperService', () => {
 
     it('should map items by categories ', () => {
 
-    const items: TestSortbleByCategoryItem[] = [{ id: 'id1',  name: 'firstCategory_222', category: 'category1' },
-                                                { id: 'id2',  name: 'secondCategory_AA', category: 'category2' },
-                                                { id: 'id3',  name: 'firstCategory_111', category: 'category1' },
-                                                { id: 'id4',  name: 'secondCategory_BB', category: 'category2' },
-                                                { id: 'id5',  name: 'Default_a', category: DEFAULT_CATEGORIES[1] },
-                                                { id: 'id6',  name: 'Default_b', category: DEFAULT_CATEGORIES[0] }];
- 
-    const expectedItemsByCategory = [{ category: 'category1', items: [items[2], items[0]] },
-                                     { category: 'category2', items: [items[1], items[3]] },
-                                     { category: '', items: [items[4], items[5]] }];
+        const items: TestSortbleByCategoryItem[] = [
+            { id: 'id1', name: 'firstCategory_222', category: 'category1' },
+            { id: 'id2', name: 'secondCategory_AA', category: 'category2' },
+            { id: 'id3', name: 'firstCategory_111', category: 'category1' },
+            { id: 'id4', name: 'secondCategory_BB', category: 'category2' },
+            { id: 'id5', name: 'Default_a', category: DEFAULT_CATEGORIES[1] },
+            { id: 'id6', name: 'Default_b', category: DEFAULT_CATEGORIES[0] }
+        ];
+
+        const expectedItemsByCategory = [
+            { category: 'category1', items: [items[2], items[0]] },
+            { category: 'category2', items: [items[1], items[3]] },
+            { category: '', items: [items[4], items[5]] }
+        ];
 
         const result = mapper.mapItems(items, DEFAULT_CATEGORIES);
 
@@ -64,7 +68,7 @@ describe('SortByCategoryMapperService', () => {
             name: 'name-b',
             id: 'id2',
             category: DEFAULT_CATEGORIES[2]
-        }, { 
+        }, {
             name: 'name-c',
             id: 'id3',
             category: DEFAULT_CATEGORIES[0]
@@ -86,11 +90,11 @@ describe('SortByCategoryMapperService', () => {
             name: 'name-b',
             id: 'id2',
             category: 'category1'
-        }, { 
+        }, {
             name: 'name-d',
             id: 'id3',
             category: DEFAULT_CATEGORIES[0]
-        }, { 
+        }, {
             name: 'name-c',
             id: 'id4',
             category: 'category2'
@@ -110,8 +114,8 @@ describe('SortByCategoryMapperService', () => {
 
     it('should set items in ascending order in appropriate category', () => {
         const contents = [{ id: 'id1', name: 'item-b', category: 'cat1' },
-                          { id: 'id2', name: 'item2', category: 'cat2' },
-                          { id: 'id3', name: 'item-a', category: 'cat1' }];
+        { id: 'id2', name: 'item2', category: 'cat2' },
+        { id: 'id3', name: 'item-a', category: 'cat1' }];
 
         const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);
 
