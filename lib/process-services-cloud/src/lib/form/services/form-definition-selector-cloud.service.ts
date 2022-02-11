@@ -35,6 +35,7 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService impleme
 
     /**
      * Get all forms of an app.
+     *
      * @param appName Name of the application
      * @returns Details of the forms
      */
@@ -42,24 +43,19 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService impleme
         const url = `${this.getBasePath(appName)}/form/v1/forms`;
 
         return this.get(url).pipe(
-            map((data: any) => {
-                return data.map((formData: any) => {
-                    return <FormRepresentation> formData.formRepresentation;
-                });
-            })
+            map((data: any) => data.map((formData: any) => formData.formRepresentation))
         );
     }
 
     /**
      * Get all forms of an app.
+     *
      * @param appName Name of the application
      * @returns Details of the forms
      */
     getStandAloneTaskForms(appName: string): Observable<FormRepresentation[]> {
         return from(this.getForms(appName)).pipe(
-            map((data: any) => {
-                return data.filter((formData: any) => formData.standalone || formData.standalone === undefined);
-            })
+            map((data: any) => data.filter((formData: any) => formData.standalone || formData.standalone === undefined))
         );
     }
 }

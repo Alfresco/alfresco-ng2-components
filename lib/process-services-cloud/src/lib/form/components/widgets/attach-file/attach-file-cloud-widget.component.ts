@@ -37,6 +37,12 @@ import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
 
+export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+export const ALIAS_ROOT_FOLDER = '-root-';
+export const ALIAS_USER_FOLDER = '-my-';
+export const APP_NAME = '-appname-';
+export const VALID_ALIAS = [ ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-' ];
+
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
     templateUrl: './attach-file-cloud-widget.component.html',
@@ -55,18 +61,8 @@ import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services'
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
-
-    static ALIAS_ROOT_FOLDER = '-root-';
-    static ALIAS_USER_FOLDER = '-my-';
-    static APP_NAME = '-appname-';
-    static VALID_ALIAS = [
-        AttachFileCloudWidgetComponent.ALIAS_ROOT_FOLDER,
-        AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, '-shared-'
-    ];
-    static RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
-
     typeId = 'AttachFileCloudWidgetComponent';
-    rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
+    rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
 
     _nodesApi: NodesApi;
@@ -121,9 +117,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     replaceAppNameAliasWithValue(path: string): string {
-        if (path?.match(AttachFileCloudWidgetComponent.APP_NAME)) {
+        if (path?.match(APP_NAME)) {
             const appName = this.fetchAppNameFromAppConfig();
-            return path.replace(AttachFileCloudWidgetComponent.APP_NAME, appName);
+            return path.replace(APP_NAME, appName);
         }
         return path;
     }
@@ -131,7 +127,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
         const nodeId = await this.getDestinationFolderNodeId();
-        this.rootNodeId = nodeId ? nodeId : AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
+        this.rootNodeId = nodeId ? nodeId : ALIAS_USER_FOLDER;
         this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
         this.contentNodeSelectorService
@@ -160,7 +156,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 rootNodeId = await this.getNodeIdFromFolderVariableValue(this.field.params.fileSource.destinationFolderPath);
                 break;
             default:
-                rootNodeId = await this.getNodeIdFromPath({ type: '', value: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER });
+                rootNodeId = await this.getNodeIdFromPath({ type: '', value: ALIAS_USER_FOLDER });
                 break;
         }
 
@@ -183,7 +179,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     async getNodeIdFromFolderVariableValue(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
         try {
-            nodeId = await this.contentNodeSelectorService.getNodeIdFromFolderVariableValue(destinationFolderPath.value, AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER);
+            nodeId = await this.contentNodeSelectorService.getNodeIdFromFolderVariableValue(destinationFolderPath.value, ALIAS_USER_FOLDER);
         } catch (error) {
             this.logService.error(error);
         }
@@ -203,7 +199,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             }
         }
 
-        return this.isValidAlias(alias) ? { alias, path } : { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: undefined };
+        return this.isValidAlias(alias) ? { alias, path } : { alias: ALIAS_USER_FOLDER, path: undefined };
     }
 
     removeExistingSelection(selections: Node[]) {
@@ -252,11 +248,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     isRetrieveMetadataOptionEnabled(): boolean {
-        return this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION];
+        return this.field?.params?.menuOptions && this.field.params.menuOptions[RETRIEVE_METADATA_OPTION];
     }
 
     isValidAlias(alias: string): boolean {
-        return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
+        return alias && VALID_ALIAS.includes(alias);
     }
 
     ngOnDestroy() {

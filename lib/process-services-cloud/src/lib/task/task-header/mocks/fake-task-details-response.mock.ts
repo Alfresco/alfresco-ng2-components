@@ -16,27 +16,27 @@
  */
 
 export const fakeTaskDetailsCloud = {
-    'entry': {
-        'appName': 'task-app',
-        'appVersion': '',
-        'id': '68d54a8f',
-        'assignee': 'Phil Woods',
-        'name': 'This is a new task',
-        'description': 'This is the description ',
-        'createdDate': 1545048055900,
-        'dueDate': 1545091200000,
-        'claimedDate': 1545140162601,
-        'priority': 0,
-        'category': null,
-        'processDefinitionId': null,
-        'processInstanceId': null,
-        'status': 'ASSIGNED',
-        'owner': 'Phil Woods',
-        'parentTaskId': null,
-        'formKey': null,
-        'lastModified': 1545140162601,
-        'lastModifiedTo': null,
-        'lastModifiedFrom': null,
-        'standalone': true
+    entry: {
+        appName: 'task-app',
+        appVersion: '',
+        id: '68d54a8f',
+        assignee: 'Phil Woods',
+        name: 'This is a new task',
+        description: 'This is the description ',
+        createdDate: 1545048055900,
+        dueDate: 1545091200000,
+        claimedDate: 1545140162601,
+        priority: 0,
+        category: null,
+        processDefinitionId: null,
+        processInstanceId: null,
+        status: 'ASSIGNED',
+        owner: 'Phil Woods',
+        parentTaskId: null,
+        formKey: null,
+        lastModified: 1545140162601,
+        lastModifiedTo: null,
+        lastModifiedFrom: null,
+        standalone: true
     }
 };

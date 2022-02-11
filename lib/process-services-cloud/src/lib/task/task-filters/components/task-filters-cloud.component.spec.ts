@@ -67,7 +67,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -89,7 +89,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -100,7 +100,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -133,14 +133,14 @@ describe('TaskFiltersCloudComponent', () => {
             done();
         });
 
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
     });
 
     it('should display the task filters', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -157,7 +157,7 @@ describe('TaskFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -170,7 +170,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toEqual(fakeGlobalFilter[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalFilter[2]);
@@ -180,7 +180,7 @@ describe('TaskFiltersCloudComponent', () => {
         const change = new SimpleChange(null, { name: 'nonexistentFilter' }, true);
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toBeUndefined();
     });
@@ -191,7 +191,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toEqual(fakeGlobalFilter[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalFilter[2]);
@@ -203,7 +203,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toEqual(fakeGlobalFilter[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalFilter[2]);
@@ -215,7 +215,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toEqual(fakeGlobalFilter[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalFilter[2]);
@@ -242,7 +242,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toBe(fakeGlobalFilter[0]);
         expect(filterClickedSpy).not.toHaveBeenCalled();
@@ -251,7 +251,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should reset the filter when the param is undefined', () => {
         const change = new SimpleChange(fakeGlobalFilter[0], undefined, false);
         component.currentFilter = fakeGlobalFilter[0];
-        component.ngOnChanges({ 'filterParam': change });
+        component.ngOnChanges({ filterParam: change });
 
         expect(component.currentFilter).toEqual(undefined);
     });
@@ -261,14 +261,14 @@ describe('TaskFiltersCloudComponent', () => {
         const appName = 'my-app-1';
 
         const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
 
     it('should display filter counter if property set to true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -331,7 +331,7 @@ describe('TaskFiltersCloudComponent', () => {
             component.currentFilter = null;
 
             change = new SimpleChange(null, { key: fakeGlobalFilter[0].key }, true);
-            component.ngOnChanges({ 'filterParam': change });
+            component.ngOnChanges({ filterParam: change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -363,22 +363,22 @@ describe('TaskFiltersCloudComponent', () => {
         const queuedTasksFilterKey = defaultTaskFiltersMock[0].key;
         const completedTasksFilterKey = defaultTaskFiltersMock[2].key;
 
-        function getActiveFilterElement(filterKey: string): Element {
+        const getActiveFilterElement = (filterKey: string): Element => {
             const activeFilter = fixture.debugElement.query(By.css(`.adf-active`));
             return activeFilter.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`);
-        }
+        };
 
-        async function clickOnFilter(filterKey: string) {
+        const clickOnFilter = async (filterKey: string) => {
             fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${filterKey}_filter"]`).click();
             fixture.detectChanges();
             await fixture.whenStable();
-        }
+        };
 
         it('Should highlight task filter on filter click', async () => {
             getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
             component.appName = 'mock-app-name';
             const appNameChange = new SimpleChange(null, 'mock-app-name', true);
-            component.ngOnChanges({ 'appName': appNameChange });
+            component.ngOnChanges({ appName: appNameChange });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -405,7 +405,7 @@ describe('TaskFiltersCloudComponent', () => {
             getTaskListFiltersSpy.and.returnValue(of(defaultTaskFiltersMock));
             fixture.detectChanges();
 
-            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: assignedTasksFilterKey }, true) });
+            component.ngOnChanges({ filterParam: new SimpleChange(null, { key: assignedTasksFilterKey }, true) });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -413,7 +413,7 @@ describe('TaskFiltersCloudComponent', () => {
             expect(getActiveFilterElement(queuedTasksFilterKey)).toBeNull();
             expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
 
-            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: queuedTasksFilterKey }, true) });
+            component.ngOnChanges({ filterParam: new SimpleChange(null, { key: queuedTasksFilterKey }, true) });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -421,7 +421,7 @@ describe('TaskFiltersCloudComponent', () => {
             expect(getActiveFilterElement(queuedTasksFilterKey)).toBeDefined();
             expect(getActiveFilterElement(completedTasksFilterKey)).toBeNull();
 
-            component.ngOnChanges({ 'filterParam': new SimpleChange(null, { key: completedTasksFilterKey }, true) });
+            component.ngOnChanges({ filterParam: new SimpleChange(null, { key: completedTasksFilterKey }, true) });
             fixture.detectChanges();
             await fixture.whenStable();
 

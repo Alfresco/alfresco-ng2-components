@@ -93,19 +93,19 @@ describe('ServiceTaskListCloudComponent', () => {
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-service-task-list': {
-                'presets': {
-                    'fakeCustomSchema': [
+                presets: {
+                    fakeCustomSchema: [
                         {
-                            'key': 'fakeName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                            'sortable': true
+                            key: 'fakeName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                            sortable: true
                         },
                         {
-                            'key': 'fakeTaskName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                            'sortable': true
+                            key: 'fakeTaskName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            sortable: true
                         }
                     ]
                 }
@@ -209,7 +209,7 @@ describe('ServiceTaskListCloudComponent', () => {
             done();
         });
         component.appName = appName.currentValue;
-        component.ngOnChanges({ 'appName': appName });
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
     });
 
@@ -257,7 +257,7 @@ describe('ServiceTaskListCloudComponent', () => {
             component.queryParams.status = 'mock-status';
             const queryParams = new SimpleChange(undefined, { status: 'mock-status' }, true);
             component.ngOnChanges({
-                'queryParams': queryParams
+                queryParams
             });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
@@ -277,7 +277,7 @@ describe('ServiceTaskListCloudComponent', () => {
             ];
             const sortChange = new SimpleChange(undefined, mockSort, true);
             component.ngOnChanges({
-                'sorting': sortChange
+                sorting: sortChange
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
@@ -404,13 +404,13 @@ describe('ServiceTaskListCloudComponent', () => {
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             copyFixture.whenStable().then(() => {
                 copyFixture.detectChanges();
-                const spanHTMLElement = <HTMLInputElement> element.querySelector('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
+                const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
                 spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                 copyFixture.detectChanges();
                 expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
             });
             customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
+            customCopyComponent.taskList.ngOnChanges({ appName });
             copyFixture.detectChanges();
         }));
 
@@ -419,7 +419,7 @@ describe('ServiceTaskListCloudComponent', () => {
             customCopyComponent.taskList.success.subscribe(() => {
                 copyFixture.whenStable().then(() => {
                     copyFixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="serviceTaskName"]');
+                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="serviceTaskName"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     copyFixture.detectChanges();
                     expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
@@ -427,7 +427,7 @@ describe('ServiceTaskListCloudComponent', () => {
                 });
             });
             customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
+            customCopyComponent.taskList.ngOnChanges({ appName });
             copyFixture.detectChanges();
         });
     });
@@ -449,20 +449,20 @@ describe('ServiceTaskListCloudComponent', () => {
             serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-service-task-list': {
-                    'presets': {
-                        'fakeCustomSchema': [
+                    presets: {
+                        fakeCustomSchema: [
                             {
-                                'key': 'id',
-                                'type': 'text',
-                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                                'sortable': true,
-                                'copyContent': true
+                                key: 'id',
+                                type: 'text',
+                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                                sortable: true,
+                                copyContent: true
                             },
                             {
-                                'key': 'activityName',
-                                'type': 'text',
-                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                                'sortable': true
+                                key: 'activityName',
+                                type: 'text',
+                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                                sortable: true
                             }
                         ]
                     }
@@ -494,7 +494,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
             component.presetColumn = 'fakeCustomSchema';
             component.appName = appName.currentValue;
-            component.ngOnChanges({ 'appName': appName });
+            component.ngOnChanges({ appName });
             component.ngAfterContentInit();
         }));
 
@@ -512,7 +512,7 @@ describe('ServiceTaskListCloudComponent', () => {
             });
             component.presetColumn = 'fakeCustomSchema';
             component.appName = appName.currentValue;
-            component.ngOnChanges({ 'appName': appName });
+            component.ngOnChanges({ appName });
             component.ngAfterContentInit();
         }));
     });

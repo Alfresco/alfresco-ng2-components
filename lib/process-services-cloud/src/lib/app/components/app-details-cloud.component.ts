@@ -35,6 +35,7 @@ export class AppDetailsCloudComponent {
 
   /**
    * Pass the selected app as next
+   *
    * @param app
    */
   onSelectApp(app: ApplicationInstanceModel): void {

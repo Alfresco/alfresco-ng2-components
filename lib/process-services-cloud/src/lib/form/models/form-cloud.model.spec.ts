@@ -77,7 +77,7 @@ describe('FormCloud', () => {
         form.fields = [];
         expect(form.hasFields()).toBeFalsy();
 
-        const field = new FormFieldModel(<any> form);
+        const field = new FormFieldModel(form);
         form.fields = [new ContainerModel(field)];
         expect(form.hasFields()).toBeTruthy();
     });

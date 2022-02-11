@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { Node } from '@alfresco/js-api';
+import { FormFieldMetadata } from '@alfresco/adf-core';
 import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';
 
 export const fakeLocalPngResponse = {
@@ -101,14 +104,14 @@ export const onlyLocalParams = {
     fileSource: {
         serviceId: 'local-file'
     }
-};
+} as FormFieldMetadata;
 
 export const contentSourceParam = {
     fileSource: {
         name: 'mock-alf-content',
         serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
     }
-};
+} as FormFieldMetadata;
 
 export const menuTestSourceParam = {
     fileSource: {
@@ -121,7 +124,7 @@ export const menuTestSourceParam = {
         retrieveMetadata: true,
         remove: true
     }
-};
+} as FormFieldMetadata;
 
 export const allSourceParamsWithRelativePath = {
     fileSource: {
@@ -156,32 +159,32 @@ export const displayableCMParams = {
     },
     displayableCMProperties: [
         {
-            'name': 'name',
-            'prefixedName': 'a:name',
-            'title': '',
-            'dataType': 'd:text',
-            'defaultValue': 'Bob'
+            name: 'name',
+            prefixedName: 'a:name',
+            title: '',
+            dataType: 'd:text',
+            defaultValue: 'Bob'
         },
         {
-            'name': 'age',
-            'prefixedName': 'a:age',
-            'title': 'Age',
-            'dataType': 'd:text',
-            'defaultValue': ''
+            name: 'age',
+            prefixedName: 'a:age',
+            title: 'Age',
+            dataType: 'd:text',
+            defaultValue: ''
         },
         {
-            'name': 'dob',
-            'prefixedName': 'a:dob',
-            'title': 'Date of Birth',
-            'dataType': 'd:date',
-            'defaultValue': ''
+            name: 'dob',
+            prefixedName: 'a:dob',
+            title: 'Date of Birth',
+            dataType: 'd:date',
+            defaultValue: ''
         },
         {
-            'name': 'doj',
-            'prefixedName': 'a:doj',
-            'title': 'Date of Joining',
-            'dataType': 'd:datetime',
-            'defaultValue': ''
+            name: 'doj',
+            prefixedName: 'a:doj',
+            title: 'Date of Joining',
+            dataType: 'd:datetime',
+            defaultValue: ''
         }
     ]
 };
@@ -260,15 +263,15 @@ export const allSourceWithoutValueProperty = {
     }
 };
 
-export const fakeMinimalNode: Node = <Node> {
+export const fakeMinimalNode = {
     id: 'fake',
     name: 'fake-name',
     content: {
         mimeType: 'application/pdf'
     }
-};
+} as Node;
 
-export const fakeNodeWithProperties: Node = <Node> {
+export const fakeNodeWithProperties = {
     id: 'fake-properties',
     name: 'fake-properties-name',
     content: {
@@ -278,22 +281,22 @@ export const fakeNodeWithProperties: Node = <Node> {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true
     }
-};
+} as Node;
 
 export const expectedValues = {
     pfx_property_one: 'testValue',
     pfx_property_two: true
 };
 
-export const mockNodeId = new Promise<string>(function(resolve) {
+export const mockNodeId = new Promise<string>((resolve) => {
     resolve('mock-node-id');
 });
 
-export const mockNodeIdBasedOnStringVariableValue = new Promise<string>(function(resolve) {
+export const mockNodeIdBasedOnStringVariableValue = new Promise<string>((resolve) => {
     resolve('mock-string-value-node-id');
 });
 
-export const mockNodeIdBasedOnFolderVariableValue = new Promise(function(resolve) {
+export const mockNodeIdBasedOnFolderVariableValue = new Promise((resolve) => {
     resolve('mock-folder-value-node-id');
 });
 
@@ -391,61 +394,61 @@ export const mockAllFileSourceWithRenamedFolderVariablePathType = {
 
 export const formVariables = [
     {
-        'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
-        'name': 'name1',
-        'type': 'string',
-        'value': 'hello'
+        id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+        name: 'name1',
+        type: 'string',
+        value: 'hello'
     },
     {
-        'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
-        'name': 'name2',
-        'type': 'folder'
+        id: '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+        name: 'name2',
+        type: 'folder'
     },
     {
-        'id': 'booleanVar',
-        'name': 'bool',
-        'type': 'boolean',
-        'value': 'true'
+        id: 'booleanVar',
+        name: 'bool',
+        type: 'boolean',
+        value: 'true'
     }
 ];
 
 export const processVariables = [
     {
-        'serviceName': 'mock-variable-mapping-rb',
-        'serviceFullName': 'mock-variable-mapping-rb',
-        'serviceVersion': '',
-        'appName': 'mock-variable-mapping',
-        'appVersion': '',
-        'serviceType': null,
-        'id': 3,
-        'type': 'string',
-        'name': 'variables.name1',
-        'createTime': 1566989626284,
-        'lastUpdatedTime': 1566989626284,
-        'executionId': null,
-        'value': '-root-/pathBasedOnStringvariablevalue',
-        'markedAsDeleted': false,
-        'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-        'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-        'taskVariable': true
+        serviceName: 'mock-variable-mapping-rb',
+        serviceFullName: 'mock-variable-mapping-rb',
+        serviceVersion: '',
+        appName: 'mock-variable-mapping',
+        appVersion: '',
+        serviceType: null,
+        id: 3,
+        type: 'string',
+        name: 'variables.name1',
+        createTime: 1566989626284,
+        lastUpdatedTime: 1566989626284,
+        executionId: null,
+        value: '-root-/pathBasedOnStringvariablevalue',
+        markedAsDeleted: false,
+        processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+        taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+        taskVariable: true
     },
     {
-        'serviceName': 'mock-variable-mapping-rb',
-        'serviceFullName': 'mock-variable-mapping-rb',
-        'serviceVersion': '',
-        'appName': 'mock-variable-mapping',
-        'appVersion': '',
-        'serviceType': null,
-        'id': 1,
-        'type': 'folder',
-        'name': 'variables.name2',
-        'createTime': 1566989626283,
-        'lastUpdatedTime': 1566989626283,
-        'executionId': null,
-        'value': [{ id: 'mock-folder-id'}],
-        'markedAsDeleted': false,
-        'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-        'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-        'taskVariable': true
+        serviceName: 'mock-variable-mapping-rb',
+        serviceFullName: 'mock-variable-mapping-rb',
+        serviceVersion: '',
+        appName: 'mock-variable-mapping',
+        appVersion: '',
+        serviceType: null,
+        id: 1,
+        type: 'folder',
+        name: 'variables.name2',
+        createTime: 1566989626283,
+        lastUpdatedTime: 1566989626283,
+        executionId: null,
+        value: [{ id: 'mock-folder-id'}],
+        markedAsDeleted: false,
+        processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+        taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+        taskVariable: true
     }
 ];

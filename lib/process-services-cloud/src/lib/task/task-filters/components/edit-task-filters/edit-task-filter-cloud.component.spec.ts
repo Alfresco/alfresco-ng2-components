@@ -57,9 +57,7 @@ describe('EditTaskFilterCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
@@ -102,7 +100,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     it('should fetch task filter by taskId', () => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(getTaskFilterSpy).toHaveBeenCalled();
@@ -120,7 +118,7 @@ describe('EditTaskFilterCloudComponent', () => {
         component.filterProperties = ['processDefinitionName'];
         fixture.detectChanges();
         const taskFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
         fixture.detectChanges();
         const controller = component.editTaskFilterForm.get('processDefinitionName');
 
@@ -133,7 +131,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     it('should display filter name as title', async () => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -147,7 +145,7 @@ describe('EditTaskFilterCloudComponent', () => {
     it('should not display filter name if showFilterName is false', async () => {
         const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
         component.showTaskFilterName = false;
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -158,7 +156,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     it('should not display mat-spinner if isloading set to false', async () => {
         const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -175,7 +173,7 @@ describe('EditTaskFilterCloudComponent', () => {
     it('should display mat-spinner if isloading set to true', async () => {
         component.isLoading = true;
         const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
+        component.ngOnChanges({ id: taskFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -188,7 +186,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         beforeEach(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
         });
 
@@ -221,7 +219,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 }));
 
                 const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': taskFilterIdChange });
+                component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -239,7 +237,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
             it('should enable delete button for custom task filters', async () => {
                 const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
-                component.ngOnChanges({ 'id': taskFilterIdChange });
+                component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -257,7 +255,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
             it('should enable save button if the filter is changed for custom task filters', (done) => {
                 const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
-                component.ngOnChanges({ 'id': taskFilterIdChange });
+                component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -308,7 +306,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 }));
 
                 const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': taskFilterIdChange });
+                component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -346,7 +344,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 }));
 
                 const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': taskFilterIdChange });
+                component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -469,7 +467,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should able to build a editTaskFilter form with default properties if input is empty', async () => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             component.filterProperties = [];
             fixture.detectChanges();
             const stateController = component.editTaskFilterForm.get('status');
@@ -489,7 +487,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             const appController = component.editTaskFilterForm.get('appName');
 
             fixture.detectChanges();
@@ -504,7 +502,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             const appController = component.editTaskFilterForm.get('completedBy');
 
             fixture.detectChanges();
@@ -521,7 +519,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -534,7 +532,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const mockUser: IdentityUserModel[] = [{
@@ -565,7 +563,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('dueDateType');
@@ -587,7 +585,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-dueDateRange"] .mat-select-trigger');
@@ -606,7 +604,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const dateFilter = {
@@ -643,7 +641,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedDateType');
@@ -665,7 +663,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const dateFilter = {
@@ -701,7 +699,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'createdDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('createdDateType');
@@ -724,7 +722,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['assignment'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             const assignmentComponent = fixture.debugElement.nativeElement.querySelector('adf-cloud-task-assignment-filter');
             expect(assignmentComponent).toBeTruthy();
@@ -735,7 +733,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['assignment'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             component.onAssignedChange(identityUserMock);
 
             component.filterChange.subscribe(() => {
@@ -749,7 +747,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'createdDateRange'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const dateFilter = {
@@ -790,7 +788,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['assignment'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             component.onAssignedGroupsChange(identityGroupsMock);
 
@@ -806,7 +804,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display default sort properties', async () => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -832,7 +830,7 @@ describe('EditTaskFilterCloudComponent', () => {
             }));
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -852,7 +850,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display default sort properties if input is empty', async () => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             component.sortProperties = [];
             fixture.detectChanges();
@@ -877,7 +875,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should display default filter actions', async () => {
             component.toggleFilterActions = true;
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -899,7 +897,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.actions = ['save'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             component.toggleFilterActions = true;
             fixture.detectChanges();
@@ -923,7 +921,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
 
             const lastModifiedToControl: AbstractControl = component.editTaskFilterForm.get('lastModifiedTo');
@@ -949,7 +947,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         beforeEach(() => {
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.ngOnChanges({ id: taskFilterIdChange });
             fixture.detectChanges();
             spyOn(component.action, 'emit').and.callThrough();
         });

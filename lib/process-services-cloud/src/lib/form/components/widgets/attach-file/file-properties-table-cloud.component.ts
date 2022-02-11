@@ -21,15 +21,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
+export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+
 @Component({
     selector: 'adf-cloud-file-properties-table',
     templateUrl: './file-properties-table-cloud.component.html',
     styleUrls: ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {
-
-    static RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
-
     @Input()
     uploadedFiles;
 
@@ -109,6 +108,6 @@ export class FilePropertiesTableCloudComponent {
     }
 
     displayMenuOption(option: string): boolean {
-        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== FilePropertiesTableCloudComponent.RETRIEVE_METADATA_OPTION;
+        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== RETRIEVE_METADATA_OPTION;
     }
 }

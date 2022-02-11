@@ -33,6 +33,7 @@ export class ProcessListCloudService extends BaseCloudService {
 
     /**
      * Finds a process using an object with optional query properties.
+     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Process information
@@ -50,9 +51,7 @@ export class ProcessListCloudService extends BaseCloudService {
                 map((response: any) => {
                     const entries = response.list && response.list.entries;
                     if (entries) {
-                        response.list.entries = entries.map((entryData) => {
-                            return entryData.entry;
-                        });
+                        response.list.entries = entries.map((entryData) => entryData.entry);
                     }
                     return response;
                 })

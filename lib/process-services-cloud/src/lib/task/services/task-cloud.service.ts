@@ -45,6 +45,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Complete a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to complete
      * @returns Details of the task that was completed
@@ -52,7 +53,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
-            const payload = { 'payloadType': 'CompleteTaskPayload' };
+            const payload = { payloadType: 'CompleteTaskPayload' };
 
             return this.post<any, TaskDetailsCloudModel>(url, payload);
         } else {
@@ -63,6 +64,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task can be completed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -72,6 +74,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task is editable.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task is editable
      */
@@ -90,6 +93,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task can be claimed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -99,6 +103,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task can be unclaimed.
+     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
@@ -109,6 +114,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Claims a task for an assignee.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to claim
      * @param assignee User to assign the task to
@@ -132,6 +138,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Un-claims a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to unclaim
      * @returns Details of the task that was unclaimed
@@ -154,6 +161,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets details of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task whose details you want
      * @returns Task details
@@ -173,6 +181,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
      /**
       * Creates a new standalone task.
+      *
       * @param taskDetails Details of the task to create
       * @returns Details of the newly created task
       */
@@ -188,6 +197,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Updates the details (name, description, due date) for a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to update
      * @param payload Data to update the task
@@ -209,6 +219,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets candidate users of the task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate users
@@ -225,6 +236,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets candidate groups of the task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate groups
@@ -241,6 +253,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets the process definitions associated with an app.
+     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
@@ -249,9 +262,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return this.get(url).pipe(
-                map((res: any) => {
-                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
-                })
+                map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
@@ -261,6 +272,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Updates the task assignee.
+     *
      * @param appName Name of the app
      * @param taskId ID of the task to update assignee
      * @param assignee assignee to update current user task assignee
@@ -268,13 +280,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      */
     assign(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-            const payLoad = { 'assignee': assignee, 'taskId': taskId, 'payloadType': 'AssignTaskPayload' };
+            const payLoad = { assignee, taskId, payloadType: 'AssignTaskPayload' };
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/assign`;
 
             return this.post(url, payLoad).pipe(
-                map((res: any) => {
-                    return res.entry;
-                })
+                map((res: any) => res.entry)
             );
         } else {
             this.logService.error('AppName and TaskId are mandatory to change/update the task assignee');

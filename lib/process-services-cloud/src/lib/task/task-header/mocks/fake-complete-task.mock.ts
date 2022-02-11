@@ -16,16 +16,16 @@
  */
 
 export const taskCompleteCloudMock: any = {
-    'entry': {
-        'appName': 'simple-app',
-        'appVersion': '',
-        'serviceName': 'simple-app',
-        'serviceFullName': 'simple-app',
-        'serviceType': 'runtime-bundle',
-        'serviceVersion': '',
-        'id': '68d54a8f',
-        'name': 'NXltAGmT',
-        'priority': 0,
-        'status': 'COMPLETED'
+    entry: {
+        appName: 'simple-app',
+        appVersion: '',
+        serviceName: 'simple-app',
+        serviceFullName: 'simple-app',
+        serviceType: 'runtime-bundle',
+        serviceVersion: '',
+        id: '68d54a8f',
+        name: 'NXltAGmT',
+        priority: 0,
+        status: 'COMPLETED'
     }
 };

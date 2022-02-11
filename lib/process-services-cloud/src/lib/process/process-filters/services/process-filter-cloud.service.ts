@@ -90,6 +90,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Creates and returns the default process instance filters for a app.
+     *
      * @param appName Name of the target app
      * @returns Observable of default process instance filters just created or created filters
      */
@@ -114,6 +115,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Gets all process instance filters for a process app.
+     *
      * @param appName Name of the target app
      * @returns Observable of process filters details
      */
@@ -124,6 +126,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Get process instance filter for given filter id
+     *
      * @param appName Name of the target app
      * @param id Id of the target process instance filter
      * @returns Observable of process instance filter details
@@ -138,17 +141,14 @@ export class ProcessFilterCloudService {
                     return of(filters);
                 }
             }),
-            map((filters: ProcessFilterCloudModel[]) => {
-                return filters.filter((filter: ProcessFilterCloudModel) => {
-                    return filter.id === id;
-                })[0];
-            }),
+            map((filters: ProcessFilterCloudModel[]) => filters.filter((filter: ProcessFilterCloudModel) => filter.id === id)[0]),
             catchError((err) => this.handleProcessError(err))
             );
     }
 
     /**
      * Adds a new process instance filter
+     *
      * @param filter The new filter to add
      * @returns Observable of process instance filters with newly added filter
      */
@@ -180,6 +180,7 @@ export class ProcessFilterCloudService {
 
     /**
      *  Update process instance filter
+     *
      * @param filter The new filter to update
      * @returns Observable of process instance filters with updated filter
      */
@@ -205,6 +206,7 @@ export class ProcessFilterCloudService {
 
     /**
      *  Delete process instance filter
+     *
      * @param filter The new filter to delete
      * @returns Observable of process instance filters without deleted filter
      */
@@ -230,6 +232,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Checks if given filter is a default filter
+     *
      * @param filterName Name of the target process filter
      * @returns Boolean value for whether the filter is a default filter
      */
@@ -240,6 +243,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Checks user preference are empty or not
+     *
      * @param preferences User preferences of the target app
      * @returns Boolean value if the preferences are not empty
      */
@@ -249,6 +253,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Checks for process instance filters in given user preferences
+     *
      * @param preferences User preferences of the target app
      * @param key Key of the process instance filters
      * @param filters Details of create filter
@@ -261,6 +266,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Calls create preference api to create process instance filters
+     *
      * @param appName Name of the target app
      * @param key Key of the process instance filters
      * @param filters Details of new process instance filter
@@ -272,6 +278,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Calls get preference api to get process instance filter by preference key
+     *
      * @param appName Name of the target app
      * @param key Key of the process instance filters
      * @returns Observable of process instance filters
@@ -282,6 +289,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Calls update preference api to update process instance filter
+     *
      * @param appName Name of the target app
      * @param key Key of the process instance filters
      * @param filters Details of update filter
@@ -293,6 +301,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Creates a uniq key with appName and username
+     *
      * @param appName Name of the target app
      * @returns String of process instance filters preference key
      */
@@ -303,6 +312,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Finds and returns the process instance filters from preferences
+     *
      * @returns Array of ProcessFilterCloudModel
      * @param preferences
      * @param key
@@ -322,6 +332,7 @@ export class ProcessFilterCloudService {
 
     /**
      * Creates and returns the default filters for a process app.
+     *
      * @param appName Name of the target app
      * @returns Array of ProcessFilterCloudModel
      */

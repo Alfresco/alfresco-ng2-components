@@ -32,27 +32,19 @@ describe('PreferenceService', () => {
     state: 404, stateText: 'Not Found'
   };
 
-  function apiMock(mockResponse): any {
-    return {
-      oauth2Auth: {
-        callCustomApi: () => {
-          return Promise.resolve(mockResponse);
-        }
-      },
-      isEcmLoggedIn() {
-        return false;
-      },
-      reply: jasmine.createSpy('reply')
-    };
-  }
+  const apiMock = (mockResponse): any => ({
+    oauth2Auth: {
+        callCustomApi: () => Promise.resolve(mockResponse)
+    },
+    isEcmLoggedIn: () => false,
+    reply: jasmine.createSpy('reply')
+  });
 
   const apiErrorMock: any = {
     oauth2Auth: {
       callCustomApi: () => Promise.reject(errorResponse)
     },
-    isEcmLoggedIn() {
-        return false;
-    }
+    isEcmLoggedIn:() => false
   };
 
   setupTestBed({

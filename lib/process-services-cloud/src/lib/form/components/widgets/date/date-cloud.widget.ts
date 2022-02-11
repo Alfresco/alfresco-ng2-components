@@ -28,6 +28,8 @@ import {
     UserPreferencesService, UserPreferenceValues, FormService
 } from '@alfresco/adf-core';
 
+export const DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+
 @Component({
     selector: 'date-widget',
     providers: [
@@ -49,9 +51,7 @@ import {
     encapsulation: ViewEncapsulation.None
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-
     typeId = 'DateCloudWidgetComponent';
-    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
 
     minDate: Moment;
     maxDate: Moment;
@@ -70,16 +70,16 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.DATE_FORMAT_CLOUD);
+                this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT_CLOUD);
+                this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
             }
         }
     }

@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
+// eslint-disable-next-line no-shadow
 export enum DateCloudFilterType {
     NO_DATE = 'NO_DATE',
     TODAY = 'TODAY',

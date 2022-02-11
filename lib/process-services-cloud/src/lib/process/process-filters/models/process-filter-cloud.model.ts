@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/* eslint-disable no-underscore-dangle */
+
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
 
 export class ProcessFilterCloudModel {
-
-    private dateRangeFilterService = new DateRangeFilterService();
-
     id: string;
     name: string;
     key: string;
@@ -47,6 +47,7 @@ export class ProcessFilterCloudModel {
     suspendedDateType: DateCloudFilterType;
     completedDate: Date;
 
+    private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
     private _completedTo: string;
     private _startFrom: string;

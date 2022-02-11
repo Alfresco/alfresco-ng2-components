@@ -84,19 +84,19 @@ describe('ProcessListCloudComponent', () => {
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-process-list': {
-                'presets': {
-                    'fakeCustomSchema': [
+                presets: {
+                    fakeCustomSchema: [
                         {
-                            'key': 'fakeName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                            'sortable': true
+                            key: 'fakeName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                            sortable: true
                         },
                         {
-                            'key': 'fakeTaskName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                            'sortable': true
+                            key: 'fakeTaskName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            sortable: true
                         }
                     ]
                 }
@@ -219,7 +219,7 @@ describe('ProcessListCloudComponent', () => {
             done();
         });
         component.appName = appName.currentValue;
-        component.ngOnChanges({ 'appName': appName });
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
     });
 
@@ -263,9 +263,9 @@ describe('ProcessListCloudComponent', () => {
             const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
 
             component.ngOnChanges({
-                'appName': appNameChange,
-                'assignee': initiatorChange,
-                'status': statusChange
+                appName: appNameChange,
+                assignee: initiatorChange,
+                status: statusChange
             });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
@@ -285,7 +285,7 @@ describe('ProcessListCloudComponent', () => {
             ];
             const sortChange = new SimpleChange(undefined, mockSort, true);
             component.ngOnChanges({
-                'sorting': sortChange
+                sorting: sortChange
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);

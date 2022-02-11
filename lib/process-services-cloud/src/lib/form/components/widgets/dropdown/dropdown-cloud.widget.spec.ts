@@ -41,13 +41,13 @@ describe('DropdownCloudWidgetComponent', () => {
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
 
-    async function openSelect(_selector?: string) {
+    const openSelect = async (_selector?: string) => {
         const dropdown: HTMLElement = element.querySelector('.mat-select-trigger');
         dropdown.click();
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -71,9 +71,7 @@ describe('DropdownCloudWidgetComponent', () => {
     describe('Simple Dropdown', () => {
 
         beforeEach(() => {
-            spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-                return of(fakeOptionList);
-            });
+            spyOn(formService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
@@ -366,7 +364,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 await openSelect('child-dropdown-id');
 
                 const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(widget.field.options).toEqual([{ id: 'empty', name: 'Choose one...' }]);
                 expect(defaultOption.context.value).toBe('empty');
                 expect(defaultOption.context.viewValue).toBe('Choose one...');
             });
@@ -396,11 +394,11 @@ describe('DropdownCloudWidgetComponent', () => {
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 
-                function selectParentOption(parentOptionName: string) {
+                const selectParentOption = (parentOptionName: string) => {
                     parentDropdown.value = parentOptionName;
                     widget.selectionChangedForField(parentDropdown);
                     fixture.detectChanges();
-                }
+                };
 
                 selectParentOption('UK');
                 await openSelect('child-dropdown-id');
@@ -495,7 +493,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 await openSelect('child-dropdown-id');
 
                 const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(widget.field.options).toEqual([{ id: 'empty', name: 'Choose one...' }]);
                 expect(defaultOption.context.value).toBe('empty');
                 expect(defaultOption.context.viewValue).toBe('Choose one...');
             });

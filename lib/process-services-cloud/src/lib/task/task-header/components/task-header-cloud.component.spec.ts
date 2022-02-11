@@ -19,7 +19,7 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { setupTestBed, AppConfigService, AlfrescoApiService, CardViewArrayItem } from '@alfresco/adf-core';
+import { setupTestBed, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -53,9 +53,7 @@ describe('TaskHeaderCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({})
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
@@ -292,7 +290,7 @@ describe('TaskHeaderCloudComponent', () => {
         });
 
         it('should not render defined edit icon for assignee property if the task in assigned state and shared among candidate groups', async () => {
-            component.candidateGroups = <CardViewArrayItem[]> [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateGroups = [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
             component.candidateUsers = [];
             fixture.detectChanges();
             await fixture.whenStable();
@@ -303,7 +301,7 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidate groups', async () => {
             getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
-            component.candidateGroups = <CardViewArrayItem[]> [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateGroups = [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
             component.candidateUsers = [];
             component.ngOnChanges();
             fixture.detectChanges();

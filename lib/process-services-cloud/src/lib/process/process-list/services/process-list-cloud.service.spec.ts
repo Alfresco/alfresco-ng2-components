@@ -24,31 +24,19 @@ describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
     let alfrescoApiService: AlfrescoApiService;
 
-    function returnCallQueryParameters(): any {
-        return {
-            oauth2Auth: {
-                callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
-                    return Promise.resolve(queryParams);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnCallQueryParameters = (): any => ({
+        oauth2Auth: {
+            callCustomApi: (_queryUrl, _operation, _context, queryParams) => Promise.resolve(queryParams)
+        },
+        isEcmLoggedIn: () => false
+    });
 
-    function returnCallUrl(): any {
-        return {
-            oauth2Auth: {
-                callCustomApi: (queryUrl) => {
-                    return Promise.resolve(queryUrl);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnCallUrl = (): any => ({
+        oauth2Auth: {
+            callCustomApi: (queryUrl) => Promise.resolve(queryUrl)
+        },
+        isEcmLoggedIn: () => false
+    });
 
     setupTestBed({
         imports: [

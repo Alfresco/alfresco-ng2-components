@@ -40,6 +40,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Gets details of a process instance.
+     *
      * @param appName Name of the app
      * @param processInstanceId ID of the process instance whose details you want
      * @returns Process instance details
@@ -62,6 +63,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Gets the process definitions associated with an app.
+     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
@@ -70,9 +72,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return this.get(url).pipe(
-                map((res: any) => {
-                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
-                })
+                map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
@@ -82,6 +82,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Gets the application versions associated with an app.
+     *
      * @param appName Name of the target app
      * @returns Array of Application Version Models
      */
@@ -90,9 +91,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
             const url = `${this.getBasePath(appName)}/query/v1/applications`;
 
             return this.get<any>(url).pipe(
-                map((appEntities: ApplicationVersionResponseModel) => {
-                    return appEntities.list.entries;
-                }),
+                map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries),
                 catchError((err) => this.handleError(err))
             );
         } else {
@@ -103,6 +102,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Cancels a process.
+     *
      * @param appName Name of the app
      * @param processInstanceId Id of the process to cancel
      * @returns Operation Information

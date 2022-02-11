@@ -31,6 +31,14 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
+export const ACTION_SAVE = 'save';
+export const ACTION_SAVE_AS = 'saveAs';
+export const ACTION_DELETE = 'delete';
+export const DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
+export const DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
+export const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
+export const DATE_FORMAT: string = 'DD/MM/YYYY';
+
 export interface DropdownOption {
     value: string;
     label: string;
@@ -43,15 +51,6 @@ export interface DropdownOption {
     encapsulation: ViewEncapsulation.None
 })
 export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
-
-    public static ACTION_SAVE = 'save';
-    public static ACTION_SAVE_AS = 'saveAs';
-    public static ACTION_DELETE = 'delete';
-    public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
-    public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
-    public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
-    public DATE_FORMAT: string = 'DD/MM/YYYY';
-
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -66,15 +65,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /** List of process filter properties to display */
     @Input()
-    filterProperties = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES;
+    filterProperties = DEFAULT_PROCESS_FILTER_PROPERTIES;
 
     /** List of sort properties to display. */
     @Input()
-    sortProperties = EditProcessFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
+    sortProperties = DEFAULT_SORT_PROPERTIES;
 
     /** List of sort actions. */
     @Input()
-    actions = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
+    actions = DEFAULT_ACTIONS;
 
     /** Toggles editing of process filter actions. */
     @Input()
@@ -139,8 +138,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
     ];
     actionDisabledForDefault = [
-        EditProcessFilterCloudComponent.ACTION_SAVE,
-        EditProcessFilterCloudComponent.ACTION_DELETE
+        ACTION_SAVE,
+        ACTION_DELETE
     ];
     applicationNames: any[] = [];
     allProcessDefinitionNamesOption: DropdownOption = {
@@ -274,7 +273,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (this.filterProperties.includes('initiator')) {
             this.initiatorOptions = !!this.processFilter.initiator
-                ? this.processFilter.initiator.split(',').map( username => Object.assign({}, { username: username }))
+                ? this.processFilter.initiator.split(',').map( username => Object.assign({}, { username }))
                 : [];
         }
 
@@ -297,7 +296,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     checkMandatoryFilterProperties() {
         if (this.filterProperties === undefined || this.filterProperties.length === 0) {
-            this.filterProperties = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES;
+            this.filterProperties = DEFAULT_PROCESS_FILTER_PROPERTIES;
         }
     }
 
@@ -323,7 +322,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     checkMandatorySortProperties() {
         if (this.sortProperties === undefined || this.sortProperties.length === 0) {
-            this.sortProperties = EditProcessFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
+            this.sortProperties = DEFAULT_SORT_PROPERTIES;
         }
     }
 
@@ -335,7 +334,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     checkMandatoryActions() {
         if (this.actions === undefined || this.actions.length === 0) {
-            this.actions = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
+            this.actions = DEFAULT_ACTIONS;
         }
     }
 
@@ -419,11 +418,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     executeFilterActions(action: ProcessFilterAction): void {
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
+        if (action.actionType === ACTION_SAVE) {
             this.save(action);
-        } else if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
+        } else if (action.actionType === ACTION_SAVE_AS) {
             this.saveAs(action);
-        } else if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
+        } else if (action.actionType === ACTION_DELETE) {
             this.delete(action);
         }
     }
@@ -489,6 +488,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /**
      * Return filter name
+     *
      * @param filterName
      */
     getSanitizeFilterName(filterName: string): string {
@@ -498,6 +498,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /**
      * Return name with hyphen
+     *
      * @param name
      */
     replaceSpaceWithHyphen(name: string): string {
@@ -525,8 +526,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     hasFilterChanged(action: ProcessFilterAction): boolean {
-        return action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE ||
-            action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS ?
+        return action.actionType === ACTION_SAVE ||
+            action.actionType === ACTION_SAVE_AS ?
             !this.filterHasBeenChanged : false;
     }
 
@@ -545,17 +546,17 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private createFilterActions(): ProcessFilterAction[] {
         return [
             {
-                actionType: EditProcessFilterCloudComponent.ACTION_SAVE,
+                actionType: ACTION_SAVE,
                 icon: 'adf:save',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
             },
             {
-                actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS,
+                actionType: ACTION_SAVE_AS,
                 icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS'
             },
             {
-                actionType: EditProcessFilterCloudComponent.ACTION_DELETE,
+                actionType: ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE'
             }

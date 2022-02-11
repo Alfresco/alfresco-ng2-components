@@ -51,7 +51,7 @@ export class ContentCloudNodeSelectorService {
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
         const select = new Subject<Node[]>();
         select.subscribe({ complete: this.close.bind(this) });
-        const data = <ContentNodeSelectorComponentData> {
+        const data = {
             title: 'Select a file',
             actionName: NodeAction.ATTACH,
             currentFolderId,
@@ -62,7 +62,7 @@ export class ContentCloudNodeSelectorService {
             showFilesInResult: true,
             showDropdownSiteList: false,
             showLocalUploadButton: isAllFileSources
-        };
+        } as ContentNodeSelectorComponentData;
         this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
         return select;
     }

@@ -60,7 +60,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -124,13 +124,13 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widgetLabel.innerText).toBe('radio-name-label*');
         expect(widget.field.isValid).toBe(false);
 
-        const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1 label');
+        const option = element.querySelector<HTMLElement>('#radio-id-opt-1 label');
         option.click();
 
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-        const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
     });
@@ -149,7 +149,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-2');
         expect(widget.field.isValid).toBe(true);
     });
@@ -168,7 +168,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
     });

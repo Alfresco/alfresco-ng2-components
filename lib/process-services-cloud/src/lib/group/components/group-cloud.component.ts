@@ -235,9 +235,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
         if (this.selectedGroups && this.selectedGroups.length > 0) {
-            const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => {
-                return selectedGroup.name === group.name;
-            });
+            const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => selectedGroup.name === group.name);
 
             return !!result;
         }
@@ -317,7 +315,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     filterGroupsByRoles(group: IdentityGroupModel): Observable<IdentityGroupModel> {
         return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole: hasRole, group: group })),
+            map((hasRole: boolean) => ({ hasRole, group })),
             filter((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.hasRole),
             map((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.group));
     }
@@ -370,9 +368,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private removeGroupFromSelected({ id, name }: IdentityGroupModel): void {
-        const indexToRemove = this.selectedGroups.findIndex(group => {
-            return group.id === id && group.name === name;
-        });
+        const indexToRemove = this.selectedGroups.findIndex(group => group.id === id && group.name === name);
 
         if (indexToRemove !== -1) {
             this.selectedGroups.splice(indexToRemove, 1);
@@ -380,9 +376,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private removeGroupFromValidation({ id, name }: IdentityGroupModel): void {
-        const indexToRemove = this.invalidGroups.findIndex(group => {
-            return group.id === id && group.name === name;
-        });
+        const indexToRemove = this.invalidGroups.findIndex(group => group.id === id && group.name === name);
 
         if (indexToRemove !== -1) {
             this.invalidGroups.splice(indexToRemove, 1);
@@ -428,9 +422,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
         return groups.filter((group, index, self) =>
-            index === self.findIndex((auxGroup) => {
-                return group.id === auxGroup.id && group.name === auxGroup.name;
-            }));
+            index === self.findIndex((auxGroup) => group.id === auxGroup.id && group.name === auxGroup.name));
     }
 
     private hasPreSelectGroups(): boolean {

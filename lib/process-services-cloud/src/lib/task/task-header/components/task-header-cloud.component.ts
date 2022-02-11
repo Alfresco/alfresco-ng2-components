@@ -127,8 +127,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             finalize(() => (this.isLoading = false))
         ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
-                this.candidateGroups = candidateGroups.map((user) => <CardViewArrayItem> { icon: 'group', value: user });
-                this.candidateUsers = candidateUsers.map((group) => <CardViewArrayItem> { icon: 'person', value: group });
+                this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
+                this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {

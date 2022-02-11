@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DateCloudWidgetComponent } from './date-cloud.widget';
+import { DateCloudWidgetComponent, DATE_FORMAT_CLOUD } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -46,19 +46,19 @@ describe('DateWidgetComponent', () => {
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
-            minValue: minValue
+            minValue
         });
 
         widget.ngOnInit();
 
-        const expected = moment(minValue, widget.DATE_FORMAT_CLOUD);
+        const expected = moment(minValue, DATE_FORMAT_CLOUD);
         expect(widget.minDate.isSame(expected)).toBeTruthy();
     });
 
     it('should date field be present', () => {
         const minValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
-            minValue: minValue
+            minValue
         });
 
         fixture.detectChanges();
@@ -70,11 +70,11 @@ describe('DateWidgetComponent', () => {
     it('should setup max value for date picker', () => {
         const maxValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
-            maxValue: maxValue
+            maxValue
         });
         widget.ngOnInit();
 
-        const expected = moment(maxValue, widget.DATE_FORMAT_CLOUD);
+        const expected = moment(maxValue, DATE_FORMAT_CLOUD);
         expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 

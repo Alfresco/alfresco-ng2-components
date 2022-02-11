@@ -61,6 +61,7 @@ export class NotificationCloudService extends BaseCloudService {
                     lazy: true,
                     connectionParams: {
                         kaInterval: 2000,
+                        // eslint-disable-next-line @typescript-eslint/naming-convention
                         'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
                     }
                 }
@@ -84,6 +85,7 @@ export class NotificationCloudService extends BaseCloudService {
                                 operation.setContext({
                                     headers: {
                                         ...oldHeaders,
+                                        // eslint-disable-next-line @typescript-eslint/naming-convention
                                         'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
                                     }
                                 });
