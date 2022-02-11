@@ -18,8 +18,8 @@
 import { Injectable } from '@angular/core';
 
 export interface SortbleByCategoryItem {
-    name: string;
-    category?: string;
+  name: string;
+  category?: string;
 }
 
 export interface ItemsByCategory<T> {
@@ -28,77 +28,77 @@ export interface ItemsByCategory<T> {
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class SortByCategoryMapperService<T extends SortbleByCategoryItem = SortbleByCategoryItem> {
 
-    private defaultCategories: string[] = [];
+  private defaultCategories: string[] = [];
 
-    mapItems(items: T[], defaultCategories: string[]): ItemsByCategory<T>[] {
-        this.defaultCategories = defaultCategories;
+  mapItems(items: T[], defaultCategories: string[]): ItemsByCategory<T>[] {
+    this.defaultCategories = defaultCategories;
 
-        const sortedItems = this.sortItems(items);
-        const itemsByCategory = this.mapItemsByCategory(sortedItems);
-        const itemsSortedByCategory = this.sortCategories(itemsByCategory);
+    const sortedItems = this.sortItems(items);
+    const itemsByCategory = this.mapItemsByCategory(sortedItems);
+    const itemsSortedByCategory = this.sortCategories(itemsByCategory);
 
-        return itemsSortedByCategory;
-    }
+    return itemsSortedByCategory;
+  }
 
-    private mapItemsByCategory(items: T[]): ItemsByCategory<T>[] {
-        const itemsByCategoryObject: {[category: string]: T[]} = {};
+  private mapItemsByCategory(items: T[]): ItemsByCategory<T>[] {
+    const itemsByCategoryObject: { [category: string]: T[] } = {};
 
-        items.forEach((item) => {
-          const category = this.mapItemsCategoryForDisplaying(item);
-            if (!itemsByCategoryObject[category]) {
-                itemsByCategoryObject[category] = [];
-            }
-
-          itemsByCategoryObject[category].push(item);
-        });
-
-        const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map(key => {
-          const category = key; 
-          return { category, items: itemsByCategoryObject[category] };
-        });
-
-      return itemsByCategory;
-    }
-
-    private sortItems(items: T[]): T[] {
-      return items.sort((itemA, itemB) => itemA.name.localeCompare(itemB.name));
-    }
-
-    private sortCategories(itemsByCategory: ItemsByCategory<T>[]): ItemsByCategory<T>[] {
-        return itemsByCategory.sort((itemA, itemB) => {
-            if (itemB.category === '' && itemA.category === '') {
-              return 0;
-            }
-  
-            if (itemA.category === '') {
-              return 1;
-            }
-  
-            if (itemB.category === '') {
-              return -1;
-            }
-  
-            return itemA.category.localeCompare(itemB.category);
-          }
-        );
-    }
-
-    private mapItemsCategoryForDisplaying(listItem: SortbleByCategoryItem): string {
-        const itemCategory = listItem.category;
-        let displayCategory = '';
-
-        if (!this.isDefaultCategory(itemCategory)) {
-          displayCategory = (itemCategory ?? '');
-        }
-
-        return displayCategory;
+    items.forEach((item) => {
+      const category = this.mapItemsCategoryForDisplaying(item);
+      if (!itemsByCategoryObject[category]) {
+        itemsByCategoryObject[category] = [];
       }
 
-      private isDefaultCategory(category?: string): boolean {
-        return category ? this.defaultCategories.includes(category) : false;
+      itemsByCategoryObject[category].push(item);
+    });
+
+    const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map(key => {
+      const category = key;
+      return { category, items: itemsByCategoryObject[category] };
+    });
+
+    return itemsByCategory;
+  }
+
+  private sortItems(items: T[]): T[] {
+    return items.sort((itemA, itemB) => itemA.name.localeCompare(itemB.name));
+  }
+
+  private sortCategories(itemsByCategory: ItemsByCategory<T>[]): ItemsByCategory<T>[] {
+    return itemsByCategory.sort((itemA, itemB) => {
+      if (itemB.category === '' && itemA.category === '') {
+        return 0;
+      }
+
+      if (itemA.category === '') {
+        return 1;
+      }
+
+      if (itemB.category === '') {
+        return -1;
+      }
+
+      return itemA.category.localeCompare(itemB.category);
     }
+    );
+  }
+
+  private mapItemsCategoryForDisplaying(listItem: SortbleByCategoryItem): string {
+    const itemCategory = listItem.category;
+    let displayCategory = '';
+
+    if (!this.isDefaultCategory(itemCategory)) {
+      displayCategory = (itemCategory ?? '');
+    }
+
+    return displayCategory;
+  }
+
+  private isDefaultCategory(category?: string): boolean {
+    return category ? this.defaultCategories.includes(category) : false;
+  }
 }

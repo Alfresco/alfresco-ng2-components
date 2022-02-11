@@ -21,7 +21,7 @@ interface TestSortbleByCategoryItem extends SortbleByCategoryItem {
     id: string;
 }
 
-fdescribe('SortByCategoryMapperService', () => {
+describe('SortByCategoryMapperService', () => {
 
     let mapper: SortByCategoryMapperService<TestSortbleByCategoryItem>;
 
@@ -38,12 +38,12 @@ fdescribe('SortByCategoryMapperService', () => {
 
     it('should map items by categories ', () => {
 
-    const items: TestSortbleByCategoryItem[] = [{ 'id': 'id1',  'name': 'firstCategory_222', 'category': 'category1' },
-                                                { 'id': 'id2',  'name': 'secondCategory_AA', 'category': 'category2' },
-                                                { 'id': 'id3',  'name': 'firstCategory_111', 'category': 'category1' },
-                                                { 'id': 'id4',  'name': 'secondCategory_BB', 'category': 'category2' },
-                                                { 'id': 'id5',  'name': 'Default_a', 'category': DEFAULT_CATEGORIES[1] },
-                                                { 'id': 'id6',  'name': 'Default_b', 'category': DEFAULT_CATEGORIES[0] }];
+    const items: TestSortbleByCategoryItem[] = [{ id: 'id1',  name: 'firstCategory_222', category: 'category1' },
+                                                { id: 'id2',  name: 'secondCategory_AA', category: 'category2' },
+                                                { id: 'id3',  name: 'firstCategory_111', category: 'category1' },
+                                                { id: 'id4',  name: 'secondCategory_BB', category: 'category2' },
+                                                { id: 'id5',  name: 'Default_a', category: DEFAULT_CATEGORIES[1] },
+                                                { id: 'id6',  name: 'Default_b', category: DEFAULT_CATEGORIES[0] }];
  
     const expectedItemsByCategory = [{ category: 'category1', items: [items[2], items[0]] },
                                      { category: 'category2', items: [items[1], items[3]] },
@@ -57,17 +57,17 @@ fdescribe('SortByCategoryMapperService', () => {
     it('should set all items under default category', () => {
 
         const defaulValues: TestSortbleByCategoryItem[] = [{
-            'name': 'name-b',
-            'id': 'id',
-            'category': DEFAULT_CATEGORIES[1]
+            name: 'name-b',
+            id: 'id',
+            category: DEFAULT_CATEGORIES[1]
         }, {
-            'name': 'name-b',
-            'id': 'id2',
-            'category': DEFAULT_CATEGORIES[2]
+            name: 'name-b',
+            id: 'id2',
+            category: DEFAULT_CATEGORIES[2]
         }, { 
-            'name': 'name-c',
-            'id': 'id3',
-            'category': DEFAULT_CATEGORIES[0]
+            name: 'name-c',
+            id: 'id3',
+            category: DEFAULT_CATEGORIES[0]
         }]
 
         const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
@@ -79,45 +79,48 @@ fdescribe('SortByCategoryMapperService', () => {
     it('should set all items under specific category if at least one item has category', () => {
 
         const defaulValues: TestSortbleByCategoryItem[] = [{
-            'name': 'name-b',
-            'id': 'id',
-            'category': DEFAULT_CATEGORIES[1]
-
+            name: 'name-e',
+            id: 'id',
+            category: DEFAULT_CATEGORIES[1]
         }, {
-            'name': 'name-b',
-            'id': 'id2',
-            'category': 'category1'
+            name: 'name-b',
+            id: 'id2',
+            category: 'category1'
         }, { 
-            'name': 'name-c',
-            'id': 'id3',
-            'category': DEFAULT_CATEGORIES[0]
+            name: 'name-d',
+            id: 'id3',
+            category: DEFAULT_CATEGORIES[0]
         }, { 
-            'name': 'name-c',
-            'id': 'id4',
-            'category': 'category2'
+            name: 'name-c',
+            id: 'id4',
+            category: 'category2'
         }]
 
         const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
 
         expect(result.length).toBe(3);
         expect(result[0].category).toBe('category1');
+        expect(result[0].items[0]).toEqual({ name: 'name-b', id: 'id2', category: 'category1' })
         expect(result[1].category).toBe('category2');
+        expect(result[1].items[0]).toEqual({ name: 'name-c', id: 'id4', category: 'category2' })
         expect(result[2].category).toBe('');
+        expect(result[2].items[0]).toEqual({ name: 'name-d', id: 'id3', category: '' })
+        expect(result[2].items[1]).toEqual({ name: 'name-e', id: 'id', category: 'DefaultCategory1' })
     });
 
     it('should set items in ascending order in appropriate category', () => {
-        const contents = [{ 'id': 'id1', 'name': 'item-b', 'category': 'cat1' },
-                          { 'id': 'id2', 'name': 'item2', 'category': 'cat2' },
-                          { 'id': 'id3', 'name': 'item-a', 'category': 'cat1' }];
+        const contents = [{ id: 'id1', name: 'item-b', category: 'cat1' },
+                          { id: 'id2', name: 'item2', category: 'cat2' },
+                          { id: 'id3', name: 'item-a', category: 'cat1' }];
 
         const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);
 
         expect(result.length).toBe(2);
         expect(result[0].category).toBe('cat1');
-        expect(result[0].items[0]).toEqual({ 'id': 'id3', 'name': 'item-a', 'category': 'cat1' });
-        expect(result[0].items[1]).toEqual({ 'id': 'id1', 'name': 'item-b', 'category': 'cat1' });
+        expect(result[0].items[0]).toEqual({ id: 'id3', name: 'item-a', category: 'cat1' });
+        expect(result[0].items[1]).toEqual({ id: 'id1', name: 'item-b', category: 'cat1' });
 
         expect(result[1].category).toBe('cat2');
-        expect(result[1].items[0]).toEqual({ 'id': 'id2', 'name': 'item2', 'category': 'cat2' });
-        });
+        expect(result[1].items[0]).toEqual({ id: 'id2', name: 'item2', category: 'cat2' });
+    });
 });
