@@ -15,70 +15,59 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SortbleByCategoryItem, SortByCategoryMapperService } from './sort-by-category.service';
 
 interface TestSortbleByCategoryItem extends SortbleByCategoryItem {
     id: string;
 }
 
-describe('SortByCategoryService', () => {
+fdescribe('SortByCategoryMapperService', () => {
 
     let mapper: SortByCategoryMapperService<TestSortbleByCategoryItem>;
 
     const DEFAULT_CATEGORIES = [
         '',
-        'http://bpmn.io/schema/bpmn',
-        'http://www.activiti.org/processdef',
-        'http://www.activiti.org/test'
+        'DefaultCategory1',
+        'DefaultCategory2',
+        'DefaultCategory3'
       ];
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
 
     beforeEach(() => {
         mapper = new SortByCategoryMapperService();
     });
 
-    it('should map items By categories ', () => {
+    it('should map items by categories ', () => {
 
     const items: TestSortbleByCategoryItem[] = [{ 'id': 'id1',  'name': 'firstCategory_222', 'category': 'category1' },
                                                 { 'id': 'id2',  'name': 'secondCategory_AA', 'category': 'category2' },
                                                 { 'id': 'id3',  'name': 'firstCategory_111', 'category': 'category1' },
                                                 { 'id': 'id4',  'name': 'secondCategory_BB', 'category': 'category2' },
-                                                { 'id': 'id5',  'name': 'Default_a', 'category': 'http://bpmn.io/schema/bpmn' },
-                                                { 'id': 'id6',  'name': 'Default_b', 'category': '' }];
+                                                { 'id': 'id5',  'name': 'Default_a', 'category': DEFAULT_CATEGORIES[1] },
+                                                { 'id': 'id6',  'name': 'Default_b', 'category': DEFAULT_CATEGORIES[0] }];
  
-        const expectedContentsByCategory = [{ category: 'category1', items: [items[2], items[0]] },
-                                            { category: 'category2', items: [items[1], items[3]] },
-                                            { category: '', items: [items[4], items[5]] }];
+    const expectedItemsByCategory = [{ category: 'category1', items: [items[2], items[0]] },
+                                     { category: 'category2', items: [items[1], items[3]] },
+                                     { category: '', items: [items[4], items[5]] }];
 
         const result = mapper.mapItems(items, DEFAULT_CATEGORIES);
 
-        expect(result).toEqual(expectedContentsByCategory);
+        expect(result).toEqual(expectedItemsByCategory);
     });
 
-    it('should display items without category if all of the items have default category', () => {
+    it('should set all items under default category', () => {
 
         const defaulValues: TestSortbleByCategoryItem[] = [{
             'name': 'name-b',
             'id': 'id',
-            'category': 'http://bpmn.io/schema/bpmn'
-    
+            'category': DEFAULT_CATEGORIES[1]
         }, {
             'name': 'name-b',
             'id': 'id2',
-            'category': 'http://www.activiti.org/test'
+            'category': DEFAULT_CATEGORIES[2]
         }, { 
             'name': 'name-c',
             'id': 'id3',
-            'category': ''
+            'category': DEFAULT_CATEGORIES[0]
         }]
 
         const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
@@ -87,13 +76,13 @@ describe('SortByCategoryService', () => {
         expect(result[0].category).toBe('');
     });
 
-    it('should display items in ascending order under no category label if there is at least one other category provided', () => {
+    it('should set all items under specific category if at least one item has category', () => {
 
         const defaulValues: TestSortbleByCategoryItem[] = [{
             'name': 'name-b',
             'id': 'id',
-            'category': 'http://bpmn.io/schema/bpmn'
-    
+            'category': DEFAULT_CATEGORIES[1]
+
         }, {
             'name': 'name-b',
             'id': 'id2',
@@ -101,8 +90,8 @@ describe('SortByCategoryService', () => {
         }, { 
             'name': 'name-c',
             'id': 'id3',
-            'category': ''
-        }, , { 
+            'category': DEFAULT_CATEGORIES[0]
+        }, { 
             'name': 'name-c',
             'id': 'id4',
             'category': 'category2'
@@ -116,12 +105,13 @@ describe('SortByCategoryService', () => {
         expect(result[2].category).toBe('');
     });
 
-    it('should display items in ascending order under specific category', () => {
-       const contents = [{ 'id': 'id1', 'name': 'item-b', 'category': 'cat1' },
-                         { 'id': 'id2', 'name': 'item2', 'category': 'cat2' },
-                         { 'id': 'id3', 'name': 'item-a', 'category': 'cat1' }];
+    it('should set items in ascending order in appropriate category', () => {
+        const contents = [{ 'id': 'id1', 'name': 'item-b', 'category': 'cat1' },
+                          { 'id': 'id2', 'name': 'item2', 'category': 'cat2' },
+                          { 'id': 'id3', 'name': 'item-a', 'category': 'cat1' }];
 
-        const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);        
+        const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);
+
         expect(result.length).toBe(2);
         expect(result[0].category).toBe('cat1');
         expect(result[0].items[0]).toEqual({ 'id': 'id3', 'name': 'item-a', 'category': 'cat1' });
