@@ -13,7 +13,7 @@
     "withCredentials": false
   },
   "upload": {
-    "threads": 2
+    "threads": 1
   },
   "oauth2": {
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
