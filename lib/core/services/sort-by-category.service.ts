@@ -46,23 +46,22 @@ export class SortByCategoryMapperService<T extends SortbleByCategoryItem = Sortb
 
     private mapItemsByCategory(items: T[]): ItemsByCategory<T>[] {
         const itemsByCategoryObject: {[category: string]: T[]} = {};
-  
+
         items.forEach((item) => {
-        const category = this.mapItemsCategoryForDisplaying(item);
-  
-          if (!itemsByCategoryObject[category]) {
-            itemsByCategoryObject[category] = [];
-          }
-  
+          const category = this.mapItemsCategoryForDisplaying(item);
+            if (!itemsByCategoryObject[category]) {
+                itemsByCategoryObject[category] = [];
+            }
+
           itemsByCategoryObject[category].push(item);
         });
-  
+
         const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map(key => {
-          const category = key;
+          const category = key; 
           return { category, items: itemsByCategoryObject[category] };
         });
 
-        return itemsByCategory;
+      return itemsByCategory;
     }
 
     private sortItems(items: T[]): T[] {
