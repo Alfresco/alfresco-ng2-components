@@ -25,7 +25,6 @@ import {
     FormFieldModel,
     FormModel,
     FormFieldTypes,
-    FormFieldMetadata,
     FormService,
     DownloadService,
     AppConfigService,
