@@ -21,7 +21,7 @@ interface TestSortbleByCategoryItem extends SortbleByCategoryItem {
     id: string;
 }
 
-describe('SortByCategoryMapperService', () => {
+fdescribe('SortByCategoryMapperService', () => {
 
     let mapper: SortByCategoryMapperService<TestSortbleByCategoryItem>;
 
@@ -61,7 +61,7 @@ describe('SortByCategoryMapperService', () => {
     it('should set all items under default category', () => {
 
         const defaulValues: TestSortbleByCategoryItem[] = [{
-            name: 'name-b',
+            name: 'name-a',
             id: 'id',
             category: DEFAULT_CATEGORIES[1]
         }, {
@@ -78,6 +78,7 @@ describe('SortByCategoryMapperService', () => {
 
         expect(result.length).toBe(1);
         expect(result[0].category).toBe('');
+        expect(result[0].items.length).toBe(defaulValues.length);
     });
 
     it('should set all items under specific category if at least one item has category', () => {
@@ -113,9 +114,11 @@ describe('SortByCategoryMapperService', () => {
     });
 
     it('should set items in ascending order in appropriate category', () => {
-        const contents = [{ id: 'id1', name: 'item-b', category: 'cat1' },
-        { id: 'id2', name: 'item2', category: 'cat2' },
-        { id: 'id3', name: 'item-a', category: 'cat1' }];
+        const contents = [
+            { id: 'id1', name: 'item-b', category: 'cat1' },
+            { id: 'id2', name: 'item2', category: 'cat2' },
+            { id: 'id3', name: 'item-a', category: 'cat1' }
+        ];
 
         const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);
 

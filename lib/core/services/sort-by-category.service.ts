@@ -48,7 +48,7 @@ export class SortByCategoryMapperService<T extends SortbleByCategoryItem = Sortb
     const itemsByCategoryObject: { [category: string]: T[] } = {};
 
     items.forEach((item) => {
-      const category = this.mapItemsCategoryForDisplaying(item);
+      const category = this.mapItemDefaultCategory(item);
       if (!itemsByCategoryObject[category]) {
         itemsByCategoryObject[category] = [];
       }
@@ -87,15 +87,15 @@ export class SortByCategoryMapperService<T extends SortbleByCategoryItem = Sortb
     );
   }
 
-  private mapItemsCategoryForDisplaying(listItem: SortbleByCategoryItem): string {
+  private mapItemDefaultCategory(listItem: SortbleByCategoryItem): string {
     const itemCategory = listItem.category;
-    let displayCategory = '';
+    let category = '';
 
     if (!this.isDefaultCategory(itemCategory)) {
-      displayCategory = (itemCategory ?? '');
+      category = (itemCategory ?? '');
     }
 
-    return displayCategory;
+    return category;
   }
 
   private isDefaultCategory(category?: string): boolean {
