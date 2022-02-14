@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { ProcessFilterAction, ProcessFilterCloudModel, PROCESS_FILTER_ACTION_DELETE, PROCESS_FILTER_ACTION_SAVE, PROCESS_FILTER_ACTION_SAVE_AS } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -124,13 +124,13 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onProcessFilterAction(filterAction: ProcessFilterAction) {
-        if (filterAction.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
+        if (filterAction.actionType === PROCESS_FILTER_ACTION_DELETE) {
             this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
         } else {
             this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         }
 
-        if ([EditProcessFilterCloudComponent.ACTION_SAVE, EditProcessFilterCloudComponent.ACTION_SAVE_AS].includes(filterAction.actionType)) {
+        if ([PROCESS_FILTER_ACTION_SAVE, PROCESS_FILTER_ACTION_SAVE_AS].includes(filterAction.actionType)) {
             this.onFilterChange(filterAction.filter);
         }
     }
