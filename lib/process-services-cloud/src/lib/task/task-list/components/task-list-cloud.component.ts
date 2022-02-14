@@ -22,7 +22,7 @@ import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
-export const PRESET_KEY = 'adf-cloud-task-list.presets';
+const PRESET_KEY = 'adf-cloud-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-task-list',

@@ -35,8 +35,8 @@ import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.m
 import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
 
-export const MAX_NAME_LENGTH = 255;
-export const DATE_FORMAT: string = 'DD/MM/YYYY';
+const MAX_NAME_LENGTH = 255;
+const DATE_FORMAT: string = 'DD/MM/YYYY';
 
 @Component({
     selector: 'adf-cloud-start-task',

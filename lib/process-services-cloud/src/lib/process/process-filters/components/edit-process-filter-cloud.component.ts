@@ -31,13 +31,12 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
-export const ACTION_SAVE = 'save';
-export const ACTION_SAVE_AS = 'saveAs';
-export const ACTION_DELETE = 'delete';
-export const DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
-export const DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
-export const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
-export const DATE_FORMAT: string = 'DD/MM/YYYY';
+const ACTION_SAVE = 'save';
+const ACTION_SAVE_AS = 'saveAs';
+const ACTION_DELETE = 'delete';
+const DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
+const DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
+const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
 
 export interface DropdownOption {
     value: string;

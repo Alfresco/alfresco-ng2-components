@@ -32,9 +32,9 @@ import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
-export const MAX_NAME_LENGTH: number = 255;
-export const PROCESS_DEFINITION_DEBOUNCE: number = 300;
-export const PROCESS_FORM_DEBOUNCE: number = 400;
+const MAX_NAME_LENGTH: number = 255;
+const PROCESS_DEFINITION_DEBOUNCE: number = 300;
+const PROCESS_FORM_DEBOUNCE: number = 400;
 
 @Component({
     selector: 'adf-cloud-start-process',

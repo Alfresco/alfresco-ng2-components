@@ -26,7 +26,7 @@ import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 
-export const PRESET_KEY = 'adf-cloud-process-list.presets';
+const PRESET_KEY = 'adf-cloud-process-list.presets';
 
 @Component({
     selector: 'adf-cloud-process-list',
