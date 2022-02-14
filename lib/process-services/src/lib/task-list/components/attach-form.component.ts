@@ -31,11 +31,11 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     /** Id of the task. */
     @Input()
-    taskId: string;
+    taskId: any;
 
     /** Identifier of the form to attach. */
     @Input()
-    formKey: string;
+    formKey: any;
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
