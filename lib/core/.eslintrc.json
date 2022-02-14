@@ -24,7 +24,7 @@
         "@typescript-eslint/naming-convention": "warn",
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "warn",
-        "no-underscore-dangle": "warn",
+        "no-underscore-dangle": ["warn", { "allowAfterThis": true }],
         "no-shadow": "warn",
         "quote-props": "warn",
         "object-shorthand": "warn",

@@ -108,6 +108,8 @@ describe('UploadDragAreaComponent', () => {
 
         component = fixture.componentInstance;
         fixture.detectChanges();
+
+        uploadService.clearCache();
     });
 
     afterEach(() => {

@@ -12,6 +12,9 @@
   "auth": {
     "withCredentials": false
   },
+  "upload": {
+    "threads": 1
+  },
   "oauth2": {
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
     "clientId": "alfresco",
