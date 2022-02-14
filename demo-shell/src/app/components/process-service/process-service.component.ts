@@ -48,13 +48,13 @@ import {
     ProcessInstanceDetailsComponent,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
-    AppsListComponent,
     FilterRepresentationModel,
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
-    ProcessFormRenderingService
+    ProcessFormRenderingService,
+    APP_LIST_LAYOUT_LIST
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
@@ -270,7 +270,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             this.processFilter = null;
             this.currentProcessInstanceId = null;
         });
-        this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.layoutType = APP_LIST_LAYOUT_LIST;
     }
 
     ngOnDestroy() {

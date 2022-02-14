@@ -22,13 +22,13 @@ import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
 
-export const DEFAULT_TASKS_APP: string = 'tasks';
-export const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
-export const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
-export const DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
-export const DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
-export const LAYOUT_LIST: string = 'LIST';
-export const LAYOUT_GRID: string = 'GRID';
+const DEFAULT_TASKS_APP: string = 'tasks';
+const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
+const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
+const DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
+
+export const APP_LIST_LAYOUT_LIST: string = 'LIST';
+export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 
 @Component({
     selector: 'adf-apps',
@@ -46,7 +46,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      * values, "GRID" and "LIST".
      */
     @Input()
-    layoutType: string = LAYOUT_GRID;
+    layoutType: string = APP_LIST_LAYOUT_GRID;
 
     /** Provides a way to filter the apps to show. */
     @Input()
@@ -134,28 +134,28 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      * Check if the value of the layoutType property is an allowed value
      */
     isValidType(): boolean {
-        return this.layoutType && (this.layoutType === LAYOUT_LIST || this.layoutType === LAYOUT_GRID);
+        return this.layoutType && (this.layoutType === APP_LIST_LAYOUT_LIST || this.layoutType === APP_LIST_LAYOUT_GRID);
     }
 
     /**
      * Assign the default value to LayoutType
      */
     setDefaultLayoutType(): void {
-        this.layoutType = LAYOUT_GRID;
+        this.layoutType = APP_LIST_LAYOUT_GRID;
     }
 
     /**
      * Return true if the layout type is LIST
      */
     isList(): boolean {
-        return this.layoutType === LAYOUT_LIST;
+        return this.layoutType === APP_LIST_LAYOUT_LIST;
     }
 
     /**
      * Return true if the layout type is GRID
      */
     isGrid(): boolean {
-        return this.layoutType === LAYOUT_GRID;
+        return this.layoutType === APP_LIST_LAYOUT_GRID;
     }
 
     isEmpty(): boolean {
