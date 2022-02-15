@@ -102,7 +102,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
      */
     uploadFiles(files: File[]): void {
         const filteredFiles: FileModel[] = files
-            .map<FileModel>((file: File) => this.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')));
+            .map<FileModel>((file: File) => this.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^\/]*$/, '')));
 
         this.uploadQueue(filteredFiles);
     }
