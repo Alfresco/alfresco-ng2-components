@@ -99,7 +99,7 @@ describe('SortByCategoryMapperService', () => {
             name: 'name-c',
             id: 'id4',
             category: 'category2'
-        }]
+        }];
 
         const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
 
