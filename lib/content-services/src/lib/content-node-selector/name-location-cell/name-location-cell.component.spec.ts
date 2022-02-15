@@ -35,8 +35,8 @@ describe('NameLocationCellComponent', () => {
         fixture = TestBed.createComponent(NameLocationCellComponent);
         component = fixture.componentInstance;
 
-        rowData = <DataRow> {
-            getValue(key): any {
+        rowData = {
+            getValue: (key): any => {
                 if (key === 'name') {
                     return 'file-name';
                 } else if (key === 'path') {
@@ -44,7 +44,7 @@ describe('NameLocationCellComponent', () => {
                 }
                 return undefined;
             }
-        };
+        } as DataRow;
         component.row = rowData;
         fixture.detectChanges();
     });

@@ -53,7 +53,7 @@ const entryDifferentItem = {
     }
 };
 
-export let result = new ResultSetPaging({
+export const result = new ResultSetPaging({
     list: {
         entries: [
             entryItem
@@ -61,7 +61,7 @@ export let result = new ResultSetPaging({
     }
 });
 
-export let differentResult = new ResultSetPaging({
+export const differentResult = new ResultSetPaging({
     list: {
         entries: [
             entryDifferentItem
@@ -69,7 +69,7 @@ export let differentResult = new ResultSetPaging({
     }
 });
 
-export let results = {
+export const results = {
     list: {
         entries: [
             entryItem,
@@ -79,7 +79,7 @@ export let results = {
     }
 };
 
-export let folderResult = {
+export const folderResult = {
     list: {
         entries: [
             {
@@ -100,13 +100,13 @@ export let folderResult = {
     }
 };
 
-export let noResult = {
+export const noResult = {
     list: {
         entries: []
     }
 };
 
-export let errorJson = {
+export const errorJson = {
     error: {
         errorKey: 'Search failed',
         statusCode: 400,

@@ -33,6 +33,7 @@ export class ContentActionListComponent {
 
     /**
      * Registers action handler within the parent document list component.
+     *
      * @param action Action model to register.
      */
     registerAction(action: ContentActionModel): boolean {

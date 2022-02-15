@@ -72,7 +72,7 @@ describe('UploadBase', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
             component.beginUpload.subscribe(() => done());
-            const file = <File> { name: 'bigFile.png', size: 1000 };
+            const file = { name: 'bigFile.png', size: 1000 } as File;
             component.uploadFiles([file]);
             fixture.detectChanges();
         });
@@ -86,7 +86,7 @@ describe('UploadBase', () => {
                 event.preventDefault();
                 prevented = true;
             });
-            const file = <File> { name: 'bigFile.png', size: 1000 };
+            const file = { name: 'bigFile.png', size: 1000 } as File;
             component.uploadFiles([file]);
 
             tick();
@@ -106,7 +106,7 @@ describe('UploadBase', () => {
                 event.preventDefault();
                 prevented = true;
             });
-            const file = <File> { name: 'bigFile.png', size: 1000 };
+            const file = { name: 'bigFile.png', size: 1000 } as File;
             component.uploadFiles([file]);
 
             tick();
@@ -132,7 +132,7 @@ describe('UploadBase', () => {
                 uploadEvent = event;
                 event.preventDefault();
             });
-            const file = <File> { name: 'bigFile.png', size: 1000 };
+            const file = { name: 'bigFile.png', size: 1000 } as File;
             component.uploadFiles([file]);
 
             tick();
@@ -147,11 +147,11 @@ describe('UploadBase', () => {
     describe('fileSize', () => {
 
         const files: File[] = [
-            <File> { name: 'bigFile.png', size: 1000 },
-            <File> { name: 'smallFile.png', size: 10 }
+            { name: 'bigFile.png', size: 1000 } as File,
+            { name: 'smallFile.png', size: 10 } as File
         ];
 
-        let addToQueueSpy;
+        let addToQueueSpy: jasmine.Spy;;
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -177,7 +177,7 @@ describe('UploadBase', () => {
 
         it('should allow file of 0 size when the max file size is set to 0', () => {
             const zeroFiles: File[] = [
-                <File> { name: 'zeroFile.png', size: 0 }
+                { name: 'zeroFile.png', size: 0 } as File
             ];
             component.maxFilesSize = 0;
 
@@ -217,12 +217,12 @@ describe('UploadBase', () => {
     describe('uploadFiles', () => {
 
         const files: File[] = [
-            <File> { name: 'phobos.jpg' },
-            <File> { name: 'deimos.png' },
-            <File> { name: 'ganymede.bmp' }
+            { name: 'phobos.jpg' } as File,
+            { name: 'deimos.png' } as File,
+            { name: 'ganymede.bmp' } as File
         ];
 
-        let addToQueueSpy;
+        let addToQueueSpy: jasmine.Spy;;
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -325,10 +325,10 @@ describe('UploadBase', () => {
 
     describe('Comments', () => {
 
-        let addToQueueSpy;
+        let addToQueueSpy: jasmine.Spy;;
 
         const files: File[] = [
-            <File> { name: 'phobos.jpg' }
+            { name: 'phobos.jpg' } as File
         ];
 
         beforeEach(() => {
@@ -353,10 +353,10 @@ describe('UploadBase', () => {
 
     describe('Versions', () => {
 
-        let addToQueueSpy;
+        let addToQueueSpy: jasmine.Spy;;
 
         const files: File[] = [
-            <File> { name: 'phobos.jpg' }
+            { name: 'phobos.jpg' } as File
         ];
 
         beforeEach(() => {
@@ -398,10 +398,10 @@ describe('UploadBase', () => {
 
     describe('Node Type', () => {
 
-        let addToQueueSpy;
+        let addToQueueSpy: jasmine.Spy;
 
         const files: File[] = [
-            <File> { name: 'process.bpmn' }
+            { name: 'process.bpmn' } as File
         ];
 
         beforeEach(() => {

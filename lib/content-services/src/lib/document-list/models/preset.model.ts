@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let presetsDefaultModel = {
+export const presetsDefaultModel = {
     '-trashcan-': [
         {
             key: '$thumbnail',
@@ -220,7 +220,7 @@ export let presetsDefaultModel = {
             sortable: true
         }
     ],
-    'default': [
+    default: [
         {
             key: '$thumbnail',
             type: 'image',

@@ -69,16 +69,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
 
-    function typeToSearchBox(searchTerm = 'string-to-search') {
+    const typeToSearchBox = (searchTerm = 'string-to-search') => {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
         searchInput.nativeElement.value = searchTerm;
         component.searchInput.setValue(searchTerm);
         fixture.detectChanges();
-    }
+    };
 
-    function triggerSearchResults(searchResults: ResultSetPaging) {
+    const triggerSearchResults = (searchResults: ResultSetPaging) => {
         component.queryBuilderService.executed.next(searchResults);
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -122,12 +122,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
             beforeEach(() => {
                 documentListService = TestBed.inject(DocumentListService);
 
-                spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({
                     list: {
-                        entries: [<SiteEntry> { entry: { guid: 'namek', id: 'namek' } },
-                            <SiteEntry> { entry: { guid: 'blog', id: 'blog' } }]
+                        entries: [
+                            { entry: { guid: 'namek', id: 'namek' } },
+                            { entry: { guid: 'blog', id: 'blog' } }
+                        ]
                     }
                 })));
 
@@ -140,7 +142,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should trigger the select event when selection has been made', (done) => {
-                const expectedNode = <Node> { id: 'fakeid'};
+                const expectedNode = { id: 'fakeid'} as Node;
                 component.select.subscribe((nodes) => {
                     expect(nodes.length).toBe(1);
                     expect(nodes[0]).toBe(expectedNode);
@@ -155,14 +157,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
                     .toBe(false, 'did not filter out blog');
             });
 
             it('should still be able to filter out the exclude site content after rowFilter changes', () => {
-                const filterFunction1 = () => {
-                    return true;
-                };
+                const filterFunction1 = () => true;
                 const filterFunction2 = (row: ShareDataRow) => {
                     const node: Node = row.node.entry;
                     return node.isFile;
@@ -177,12 +177,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     properties: { 'st:componentId': 'blog' },
                     isFile: true
                 });
-                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
                     .toBe(false, 'did not filter out blog with filterFunction1');
 
                 component.rowFilter = filterFunction2;
                 fixture.detectChanges();
-                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
                     .toBe(false, 'did not filter out blog with filterFunction2');
             });
 
@@ -190,7 +190,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null)).toBe(true);
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(true);
             });
 
             it('should render search input by default', () => {
@@ -227,7 +227,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             beforeEach(() => {
                 documentListService = TestBed.inject(DocumentListService);
 
-                spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
 
@@ -305,7 +305,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
 
-                const chosenNode = <Node> { path: { elements: [] } };
+                const chosenNode = { path: { elements: [] } } as Node;
                 component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
 
@@ -328,14 +328,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should make changes to breadcrumb folderNode if breadcrumbTransform is defined', (done) => {
-                const transformedFolderNode = <Node> {
+                const transformedFolderNode = {
                     id: 'trans-node',
                     name: 'trans-node-name',
                     path: { elements: [{ id: 'testId', name: 'testName' }] }
                 };
-                component.breadcrumbTransform = (() => {
-                    return transformedFolderNode;
-                });
+                component.breadcrumbTransform = (() => transformedFolderNode);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -387,11 +385,11 @@ describe('ContentNodeSelectorPanelComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
             let customResourcesService: CustomResourcesService;
-            const entry: Node = <Node> { id: 'fakeid'};
+            const entry: Node = { id: 'fakeid'} as Node;
 
             beforeEach(() => {
                 const documentListService = TestBed.inject(DocumentListService);
-                const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
+                const expectedDefaultFolderNode = { entry: { path: { elements: [] } } };
                 component.isSelectionValid = (node: Node) => node.isFile;
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
@@ -506,7 +504,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should update the breadcrumb when changing to a custom site', async () => {
-                component.siteChanged(<SiteEntry> { entry: { guid: '-mysites-', title: 'My Sites' } });
+                component.siteChanged({ entry: { guid: '-mysites-', title: 'My Sites' } } as SiteEntry);
 
                 expect(component.breadcrumbFolderTitle).toBe('My Sites');
             });
@@ -518,7 +516,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1, 'Search count should be one after only one search');
 
-                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 const expectedQueryBody = mockQueryBody;
                 expectedQueryBody.filterQueries = [ { query: `ANCESTOR:'workspace://SpacesStore/namek'`} ];
@@ -528,7 +526,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
-                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('search-term');
@@ -537,7 +535,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1);
 
-                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
 
                 const expectedQueryBodyWithSiteChange = mockQueryBody;
                 expectedQueryBodyWithSiteChange.filterQueries = [
@@ -555,26 +553,26 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 tick(debounceSearch);
 
-                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1, 'getCorrespondingNodeIdsSpy calls count should be one after the site changes to known alias \'-sites\-');
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from CUSTOM dropdown', fakeAsync(() => {
-                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
 
                 tick(debounceSearch);
 
-                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
+                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
             }));
 
             it('should NOT get the corresponding node ids on search when NOTHING is selected from dropdown', fakeAsync(() => {
-                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
@@ -590,13 +588,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
 
-                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
 
             it('should NOT get the corresponding node ids on search when NO known alias is selected from CUSTOM dropdown', fakeAsync(() => {
-                component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
+                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
@@ -604,7 +602,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
 
-                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
@@ -730,7 +728,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.queryBuilderService.userQuery = 'search-term*';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
-                component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
+                component.siteChanged({ entry: { guid: 'my-site-id' } } as SiteEntry);
 
                 const expectedQueryBodyWithSiteChange = mockQueryBody;
                 expectedQueryBodyWithSiteChange.filterQueries = [
@@ -799,7 +797,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1);
 
-                component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
+                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 expect(searchSpy.calls.count()).toBe(2);
 
@@ -833,14 +831,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                         })
                     }
                 }))
-                    .toBe(filter(<ShareDataRow> {
+                    .toBe(filter({
                         node: {
                             entry: new Node({
                                 name: 'impossible-name',
                                 id: 'name'
                             })
                         }
-                    }));
+                    } as ShareDataRow));
             });
 
             it('should pass through the excludeSiteContent to the rowFilter of the documentList', () => {
@@ -853,7 +851,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(documentList.componentInstance.rowFilter).toBeTruthy('Document list should have had a rowFilter');
 
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(documentList.componentInstance.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
+                expect(documentList.componentInstance.rowFilter({ node: { entry: testSiteContent } }, null, null))
                     .toBe(false);
             });
 
@@ -948,13 +946,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
-                component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
+                component.siteChanged({ entry: { guid: 'Kame-Sennin Muten Roshi' } } as SiteEntry);
                 fixture.detectChanges();
 
                 let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                 expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
 
-                component.siteChanged(<SiteEntry> { entry: { guid: undefined } });
+                component.siteChanged({ entry: { guid: undefined } } as SiteEntry);
                 fixture.detectChanges();
 
                 documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
@@ -990,7 +988,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(searchSpy).not.toHaveBeenCalled();
                 });
 
-                it('should set its loading state to true to perform a new search', async() => {
+                it('should set its loading state to true to perform a new search', async () => {
                     component.prepareDialogForNewSearch(mockQueryBody);
                     fixture.detectChanges();
                     await fixture.whenStable();
@@ -1035,18 +1033,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Chosen node', () => {
 
-            const entry: Node = <Node> { id: 'fakeid'};
-            const nodePage: NodePaging = <NodePaging> { list: { pagination: {} } };
+            const entry: Node = { id: 'fakeid'} as Node;
+            const nodePage: NodePaging = { list: { pagination: {} } };
             let hasAllowableOperations;
-            const fakeFolderNode = <Node> { id: 'fakeNodeId', isFolder: true };
+            const fakeFolderNode = { id: 'fakeNodeId', isFolder: true } as Node;
 
-            function returnHasPermission(): boolean {
-                return hasAllowableOperations;
-            }
+            const returnHasPermission = (): boolean => hasAllowableOperations;
 
             beforeEach(() => {
-                const schema = [<DataColumn> {}];
-                const rows = [<DataRow> {}, <DataRow> {}];
+                const schema = [{}] as DataColumn[];
+                const rows = [{}, {}] as DataRow[];
                 component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
                 spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
                 spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
@@ -1140,7 +1136,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     component.documentList.ready.emit(nodePage);
                 });
 
-                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async() => {
+                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async () => {
                     hasAllowableOperations = true;
 
                     component.select.subscribe((nodes) => {
@@ -1186,7 +1182,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be empty when the chosenNode is reset', async () => {
                     hasAllowableOperations = true;
-                    component.onCurrentSelection([{ entry: <Node> {} }]);
+                    component.onCurrentSelection([{ entry: {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1235,7 +1231,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: <Node> {} }]);
+                    component.onCurrentSelection([{ entry: {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1272,7 +1268,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: <Node> {} }]);
+                    component.onCurrentSelection([{ entry: {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1303,7 +1299,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     const isUploadingSpy = spyOn(uploadService, 'isUploading').and.returnValue(true);
                     const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
 
-                    const fakeFileModels = [new FileModel(<File> { name: 'fake-name', size: 100 }), new FileModel(<File> { name: 'fake-name-2', size: 200 })];
+                    const fakeFileModels = [new FileModel({ name: 'fake-name', size: 100 } as File), new FileModel({ name: 'fake-name-2', size: 200 } as File)];
                     const fileUploadCompleteEvent  = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
                     uploadService.fileUploadComplete.next(fileUploadCompleteEvent);
 
@@ -1330,8 +1326,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     const documentListUnselectRowSpy = spyOn(component.documentList, 'unselectRowFromNodeId');
                     const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
-                    const fakeFileModel = new FileModel(<File> { name: 'fake-name', size: 10000000 });
-                    const fakeNodes = [<Node> { id: 'fakeNodeId' }, <Node> { id: 'fakeNodeId2' }];
+                    const fakeFileModel = new FileModel({ name: 'fake-name', size: 10000000 } as File);
+                    const fakeNodes = [{ id: 'fakeNodeId' }, { id: 'fakeNodeId2' }] as Node[];
 
                     fakeFileModel.data = { entry: fakeNodes[0] };
                     fakeFileModel.status = FileUploadStatus.Deleted;
@@ -1375,7 +1371,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 contentNodeSelectorPanelService.customModels = undefined;
             });
 
-            it ('should search panel be collapsed by default and expand when clicking the filter button', async() => {
+            it ('should search panel be collapsed by default and expand when clicking the filter button', async () => {
                 contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 

@@ -31,18 +31,18 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const customSiteList = {
-    'list': {
-        'entries': [
+    list: {
+        entries: [
             {
-                'entry': {
-                    'guid': '-my-',
-                    'title': 'PERSONAL_FILES'
+                entry: {
+                    guid: '-my-',
+                    title: 'PERSONAL_FILES'
                 }
             },
             {
-                'entry': {
-                    'guid': '-mysites-',
-                    'title': 'FILE_LIBRARIES'
+                entry: {
+                    guid: '-mysites-',
+                    title: 'FILE_LIBRARIES'
                 }
             }
         ]
@@ -106,10 +106,10 @@ describe('DropdownSitesComponent', () => {
                 component = fixture.componentInstance;
             });
 
-            function openSelectBox() {
+            const openSelectBox = () => {
                 const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-option"] .mat-select-trigger')));
                 selectBox.triggerEventHandler('click', null);
-            }
+            };
 
             it('Dropdown sites should be rendered', async () => {
                 fixture.detectChanges();

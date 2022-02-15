@@ -33,9 +33,7 @@ export class TreeViewService {
     getTreeNodes(nodeId): Observable<TreeBaseNode[]> {
         return this.nodeApi.getNodeChildren(nodeId)
             .pipe(
-                map((nodePage: NodePaging) => {
-                    return nodePage.list.entries.filter((node) => node.entry.isFolder ? node : null);
-                }),
+                map((nodePage: NodePaging) => nodePage.list.entries.filter((node) => node.entry.isFolder ? node : null)),
                 map((nodes: NodeEntry[]) => nodes.map((node) => new TreeBaseNode(node)))
             );
     }

@@ -26,9 +26,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const fakeNode: Node = <Node> {
+const fakeNode: Node = {
     id: 'fake'
-};
+} as Node;
 
 describe('NodeActionsService', () => {
 

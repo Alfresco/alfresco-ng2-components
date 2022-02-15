@@ -87,7 +87,7 @@ describe('SearchFilterComponent', () => {
                 }
             };
 
-            searchFacetFiltersService.responseFacets = <any> [
+            searchFacetFiltersService.responseFacets = [
                 { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
                             { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                             { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
@@ -131,7 +131,7 @@ describe('SearchFilterComponent', () => {
                 }
             };
 
-            searchFacetFiltersService.responseFacets = <any> [
+            searchFacetFiltersService.responseFacets = [
                 { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
                             { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                             { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
@@ -175,7 +175,7 @@ describe('SearchFilterComponent', () => {
                 }
             };
 
-            searchFacetFiltersService.responseFacets = <any> [
+            searchFacetFiltersService.responseFacets = [
                 { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
                             { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                             { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
@@ -201,13 +201,13 @@ describe('SearchFilterComponent', () => {
             spyOn(queryBuilder, 'update').and.stub();
             spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
-            const queryResponse = <any> {
+            const queryResponse = {
                 label: 'query response',
                 buckets: new SearchFilterList([
                         { label: 'q1', query: 'q1', checked: true, metrics: [{value: {count: 1}}] },
                         { label: 'q2', query: 'q2', checked: false, metrics: [{value: {count: 1}}] },
                         { label: 'q3', query: 'q3', checked: true, metrics: [{value: {count: 1}}] }])
-                };
+            } as any;
             searchFacetFiltersService.responseFacets = [queryResponse];
 
             fixture.detectChanges();
@@ -317,7 +317,7 @@ describe('SearchFilterComponent', () => {
             inputElement.triggerEventHandler('change', { target: { value: '*' } });
             expect(queryBuilder.update).toHaveBeenCalled();
 
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
@@ -334,7 +334,7 @@ describe('SearchFilterComponent', () => {
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="expansion-panel-Name"] input'));
             inputElement.triggerEventHandler('change', { target: { value: '*' } });
 
-            queryBuilder.executed.next(<any> getMockSearchResultWithResponseBucket());
+            queryBuilder.executed.next(getMockSearchResultWithResponseBucket());
             fixture.detectChanges();
 
             const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
@@ -348,7 +348,7 @@ describe('SearchFilterComponent', () => {
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             let sizes = getAllMenus(`${panel} mat-checkbox`, fixture);
@@ -414,7 +414,7 @@ describe('SearchFilterComponent', () => {
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             const facetElement = fixture.debugElement.query(By.css(panel));
@@ -426,7 +426,7 @@ describe('SearchFilterComponent', () => {
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             spyOn(queryBuilder, 'update').and.stub();
@@ -469,7 +469,7 @@ describe('SearchFilterComponent', () => {
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
             spyOn(queryBuilder, 'update').and.stub();
 
@@ -505,7 +505,7 @@ describe('SearchFilterComponent', () => {
         });
 
         it('should reset the query fragments when reset All is clicked', () => {
-            component.queryBuilder.queryFragments = { 'fragment1' : 'value1'};
+            component.queryBuilder.queryFragments = { fragment1 : 'value1'};
             appConfigService.config.search = searchFilter;
             searchFacetFiltersService.responseFacets = [];
             component.displayResetButton = true;
@@ -522,7 +522,7 @@ describe('SearchFilterComponent', () => {
     });
 });
 
-export function getAllMenus(regex, fixture: ComponentFixture<any>): string[] {
+export const getAllMenus = (regex, fixture: ComponentFixture<any>): string[] => {
     const elements = fixture.debugElement.queryAll(By.css(regex));
     return Array.from(elements).map(element => element.nativeElement.innerText);
-}
+};

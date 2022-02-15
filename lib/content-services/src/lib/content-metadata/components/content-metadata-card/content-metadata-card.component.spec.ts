@@ -48,14 +48,14 @@ describe('ContentMetadataCardComponent', () => {
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
         component = fixture.componentInstance;
-        node = <Node> {
+        node = {
             aspectNames: [],
             nodeType: '',
             content: {},
             properties: {},
             createdByUser: {},
             modifiedByUser: {}
-        };
+        } as Node;
 
         component.node = node;
         component.preset = preset;

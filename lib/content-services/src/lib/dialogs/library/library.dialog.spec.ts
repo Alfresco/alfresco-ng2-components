@@ -60,9 +60,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should set library id automatically on title input', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('libraryTitle');
@@ -75,9 +73,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should translate library title space character to dash for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('library title');
@@ -90,9 +86,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should not change custom library id on title input', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.id.setValue('custom-id');
@@ -129,9 +123,7 @@ describe('LibraryDialogComponent', () => {
         spyOn(sitesService, 'createSite').and.returnValue(
             of({entry: {id: 'fake-id'}} as SiteEntry).pipe(delay(100))
         );
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('library title');
@@ -196,12 +188,8 @@ describe('LibraryDialogComponent', () => {
     it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         const error = { message: '{ "error": { "statusCode": 409 } }' };
-        spyOn(sitesService, 'createSite').and.callFake(() => {
-            return throwError(error);
-        });
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'createSite').and.callFake(() => throwError(error));
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('test');
@@ -220,9 +208,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should not translate library title if value is not a valid id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('@@@####');
@@ -235,9 +221,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should translate library title partially for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('@@@####library');
@@ -250,9 +234,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should translate library title multiple space character to one dash for library id', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('library     title');
@@ -265,9 +247,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should invalidate library title if is too short', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'getSite').and.callFake(() => {
-            return throwError('error');
-        });
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('l');

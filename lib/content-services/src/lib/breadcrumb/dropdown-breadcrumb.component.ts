@@ -25,7 +25,7 @@ import { BreadcrumbComponent } from './breadcrumb.component';
     templateUrl: './dropdown-breadcrumb.component.html',
     styleUrls: ['./dropdown-breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-dropdown-breadcrumb' }
+    host: { class: 'adf-dropdown-breadcrumb' }
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
 

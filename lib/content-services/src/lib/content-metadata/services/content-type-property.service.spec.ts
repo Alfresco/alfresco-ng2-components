@@ -31,84 +31,84 @@ describe('ContentTypePropertyService', () => {
     let contentTypeService: ContentTypeService;
 
     const mockContent: any = {
-        'entry':
+        entry:
         {
-            'associations': [],
-            'isArchive': true,
-            'includedInSupertypeQuery': true,
-            'description': 'Base Content Object',
-            'isContainer': false,
-            'id': 'fk:nodeType',
-            'title': 'Content',
-            'model': { 'namespacePrefix': 'fk' },
-            'properties': [{ 'id': 'cm:name', 'title': 'Name', 'description': 'Name', 'dataType': 'd:text', 'isMultiValued': false, 'isMandatory': true, 'isMandatoryEnforced': true, 'isProtected': false }],
-            'parentId': 'cm:cmobject'
+            associations: [],
+            isArchive: true,
+            includedInSupertypeQuery: true,
+            description: 'Base Content Object',
+            isContainer: false,
+            id: 'fk:nodeType',
+            title: 'Content',
+            model: { namespacePrefix: 'fk' },
+            properties: [{ id: 'cm:name', title: 'Name', description: 'Name', dataType: 'd:text', isMultiValued: false, isMandatory: true, isMandatoryEnforced: true, isProtected: false }],
+            parentId: 'cm:cmobject'
         }
     };
 
     const mockContentWithProperties: any = {
-        'entry':
+        entry:
         {
-            'associations': [],
-            'isArchive': true,
-            'includedInSupertypeQuery': true,
-            'description': 'Base Content Object',
-            'isContainer': false,
-            'id': 'fk:nodeType',
-            'title': 'Content',
-            'model': { 'namespacePrefix': 'fk' },
-            'properties': [
+            associations: [],
+            isArchive: true,
+            includedInSupertypeQuery: true,
+            description: 'Base Content Object',
+            isContainer: false,
+            id: 'fk:nodeType',
+            title: 'Content',
+            model: { namespacePrefix: 'fk' },
+            properties: [
                 {
-                    'id': 'cm:name',
-                    'title': 'Name',
-                    'description': 'Name',
-                    'dataType': 'd:text',
-                    'isMultiValued': false,
-                    'isMandatory': true,
-                    'isMandatoryEnforced': true,
-                    'isProtected': false
+                    id: 'cm:name',
+                    title: 'Name',
+                    description: 'Name',
+                    dataType: 'd:text',
+                    isMultiValued: false,
+                    isMandatory: true,
+                    isMandatoryEnforced: true,
+                    isProtected: false
                 },
                 {
-                    'id': 'fk:brendonstare',
-                    'title': 'Brendon',
-                    'description': 'is watching the dark emperor',
-                    'dataType': 'd:text',
-                    'isMultiValued': false,
-                    'isMandatory': true,
-                    'defaultValue': 'default',
-                    'isMandatoryEnforced': true,
-                    'isProtected': false
+                    id: 'fk:brendonstare',
+                    title: 'Brendon',
+                    description: 'is watching the dark emperor',
+                    dataType: 'd:text',
+                    isMultiValued: false,
+                    isMandatory: true,
+                    defaultValue: 'default',
+                    isMandatoryEnforced: true,
+                    isProtected: false
                 }],
-            'parentId': 'cm:cmobject'
+            parentId: 'cm:cmobject'
         }
     };
 
     const mockSelectOptions: TypeEntry[] = [
         {
-            'entry': {
-                'isArchive': true,
-                'includedInSupertypeQuery': true,
-                'isContainer': false,
-                'model': {
-                    'id': 'e2e:test',
-                    'author': 'E2e Automation User',
-                    'description': 'Custom type e2e model',
-                    'namespaceUri': 'http://www.customModel.com/whatever',
-                    'namespacePrefix': 'e2e'
+            entry: {
+                isArchive: true,
+                includedInSupertypeQuery: true,
+                isContainer: false,
+                model: {
+                    id: 'e2e:test',
+                    author: 'E2e Automation User',
+                    description: 'Custom type e2e model',
+                    namespaceUri: 'http://www.customModel.com/whatever',
+                    namespacePrefix: 'e2e'
                 },
-                'id': 'e2e:test',
-                'title': 'Test type',
-                'properties': [{
-                    'id': 'cm:name',
-                    'title': 'Name',
-                    'description': 'Name',
-                    'dataType': 'd:text',
-                    'isMultiValued': false,
-                    'isMandatory': true,
-                    'isMandatoryEnforced': true,
-                    'isProtected': false
+                id: 'e2e:test',
+                title: 'Test type',
+                properties: [{
+                    id: 'cm:name',
+                    title: 'Name',
+                    description: 'Name',
+                    dataType: 'd:text',
+                    isMultiValued: false,
+                    isMandatory: true,
+                    isMandatoryEnforced: true,
+                    isProtected: false
                 }],
-                'parentId': 'cm:content'
+                parentId: 'cm:content'
             }
         }
     ];
@@ -127,7 +127,7 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a card text item for ACS version below 7', (done) => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
@@ -136,7 +136,7 @@ describe('ContentTypePropertyService', () => {
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
             properties: {}
-        };
+        } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(false);
         service.getContentTypeCardItem(fakeNode).subscribe((items: CardViewItem[]) => {
             expect(items.length).toBe(1);
@@ -150,7 +150,7 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a card select item for ACS version 7 and above', (done) => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
@@ -159,7 +159,7 @@ describe('ContentTypePropertyService', () => {
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
             properties: {}
-        };
+        } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContent));
         spyOn(contentTypeService, 'getContentTypeChildren').and.returnValue(of(mockSelectOptions));
@@ -175,7 +175,7 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a list of cards for the content type and all its own properties', (done) => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
@@ -184,7 +184,7 @@ describe('ContentTypePropertyService', () => {
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
             properties: {}
-        };
+        } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));
         spyOn(contentTypeService, 'getContentTypeChildren').and.returnValue(of(mockSelectOptions));
@@ -206,7 +206,7 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a list of cards for the content type and all its own properties with relative value set', (done) => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
@@ -215,7 +215,7 @@ describe('ContentTypePropertyService', () => {
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
             properties: {'fk:brendonstare': 'i keep staring i do not know why'}
-        };
+        } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));
         spyOn(contentTypeService, 'getContentTypeChildren').and.returnValue(of(mockSelectOptions));

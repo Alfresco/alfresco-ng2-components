@@ -22,9 +22,7 @@ describe('AspectOrientedConfigService', () => {
 
     let configService: AspectOrientedConfigService;
 
-    function createConfigService(configObj: AspectOrientedConfig) {
-        return new AspectOrientedConfigService(configObj);
-    }
+    const createConfigService = (configObj: AspectOrientedConfig) => new AspectOrientedConfigService(configObj);
 
     describe('reorganiseByConfig', () => {
 
@@ -34,10 +32,10 @@ describe('AspectOrientedConfigService', () => {
             expectations: OrganisedPropertyGroup[];
         }
 
-        const property1 = <Property> { name: 'property1' };
-        const property2 = <Property> { name: 'property2' };
-        const property3 = <Property> { name: 'property3' };
-        const property4 = <Property> { name: 'property4' };
+        const property1 = { name: 'property1' } as Property;
+        const property2 = { name: 'property2' } as Property;
+        const property3 = { name: 'property3' } as Property;
+        const property4 = { name: 'property4' } as Property;
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
@@ -53,7 +51,7 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'One property from One group',
                 config: {
-                    'berseria': [ 'property1' ]
+                    berseria: [ 'property1' ]
                 },
                 expectations: [{
                     title: 'Berseria',
@@ -63,7 +61,7 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'More properties from One group',
                 config: {
-                    'berseria': [ 'property1', 'property2' ]
+                    berseria: [ 'property1', 'property2' ]
                 },
                 expectations: [{
                     title: 'Berseria',
@@ -73,8 +71,8 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'One-one properties from More group',
                 config: {
-                    'berseria': [ 'property1' ],
-                    'zestiria': [ 'property3' ]
+                    berseria: [ 'property1' ],
+                    zestiria: [ 'property3' ]
                 },
                 expectations: [
                     {
@@ -90,8 +88,8 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'More properties from More groups',
                 config: {
-                    'zestiria': [ 'property4', 'property3' ],
-                    'berseria': [ 'property2', 'property1' ]
+                    zestiria: [ 'property4', 'property3' ],
+                    berseria: [ 'property2', 'property1' ]
                 },
                 expectations: [
                     {
@@ -107,8 +105,8 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'Wildcard',
                 config: {
-                    'berseria': '*',
-                    'zestiria': [ 'property4' ]
+                    berseria: '*',
+                    zestiria: [ 'property4' ]
                 },
                 expectations: [
                     {
@@ -124,9 +122,9 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'Not existing group',
                 config: {
-                    'berseria': '*',
+                    berseria: '*',
                     'not-existing-group': '*',
-                    'zestiria': [ 'property4' ]
+                    zestiria: [ 'property4' ]
                 },
                 expectations: [
                     {
@@ -142,8 +140,8 @@ describe('AspectOrientedConfigService', () => {
             {
                 name: 'Not existing property',
                 config: {
-                    'berseria': [ 'not-existing-property' ],
-                    'zestiria': [ 'property4' ]
+                    berseria: [ 'not-existing-property' ],
+                    zestiria: [ 'property4' ]
                 },
                 expectations: [
                     {
@@ -177,10 +175,10 @@ describe('AspectOrientedConfigService', () => {
     });
 
     describe('appendAllPreset', () => {
-        const property1 = <Property> { name: 'property1' };
-        const property2 = <Property> { name: 'property2' };
-        const property3 = <Property> { name: 'property3' };
-        const property4 = <Property> { name: 'property4' };
+        const property1 = { name: 'property1' } as Property;
+        const property2 = { name: 'property2' } as Property;
+        const property3 = { name: 'property3' } as Property;
+        const property4 = { name: 'property4' } as Property;
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },

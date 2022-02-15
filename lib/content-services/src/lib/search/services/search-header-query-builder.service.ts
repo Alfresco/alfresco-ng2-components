@@ -66,7 +66,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     setActiveFilter(columnActivated: string, filterValue: string) {
         const selectedFilter = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
         if (!selectedFilter) {
-            this.activeFilters.push(<FilterSearch> {
+            this.activeFilters.push({
                 key: columnActivated,
                 value: filterValue
             });
@@ -104,7 +104,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
                 const currentSort: SearchSortingDefinition = {
                     key: columnSorting.key,
                     label: 'current',
-                    type: type,
+                    type,
                     field: fieldValue,
                     ascending: optionAscending
                 };

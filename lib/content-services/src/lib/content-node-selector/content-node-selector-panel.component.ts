@@ -62,7 +62,7 @@ export const defaultValidation = () => true;
     templateUrl: './content-node-selector-panel.component.html',
     styleUrls: ['./content-node-selector-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-node-selector-panel' },
+    host: { class: 'adf-content-node-selector-panel' },
     providers: [{
         provide: SEARCH_QUERY_SERVICE_TOKEN,
         useClass: SearchQueryBuilderService
@@ -70,6 +70,7 @@ export const defaultValidation = () => true;
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
         skipCount: 0
@@ -418,10 +419,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (!filter) {
             filter = () => true;
         }
-        this._rowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
-            return filter(value, index, array) &&
+        this._rowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => filter(value, index, array) &&
                 !this.isExcludedSiteContent(value);
-        };
     }
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {

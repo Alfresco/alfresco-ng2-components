@@ -130,7 +130,7 @@ export class SearchFilterList<T> implements Iterable<T> {
         const items = this.visibleItems;
 
         return {
-            next(): IteratorResult<T> {
+            next: (): IteratorResult<T> => {
                 if (pointer < items.length) {
                     return {
                         done: false,

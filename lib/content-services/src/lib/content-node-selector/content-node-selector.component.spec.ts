@@ -26,7 +26,6 @@ import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -111,19 +110,19 @@ describe('ContentNodeSelectorComponent', () => {
         fixture.destroy();
     });
 
-    function enableLocalUpload() {
+    const enableLocalUpload = () => {
         component.data.showLocalUploadButton = true;
         component.hasAllowableOperations = true;
         component.showingSearch = false;
         component.isLoading = false;
-    }
+    };
 
-    function selectTabByIndex(tabIndex: number) {
+    const selectTabByIndex = (tabIndex: number) => {
         const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[tabIndex];
         const attributes = uploadFromLocalTab.nativeNode.attributes as NamedNodeMap;
         const tabPositionInSet = Number(attributes.getNamedItem('aria-posinset').value) - 1;
         component.onTabSelectionChange(tabPositionInSet);
-    }
+    };
 
     describe('Data injecting with the "Material dialog way"', () => {
 
@@ -157,7 +156,7 @@ describe('ContentNodeSelectorComponent', () => {
                     })
                 }
             }))
-                .toBe(data.rowFilter(<ShareDataRow> {
+                .toBe(data.rowFilter({
                     node: {
                         entry: new Node({
                             name: 'impossible-name',
@@ -433,7 +432,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should uploadStarted become true when the first upload gets started', () => {
-            const fileUploadEvent  = new FileUploadEvent(new FileModel(<File> { name: 'fake-name', size: 100 }));
+            const fileUploadEvent  = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
             uploadService.fileUploadStarting.next(fileUploadEvent);
 
             expect(component.uploadStarted).toBe(true);

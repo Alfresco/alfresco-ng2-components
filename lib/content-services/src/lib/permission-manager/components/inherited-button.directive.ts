@@ -23,7 +23,7 @@ import { Node } from '@alfresco/js-api';
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
     host: {
-        'role': 'button',
+        role: 'button',
         '(click)': 'onInheritPermissionClicked()'
     }
 })

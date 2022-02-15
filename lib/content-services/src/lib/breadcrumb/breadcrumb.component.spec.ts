@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PathElementEntity, Node } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
@@ -72,7 +72,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should emit navigation event', (done) => {
-        const node = <PathElementEntity> { id: '-id-', name: 'name' };
+        const node = { id: '-id-', name: 'name' };
         component.navigate.subscribe((val) => {
             expect(val).toBe(node);
             done();
@@ -112,8 +112,7 @@ describe('Breadcrumb', () => {
         });
 
         it('should update document list on click', () => {
-
-            const node = <PathElementEntity> { id: '-id-', name: 'name' };
+            const node = { id: '-id-', name: 'name' };
             component.target = documentListComponent;
 
             component.onRoutePathClick(node, null);

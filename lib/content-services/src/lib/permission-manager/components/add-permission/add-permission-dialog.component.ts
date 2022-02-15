@@ -96,8 +96,8 @@ export class AddPermissionDialogComponent {
     }
 
     onMemberUpdate(role: string, member: MemberModel) {
-        const _member = this.selectedMembers.find(({ id }) => id === member.id);
-        _member.role = role;
+        const memberInstance = this.selectedMembers.find(({ id }) => id === member.id);
+        memberInstance.role = role;
     }
 
     isValid(): boolean {

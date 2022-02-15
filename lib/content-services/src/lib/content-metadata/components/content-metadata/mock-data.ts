@@ -17,57 +17,57 @@
 
 export const mockGroupProperties = [
     {
-        'title': 'EXIF',
-        'properties': [
+        title: 'EXIF',
+        properties: [
             {
-                'label': 'Image Width',
-                'value': 363,
-                'key': 'properties.exif:pixelXDimension',
-                'default': null,
-                'editable': true,
-                'clickable': false,
-                'icon': '',
-                'data': null,
-                'type': 'int',
-                'multiline': false,
-                'pipes': [],
-                'clickCallBack': null,
-                'displayValue': 400
+                label: 'Image Width',
+                value: 363,
+                key: 'properties.exif:pixelXDimension',
+                default: null,
+                editable: true,
+                clickable: false,
+                icon: '',
+                data: null,
+                type: 'int',
+                multiline: false,
+                pipes: [],
+                clickCallBack: null,
+                displayValue: 400
             },
             {
-                'label': 'Image Height',
-                'value': 400,
-                'key': 'properties.exif:pixelYDimension',
-                'default': null,
-                'editable': true,
-                'clickable': false,
-                'icon': '',
-                'data': null,
-                'type': 'int',
-                'multiline': false,
-                'pipes': [],
-                'clickCallBack': null,
-                'displayValue': 400
+                label: 'Image Height',
+                value: 400,
+                key: 'properties.exif:pixelYDimension',
+                default: null,
+                editable: true,
+                clickable: false,
+                icon: '',
+                data: null,
+                type: 'int',
+                multiline: false,
+                pipes: [],
+                clickCallBack: null,
+                displayValue: 400
             }
         ]
     },
     {
-        'title': 'CUSTOM',
-        'properties': [
+        title: 'CUSTOM',
+        properties: [
             {
-                'label': 'Height',
-                'value': 400,
-                'key': 'properties.custom:abc',
-                'default': null,
-                'editable': true,
-                'clickable': false,
-                'icon': '',
-                'data': null,
-                'type': 'int',
-                'multiline': false,
-                'pipes': [],
-                'clickCallBack': null,
-                'displayValue': 400
+                label: 'Height',
+                value: 400,
+                key: 'properties.custom:abc',
+                default: null,
+                editable: true,
+                clickable: false,
+                icon: '',
+                data: null,
+                type: 'int',
+                multiline: false,
+                pipes: [],
+                clickCallBack: null,
+                displayValue: 400
             }
         ]
     }

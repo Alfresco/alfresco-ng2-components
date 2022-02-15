@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let fakeSearch = {
+export const fakeSearch = {
     list: {
         pagination: {
             count: 1,
@@ -44,7 +44,7 @@ export let fakeSearch = {
     }
 };
 
-export let mockError = {
+export const mockError = {
     error: {
         errorKey: 'Search failed',
         statusCode: 400,
@@ -54,7 +54,7 @@ export let mockError = {
     }
 };
 
-export let searchMockApi = {
+export const searchMockApi = {
     core: {
         queriesApi: {
             findNodes: () => Promise.resolve(fakeSearch)

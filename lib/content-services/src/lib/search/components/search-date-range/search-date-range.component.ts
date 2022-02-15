@@ -96,7 +96,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     ngOnInit() {
         this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
 
-        const customDateAdapter = <MomentDateAdapter> <any> this.dateAdapter;
+        const customDateAdapter = this.dateAdapter as MomentDateAdapter;
         customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
 
         this.userPreferencesService
@@ -226,7 +226,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             formControl.setValue(formatDate);
         } else if (formatDate) {
             formControl.setErrors({
-                'invalidOnChange': true
+                invalidOnChange: true
             });
         }
 

@@ -48,7 +48,7 @@ describe('SearchNumberRangeComponent', () => {
             queryFragments: {
                 contentSize: 'query'
             },
-            update() {}
+            update: () => {}
         };
 
         component.id = 'contentSize';
@@ -66,7 +66,7 @@ describe('SearchNumberRangeComponent', () => {
     it('should update query builder on value changes', () => {
         const context: any = {
             queryFragments: {},
-            update() {}
+            update: () => {}
         };
 
         component.id = 'contentSize';
@@ -110,7 +110,7 @@ describe('SearchNumberRangeComponent', () => {
     it('should format value based on the current pattern', () => {
         const context: any = {
             queryFragments: {},
-            update() {}
+            update: () => {}
         };
 
         component.id = 'range1';

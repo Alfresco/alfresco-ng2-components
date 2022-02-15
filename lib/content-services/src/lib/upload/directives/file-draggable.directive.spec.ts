@@ -61,19 +61,17 @@ describe('FileDraggableDirective', () => {
         fixture.destroy();
     });
 
-    function createEvent(eventName: string): DragEvent {
-        return new DragEvent(eventName, {
-            bubbles: true,
-            cancelable: true,
-            dataTransfer: new DataTransfer()
-        });
-    }
+    const createEvent = (eventName: string): DragEvent => new DragEvent(eventName, {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer: new DataTransfer()
+    });
 
-    function raiseEvent(eventName: string): DragEvent {
+    const raiseEvent = (eventName: string): DragEvent => {
         const event = createEvent(eventName);
         testContent.dispatchEvent(event);
         return event;
-    }
+    };
 
     it('should always be enabled by default', () => {
         expect(directive.enabled).toBeTruthy();

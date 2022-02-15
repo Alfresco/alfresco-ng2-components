@@ -110,9 +110,9 @@ describe('PermissionListService', () => {
             const event = { source: { checked: false } };
             const updateNode = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
             node.permissions.locallySet = [{
-                'authorityId': 'GROUP_site_testsite_SiteManager',
-                'name': 'SiteManager',
-                'accessStatus': 'ALLOWED'
+                authorityId: 'GROUP_site_testsite_SiteManager',
+                name: 'SiteManager',
+                accessStatus: 'ALLOWED'
             }];
             updateNode.permissions.isInheritanceEnabled = false;
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));

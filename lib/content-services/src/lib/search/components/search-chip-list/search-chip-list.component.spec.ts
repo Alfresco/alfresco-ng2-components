@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SearchFacetFiltersService, SelectedBucket } from '../../services/search-facet-filters.service';
+import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -34,8 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
 class TestComponent {
     allowClear = true;
     searchFilter = {
-        selectedBuckets: <SelectedBucket[]> [],
-        unselectFacetBucket() {}
+        selectedBuckets: [],
+        unselectFacetBucket: () => {}
     };
 }
 

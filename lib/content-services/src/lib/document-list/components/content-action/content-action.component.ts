@@ -163,7 +163,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             icon: this.icon,
             permission: this.permission,
             disableWithNoPermission: this.disableWithNoPermission,
-            target: target,
+            target,
             disabled: this.disabled,
             visible: this.visible
         });

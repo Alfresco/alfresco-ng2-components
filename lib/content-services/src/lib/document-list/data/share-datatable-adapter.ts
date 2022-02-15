@@ -28,11 +28,10 @@ import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
 import { RowFilter } from './row-filter.model';
 
+export const ERR_ROW_NOT_FOUND: string = 'Row not found';
+export const ERR_COL_NOT_FOUND: string = 'Column not found';
+
 export class ShareDataTableAdapter implements DataTableAdapter {
-
-    ERR_ROW_NOT_FOUND: string = 'Row not found';
-    ERR_COL_NOT_FOUND: string = 'Column not found';
-
     private _sortingMode: string;
     private sorting: DataSorting;
     private rows: DataRow[];
@@ -91,12 +90,12 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     getValue(row: DataRow, col: DataColumn): any {
         if (!row) {
-            throw new Error(this.ERR_ROW_NOT_FOUND);
+            throw new Error(ERR_ROW_NOT_FOUND);
         }
         if (!col) {
-            throw new Error(this.ERR_COL_NOT_FOUND);
+            throw new Error(ERR_COL_NOT_FOUND);
         }
-        const dataRow: ShareDataRow = <ShareDataRow> row;
+        const dataRow = row as ShareDataRow;
         const value: any = row.getValue(col.key);
         if (dataRow.cache[col.key] !== undefined) {
             return dataRow.cache[col.key];
@@ -111,7 +110,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 }
             }
 
-            const node = (<ShareDataRow> row).node;
+            const node = row.node;
 
             if (node.entry.isFolder) {
                 return this.getFolderIcon(node);
@@ -280,9 +279,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         if (merge) {
             const listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
-                const isPresent = this.rows.find((currentRow: any) => {
-                    return currentRow.obj.entry.id === elementToFilter.obj.entry.id;
-                });
+                const isPresent = this.rows.find((currentRow: any) => currentRow.obj.entry.id === elementToFilter.obj.entry.id);
 
                 return !isPresent;
             });

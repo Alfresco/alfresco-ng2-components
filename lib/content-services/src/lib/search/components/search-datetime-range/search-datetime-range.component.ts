@@ -214,7 +214,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             formControl.setValue(formatDate);
         } else if (formatDate) {
             formControl.setErrors({
-                'invalidOnChange': true
+                invalidOnChange: true
             });
         }
 

@@ -27,9 +27,7 @@ describe('LayoutOrientedConfigService', () => {
 
     let configService: LayoutOrientedConfigService;
 
-    function createConfigService(configObj: LayoutOrientedConfig) {
-        return new LayoutOrientedConfigService(configObj);
-    }
+    const createConfigService = (configObj: LayoutOrientedConfig) => new LayoutOrientedConfigService(configObj);
 
     describe('isGroupAllowed', () => {
 
@@ -102,12 +100,12 @@ describe('LayoutOrientedConfigService', () => {
             expectations: OrganisedPropertyGroup[];
         }
 
-        const property1 = <Property> { name: 'property1' };
-        const property2 = <Property> { name: 'property2' };
-        const property3 = <Property> { name: 'property3' };
-        const property4 = <Property> { name: 'property4' };
-        const property5 = <Property> { name: 'property5' };
-        const property6 = <Property> { name: 'property6' };
+        const property1 = { name: 'property1' } as Property;
+        const property2 = { name: 'property2' } as Property;
+        const property3 = { name: 'property3' } as Property;
+        const property4 = { name: 'property4' } as Property;
+        const property5 = { name: 'property5' } as Property;
+        const property6 = { name: 'property6' } as Property;
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
@@ -282,8 +280,8 @@ describe('LayoutOrientedConfigService', () => {
                         title: 'First group',
                         items: [
                             { aspect: 'zestiria', properties: 'property3' },
-                            { type: 'berseria', properties: ['property2', <any> { title: 'Custom title', name: 'property1' }] },
-                            { type: 'otherTales', properties: [<any> { title: 'Custom title', name: 'property5' }] }
+                            { type: 'berseria', properties: ['property2', { title: 'Custom title', name: 'property1' } as any] },
+                            { type: 'otherTales', properties: [{ title: 'Custom title', name: 'property5' } as any] }
                         ]
                     }
                 ],
@@ -293,8 +291,8 @@ describe('LayoutOrientedConfigService', () => {
                         properties: [
                             property3,
                             property2,
-                            <Property> { name: 'property1', title: 'Custom title', editable: true },
-                            <Property> { name: 'property5', title: 'Custom title', editable: true }
+                            { name: 'property1', title: 'Custom title', editable: true } as Property,
+                            { name: 'property5', title: 'Custom title', editable: true } as Property
                         ]
                     }
                 ]

@@ -70,7 +70,7 @@ describe('InheritPermissionDirective', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
+        const buttonPermission = element.querySelector<HTMLButtonElement>('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).toBeNull();
         buttonPermission.click();
@@ -95,7 +95,7 @@ describe('InheritPermissionDirective', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
+        const buttonPermission = element.querySelector<HTMLButtonElement>('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).not.toBeNull();
         buttonPermission.click();
@@ -114,7 +114,7 @@ describe('InheritPermissionDirective', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
+        const buttonPermission = element.querySelector<HTMLButtonElement>('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).not.toBeNull();
         buttonPermission.click();

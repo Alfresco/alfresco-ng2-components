@@ -57,7 +57,7 @@ describe('AddPermissionComponent', () => {
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
         expect(element.querySelector('#adf-add-permission-actions')).not.toBeNull();
-        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+        const addButton = element.querySelector<HTMLButtonElement>('#adf-add-permission-action-button');
         expect(addButton.disabled).toBeTruthy();
     });
 

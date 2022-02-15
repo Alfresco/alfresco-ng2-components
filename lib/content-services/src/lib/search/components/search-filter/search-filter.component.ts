@@ -37,7 +37,7 @@ export class SearchFilterComponent {
 
     facetQueriesLabel: string = 'Facet Queries';
     facetExpanded = {
-        'default': false
+        default: false
     };
     displayResetButton: boolean;
 

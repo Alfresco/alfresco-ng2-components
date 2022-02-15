@@ -38,8 +38,8 @@ describe('SearchHeaderQueryBuilderService', () => {
     it('should load the configuration from app config', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -66,8 +66,8 @@ describe('SearchHeaderQueryBuilderService', () => {
     it('should return the category assigned to a column key', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', columnKey: 'fake-key-1', enabled: true },
-                <any> { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
+                { id: 'cat1', columnKey: 'fake-key-1', enabled: true } as any,
+                { id: 'cat2', columnKey: 'fake-key-2', enabled: true } as any
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -98,8 +98,8 @@ describe('SearchHeaderQueryBuilderService', () => {
     it('should add the extra filter for the parent node', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -128,8 +128,8 @@ describe('SearchHeaderQueryBuilderService', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ],
             filterQueries: expectedResult
         };
@@ -154,7 +154,7 @@ describe('SearchHeaderQueryBuilderService', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             filterQueries: [
                 { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }

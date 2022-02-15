@@ -38,6 +38,7 @@ export class RatingService implements RatingServiceInterface {
 
     /**
      * Gets the current user's rating for a node.
+     *
      * @param nodeId Node to get the rating from
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
      * @returns The rating value
@@ -51,6 +52,7 @@ export class RatingService implements RatingServiceInterface {
 
     /**
      * Adds the current user's rating for a node.
+     *
      * @param nodeId Target node for the rating
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
      * @param vote Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
@@ -58,8 +60,8 @@ export class RatingService implements RatingServiceInterface {
      */
     postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | any> {
         const ratingBody: RatingBody = new RatingBody({
-            'id': ratingType,
-            'myRating': vote
+            id: ratingType,
+            myRating: vote
         });
         return from(this.ratingsApi.createRating(nodeId, ratingBody))
             .pipe(
@@ -69,6 +71,7 @@ export class RatingService implements RatingServiceInterface {
 
     /**
      * Removes the current user's rating for a node.
+     *
      * @param nodeId Target node
      * @param ratingType Type of rating to remove (can be "likes" or "fiveStar")
      * @returns Null response indicating that the operation is complete

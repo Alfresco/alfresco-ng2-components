@@ -27,17 +27,17 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchCategory } from '../../models/search-category.interface';
 
 const mockCategory: SearchCategory = {
-    'id': 'queryName',
-    'name': 'Name',
-    'columnKey': 'name',
-    'enabled': true,
-    'expanded': true,
-    'component': {
-        'selector': 'text',
-        'settings': {
-            'pattern': `cm:name:'(.*?)'`,
-            'field': 'cm:name',
-            'placeholder': 'Enter the name'
+    id: 'queryName',
+    name: 'Name',
+    columnKey: 'name',
+    enabled: true,
+    expanded: true,
+    component: {
+        selector: 'text',
+        settings: {
+            pattern: `cm:name:'(.*?)'`,
+            field: 'cm:name',
+            placeholder: 'Enter the name'
         }
     }
 };
@@ -151,6 +151,7 @@ describe('SearchFilterContainerComponent', () => {
             fixture.detectChanges();
 
             expect(component.focusTrap).toBeDefined();
+            // eslint-disable-next-line no-underscore-dangle
             expect(component.focusTrap._element).toBe(component.filterContainer.nativeElement);
         });
 
