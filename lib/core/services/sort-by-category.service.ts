@@ -56,7 +56,7 @@ export class SortByCategoryMapperService<T extends SortbleByCategoryItem = Sortb
       itemsByCategoryObject[category].push(item);
     });
 
-    const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map(key => {
+    const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map((key) => {
       const category = key;
       return { category, items: itemsByCategoryObject[category] };
     });

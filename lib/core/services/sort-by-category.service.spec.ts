@@ -21,7 +21,7 @@ interface TestSortbleByCategoryItem extends SortbleByCategoryItem {
     id: string;
 }
 
-fdescribe('SortByCategoryMapperService', () => {
+describe('SortByCategoryMapperService', () => {
 
     let mapper: SortByCategoryMapperService<TestSortbleByCategoryItem>;
 
@@ -72,7 +72,7 @@ fdescribe('SortByCategoryMapperService', () => {
             name: 'name-c',
             id: 'id3',
             category: DEFAULT_CATEGORIES[0]
-        }]
+        }];
 
         const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
 
@@ -105,12 +105,12 @@ fdescribe('SortByCategoryMapperService', () => {
 
         expect(result.length).toBe(3);
         expect(result[0].category).toBe('category1');
-        expect(result[0].items[0]).toEqual({ name: 'name-b', id: 'id2', category: 'category1' })
+        expect(result[0].items[0]).toEqual({ name: 'name-b', id: 'id2', category: 'category1' });
         expect(result[1].category).toBe('category2');
-        expect(result[1].items[0]).toEqual({ name: 'name-c', id: 'id4', category: 'category2' })
+        expect(result[1].items[0]).toEqual({ name: 'name-c', id: 'id4', category: 'category2' });
         expect(result[2].category).toBe('');
-        expect(result[2].items[0]).toEqual({ name: 'name-d', id: 'id3', category: '' })
-        expect(result[2].items[1]).toEqual({ name: 'name-e', id: 'id', category: 'DefaultCategory1' })
+        expect(result[2].items[0]).toEqual({ name: 'name-d', id: 'id3', category: '' });
+        expect(result[2].items[1]).toEqual({ name: 'name-e', id: 'id', category: 'DefaultCategory1' });
     });
 
     it('should set items in ascending order in appropriate category', () => {
