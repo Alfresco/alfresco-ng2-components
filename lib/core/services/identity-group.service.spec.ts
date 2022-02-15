@@ -19,8 +19,6 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { IdentityGroupService } from './identity-group.service';
-import { IdentityGroupSearchParam } from '../models/identity-group.model';
-
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
@@ -59,7 +57,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to fetch groups based on group name', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
-        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((res) => {
+        service.findGroupsByName({name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(5);

@@ -63,7 +63,7 @@ describe('Comment Content Service', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeContentComment)
             });
@@ -81,7 +81,7 @@ describe('Comment Content Service', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeContentComments)
             });

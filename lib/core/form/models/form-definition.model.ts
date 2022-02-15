@@ -26,13 +26,13 @@ export class FormDefinitionModel extends FormSaveRepresentation {
     constructor(id: string, name: any, lastUpdatedByFullName: string, lastUpdated: string, metadata: any) {
         super();
         this.formRepresentation = {
-            id: id,
-            name: name,
+            id,
+            name,
             description: '',
             version: 1,
             lastUpdatedBy: 1,
-            lastUpdatedByFullName: lastUpdatedByFullName,
-            lastUpdated: lastUpdated,
+            lastUpdatedByFullName,
+            lastUpdated,
             stencilSetId: 0,
             referenceId: null,
             formDefinition: {
@@ -47,7 +47,7 @@ export class FormDefinitionModel extends FormSaveRepresentation {
                     sizeY: 1,
                     row: -1,
                     col: -1,
-                    fields: {'1': this.metadataToFields(metadata)}
+                    fields: {1: this.metadataToFields(metadata)}
                 }],
                 gridsterForm: false,
                 javascriptEvents: [],
@@ -64,7 +64,7 @@ export class FormDefinitionModel extends FormSaveRepresentation {
     private metadataToFields(metadata: any): any[] {
         const fields = [];
         if (metadata) {
-            metadata.forEach(function(property) {
+            metadata.forEach((property) => {
                 if (property) {
                     const field = {
                         type: 'text',

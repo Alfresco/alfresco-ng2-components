@@ -59,7 +59,7 @@ export class ExternalAlfrescoApiService {
             provider: 'ECM',
             hostEcm: ecmHost,
             authType: 'BASIC',
-            contextRoot: contextRoot,
+            contextRoot,
             domainPrefix
         };
         this.initAlfrescoApi(config);

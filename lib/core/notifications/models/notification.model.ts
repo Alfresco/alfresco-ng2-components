@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+// eslint-disable-next-line no-shadow
 export enum NOTIFICATION_TYPE {
     INFO = 'info',
     WARN = 'warning',

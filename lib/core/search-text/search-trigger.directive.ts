@@ -48,7 +48,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
-        'role': 'combobox',
+        role: 'combobox',
         '[attr.autocomplete]': 'autocomplete',
         'aria-autocomplete': 'list',
         '[attr.aria-expanded]': 'panelOpen.toString()',

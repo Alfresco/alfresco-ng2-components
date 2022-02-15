@@ -69,7 +69,7 @@ export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKey
         const validValues = this.values.filter((i) => i.name.length && i.value.length);
 
         if (remove || validValues.length) {
-            this.cardViewUpdateService.update(<CardViewKeyValuePairsItemModel> { ...this.property }, validValues);
+            this.cardViewUpdateService.update({ ...this.property } as CardViewKeyValuePairsItemModel, validValues);
             this.property.value = validValues;
         }
     }

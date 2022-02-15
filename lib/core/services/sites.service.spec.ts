@@ -62,23 +62,23 @@ describe('Sites service', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'list': {
-                    'pagination': {
-                        'count': 1,
-                        'hasMoreItems': false,
-                        'totalItems': 1,
-                        'skipCount': 0,
-                        'maxItems': 100
+                list: {
+                    pagination: {
+                        count: 1,
+                        hasMoreItems: false,
+                        totalItems: 1,
+                        skipCount: 0,
+                        maxItems: 100
                     },
-                    'entries': [
+                    entries: [
                         {
-                            'entry': {
-                                'role': 'SiteManager',
-                                'visibility': 'PUBLIC',
-                                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                'description': 'This is a Sample Alfresco Team site.',
-                                'id': 'swsdp',
-                                'title': 'FAKE'
+                            entry: {
+                                role: 'SiteManager',
+                                visibility: 'PUBLIC',
+                                guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
+                                description: 'This is a Sample Alfresco Team site.',
+                                id: 'swsdp',
+                                title: 'FAKE'
                             }
                         }
                     ]
@@ -97,14 +97,14 @@ describe('Sites service', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'entry': {
-                    'role': 'SiteManager',
-                    'visibility': 'PUBLIC',
-                    'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                    'description': 'This is a Sample Alfresco Team site.',
-                    'id': 'swsdp',
-                    'preset': 'site-dashboard',
-                    'title': 'FAKE-SINGLE-TITLE'
+                entry: {
+                    role: 'SiteManager',
+                    visibility: 'PUBLIC',
+                    guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
+                    description: 'This is a Sample Alfresco Team site.',
+                    id: 'swsdp',
+                    preset: 'site-dashboard',
+                    title: 'FAKE-SINGLE-TITLE'
                 }
             }
         });
@@ -121,35 +121,35 @@ describe('Sites service', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'list': {
-                    'pagination': {
-                        'count': 1,
-                        'hasMoreItems': false,
-                        'totalItems': 1,
-                        'skipCount': 0,
-                        'maxItems': 100
+                list: {
+                    pagination: {
+                        count: 1,
+                        hasMoreItems: false,
+                        totalItems: 1,
+                        skipCount: 0,
+                        maxItems: 100
                     },
-                    'entries': [
+                    entries: [
                         {
-                            'entry': {
-                                'id': 'site-id',
-                                'createdAt': '2020-05-13T07:46:36.180Z',
-                                'site': {
-                                        'id': 'site-id',
-                                        'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                        'title': 'Sample Site',
-                                        'description': '',
-                                        'visibility': 'MODERATED',
-                                        'preset': 'preset',
-                                        'role': 'Manager'
+                            entry: {
+                                id: 'site-id',
+                                createdAt: '2020-05-13T07:46:36.180Z',
+                                site: {
+                                        id: 'site-id',
+                                        guid: 'b4cff62a-664d-4d45-9302-98723eac1319',
+                                        title: 'Sample Site',
+                                        description: '',
+                                        visibility: 'MODERATED',
+                                        preset: 'preset',
+                                        role: 'Manager'
                                 },
-                                'person': {
-                                        'id': 'user-id',
-                                        'firstName': 'string',
-                                        'lastName': 'string',
-                                        'displayName': 'string'
+                                person: {
+                                        id: 'user-id',
+                                        firstName: 'string',
+                                        lastName: 'string',
+                                        displayName: 'string'
                                 },
-                                'message': 'message'
+                                message: 'message'
                             }
                       }
                     ]

@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export function getType(type: any): any {
-    return () => type;
-}
+export const getType = (type: any): any => () => type;

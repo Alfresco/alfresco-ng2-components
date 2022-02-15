@@ -29,10 +29,10 @@ describe('ContextMenuOverlayService', () => {
     let injector: Injector;
     const overlayConfig = {
         panelClass: 'test-panel',
-        source: <MouseEvent> {
+        source: {
             clientY: 1,
             clientX: 1
-        }
+        } as MouseEvent
     };
 
     setupTestBed({

@@ -44,8 +44,8 @@ describe('DateTimeEditorComponent', () => {
         fixture = TestBed.createComponent(DateTimeEditorComponent);
         component = fixture.componentInstance;
 
-        row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
-        column = <DynamicTableColumn> { id: 'datetime', type: 'Datetime' };
+        row = { value: { date: '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
+        column = { id: 'datetime', type: 'Datetime' } as DynamicTableColumn;
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field, null);
         table.rows.push(row);

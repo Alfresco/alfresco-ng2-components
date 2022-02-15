@@ -38,6 +38,7 @@ export class JwtHelperService {
 
     /**
      * Decodes a JSON web token into a JS object.
+     *
      * @param token Token in encoded form
      * @returns Decoded token data object
      */
@@ -79,6 +80,7 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access or id token.
+     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -88,6 +90,7 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access token.
+     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -97,6 +100,7 @@ export class JwtHelperService {
 
     /**
      * Gets access token
+     *
      * @returns access token
      */
     getAccessToken(): string {
@@ -105,6 +109,7 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user id token.
+     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
@@ -114,6 +119,7 @@ export class JwtHelperService {
 
     /**
      * Gets id token
+     *
      * @returns id token
      */
      getIdToken(): string {
@@ -122,6 +128,7 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access token.
+     *
      * @param accessToken your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
@@ -132,11 +139,12 @@ export class JwtHelperService {
             const tokenPayload = this.decodeToken(token);
             value = tokenPayload[key];
         }
-        return <T> value;
+        return value;
     }
 
     /**
      * Gets realm roles.
+     *
      * @returns Array of realm roles
      */
     getRealmRoles(): string[] {
@@ -146,6 +154,7 @@ export class JwtHelperService {
 
     /**
      * Gets Client roles.
+     *
      * @returns Array of client roles
      */
     getClientRoles(clientName: string): string[] {
@@ -155,6 +164,7 @@ export class JwtHelperService {
 
     /**
      * Checks for single realm role.
+     *
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise
      */
@@ -162,38 +172,35 @@ export class JwtHelperService {
         let hasRole = false;
         if (this.getAccessToken()) {
             const realmRoles = this.getRealmRoles();
-            hasRole = realmRoles.some((currentRole) => {
-                return currentRole === role;
-            });
+            hasRole = realmRoles.some((currentRole) => currentRole === role);
         }
         return hasRole;
     }
 
     /**
      * Checks for realm roles.
+     *
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
     hasRealmRoles(rolesToCheck: string []): boolean {
-        return rolesToCheck.some((currentRole) => {
-            return this.hasRealmRole(currentRole);
-        });
+        return rolesToCheck.some((currentRole) => this.hasRealmRole(currentRole));
     }
 
     /**
      * Checks for client roles.
+     *
      * @param clientName Targeted client name
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
     hasRealmRolesForClientRole(clientName: string, rolesToCheck: string []): boolean {
-        return rolesToCheck.some((currentRole) => {
-            return this.hasClientRole(clientName, currentRole);
-        });
+        return rolesToCheck.some((currentRole) => this.hasClientRole(clientName, currentRole));
     }
 
     /**
      * Checks for client role.
+     *
      * @param clientName Targeted client name
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise
@@ -202,9 +209,7 @@ export class JwtHelperService {
         let hasRole = false;
         if (this.getAccessToken()) {
             const clientRoles = this.getClientRoles(clientName);
-            hasRole = clientRoles.some((currentRole) => {
-                return currentRole === role;
-            });
+            hasRole = clientRoles.some((currentRole) => currentRole === role);
         }
         return hasRole;
     }

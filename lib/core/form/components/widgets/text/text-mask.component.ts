@@ -51,11 +51,11 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     };
 
     private translationMask = {
-        '0': { pattern: /\d/ },
-        '9': { pattern: /\d/, optional: true },
+        0: { pattern: /\d/ },
+        9: { pattern: /\d/, optional: true },
         '#': { pattern: /\d/, recursive: true },
-        'A': { pattern: /[a-zA-Z0-9]/ },
-        'S': { pattern: /[a-zA-Z]/ }
+        A: { pattern: /[a-zA-Z0-9]/ },
+        S: { pattern: /[a-zA-Z]/ }
     };
 
     private byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];

@@ -185,7 +185,7 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'https://www.alfresco.com/';
         widget.field = new FormFieldModel(new FormModel(), {
             hyperlinkUrl: url,
-            displayText: displayText,
+            displayText,
             type: FormFieldTypes.HYPERLINK
         });
 
@@ -201,7 +201,7 @@ describe('HyperlinkWidgetComponent', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             id: 'hyperlink',
             hyperlinkUrl: url,
-            displayText: displayText,
+            displayText,
             type: FormFieldTypes.HYPERLINK,
             tooltip: 'hyperlink widget'
         });

@@ -36,7 +36,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() pdfViewer: any;
 
     @Output()
-    close: EventEmitter<any> = new EventEmitter<void>();
+    close = new EventEmitter<void>();
 
     virtualHeight: number = 0;
     translateY: number = 0;
@@ -149,14 +149,11 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getPages() {
+        // eslint-disable-next-line no-underscore-dangle
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
-            getWidth: () => {
-                return this.width;
-            },
-            getHeight: () => {
-                return this.currentHeight;
-            },
+            getWidth: () => this.width,
+            getHeight: () => this.currentHeight,
             getPage: () => this.pdfViewer.pdfDocument.getPage(page.id)
         }));
     }

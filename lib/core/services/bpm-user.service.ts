@@ -21,7 +21,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
-import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { UserProfileApi } from '@alfresco/js-api';
 
 /**
  *
@@ -33,7 +33,7 @@ import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 })
 export class BpmUserService {
 
-    _profileApi: UserProfileApi;
+    private _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
         this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
         return this._profileApi;
@@ -45,30 +45,26 @@ export class BpmUserService {
 
     /**
      * Gets information about the current user.
+     *
      * @returns User information object
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
         return from(this.profileApi.getProfile())
             .pipe(
-                map((userRepresentation: UserRepresentation) => {
-                    return new BpmUserModel(userRepresentation);
-                }),
+                map((userRepresentation) => new BpmUserModel(userRepresentation)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets the current user's profile image as a URL.
+     *
      * @returns URL string
      */
     getCurrentUserProfileImage(): string {
         return this.profileApi.getProfilePictureUrl();
     }
 
-    /**
-     * Throw the error
-     * @param error
-     */
     private handleError(error: any) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console

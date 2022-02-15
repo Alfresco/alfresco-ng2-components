@@ -61,7 +61,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -82,7 +82,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -105,7 +105,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -204,13 +204,13 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(widgetLabel.innerText).toBe('radio-name-label*');
             expect(radioButtonWidget.field.isValid).toBe(false);
 
-            const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1 label');
+            const option = element.querySelector<HTMLElement>('#radio-id-opt-1 label');
             option.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
             expect(selectedOption.innerText).toBe('opt-name-1');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
@@ -229,7 +229,7 @@ describe('RadioButtonsWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
+            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
             expect(selectedOption.innerText).toBe('opt-name-2');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
@@ -281,7 +281,7 @@ describe('RadioButtonsWidgetComponent', () => {
             });
 
             it('should trigger field changed event on click', fakeAsync(() => {
-                const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
+                const option = element.querySelector<HTMLElement>('#radio-id-opt-1-input');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();

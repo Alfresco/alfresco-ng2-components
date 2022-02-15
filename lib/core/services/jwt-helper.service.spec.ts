@@ -52,7 +52,7 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'realm_access': { roles: ['role1'] }
+                    realm_access: { roles: ['role1'] }
                 });
 
             const result = jwtHelperService.hasRealmRole('role1');
@@ -64,7 +64,7 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'realm_access': { roles: ['role1'] }
+                    realm_access: { roles: ['role1'] }
                 });
 
             const result = jwtHelperService.hasRealmRoles(['role1', 'role2']);
@@ -75,7 +75,7 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'realm_access': { roles: ['role3'] }
+                    realm_access: { roles: ['role3'] }
                 });
             const result = jwtHelperService.hasRealmRole('role1');
             expect(result).toBeFalsy();
@@ -85,7 +85,7 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'realm_access': { roles: ['role1'] }
+                    realm_access: { roles: ['role1'] }
                 });
             const result = jwtHelperService.hasRealmRoles(['role3', 'role2']);
             expect(result).toBeFalsy();
@@ -99,7 +99,7 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'resource_access': { fakeapp: { roles: ['role1'] } }
+                    resource_access: { fakeapp: { roles: ['role1'] } }
                 });
 
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1']);
@@ -111,7 +111,7 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'resource_access': { fakeapp: { roles: ['role1'] } }
+                    resource_access: { fakeapp: { roles: ['role1'] } }
                 });
 
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
@@ -122,7 +122,7 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'resource_access': { fakeapp: { roles: ['role3'] } }
+                    resource_access: { fakeapp: { roles: ['role3'] } }
                 });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
             expect(result).toBeFalsy();
@@ -132,7 +132,7 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    'resource_access': { anotherfakeapp: { roles: ['role1'] } }
+                    resource_access: { anotherfakeapp: { roles: ['role1'] } }
                 });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
             expect(result).toBeFalsy();

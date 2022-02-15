@@ -101,14 +101,14 @@ describe('CopyClipboardDirective', () => {
     });
 
     it('should show tooltip when hover element', (() => {
-        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
     }));
 
     it('should not show tooltip when element it is not hovered', (() => {
-        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
@@ -119,7 +119,7 @@ describe('CopyClipboardDirective', () => {
     }));
 
     it('should copy the content of element when click it', fakeAsync(() => {
-        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
         spyOn(document, 'execCommand');
         spanHTMLElement.dispatchEvent(new Event('click'));
@@ -129,7 +129,7 @@ describe('CopyClipboardDirective', () => {
     }));
 
     it('should not copy the content of element when click it', fakeAsync(() => {
-        const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
+        const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
         spyOn(document, 'execCommand');
         spanHTMLElement.dispatchEvent(new Event('mouseleave'));

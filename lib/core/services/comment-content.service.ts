@@ -40,6 +40,7 @@ export class CommentContentService {
 
     /**
      * Adds a comment to a node.
+     *
      * @param nodeId ID of the target node
      * @param message Text for the comment
      * @returns Details of the comment added
@@ -47,20 +48,19 @@ export class CommentContentService {
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
         return from(this.commentsApi.createComment(nodeId, { content: message }))
             .pipe(
-                map((response: CommentEntry) => {
-                    return new CommentModel({
-                        id: response.entry.id,
-                        message: response.entry.content,
-                        created: response.entry.createdAt,
-                        createdBy: response.entry.createdBy
-                    });
-                }),
+                map((response: CommentEntry) => new CommentModel({
+                    id: response.entry.id,
+                    message: response.entry.content,
+                    created: response.entry.createdAt,
+                    createdBy: response.entry.createdBy
+                })),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets all comments that have been added to a node.
+     *
      * @param nodeId ID of the target node
      * @returns Details for each comment
      */

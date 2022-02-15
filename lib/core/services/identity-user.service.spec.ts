@@ -76,12 +76,8 @@ describe('IdentityUserService', () => {
     beforeEach(() => {
         const store = {};
 
-        spyOn(localStorage, 'getItem').and.callFake( (key: string): string => {
-         return store[key] || null;
-        });
-        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {
-          return store[key] = <string> value;
-        });
+        spyOn(localStorage, 'getItem').and.callFake( (key: string): string => store[key] || null);
+        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  store[key] = value);
     });
 
     it('should fetch identity user info from Jwt id token', () => {

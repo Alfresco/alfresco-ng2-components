@@ -21,19 +21,19 @@ import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { IdentityRoleResponseModel, IdentityRoleService } from './identity-role.service';
 
-export let mockIdentityRole1 = {
+export const mockIdentityRole1 = {
     id: 'mock-id-1', name: 'Mock_Role_1', description: 'Mock desc1',  clientRole: true, composite: false
 };
 
-export let mockIdentityRole2 = {
+export const mockIdentityRole2 = {
     id: 'mock-id-2', name: 'Mock_Role_2', description: 'Mock desc2', clientRole: false, composite: true
 };
 
-export let mockIdentityRole3 = {
+export const mockIdentityRole3 = {
     id: 'mock-id-3', name: 'Mock_Role_3', description: 'Mock desc3', clientRole: false, composite: false
 };
 
-export let mockIdentityRoles = {
+export const mockIdentityRoles = {
     entries: [
       mockIdentityRole1,  mockIdentityRole2, mockIdentityRole3
     ],
@@ -73,8 +73,8 @@ describe('IdentityRoleService', () => {
     it('should be able to add role', (done) => {
         const response = new HttpResponse({
             body: [],
-            'status': 201,
-            'statusText': 'Created'
+            status: 201,
+            statusText: 'Created'
         });
         spyOn(service, 'addRole').and.returnValue(of(response));
         service.addRole(mockIdentityRole1).subscribe(
@@ -107,8 +107,8 @@ describe('IdentityRoleService', () => {
     it('should be able to delete role', (done) => {
         const response = new HttpResponse({
             body: [],
-            'status': 204,
-            'statusText': 'No Content'
+            status: 204,
+            statusText: 'No Content'
         });
         spyOn(service, 'deleteRole').and.returnValue(of(response));
         service.deleteRole(mockIdentityRole1).subscribe(

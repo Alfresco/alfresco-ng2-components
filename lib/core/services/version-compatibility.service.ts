@@ -72,9 +72,9 @@ export class VersionCompatibilityService {
         const patch = version.split('.')[2] || '0';
 
         return {
-            major: major,
-            minor: minor,
-            patch: patch
+            major,
+            minor,
+            patch
         } as VersionInfo;
     }
 }

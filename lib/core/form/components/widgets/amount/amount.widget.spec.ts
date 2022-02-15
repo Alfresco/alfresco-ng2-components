@@ -46,7 +46,7 @@ describe('AmountWidgetComponent', () => {
     it('should setup currency from field', () => {
         const currency = 'UAH';
         widget.field = new FormFieldModel(null, {
-            currency: currency
+            currency
         });
 
         widget.ngOnInit();

@@ -256,9 +256,9 @@ export class NodeRestoreDirective {
             path = status.success[0].entry.path;
         }
         this.restore.emit({
-            message: message,
-            action: action,
-            path: path
+            message,
+            action,
+            path
         });
     }
 

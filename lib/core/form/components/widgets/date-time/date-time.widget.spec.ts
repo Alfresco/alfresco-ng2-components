@@ -57,7 +57,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-id',
             name: 'date-name',
             type: 'datetime',
-            minValue: minValue
+            minValue
         });
 
         fixture.detectChanges();
@@ -81,7 +81,7 @@ describe('DateTimeWidgetComponent', () => {
     it('should setup max value for date picker', () => {
         const maxValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
-            maxValue: maxValue
+            maxValue
         });
         fixture.detectChanges();
 
@@ -157,14 +157,14 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            let dateButton = <HTMLButtonElement> element.querySelector('button');
+            let dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
             await fixture.whenStable();
 
-            dateButton = <HTMLButtonElement> element.querySelector('button');
+            dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeTruthy();
         });
 

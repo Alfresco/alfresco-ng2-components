@@ -22,7 +22,7 @@ export const mockIdentityUser1: IdentityUserModel = { id: 'mock-user-id-1', user
 export const mockIdentityUser2: IdentityUserModel = { id: 'mock-user-id-2', username: 'userName2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'};
 export const mockIdentityUser3: IdentityUserModel = { id: 'mock-user-id-3', username: 'userName3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' };
 export const mockIdentityUser4: IdentityUserModel = { id: 'mock-user-id-4', username: 'userName4', firstName: 'first-name-4', lastName: 'last-name-4', email: 'abcde@xyz.com' };
-export let  mockIdentityUser5: IdentityUserModel = { id: 'mock-user-id-5', username: 'userName5', firstName: 'first-name-5', lastName: 'last-name-5', email: 'abcde@xyz.com' };
+export const  mockIdentityUser5: IdentityUserModel = { id: 'mock-user-id-5', username: 'userName5', firstName: 'first-name-5', lastName: 'last-name-5', email: 'abcde@xyz.com' };
 
 export const mockIdentityUsers: IdentityUserModel[] = [
     mockIdentityUser1,

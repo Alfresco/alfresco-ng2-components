@@ -24,7 +24,7 @@ export class LogLevelsEnum extends Number {
     static SILENT: number = 0;
 }
 
-export let logLevels: any[] = [
+export const logLevels: any[] = [
     {level: LogLevelsEnum.TRACE, name: 'TRACE'},
     {level: LogLevelsEnum.DEBUG, name: 'DEBUG'},
     {level: LogLevelsEnum.INFO, name: 'INFO'},

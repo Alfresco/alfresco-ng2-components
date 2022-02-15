@@ -51,7 +51,7 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
 
         return page.render({
             canvasContext: canvas.getContext('2d'),
-            viewport: page.getViewport({ scale: scale })
+            viewport: page.getViewport({ scale })
         }).promise.then(() => {
             const imageSource = canvas.toDataURL();
             return this.sanitizer.bypassSecurityTrustUrl(imageSource);

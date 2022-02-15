@@ -29,7 +29,7 @@ export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number; message: string }>();
 
-    _sharedLinksApi: SharedlinksApi;
+    private _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
@@ -41,6 +41,7 @@ export class SharedLinksApiService {
 
     /**
      * Gets shared links available to the current user.
+     *
      * @param options Options supported by JS-API
      * @returns List of shared links
      */
@@ -60,12 +61,13 @@ export class SharedLinksApiService {
 
     /**
      * Creates a shared link available to the current user.
+     *
      * @param nodeId ID of the node to link to
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink({ nodeId: nodeId }, options);
+        const promise = this.sharedLinksApi.createSharedLink({ nodeId }, options);
 
         return from(promise).pipe(
             catchError((err) => of(err))
@@ -74,6 +76,7 @@ export class SharedLinksApiService {
 
     /**
      * Deletes a shared link.
+     *
      * @param sharedId ID of the link to delete
      * @returns Null response notifying when the operation is complete
      */

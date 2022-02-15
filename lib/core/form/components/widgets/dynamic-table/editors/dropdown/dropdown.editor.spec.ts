@@ -51,14 +51,14 @@ describe('DropdownEditorComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         formService = new FormService(null, alfrescoApiService, null);
 
-        row = <DynamicTableRow> {value: {dropdown: 'one'}};
-        column = <DynamicTableColumn> {
+        row = {value: {dropdown: 'one'}} as DynamicTableRow;
+        column = {
             id: 'dropdown',
             options: [
-                <DynamicTableColumnOption> {id: '1', name: 'one'},
-                <DynamicTableColumnOption> {id: '2', name: 'two'}
+                {id: '1', name: 'one'},
+                {id: '2', name: 'two'}
             ]
-        };
+        } as DynamicTableColumn;
 
         form = new FormModel({taskId: '<task-id>'});
         table = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
@@ -95,9 +95,9 @@ describe('DropdownEditorComponent', () => {
         column.optionType = 'rest';
         row.value[column.id] = 'twelve';
 
-        const restResults = [
-            <DynamicTableColumnOption> {id: '11', name: 'eleven'},
-            <DynamicTableColumnOption> {id: '12', name: 'twelve'}
+        const restResults: DynamicTableColumnOption[] = [
+            {id: '11', name: 'eleven'},
+            {id: '12', name: 'twelve'}
         ];
 
         spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
@@ -192,11 +192,11 @@ describe('DropdownEditorComponent', () => {
         }, {id: 'opt_3', name: 'option_3'}];
         let dynamicTable: DynamicTableModel;
 
-        function openSelect() {
+        const openSelect = () => {
             const dropdown = fixture.debugElement.query(By.css('.mat-select-trigger'));
             dropdown.triggerEventHandler('click', null);
             fixture.detectChanges();
-        }
+        };
 
         beforeEach(() => {
             fixture = TestBed.createComponent(DropdownEditorComponent);
@@ -213,15 +213,15 @@ describe('DropdownEditorComponent', () => {
             beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesColumn').and.returnValue(of(fakeOptionList));
-                row = <DynamicTableRow> {value: {dropdown: 'one'}};
-                column = <DynamicTableColumn> {
+                row = {value: {dropdown: 'one'}} as DynamicTableRow;
+                column = {
                     id: 'column-id',
                     optionType: 'rest',
                     options: [
-                        <DynamicTableColumnOption> {id: '1', name: 'one'},
-                        <DynamicTableColumnOption> {id: '2', name: 'two'}
+                        {id: '1', name: 'one'},
+                        {id: '2', name: 'two'}
                     ]
-                };
+                } as DynamicTableColumn;
                 form = new FormModel({taskId: '<task-id>'});
                 dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
                 dynamicTable.rows.push(row);
@@ -261,15 +261,15 @@ describe('DropdownEditorComponent', () => {
             beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesColumnByProcessId').and.returnValue(of(fakeOptionList));
-                row = <DynamicTableRow> {value: {dropdown: 'one'}};
-                column = <DynamicTableColumn> {
+                row = {value: {dropdown: 'one'}} as DynamicTableRow;
+                column = {
                     id: 'column-id',
                     optionType: 'rest',
                     options: [
-                        <DynamicTableColumnOption> {id: '1', name: 'one'},
-                        <DynamicTableColumnOption> {id: '2', name: 'two'}
+                        {id: '1', name: 'one'},
+                        {id: '2', name: 'two'}
                     ]
-                };
+                } as DynamicTableColumn;
                 form = new FormModel({processDefinitionId: '<proc-id>'});
                 dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
                 dynamicTable.rows.push(row);

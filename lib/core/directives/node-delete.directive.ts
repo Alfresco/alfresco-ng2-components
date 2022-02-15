@@ -120,7 +120,7 @@ export class NodeDeleteDirective implements OnChanges {
     }
 
     private deleteNode(node: NodeEntry | DeletedNodeEntity): Observable<ProcessedNodeData> {
-        const id = (<any> node.entry).nodeId || node.entry.id;
+        const id = (node.entry as any).nodeId || node.entry.id;
 
         let promise: Promise<any>;
 

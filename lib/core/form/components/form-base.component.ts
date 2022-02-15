@@ -157,6 +157,7 @@ export abstract class FormBaseComponent {
 
     /**
      * Invoked when user clicks outcome button.
+     *
      * @param outcome Form outcome model
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {

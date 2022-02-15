@@ -28,13 +28,13 @@ export class SearchService {
 
     dataLoaded: Subject<ResultSetPaging> = new Subject();
 
-    _queriesApi: QueriesApi;
+    private _queriesApi: QueriesApi;
     get queriesApi(): QueriesApi {
         this._queriesApi = this._queriesApi ?? new QueriesApi(this.apiService.getInstance());
         return this._queriesApi;
     }
 
-    _searchApi: SearchApi;
+    private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
@@ -46,6 +46,7 @@ export class SearchService {
 
     /**
      * Gets a list of nodes that match the given search criteria.
+     *
      * @param term Term to search for
      * @param options Options for delivery of the search results
      * @returns List of nodes resulting from the search
@@ -62,6 +63,7 @@ export class SearchService {
 
     /**
      * Performs a search.
+     *
      * @param searchTerm Term to search for
      * @param maxResults Maximum number of items in the list of results
      * @param skipCount Number of higher-ranked items to skip over in the list
@@ -80,6 +82,7 @@ export class SearchService {
 
     /**
      * Performs a search with its parameters supplied by a QueryBody object.
+     *
      * @param queryBody Object containing the search parameters
      * @returns List of search results
      */

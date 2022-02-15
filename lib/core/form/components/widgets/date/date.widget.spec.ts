@@ -49,7 +49,7 @@ describe('DateWidgetComponent', () => {
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
-            minValue: minValue
+            minValue
         });
 
         widget.ngOnInit();
@@ -61,7 +61,7 @@ describe('DateWidgetComponent', () => {
     it('should date field be present', () => {
         const minValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
-            minValue: minValue
+            minValue
         });
 
         fixture.detectChanges();
@@ -73,7 +73,7 @@ describe('DateWidgetComponent', () => {
     it('should setup max value for date picker', () => {
         const maxValue = '31-03-1982';
         widget.field = new FormFieldModel(null, {
-            maxValue: maxValue
+            maxValue
         });
         widget.ngOnInit();
 
@@ -160,13 +160,13 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            let dateButton = <HTMLButtonElement> element.querySelector('button');
+            let dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            dateButton = <HTMLButtonElement> element.querySelector('button');
+            dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeTruthy();
         });
 

@@ -17,6 +17,7 @@
 
 import { AlfrescoApiService } from './alfresco-api.service';
 
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function startupServiceFactory(alfrescoApiService: AlfrescoApiService) {
     return () => alfrescoApiService.load();
 }

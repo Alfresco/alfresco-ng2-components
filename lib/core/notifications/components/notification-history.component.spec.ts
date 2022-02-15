@@ -34,12 +34,12 @@ describe('Notification History Component', () => {
     let overlayContainerElement: HTMLElement;
     let storage: StorageService;
 
-    function openNotification() {
+    const openNotification = () => {
         fixture.detectChanges();
-        const button: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-notification-history-open-button');
+        const button = element.querySelector<HTMLButtonElement>('#adf-notification-history-open-button');
         button.click();
         fixture.detectChanges();
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -86,7 +86,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(component.notifications.length).toBe(1);
-                const markAllAsRead = <HTMLButtonElement> overlayContainerElement.querySelector('#adf-notification-history-mark-as-read');
+                const markAllAsRead = overlayContainerElement.querySelector<HTMLButtonElement>('#adf-notification-history-mark-as-read');
                 markAllAsRead.click();
                 fixture.detectChanges();
                 expect(storage.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)).toBeNull();
@@ -124,7 +124,7 @@ describe('Notification History Component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const notification = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-menu-item');
+                const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
                 notification.click();
                 expect(callBackSpy).toHaveBeenCalled();
                 done();
@@ -142,7 +142,7 @@ describe('Notification History Component', () => {
             openNotification();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const loadMoreButton = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-load-more');
+                const loadMoreButton = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-load-more');
                 expect(component.paginatedNotifications.length).toBe(5);
                 expect(loadMoreButton).toBeDefined();
                 done();
@@ -160,7 +160,7 @@ describe('Notification History Component', () => {
             openNotification();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const notification = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-menu-item');
+                const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
                 expect(notification).toBeDefined();
                 done();
             });

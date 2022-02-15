@@ -71,7 +71,7 @@ describe('NodeService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(responseBody)
         });
@@ -100,7 +100,7 @@ describe('NodeService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(responseBody)
         });
@@ -124,7 +124,7 @@ describe('NodeService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(responseBody)
         });
@@ -144,7 +144,7 @@ describe('NodeService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -163,7 +163,7 @@ describe('NodeService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });

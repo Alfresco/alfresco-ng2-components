@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let fakeRendition = {
+export const fakeRendition = {
     entry: {
         id: 'pdf',
         content: {
@@ -26,7 +26,7 @@ export let fakeRendition = {
     }
 };
 
-export let fakeRenditionCreated = {
+export const fakeRenditionCreated = {
     entry: {
         id: 'pdf',
         content: {
@@ -37,7 +37,7 @@ export let fakeRenditionCreated = {
     }
 };
 
-export let fakeRenditionsList = {
+export const fakeRenditionsList = {
     list: {
         pagination: {
             count: 6,
@@ -111,7 +111,7 @@ export let fakeRenditionsList = {
     }
 };
 
-export let fakeRenditionsListWithACreated = {
+export const fakeRenditionsListWithACreated = {
     list: {
         pagination: {
             count: 6,

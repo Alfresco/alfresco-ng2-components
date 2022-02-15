@@ -32,7 +32,7 @@ export const formDisplayValueVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0bq3ar',
                                 name: 'Text',
@@ -47,7 +47,7 @@ export const formDisplayValueVisibility = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Displayvalue0g6092',
                                 name: 'Display value',
@@ -101,7 +101,7 @@ export const formDisplayValueForm = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'DisplayValueColspan',
                                 name: 'DisplayValueColspan',
@@ -240,7 +240,7 @@ export const formDisplayValueForm = {
                                 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Text0howrc',
                                 name: 'Text',
@@ -342,7 +342,7 @@ export const formDisplayValueCombinedVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0bq3ar',
                                 name: 'Text',
@@ -357,7 +357,7 @@ export const formDisplayValueCombinedVisibility = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Displayvalue0g6092',
                                 name: 'Display value',
@@ -402,7 +402,7 @@ export const formDisplayValueCombinedVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'TextTwo',
                                 name: 'TextTwo',
@@ -417,7 +417,7 @@ export const formDisplayValueCombinedVisibility = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': []
+                        2: []
                     }
                 }
             ],
@@ -445,7 +445,7 @@ export const formNumberWidgetVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Number1',
                                 name: 'Number1',
@@ -462,7 +462,7 @@ export const formNumberWidgetVisibility = {
                                 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Number2',
                                 name: 'Number2',
@@ -520,7 +520,7 @@ export const formNumberTextJson = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'NumberColspan',
                                        name: 'NumberColspan',
@@ -582,7 +582,7 @@ export const formNumberTextJson = {
                                        }
                                    }
                                ],
-                               '2': [
+                               2: [
                                    {
                                        id: 'Text',
                                        name: 'Text',
@@ -763,7 +763,7 @@ export const formRequiredNumberWidget = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'Number1',
                                        name: 'Number1',
@@ -780,7 +780,7 @@ export const formRequiredNumberWidget = {
                                        }
                                    }
                                ],
-                               '2': [
+                               2: [
                                    {
                                        id: 'Number2',
                                        name: 'Number2',
@@ -839,7 +839,7 @@ export const colspanForm = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'Number0u0kiv',
                                        name: 'NumberColspan',
@@ -866,7 +866,7 @@ export const colspanForm = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'Number00fuuk',
                                        name: 'Number',
@@ -884,7 +884,7 @@ export const colspanForm = {
                                        }
                                    }
                                ],
-                               '2': [
+                               2: [
                                    {
                                        id: 'Number03u9d4',
                                        name: 'Number',
@@ -911,7 +911,7 @@ export const colspanForm = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'Text04sjhr',
                                        name: 'Text',
@@ -957,7 +957,7 @@ export const numberNotRequiredForm = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Number0x8cbv',
                                 name: 'Number',
@@ -971,7 +971,7 @@ export const numberNotRequiredForm = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': []
+                        2: []
                     }
                 }
             ],
@@ -999,7 +999,7 @@ export const numberMinMaxForm = {
                            tab: null,
                            numberOfColumns: 2,
                            fields: {
-                               '1': [
+                               1: [
                                    {
                                        id: 'Number0him2z',
                                        name: 'Number',
@@ -1016,7 +1016,7 @@ export const numberMinMaxForm = {
                                        }
                                    }
                                ],
-                               '2': []
+                               2: []
                            }
                        }
                    ],
@@ -1043,7 +1043,7 @@ export const textWidgetVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'textOne',
                                 name: 'textOne',
@@ -1058,7 +1058,7 @@ export const textWidgetVisibility = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'textTwo',
                                 name: 'textTwo',
@@ -1091,7 +1091,7 @@ export const textWidgetVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'textThree',
                                 name: 'textThree',
@@ -1125,7 +1125,7 @@ export const textWidgetVisibility = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'textFour',
                                 name: 'textFour',
@@ -1187,7 +1187,7 @@ export const numberWidgetVisibilityForm = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0hs0gt',
                                 name: 'TextOne',
@@ -1236,7 +1236,7 @@ export const numberWidgetVisibilityForm = {
                                 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Text0cuqet',
                                 name: 'TextTwo',
@@ -1280,7 +1280,7 @@ export const radioWidgetVisibiltyForm = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0cee7g',
                                 name: 'Text',
@@ -1295,7 +1295,7 @@ export const radioWidgetVisibiltyForm = {
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'Radiobuttons03rkbo',
                                 name: 'Radio buttons',
@@ -1352,7 +1352,7 @@ export const customWidgetForm = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0vdi18',
                                 name: 'herejustoshowstandardones',
@@ -1371,7 +1371,7 @@ export const customWidgetForm = {
                                 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'bananaforevah0k8gui',
                                 name: 'bananaforevah',
@@ -1416,7 +1416,7 @@ export const customWidgetFormWithVisibility = {
                     tab: null,
                     numberOfColumns: 2,
                     fields: {
-                        '1': [
+                        1: [
                             {
                                 id: 'Text0vdi18',
                                 name: 'herejustoshowstandardones',
@@ -1435,7 +1435,7 @@ export const customWidgetFormWithVisibility = {
                                 }
                             }
                         ],
-                        '2': [
+                        2: [
                             {
                                 id: 'bananaforevah0k8gui',
                                 name: 'bananaforevah',
@@ -1488,7 +1488,7 @@ export const formDateVisibility = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-              '1': [
+              1: [
                 {
                   id: 'Date0hwq20',
                   name: 'Date',
@@ -1508,7 +1508,7 @@ export const formDateVisibility = {
                   dateDisplayFormat: 'YYYY-MM-DD'
                 }
               ],
-              '2': [
+              2: [
                 {
                   id: 'Text0pqd1u',
                   name: 'Text',
@@ -1545,7 +1545,7 @@ export const formDateVisibility = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-              '1': [
+              1: [
                 {
                   id: 'Text0uyqd3',
                   name: 'Text',
@@ -1573,7 +1573,7 @@ export const formDateVisibility = {
                   }
                 }
               ],
-              '2': []
+              2: []
             }
           }
         ],

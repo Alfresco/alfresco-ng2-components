@@ -71,12 +71,13 @@ export class ContentService {
     /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
+     *
      * @param  blob Data to wrap into object URL
      * @returns URL string
      */
     createTrustedUrl(blob: Blob): string {
         const url = window.URL.createObjectURL(blob);
-        return <string> this.sanitizer.bypassSecurityTrustUrl(url);
+        return this.sanitizer.bypassSecurityTrustUrl(url) as string;
     }
 
     /**
@@ -93,6 +94,7 @@ export class ContentService {
 
     /**
      * Gets a content URL for the given node.
+     *
      * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
@@ -116,6 +118,7 @@ export class ContentService {
 
     /**
      * Gets content for the given node.
+     *
      * @param nodeId ID of the target node
      * @returns Content data
      */
@@ -128,6 +131,7 @@ export class ContentService {
 
     /**
      * Gets a Node via its node ID.
+     *
      * @param nodeId ID of the target node
      * @param opts Options supported by JS-API
      * @returns Details of the folder
@@ -138,6 +142,7 @@ export class ContentService {
 
     /**
      * Checks if the user has permission on that node
+     *
      * @param node Node to check permissions
      * @param permission Required permission type
      * @param userId Optional current user id will be taken by default
@@ -172,6 +177,7 @@ export class ContentService {
 
     /**
      * Checks if the user has permissions on that node
+     *
      * @param node Node to check allowableOperations
      * @param allowableOperation Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      * @returns True if the user has the required permissions, false otherwise

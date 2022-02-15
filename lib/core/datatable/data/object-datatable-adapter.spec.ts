@@ -47,8 +47,8 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should map columns without rows', () => {
         const adapter = new ObjectDataTableAdapter(null, [
-            <DataColumn> {},
-            <DataColumn> {}
+            {} as DataColumn,
+            {} as DataColumn
         ]);
         const columns = adapter.getColumns();
 
@@ -64,10 +64,7 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should apply new rows array', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        const newRows = [
-            <DataRow> {},
-            <DataRow> {}
-        ];
+        const newRows = [{}, {}] as DataRow[];
 
         adapter.setRows(newRows);
         expect(adapter.getRows()).toBe(newRows);
@@ -102,10 +99,7 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should apply new columns array', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        const columns = [
-            <DataColumn> {},
-            <DataColumn> {}
-        ];
+        const columns = [{},{}] as DataColumn[];
 
         adapter.setColumns(columns);
         expect(adapter.getColumns()).toBe(columns);
@@ -123,8 +117,8 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should reset columns by null value', () => {
         const adapter = new ObjectDataTableAdapter([], [
-            <DataColumn> {},
-            <DataColumn> {}
+            {} as DataColumn,
+            {} as DataColumn
         ]);
         expect(adapter.getColumns()).toBeDefined();
         expect(adapter.getColumns().length).toBe(2);
@@ -144,7 +138,7 @@ describe('ObjectDataTableAdapter', () => {
     it('should fail getting value with column not defined', () => {
         const adapter = new ObjectDataTableAdapter([], []);
         expect(() => {
-            adapter.getValue(<DataRow> {}, null);
+            adapter.getValue({} as DataRow, null);
         }).toThrowError('Column not found');
     });
 
@@ -155,7 +149,7 @@ describe('ObjectDataTableAdapter', () => {
         row.getValue.and.returnValue(value);
 
         const adapter = new ObjectDataTableAdapter([], []);
-        const result = adapter.getValue(row, <DataColumn> { key: 'col1' });
+        const result = adapter.getValue(row, { key: 'col1' } as DataColumn);
 
         expect(row.getValue).toHaveBeenCalledWith('col1');
         expect(result).toBe(value);
@@ -206,7 +200,7 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should take first sortable column by default', () => {
         const adapter = new ObjectDataTableAdapter([], [
-            <DataColumn> { key: 'icon' },
+            { key: 'icon' } as DataColumn,
             new ObjectDataColumn({ key: 'id', sortable: true })
         ]);
 
@@ -225,8 +219,8 @@ describe('ObjectDataTableAdapter', () => {
                 { id: 2, created: new Date(2016, 7, 6, 15, 7, 1) }
             ],
             [
-                <DataColumn> { key: 'id' },
-                <DataColumn> { key: 'created' }
+                { key: 'id' } as DataColumn,
+                { key: 'created' } as DataColumn
             ]
         );
 
@@ -304,9 +298,7 @@ describe('ObjectDataTableAdapter', () => {
 describe('ObjectDataRow', () => {
 
     it('should require object source', () => {
-        expect(() => {
-            return new ObjectDataRow(null);
-        }).toThrowError('Object source not found');
+        expect(() => new ObjectDataRow(null)).toThrowError('Object source not found');
     });
 
     it('should get top level property value', () => {

@@ -29,7 +29,7 @@ export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
     selector: 'adf-host-settings',
     templateUrl: 'host-settings.component.html',
     host: {
-        'class': 'adf-host-settings'
+        class: 'adf-host-settings'
     },
     styleUrls: ['./host-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -77,7 +77,7 @@ export class HostSettingsComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             providersControl: [providerSelected, Validators.required],
-            authType: authType
+            authType
         });
 
         this.addFormGroups();

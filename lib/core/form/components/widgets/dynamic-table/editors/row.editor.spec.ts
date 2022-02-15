@@ -17,7 +17,6 @@
 
 import { FormFieldModel, FormModel } from '../../core';
 import { FormService } from './../../../../services/form.service';
-import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from './../dynamic-table-column.model';
 import { DynamicTableRow } from './../dynamic-table-row.model';
 import { DynamicTableModel } from './../dynamic-table.widget.model';
@@ -45,8 +44,8 @@ describe('RowEditorComponent', () => {
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
         component.table = new DynamicTableModel(field, new FormService(null, alfrescoApiService, null));
-        component.row = <DynamicTableRow> {};
-        component.column = <DynamicTableColumn> {};
+        component.row = {} as DynamicTableRow;
+        component.column = {} as DynamicTableColumn;
     });
 
     it('should be valid upon init', () => {
@@ -72,7 +71,7 @@ describe('RowEditorComponent', () => {
 
     it('should emit [save] event', (done) => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> {isValid: true, message: null}
+            {isValid: true, message: null}
         );
         component.save.subscribe((event) => {
             expect(event.table).toBe(component.table);
@@ -85,7 +84,7 @@ describe('RowEditorComponent', () => {
 
     it('should not emit [save] event for invalid row', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> {isValid: false, message: 'error'}
+            {isValid: false, message: 'error'}
         );
         let raised = false;
         component.save.subscribe(() => raised = true);

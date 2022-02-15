@@ -20,7 +20,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
 @Component({
     selector: 'adf-toolbar-divider',
     template: '<div></div>',
-    host: { 'class': 'adf-toolbar-divider' },
+    host: { class: 'adf-toolbar-divider' },
     styles: [`
         .adf-toolbar-divider > div {
             height: 24px;

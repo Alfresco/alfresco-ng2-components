@@ -28,7 +28,7 @@ const fileContentPdfResponseBody = {
     id: 999,
     name: 'fake-name.pdf',
     created: '2017-01-23T12:12:53.219+0000',
-    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin' },
+    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', email: 'fake-admin' },
     relatedContent: false,
     contentAvailable: true,
     link: false,
@@ -42,7 +42,7 @@ const fileContentJpgResponseBody = {
     id: 888,
     name: 'fake-name.jpg',
     created: '2017-01-23T12:12:53.219+0000',
-    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin' },
+    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', email: 'fake-admin' },
     relatedContent: false,
     contentAvailable: true,
     link: false,
@@ -52,7 +52,7 @@ const fileContentJpgResponseBody = {
     thumbnailStatus: 'unsupported'
 };
 
-function createFakeBlob() {
+const createFakeBlob = () => {
     const data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
     const bytes = new Uint8Array(data.length / 2);
@@ -61,7 +61,7 @@ function createFakeBlob() {
         bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
     }
     return new Blob([bytes], { type: 'image/png' });
-}
+};
 
 describe('ProcessContentService', () => {
 
@@ -100,7 +100,7 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({
                 size: 2,
@@ -150,7 +150,7 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fileContentJpgResponseBody)
         });
@@ -168,7 +168,7 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fileContentPdfResponseBody)
         });

@@ -123,9 +123,9 @@ describe('ContainerWidgetComponent', () => {
                 type: 'container',
                 tab: null,
                 fields: {
-                    '1' : [{ id: '1' }, { id: '2' }, { id: '3' }],
-                    '2' : [{ id: '4' }, { id: '5' }],
-                    '3' : [{ id: '6' }]
+                    1 : [{ id: '1' }, { id: '2' }, { id: '3' }],
+                    2 : [{ id: '4' }, { id: '5' }],
+                    3 : [{ id: '6' }]
                 }
             };
 
@@ -150,7 +150,7 @@ describe('ContainerWidgetComponent', () => {
                 type: 'container',
                 tab: null,
                 fields: {
-                    '1': [
+                    1: [
                         {
                             id: 'a',
                             colspan: 2,
@@ -192,7 +192,7 @@ describe('ContainerWidgetComponent', () => {
                             rowspan: 1
                         }
                     ],
-                    '2': [
+                    2: [
                         {
                             id: '1',
                             rowspan: 3,
@@ -208,7 +208,7 @@ describe('ContainerWidgetComponent', () => {
                             colspan: 2
                         }
                     ],
-                    '3': [
+                    3: [
                         {
                             id: 'white'
                         },
@@ -265,8 +265,8 @@ describe('ContainerWidgetComponent', () => {
             widget.content = container;
 
             expect(widget.getColumnWith(undefined)).toBe('25');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 1 })).toBe('25');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 3 })).toBe('75');
+            expect(widget.getColumnWith({ colspan: 1 } as FormFieldModel)).toBe('25');
+            expect(widget.getColumnWith({ colspan: 3 } as FormFieldModel)).toBe('75');
         });
     });
 });

@@ -113,17 +113,13 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
 
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
-            switchMap((clientId: string) => {
-                return this.checkUserHasClientApp(userId, clientId);
-            })
+            switchMap((clientId: string) => this.checkUserHasClientApp(userId, clientId))
         );
     }
 
     checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
-            switchMap((clientId: string) => {
-                return this.checkUserHasAnyClientAppRole(userId, clientId, roleNames);
-            })
+            switchMap((clientId: string) => this.checkUserHasAnyClientAppRole(userId, clientId, roleNames))
         );
     }
 
@@ -173,9 +169,7 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
     private async userHasAnyRole(userId: string, roleNames: string[]): Promise<boolean> {
         const userRoles = await this.getUserRoles(userId).toPromise();
         const hasAnyRole = roleNames.some((roleName) => {
-            const filteredRoles = userRoles.filter((userRole) => {
-                return userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase();
-            });
+            const filteredRoles = userRoles.filter((userRole) => userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase());
 
             return filteredRoles.length > 0;
         });

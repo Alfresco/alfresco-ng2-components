@@ -249,7 +249,7 @@ export class WidgetVisibilityService {
 
     private getFormTabContainers(form: FormModel): ContainerModel[] {
         if (!!form) {
-            return <ContainerModel[]> form.fields.filter(field => field.type === 'container' && field.tab);
+            return form.fields.filter(field => field.type === 'container' && field.tab) as ContainerModel[];
         }
         return [];
     }
@@ -345,7 +345,7 @@ export class WidgetVisibilityService {
             .pipe(
                 map((res) => {
                     const jsonRes = this.toJson(res);
-                    this.processVarList = <TaskProcessVariableModel[]> jsonRes;
+                    this.processVarList = jsonRes;
                     return jsonRes;
                 }),
                 catchError(() => this.handleError())

@@ -48,7 +48,7 @@ declare const pdfjsViewer: any;
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],
-    host: { 'class': 'adf-pdf-viewer' },
+    host: { class: 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
@@ -215,8 +215,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         if (viewer && container) {
             this.pdfViewer = new pdfjsViewer.PDFViewer({
-                container: container,
-                viewer: viewer,
+                container,
+                viewer,
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus
             });
@@ -364,7 +364,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             if (!this.isSameScale(this.currentScale, newScale)) {
                 this.currentScale = newScale;
 
-                this.pdfViewer._pages.forEach(function(currentPage) {
+                this.pdfViewer._pages.forEach((currentPage) => {
                     currentPage.update(newScale);
                 });
             }
@@ -530,6 +530,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Keyboard Event Listener
+     *
      * @param KeyboardEvent event
      */
     @HostListener('document:keydown', ['$event'])
@@ -543,7 +544,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
             const r = Math.random() * 16 | 0;
             const v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);

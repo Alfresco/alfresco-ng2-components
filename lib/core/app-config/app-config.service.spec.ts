@@ -44,7 +44,7 @@ describe('AppConfigService', () => {
             name: 'Custom Name'
         },
         files: {
-            'excluded': ['excluded']
+            excluded: ['excluded']
         },
         logLevel: 'silent',
         alfrescoRepositoryName: 'alfresco-1'

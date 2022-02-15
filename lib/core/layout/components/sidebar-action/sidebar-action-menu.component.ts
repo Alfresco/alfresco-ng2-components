@@ -23,7 +23,7 @@ import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation
     styleUrls: ['./sidebar-action-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-sidebar-action-menu' }
+    host: { class: 'adf-sidebar-action-menu' }
 })
 
 export class SidebarActionMenuComponent {

@@ -33,7 +33,6 @@ import {
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormFieldModel } from './../widgets/core/form-field.model';
-import { WidgetComponent } from './../widgets/widget.component';
 
 declare const adf: any;
 
@@ -93,7 +92,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 if (componentType) {
                     const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
-                    const instance = <WidgetComponent> this.componentRef.instance;
+                    const instance = this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
@@ -136,7 +135,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
         const metadata = {
             selector: `runtime-component-${type}`,
-            template: template
+            template
         };
 
         const factory = this.createComponentFactorySync(this.compiler, metadata, componentInfo.class);

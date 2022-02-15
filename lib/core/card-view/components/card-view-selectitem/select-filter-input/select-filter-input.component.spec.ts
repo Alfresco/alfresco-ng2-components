@@ -44,9 +44,9 @@ export class TestComponent {
     showInputFilter = true;
     multiple = false;
     standardOptions = [
-        { 'id': '1', 'name': 'one' },
-        { 'id': '2', 'name': 'two' },
-        { 'id': '3', 'name': 'three' }
+        { id: '1', name: 'one' },
+        { id: '2', name: 'two' },
+        { id: '3', name: 'three' }
     ];
     options = this.standardOptions;
 
@@ -136,7 +136,7 @@ describe('SelectFilterInputComponent', () => {
             component.onModelChange('some-search-term');
             expect(component.term).toBe('some-search-term');
 
-            component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': ESCAPE} as any));
+            component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', {keyCode: ESCAPE} as any));
             fixture.detectChanges();
             expect(component.term).toBe('');
         });
@@ -152,10 +152,10 @@ describe('SelectFilterInputComponent', () => {
         afterEach(() => testFixture.destroy());
 
         it('should preserve the values for multiple search', async () => {
-            const userSelection = [{ 'id': '3', 'name': 'three' }];
+            const userSelection = [{ id: '3', name: 'three' }];
             const preSelected = [
-                { 'id': '1', 'name': 'one' },
-                { 'id': '2', 'name': 'two' }
+                { id: '1', name: 'one' },
+                { id: '2', name: 'two' }
             ];
             testComponent.field.value = preSelected;
             testComponent.multiple = true;

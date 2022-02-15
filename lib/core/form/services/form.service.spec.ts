@@ -25,28 +25,28 @@ import { TranslateModule } from '@ngx-translate/core';
 declare let jasmine: any;
 
 const fakeGroupResponse = {
-    'size': 2,
-    'total': 2,
-    'start': 0,
-    'data': [{
-        'id': '2004',
-        'name': 'PEOPLE_GROUP',
-        'externalId': null,
-        'status': 'active',
-        'groups': null
-    }, { 'id': 2005, 'name': 'PEOPLE_GROUP_2', 'externalId': null, 'status': 'active', 'groups': null }]
+    size: 2,
+    total: 2,
+    start: 0,
+    data: [{
+        id: '2004',
+        name: 'PEOPLE_GROUP',
+        externalId: null,
+        status: 'active',
+        groups: null
+    }, { id: 2005, name: 'PEOPLE_GROUP_2', externalId: null, status: 'active', groups: null }]
 };
 
 const fakePeopleResponse = {
-    'size': 3,
-    'total': 3,
-    'start': 0,
-    'data': [{ 'id': 2002, 'firstName': 'Peo', 'lastName': 'Ple', 'email': 'people' }, {
-        'id': 2003,
-        'firstName': 'Peo02',
-        'lastName': 'Ple02',
-        'email': 'people02'
-    }, { 'id': 2004, 'firstName': 'Peo03', 'lastName': 'Ple03', 'email': 'people03' }]
+    size: 3,
+    total: 3,
+    start: 0,
+    data: [{ id: 2002, firstName: 'Peo', lastName: 'Ple', email: 'people' }, {
+        id: 2003,
+        firstName: 'Peo02',
+        lastName: 'Ple02',
+        email: 'people02'
+    }, { id: 2004, firstName: 'Peo03', lastName: 'Ple03', email: 'people03' }]
 };
 
 describe('Form service', () => {
@@ -93,7 +93,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(responseBody)
             });
@@ -107,7 +107,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(responseBody)
             });
@@ -121,7 +121,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({ id: '1' })
             });
@@ -136,7 +136,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(responseBody)
             });
@@ -151,7 +151,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(responseBody)
             });
@@ -167,7 +167,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(responseBody)
             });
@@ -181,7 +181,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({ id: 1 })
             });
@@ -195,7 +195,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({ id: 1 })
             });
@@ -217,7 +217,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(response)
             });
@@ -233,7 +233,7 @@ describe('Form service', () => {
         it('should handle error with error message', () => {
             const message = '<error>';
 
-            service.handleError({ message: message }).subscribe(() => {
+            service.handleError({ message }).subscribe(() => {
             }, (error) => {
                 expect(error).toBe(message);
             });
@@ -266,7 +266,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     data: [
@@ -288,7 +288,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(response)
             });
@@ -303,7 +303,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(simpleResponseBody)
             });
@@ -322,7 +322,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakePeopleResponse)
             });
@@ -340,7 +340,7 @@ describe('Form service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGroupResponse)
             });
@@ -353,23 +353,10 @@ describe('Form service', () => {
         });
 
         it('should create a Form form a Node', (done) => {
-
             const nameForm = 'testNode';
-
             const formId = 100;
 
-            stubCreateForm();
-
-            stubGetEcmModel();
-
-            stubAddFieldsToAForm();
-
-            service.createFormFromANode(nameForm).subscribe((result) => {
-                expect(result.id).toEqual(formId);
-                done();
-            });
-
-            function stubCreateForm() {
+            const stubCreateForm = () => {
                 jasmine.Ajax.stubRequest(
                     'http://localhost:9876/bpm/activiti-app/api/enterprise/models'
                 ).andReturn({
@@ -378,9 +365,9 @@ describe('Form service', () => {
                     contentType: 'text/xml;charset=UTF-8',
                     responseText: { id: formId, name: 'test', lastUpdatedByFullName: 'uset', lastUpdated: '12-12-2016' }
                 });
-            }
+            };
 
-            function stubGetEcmModel() {
+            const stubGetEcmModel = () => {
                 jasmine.Ajax.stubRequest(
                     'http://localhost:9876/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
                 ).andReturn({
@@ -399,9 +386,9 @@ describe('Form service', () => {
                         }
                     }
                 });
-            }
+            };
 
-            function stubAddFieldsToAForm() {
+            const stubAddFieldsToAForm = () => {
                 jasmine.Ajax.stubRequest(
                     'http://localhost:9876/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
                 ).andReturn({
@@ -410,7 +397,16 @@ describe('Form service', () => {
                     contentType: 'text/xml;charset=UTF-8',
                     responseText: { id: formId, name: 'test', lastUpdatedByFullName: 'user', lastUpdated: '12-12-2016' }
                 });
-            }
+            };
+
+            stubCreateForm();
+            stubGetEcmModel();
+            stubAddFieldsToAForm();
+
+            service.createFormFromANode(nameForm).subscribe((result) => {
+                expect(result.id).toEqual(formId);
+                done();
+            });
         });
    });
 });

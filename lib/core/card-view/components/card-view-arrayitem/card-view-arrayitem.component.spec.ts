@@ -28,11 +28,12 @@ describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
 
-    const mockData = <CardViewArrayItem[]> [
+    const mockData = [
         { icon: 'person', value: 'Zlatan' },
         { icon: 'group', value: 'Lionel Messi' },
         { icon: 'person', value: 'Mohamed' },
-        { icon: 'person', value: 'Ronaldo' }];
+        { icon: 'person', value: 'Ronaldo' }
+    ] as CardViewArrayItem[];
 
     const mockDefaultProps = {
         label: 'Array of items',

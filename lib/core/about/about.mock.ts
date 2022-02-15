@@ -22,7 +22,7 @@ export const mockDependencies = {
     '@angular/mock-services': '8.0.0'
 };
 
-export const mockPlugins = <any> [
+export const mockPlugins = [
     {
         $name: 'plugin1',
         $version: '1.0.0',

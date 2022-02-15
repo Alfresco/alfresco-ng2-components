@@ -28,8 +28,8 @@ describe('TextEditorComponent', () => {
     });
 
     it('should update row value on change', () => {
-        const row = <DynamicTableRow> { value: {} };
-        const column = <DynamicTableColumn> { id: 'key' };
+        const row = { value: {} } as DynamicTableRow;
+        const column = { id: 'key' } as DynamicTableColumn;
 
         const value = '<value>';
         const event = { target: { value } };

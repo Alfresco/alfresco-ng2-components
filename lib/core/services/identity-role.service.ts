@@ -47,6 +47,7 @@ export class IdentityRoleService {
 
     /**
      * Ret all roles
+     *
      * @returns List of roles
      */
     getRoles(
@@ -54,9 +55,7 @@ export class IdentityRoleService {
         size: number = 5
     ): Observable<IdentityRoleResponseModel> {
         return this.http.get<any>(`${this.identityHost}/roles`).pipe(
-            map(res => {
-                return this.preparePaginationWithRoles(res, skipCount, size);
-            }),
+            map(res => this.preparePaginationWithRoles(res, skipCount, size)),
             catchError(error => this.handleError(error))
         );
     }
@@ -69,7 +68,7 @@ export class IdentityRoleService {
         return {
             entries: roles.slice(skipCount, skipCount + size),
             pagination: {
-                skipCount: skipCount,
+                skipCount,
                 maxItems: size,
                 count: roles.length,
                 hasMoreItems: false,
@@ -80,6 +79,7 @@ export class IdentityRoleService {
 
     /**
      * Add new role
+     *
      * @param newRole Role model
      * @returns Server result payload
      */
@@ -95,6 +95,7 @@ export class IdentityRoleService {
 
     /**
      * Delete existing role
+     *
      * @param deletedRole Role model
      * @returns Server result payload
      */
@@ -106,6 +107,7 @@ export class IdentityRoleService {
 
     /**
      * Update existing role
+     *
      * @param updatedRole Role model
      * @param roleId Role id
      * @returns Server result payload

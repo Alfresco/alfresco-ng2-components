@@ -145,7 +145,7 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the select element with the None option when not set in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
         component.properties = [new CardViewSelectItemModel({
             label: 'My default label',
             value: '1',
@@ -173,7 +173,7 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the select element with the None option when set true in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
         component.properties = [new CardViewSelectItemModel({
             label: 'My default label',
             value: '1',
@@ -202,7 +202,7 @@ describe('CardViewComponent', () => {
     });
 
     it('should not render the select element with the None option when set false in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
         component.properties = [new CardViewSelectItemModel({
             label: 'My default label',
             value: '1',

@@ -73,9 +73,7 @@ export class AboutComponent implements OnInit {
         this.dependencies = this.pkg?.dependencies;
 
         if (this.dependencies) {
-            const alfrescoPackages = Object.keys(this.dependencies).filter((val) => {
-                return new RegExp(this.regexp).test(val);
-            });
+            const alfrescoPackages = Object.keys(this.dependencies).filter((val) => new RegExp(this.regexp).test(val));
 
             alfrescoPackages.forEach((val) => {
                 this.dependencyEntries.push({
@@ -97,20 +95,16 @@ export class AboutComponent implements OnInit {
         this.discovery.getEcmProductInfo().subscribe((repository) => {
             this.repository = repository;
 
-            this.statusEntries = Object.keys(repository.status).map((key) => {
-                return {
-                    property: key,
-                    value: repository.status[key]
-                };
-            });
+            this.statusEntries = Object.keys(repository.status).map((key) => ({
+                property: key,
+                value: repository.status[key]
+            }));
 
             if (repository.license) {
-                this.licenseEntries = Object.keys(repository.license).map((key) => {
-                    return {
-                        property: key,
-                        value: repository.license[key]
-                    };
-                });
+                this.licenseEntries = Object.keys(repository.license).map((key) => ({
+                    property: key,
+                    value: repository.license[key]
+                }));
             }
         });
     }

@@ -133,7 +133,7 @@ export const createNewPersonMock = {
     email: 'fakeEcm@ecmUser.com'
 };
 
-export function getFakeUserWithContentAdminCapability(): PersonEntry {
+export const getFakeUserWithContentAdminCapability = (): PersonEntry => {
     const fakeEcmUserWithAdminCapabilities = {
         ...fakeEcmUser,
         capabilities: {
@@ -142,9 +142,9 @@ export function getFakeUserWithContentAdminCapability(): PersonEntry {
     };
     const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);
     return { entry: mockPerson };
-}
+};
 
-export function getFakeUserWithContentUserCapability(): PersonEntry {
+export const getFakeUserWithContentUserCapability = (): PersonEntry => {
     const fakeEcmUserWithAdminCapabilities = {
         ...fakeEcmUser,
         capabilities: {
@@ -153,4 +153,4 @@ export function getFakeUserWithContentUserCapability(): PersonEntry {
     };
     const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);
     return { entry: mockPerson };
-}
+};
