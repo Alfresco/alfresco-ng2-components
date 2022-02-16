@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { SortbleByCategoryItem, SortByCategoryMapperService } from './sort-by-category.service';
+import { SortableByCategoryItem, SortByCategoryMapperService } from './sort-by-category.service';
 
-interface TestSortbleByCategoryItem extends SortbleByCategoryItem {
+interface TestSortableByCategoryItem extends SortableByCategoryItem {
     id: string;
 }
 
 describe('SortByCategoryMapperService', () => {
 
-    let mapper: SortByCategoryMapperService<TestSortbleByCategoryItem>;
+    let mapper: SortByCategoryMapperService<TestSortableByCategoryItem>;
 
     const DEFAULT_CATEGORIES = [
         '',
@@ -38,7 +38,7 @@ describe('SortByCategoryMapperService', () => {
 
     it('should map items by categories ', () => {
 
-        const items: TestSortbleByCategoryItem[] = [
+        const items: TestSortableByCategoryItem[] = [
             { id: 'id1', name: 'firstCategory_222', category: 'category1' },
             { id: 'id2', name: 'secondCategory_AA', category: 'category2' },
             { id: 'id3', name: 'firstCategory_111', category: 'category1' },
@@ -60,7 +60,7 @@ describe('SortByCategoryMapperService', () => {
 
     it('should set all items under default category', () => {
 
-        const defaulValues: TestSortbleByCategoryItem[] = [{
+        const defaulValues: TestSortableByCategoryItem[] = [{
             name: 'name-a',
             id: 'id',
             category: DEFAULT_CATEGORIES[1]
@@ -83,7 +83,7 @@ describe('SortByCategoryMapperService', () => {
 
     it('should set all items under specific category if at least one item has category', () => {
 
-        const defaulValues: TestSortbleByCategoryItem[] = [{
+        const defaulValues: TestSortableByCategoryItem[] = [{
             name: 'name-e',
             id: 'id',
             category: DEFAULT_CATEGORIES[1]

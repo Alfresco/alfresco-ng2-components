@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 
-export interface SortbleByCategoryItem {
+export interface SortableByCategoryItem {
   name: string;
   category?: string;
 }
@@ -30,7 +30,7 @@ export interface ItemsByCategory<T> {
 @Injectable({
   providedIn: 'root'
 })
-export class SortByCategoryMapperService<T extends SortbleByCategoryItem = SortbleByCategoryItem> {
+export class SortByCategoryMapperService<T extends SortableByCategoryItem = SortableByCategoryItem> {
 
   private defaultCategories: string[] = [];
 
@@ -87,7 +87,7 @@ export class SortByCategoryMapperService<T extends SortbleByCategoryItem = Sortb
     );
   }
 
-  private mapItemDefaultCategory(listItem: SortbleByCategoryItem): string {
+  private mapItemDefaultCategory(listItem: SortableByCategoryItem): string {
     const itemCategory = listItem.category;
     let category = '';
 
