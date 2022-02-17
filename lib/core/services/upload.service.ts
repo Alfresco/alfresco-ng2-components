@@ -186,7 +186,10 @@ export class UploadService {
                 promise.next();
             } else {
                 const performAction = this.getAction(file);
-                performAction();
+
+                if (performAction) {
+                    performAction();
+                }
             }
         });
     }

@@ -50,13 +50,6 @@ describe('FileUploadingListRowComponent', () => {
 
             expect(component.cancel.emit).toHaveBeenCalledWith(file);
         });
-
-        it('should emit remove event', () => {
-            spyOn(component.remove, 'emit');
-            component.onRemove(component.file);
-
-            expect(component.remove.emit).toHaveBeenCalledWith(file);
-        });
     });
 
     it('should render node version when upload a version file', () => {
@@ -69,20 +62,6 @@ describe('FileUploadingListRowComponent', () => {
         expect(fixture.nativeElement.querySelector(
             '.adf-file-uploading-row__version'
         ).textContent).toContain('1');
-    });
-
-    it('should not emit remove event on a version file', () => {
-        spyOn(component.remove, 'emit');
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.options = { newVersion: true };
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
-        component.file.status = FileUploadStatus.Complete;
-
-        fixture.detectChanges();
-        const uploadCompleteIcon = document.querySelector('.adf-file-uploading-row__file-version .adf-file-uploading-row__status--done');
-        uploadCompleteIcon.dispatchEvent(new MouseEvent('click'));
-
-        expect(component.remove.emit).not.toHaveBeenCalled();
     });
 
     it('should show cancel button when upload is in progress', async () => {

@@ -27,7 +27,7 @@
         (keyup.enter)="onCancel(file)"
         (click)="onCancel(file)"
         data-automation-id="cancel-upload-progress"
-        *ngIf="file.status === FileUploadStatus.Progress || file.status === FileUploadStatus.Starting"
+        *ngIf="isUploading()"
         [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_FILE_UPLOAD' | translate: { file: file.name }"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}">
@@ -42,28 +42,8 @@
         </mat-icon>
     </div>
 
-    <button mat-icon-button
-        adf-toggle-icon
-        #toggleIcon="toggleIcon"
-        *ngIf="file.status === FileUploadStatus.Complete && !isUploadVersion()"
-        (click)="onRemove(file)"
-        class="adf-file-uploading-row__group"
-        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.REMOVE_FILE' | translate: { file: file.name }"
-        title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
-
-        <mat-icon *ngIf="!toggleIcon.isToggled"
-            class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
-            check_circle
-        </mat-icon>
-
-        <mat-icon *ngIf="toggleIcon.isToggled"
-            class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
-            remove_circle
-        </mat-icon>
-    </button>
-
     <div
-        *ngIf="file.status === FileUploadStatus.Complete && isUploadVersion()"
+        *ngIf="isUploadVersionComplete()"
         class="adf-file-uploading-row__file-version"
         [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
         role="status"
@@ -79,7 +59,7 @@
         adf-toggle-icon
         #toggleIconCancel="toggleIcon"
         mat-icon-button
-        *ngIf="file.status === FileUploadStatus.Pending"
+        *ngIf="canCancelUpload()"
         (click)="onCancel(file)"
         data-automation-id="cancel-upload-queue"
         class="adf-file-uploading-row__group"
@@ -101,7 +81,7 @@
     <div
         tabindex="0"
         role="status"
-        *ngIf="file.status === FileUploadStatus.Error"
+        *ngIf="isUploadError()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
         <mat-icon mat-list-icon
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"

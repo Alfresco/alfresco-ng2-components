@@ -29,20 +29,10 @@ export class FileUploadingListRowComponent {
     file: FileModel;
 
     @Output()
-    cancel: EventEmitter<FileModel> = new EventEmitter<FileModel>();
-
-    @Output()
-    remove: EventEmitter<FileModel> = new EventEmitter<FileModel>();
-
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    FileUploadStatus = FileUploadStatus;
+    cancel = new EventEmitter<FileModel>();
 
     onCancel(file: FileModel): void {
         this.cancel.emit(file);
-    }
-
-    onRemove(file: FileModel): void {
-        this.remove.emit(file);
     }
 
     showCancelledStatus(): boolean {
@@ -71,5 +61,21 @@ export class FileUploadingListRowComponent {
             this.file.data.entry.properties &&
             this.file.data.entry.properties['cm:versionLabel']
         );
+    }
+
+    canCancelUpload(): boolean {
+        return this.file && this.file.status === FileUploadStatus.Pending;
+    }
+
+    isUploadError(): boolean {
+        return this.file && this.file.status === FileUploadStatus.Error;
+    }
+
+    isUploading(): boolean {
+        return this.file && (this.file.status === FileUploadStatus.Progress || this.file.status === FileUploadStatus.Starting);
+    }
+
+    isUploadVersionComplete(): boolean {
+        return this.file && (this.file.status === FileUploadStatus.Complete && this.isUploadVersion());
     }
 }
