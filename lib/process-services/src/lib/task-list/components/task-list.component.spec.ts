@@ -56,7 +56,7 @@ describe('TaskListComponent', () => {
 
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
-                'presets': {
+                presets: {
                     fakeCustomSchema
                 }
             }
@@ -158,11 +158,11 @@ describe('TaskListComponent', () => {
             done();
         });
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
+        component.ngOnChanges({ state, processDefinitionKey, assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -184,11 +184,11 @@ describe('TaskListComponent', () => {
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
+        component.ngOnChanges({ state, processDefinitionKey, assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -210,11 +210,11 @@ describe('TaskListComponent', () => {
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment });
+        component.ngOnChanges({ state, processInstanceId, assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -236,11 +236,11 @@ describe('TaskListComponent', () => {
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processDefinitionId': processDefinitionId, 'assignment': assignment });
+        component.ngOnChanges({ state, processDefinitionId, assignment });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -259,10 +259,10 @@ describe('TaskListComponent', () => {
             done();
         });
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'afterDate': afterDate });
+        component.ngOnChanges({ state, afterDate });
         fixture.detectChanges();
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -287,11 +287,11 @@ describe('TaskListComponent', () => {
         });
 
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processInstanceId': processInstanceId });
+        component.ngOnChanges({ state, processInstanceId });
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -328,7 +328,7 @@ describe('TaskListComponent', () => {
         component.reload();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeGlobalTask)
         });
@@ -363,7 +363,7 @@ describe('TaskListComponent', () => {
             component.rows = [{ id: '999', name: 'Fake-name' }];
             const landingTaskId = '999';
             const change = new SimpleChange(null, landingTaskId, true);
-            component.ngOnChanges({ 'landingTaskId': change });
+            component.ngOnChanges({ landingTaskId: change });
             expect(component.reload).not.toHaveBeenCalled();
             expect(component.rows.length).toEqual(1);
         });
@@ -381,10 +381,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'landingTaskId': change });
+            component.ngOnChanges({ landingTaskId: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -409,10 +409,10 @@ describe('TaskListComponent', () => {
                 expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({ appId: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -431,10 +431,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'processDefinitionKey': change });
+            component.ngOnChanges({ processDefinitionKey: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -453,10 +453,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'state': change });
+            component.ngOnChanges({ state: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -475,10 +475,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'sort': change });
+            component.ngOnChanges({ sort: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -497,10 +497,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'name': change });
+            component.ngOnChanges({ name: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -519,10 +519,10 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ 'assignment': change });
+            component.ngOnChanges({ assignment: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGlobalTask)
             });
@@ -532,7 +532,7 @@ describe('TaskListComponent', () => {
     it('should update the columns when presetColumn schema changes', () => {
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
-                'presets': fakeColumnSchema
+                presets: fakeColumnSchema
             }
         });
 
@@ -543,7 +543,7 @@ describe('TaskListComponent', () => {
 
         component.presetColumn = 'fakeMyTasksSchema';
         const presetColumnChange = new SimpleChange(null, 'fakeMyTasksSchema', false);
-        component.ngOnChanges({ 'presetColumn': presetColumnChange });
+        component.ngOnChanges({ presetColumn: presetColumnChange });
 
         const newColumnSchema = component.mergeJsonAndHtmlSchema();
         const expectedColumn1 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[0]);
@@ -562,7 +562,7 @@ describe('TaskListComponent', () => {
         const processDefinitionKey = new SimpleChange(null, null, true);
         const assignment = new SimpleChange(null, 'fake-assignee', true);
         component.ngAfterContentInit();
-        component.ngOnChanges({ 'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment });
+        component.ngOnChanges({ state, processDefinitionKey, assignment });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -584,7 +584,7 @@ describe('TaskListComponent', () => {
         const state = new SimpleChange(null, 'open', true);
         component.multiselect = true;
 
-        component.ngOnChanges({ 'sort': state });
+        component.ngOnChanges({ sort: state });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -612,7 +612,7 @@ describe('TaskListComponent', () => {
         const state = new SimpleChange(null, 'open', true);
         component.multiselect = true;
 
-        component.ngOnChanges({ 'sort': state });
+        component.ngOnChanges({ sort: state });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -650,7 +650,7 @@ describe('TaskListComponent', () => {
         component.multiselect = true;
         component.selectionMode = 'none';
 
-        component.ngOnChanges({ 'sort': state });
+        component.ngOnChanges({ sort: state });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -695,7 +695,7 @@ describe('TaskListComponent', () => {
         component.multiselect = true;
         component.selectionMode = 'single';
 
-        component.ngOnChanges({ 'sort': state });
+        component.ngOnChanges({ sort: state });
         fixture.detectChanges();
 
         const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
@@ -726,7 +726,7 @@ describe('TaskListComponent', () => {
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
         const state = new SimpleChange(null, 'open', true);
 
-        component.ngOnChanges({ 'sort': state });
+        component.ngOnChanges({ sort: state });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -827,9 +827,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     beforeEach(() => {
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return of(key);
-        });
+        spyOn(translateService, 'get').and.callFake((key: string) => of(key));
         spyOn(taskListService, 'findTasksByState').and.returnValue(of(fakeEmptyTask));
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();

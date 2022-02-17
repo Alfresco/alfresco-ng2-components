@@ -26,6 +26,8 @@ import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 
+const PRESET_KEY = 'adf-cloud-process-list.presets';
+
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -33,9 +35,6 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
-
-    static PRESET_KEY = 'adf-cloud-process-list.presets';
-
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
@@ -198,12 +197,12 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService, ProcessListCloudComponent.PRESET_KEY, processCloudPresetsDefaultModel);
+        super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+        this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -282,6 +281,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /**
      * Resets the pagination values and
      * Reloads the process list
+     *
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {

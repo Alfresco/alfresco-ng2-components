@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { FormModel } from './../components/widgets/core/index';
 import { FormEvent } from './form.event';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 
@@ -24,7 +23,7 @@ export class ValidateFormEvent extends FormEvent {
     isValid = true;
     errorsField: FormFieldModel[] = [];
 
-    constructor(form: FormModel) {
+    constructor(form: any) {
         super(form);
     }
 }

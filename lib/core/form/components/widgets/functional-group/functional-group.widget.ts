@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
@@ -74,7 +74,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
             const params = this.field.params;
             if (params && params.restrictWithGroup) {
-                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
+                const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
 

@@ -88,7 +88,7 @@
         color: var(--theme-warn-color);
         padding: 0;
         margin-bottom: 4px;
-        font-size: 13px;
+        font-size: var(--theme-caption-font-size);
     }
 
     .adf-error-message .adf-error-icon {
@@ -176,7 +176,7 @@
 
     .adf-is-active {
         background-color: transparent;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         font-weight: normal;
         line-height: 1.33;
         color: var(--theme-warn-color);
@@ -186,7 +186,7 @@
         min-width: 320px;
         text-align: center;
         padding: 16px 0;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         opacity: 0.54;
     }
 
@@ -196,7 +196,7 @@
 
     .adf-login__field .mat-form-field-wrapper {
         margin: 1em 0 0;
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
     }
 
     .adf-login__field input:-webkit-autofill {
@@ -209,13 +209,13 @@
     .adf-login-validation {
         background-color: transparent;
         color: var(--theme-warn-color);
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
     }
 
     .adf-login-error {
         color: var(--theme-warn-color);
         position: absolute;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         margin-top: -12px;
         display: block;
     }

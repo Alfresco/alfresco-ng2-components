@@ -74,9 +74,7 @@ describe('PropertyDescriptorLoaderService', () => {
         const apiResponses = [ exifResponse, contentResponse ];
         let counter = 0;
 
-        spyOn(classesApi, 'getClass').and.callFake(() => {
-            return Promise.resolve(apiResponses[counter++]);
-        });
+        spyOn(classesApi, 'getClass').and.callFake(() => Promise.resolve(apiResponses[counter++]));
 
         service.load(['exif:exif', 'cm:content'])
             .subscribe({

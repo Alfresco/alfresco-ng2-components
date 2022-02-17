@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 // maps to: com.activiti.model.editor.form.OptionRepresentation
 export interface DynamicTableColumnOption {

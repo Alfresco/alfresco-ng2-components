@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-console  */
+/* eslint-disable no-console */
 
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
@@ -45,6 +45,7 @@ export class LogService {
 
     /**
      * Logs a message at the "ERROR" level.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -59,6 +60,7 @@ export class LogService {
 
     /**
      * Logs a message at the "DEBUG" level.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -73,6 +75,7 @@ export class LogService {
 
     /**
      * Logs a message at the "INFO" level.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -87,6 +90,7 @@ export class LogService {
 
     /**
      * Logs a message at any level from "TRACE" upwards.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -101,6 +105,7 @@ export class LogService {
 
     /**
      * Logs a message at the "TRACE" level.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -115,6 +120,7 @@ export class LogService {
 
     /**
      * Logs a message at the "WARN" level.
+     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -129,6 +135,7 @@ export class LogService {
 
     /**
      * Logs a message if a boolean test fails.
+     *
      * @param test Test value (typically a boolean expression)
      * @param message Message to show if test is false
      * @param optionalParams Interpolation values for the message in "printf" format
@@ -144,6 +151,7 @@ export class LogService {
 
     /**
      * Starts an indented group of log messages.
+     *
      * @param groupTitle Title shown at the start of the group
      * @param optionalParams Interpolation values for the title in "printf" format
      */
@@ -164,23 +172,23 @@ export class LogService {
 
     /**
      * Converts a log level name string into its numeric equivalent.
+     *
      * @param level Level name
      * @returns Numeric log level
      */
     getLogLevel(level: string): LogLevelsEnum {
-        const referencedLevel = logLevels.find((currentLevel: any) => {
-            return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
-        });
+        const referencedLevel = logLevels.find((currentLevel: any) => currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase());
 
         return referencedLevel ? referencedLevel.level : 5;
     }
 
     /**
      * Triggers notification callback for log messages.
+     *
      * @param text Message text
      * @param logLevel Log level for the message
      */
     messageBus(text: string, logLevel: string) {
-        this.onMessage.next({ text: text, type: logLevel });
+        this.onMessage.next({ text, type: logLevel });
     }
 }

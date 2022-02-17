@@ -28,7 +28,7 @@ export class PipesComponent {
     today = new Date();
     locale: string;
     format: string;
-    number = 12345.56;
+    numberValue = 12345.56;
     decimalValues = {
         minIntegerDigits: undefined,
         minFractionDigits: undefined,

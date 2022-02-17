@@ -20,77 +20,21 @@
 import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
+import * as kube from './kube-utils';
 
-export interface KubeArgs {
-    tag?: string;
-    installCheck?: boolean;
-    username?: string;
-    token?: string;
-    clusterEnv?: string;
-    clusterUrl?: string;
-    dockerRepo?: string;
-    label?: string;
-    namespaces?: string;
-}
-
-function setCluster(args: KubeArgs) {
-    logger.info('Perform set-cluster...');
-    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
-    logger.info(response);
-}
-
-function setCredentials(args: KubeArgs) {
-    logger.info('Perform set-credentials...');
-    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
-    logger.info(response);
-}
-
-function setContext(args: KubeArgs) {
-    logger.info('Perform set-context...');
-    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
-    logger.info(response);
-}
-
-function useContext(args: KubeArgs) {
-    logger.info('Perform use-context...');
-    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
-    logger.info(response);
-}
-
-function getNamespaces(): string [] {
-    logger.info('Perform get namespaces name...');
-    const result =  exec('kubectl', [`get`, `namespaces`, `-l`, `type=application`, `-o`, `name`], {});
-    const namespaces = result.replace(/namespace[\/]+/g, '').split(/\r?\n/);
-    logger.info(`namespaces found: ${namespaces}`);
-    return namespaces;
-}
-
-function getDeploymentName(args: KubeArgs, namespace: string): string {
-    logger.info('Perform get deployment name...');
-    const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${args.label}`, `-o`, `name`], {});
-    logger.info(`deployment name: ${result}`);
-    return result;
-}
-
-function setImage(args: KubeArgs, deploymentName: string, serviceName: string, namespace: string) {
-    logger.info('Perform set image...');
-    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `${deploymentName}`, `${serviceName}=${args.dockerRepo}:${args.tag}`], {});
-    logger.info(response);
-}
-
-function installPerform() {
+const installPerform = () => {
     logger.info('Perform install...');
     const responseK8sStable = exec('curl', [`-s`, `https://storage.googleapis.com/kubernetes-release/release/stable.txt`], {}).trim();
     const k8sRelease = `https://storage.googleapis.com/kubernetes-release/release/${responseK8sStable}/bin/linux/amd64/kubectl`;
     exec('curl', [`LO`, `${k8sRelease}`], {});
-}
+};
 
-export default function (args: KubeArgs) {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export default function(args: kube.KubeArgs) {
     main(args);
 }
 
-function main(args) {
-
+const main = (args: kube.KubeArgs) => {
     program
         .version('0.1.0')
         .description('his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
@@ -115,27 +59,28 @@ function main(args) {
     }
 
     if (args.tag !== undefined) {
-        setCluster(args);
-        setCredentials(args);
-        setContext(args);
-        useContext(args);
+        kube.setCluster(args.clusterEnv, args.clusterUrl);
+        kube.setCredentials(args.username, args.token);
+        kube.setContext(args.clusterEnv, args.username);
+        kube.useContext(args.clusterEnv);
+
         let namespaces: string [];
         if (args.namespaces === null || args.namespaces === 'default') {
             logger.info(`No namespaces provided. Fetch all of them`);
-            namespaces = getNamespaces();
+            namespaces = kube.getNamespaces();
         } else {
             namespaces = args.namespaces.split(',');
         }
-        namespaces.forEach( (namespace) => {
+
+        namespaces.forEach((namespace) => {
             logger.info(`Find deployment name based on label ${args.label} and namespace ${namespace}`);
-            const deploymentName = getDeploymentName(args, namespace);
+            const deploymentName = kube.getDeploymentName(args, namespace);
             if (deploymentName) {
                 logger.info(`Found ${deploymentName}`);
-                setImage(args, deploymentName.trim(), '*', namespace);
+                kube.setImage(args, deploymentName.trim(), '*', namespace);
             } else {
                 logger.info(`No container with the label app=${args.label} found`);
             }
-
         });
     }
-}
+};

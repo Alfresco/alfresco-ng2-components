@@ -47,8 +47,8 @@ describe('UserPreferencesService', () => {
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
             pagination: {
-                'size': 10,
-                'supportedPageSizes': [5, 10, 15, 20]
+                size: 10,
+                supportedPageSizes: [5, 10, 15, 20]
             }
         };
 

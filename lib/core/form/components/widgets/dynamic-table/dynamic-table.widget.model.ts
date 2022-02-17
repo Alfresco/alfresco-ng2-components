@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import moment from 'moment-es6';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
@@ -72,7 +72,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map((obj) => <DynamicTableRow> {selected: false, value: obj});
+                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj } as DynamicTableRow));
             }
         }
 
@@ -91,7 +91,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (definitions) {
-                return definitions.map((obj) => <DynamicTableColumn> obj);
+                return definitions.map((obj) => obj as DynamicTableColumn);
             }
         }
         return null;

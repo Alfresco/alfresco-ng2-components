@@ -25,6 +25,7 @@ import { Logger } from '../../core/utils/logger';
 import { TabPage } from '../../core/pages/form/widgets/tab.page';
 import { UploadButtonPage } from '../pages/upload-button.page';
 import { FileModel } from '../../core/models/file.model';
+import { TestElement } from '../../core/public-api';
 
 export class ContentNodeSelectorDialogPage {
     dialog = $(`adf-content-node-selector`);
@@ -39,8 +40,9 @@ export class ContentNodeSelectorDialogPage {
     dataTable = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.$(`mat-select[data-automation-id='site-my-files-option']`));
     breadcrumbDropdown = new BreadcrumbDropdownPage();
-    tabPage: TabPage = new TabPage();
+    tab: TabPage = new TabPage();
     uploadButtonComponent = new UploadButtonPage();
+    selectedFileCounter = TestElement.byCss('adf-node-counter');
 
     uploadFromLocalTab = $$('*[role="tab"]').get(1);
     uploadFromLocalTabName = 'Upload from your device';
@@ -48,6 +50,10 @@ export class ContentNodeSelectorDialogPage {
 
     breadcrumbDropdownPage(): BreadcrumbDropdownPage {
         return this.breadcrumbDropdown;
+    }
+
+    tabPage(): TabPage {
+        return this.tab;
     }
 
     uploadButtonPage(): UploadButtonPage {
@@ -159,11 +165,11 @@ export class ContentNodeSelectorDialogPage {
     async attachFilesFromLocal(files: FileModel[]): Promise<void> {
         await this.checkFileServerTabIsLoaded();
 
-        await this.tabPage.clickTabByLabel(this.uploadFromLocalTabName);
+        await this.tab.clickTabByLabel(this.uploadFromLocalTabName);
 
         await this.uploadButtonComponent.attachFiles(files);
 
-        await this.tabPage.clickTabByLabel(this.repositoryTabName);
+        await this.tab.clickTabByLabel(this.repositoryTabName);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();

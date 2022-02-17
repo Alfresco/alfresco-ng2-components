@@ -31,8 +31,8 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
     }
 
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        const aspects = this.config,
-            aspectNames = Object.keys(aspects);
+        const aspects = this.config;
+        const aspectNames = Object.keys(aspects);
 
         return aspectNames
             .reduce((groupAccumulator, aspectName) => {
@@ -45,8 +45,8 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
     public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const groups = Object.keys(propertyGroups)
             .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName],
-                    properties = propertyGroup.properties;
+                const propertyGroup = propertyGroups[groupName];
+                const properties = propertyGroup.properties;
 
                 if (this.isAspectReadOnly(groupName)) {
                     Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
@@ -92,9 +92,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
 
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         if (this.config.exclude) {
-            return propertyGroups.filter((preset) => {
-                return !this.config.exclude.includes(preset.name);
-            });
+            return propertyGroups.filter((preset) => !this.config.exclude.includes(preset.name));
         }
         return propertyGroups;
     }
@@ -114,7 +112,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
             if (aspectProperties === '*') {
                 properties = getProperty(propertyGroups, aspectName, aspectProperties);
             } else {
-                properties = (<string[]> aspectProperties)
+                properties = aspectProperties
                     .map((propertyName) => getProperty(propertyGroups, aspectName, propertyName))
                     .filter((props) => props !== undefined);
             }

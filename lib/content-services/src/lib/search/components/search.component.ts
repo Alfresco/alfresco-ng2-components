@@ -41,9 +41,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None,
     preserveWhitespaces: false,
     exportAs: 'searchAutocomplete',
-    host: {
-        'class': 'adf-search'
-    }
+    host: { class: 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
 
@@ -72,6 +70,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     searchTerm: string = '';
 
     /** CSS class for display. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('class')
     set classList(classList: string) {
         if (classList && classList.length) {
@@ -167,7 +166,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
 
     onSearchDataLoaded(resultSetPaging: ResultSetPaging) {
         if (resultSetPaging) {
-            this.results = <NodePaging> resultSetPaging;
+            this.results = resultSetPaging as NodePaging;
             this.resultLoaded.emit(this.results);
             this.isOpen = true;
             this.setVisibility();

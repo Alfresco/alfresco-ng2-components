@@ -16,38 +16,32 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Direction } from '@angular/cdk/bidi';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { LanguageItem } from './language-item.interface';
 import { UserPreferencesService } from './user-preferences.service';
-
-export interface LanguageItem {
-    key: string;
-    label: string;
-    direction?: Direction;
-}
 
 @Injectable({providedIn: 'root'})
 export class LanguageService {
 
     private languages = new BehaviorSubject<LanguageItem[]>([
-        {'key': 'de', 'label': 'Deutsch'},
-        {'key': 'en', 'label': 'English'},
-        {'key': 'es', 'label': 'Español'},
-        {'key': 'fr', 'label': 'Français'},
-        {'key': 'it', 'label': 'Italiano'},
-        {'key': 'ja', 'label': '日本語'},
-        {'key': 'nb', 'label': 'Bokmål'},
-        {'key': 'nl', 'label': 'Nederlands'},
-        {'key': 'pt-BR', 'label': 'Português (Brasil)'},
-        {'key': 'ru', 'label': 'Русский'},
-        {'key': 'zh-CN', 'label': '中文简体'},
-        {'key': 'cs', 'label': 'Čeština'},
-        {'key': 'da', 'label': 'Dansk'},
-        {'key': 'fi', 'label': 'Suomi'},
-        {'key': 'pl', 'label': 'Polski'},
-        {'key': 'sv', 'label': 'Svenska'},
-        {'key': 'ar', 'label': 'العربية', direction: 'rtl'}
+        {key: 'de', label: 'Deutsch'},
+        {key: 'en', label: 'English'},
+        {key: 'es', label: 'Español'},
+        {key: 'fr', label: 'Français'},
+        {key: 'it', label: 'Italiano'},
+        {key: 'ja', label: '日本語'},
+        {key: 'nb', label: 'Bokmål'},
+        {key: 'nl', label: 'Nederlands'},
+        {key: 'pt-BR', label: 'Português (Brasil)'},
+        {key: 'ru', label: 'Русский'},
+        {key: 'zh-CN', label: '中文简体'},
+        {key: 'cs', label: 'Čeština'},
+        {key: 'da', label: 'Dansk'},
+        {key: 'fi', label: 'Suomi'},
+        {key: 'pl', label: 'Polski'},
+        {key: 'sv', label: 'Svenska'},
+        {key: 'ar', label: 'العربية', direction: 'rtl'}
     ]);
 
     languages$ = this.languages.asObservable();

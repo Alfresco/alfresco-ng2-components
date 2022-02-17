@@ -74,10 +74,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
         let supportedExtension: string;
 
         if (this.supportedExtensions && (this.supportedExtensions instanceof Array)) {
-            supportedExtension = this.supportedExtensions.find((extension) => {
-                return extension.toLowerCase() === fileExtension;
-
-            });
+            supportedExtension = this.supportedExtensions.find((extension) => extension.toLowerCase() === fileExtension);
         }
 
         return !!supportedExtension;

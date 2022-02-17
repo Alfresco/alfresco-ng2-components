@@ -58,7 +58,7 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
             'text-anchor' : 'middle',
             'font-family' : 'Arial',
             'font-size' : '11',
-            'fill' : '#373e48'
+            fill : '#373e48'
         });
 
         textPaper.transform(this.transform);

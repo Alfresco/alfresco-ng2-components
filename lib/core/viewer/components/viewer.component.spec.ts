@@ -156,9 +156,7 @@ describe('ViewerComponent', () => {
         providers: [
             {
                 provide: RenditionsService, useValue: {
-                    getRendition: () => {
-                        return throwError('thrown');
-                    }
+                    getRendition: () => throwError('thrown')
                 }
             },
             RenderingQueueServices,
@@ -560,15 +558,15 @@ describe('ViewerComponent', () => {
 
         expect(component.fileTitle).toBe('file1');
 
-        alfrescoApiService.nodeUpdated.next(<any> { id: 'id1', name: 'file2' });
+        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file2');
 
-        alfrescoApiService.nodeUpdated.next(<any> { id: 'id1', name: 'file3' });
+        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
 
-        alfrescoApiService.nodeUpdated.next(<any> { id: 'id2', name: 'file4' });
+        alfrescoApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
         expect(component.nodeId).toBe('id1');

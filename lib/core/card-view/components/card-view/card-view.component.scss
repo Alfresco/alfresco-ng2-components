@@ -33,14 +33,14 @@
         }
 
         .adf-property-label {
-            font-size: 12px;
+            font-size: var(--theme-caption-font-size);
             color: var(--theme-text-color);
             word-wrap: break-word;
         }
 
         .adf-property-value,
         .mat-form-field-label {
-            font-size: 14px;
+            font-size: var(--theme-body-1-font-size);
             color: var(--theme-text-bold-color);
         }
     }

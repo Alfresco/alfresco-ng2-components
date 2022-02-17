@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter, OnInit } from '@angular/core';
 import { ESCAPE, TAB } from '@angular/cdk/keycodes';
 import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
@@ -25,10 +25,10 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-select-filter-input',
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
-    host: { 'class': 'adf-select-filter-input' },
+    host: { class: 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })
-export class SelectFilterInputComponent implements OnDestroy {
+export class SelectFilterInputComponent implements OnInit, OnDestroy {
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 
@@ -79,6 +79,7 @@ export class SelectFilterInputComponent implements OnDestroy {
 
                     this.previousSelected = values;
                     if (restoreSelection) {
+                        // eslint-disable-next-line no-underscore-dangle
                         this.matSelect._onChange(values);
                     }
                 });

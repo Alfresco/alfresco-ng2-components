@@ -36,48 +36,48 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+const CREATE_PERMISSION: string = 'create';
+
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
-    private CREATE_PERMISSION = 'create';
-
-    _peopleApi: PeopleApi;
+    private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
         return this._peopleApi;
     }
 
-    _sitesApi: SitesApi;
+    private _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
     }
 
-    _trashcanApi: TrashcanApi;
+    private _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
         return this._trashcanApi;
     }
 
-    _searchApi: SearchApi;
+    private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
-    _sharedLinksApi: SharedlinksApi;
+    private _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
 
-    _favoritesApi: FavoritesApi;
+    private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
         return this._favoritesApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
@@ -88,6 +88,7 @@ export class CustomResourcesService {
 
     /**
      * Gets files recently accessed by a user.
+     *
      * @param personId ID of the user
      * @param pagination Specifies how to paginate the results
      * @param filters Specifies additional filters to apply (joined with **AND**)
@@ -169,6 +170,7 @@ export class CustomResourcesService {
 
     /**
      * Gets favorite files for the current user.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where A string to restrict the returned objects by using a predicate
@@ -221,6 +223,7 @@ export class CustomResourcesService {
 
     /**
      * Gets sites that the current user is a member of.
+     *
      * @param pagination Specifies how to paginate the results
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
@@ -240,7 +243,7 @@ export class CustomResourcesService {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { site } }: any) => {
-                                        site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
+                                        site.allowableOperations = site.allowableOperations ? site.allowableOperations : [CREATE_PERMISSION];
                                         site.name = site.name || site.title;
                                         return {
                                             entry: site
@@ -262,6 +265,7 @@ export class CustomResourcesService {
 
     /**
      * Gets all sites in the repository.
+     *
      * @param pagination Specifies how to paginate the results
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
@@ -297,6 +301,7 @@ export class CustomResourcesService {
 
     /**
      * Gets all items currently in the trash.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @returns List of deleted items
@@ -317,6 +322,7 @@ export class CustomResourcesService {
 
     /**
      * Gets shared links for the current user.
+     *
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
      * @param where A string to restrict the returned objects by using a predicate
@@ -338,6 +344,7 @@ export class CustomResourcesService {
 
     /**
      * Is the folder ID one of the well-known aliases?
+     *
      * @param folderId Folder ID name to check
      * @returns True if the ID is a well-known name, false otherwise
      */
@@ -354,6 +361,7 @@ export class CustomResourcesService {
 
     /**
      * Is the folder ID a "-my", "-root-", or "-shared-" alias?
+     *
      * @param folderId Folder ID name to check
      * @returns True if the ID is one of the supported sources, false otherwise
      */
@@ -370,6 +378,7 @@ export class CustomResourcesService {
 
     /**
      * Gets a folder's contents.
+     *
      * @param nodeId ID of the target folder node
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
@@ -396,6 +405,7 @@ export class CustomResourcesService {
 
     /**
      * Gets the contents of one of the well-known aliases in the form of node ID strings.
+     *
      * @param nodeId ID of the target folder node
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
@@ -404,9 +414,7 @@ export class CustomResourcesService {
         if (this.isCustomSource(nodeId)) {
 
             return this.loadFolderByNodeId(nodeId, pagination)
-                .pipe(map((result: any): string[] => {
-                    return result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId));
-                }));
+                .pipe(map((result: any): string[] => result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId))));
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
@@ -419,6 +427,7 @@ export class CustomResourcesService {
 
     /**
      * Chooses the correct ID for a node entry.
+     *
      * @param node Node object
      * @param nodeId ID of the node object
      * @returns ID value
@@ -437,6 +446,7 @@ export class CustomResourcesService {
 
     /**
      * Does the well-known alias have a corresponding node ID?
+     *
      * @param nodeId Node to check
      * @returns True if the alias has a corresponding node ID, false otherwise
      */

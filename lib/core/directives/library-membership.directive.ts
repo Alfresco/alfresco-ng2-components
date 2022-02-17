@@ -65,7 +65,7 @@ export class LibraryMembershipDirective implements OnChanges {
     @Output()
     toggle = new EventEmitter<LibraryMembershipToggleEvent>();
 
-    // tslint:disable-next-line: no-output-native
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<LibraryMembershipErrorEvent>();
 

@@ -23,11 +23,6 @@ import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 import { GroupModel } from './../components/widgets/core/group.model';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import {
-    FormErrorEvent, FormEvent, FormFieldEvent,
-    ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
-} from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
@@ -43,11 +38,22 @@ import {
     UsersApi,
     ActivitiGroupsApi
 } from '@alfresco/js-api';
+import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
+import { FormValues } from '../components/widgets/core/form-values';
+import { FormModel } from '../components/widgets/core/form.model';
+import { FormOutcomeModel } from '../components/widgets/core/form-outcome.model';
+import { FormEvent } from '../events/form.event';
+import { FormFieldEvent } from '../events/form-field.event';
+import { FormErrorEvent } from '../events/form-error.event';
+import { ValidateFormEvent } from '../events/validate-form.event';
+import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
+import { ValidateDynamicTableRowEvent } from '../events/validate-dynamic-table-row.event';
+import { FormValidationService } from './form-validation-service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormService {
+export class FormService implements FormValidationService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
@@ -131,6 +137,7 @@ export class FormService {
 
     /**
      * Parses JSON data to create a corresponding Form model.
+     *
      * @param json JSON to create the form
      * @param data Values for the form fields
      * @param readOnly Should the form fields be read-only?
@@ -142,7 +149,7 @@ export class FormService {
             const form = new FormModel(json, data, readOnly, this, fixedSpace);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(<any> form, {
+                    new FormOutcomeModel(form, {
                         id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
@@ -156,6 +163,7 @@ export class FormService {
 
     /**
      * Creates a Form with a field for each metadata property.
+     *
      * @param formName Name of the new form
      * @returns The new form
      */
@@ -181,6 +189,7 @@ export class FormService {
 
     /**
      * Create a Form.
+     *
      * @param formName Name of the new form
      * @returns The new form
      */
@@ -199,6 +208,7 @@ export class FormService {
 
     /**
      * Saves a form.
+     *
      * @param formId ID of the form to save
      * @param formModel Model data for the form
      * @returns Data for the saved form
@@ -211,32 +221,32 @@ export class FormService {
 
     /**
      * Searches for a form by name.
+     *
      * @param name The form name to search for
      * @returns Form model(s) matching the search name
      */
     searchFrom(name: string): Observable<any> {
         const opts = {
-            'modelType': 2
+            modelType: 2
         };
 
         return from(
             this.modelsApi.getModels(opts)
         )
             .pipe(
-                map(function (forms: any) {
-                    return forms.data.find((formData) => formData.name === name);
-                }),
+                map((forms: any) => forms.data.find((formData) => formData.name === name)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets all the forms.
+     *
      * @returns List of form models
      */
     getForms(): Observable<any> {
         const opts = {
-            'modelType': 2
+            modelType: 2
         };
 
         return from(this.modelsApi.getModels(opts))
@@ -248,6 +258,7 @@ export class FormService {
 
     /**
      * Gets process definitions.
+     *
      * @returns List of process definitions
      */
     getProcessDefinitions(): Observable<any> {
@@ -260,6 +271,7 @@ export class FormService {
 
     /**
      * Gets instance variables for a process.
+     *
      * @param processInstanceId ID of the target process
      * @returns List of instance variable information
      */
@@ -273,6 +285,7 @@ export class FormService {
 
     /**
      * Gets all the tasks.
+     *
      * @returns List of tasks
      */
     getTasks(): Observable<any> {
@@ -285,6 +298,7 @@ export class FormService {
 
     /**
      * Gets a task.
+     *
      * @param taskId Task Id
      * @returns Task info
      */
@@ -298,12 +312,13 @@ export class FormService {
 
     /**
      * Saves a task form.
+     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @returns Null response when the operation is complete
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        const saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
+        const saveFormRepresentation = { values: formValues } as SaveFormRepresentation;
 
         return from(this.taskFormsApi.saveTaskForm(taskId, saveFormRepresentation))
             .pipe(
@@ -313,13 +328,14 @@ export class FormService {
 
     /**
      * Completes a Task Form.
+     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @param outcome Form Outcome
      * @returns Null response when the operation is complete
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
+        const completeFormRepresentation = { values: formValues } as CompleteFormRepresentation;
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -332,6 +348,7 @@ export class FormService {
 
     /**
      * Gets a form related to a task.
+     *
      * @param taskId ID of the target task
      * @returns Form definition
      */
@@ -345,6 +362,7 @@ export class FormService {
 
     /**
      * Gets a form definition.
+     *
      * @param formId ID of the target form
      * @returns Form definition
      */
@@ -358,14 +376,15 @@ export class FormService {
 
     /**
      * Gets the form definition with a given name.
+     *
      * @param name The form name
      * @returns Form definition
      */
     getFormDefinitionByName(name: string): Observable<any> {
         const opts = {
-            'filter': 'myReusableForms',
-            'filterText': name,
-            'modelType': 2
+            filter: 'myReusableForms',
+            filterText: name,
+            modelType: 2
         };
 
         return from(this.modelsApi.getModels(opts))
@@ -377,6 +396,7 @@ export class FormService {
 
     /**
      * Gets the start form instance for a given process.
+     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -390,6 +410,7 @@ export class FormService {
 
     /**
      * Gets a process instance.
+     *
      * @param processId ID of the process to get
      * @returns Process instance
      */
@@ -403,6 +424,7 @@ export class FormService {
 
     /**
      * Gets the start form definition for a given process.
+     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -416,6 +438,7 @@ export class FormService {
 
     /**
      * Gets values of fields populated by a REST backend.
+     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @returns Field values
@@ -429,6 +452,7 @@ export class FormService {
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
+     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @returns Field values
@@ -442,6 +466,7 @@ export class FormService {
 
     /**
      * Gets column values of fields populated by a REST backend using a process ID.
+     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -456,6 +481,7 @@ export class FormService {
 
     /**
      * Gets column values of fields populated by a REST backend.
+     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -470,6 +496,7 @@ export class FormService {
 
     /**
      * Returns a URL for the profile picture of a user.
+     *
      * @param userId ID of the target user
      * @returns URL string
      */
@@ -479,18 +506,19 @@ export class FormService {
 
     /**
      * Gets a list of workflow users.
+     *
      * @param filter Filter to select specific users
      * @param groupId Group ID for the search
      * @returns Array of users
      */
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        const option: any = { filter: filter };
+        const option: any = { filter };
         if (groupId) {
             option.groupId = groupId;
         }
         return from(this.usersApi.getUsers(option))
             .pipe(
-                switchMap(response => <UserProcessModel[]> response.data || []),
+                switchMap(response => response.data as UserProcessModel[] || []),
                 map((user) => {
                     user.userImage = this.getUserProfileImageApi(user.id.toString());
                     return of(user);
@@ -503,24 +531,26 @@ export class FormService {
 
     /**
      * Gets a list of groups in a workflow.
+     *
      * @param filter Filter to select specific groups
      * @param groupId Group ID for the search
      * @returns Array of groups
      */
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        const option: any = { filter: filter };
+        const option: any = { filter };
         if (groupId) {
             option.groupId = groupId;
         }
         return from(this.groupsApi.getGroups(option))
             .pipe(
-                map((response: any) => <GroupModel[]> response.data || []),
+                map((response: any) => response.data || []),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets the ID of a form.
+     *
      * @param form Object representing a form
      * @returns ID string
      */
@@ -536,6 +566,7 @@ export class FormService {
 
     /**
      * Creates a JSON representation of form data.
+     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -548,6 +579,7 @@ export class FormService {
 
     /**
      * Creates a JSON array representation of form data.
+     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -560,6 +592,7 @@ export class FormService {
 
     /**
      * Reports an error message.
+     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

@@ -27,7 +27,7 @@ import { UserFiltersApi } from '@alfresco/js-api';
 })
 export class TaskFilterService {
 
-    private _userFiltersApi;
+    private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
         return this._userFiltersApi;
@@ -39,6 +39,7 @@ export class TaskFilterService {
 
     /**
      * Creates and returns the default filters for a process app.
+     *
      * @param appId ID of the target app
      * @returns Array of default filters just created
      */
@@ -103,6 +104,7 @@ export class TaskFilterService {
 
     /**
      * Gets all task filters for a process app.
+     *
      * @param appId Optional ID for a specific app
      * @returns Array of task filter details
      */
@@ -123,6 +125,7 @@ export class TaskFilterService {
 
     /**
      * Gets a task filter by ID.
+     *
      * @param filterId ID of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
@@ -136,6 +139,7 @@ export class TaskFilterService {
 
     /**
      * Gets a task filter by name.
+     *
      * @param taskName Name of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
@@ -149,27 +153,27 @@ export class TaskFilterService {
 
     /**
      * Adds a new task filter
+     *
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         return from(this.userFiltersApi.createUserTaskFilter(filter))
             .pipe(
-                map((response: FilterRepresentationModel) => {
-                    return response;
-                }),
+                map((response: FilterRepresentationModel) => response),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Calls `getUserTaskFilters` from the Alfresco JS API.
+     *
      * @param appId ID of the target app
      * @returns List of task filters
      */
     callApiTaskFilters(appId?: number): Promise<any> {
         if (appId) {
-            return this.userFiltersApi.getUserTaskFilters({ appId: appId });
+            return this.userFiltersApi.getUserTaskFilters({ appId });
         } else {
             return this.userFiltersApi.getUserTaskFilters();
         }
@@ -177,68 +181,77 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "My Tasks" task instances.
+     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
     getMyTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'My Tasks',
-            'appId': appId,
-            'recent': false,
-            'icon': 'glyphicon-inbox',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee' },
+            name: 'My Tasks',
+            appId,
+            recent: false,
+            icon: 'glyphicon-inbox',
+            filter: {
+                sort: 'created-desc',
+                name: '',
+                state: 'open',
+                assignment: 'assignee'
+            },
             index
         });
     }
 
     /**
      * Creates and returns a filter for "Involved" task instances.
+     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
     getInvolvedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Involved Tasks',
-            'appId': appId,
-            'recent': false,
-            'icon': 'glyphicon-align-left',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved' },
+            name: 'Involved Tasks',
+            appId,
+            recent: false,
+            icon: 'glyphicon-align-left',
+            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'involved' },
             index
         });
     }
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
+     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
     getQueuedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Queued Tasks',
-            'appId': appId,
-            'recent': false,
-            'icon': 'glyphicon-record',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate' },
+            name: 'Queued Tasks',
+            appId,
+            recent: false,
+            icon: 'glyphicon-record',
+            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'candidate' },
             index
         });
     }
 
     /**
      * Creates and returns a filter for "Completed" task instances.
+     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
     getCompletedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            'name': 'Completed Tasks',
-            'appId': appId,
-            'recent': true,
-            'icon': 'glyphicon-ok-sign',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved' },
+            name: 'Completed Tasks',
+            appId,
+            recent: true,
+            icon: 'glyphicon-ok-sign',
+            filter: { sort: 'created-desc', name: '', state: 'completed', assignment: 'involved' },
             index
         });
     }
@@ -247,5 +260,4 @@ export class TaskFilterService {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }
-
 }

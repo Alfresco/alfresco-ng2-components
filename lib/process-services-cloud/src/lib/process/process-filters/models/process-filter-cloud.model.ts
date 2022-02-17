@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/* eslint-disable no-underscore-dangle */
+
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
 
 export class ProcessFilterCloudModel {
-
-    private dateRangeFilterService = new DateRangeFilterService();
-
     id: string;
     name: string;
     key: string;
@@ -47,6 +47,7 @@ export class ProcessFilterCloudModel {
     suspendedDateType: DateCloudFilterType;
     completedDate: Date;
 
+    private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
     private _completedTo: string;
     private _startFrom: string;
@@ -98,15 +99,15 @@ export class ProcessFilterCloudModel {
         this._completedFrom = completedFrom;
     }
 
-    set completedTo(completedTo: string) {
-        this._completedTo = completedTo;
-    }
-
     get completedFrom() {
         if (this.isDateRangeType(this.completedDateType)) {
             return this._completedFrom;
         }
         return this.getStartDate(this.completedDateType);
+    }
+
+    set completedTo(completedTo: string) {
+        this._completedTo = completedTo;
     }
 
     get completedTo() {
@@ -120,15 +121,15 @@ export class ProcessFilterCloudModel {
         this._startFrom = startFrom;
     }
 
-    set startTo(startTo: string) {
-        this._startTo = startTo;
-    }
-
     get startFrom() {
         if (this.isDateRangeType(this.startedDateType)) {
             return this._startFrom;
         }
         return this.getStartDate(this.startedDateType);
+    }
+
+    set startTo(startTo: string) {
+        this._startTo = startTo;
     }
 
     get startTo() {
@@ -142,15 +143,15 @@ export class ProcessFilterCloudModel {
         this._suspendedFrom = suspendedFrom;
     }
 
-    set suspendedTo(suspendedTo: string) {
-        this._suspendedTo = suspendedTo;
-    }
-
     get suspendedFrom(): string {
         if (this.isDateRangeType(this.suspendedDateType)) {
             return this._suspendedFrom;
         }
         return this.getStartDate(this.suspendedDateType);
+    }
+
+    set suspendedTo(suspendedTo: string) {
+        this._suspendedTo = suspendedTo;
     }
 
     get suspendedTo(): string {
@@ -182,7 +183,7 @@ export interface ProcessFilterAction {
 
 export interface ProcessFilterOptions {
     label?: string;
-    value?: string | object;
+    value?: string | any;
 }
 
 export interface ProcessFilterProperties {
@@ -190,7 +191,7 @@ export interface ProcessFilterProperties {
     type?: string;
     value?: any;
     key?: string;
-    attributes?: { [key: string]: string; };
+    attributes?: { [key: string]: string };
     options?: ProcessFilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
@@ -198,6 +199,6 @@ export interface ProcessFilterProperties {
 
 export interface ProcessSortFilterProperty {
     label: string;
-    value: string | object;
+    value: string | any;
     key: string;
 }

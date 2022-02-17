@@ -39,7 +39,7 @@ export class TranslationService {
     constructor(public translate: TranslateService,
                 userPreferencesService: UserPreferencesService,
                 @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
-        this.customLoader = <TranslateLoaderService> this.translate.currentLoader;
+        this.customLoader = this.translate.currentLoader as TranslateLoaderService;
 
         this.defaultLang = 'en';
         translate.setDefaultLang(this.defaultLang);
@@ -61,6 +61,7 @@ export class TranslationService {
 
     /**
      * Adds a new folder of translation source files.
+     *
      * @param name Name for the translation provider
      * @param path Path to the folder
      */
@@ -78,6 +79,7 @@ export class TranslationService {
 
     /**
      * Loads a translation file.
+     *
      * @param lang Language code for the language to load
      * @param fallback Language code to fall back to if the first one was unavailable
      */
@@ -97,17 +99,19 @@ export class TranslationService {
 
     /**
      * Triggers a notification callback when the translation language changes.
+     *
      * @param lang The new language code
      */
     onTranslationChanged(lang: string): void {
         this.translate.onTranslationChange.next({
-            lang: lang,
+            lang,
             translations: this.customLoader.getFullTranslationJSON(lang)
         });
     }
 
     /**
      * Sets the target language for translations.
+     *
      * @param lang Code name for the language
      * @returns Translations available for the language
      */
@@ -118,21 +122,23 @@ export class TranslationService {
 
     /**
      * Gets the translation for the supplied key.
+     *
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    get(key: string | Array<string>, interpolateParams?: Object): Observable<string | any> {
+    get(key: string | Array<string>, interpolateParams?: any): Observable<string | any> {
         return this.translate.get(key, interpolateParams);
     }
 
     /**
      * Directly returns the translation for the supplied key.
+     *
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    instant(key: string | Array<string>, interpolateParams?: Object): string | any {
+    instant(key: string | Array<string>, interpolateParams?: any): string | any {
         return key ? this.translate.instant(key, interpolateParams) : '';
     }
 }

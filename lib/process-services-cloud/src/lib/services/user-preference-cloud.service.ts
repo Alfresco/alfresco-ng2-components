@@ -33,6 +33,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
   /**
    * Gets user preferences
+   *
    * @param appName Name of the target app
    * @returns List of user preferences
    */
@@ -48,6 +49,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
   /**
    * Gets user preference.
+   *
    * @param appName Name of the target app
    * @param key Key of the target preference
    * @returns Observable of user preference
@@ -64,6 +66,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
   /**
    * Creates user preference.
+   *
    * @param appName Name of the target app
    * @param key Key of the target preference
    * @newPreference Details of new user preference
@@ -83,6 +86,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
   /**
    * Updates user preference.
+   *
    * @param appName Name of the target app
    * @param key Key of the target preference
    * @param updatedPreference Details of updated preference
@@ -94,6 +98,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
   /**
    * Deletes user preference by given preference key.
+   *
    * @param appName Name of the target app
    * @param key Key of the target preference
    * @returns Observable of delete operation status

@@ -48,12 +48,8 @@ describe('PeopleWidgetComponent', () => {
         formService = TestBed.inject(FormService);
 
         translationService = TestBed.inject(TranslateService);
-        spyOn(translationService, 'instant').and.callFake((key) => {
-            return key;
-        });
-        spyOn(translationService, 'get').and.callFake((key) => {
-            return of(key);
-        });
+        spyOn(translationService, 'instant').and.callFake((key) => key);
+        spyOn(translationService, 'get').and.callFake((key) => of(key));
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -193,7 +189,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', async () => {
-            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -207,7 +203,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show the people if the typed result match', async () => {
-            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -221,7 +217,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should hide result list if input is empty',  async () => {
-            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -238,7 +234,7 @@ describe('PeopleWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
@@ -253,7 +249,7 @@ describe('PeopleWidgetComponent', () => {
 
         it('should emit peopleSelected if option is valid', async () => {
             const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
-            const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const peopleHTMLElement = element.querySelector<HTMLInputElement>('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'Test01 Test01';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));

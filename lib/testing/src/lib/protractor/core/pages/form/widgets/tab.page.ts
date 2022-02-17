@@ -16,11 +16,14 @@
  */
 
 import { by, element, $ } from 'protractor';
+import { TestElement } from '../../../test-element';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {
 
     changeTabAnimation = $('div[class="mat-ripple-element"]');
+
+    public disabledContentNodeSelectorTabInfoIcon = TestElement.byCss('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]');
 
     async clickTabByLabel(tabLabel): Promise<void> {
         const user = element(by.cssContainingText('.mat-tab-label-content', tabLabel));

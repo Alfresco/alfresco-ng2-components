@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { DisplayableCMProperties } from './displayable-cm-properties.model';
 import { FormFieldFileSource } from './form-field-file-source';
@@ -31,10 +31,10 @@ export interface FormFieldMetadata {
     };
     responseVariable?: boolean;
     menuOptions?: {
-        show?: boolean,
-        download?: boolean,
-        retrieveMetadata?: boolean,
-        remove?: boolean
+        show?: boolean;
+        download?: boolean;
+        retrieveMetadata?: boolean;
+        remove?: boolean;
     };
     displayableCMProperties?: DisplayableCMProperties[];
 }

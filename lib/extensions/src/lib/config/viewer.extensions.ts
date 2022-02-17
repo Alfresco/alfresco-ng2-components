@@ -22,7 +22,7 @@ export interface ViewerExtensionRef extends ExtensionElement {
     component: string;
 
     rules?: {
-        visible?: string;
         [key: string]: string;
+        visible?: string;
     };
 }

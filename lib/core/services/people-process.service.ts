@@ -50,6 +50,7 @@ export class PeopleProcessService {
 
     /**
      * Gets information about users across all tasks.
+     *
      * @param taskId ID of the task
      * @param searchWord Filter text to search for
      * @returns Array of user information objects
@@ -58,13 +59,14 @@ export class PeopleProcessService {
         const option = { excludeTaskId: taskId, filter: searchWord };
         return from(this.getWorkflowUserApi(option))
             .pipe(
-                map((response: any) => <UserProcessModel[]> response.data || []),
+                map((response: any) => response.data || []),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets the profile picture URL for the specified user.
+     *
      * @param user The target user
      * @returns Profile picture URL
      */
@@ -74,6 +76,7 @@ export class PeopleProcessService {
 
     /**
      * Sets a user to be involved with a task.
+     *
      * @param taskId ID of the target task
      * @param idToInvolve ID of the user to involve
      * @returns Empty response when the update completes
@@ -88,6 +91,7 @@ export class PeopleProcessService {
 
     /**
      * Removes a user who is currently involved with a task.
+     *
      * @param taskId ID of the target task
      * @param idToRemove ID of the user to remove
      * @returns Empty response when the update completes
@@ -116,10 +120,6 @@ export class PeopleProcessService {
         return this.userApi.getUserProfilePictureUrl(userId);
     }
 
-    /**
-     * Throw the error
-     * @param error
-     */
     private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');

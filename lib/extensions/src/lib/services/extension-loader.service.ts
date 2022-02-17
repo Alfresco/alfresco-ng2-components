@@ -79,38 +79,6 @@ export class ExtensionLoaderService {
         });
     }
 
-    protected getMetadata(config: ExtensionConfig): ExtensionRef {
-        const result: any = {};
-
-        Object
-            .keys(config)
-            .filter((key) => key.startsWith('$'))
-            .forEach((key) => {
-                result[key] = config[key];
-            });
-
-        return result;
-    }
-
-    protected loadConfig(
-        url: string,
-        order: number
-    ): Promise<{ order: number; config: ExtensionConfig }> {
-        return new Promise((resolve) => {
-            this.http.get<ExtensionConfig>(url).subscribe(
-                (config) => {
-                    resolve({
-                        order,
-                        config
-                    });
-                },
-                () => {
-                    resolve(null);
-                }
-            );
-        });
-    }
-
     /**
      * Retrieves configuration elements.
      * Filters element by **enabled** and **order** attributes.
@@ -159,6 +127,38 @@ export class ExtensionLoaderService {
             return config.features || [];
         }
         return [];
+    }
+
+    protected getMetadata(config: ExtensionConfig): ExtensionRef {
+        const result: any = {};
+
+        Object
+            .keys(config)
+            .filter((key) => key.startsWith('$'))
+            .forEach((key) => {
+                result[key] = config[key];
+            });
+
+        return result;
+    }
+
+    protected loadConfig(
+        url: string,
+        order: number
+    ): Promise<{ order: number; config: ExtensionConfig }> {
+        return new Promise((resolve) => {
+            this.http.get<ExtensionConfig>(url).subscribe(
+                (config) => {
+                    resolve({
+                        order,
+                        config
+                    });
+                },
+                () => {
+                    resolve(null);
+                }
+            );
+        });
     }
 
     protected setActionDefaults(action: ContentActionRef): ContentActionRef {

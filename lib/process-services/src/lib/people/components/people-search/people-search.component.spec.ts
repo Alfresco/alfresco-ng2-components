@@ -102,7 +102,7 @@ describe('PeopleSearchComponent', () => {
         fixture.whenStable()
             .then(() => {
                 peopleSearchComponent.onRowClick(fakeUser);
-                const addUserButton = <HTMLElement> element.querySelector('#add-people');
+                const addUserButton = element.querySelector<HTMLElement>('#add-people');
                 addUserButton.click();
             });
     });
@@ -118,7 +118,7 @@ describe('PeopleSearchComponent', () => {
         fixture.detectChanges();
 
         peopleSearchComponent.onRowClick(fakeUser);
-        const addUserButton = <HTMLElement> element.querySelector('#add-people');
+        const addUserButton = element.querySelector<HTMLElement>('#add-people');
         addUserButton.click();
         fixture.detectChanges();
 

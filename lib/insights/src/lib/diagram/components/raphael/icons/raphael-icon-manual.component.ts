@@ -55,11 +55,10 @@ export class RaphaelIconManualDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-
         this.draw(this.position);
     }
 
-    public draw(position: Point) {
+    draw(position: Point) {
         const path1 = this.paper.path(`m 17,9.3290326 c -0.0069,0.5512461 -0.455166,1.0455894 -0.940778,1.0376604 l -5.792746,0 c
         0.0053,0.119381 0.0026,0.237107 0.0061,0.355965 l 5.154918,0 c 0.482032,-0.0096 0.925529,0.49051 0.919525,1.037574 -0.0078,0.537128
         -0.446283,1.017531 -0.919521,1.007683 l -5.245273,0 c -0.01507,0.104484 -0.03389,0.204081 -0.05316,0.301591 l 2.630175,0
@@ -70,9 +69,9 @@ export class RaphaelIconManualDirective extends RaphaelBase implements OnInit {
         8.507351,5.7996113 8.4370292,5.7936859 l 6.3569748,-0.00871 c 0.497046,-0.00958 0.952273,0.5097676 0.94612,1.0738232
         -0.0053,0.556126 -0.456176,1.0566566 -0.94612,1.0496854 l -4.72435,0 c 0.01307,0.1149374 0.0244,0.2281319 0.03721,0.3498661
         l 5.952195,0 c 0.494517,-0.00871 0.947906,0.5066305 0.940795,1.0679848 z`).attr({
-            'opacity': 1,
-            'stroke': this.stroke,
-            'fill': this.fillColors
+            opacity: 1,
+            stroke: this.stroke,
+            fill: this.fillColors
         });
         return path1.transform('T' + position.x + ',' + position.y);
     }

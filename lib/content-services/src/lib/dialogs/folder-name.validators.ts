@@ -19,27 +19,27 @@ import { FormControl } from '@angular/forms';
 
 const I18N_ERRORS_PATH = 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS';
 
-export function forbidSpecialCharacters({ value }: FormControl) {
+export const forbidSpecialCharacters = ({ value }: FormControl) => {
     const specialCharacters: RegExp = /([\*\"\<\>\\\/\?\:\|])/;
     const isValid: boolean = !specialCharacters.test(value);
 
     return (isValid) ? null : {
         message: `${I18N_ERRORS_PATH}.SPECIAL_CHARACTERS`
     };
-}
+};
 
-export function forbidEndingDot({ value }: FormControl) {
+export const forbidEndingDot = ({ value }: FormControl) => {
     const isValid: boolean = ((value || '').trim().split('').pop() !== '.');
 
     return isValid ? null : {
         message: `${I18N_ERRORS_PATH}.ENDING_DOT`
     };
-}
+};
 
-export function forbidOnlySpaces({ value }: FormControl) {
+export const forbidOnlySpaces = ({ value }: FormControl) => {
     const isValid: boolean = !!((value || '')).trim();
 
     return isValid ? null : {
         message: `${I18N_ERRORS_PATH}.ONLY_SPACES`
     };
-}
+};

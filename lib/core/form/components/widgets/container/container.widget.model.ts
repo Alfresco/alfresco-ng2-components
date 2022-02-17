@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { ContainerColumnModel } from './../core/container-column.model';
 import { ContainerModel } from './../core/container.model';
@@ -37,7 +37,7 @@ export class ContainerWidgetComponentModel extends ContainerModel {
         let allowCollapse = false;
 
         if (this.isGroup() && this.field.params['allowCollapse']) {
-            allowCollapse = <boolean> this.field.params['allowCollapse'];
+            allowCollapse = this.field.params['allowCollapse'];
         }
 
         return allowCollapse;
@@ -47,7 +47,7 @@ export class ContainerWidgetComponentModel extends ContainerModel {
         let collapseByDefault = false;
 
         if (this.isCollapsible() && this.field.params['collapseByDefault']) {
-            collapseByDefault = <boolean> this.field.params['collapseByDefault'];
+            collapseByDefault = this.field.params['collapseByDefault'];
         }
 
         return collapseByDefault;

@@ -19,11 +19,12 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { LanguageItem } from './language.service';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { LanguageItem } from './language-item.interface';
 
+// eslint-disable-next-line no-shadow
 export enum UserPreferenceValues {
     PaginationSize = 'paginationSize',
     Locale = 'locale',
@@ -78,6 +79,7 @@ export class UserPreferencesService {
 
     /**
      * Sets up a callback to notify when a property has changed.
+     *
      * @param property The property to watch
      * @returns Notification callback
      */
@@ -91,6 +93,7 @@ export class UserPreferencesService {
 
     /**
      * Gets a preference property.
+     *
      * @param property Name of the property
      * @param defaultValue Default to return if the property is not found
      * @returns Preference property
@@ -106,6 +109,7 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
+     *
      * @param property Name of the property
      * @param value New value for the property
      */
@@ -123,6 +127,7 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
+     *
      * @param property Name of the property
      * @param value New value for the property
      */
@@ -136,6 +141,7 @@ export class UserPreferencesService {
 
     /**
      * Check if an item is present in the storage
+     *
      * @param property Name of the property
      * @returns True if the item is present, false otherwise
      */
@@ -150,6 +156,7 @@ export class UserPreferencesService {
 
     /**
      * Gets the active storage prefix for preferences.
+     *
      * @returns Storage prefix
      */
     getStoragePrefix(): string {
@@ -158,6 +165,7 @@ export class UserPreferencesService {
 
     /**
      * Sets the active storage prefix for preferences.
+     *
      * @param value Name of the prefix
      */
     setStoragePrefix(value: string) {
@@ -167,6 +175,7 @@ export class UserPreferencesService {
 
     /**
      * Gets the full property key with prefix.
+     *
      * @param property The property name
      * @returns Property key
      */
@@ -176,6 +185,7 @@ export class UserPreferencesService {
 
     /**
      * Gets an array containing the available page sizes.
+     *
      * @returns Array of page size values
      */
     get supportedPageSizes(): number[] {
@@ -218,17 +228,18 @@ export class UserPreferencesService {
 
     /**
      * Gets the default locale.
+     *
      * @returns Default locale language code
      */
-    public getDefaultLocale(): string {
+    getDefaultLocale(): string {
         return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
     private getLanguageByKey(key: string): LanguageItem {
         return (
             this.appConfig
-                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [<LanguageItem> { key: 'en' }])
-                .find((language) => key.includes(language.key)) || <LanguageItem> { key: 'en' }
+                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [{ key: 'en' } as LanguageItem])
+                .find((language) => key.includes(language.key)) || { key: 'en' } as LanguageItem
         );
     }
 }

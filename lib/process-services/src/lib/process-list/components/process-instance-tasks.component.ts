@@ -44,19 +44,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    activeTasks: TaskDetailsModel[] = [];
-    completedTasks: TaskDetailsModel[] = [];
-
-    private taskObserver: Observer<TaskDetailsModel>;
-    private completedTaskObserver: Observer<TaskDetailsModel>;
-    private onDestroy$ = new Subject<boolean>();
-
-    task$: Observable<TaskDetailsModel>;
-    completedTask$: Observable<TaskDetailsModel>;
-    message: string;
-    processId: string;
+    error = new EventEmitter<any>();
 
     @ViewChild('startDialog')
     startDialog: any;
@@ -66,7 +54,18 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
 
     /** Emitted when a task is clicked. */
     @Output()
-    taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
+    taskClick = new EventEmitter<TaskDetailsEvent>();
+
+    activeTasks: TaskDetailsModel[] = [];
+    completedTasks: TaskDetailsModel[] = [];
+    task$: Observable<TaskDetailsModel>;
+    completedTask$: Observable<TaskDetailsModel>;
+    message: string;
+    processId: string;
+
+    private taskObserver: Observer<TaskDetailsModel>;
+    private completedTaskObserver: Observer<TaskDetailsModel>;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(private activitiProcess: ProcessService,
                 private logService: LogService,

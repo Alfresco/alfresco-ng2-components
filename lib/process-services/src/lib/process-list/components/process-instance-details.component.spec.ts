@@ -77,7 +77,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     it('should display a header when the processInstanceId is provided', async () => {
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
+        component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -91,7 +91,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(exampleProcessNoName));
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
+        component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -105,7 +105,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(mockRunningProcess));
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
+        component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -119,7 +119,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(processEnded));
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
+        component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -142,7 +142,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
         it('should fetch new process details when processInstanceId changed', async () => {
             fixture.detectChanges();
-            component.ngOnChanges({ 'processInstanceId': change });
+            component.ngOnChanges({ processInstanceId: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -162,7 +162,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
         it('should NOT fetch new process details when processInstanceId changed to null', async () => {
             fixture.detectChanges();
-            component.ngOnChanges({ 'processInstanceId': nullChange });
+            component.ngOnChanges({ processInstanceId: nullChange });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -171,7 +171,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         });
 
         it('should set a placeholder message when processInstanceId changed to null', async () => {
-            component.ngOnChanges({ 'processInstanceId': nullChange });
+            component.ngOnChanges({ processInstanceId: nullChange });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -180,7 +180,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         });
 
         it('should display cancel button if process is running', async () => {
-            component.ngOnChanges({ 'processInstanceId': change });
+            component.ngOnChanges({ processInstanceId: change });
 
             fixture.detectChanges();
             await fixture.whenStable();

@@ -28,6 +28,7 @@ export class TestElement {
 
     /**
      * Create a new instance with the element located by the id
+     *
      * @param id The id of the element
      */
     static byId(id: string): TestElement {
@@ -36,6 +37,7 @@ export class TestElement {
 
     /**
      * Create a new instance with the element located by the CSS class name
+     *
      * @param selector The CSS class name to lookup
      */
     static byCss(selector: string): TestElement {
@@ -44,6 +46,7 @@ export class TestElement {
 
     /**
      * Create a new instance with the element that contains specific text
+     *
      * @param selector the CSS selector
      * @param text the text within the target element
      */
@@ -53,6 +56,7 @@ export class TestElement {
 
     /**
      * Create a new instance with the element with specific HTML tag name
+     *
      * @param selector the HTML tag name
      */
     static byTag(selector: string): TestElement {
@@ -68,6 +72,7 @@ export class TestElement {
 
     /**
      * Checks that an element is present on the DOM of a page and visible
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async isVisible(waitTimeout?: number): Promise<boolean> {
@@ -81,6 +86,7 @@ export class TestElement {
 
     /**
      * Waits until the element is present on the DOM of a page and visible
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async waitVisible(waitTimeout?: number): Promise<any> {
@@ -89,6 +95,7 @@ export class TestElement {
 
     /**
      * Waits until the element is either invisible or not present on the DOM
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async waitNotVisible(waitTimeout?: number): Promise<any> {
@@ -97,6 +104,7 @@ export class TestElement {
 
     /**
      * Checks that an element is present on the DOM of a page
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async isPresent(waitTimeout?: number): Promise<boolean> {
@@ -110,6 +118,7 @@ export class TestElement {
 
     /**
      * Waits until the element is present on the DOM of a page
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async waitPresent(waitTimeout?: number): Promise<any> {
@@ -118,6 +127,7 @@ export class TestElement {
 
     /**
      * Waits until the element is not attached to the DOM of a page
+     *
      * @param waitTimeout How long to wait for the condition to be true
      */
     async waitNotPresent(waitTimeout?: number): Promise<any> {
@@ -126,6 +136,7 @@ export class TestElement {
 
     /**
      * Waits until the given text is present in the element’s value
+     *
      * @param value the text to check
      */
     async waitHasValue(value: string): Promise<any> {
@@ -159,6 +170,7 @@ export class TestElement {
 
     /**
      * Query for the value of the given attribute of the element.
+     *
      * @param attributeName The name of the attribute to query.
      */
     async getAttribute(attributeName: string): Promise<string> {
@@ -181,6 +193,7 @@ export class TestElement {
 
     /**
      * Enter the text
+     *
      * @param text the text to enter
      */
     async typeText(text: string): Promise<void> {

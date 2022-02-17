@@ -170,8 +170,8 @@ describe('ProcessInstanceHeaderComponent', () => {
 
         it('should show only the properties from the configuration file', () => {
             appConfigService.config['adf-process-instance-header'] = {
-                'presets': {
-                    'properties': ['status', 'ended']
+                presets: {
+                    properties: ['status', 'ended']
                 }
             };
             component.ngOnChanges();

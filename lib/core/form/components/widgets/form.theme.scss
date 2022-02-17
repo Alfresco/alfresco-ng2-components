@@ -14,7 +14,7 @@ ul > li > form-field > .adf-focus {
     &-error-text {
         padding: 1px;
         height: 16px;
-        font-size: 12px;
+        font-size: var(--theme-caption-font-size);
         line-height: 1.33;
         float: left;
         color: var(--theme-warn-color);
@@ -22,7 +22,7 @@ ul > li > form-field > .adf-focus {
 
     &-error-icon {
         float: right;
-        font-size: 17px;
+        font-size: var(--theme-adf-icon-1-font-size);
         color: var(--theme-warn-color);
     }
 

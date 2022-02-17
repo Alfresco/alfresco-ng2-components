@@ -53,6 +53,7 @@ export class UploadActions {
     async createEmptyFiles(emptyFileNames: string[], parentFolderId): Promise<NodeEntry> {
         const filesRequest = [];
 
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < emptyFileNames.length; i++) {
             const jsonItem = {};
             jsonItem['name'] = emptyFileNames[i];
@@ -60,7 +61,7 @@ export class UploadActions {
             filesRequest.push(jsonItem);
         }
 
-        return this.nodesApi.createNode(parentFolderId, <any> filesRequest, {});
+        return this.nodesApi.createNode(parentFolderId, filesRequest as any, {});
     }
 
     async createFolder(folderName, parentFolderId): Promise<NodeEntry> {

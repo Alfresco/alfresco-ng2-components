@@ -56,17 +56,17 @@ describe('SearchSliderComponent', () => {
     });
 
     it('should update value on slider change', () => {
-        component.onChangedHandler(<MatSliderChange> { value: 10 });
+        component.onChangedHandler({ value: 10 } as MatSliderChange);
         expect(component.value).toEqual(10);
 
-        component.onChangedHandler(<MatSliderChange> { value: 20 });
+        component.onChangedHandler({ value: 20 } as MatSliderChange);
         expect(component.value).toEqual(20);
     });
 
     it('should update its query part on slider change', () => {
         const context: any = {
             queryFragments: {},
-            update() {}
+            update: () => {}
         };
 
         spyOn(context, 'update').and.stub();
@@ -76,11 +76,11 @@ describe('SearchSliderComponent', () => {
         component.settings = { field: 'cm:content.size' };
         fixture.detectChanges();
 
-        component.onChangedHandler(<MatSliderChange> { value: 10 });
+        component.onChangedHandler({ value: 10 } as MatSliderChange);
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
         expect(context.update).toHaveBeenCalled();
 
-        component.onChangedHandler(<MatSliderChange> { value: 20 });
+        component.onChangedHandler({ value: 20 } as MatSliderChange);
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
     });
 
@@ -95,7 +95,7 @@ describe('SearchSliderComponent', () => {
 
         const context: any = {
             queryFragments: {},
-            update() {}
+            update: () => {}
         };
 
         component.settings = settings;
@@ -123,7 +123,7 @@ describe('SearchSliderComponent', () => {
 
         const context: any = {
             queryFragments: {},
-            update() {}
+            update: () => {}
         };
 
         component.settings = settings;

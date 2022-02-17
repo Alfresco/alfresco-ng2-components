@@ -30,12 +30,10 @@ describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
     let component: PdfThumbListComponent;
 
-    const page = (id) => {
-        return {
-            id,
-            getPage: Promise.resolve()
-        };
-    };
+    const page = (id) => ({
+        id,
+        getPage: Promise.resolve()
+    });
 
     const viewerMock = {
         _currentPageNumber: null,
@@ -90,6 +88,7 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map((item) => item.id);
+        // eslint-disable-next-line no-underscore-dangle
         const rangeIds = viewerMock._pages.slice(0, 6).map((item) => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
@@ -101,6 +100,7 @@ describe('PdfThumbListComponent', () => {
         fixture.detectChanges();
 
         const renderedIds = component.renderItems.map((item) => item.id);
+        // eslint-disable-next-line no-underscore-dangle
         const rangeIds = viewerMock._pages.slice(5, 12).map((item) => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
@@ -175,7 +175,7 @@ describe('PdfThumbListComponent', () => {
 
     describe('Keyboard events', () => {
         it('should select next page in the list on DOWN_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {'keyCode': DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -185,7 +185,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should select previous page in the list on UP_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {'keyCode': UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(2);
             expect(document.activeElement.id).toBe('2');
@@ -195,7 +195,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select previous page if it is the first page', () => {
-            const event = new KeyboardEvent('keydown', {'keyCode': UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -205,7 +205,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select next item if it is the last page', () => {
-            const event = new KeyboardEvent('keydown', {'keyCode': DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.scrollInto(16);
             fixture.detectChanges();
@@ -218,7 +218,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should emit on ESCAPE event', () => {
-            const event = new KeyboardEvent('keydown', {'keyCode': ESCAPE} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {keyCode: ESCAPE} as KeyboardEventInit);
             spyOn(component.close, 'emit');
             fixture.detectChanges();
 

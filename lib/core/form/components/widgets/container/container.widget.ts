@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
@@ -97,9 +97,8 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
     private getMaxColumnFieldSize(): number {
         let maxFieldSize = 0;
         if (this.content?.columns?.length > 0) {
-            maxFieldSize = this.content?.columns?.reduce((prevColumn, currentColumn) => {
-                return currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn;
-            })?.fields?.length;
+            maxFieldSize = this.content?.columns?.reduce((prevColumn, currentColumn) =>
+                currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn)?.fields?.length;
         }
         return maxFieldSize;
     }

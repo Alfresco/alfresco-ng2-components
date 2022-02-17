@@ -92,6 +92,7 @@ export class AuthenticationService {
 
     /**
      * Checks if the user logged in.
+     *
      * @returns True if logged in, false otherwise
      */
     isLoggedIn(): boolean {
@@ -113,6 +114,7 @@ export class AuthenticationService {
 
     /**
      * Does kerberos enabled?
+     *
      * @returns True if enabled, false otherwise
      */
     isKerberosEnabled(): boolean {
@@ -121,6 +123,7 @@ export class AuthenticationService {
 
     /**
      * Does the provider support OAuth?
+     *
      * @returns True if supported, false otherwise
      */
     isOauth(): boolean {
@@ -133,6 +136,7 @@ export class AuthenticationService {
 
     /**
      * Does the provider support ECM?
+     *
      * @returns True if supported, false otherwise
      */
     isECMProvider(): boolean {
@@ -141,6 +145,7 @@ export class AuthenticationService {
 
     /**
      * Does the provider support BPM?
+     *
      * @returns True if supported, false otherwise
      */
     isBPMProvider(): boolean {
@@ -149,6 +154,7 @@ export class AuthenticationService {
 
     /**
      * Does the provider support both ECM and BPM?
+     *
      * @returns True if both are supported, false otherwise
      */
     isALLProvider(): boolean {
@@ -157,12 +163,13 @@ export class AuthenticationService {
 
     /**
      * Logs the user in.
+     *
      * @param username Username for the login
      * @param password Password for the login
      * @param rememberMe Stores the user's login details if true
      * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
      */
-    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
+    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
         return from(this.alfrescoApi.getInstance().login(username, password))
             .pipe(
                 map((response: any) => {
@@ -186,6 +193,7 @@ export class AuthenticationService {
 
     /**
      * Saves the "remember me" cookie as either a long-life cookie or a session cookie.
+     *
      * @param rememberMe Enables a long-life cookie
      */
     private saveRememberMeCookie(rememberMe: boolean): void {
@@ -202,6 +210,7 @@ export class AuthenticationService {
 
     /**
      * Checks whether the "remember me" cookie was set or not.
+     *
      * @returns True if set, false otherwise
      */
     isRememberMeSet(): boolean {
@@ -210,6 +219,7 @@ export class AuthenticationService {
 
     /**
      * Logs the user out.
+     *
      * @returns Response event called when logout is complete
      */
     logout() {
@@ -232,6 +242,7 @@ export class AuthenticationService {
 
     /**
      * Gets the ECM ticket stored in the Storage.
+     *
      * @returns The ticket or `null` if none was found
      */
     getTicketEcm(): string | null {
@@ -240,6 +251,7 @@ export class AuthenticationService {
 
     /**
      * Gets the BPM ticket stored in the Storage.
+     *
      * @returns The ticket or `null` if none was found
      */
     getTicketBpm(): string | null {
@@ -248,6 +260,7 @@ export class AuthenticationService {
 
     /**
      * Gets the BPM ticket from the Storage in Base 64 format.
+     *
      * @returns The ticket or `null` if none was found
      */
     getTicketEcmBase64(): string | null {
@@ -260,6 +273,7 @@ export class AuthenticationService {
 
     /**
      * Checks if the user is logged in on an ECM provider.
+     *
      * @returns True if logged in, false otherwise
      */
     isEcmLoggedIn(): boolean {
@@ -274,6 +288,7 @@ export class AuthenticationService {
 
     /**
      * Checks if the user is logged in on a BPM provider.
+     *
      * @returns True if logged in, false otherwise
      */
     isBpmLoggedIn(): boolean {
@@ -288,6 +303,7 @@ export class AuthenticationService {
 
     /**
      * Gets the ECM username.
+     *
      * @returns The ECM username
      */
     getEcmUsername(): string {
@@ -296,6 +312,7 @@ export class AuthenticationService {
 
     /**
      * Gets the BPM username
+     *
      * @returns The BPM username
      */
     getBpmUsername(): string {
@@ -303,6 +320,7 @@ export class AuthenticationService {
     }
 
     /** Sets the URL to redirect to after login.
+     *
      * @param url URL to redirect to
      */
     setRedirect(url: RedirectionModel) {
@@ -310,15 +328,17 @@ export class AuthenticationService {
     }
 
     /** Gets the URL to redirect to after login.
+     *
      * @returns The redirect URL
      */
     getRedirect(): string {
-        const provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
+        const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
     /**
      * Gets information about the user currently logged into APS.
+     *
      * @returns User information
      */
     getBpmLoggedUser(): Observable<UserRepresentation> {
@@ -335,6 +355,7 @@ export class AuthenticationService {
 
     /**
      * Prints an error message in the console browser
+     *
      * @param error Error message
      * @returns Object representing the error message
      */
@@ -345,6 +366,7 @@ export class AuthenticationService {
 
     /**
      * Gets the set of URLs that the token bearer is excluded from.
+     *
      * @returns Array of URL strings
      */
     getBearerExcludedUrls(): string[] {
@@ -353,6 +375,7 @@ export class AuthenticationService {
 
     /**
      * Gets the auth token.
+     *
      * @returns Auth token string
      */
     getToken(): string {
@@ -361,6 +384,7 @@ export class AuthenticationService {
 
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.
+     *
      * @param headersArg Header that will receive the token
      * @returns The new header with the token added
      */

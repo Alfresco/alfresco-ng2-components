@@ -35,6 +35,7 @@ export class TaskListCloudService extends BaseCloudService {
 
     /**
      * Finds a task using an object with optional query properties.
+     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Task information
@@ -62,8 +63,8 @@ export class TaskListCloudService extends BaseCloudService {
         }
     }
 
-    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): Object {
-        const queryParam: Object = {};
+    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
+        const queryParam: any = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&

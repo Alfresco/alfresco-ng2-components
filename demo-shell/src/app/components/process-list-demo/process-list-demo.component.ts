@@ -21,25 +21,22 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+const DEFAULT_SIZE = 20;
+
 @Component({
     templateUrl: './process-list-demo.component.html',
     styleUrls: [`./process-list-demo.component.scss`]
 })
 
 export class ProcessListDemoComponent implements OnInit, OnDestroy {
-
-    DEFAULT_SIZE = 20;
-
     minValue = 0;
-
     processListForm: FormGroup;
-
     appId: number;
     processDefId: string;
     processInsId: string;
     state: string;
     sort: string;
-    size: number = this.DEFAULT_SIZE;
+    size: number = DEFAULT_SIZE;
     page: number = 0;
 
     presetColumn = 'default';
@@ -140,7 +137,7 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
         this.processDefId = null;
         this.state = this.stateOptions[0].value;
         this.sort = null;
-        this.size = this.DEFAULT_SIZE;
+        this.size = DEFAULT_SIZE;
         this.page = null;
     }
 

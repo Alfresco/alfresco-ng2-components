@@ -27,9 +27,7 @@ export class Payload {
 
 describe('SearchFilterList', () => {
 
-    function generateItems(count: number): Payload[] {
-        return Array(count).fill(null).map((_, id) => new Payload(id));
-    }
+    const generateItems = (count: number): Payload[] => Array(count).fill(null).map((_, id) => new Payload(id));
 
     it('should init with external items', () => {
         const items = [
@@ -160,9 +158,7 @@ describe('SearchFilterList', () => {
         const list = new SearchFilterList(items, 5);
         expect(list.visibleItems.length).toBe(5);
 
-        list.filter = (item: Payload): boolean => {
-            return item.name === 'custom';
-        };
+        list.filter = (item: Payload): boolean => item.name === 'custom';
         expect(list.visibleItems.length).toBe(1);
     });
 

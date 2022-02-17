@@ -24,7 +24,7 @@ import { ClipboardService } from './clipboard.service';
 })
 export class ClipboardDirective {
     /** Translation key or message for the tooltip. */
-    // tslint:disable-next-line:no-input-rename
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-clipboard')
     placeholder: string;
 
@@ -33,7 +33,7 @@ export class ClipboardDirective {
     target: HTMLInputElement | HTMLTextAreaElement;
 
     /** Translation key or message for snackbar notification. */
-    // tslint:disable-next-line:no-input-rename
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
     constructor(private clipboardService: ClipboardService,

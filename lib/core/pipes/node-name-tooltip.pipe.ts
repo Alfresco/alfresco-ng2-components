@@ -31,14 +31,14 @@ export class NodeNameTooltipPipe implements PipeTransform {
     }
 
     private containsLine(lines: string[], line: string): boolean {
-        return lines.some((item: string) => {
-            return item.toLowerCase() === line.toLowerCase();
-        });
+        return lines.some((item: string) => item.toLowerCase() === line.toLowerCase());
     }
 
     private removeDuplicateLines(lines: string[]): string[] {
         const reducer = (acc: string[], line: string): string[] => {
-            if (!this.containsLine(acc, line)) { acc.push(line); }
+            if (!this.containsLine(acc, line)) {
+                acc.push(line);
+            }
             return acc;
         };
 

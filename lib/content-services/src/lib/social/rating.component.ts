@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +27,7 @@ import { Subject } from 'rxjs';
     templateUrl: './rating.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class RatingComponent implements OnChanges {
+export class RatingComponent implements OnChanges, OnDestroy {
 
     /** Identifier of the node to apply the rating to. */
     @Input()

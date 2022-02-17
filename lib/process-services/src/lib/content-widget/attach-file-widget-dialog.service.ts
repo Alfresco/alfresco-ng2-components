@@ -27,13 +27,13 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class AttachFileWidgetDialogService {
-    private externalApis: { [key: string]: AlfrescoApiService } = {};
-
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
+
+    private externalApis: { [key: string]: AlfrescoApiService } = {};
 
     constructor(private dialog: MatDialog,
                 private translation: TranslationService) {
@@ -41,6 +41,7 @@ export class AttachFileWidgetDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
+     *
      * @param repository Alfresco endpoint that represents the content service
      * @param currentFolderId Upload file from specific folder
      * @returns Information about the chosen file(s)
@@ -62,19 +63,6 @@ export class AttachFileWidgetDialogService {
         return selected;
     }
 
-    private openLoginDialog(data: AttachFileWidgetDialogComponentData, currentPanelClass: string, chosenWidth: string) {
-        this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
-    }
-
-    private showExternalHostLoginDialog(repository: AlfrescoEndpointRepresentation): Observable<AlfrescoApiService> {
-        const data = {
-            ...this.constructPayload(repository),
-            loginOnly: true
-        };
-        return this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' })
-            .afterClosed();
-    }
-
     downloadURL(repository: AlfrescoEndpointRepresentation, sourceId: string): Observable<string> {
         const { accountIdentifier } = this.constructPayload(repository);
 
@@ -94,6 +82,30 @@ export class AttachFileWidgetDialogService {
         );
     }
 
+    addService(accountIdentifier: string, apiService: AlfrescoApiService) {
+        if (!this.externalApis[accountIdentifier]) {
+            this.externalApis[accountIdentifier] = apiService;
+        }
+    }
+
+    /** Closes the currently open dialog. */
+    close() {
+        this.dialog.closeAll();
+    }
+
+    private openLoginDialog(data: AttachFileWidgetDialogComponentData, currentPanelClass: string, chosenWidth: string) {
+        this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    }
+
+    private showExternalHostLoginDialog(repository: AlfrescoEndpointRepresentation): Observable<AlfrescoApiService> {
+        const data = {
+            ...this.constructPayload(repository),
+            loginOnly: true
+        };
+        return this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' })
+            .afterClosed();
+    }
+
     private constructPayload(repository: AlfrescoEndpointRepresentation) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
         const ecmHost = repository.repositoryUrl.replace('/alfresco', '');
@@ -104,17 +116,6 @@ export class AttachFileWidgetDialogService {
         const title = this.getLoginTitleTranslation(ecmHost);
         const registerExternalHost = this.addService.bind(this);
         return { ecmHost, accountIdentifier, selected, title, registerExternalHost };
-    }
-
-    addService(accountIdentifier: string, apiService: AlfrescoApiService) {
-        if (!this.externalApis[accountIdentifier]) {
-            this.externalApis[accountIdentifier] = apiService;
-        }
-    }
-
-    /** Closes the currently open dialog. */
-    close() {
-        this.dialog.closeAll();
     }
 
     private getLoginTitleTranslation(ecmHost: string): string {

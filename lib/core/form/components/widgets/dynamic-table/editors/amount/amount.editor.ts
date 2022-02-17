@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
@@ -45,7 +45,7 @@ export class AmountEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        const value: number = Number((<HTMLInputElement> event.target).value);
+        const value: number = Number(event.target.value);
         row.value[column.id] = value;
     }
 

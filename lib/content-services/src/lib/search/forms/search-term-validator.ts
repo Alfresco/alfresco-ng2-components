@@ -20,10 +20,8 @@ import { FormControl } from '@angular/forms';
 export class SearchTermValidator {
 
     static minAlphanumericChars(minChars: number) {
-        return (control: FormControl) => {
-            return ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
-                hasMinAlphanumericChars: false
-            };
+        return (control: FormControl) => ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
+            hasMinAlphanumericChars: false
         };
     }
 

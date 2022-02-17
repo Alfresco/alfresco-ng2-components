@@ -1,24 +1,23 @@
-/* tslint:disable */
-let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
-let fs = require ('fs');
+const alfrescoApi = require('@alfresco/js-api');
+const program = require('commander');
+const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
 const { throwError } = require('rxjs');
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { AppDefinitionsApi, RuntimeAppDefinitionsApi } = require('@alfresco/js-api');
-let MAX_RETRY = 10;
+const MAX_RETRY = 10;
 let counter = 0;
-let TIMEOUT = 6000;
+const TIMEOUT = 6000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
-/* tslint:enable */
 
 let alfrescoJsApi;
 let alfrescoJsApiRepo;
 
-export default async function () {
+export default async function() {
     await main();
 }
 
@@ -162,9 +161,9 @@ async function hasDefaultTenant(tenantId, tenantName) {
 
 async function createDefaultTenant(tenantName) {
     const tenantPost = {
-        'active': true,
-        'maxUsers': 10000,
-        'name' : tenantName
+        active: true,
+        maxUsers: 10000,
+        name : tenantName
     };
 
     try {
@@ -180,13 +179,13 @@ async function createUsers(tenandId, user) {
     logger.info(`Create user ${user.email} on tenant: ${tenandId}`);
     const passwordCamelCase = 'Password';
     const userJson = {
-        'email': user.email,
-        'firstName': user.firstName,
-        'lastName': user.lastName,
-        'status': 'active',
-        'type': 'enterprise',
-        'password': passwordCamelCase,
-        'tenantId': tenandId
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        status: 'active',
+        type: 'enterprise',
+        password: passwordCamelCase,
+        tenantId: tenandId
     };
 
     try {
@@ -336,11 +335,11 @@ async function addContentRepoWithBasic(tenantId, name) {
     const body = {
         alfrescoTenantId: '',
         authenticationType: 'basic',
-        name: name,
+        name,
         repositoryUrl: `${program.host}/alfresco`,
         shareUrl: `${program.host}/share`,
         // sitesFolder: '', not working on activiti 1.11.1.1
-        tenantId: tenantId,
+        tenantId,
         version: '6.1.1'
     };
 
@@ -413,7 +412,7 @@ async function authorizeUserToContentWithBasic(username, contentId) {
     }
 }
 
-/* tslint:disable */
+/* eslint-disable */
 async function downloadLicenseFile(apsLicensePath) {
 
     try {
@@ -428,7 +427,7 @@ async function downloadLicenseFile(apsLicensePath) {
         return false;
     }
 }
-/* tslint:enable */
+/* eslint-enable */
 
 function sleep(delay) {
     const start = new Date().getTime();

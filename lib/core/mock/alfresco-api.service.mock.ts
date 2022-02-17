@@ -20,7 +20,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../services/storage.service';
 
-/* tslint:disable:adf-file-name */
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
 

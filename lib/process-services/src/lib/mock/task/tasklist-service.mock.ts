@@ -18,25 +18,25 @@
 import { TaskListModel } from '../../task-list/models/task-list.model';
 import { fakeAppFilter } from './task-filters.mock';
 
-export let fakeApps = {
+export const fakeApps = {
     size: 2, total: 2, start: 0,
     data: [
         {
             id: 1, defaultAppId: null, name: 'Sales-Fakes-App', description: 'desc-fake1', modelId: 22,
-            theme: 'theme-1-fake', icon: 'glyphicon-asterisk', 'deploymentId': '111', 'tenantId': null
+            theme: 'theme-1-fake', icon: 'glyphicon-asterisk', deploymentId: '111', tenantId: null
         },
         {
             id: 2, defaultAppId: null, name: 'health-care-Fake', description: 'desc-fake2', modelId: 33,
-            theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
+            theme: 'theme-2-fake', icon: 'glyphicon-asterisk', deploymentId: '444', tenantId: null
         }
     ]
 };
 
-export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export let fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
+export const fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
 
-export let fakeTaskList = new TaskListModel({
+export const fakeTaskList = new TaskListModel({
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -47,7 +47,7 @@ export let fakeTaskList = new TaskListModel({
     ]
 });
 
-export let fakeTaskListDifferentProcessDefinitionKey = {
+export const fakeTaskListDifferentProcessDefinitionKey = {
     size: 2, total: 1, start: 0,
     data: [
         {
@@ -65,7 +65,7 @@ export let fakeTaskListDifferentProcessDefinitionKey = {
     ]
 };
 
-export let secondFakeTaskList = {
+export const secondFakeTaskList = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -76,13 +76,13 @@ export let secondFakeTaskList = {
     ]
 };
 
-export let mockErrorTaskList = {
+export const mockErrorTaskList = {
     error: 'wrong request'
 };
 
-export let fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser1 };
+export const fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser1 };
 
-export let fakeTasksComment = {
+export const fakeTasksComment = {
     size: 2, total: 2, start: 0,
     data: [
         {
@@ -94,7 +94,7 @@ export let fakeTasksComment = {
     ]
 };
 
-export let fakeTasksChecklist = {
+export const fakeTasksChecklist = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -110,11 +110,11 @@ export let fakeTasksChecklist = {
     ]
 };
 
-export let fakeAppPromise = new Promise(function (resolve) {
+export const fakeAppPromise = new Promise((resolve) => {
     resolve(fakeAppFilter);
 });
 
-export let fakeFormList = {
+export const fakeFormList = {
     size: 2,
     total: 2,
     start: 0,
@@ -157,7 +157,7 @@ export let fakeFormList = {
     }]
 };
 
-export let fakeTaskOpen1 = {
+export const fakeTaskOpen1 = {
         id: '1', name: 'FakeOpenTask1', description: null, category: null,
         assignee: fakeUser1,
         created: '2017-07-15T11:19:17.440+0000',
@@ -165,7 +165,7 @@ export let fakeTaskOpen1 = {
         endDate: null
     };
 
-export let fakeTaskOpen2 = {
+export const fakeTaskOpen2 = {
         id: '1', name: 'FakeOpenTask2', description: null, category: null,
         assignee: { id: 1, email: 'fake-open-email@dom.com', firstName: 'firstName', lastName: 'lastName' },
         created: '2017-07-15T11:19:17.440+0000',
@@ -173,7 +173,7 @@ export let fakeTaskOpen2 = {
         endDate: null
     };
 
-export let fakeTaskCompleted1 = {
+export const fakeTaskCompleted1 = {
         id: '1', name: 'FakeCompletedTaskName1', description: null, category: null,
         assignee: { id: 1, email: 'fake-completed-email@dom.com', firstName: 'firstName', lastName: 'lastName' },
         created: '2016-07-15T11:19:17.440+0000',
@@ -181,7 +181,7 @@ export let fakeTaskCompleted1 = {
         endDate: '2016-11-03T15:25:42.749+0000'
     };
 
-export let fakeTaskCompleted2 = {
+export const fakeTaskCompleted2 = {
         id: '1', name: 'FakeCompletedTaskName2', description: null, category: null,
         assignee: fakeUser1,
         created: null,
@@ -189,14 +189,14 @@ export let fakeTaskCompleted2 = {
         endDate: '2016-11-03T15:25:42.749+0000'
     };
 
-export let fakeOpenTaskList = new TaskListModel({
+export const fakeOpenTaskList = new TaskListModel({
     size: 2,
     total: 2,
     start: 0,
     data: [fakeTaskOpen1, fakeTaskOpen2]
 });
 
-export let fakeCompletedTaskList = new TaskListModel({
+export const fakeCompletedTaskList = new TaskListModel({
     size: 2,
     total: 2,
     start: 0,

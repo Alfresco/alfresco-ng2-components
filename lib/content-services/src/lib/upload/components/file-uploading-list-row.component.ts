@@ -34,6 +34,7 @@ export class FileUploadingListRowComponent {
     @Output()
     remove: EventEmitter<FileModel> = new EventEmitter<FileModel>();
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     FileUploadStatus = FileUploadStatus;
 
     onCancel(file: FileModel): void {

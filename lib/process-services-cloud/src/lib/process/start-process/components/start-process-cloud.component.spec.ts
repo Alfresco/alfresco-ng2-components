@@ -72,11 +72,11 @@ describe('StartProcessCloudComponent', () => {
         }
     };
 
-    function typeValueInto(selector: any, value: string) {
+    const typeValueInto = (selector: any, value: string) => {
         const inputElement = fixture.debugElement.query(By.css(`${selector}`));
         inputElement.nativeElement.value = value;
         inputElement.nativeElement.dispatchEvent(new Event('input'));
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -120,7 +120,7 @@ describe('StartProcessCloudComponent', () => {
             component.appName = 'myApp';
             fixture.detectChanges();
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
         });
 
@@ -131,7 +131,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick(550);
 
@@ -162,7 +162,7 @@ describe('StartProcessCloudComponent', () => {
             const change = new SimpleChange(null, 'MyApp', false);
             fixture.detectChanges();
 
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
             typeValueInto('#processName', 'OLE');
@@ -209,24 +209,24 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'My new process with form';
             component.values = [{
-                'id': '1',
-                'type': 'string',
-                'name': 'firstName',
-                'value': 'FakeName',
-                get 'hasValue'() {
+                id: '1',
+                type: 'string',
+                name: 'firstName',
+                value: 'FakeName',
+                get hasValue() {
                     return this['value'];
                 },
-                set 'hasValue'(value) {
+                set hasValue(value) {
                     this['value'] = value;
                 }
             }, {
-                'id': '1', 'type': 'string',
-                'name': 'lastName',
-                'value': 'FakeLastName',
-                get 'hasValue'() {
+                id: '1', type: 'string',
+                name: 'lastName',
+                value: 'FakeLastName',
+                get hasValue() {
                     return this['value'];
                 },
-                set 'hasValue'(value) {
+                set hasValue(value) {
                     this['value'] = value;
                 }
             }];
@@ -239,7 +239,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
             typeValueInto('#processName', 'My new process with form');
@@ -265,7 +265,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
             tick();
@@ -293,7 +293,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
             tick();
@@ -323,7 +323,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
 
             tick();
@@ -355,7 +355,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick(550);
 
@@ -382,7 +382,7 @@ describe('StartProcessCloudComponent', () => {
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick(550);
 
@@ -401,7 +401,7 @@ describe('StartProcessCloudComponent', () => {
             component.appName = 'myApp';
             fixture.detectChanges();
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
             fixture.detectChanges();
         });
 
@@ -688,7 +688,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should call service to start process with the variables setted', async () => {
-            const inputProcessVariable: Map<string, object>[] = [];
+            const inputProcessVariable: Map<string, any>[] = [];
             inputProcessVariable['name'] = { value: 'Josh' };
 
             component.variables = inputProcessVariable;
@@ -853,11 +853,11 @@ describe('StartProcessCloudComponent', () => {
 
             component.processDefinitionName = 'fake-name';
             const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
         });
 
         it('should cancel bubbling a keydown event ()', () => {
-            const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
+            const escapeKeyboardEvent = new KeyboardEvent('keydown', { keyCode: ESCAPE } as any);
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
 
             expect(escapeKeyboardEvent.cancelBubble).toBe(true);

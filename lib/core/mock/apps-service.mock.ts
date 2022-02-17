@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-export let fakeApps = {
+export const fakeApps = {
     size: 2, total: 2, start: 0,
     data: [
         {
             id: 1, defaultAppId: null, name: 'Sales-Fakes-App', description: 'desc-fake1', modelId: 22,
-            theme: 'theme-1-fake', icon: 'glyphicon-asterisk', 'deploymentId': '111', 'tenantId': null
+            theme: 'theme-1-fake', icon: 'glyphicon-asterisk', deploymentId: '111', tenantId: null
         },
         {
             id: 2, defaultAppId: null, name: 'health-care-Fake', description: 'desc-fake2', modelId: 33,
-            theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
+            theme: 'theme-2-fake', icon: 'glyphicon-asterisk', deploymentId: '444', tenantId: null
         }
     ]
 };

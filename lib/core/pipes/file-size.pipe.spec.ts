@@ -23,7 +23,7 @@ describe('FileSizePipe', () => {
 
     beforeEach(() => {
         const translation: any = {
-            instant(key) {
+            instant: (key: string) => {
                 const enUs = {
                     'CORE.FILE_SIZE.BYTES': 'Bytes',
                     'CORE.FILE_SIZE.KB': 'KB',

@@ -39,15 +39,17 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         const layoutBlocks = this.config.filter((itemsGroup) => itemsGroup.items);
 
         const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
-            const flattenedItems = this.flattenItems(layoutBlock.items),
-                properties = flattenedItems.reduce((props, explodedItem) => {
-                    const isProperty = typeof explodedItem.property  === 'object';
-                    const propertyName = isProperty ? explodedItem.property.name : explodedItem.property;
-                    let  property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
-                    if (isProperty) { property = this.setPropertyTitle(property, explodedItem.property); }
-                    property = this.setEditableProperty(property, explodedItem);
-                    return props.concat(property);
-                }, []);
+            const flattenedItems = this.flattenItems(layoutBlock.items);
+            const properties = flattenedItems.reduce((props, explodedItem) => {
+                const isProperty = typeof explodedItem.property  === 'object';
+                const propertyName = isProperty ? explodedItem.property.name : explodedItem.property;
+                let  property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
+                if (isProperty) {
+                    property = this.setPropertyTitle(property, explodedItem.property);
+                }
+                property = this.setEditableProperty(property, explodedItem);
+                return props.concat(property);
+            }, []);
 
             return {
                 title: layoutBlock.title,
@@ -61,8 +63,8 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         return Object.keys(propertyGroups)
             .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName],
-                    properties = propertyGroup.properties;
+                const propertyGroup = propertyGroups[groupName];
+                const properties = propertyGroup.properties;
 
                 return Object.assign({}, propertyGroup, {
                     properties: Object.keys(properties).map((propertyName) => properties[propertyName])
@@ -81,9 +83,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
             excludedConfig = [excludedConfig];
         }
 
-        return propertyGroups.filter((props) => {
-            return !excludedConfig.includes(props.name);
-        });
+        return propertyGroups.filter((props) => !excludedConfig.includes(props.name));
     }
 
     public isIncludeAllEnabled() {
@@ -114,13 +114,11 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     private flattenItems(items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
-            const flattenedProperties = properties.map((property) => {
-                return {
-                    groupName: item.aspect || item.type,
-                    property,
-                    editable: item.editable
-                };
-            });
+            const flattenedProperties = properties.map((property) => ({
+                groupName: item.aspect || item.type,
+                property,
+                editable: item.editable
+            }));
 
             return accumulator.concat(flattenedProperties);
         }, []);

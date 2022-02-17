@@ -29,20 +29,19 @@ export class HighlightTransformService {
 
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
+     *
      * @param text Text to search within
      * @param search Text pattern to search for
      * @param wrapperClass CSS class used to provide highlighting style
      * @returns New text along with boolean value to indicate whether anything was highlighted
      */
     public highlight(text: string, search: string, wrapperClass: string = 'adf-highlight'): HighlightTransformResult {
-        let isMatching = false,
-            result = text;
+        let isMatching = false;
+        let result = text;
 
         if (search && text) {
             let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-            pattern = pattern.split(' ').filter((t) => {
-                return t.length > 0;
-            }).join('|');
+            pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
 
             const regex = new RegExp(pattern, 'gi');
             result = text.replace(/<[^>]+>/g, '').replace(regex, (match) => {

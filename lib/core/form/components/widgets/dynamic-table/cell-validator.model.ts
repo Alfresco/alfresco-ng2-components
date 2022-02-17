@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';

@@ -86,7 +86,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
                 this.property.locale = locale;
             });
 
-        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = 'MMM DD';
+        (this.dateAdapter as MomentDateAdapter).overrideDisplayFormat = 'MMM DD';
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.dateFormat);
@@ -129,7 +129,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     onDateClear() {
         this.valueDate = null;
-        this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, null);
+        this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, null);
         this.property.value = null;
         this.property.default = null;
     }
@@ -155,6 +155,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     update() {
-        this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, this.property.value);
+        this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
     }
 }

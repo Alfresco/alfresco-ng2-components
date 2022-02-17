@@ -26,7 +26,7 @@ import { map } from 'rxjs/operators';
     templateUrl: './people-search.component.html',
     styleUrls: ['./people-search.component.scss'],
     host: {
-        'class': 'adf-people-search'
+        class: 'adf-people-search'
     },
     encapsulation: ViewEncapsulation.None
 })
@@ -53,21 +53,12 @@ export class PeopleSearchComponent implements OnInit {
     selectedUser: UserProcessModel = {};
     performSearch: PerformSearchCallback;
 
-    constructor() {}
-
     ngOnInit() {
         this.filteredResults$ = this.results
             .pipe(
-                map((users) => {
-                    return users.filter((user) => user.id !== this.selectedUser.id);
-                })
+                map((users) => users.filter((user) => user.id !== this.selectedUser.id))
             );
         this.performSearch = this.performSearchCallback.bind(this);
-    }
-
-    private performSearchCallback(event: any): Observable<UserProcessModel[]> {
-        this.searchPeople.emit(event);
-        return this.filteredResults$;
     }
 
     onRowClick(user: UserProcessModel) {
@@ -88,5 +79,10 @@ export class PeopleSearchComponent implements OnInit {
             return;
         }
         this.success.emit(this.selectedUser);
+    }
+
+    private performSearchCallback(event: any): Observable<UserProcessModel[]> {
+        this.searchPeople.emit(event);
+        return this.filteredResults$;
     }
 }

@@ -39,6 +39,7 @@ import { map, catchError } from 'rxjs/operators';
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     FileUploadStatus = FileUploadStatus;
 
     @ContentChild(TemplateRef)

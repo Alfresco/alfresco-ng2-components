@@ -27,7 +27,7 @@ import { NodesApiService } from '../../services/nodes-api.service';
     selector: 'adf-download-zip-dialog',
     templateUrl: './download-zip.dialog.html',
     styleUrls: ['./download-zip.dialog.scss'],
-    host: { 'class': 'adf-download-zip-dialog' },
+    host: { class: 'adf-download-zip-dialog' },
     encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {

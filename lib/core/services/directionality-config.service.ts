@@ -36,7 +36,7 @@ export class DirectionalityConfigService {
             .select('textOrientation')
             .subscribe((direction: Direction) => {
                 renderer.setAttribute(this.document.body, 'dir', direction);
-                (<any> this.directionality).value = direction;
+                (this.directionality as any).value = direction;
             });
     }
 }

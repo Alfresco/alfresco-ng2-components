@@ -37,7 +37,7 @@ class TestPaginatedComponent implements PaginatedComponent {
 
     get pagination(): BehaviorSubject<PaginationModel> {
         if (!this._pagination) {
-            const defaultPagination = <PaginationModel> {
+            const defaultPagination = {
                 maxItems: 10,
                 skipCount: 0,
                 totalItems: 0,

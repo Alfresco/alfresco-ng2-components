@@ -113,7 +113,7 @@ describe('UnClaim Task Directive validation errors', () => {
         selector:  'adf-cloud-claim-undefined-appname-component',
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
-    class ClaimTestInvalidAppNameUndefineddDirectiveComponent {
+    class ClaimTestInvalidAppNameUndefinedDirectiveComponent {
 
         appNameUndefined = undefined;
         taskMock = 'test1234';
@@ -126,7 +126,7 @@ describe('UnClaim Task Directive validation errors', () => {
         selector:  'adf-cloud-claim-null-appname-component',
         template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })
-    class ClaimTestInvalidAppNameNulldDirectiveComponent {
+    class ClaimTestInvalidAppNameNullDirectiveComponent {
 
         appNameNull = null;
         taskMock = 'test1234';
@@ -144,8 +144,8 @@ describe('UnClaim Task Directive validation errors', () => {
         ],
         declarations: [
             ClaimTestMissingTaskIdDirectiveComponent,
-            ClaimTestInvalidAppNameUndefineddDirectiveComponent,
-            ClaimTestInvalidAppNameNulldDirectiveComponent,
+            ClaimTestInvalidAppNameUndefinedDirectiveComponent,
+            ClaimTestInvalidAppNameNullDirectiveComponent,
             ClaimTestMissingInputDirectiveComponent
         ]
     });
@@ -165,12 +165,12 @@ describe('UnClaim Task Directive validation errors', () => {
     });
 
     it('should throw error when appName is undefined', () => {
-        fixture = TestBed.createComponent(ClaimTestInvalidAppNameUndefineddDirectiveComponent);
+        fixture = TestBed.createComponent(ClaimTestInvalidAppNameUndefinedDirectiveComponent);
         expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 
     it('should throw error when appName is null', () => {
-        fixture = TestBed.createComponent(ClaimTestInvalidAppNameUndefineddDirectiveComponent);
+        fixture = TestBed.createComponent(ClaimTestInvalidAppNameUndefinedDirectiveComponent);
         expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 });

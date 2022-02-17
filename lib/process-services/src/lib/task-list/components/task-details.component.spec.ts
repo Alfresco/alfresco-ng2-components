@@ -208,7 +208,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should fetch new task details when taskId changed', () => {
-            component.ngOnChanges({ 'taskId': change });
+            component.ngOnChanges({ taskId: change });
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -223,13 +223,13 @@ describe('TaskDetailsComponent', () => {
         it('should NOT fetch new task details when taskId changed to null', fakeAsync(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                component.ngOnChanges({ 'taskId': nullChange });
+                component.ngOnChanges({ taskId: nullChange });
                 expect(getTaskDetailsSpy).not.toHaveBeenCalled();
             });
         }));
 
         it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({ taskId: nullChange });
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
         });
@@ -243,7 +243,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         afterEach(() => {
-            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+            const overlayContainers = window.document.querySelectorAll('.cdk-overlay-container');
 
             overlayContainers.forEach((overlayContainer) => {
                 overlayContainer.innerHTML = '';
@@ -340,7 +340,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -352,7 +352,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -364,7 +364,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = null;
@@ -376,7 +376,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -388,7 +388,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be present if showComments is true', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
@@ -398,7 +398,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be present if showComments is false', () => {
             component.showComments = false;
-            component.ngOnChanges({ 'taskId': new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 

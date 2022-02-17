@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Anchor } from './anchor';
+import { Anchor, ANCHOR_TYPE } from './anchor';
 
-/* tslint:disable */
+/* eslint-disable */
 export class Polyline {
 
     id: any = null;
@@ -70,14 +70,14 @@ export class Polyline {
 
         // create anchors
 
-        this.pushAnchor(Anchor.ANCHOR_TYPE.first, this.getLine(0).x1, this.getLine(0).y1);
+        this.pushAnchor(ANCHOR_TYPE.first, this.getLine(0).x1, this.getLine(0).y1);
 
         for (var i = 1; i < linesCount; i++) {
             var line1 = this.getLine(i - 1);
-            this.pushAnchor(Anchor.ANCHOR_TYPE.main, line1.x2, line1.y2);
+            this.pushAnchor(ANCHOR_TYPE.main, line1.x2, line1.y2);
         }
 
-        this.pushAnchor(Anchor.ANCHOR_TYPE.last, this.getLine(linesCount - 1).x2, this.getLine(linesCount - 1).y2);
+        this.pushAnchor(ANCHOR_TYPE.last, this.getLine(linesCount - 1).x2, this.getLine(linesCount - 1).y2);
 
         this.rebuildPath();
     }
@@ -149,9 +149,9 @@ export class Polyline {
 
     pushAnchor(type, x, y) {
         var index;
-        if (type === Anchor.ANCHOR_TYPE.first) {
+        if (type === ANCHOR_TYPE.first) {
             index = 0;
-        } else if (type === Anchor.ANCHOR_TYPE.last) {
+        } else if (type === ANCHOR_TYPE.last) {
             index = this.getAnchorsCount();
         } else if (!index) {
             index = this.anchors.length;
@@ -165,7 +165,7 @@ export class Polyline {
             }
         }
 
-        var anchor: any = new Anchor(this.id, Anchor.ANCHOR_TYPE.main, x, y);
+        var anchor: any = new Anchor(this.id, ANCHOR_TYPE.main, x, y);
 
         this.anchors.push(anchor);
     }
@@ -175,10 +175,10 @@ export class Polyline {
     }
 
     getAnchorByType(type, position) {
-        if (type === Anchor.ANCHOR_TYPE.first) {
+        if (type === ANCHOR_TYPE.first) {
             return this.anchors[0];
         }
-        if (type === Anchor.ANCHOR_TYPE.last) {
+        if (type === ANCHOR_TYPE.last) {
             return this.anchors[this.getAnchorsCount() - 1];
         }
         for (var i = 0; i < this.getAnchorsCount(); i++) {

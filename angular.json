@@ -124,47 +124,47 @@
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
-                "bundleName" : "adf-blue-orange"
+                "bundleName": "adf-blue-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
-                "bundleName" : "adf-blue-purple"
+                "bundleName": "adf-blue-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
-                "bundleName" : "adf-cyan-orange"
+                "bundleName": "adf-cyan-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
-                "bundleName" : "adf-cyan-purple"
+                "bundleName": "adf-cyan-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
-                "bundleName" : "adf-green-orange"
+                "bundleName": "adf-green-orange"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
-                "bundleName" : "adf-green-purple"
+                "bundleName": "adf-green-purple"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
-                "bundleName" : "adf-indigo-pink"
+                "bundleName": "adf-indigo-pink"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
-                "bundleName" : "adf-pink-bluegrey"
+                "bundleName": "adf-pink-bluegrey"
               },
               {
                 "inject": false,
                 "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
-                "bundleName" : "adf-purple-green"
+                "bundleName": "adf-purple-green"
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
@@ -355,15 +355,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.dev.json"
-            ],
-            "exclude": [
-              "**/node_modules/**/*",
-              "**/lib/**/*",
-              "package.json"
+            "lintFilePatterns": [
+              "demo-shell/**/*.ts",
+              "demo-shell/**/*.html"
             ]
           }
         }
@@ -438,19 +434,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/core/tsconfig.lib.json",
-              "lib/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/extensions/**/*",
-              "**/lib/content-services/**/*",
-              "**/lib/insights/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/process-services/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/core/**/*.ts",
+              "lib/core/**/*.html"
             ]
           }
         },
@@ -519,19 +507,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/content-services/tsconfig.lib.json",
-              "lib/content-services/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/extensions/**/*",
-              "**/lib/core/**/*",
-              "**/lib/insights/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/process-services/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/content-services/**/*.ts",
+              "lib/content-services/**/*.html"
             ]
           }
         },
@@ -600,19 +580,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/process-services/tsconfig.lib.json",
-              "lib/process-services/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/extensions/**/*",
-              "**/lib/core/**/*",
-              "**/lib/insights/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/content-services/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/process-services/**/*.ts",
+              "lib/process-services/**/*.html"
             ]
           }
         }
@@ -648,19 +620,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/process-services-cloud/tsconfig.lib.json",
-              "lib/process-services-cloud/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/extensions/**/*",
-              "**/lib/core/**/*",
-              "**/lib/insights/**/*",
-              "**/lib/process-services/**/*",
-              "**/lib/content-services/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/process-services-cloud/**/*.ts",
+              "lib/process-services-cloud/**/*.html"
             ]
           }
         },
@@ -729,19 +693,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/insights/tsconfig.lib.json",
-              "lib/insights/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/extensions/**/*",
-              "**/lib/core/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/process-services/**/*",
-              "**/lib/content-services/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/insights/**/*.ts",
+              "lib/insights/**/*.html"
             ]
           }
         }
@@ -776,19 +732,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/extensions/tsconfig.lib.json",
-              "lib/extensions/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/core/**/*",
-              "**/lib/content-services/**/*",
-              "**/lib/process-services/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/insights/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/extensions/**/*.ts",
+              "lib/extensions/**/*.html"
             ]
           }
         }
@@ -813,19 +761,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "lib/testing/tsconfig.lib.json",
-              "lib/testing/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/lib/core/**/*",
-              "**/lib/content-services/**/*",
-              "**/lib/process-services/**/*",
-              "**/lib/process-services-cloud/**/*",
-              "**/lib/insight/**/*",
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "lib/testing/**/*.ts",
+              "lib/testing/**/*.html"
             ]
           }
         }
@@ -846,6 +786,15 @@
             "production": {
               "tsConfig": "lib/cli/tsconfig.lib.prod.json"
             }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "lib/cli/**/*.ts",
+              "lib/cli/**/*.html"
+            ]
           }
         }
       }
@@ -891,8 +840,5 @@
       }
     }
   },
-  "defaultProject": "demoshell",
-  "cli": {
-    "analytics": "0ce5075f-0835-439a-bebe-7c41750179a6"
-  }
+  "defaultProject": "demoshell"
 }

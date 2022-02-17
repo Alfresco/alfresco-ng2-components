@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../services/highlight-transform.service';

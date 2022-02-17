@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import moment from 'moment-es6';
 import { FormFieldTypes } from './form-field-types';
+import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
 
 export interface FormFieldValidator {
@@ -104,11 +105,7 @@ export class NumberFieldValidator implements FormFieldValidator {
     ];
 
     static isNumber(value: any): boolean {
-        if (value === null || value === undefined || value === '') {
-            return false;
-        }
-
-        return !isNaN(+value);
+        return isNumberValue(value);
     }
 
     isSupported(field: FormFieldModel): boolean {

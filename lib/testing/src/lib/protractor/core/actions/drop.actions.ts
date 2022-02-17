@@ -20,11 +20,11 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { BrowserActions } from '../utils/browser-actions';
 
-const JS_BIND_INPUT = function(target) {
+const JS_BIND_INPUT = (target) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
-    input.addEventListener('change', function() {
+    input.addEventListener('change', () => {
         target.scrollIntoView(true);
 
         const rect = target.getBoundingClientRect();
@@ -32,7 +32,7 @@ const JS_BIND_INPUT = function(target) {
         const y = rect.top + (rect.height >> 1);
         const data = { files: input.files };
 
-        ['dragenter', 'dragover', 'drop'].forEach(function(name) {
+        ['dragenter', 'dragover', 'drop'].forEach((name) => {
             const mouseEvent: any = document.createEvent('MouseEvent');
             mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
             mouseEvent.dataTransfer = data;
@@ -46,13 +46,13 @@ const JS_BIND_INPUT = function(target) {
     return input;
 };
 
-const JS_BIND_INPUT_FOLDER = function(target) {
+const JS_BIND_INPUT_FOLDER = (target) => {
     const input: any = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
     input.multiple = true;
     input.webkitdirectory = true;
-    input.addEventListener('change', function() {
+    input.addEventListener('change', () => {
         target.scrollIntoView(true);
 
         const rect = target.getBoundingClientRect();
@@ -60,7 +60,7 @@ const JS_BIND_INPUT_FOLDER = function(target) {
         const y = rect.top + (rect.height >> 1);
         const data = { files: input.files };
 
-        ['dragenter', 'dragover', 'drop'].forEach(function(name) {
+        ['dragenter', 'dragover', 'drop'].forEach((name) => {
             const mouseEvent: any = document.createEvent('MouseEvent');
             mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
             mouseEvent.dataTransfer = data;

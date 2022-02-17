@@ -49,7 +49,7 @@ export class AttachFileWidgetDialogComponent {
                 private externalApiService: AlfrescoApiService,
                 private authenticationService: AuthenticationService,
                 private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>) {
-        (<any> externalApiService).init(data.ecmHost, data.context);
+        (externalApiService as any).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');
@@ -60,14 +60,6 @@ export class AttachFileWidgetDialogComponent {
         this.authenticationService.onLogin.subscribe(() => this.registerAndClose());
         if (this.externalApiService.getInstance().isLoggedIn()) {
             this.registerAndClose();
-        }
-    }
-
-    private registerAndClose() {
-        this.data.registerExternalHost(this.data.accountIdentifier, this.externalApiService);
-        if (this.data.loginOnly) {
-            this.data.selected.complete();
-            this.matDialogRef.close();
         }
     }
 
@@ -108,5 +100,13 @@ export class AttachFileWidgetDialogComponent {
 
     hasNodeSelected(): boolean {
         return this.chosenNode?.length > 0;
+    }
+
+    private registerAndClose() {
+        this.data.registerExternalHost(this.data.accountIdentifier, this.externalApiService);
+        if (this.data.loginOnly) {
+            this.data.selected.complete();
+            this.matDialogRef.close();
+        }
     }
 }

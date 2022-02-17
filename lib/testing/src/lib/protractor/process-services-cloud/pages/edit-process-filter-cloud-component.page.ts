@@ -42,33 +42,21 @@ export class EditProcessFilterCloudComponentPage {
     deleteButton = $('button[data-automation-id="adf-filter-action-delete"]');
     filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`);
 
-    private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`);
-    private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`);
-    private locatorSortDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`);
-    private locatorOrderDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`);
-    private locatorProcessDefinitionNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`);
-    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
-    private locatorSuspendedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`);
-    private locatorStartedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`);
-    private locatorCompletedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`);
-
-    private locatorSuspendedDateRangeWithin = $(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`);
-    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
-
-    appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
-    statusDropdown = new DropdownPage(this.locatorStatusDropdown);
-    sortDropdown = new DropdownPage(this.locatorSortDropdown);
-    orderDropdown = new DropdownPage(this.locatorOrderDropdown);
-    processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
-    suspendedDateRangeDropdown = new DropdownPage(this.locatorSuspendedDateRangeDropdown);
-    startedDateRangeDropdown = new DropdownPage(this.locatorStartedDateRangeDropdown);
-    completedDateRangeDropdown = new DropdownPage(this.locatorCompletedDateRangeDropdown);
-
-    suspendedDateRangeWithin = new DatePickerPage(this.locatorSuspendedDateRangeWithin);
+    appNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
+    statusDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
+    sortDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
+    orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
+    processDefinitionNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
+    suspendedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
+    startedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
+    completedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
+    suspendedDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
 
     peopleCloudComponent = new PeopleCloudComponentPage();
-
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
+
+    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
+    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
 
     editProcessFilterDialog(): EditProcessFilterDialogPage {
         return this.editProcessFilterDialogPage;
@@ -108,7 +96,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getStateFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($("mat-form-field[data-automation-id='status'] span"));
+        return BrowserActions.getText($(`mat-form-field[data-automation-id='status'] span`));
     }
 
     async setSortFilterDropDown(option) {
@@ -117,7 +105,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
-        const sortLocator = $$("mat-form-field[data-automation-id='sort'] span").first();
+        const sortLocator = $$(`mat-form-field[data-automation-id='sort'] span`).first();
         return BrowserActions.getText(sortLocator);
     }
 
@@ -127,7 +115,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($("mat-form-field[data-automation-id='order'] span"));
+        return BrowserActions.getText($(`mat-form-field[data-automation-id='order'] span`));
     }
 
     async setAppNameDropDown(option: string) {
@@ -265,13 +253,27 @@ export class EditProcessFilterCloudComponentPage {
 
     async setFilter(props: FilterProps) {
         await this.openFilter();
-        if (props.name) { await this.setProcessName(props.name); }
-        if (props.status) { await this.setStatusFilterDropDown(props.status); }
-        if (props.sort) { await this.setSortFilterDropDown(props.sort);     }
-        if (props.order) { await this.setOrderFilterDropDown(props.order);   }
-        if (props.initiator) { await this.setInitiator(props.initiator);   }
-        if (props.processName) { await this.setProcessName(props.processName);   }
-        if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
+        if (props.name) {
+            await this.setProcessName(props.name);
+        }
+        if (props.status) {
+            await this.setStatusFilterDropDown(props.status);
+        }
+        if (props.sort) {
+            await this.setSortFilterDropDown(props.sort);
+        }
+        if (props.order) {
+            await this.setOrderFilterDropDown(props.order);
+        }
+        if (props.initiator) {
+            await this.setInitiator(props.initiator);
+        }
+        if (props.processName) {
+            await this.setProcessName(props.processName);
+        }
+        if (props.suspendedDateRange) {
+            await this.setSuspendedDateRangeDropDown(props.suspendedDateRange);
+        }
         await this.closeFilter();
     }
 

@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from './../../../models/widget-visibility.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
@@ -32,7 +31,7 @@ export class FormOutcomeModel extends FormWidgetModel {
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;
 
-    constructor(form: FormModel, json?: any) {
+    constructor(form: any, json?: any) {
         super(form, json);
 
         if (json) {

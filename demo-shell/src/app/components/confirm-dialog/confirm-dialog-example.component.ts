@@ -53,7 +53,7 @@ export class ConfirmDialogExampleComponent {
        const dialog =  this.dialog.open(ConfirmDialogComponent, {
             data: {
                 title: 'Upload',
-                thirdOptionLabel: thirdOptionLabel,
+                thirdOptionLabel,
                 message: `This is the default message`
             },
             minWidth: '250px'

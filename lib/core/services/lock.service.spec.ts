@@ -29,9 +29,9 @@ describe('PeopleProcessService', () => {
     let service: LockService;
     let apiService: AlfrescoApiService;
 
-    const fakeNodeUnlocked: Node = <Node> { name: 'unlocked', isLocked: false, isFile: true };
-    const fakeFolderNode: Node = <Node> { name: 'unlocked', isLocked: false, isFile: false, isFolder: true };
-    const fakeNodeNoProperty: Node = <Node> { name: 'unlocked', isLocked: true, isFile: true, properties: {} };
+    const fakeNodeUnlocked: Node = { name: 'unlocked', isLocked: false, isFile: true } as Node;
+    const fakeFolderNode: Node = { name: 'unlocked', isLocked: false, isFile: false, isFolder: true } as Node;
+    const fakeNodeNoProperty: Node = { name: 'unlocked', isLocked: true, isFile: true, properties: {} } as Node;
 
     setupTestBed({
         imports: [
@@ -58,7 +58,7 @@ describe('PeopleProcessService', () => {
     });
 
     describe('When the lock is readonly', () => {
-        const nodeReadonly: Node = <Node> {
+        const nodeReadonly: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -67,9 +67,9 @@ describe('PeopleProcessService', () => {
                     'cm:lockType': 'READ_ONLY_LOCK',
                     'cm:lockLifetime': 'PERSISTENT'
                 }
-        };
+        } as Node;
 
-        const nodeReadOnlyWithExpiredDate: Node = <Node> {
+        const nodeReadOnlyWithExpiredDate: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -80,9 +80,9 @@ describe('PeopleProcessService', () => {
                     'cm:lockOwner': { id: 'lock-owner-user' },
                     'cm:expiryDate': moment().subtract(4, 'days')
                 }
-        };
+        } as Node;
 
-        const nodeReadOnlyWithActiveExpiration: Node = <Node> {
+        const nodeReadOnlyWithActiveExpiration: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -93,7 +93,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockOwner': { id: 'lock-owner-user' },
                     'cm:expiryDate': moment().add(4, 'days')
                 }
-        };
+        } as Node;
 
         it('should return true when readonly lock is active', () => {
             expect(service.isLocked(nodeReadonly)).toBeTruthy();
@@ -109,7 +109,7 @@ describe('PeopleProcessService', () => {
     });
 
     describe('When only the lock owner is allowed', () => {
-        const nodeOwnerAllowedLock: Node = <Node> {
+        const nodeOwnerAllowedLock: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -119,9 +119,9 @@ describe('PeopleProcessService', () => {
                     'cm:lockLifetime': 'PERSISTENT',
                     'cm:lockOwner': { id: 'lock-owner-user' }
                 }
-        };
+        } as Node;
 
-        const nodeOwnerAllowedLockWithExpiredDate: Node = <Node> {
+        const nodeOwnerAllowedLockWithExpiredDate: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -132,9 +132,9 @@ describe('PeopleProcessService', () => {
                     'cm:lockOwner': { id: 'lock-owner-user' },
                     'cm:expiryDate': moment().subtract(4, 'days')
                 }
-        };
+        } as Node;
 
-        const nodeOwnerAllowedLockWithActiveExpiration: Node = <Node> {
+        const nodeOwnerAllowedLockWithActiveExpiration: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
@@ -145,7 +145,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockOwner': { id: 'lock-owner-user' },
                     'cm:expiryDate': moment().add(4, 'days')
                 }
-        };
+        } as Node;
 
         it('should return false when the user is the lock owner', () => {
             spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('lock-owner-user');

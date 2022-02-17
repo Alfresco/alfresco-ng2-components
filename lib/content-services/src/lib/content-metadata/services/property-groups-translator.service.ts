@@ -45,13 +45,12 @@ const D_FLOAT = 'd:float';
 const D_DOUBLE = 'd:double';
 const D_BOOLEAN = 'd:boolean';
 
+export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
+
 @Injectable({
     providedIn: 'root'
 })
 export class PropertyGroupTranslatorService {
-
-    static readonly RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
-
     valueSeparator: string;
 
     constructor(private logService: LogService,
@@ -87,9 +86,7 @@ export class PropertyGroupTranslatorService {
     }
 
     private translateArray(properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
-        return properties.map((property) => {
-            return this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition));
-        });
+        return properties.map((property) => this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition)));
     }
 
     private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
@@ -108,7 +105,7 @@ export class PropertyGroupTranslatorService {
             key: `${prefix}${property.name}`,
             default: property.defaultValue,
             editable: property.protected ? false : property.editable !== undefined ? property.editable : true,
-            constraints: constraints
+            constraints
         };
 
         return this.transform(propertyDefinition, property.dataType, property.multiValued);
@@ -189,7 +186,7 @@ export class PropertyGroupTranslatorService {
     }
 
     private checkECMTypeValidity(ecmPropertyType: string) {
-        if (PropertyGroupTranslatorService.RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
+        if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
             this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }
     }

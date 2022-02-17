@@ -24,8 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
-/* tslint:disable:adf-file-name */
-
 describe('AppsProcessService', () => {
 
     let service: AppsProcessService;
@@ -65,7 +63,7 @@ describe('AppsProcessService', () => {
         );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeApps)
         });
@@ -83,7 +81,7 @@ describe('AppsProcessService', () => {
         );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeApps)
         });
@@ -101,7 +99,7 @@ describe('AppsProcessService', () => {
         );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeApps)
         });

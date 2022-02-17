@@ -20,7 +20,11 @@ import { Polyline } from './polyline';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
+
+const ARROW_WIDTH = 4;
+const SEQUENCE_FLOW_STROKE = 1.5;
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
@@ -36,29 +40,25 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Output()
     error = new EventEmitter();
 
-    ARROW_WIDTH = 4;
-    SEQUENCE_FLOW_STROKE = 1.5;
-
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {
         super(elementRef, raphaelService);
     }
 
     ngOnInit() {
-
         this.draw(this.flow);
     }
 
-    public draw(flow: any) {
+    draw(flow: any) {
         const line = this.drawLine(flow);
         this.drawArrow(line);
     }
 
-    public drawLine(flow: any) {
-        const polyline = new Polyline(flow.id, flow.waypoints, this.SEQUENCE_FLOW_STROKE, this.paper);
+    drawLine(flow: any) {
+        const polyline = new Polyline(flow.id, flow.waypoints, SEQUENCE_FLOW_STROKE, this.paper);
         polyline.element = this.paper.path(polyline.path);
-        polyline.element.attr({'stroke-width': this.SEQUENCE_FLOW_STROKE});
-        polyline.element.attr({'stroke': '#585858'});
+        polyline.element.attr({'stroke-width': SEQUENCE_FLOW_STROKE});
+        polyline.element.attr({stroke: '#585858'});
 
         polyline.element.node.id = this.flow.id;
 
@@ -67,9 +67,9 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
         return line;
     }
 
-    public drawArrow(line: any) {
-        const doubleArrowWidth = 2 * this.ARROW_WIDTH;
-        const width = this.ARROW_WIDTH / 2 + .5;
+    drawArrow(line: any) {
+        const doubleArrowWidth = 2 * ARROW_WIDTH;
+        const width = ARROW_WIDTH / 2 + .5;
         const arrowHead: any = this.paper.path('M0 0L-' + width + '-' + doubleArrowWidth + 'L' + width + ' -' + doubleArrowWidth + 'z');
 
         arrowHead.transform('t' + line.x2 + ',' + line.y2);
@@ -78,8 +78,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
 
         arrowHead.attr('fill', '#585858');
 
-        arrowHead.attr('stroke-width', this.SEQUENCE_FLOW_STROKE);
+        arrowHead.attr('stroke-width', SEQUENCE_FLOW_STROKE);
         arrowHead.attr('stroke', '#585858');
-
     }
 }

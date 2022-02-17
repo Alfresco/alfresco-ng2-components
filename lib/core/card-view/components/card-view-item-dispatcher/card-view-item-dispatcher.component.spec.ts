@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -59,7 +59,7 @@ describe('CardViewItemDispatcherComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewItemDispatcherComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewItem> {
+        component.property = {
             type: 'shiny-custom-element',
             label: 'Shiny custom element',
             value: null,
@@ -109,12 +109,12 @@ describe('CardViewItemDispatcherComponent', () => {
         });
 
         it('should update the subcomponent\'s input parameters', () => {
-            const expectedEditable = false,
-                expectedDisplayEmpty = true,
-                expectedProperty = <CardViewItem> {},
-                expectedCustomInput = 1,
-                expectedDisplayNoneOption = false,
-                expectedDisplayClearAction = false;
+            const expectedEditable = false;
+            const expectedDisplayEmpty = true;
+            const expectedProperty = {};
+            const expectedCustomInput = 1;
+            const expectedDisplayNoneOption = false;
+            const expectedDisplayClearAction = false;
 
             component.ngOnChanges({
                 editable: new SimpleChange(true, expectedEditable, false),

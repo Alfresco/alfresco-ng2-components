@@ -295,6 +295,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     /**
      * Get custom set of outcomes for a Form Definition.
+     *
      * @param form Form definition model.
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
@@ -307,20 +308,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         if (field && field.form) {
             this.visibilityService.refreshVisibility(field.form);
         }
-    }
-
-    private refreshFormData() {
-        this.form = this.parseForm(this.form.json);
-        this.onFormLoaded(this.form);
-        this.onFormDataRefreshed(this.form);
-    }
-
-    private loadFormForEcmNode(nodeId: string): void {
-        this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
-                this.data = data.metadata;
-                this.loadFormFromActiviti(data.nodeType);
-            },
-            this.handleError);
     }
 
     loadFormFromActiviti(nodeType: string): any {
@@ -338,11 +325,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                 this.handleError(error);
             }
         );
-    }
-
-    private loadFormFromFormId(formId: number) {
-        this.formId = formId;
-        this.loadForm();
     }
 
     protected storeFormAsMetadata() {
@@ -397,5 +379,24 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
         this.executeOutcome.emit(args);
         return !args.defaultPrevented;
+    }
+
+    private refreshFormData() {
+        this.form = this.parseForm(this.form.json);
+        this.onFormLoaded(this.form);
+        this.onFormDataRefreshed(this.form);
+    }
+
+    private loadFormForEcmNode(nodeId: string): void {
+        this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
+            },
+            this.handleError);
+    }
+
+    private loadFormFromFormId(formId: number) {
+        this.formId = formId;
+        this.loadForm();
     }
 }

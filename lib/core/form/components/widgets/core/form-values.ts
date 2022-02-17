@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
-/* tslint:disable */
+/* eslint-disable */
 import { FormFieldMetadata } from './form-field-metadata';
 
 export interface FormValues extends FormFieldMetadata {

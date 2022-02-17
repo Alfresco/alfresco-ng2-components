@@ -17,7 +17,7 @@
 
 import { ContentActionRef, ContentActionType } from './action.extensions';
 
-export function getValue(target: any, key: string): any {
+export const getValue = (target: any, key: string): any => {
     if (!target) {
         return undefined;
     }
@@ -42,27 +42,25 @@ export function getValue(target: any, key: string): any {
     } while (keys.length);
 
     return target;
-}
+};
 
-export function filterEnabled(entry: { disabled?: boolean }): boolean {
-    return !entry.disabled;
-}
+export const filterEnabled = (entry: { disabled?: boolean }): boolean => !entry.disabled;
 
-export function sortByOrder(
+export const sortByOrder = (
     a: { order?: number | undefined },
     b: { order?: number | undefined }
-) {
+) => {
     const left = a.order === undefined ? Number.MAX_SAFE_INTEGER : a.order;
     const right = b.order === undefined ? Number.MAX_SAFE_INTEGER : b.order;
     return left - right;
-}
+};
 
-export function reduceSeparators(
+export const reduceSeparators = (
     acc: ContentActionRef[],
     el: ContentActionRef,
     i: number,
     arr: ContentActionRef[]
-): ContentActionRef[] {
+): ContentActionRef[] => {
     // remove leading separator
     if (i === 0) {
         if (arr[i].type === ContentActionType.separator) {
@@ -88,21 +86,21 @@ export function reduceSeparators(
     }
 
     return acc.concat(el);
-}
+};
 
-export function reduceEmptyMenus(
+export const reduceEmptyMenus = (
     acc: ContentActionRef[],
     el: ContentActionRef
-): ContentActionRef[] {
+): ContentActionRef[] => {
     if (el.type === ContentActionType.menu) {
         if ((el.children || []).length === 0) {
             return acc;
         }
     }
     return acc.concat(el);
-}
+};
 
-export function mergeObjects(...objects: object[]): any {
+export const mergeObjects = (...objects: any[]): any => {
     const result = {};
 
     objects.forEach((source) => {
@@ -129,9 +127,9 @@ export function mergeObjects(...objects: object[]): any {
     });
 
     return result;
-}
+};
 
-export function mergeArrays(left: any[], right: any[]): any[] {
+export const mergeArrays = (left: any[], right: any[]): any[] => {
     const result = [];
     const map = {};
 
@@ -155,4 +153,4 @@ export function mergeArrays(left: any[], right: any[]): any[] {
     });
 
     return Object.keys(map).map((key) => map[key]).concat(result);
-}
+};

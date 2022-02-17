@@ -27,12 +27,11 @@ export class BasicPropertiesService {
     }
 
     getProperties(node: Node) {
-
-        const sizeInBytes = node.content ? node.content.sizeInBytes : '',
-            mimeTypeName = node.content ? node.content.mimeTypeName : '',
-            author = node.properties ? node.properties['cm:author'] : '',
-            description = node.properties ? node.properties['cm:description'] : '',
-            title = node.properties ? node.properties['cm:title'] : '';
+        const sizeInBytes = node.content ? node.content.sizeInBytes : '';
+        const mimeTypeName = node.content ? node.content.mimeTypeName : '';
+        const author = node.properties ? node.properties['cm:author'] : '';
+        const description = node.properties ? node.properties['cm:description'] : '';
+        const title = node.properties ? node.properties['cm:title'] : '';
 
         return [
             new CardViewTextItemModel({

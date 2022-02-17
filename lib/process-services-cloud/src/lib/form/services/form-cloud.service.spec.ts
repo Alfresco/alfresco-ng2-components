@@ -51,10 +51,8 @@ describe('Form Cloud service', () => {
         apiService = TestBed.inject(AlfrescoApiService);
 
         spyOn(apiService, 'getInstance').and.returnValue({
-            oauth2Auth: oauth2Auth,
-            isEcmLoggedIn() {
-                return false;
-            },
+            oauth2Auth,
+            isEcmLoggedIn: () => false,
             reply: jasmine.createSpy('reply')
         } as any);
     });
@@ -102,36 +100,36 @@ describe('Form Cloud service', () => {
 
         it('should fetch task variables', (done) => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
-                'list': {
-                  'entries': [
+                list: {
+                  entries: [
                     {
-                      'entry': {
-                        'serviceName': 'fake-rb',
-                        'serviceFullName': 'fake-rb',
-                        'serviceVersion': '',
-                        'appName': 'fake',
-                        'appVersion': '',
-                        'serviceType': null,
-                        'id': 25,
-                        'type': 'string',
-                        'name': 'fakeProperty',
-                        'createTime': 1556112661342,
-                        'lastUpdatedTime': 1556112661342,
-                        'executionId': null,
-                        'value': 'fakeValue',
-                        'markedAsDeleted': false,
-                        'processInstanceId': '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                        'taskId': '18e192da-6694-11e9-9c1b-0a586460028a',
-                        'taskVariable': true
+                      entry: {
+                        serviceName: 'fake-rb',
+                        serviceFullName: 'fake-rb',
+                        serviceVersion: '',
+                        appName: 'fake',
+                        appVersion: '',
+                        serviceType: null,
+                        id: 25,
+                        type: 'string',
+                        name: 'fakeProperty',
+                        createTime: 1556112661342,
+                        lastUpdatedTime: 1556112661342,
+                        executionId: null,
+                        value: 'fakeValue',
+                        markedAsDeleted: false,
+                        processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                        taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                        taskVariable: true
                       }
                     }
                   ],
-                  'pagination': {
-                    'skipCount': 0,
-                    'maxItems': 100,
-                    'count': 1,
-                    'hasMoreItems': false,
-                    'totalItems': 1
+                  pagination: {
+                    skipCount: 0,
+                    maxItems: 100,
+                    count: 1,
+                    hasMoreItems: false,
+                    totalItems: 1
                   }
                 }
               }));
@@ -149,36 +147,36 @@ describe('Form Cloud service', () => {
 
         it('should fetch result if the variable value is 0', (done) => {
             oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
-                'list': {
-                  'entries': [
+                list: {
+                  entries: [
                     {
-                      'entry': {
-                        'serviceName': 'fake-rb',
-                        'serviceFullName': 'fake-rb',
-                        'serviceVersion': '',
-                        'appName': 'fake',
-                        'appVersion': '',
-                        'serviceType': null,
-                        'id': 25,
-                        'type': 'string',
-                        'name': 'fakeProperty',
-                        'createTime': 1556112661342,
-                        'lastUpdatedTime': 1556112661342,
-                        'executionId': null,
-                        'value': 0,
-                        'markedAsDeleted': false,
-                        'processInstanceId': '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                        'taskId': '18e192da-6694-11e9-9c1b-0a586460028a',
-                        'taskVariable': true
+                      entry: {
+                        serviceName: 'fake-rb',
+                        serviceFullName: 'fake-rb',
+                        serviceVersion: '',
+                        appName: 'fake',
+                        appVersion: '',
+                        serviceType: null,
+                        id: 25,
+                        type: 'string',
+                        name: 'fakeProperty',
+                        createTime: 1556112661342,
+                        lastUpdatedTime: 1556112661342,
+                        executionId: null,
+                        value: 0,
+                        markedAsDeleted: false,
+                        processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                        taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                        taskVariable: true
                       }
                     }
                   ],
-                  'pagination': {
-                    'skipCount': 0,
-                    'maxItems': 100,
-                    'count': 1,
-                    'hasMoreItems': false,
-                    'totalItems': 1
+                  pagination: {
+                    skipCount: 0,
+                    maxItems: 100,
+                    count: 1,
+                    hasMoreItems: false,
+                    totalItems: 1
                   }
                 }
               }));

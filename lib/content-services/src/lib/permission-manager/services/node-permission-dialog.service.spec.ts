@@ -61,7 +61,7 @@ describe('NodePermissionDialogService', () => {
         let fakePermissionNode = new Node({});
 
         beforeEach(() => {
-            fakePermissionNode = <Node> { id: 'fake-permission-node', allowableOperations: ['updatePermissions']};
+            fakePermissionNode = { id: 'fake-permission-node', allowableOperations: ['updatePermissions']} as Node;
         });
 
         it('should be able to open the dialog showing node permissions', () => {
@@ -97,7 +97,7 @@ describe('NodePermissionDialogService', () => {
         let fakeForbiddenNode = new Node({});
 
         beforeEach(() => {
-            fakeForbiddenNode = <Node> { id: 'fake-permission-node', allowableOperations: ['update']};
+            fakeForbiddenNode = { id: 'fake-permission-node', allowableOperations: ['update']} as Node;
         });
 
         it('should not be able to open the dialog showing node permissions', () => {

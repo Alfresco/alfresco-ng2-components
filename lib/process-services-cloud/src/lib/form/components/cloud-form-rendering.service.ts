@@ -33,10 +33,10 @@ export class CloudFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
-            'upload': () => AttachFileCloudWidgetComponent,
-            'dropdown': () => DropdownCloudWidgetComponent,
-            'date': () => DateCloudWidgetComponent,
-            'people': () => PeopleCloudWidgetComponent,
+            upload: () => AttachFileCloudWidgetComponent,
+            dropdown: () => DropdownCloudWidgetComponent,
+            date: () => DateCloudWidgetComponent,
+            people: () => PeopleCloudWidgetComponent,
             'functional-group': () => GroupCloudWidgetComponent,
             'properties-viewer': () => PropertiesViewerWidgetComponent,
             'radio-buttons': () => RadioButtonsCloudWidgetComponent

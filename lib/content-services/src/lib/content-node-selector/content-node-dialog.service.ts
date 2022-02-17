@@ -31,7 +31,7 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
     static nonDocumentSiteContent = [
         'blog',
@@ -57,17 +57,17 @@ export class ContentNodeDialogService {
     /**
      * Opens a file browser at a chosen folder location.
      * shows files and folders in the dialog search result.
+     *
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => {
-            return this.openUploadFileDialog(NodeAction.CHOOSE, nodeEntry.entry, true);
-        }));
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => this.openUploadFileDialog(NodeAction.CHOOSE, nodeEntry.entry, true)));
     }
 
     /**
      * Opens a lock node dialog.
+     *
      * @param contentEntry Node to lock
      * @returns Error/status message (if any)
      */
@@ -95,17 +95,17 @@ export class ContentNodeDialogService {
     /**
      * Opens a file browser at a chosen site location.
      * shows files and folders in the dialog search result.
+     *
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogBySite(): Observable<Node[]> {
-        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
-            return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
-        }));
+        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid)));
     }
 
     /**
      * Opens a file browser at a default myFile location.
      * shows files and folders in the dialog search result.
+     *
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByDefaultLocation(): Observable<Node[]> {
@@ -114,6 +114,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a folder browser at a chosen site location.
+     *
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogBySite(): Observable<Node[]> {
@@ -122,17 +123,17 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a folder browser at a chosen folder location.
+     *
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: NodeEntry) => {
-            return this.openUploadFolderDialog(NodeAction.CHOOSE, node.entry);
-        }));
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: NodeEntry) => this.openUploadFolderDialog(NodeAction.CHOOSE, node.entry)));
     }
 
     /**
      * Opens a dialog to copy or move an item to a new location.
+     *
      * @param action Name of the action (eg, "Copy" or "Move") to show in the title
      * @param contentEntry Item to be copied or moved
      * @param permission Permission for the operation
@@ -153,7 +154,7 @@ export class ContentNodeDialogService {
                 where: '(isFolder=true)',
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
-                select: select
+                select
             };
 
             const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
@@ -168,6 +169,7 @@ export class ContentNodeDialogService {
 
     /**
      * Gets the translation of the dialog title.
+     *
      * @param action Name of the action to display in the dialog title
      * @param name Name of the item on which the action is being performed
      * @returns Translated version of the title
@@ -178,6 +180,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a dialog to choose folders to upload.
+     *
      * @param action Name of the action to show in the title
      * @param contentEntry  Item to upload
      * @returns Information about the chosen folder(s)
@@ -193,7 +196,7 @@ export class ContentNodeDialogService {
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.hasAllowableOperationsOnNodeFolder.bind(this),
             where: '(isFolder=true)',
-            select: select
+            select
         };
 
         const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
@@ -204,6 +207,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
+     *
      * @param action Name of the action to show in the title
      * @param contentEntry Item to upload
      * @param showFilesInResult Show files in dialog search result
@@ -219,7 +223,7 @@ export class ContentNodeDialogService {
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: (entry: Node) => entry.isFile,
-            select: select,
+            select,
             showFilesInResult
         };
 

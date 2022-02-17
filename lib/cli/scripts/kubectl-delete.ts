@@ -17,54 +17,15 @@
  * limitations under the License.
  */
 
-import { exec } from './exec';
 import * as program from 'commander';
-import { logger } from './logger';
+import * as kube from './kube-utils';
 
-export interface KubeArgs {
-    username?: string;
-    token?: string;
-    clusterEnv?: string;
-    clusterUrl?: string;
-    label?: string;
-}
-
-function setCluster(args: KubeArgs) {
-    logger.info('Perform set-cluster...');
-    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
-    logger.info(response);
-}
-
-function setCredentials(args: KubeArgs) {
-    logger.info('Perform set-credentials...');
-    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
-    logger.info(response);
-}
-
-function setContext(args: KubeArgs) {
-    logger.info('Perform set-context...');
-    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
-    logger.info(response);
-}
-
-function useContext(args: KubeArgs) {
-    logger.info('Perform use-context...');
-    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
-    logger.info(response);
-}
-
-function deletePod(args: KubeArgs) {
-    logger.info('Perform delete pods...');
-    const response = exec('kubectl', [`delete`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`], {});
-    logger.info(response);
-}
-
-export default function (args: KubeArgs) {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export default function(args: kube.KubeArgs) {
     main(args);
 }
 
-function main(args) {
-
+const main = (args: kube.KubeArgs) => {
     program
         .version('0.1.0')
         .option('--username [type]', 'username')
@@ -81,10 +42,10 @@ function main(args) {
     }
 
     if (args.label !== undefined) {
-        setCluster(args);
-        setCredentials(args);
-        setContext(args);
-        useContext(args);
-        deletePod(args);
+        kube.setCluster(args.clusterEnv, args.clusterUrl);
+        kube.setCredentials(args.username, args.token);
+        kube.setContext(args.clusterEnv, args.username);
+        kube.useContext(args.clusterEnv);
+        kube.deletePod(args);
     }
-}
+};

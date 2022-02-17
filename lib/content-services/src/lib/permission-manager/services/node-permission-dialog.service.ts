@@ -38,6 +38,7 @@ export class NodePermissionDialogService {
 
     /**
      * Opens a dialog to add permissions to a node.
+     *
      * @param node target node
      * @param roles settable roles for the node
      * @param title Dialog title
@@ -52,9 +53,9 @@ export class NodePermissionDialogService {
             });
 
             const data: AddPermissionDialogData = {
-                node: node,
-                title: title,
-                confirm: confirm,
+                node,
+                title,
+                confirm,
                 roles
             };
 
@@ -80,6 +81,7 @@ export class NodePermissionDialogService {
 
     /**
      * Opens a dialog to update permissions for a node.
+     *
      * @param nodeId ID of the target node
      * @param title Dialog title
      * @returns Node with updated permissions
@@ -87,14 +89,10 @@ export class NodePermissionDialogService {
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<Node> {
         return this.nodePermissionService.getNodeWithRoles(nodeId)
             .pipe(
-                switchMap(({node, roles}) => {
-                    return this.openAddPermissionDialog(node, roles, title)
-                        .pipe(
-                            switchMap((selection) => {
-                                return this.nodePermissionService.updateNodePermissions(nodeId, selection);
-                            })
-                        );
-                })
+                switchMap(({node, roles}) => this.openAddPermissionDialog(node, roles, title)
+                    .pipe(
+                        switchMap((selection) => this.nodePermissionService.updateNodePermissions(nodeId, selection))
+                    ))
             );
     }
 }

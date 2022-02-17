@@ -26,7 +26,7 @@ import { DownloadService } from '../services/download.service';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
@@ -59,6 +59,7 @@ export class NodeDownloadDirective {
     /**
      * Downloads multiple selected nodes.
      * Packs result into a .ZIP archive if there is more than one node selected.
+     *
      * @param selection Multiple selected nodes to download
      */
     downloadNodes(selection: NodeEntry | Array<NodeEntry>) {
@@ -80,6 +81,7 @@ export class NodeDownloadDirective {
     /**
      * Downloads a single node.
      * Packs result into a .ZIP archive is the node is a Folder.
+     *
      * @param node Node to download
      */
     downloadNode(node: NodeEntry) {
@@ -95,7 +97,7 @@ export class NodeDownloadDirective {
             }
 
             // Check if there's nodeId for Shared Files
-            if (!entry.isFile && !entry.isFolder && (<any> entry).nodeId) {
+            if (!entry.isFile && !entry.isFolder && (entry as any).nodeId) {
                 this.downloadFile(node);
             }
         }
@@ -108,9 +110,10 @@ export class NodeDownloadDirective {
     private downloadFile(node: NodeEntry) {
         if (node && node.entry) {
             // nodeId for Shared node
-            const id = (<any> node.entry).nodeId || node.entry.id;
+            const id = (node.entry as any).nodeId || node.entry.id;
 
-            let url, fileName;
+            let url;
+            let fileName;
             if (this.version) {
                 url = this.contentApi.getVersionContentUrl(id, this.version.entry.id, true);
                 fileName = this.version.entry.name;

@@ -89,7 +89,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
         if (this.node && this.node.entry) {
             this.displayText$.next(
-                this.makeLibraryTitle(<any> this.node.entry, rows)
+                this.makeLibraryTitle(this.node.entry as any, rows)
             );
             this.displayTooltip$.next(this.makeLibraryTooltip(this.node.entry));
         }
@@ -119,9 +119,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         let isDuplicate = false;
 
         if (entries) {
-            isDuplicate = entries.some((entry: any) => {
-                return entry.id !== id && entry.title === title;
-            });
+            isDuplicate = entries.some((entry: any) => entry.id !== id && entry.title === title);
         }
 
         return isDuplicate ? `${title} (${id})` : `${title}`;

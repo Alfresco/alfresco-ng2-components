@@ -20,10 +20,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class RatePage {
-
     private ratingsCounter = $(`div[id="adf-rating-counter"]`);
-    private coloredStar = async (rateValue: number) => $(`span[id="adf-rate-${rateValue}"] mat-icon`);
-    private greyStar = async (rateValue: number) => $(`mat-icon[id="adf-grey-star-${rateValue}"]`);
 
     async rateComponent(rateValue: number) {
         const unratedStar = await this.coloredStar(rateValue);
@@ -64,4 +61,6 @@ export class RatePage {
         return BrowserActions.getColor(coloredStar);
     }
 
+    private coloredStar = async (rateValue: number) => $(`span[id="adf-rate-${rateValue}"] mat-icon`);
+    private greyStar = async (rateValue: number) => $(`mat-icon[id="adf-grey-star-${rateValue}"]`);
 }

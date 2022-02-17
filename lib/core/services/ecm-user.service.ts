@@ -40,6 +40,7 @@ export class EcmUserService {
 
     /**
      * Gets information about a user identified by their username.
+     *
      * @param userName Target username
      * @returns User information
      */
@@ -52,6 +53,7 @@ export class EcmUserService {
 
     /**
      * Gets information about the user who is currently logged-in.
+     *
      * @returns User information as for getUserInfo
      */
     getCurrentUserInfo() {
@@ -60,6 +62,7 @@ export class EcmUserService {
 
     /**
      * Returns a profile image as a URL.
+     *
      * @param avatarId Target avatar
      * @returns Image URL
      */

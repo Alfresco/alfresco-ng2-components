@@ -28,8 +28,8 @@ export class IndifferentConfigService implements ContentMetadataConfig {
     reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         return Object.keys(propertyGroups)
             .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName],
-                    properties = propertyGroup.properties;
+                const propertyGroup = propertyGroups[groupName];
+                const properties = propertyGroup.properties;
 
                 return Object.assign({}, propertyGroup, {
                     properties: Object.keys(properties).map((propertyName) => properties[propertyName])

@@ -38,7 +38,7 @@ function zipArtifact(output: string) {
     logger.info(response);
 }
 
-export default function () {
+export default function() {
     main();
 }
 

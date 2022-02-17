@@ -33,13 +33,13 @@ import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
-    _reportApi: ReportApi;
+    private _reportApi: ReportApi;
     get reportApi(): ReportApi {
         this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
         return this._reportApi;
     }
 
-    _processDefinitionsApi: ProcessDefinitionsApi;
+    private _processDefinitionsApi: ProcessDefinitionsApi;
     get processDefinitionsApi(): ProcessDefinitionsApi {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;
@@ -71,32 +71,21 @@ export class AnalyticsService {
 
     /**
      * Retrieve Report by name
+     *
      * @param reportName - string - The name of report
      */
     getReportByName(reportName: string): Observable<any> {
         return from(this.reportApi.getReportList())
             .pipe(
-                map((response: any) => {
-                    return response.find((report) => report.name === reportName);
-                }),
+                map((response: any) => response.find((report) => report.name === reportName)),
                 catchError((err) => this.handleError(err))
             );
-    }
-
-    private isReportValid(appId: number, report: ReportParametersModel) {
-        let isValid: boolean = true;
-        if (appId && appId !== 0 && report.name.includes('Process definition overview')) {
-            isValid = false;
-        }
-        return isValid;
     }
 
     getReportParams(reportId: string): Observable<ReportParametersModel> {
         return from(this.reportApi.getReportParams(reportId))
             .pipe(
-                map((res: any) => {
-                    return new ReportParametersModel(res);
-                }),
+                map((res: any) => new ReportParametersModel(res)),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -166,7 +155,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: number): Observable<ParameterValueModel[]> {
-        const options = { 'appDefinitionId': appId };
+        const options = { appDefinitionId: appId };
         return from(this.processDefinitionsApi.getProcessDefinitions(options))
             .pipe(
                 map((res: any) => {
@@ -271,5 +260,13 @@ export class AnalyticsService {
     private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');
+    }
+
+    private isReportValid(appId: number, report: ReportParametersModel) {
+        let isValid: boolean = true;
+        if (appId && appId !== 0 && report.name.includes('Process definition overview')) {
+            isValid = false;
+        }
+        return isValid;
     }
 }

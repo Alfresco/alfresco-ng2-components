@@ -24,17 +24,14 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
 
+const ACTION_SAVE_AS = 'saveAs';
+const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
+
 @Component({
     templateUrl: './community-task-cloud.component.html',
-    styles: [`.adf-cloud-layout-tab-body .mat-tab-body-wrapper {
-        height: 100%;
-      }
-      `]
+    styles: [`.adf-cloud-layout-tab-body .mat-tab-body-wrapper { height: 100%; }`]
 })
 export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
-    public static ACTION_SAVE_AS = 'saveAs';
-    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
-
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
@@ -63,7 +60,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
         private userPreference: UserPreferencesService,
         private appConfig: AppConfigService) {
 
-        const properties = this.appConfig.get<Array<any>>(CommunityTasksCloudDemoComponent.TASK_FILTER_PROPERTY_KEYS);
+        const properties = this.appConfig.get<Array<any>>(TASK_FILTER_PROPERTY_KEYS);
         if (properties) {
             this.taskFilterProperties = properties;
         }
@@ -137,7 +134,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
 
     onTaskFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
-        if (filterAction.actionType === CommunityTasksCloudDemoComponent.ACTION_SAVE_AS) {
+        if (filterAction.actionType === ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/community/tasks/`], { queryParams: filterAction.filter });
         }
     }

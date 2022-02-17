@@ -63,7 +63,7 @@ export const formModelTabs: any = {
               visibilityCondition: null,
               numberOfColumns: 2,
               fields: {
-                '1': [
+                1: [
                   {
                     fieldType: 'AmountFieldRepresentation',
                     id: 'label',
@@ -108,7 +108,7 @@ export const formModelTabs: any = {
                     currency: null
                   }
                 ],
-                '2': [
+                2: [
                   {
                     fieldType: 'FormFieldRepresentation',
                     id: 'label1',
@@ -187,7 +187,7 @@ export const formModelTabs: any = {
               visibilityCondition: null,
               numberOfColumns: 2,
               fields: {
-                '1': [
+                1: [
                   {
                     fieldType: 'FormFieldRepresentation',
                     id: 'label2',
@@ -230,7 +230,7 @@ export const formModelTabs: any = {
                     visibilityCondition: null
                   }
                 ],
-                '2': []
+                2: []
               }
             }
           ],

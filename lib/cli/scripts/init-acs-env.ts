@@ -1,19 +1,18 @@
-/* tslint:disable */
-let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
-let fs = require ('fs');
+const alfrescoApi = require('@alfresco/js-api');
+const program = require('commander');
+const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const { SharedlinksApi, FavoritesApi, NodesApi } = require('@alfresco/js-api');
-let MAX_RETRY = 10;
+const MAX_RETRY = 10;
 let counter = 0;
-let TIMEOUT = 6000;
+const TIMEOUT = 6000;
 const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
-/* tslint:enable */
 
 let alfrescoJsApi;
 
-export default async function () {
+export default async function() {
     await main();
 }
 
@@ -120,7 +119,7 @@ async function lockFile(nodeId) {
 
 async function shareFile(nodeId) {
     const data = {
-        nodeId: nodeId
+        nodeId
     };
     try {
         await new SharedlinksApi(alfrescoJsApi).createSharedLink(data);
@@ -179,7 +178,7 @@ async function checkEnv() {
     }
 }
 
-/* tslint:enable */
+/* eslint-enable */
 
 function sleep(delay) {
     const start = new Date().getTime();

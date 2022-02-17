@@ -31,7 +31,7 @@ describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService = jasmine.createSpyObj({ 'loadFolderByNodeId': of(''), 'isCustomSourceService': false });
+    let documentListService: DocumentListService = jasmine.createSpyObj({ loadFolderByNodeId: of(''), isCustomSourceService: false });
 
     setupTestBed({
         imports: [
@@ -53,22 +53,22 @@ describe('DropdownBreadcrumb', () => {
         fixture.destroy();
     });
 
-    function openSelect() {
+    const openSelect = () => {
         const folderIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
         folderIcon.click();
         fixture.detectChanges();
-    }
+    };
 
-    function triggerComponentChange(fakeNodeData) {
+    const triggerComponentChange = (fakeNodeData) => {
         component.folderNode = fakeNodeData;
         component.ngOnChanges();
         fixture.detectChanges();
-    }
+    };
 
-    function clickOnTheFirstOption() {
+    const clickOnTheFirstOption = () => {
         const option: any = document.querySelector('[id^="mat-option"]');
         option.click();
-    }
+    };
 
     it('should display only the current folder name if there is no previous folders', (done) => {
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));

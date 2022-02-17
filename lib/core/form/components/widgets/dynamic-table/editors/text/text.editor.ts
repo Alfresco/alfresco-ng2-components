@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
@@ -45,7 +45,7 @@ export class TextEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        const value: any = (<HTMLInputElement> event.target).value;
+        const value: any = event.target.value;
         row.value[column.id] = value;
     }
 

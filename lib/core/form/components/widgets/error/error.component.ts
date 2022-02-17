@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';

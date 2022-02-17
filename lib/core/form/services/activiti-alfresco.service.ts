@@ -72,6 +72,7 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of all the repositories configured
+     *
      * @param tenantId
      * @param includeAccount
      */

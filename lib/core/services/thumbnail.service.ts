@@ -22,13 +22,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { ContentApi, NodeEntry } from '@alfresco/js-api';
 
+const DEFAULT_ICON = './assets/images/ft_ic_miscellaneous.svg';
+
 @Injectable({
     providedIn: 'root'
 })
 export class ThumbnailService {
-
-    DEFAULT_ICON: string = './assets/images/ft_ic_miscellaneous.svg';
-
     mimeTypeIcons: any = {
         'image/png': './assets/images/ft_ic_raster_image.svg',
         'image/jpeg': './assets/images/ft_ic_raster_image.svg',
@@ -150,18 +149,18 @@ export class ThumbnailService {
         'application/vnd.visio': './assets/images/ft_ic_document.svg',
         'application/wordperfect': './assets/images/ft_ic_document.svg',
         'application/x-cpio': './assets/images/ft_ic_document.svg',
-        'folder': './assets/images/ft_ic_folder.svg',
-        'smartFolder': './assets/images/ft_ic_smart_folder.svg',
-        'ruleFolder': './assets/images/ft_ic_folder_rule.svg',
-        'linkFolder': './assets/images/ft_ic_folder_shortcut_link.svg',
+        folder: './assets/images/ft_ic_folder.svg',
+        smartFolder: './assets/images/ft_ic_smart_folder.svg',
+        ruleFolder: './assets/images/ft_ic_folder_rule.svg',
+        linkFolder: './assets/images/ft_ic_folder_shortcut_link.svg',
         'disable/folder': './assets/images/ft_ic_folder_disable.svg',
-        'selected': './assets/images/ft_ic_selected.svg',
+        selected: './assets/images/ft_ic_selected.svg',
         'dynamic-feed': './assets/images/dynamic_feed-24px.svg',
         'ic-process': './assets/images/ic-process.svg',
-        'filter': './assets/images/ft_ic_filter.svg',
+        filter: './assets/images/ft_ic_filter.svg',
         'save-as': './assets/images/save-as.svg',
-        'save': './assets/images/save.svg',
-        'task': './assets/images/task.svg'
+        save: './assets/images/save.svg',
+        task: './assets/images/task.svg'
     };
 
     _contentApi: ContentApi;
@@ -181,6 +180,7 @@ export class ThumbnailService {
 
     /**
      * Gets a thumbnail URL for the given document node.
+     *
      * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
@@ -201,24 +201,26 @@ export class ThumbnailService {
             resultUrl = this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
         }
 
-        return resultUrl || this.DEFAULT_ICON;
+        return resultUrl || DEFAULT_ICON;
     }
 
     /**
      * Gets a thumbnail URL for a MIME type.
+     *
      * @param mimeType MIME type for the thumbnail
      * @returns URL string
      */
     public getMimeTypeIcon(mimeType: string): string {
         const icon = this.mimeTypeIcons[mimeType];
-        return (icon || this.DEFAULT_ICON);
+        return (icon || DEFAULT_ICON);
     }
 
     /**
      * Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
+     *
      * @returns URL string
      */
     public getDefaultMimeTypeIcon(): string {
-        return this.DEFAULT_ICON;
+        return DEFAULT_ICON;
     }
 }

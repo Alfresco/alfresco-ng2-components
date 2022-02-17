@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -42,7 +42,7 @@ const templateTypes = {
     styleUrls: ['./card-view-textitem.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
+export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
 
     @Input()
     editable: boolean = false;
@@ -92,7 +92,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.setTemplateType();
 
         if (changes.editable) {
-            this.isEditable ? this.textInput.enable() : this.textInput.disable();
+            if (this.isEditable) {
+                this.textInput.enable();
+            } else {
+                this.textInput.disable();
+            }
         }
     }
 
@@ -128,7 +132,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     update(): void {
         if (this.property.isValid(this.editedValue)) {
             this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
-            this.cardViewUpdateService.update(<CardViewTextItemModel> { ...this.property }, this.property.value);
+            this.cardViewUpdateService.update({ ...this.property } as CardViewTextItemModel, this.property.value);
             this.resetErrorMessages();
         } else {
             this.errors = this.property.getValidationErrors(this.editedValue);

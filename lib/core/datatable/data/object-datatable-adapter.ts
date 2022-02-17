@@ -44,7 +44,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                     if (rowToExaminate.hasOwnProperty(key)) {
                         schema.push({
                             type: 'text',
-                            key: key,
+                            key,
                             title: key,
                             sortable: false
                         });
@@ -61,15 +61,11 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = [];
 
         if (data && data.length > 0) {
-            this._rows = data.map((item) => {
-                return new ObjectDataRow(item);
-            });
+            this._rows = data.map((item) => new ObjectDataRow(item));
         }
 
         if (schema && schema.length > 0) {
-            this._columns = schema.map((item) => {
-                return new ObjectDataColumn(item);
-            });
+            this._columns = schema.map((item) => new ObjectDataColumn(item));
 
             // Sort by first sortable or just first column
             const sortable = this._columns.filter((column) => column.sortable);
@@ -99,7 +95,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn, resolver?: (row: DataRow, col: DataColumn) => any ): any {
+    getValue(row: DataRow, col: DataColumn, resolver?: (_row: DataRow, _col: DataColumn) => any ): any {
         if (!row) {
             throw new Error('Row not found');
         }

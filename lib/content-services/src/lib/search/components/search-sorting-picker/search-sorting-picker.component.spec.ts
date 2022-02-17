@@ -41,16 +41,16 @@ describe('SearchSortingPickerComponent', () => {
         const config: SearchConfiguration = {
             sorting: {
                 options: [
-                    <any> { 'key': 'name', 'label': 'Name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': true },
-                    <any> { 'key': 'content.sizeInBytes', 'label': 'Size', 'type': 'FIELD', 'field': 'content.size', 'ascending': true },
-                    <any> { 'key': 'description', 'label': 'Description', 'type': 'FIELD', 'field': 'cm:description', 'ascending': true }
+                    { key: 'name', label: 'Name', type: 'FIELD', field: 'cm:name', ascending: true },
+                    { key: 'content.sizeInBytes', label: 'Size', type: 'FIELD', field: 'content.size', ascending: true },
+                    { key: 'description', label: 'Description', type: 'FIELD', field: 'cm:description', ascending: true }
                 ],
                 defaults: [
-                    <any> { 'key': 'name', 'type': 'FIELD', 'field': 'cm:name', 'ascending': false }
+                    { key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any
                 ]
             },
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);

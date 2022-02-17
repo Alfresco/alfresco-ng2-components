@@ -37,10 +37,10 @@ describe('DropdownWidgetComponent', () => {
     let fixture: ComponentFixture<DropdownWidgetComponent>;
     let element: HTMLElement;
 
-    function openSelect() {
+    const openSelect = () => {
         const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
         dropdown.click();
-    }
+    };
 
     const fakeOptionList: FormFieldOption[] = [
         { id: 'opt_1', name: 'option_1' },
@@ -80,7 +80,7 @@ describe('DropdownWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -99,16 +99,14 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should preserve empty option when loading fields', () => {
-        const restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next([restFieldValue]);
-                observer.complete();
-            });
-        });
+        const restFieldValue: FormFieldOption = { id: '1', name: 'Option1' } as FormFieldOption;
+        spyOn(formService, 'getRestFieldValues').and.callFake(() => new Observable((observer) => {
+            observer.next([restFieldValue]);
+            observer.complete();
+        }));
 
         const form = new FormModel({ taskId: '<id>' });
-        const emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
+        const emptyOption: FormFieldOption = { id: 'empty', name: 'Empty' } as FormFieldOption;
         widget.field = new FormFieldModel(form, {
             id: '<id>',
             restUrl: '/some/url/address',
@@ -167,9 +165,7 @@ describe('DropdownWidgetComponent', () => {
 
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-                    return of(fakeOptionList);
-                });
+                spyOn(formService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -230,9 +226,7 @@ describe('DropdownWidgetComponent', () => {
 
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => {
-                    return of(fakeOptionList);
-                });
+                spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -300,7 +294,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                const dropDownElement = element.querySelector<HTMLSelectElement>('#dropdown-id');
                 expect(dropDownElement).not.toBeNull();
                 expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
             });

@@ -41,10 +41,10 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
             include: ['properties', 'aspectNames'],
             paging: {
                 maxItems: maxResults,
-                skipCount: skipCount
+                skipCount
             },
             filterQueries: [
-                /*tslint:disable-next-line */
+                /* eslint-disable-next-line */
                 { query: "TYPE:'cm:authority'" }]
         };
 

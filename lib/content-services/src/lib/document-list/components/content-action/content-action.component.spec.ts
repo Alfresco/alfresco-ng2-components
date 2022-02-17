@@ -94,16 +94,14 @@ describe('ContentAction', () => {
 
         action.visible = false;
         action.ngOnChanges({
-            'visible': new SimpleChange(true, false, false)
+            visible: new SimpleChange(true, false, false)
         });
 
         expect(action.documentActionModel.visible).toBeFalsy();
     });
 
     it('should get action handler from document actions service', () => {
-
-        const handler = function () {
-        };
+        const handler = () => {};
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
         const action = new ContentActionComponent(actionList, documentActions, null);
@@ -119,8 +117,7 @@ describe('ContentAction', () => {
     });
 
     it('should get action handler from folder actions service', () => {
-        const handler = function () {
-        };
+        const handler = () => {};
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
         const action = new ContentActionComponent(actionList, null, folderActions);

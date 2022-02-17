@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-console */
+/* eslint-disable no-console */
 
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';

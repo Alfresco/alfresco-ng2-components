@@ -1,9 +1,9 @@
-/* tslint:disable */
+/* eslint-disable */
 const alfrescoApi = require('@alfresco/js-api');
 const program = require('commander');
 const path = require('path');
 const fs = require('fs');
-/* tslint:enable */
+/* eslint-enable */
 import { logger } from './logger';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
@@ -70,19 +70,19 @@ async function checkDiskSpaceFullEnv() {
 
         try {
             folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': `try-env`,
-                'relativePath': `Builds`,
-                'nodeType': 'cm:folder'
+                name: `try-env`,
+                relativePath: `Builds`,
+                nodeType: 'cm:folder'
             }, {}, {
-                'overwrite': true
+                overwrite: true
             });
 
         } catch (error) {
             folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/try-env`,
-                'nodeType': 'cm:folder'
+                relativePath: `Builds/try-env`,
+                nodeType: 'cm:folder'
             }, {}, {
-                'overwrite': true
+                overwrite: true
             });
         }
         const pathFile = path.join(__dirname, '../', 'README.md');
@@ -95,9 +95,9 @@ async function checkDiskSpaceFullEnv() {
             folder.entry.id,
             null,
             {
-                'name': 'README.md',
-                'nodeType': 'cm:content',
-                'autoRename': true
+                name: 'README.md',
+                nodeType: 'cm:content',
+                autoRename: true
             }
         );
 

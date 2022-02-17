@@ -84,7 +84,7 @@ describe('Content Type Dialog Component', () => {
     let data: ContentTypeDialogComponentData;
 
     beforeEach(async () => {
-        data = <ContentTypeDialogComponentData> {
+        data = {
             title: 'Title',
             description: 'Description that can be longer or shorter',
             nodeType: 'fk:fakeNode',

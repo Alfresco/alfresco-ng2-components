@@ -69,7 +69,7 @@ describe('NodeRestoreDirective', () => {
         }));
 
         translationService = TestBed.inject(TranslationService);
-        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
+        spyOn(translationService, 'instant').and.callFake((key) => key);
     });
 
     it('should not restore when selection is empty', () => {
@@ -238,9 +238,7 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            restoreNodeSpy.and.callFake(() => {
-                return Promise.resolve();
-            });
+            restoreNodeSpy.and.callFake(() => Promise.resolve());
 
             component.selection = [
                 { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } },

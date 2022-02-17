@@ -39,12 +39,12 @@ describe('ContentWidgetComponent', () => {
     let processContentService: ProcessContentService;
     let serviceContent: ContentService;
 
-    function createFakeImageBlob() {
+    const createFakeImageBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
         return new Blob([data], { type: 'image/png' });
-    }
+    };
 
-    function createFakePdfBlob(): Blob {
+    const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
@@ -60,7 +60,7 @@ describe('ContentWidgetComponent', () => {
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
         return new Blob([pdfData], { type: 'application/pdf' });
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -118,7 +118,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ 'id': change });
+            component.ngOnChanges({ id: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -129,7 +129,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
+                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -161,7 +161,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ 'id': change });
+            component.ngOnChanges({ id: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -172,7 +172,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
+                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -189,7 +189,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ 'id': change });
+            component.ngOnChanges({ id: change });
 
             component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
+                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: false,
@@ -235,7 +235,7 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
+                    firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,
@@ -271,7 +271,7 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
+                    firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
-/* tslint:disable:rxjs-no-subject-value */
+/* eslint-disable @angular-eslint/no-input-rename */
+/* eslint-disable rxjs/no-subject-value */
 
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
@@ -34,7 +34,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-infinite-pagination',
-    host: { 'class': 'infinite-adf-pagination' },
+    host: { class: 'infinite-adf-pagination' },
     templateUrl: './infinite-pagination.component.html',
     styleUrls: ['./infinite-pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -118,7 +118,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
         if (this._target) {
             this.isLoading = true;
-            this._target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
+            this._target.updatePagination(this.requestPaginationModel);
         }
     }
 

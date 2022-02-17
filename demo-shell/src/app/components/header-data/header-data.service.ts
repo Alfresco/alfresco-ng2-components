@@ -21,7 +21,7 @@ import { ThemePalette } from '@angular/material/core';
 @Injectable({
     providedIn: 'root'
 })
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class HeaderDataService {
 
     show = true;

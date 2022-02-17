@@ -47,9 +47,9 @@ describe('JsonCellComponent', () => {
         rowData = {
             name: '1',
             entity: {
-                'name': 'test',
-                'description': 'this is a test',
-                'version': 1
+                name: 'test',
+                description: 'this is a test',
+                version: 1
             }
         };
 

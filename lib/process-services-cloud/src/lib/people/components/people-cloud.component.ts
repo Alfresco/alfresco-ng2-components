@@ -264,16 +264,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
         return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
-            filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
-            map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
+            map((hasRole: boolean) => ({ hasRole, user })),
+            filter((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.hasRole),
+            map((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.user));
     }
 
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
-            const result = this.selectedUsers.find((selectedUser) => {
-                return this.compare(selectedUser, searchUser);
-            });
+            const result = this.selectedUsers.find((selectedUser) => this.compare(selectedUser, searchUser));
 
             return !!result;
         }
@@ -442,11 +440,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
-        const indexToRemove = this.selectedUsers.findIndex(user => {
-            return user.id === id
+        const indexToRemove = this.selectedUsers.findIndex(user => user.id === id
                 && user.username === username
-                && user.email === email;
-        });
+                && user.email === email);
 
         if (indexToRemove !== -1) {
             this.selectedUsers.splice(indexToRemove, 1);
@@ -454,11 +450,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private removeUserFromValidation({ id, username, email }: IdentityUserModel): void {
-        const indexToRemove = this.invalidUsers.findIndex(user => {
-            return user.id === id
+        const indexToRemove = this.invalidUsers.findIndex(user => user.id === id
                 && user.username === username
-                && user.email === email;
-        });
+                && user.email === email);
 
         if (indexToRemove !== -1) {
             this.invalidUsers.splice(indexToRemove, 1);

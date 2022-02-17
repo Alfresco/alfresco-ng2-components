@@ -59,34 +59,34 @@ describe('AuditService', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'list': {
-                    'pagination': {
-                        'count': 3,
-                        'hasMoreItems': false,
-                        'totalItems': 3,
-                        'skipCount': 0,
-                        'maxItems': 100
+                list: {
+                    pagination: {
+                        count: 3,
+                        hasMoreItems: false,
+                        totalItems: 3,
+                        skipCount: 0,
+                        maxItems: 100
                     },
-                    'entries': [
+                    entries: [
                         {
-                            'entry': {
-                                'isEnabled': true,
-                                'name': 'Alfresco Tagging Service',
-                                'id': 'tagging'
+                            entry: {
+                                isEnabled: true,
+                                name: 'Alfresco Tagging Service',
+                                id: 'tagging'
                             }
                         },
                         {
-                            'entry': {
-                                'isEnabled': true,
-                                'name': 'ShareSiteAccess',
-                                'id': 'share-site-access'
+                            entry: {
+                                isEnabled: true,
+                                name: 'ShareSiteAccess',
+                                id: 'share-site-access'
                             }
                         },
                         {
-                            'entry': {
-                                'isEnabled': true,
-                                'name': 'alfresco-access',
-                                'id': 'alfresco-access'
+                            entry: {
+                                isEnabled: true,
+                                name: 'alfresco-access',
+                                id: 'alfresco-access'
                             }
                         }
                     ]
@@ -106,10 +106,10 @@ describe('AuditService', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'entry': {
-                    'id': 'alfresco-access',
-                    'name': 'alfresco-access',
-                    'isEnabled': true
+                entry: {
+                    id: 'alfresco-access',
+                    name: 'alfresco-access',
+                    isEnabled: true
                 }
             }
         });
@@ -125,49 +125,49 @@ describe('AuditService', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'list': {
-                    'pagination': {
-                        'count': 3,
-                        'hasMoreItems': false,
-                        'totalItems': 3,
-                        'skipCount': 0,
-                        'maxItems': 100
+                list: {
+                    pagination: {
+                        count: 3,
+                        hasMoreItems: false,
+                        totalItems: 3,
+                        skipCount: 0,
+                        maxItems: 100
                     },
-                    'entries': [
+                    entries: [
                         {
-                            'entry': {
-                                'id': '1',
-                                'auditApplicationId': 'alfresco-access',
-                                'createdByUser': {
-                                    'displayName': 'admin',
-                                    'id': 'admin'
+                            entry: {
+                                id: '1',
+                                auditApplicationId: 'alfresco-access',
+                                createdByUser: {
+                                    displayName: 'admin',
+                                    id: 'admin'
                                 },
-                                'createdAt': '2020-08-11T13:11:59.141Z',
-                                'values': {}
+                                createdAt: '2020-08-11T13:11:59.141Z',
+                                values: {}
                             }
                         },
                         {
-                            'entry': {
-                                'id': '2',
-                                'auditApplicationId': 'alfresco-access',
-                                'createdByUser': {
-                                    'displayName': 'admin',
-                                    'id': 'admin'
+                            entry: {
+                                id: '2',
+                                auditApplicationId: 'alfresco-access',
+                                createdByUser: {
+                                    displayName: 'admin',
+                                    id: 'admin'
                                 },
-                                'createdAt': '2020-08-11T13:11:59.141Z',
-                                'values': {}
+                                createdAt: '2020-08-11T13:11:59.141Z',
+                                values: {}
                             }
                         },
                         {
-                            'entry': {
-                                'id': '3',
-                                'auditApplicationId': 'alfresco-access',
-                                'createdByUser': {
-                                    'displayName': 'admin',
-                                    'id': 'admin'
+                            entry: {
+                                id: '3',
+                                auditApplicationId: 'alfresco-access',
+                                createdByUser: {
+                                    displayName: 'admin',
+                                    id: 'admin'
                                 },
-                                'createdAt': '2020-08-11T13:11:59.141Z',
-                                'values': {}
+                                createdAt: '2020-08-11T13:11:59.141Z',
+                                values: {}
                             }
                         }
                     ]
@@ -187,15 +187,15 @@ describe('AuditService', () => {
             status: 200,
             contentType: 'json',
             responseText: {
-                'entry': {
-                    'id': '1',
-                    'auditApplicationId': 'alfresco-access',
-                    'createdByUser': {
-                        'displayName': 'admin',
-                        'id': 'admin'
+                entry: {
+                    id: '1',
+                    auditApplicationId: 'alfresco-access',
+                    createdByUser: {
+                        displayName: 'admin',
+                        id: 'admin'
                     },
-                    'createdAt': '2020-08-11T13:11:59.148Z',
-                    'values': {}
+                    createdAt: '2020-08-11T13:11:59.148Z',
+                    values: {}
                 }
             }
         });

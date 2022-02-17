@@ -20,10 +20,10 @@ import { ApiService } from '../../../shared/api/api.service';
 import { Logger } from '../utils/logger';
 import { browser } from 'protractor';
 
-export function createApiService(
+export const createApiService = (
     /** @deprecated */
     appConfigOverride: Partial<AlfrescoApiConfig> = {}
-) {
+) => {
     const patchedAppConfig = {
         ...browser.params.testConfig.appConfig,
         oauth2: {
@@ -44,4 +44,4 @@ export function createApiService(
         },
         Logger
     );
-}
+};

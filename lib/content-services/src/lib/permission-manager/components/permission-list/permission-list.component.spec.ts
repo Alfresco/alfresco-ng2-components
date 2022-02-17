@@ -114,7 +114,7 @@ describe('PermissionListComponent', () => {
     });
 
     describe('Inherited Permission', () => {
-        it('should show inherited details',  async() => {
+        it('should show inherited details',  async () => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
             component.ngOnInit();
 
@@ -191,7 +191,7 @@ describe('PermissionListComponent', () => {
             getNodeSpy.and.returnValue(of(fakeLocalPermission));
         });
 
-        it('should show locally set permissions',  async() => {
+        it('should show locally set permissions',  async () => {
             searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
             component.ngOnInit();
 
@@ -202,7 +202,7 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
         });
 
-        it('should see the settable roles if the node is not in any site', async() => {
+        it('should see the settable roles if the node is not in any site', async () => {
             searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
             component.ngOnInit();
 
@@ -225,7 +225,7 @@ describe('PermissionListComponent', () => {
             expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
         });
 
-        it('should show readonly member for site manager to toggle the inherit permission', async() => {
+        it('should show readonly member for site manager to toggle the inherit permission', async () => {
             getNodeSpy.and.returnValue(of(fakeNodeLocalSiteManager));
             component.ngOnInit();
 

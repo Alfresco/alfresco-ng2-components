@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let mockToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ' +
+export const mockToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ' +
     'zdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZmFtaWx5X25hbWUiOiJEb2UiLCJnaXZ' +
     'lbl9uYW1lIjoiSm9obiIsImFkbWluIjp0cnVlLCJlbWFpbCI6ImpvaG5Eb2VAZ21haWwuY29tIiwicHJ' +
     'lZmVycmVkX3VzZXJuYW1lIjoiam9obkRvZTEiLCJqdGkiOiI2MmQ3YjA4NS1hNTJjLTRjZmEtYjA2Zi1' +

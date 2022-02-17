@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -62,7 +62,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {

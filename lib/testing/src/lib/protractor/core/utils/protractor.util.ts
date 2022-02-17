@@ -19,14 +19,12 @@ import { ElementFinder, browser } from 'protractor';
 
 /**
  * Tagged template to convert a sting to an `ElementFinder`.
+ *
  * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
  * @example ```const item = byCss`${variable}`;```
  * @returns Instance of `ElementFinder` type.
  */
-export function byCss(
-    literals: TemplateStringsArray,
-    ...placeholders: string[]
-): ElementFinder {
+export const byCss = (literals: TemplateStringsArray, ...placeholders: string[]): ElementFinder => {
     const selector = literals[0] || placeholders[0];
     return browser.$(selector);
-}
+};

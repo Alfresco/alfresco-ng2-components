@@ -34,35 +34,35 @@ describe('TreeViewComponent', () => {
     let component: any;
 
     const fakeNodeList: TreeBaseNode[] = [
-        <TreeBaseNode> {
+        {
             nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
-            node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } }
+            node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } } as any
         }
     ];
 
     const fakeChildrenList: TreeBaseNode[] = [
-        <TreeBaseNode>  { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} },
-        <TreeBaseNode>  { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} }
+        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} as any },
+        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} as any }
     ];
 
     const fakeNextChildrenList: TreeBaseNode[] = [
-        <TreeBaseNode> {
+        {
             nodeId: 'fake-next-child-id',
             name: 'fake-next-child-name',
             level: 0,
             expandable: true,
-            node: {}
+            node: {} as any
         },
-        <TreeBaseNode> {
+        {
             nodeId: 'fake-next-second-id',
             name: 'fake-next-second-name',
             level: 0,
             expandable: true,
-            node: {}
+            node: {} as any
         }
     ];
 
-    const returnRootOrChildrenNode = function (nodeId: string) {
+    const returnRootOrChildrenNode = (nodeId: string) => {
         if (nodeId === '9999999') {
             return of(fakeNodeList);
         } else if (nodeId === 'fake-second-id') {
@@ -89,7 +89,7 @@ describe('TreeViewComponent', () => {
             spyOn(treeService, 'getTreeNodes').and.callFake((nodeId) => returnRootOrChildrenNode(nodeId));
             component.nodeId = '9999999';
             const changeNodeId = new SimpleChange(null, '9999999', true);
-            component.ngOnChanges({ 'nodeId': changeNodeId });
+            component.ngOnChanges({ nodeId: changeNodeId });
             fixture.detectChanges();
         });
 
@@ -119,7 +119,7 @@ describe('TreeViewComponent', () => {
         it('should show only the correct subfolders when the nodeId is changed', async () => {
             component.nodeId = 'fake-second-id';
             const changeNodeId = new SimpleChange('9999999', 'fake-second-id', true);
-            component.ngOnChanges({ 'nodeId': changeNodeId });
+            component.ngOnChanges({ nodeId: changeNodeId });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -254,7 +254,7 @@ describe('TreeViewComponent', () => {
                 done();
             });
             const changeNodeId = new SimpleChange(null, 'Poopoovic', true);
-            fixture.componentInstance.ngOnChanges({ 'nodeId': changeNodeId });
+            fixture.componentInstance.ngOnChanges({ nodeId: changeNodeId });
             fixture.detectChanges();
         });
     });

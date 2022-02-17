@@ -32,7 +32,7 @@ export interface ConfirmDialogComponentProps {
     selector: 'adf-confirm-dialog',
     templateUrl: './confirm.dialog.html',
     styleUrls: ['./confirm.dialog.scss'],
-    host: { 'class': 'adf-confirm-dialog' },
+    host: { class: 'adf-confirm-dialog' },
     encapsulation: ViewEncapsulation.None
 })
 export class ConfirmDialogComponent {

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import { Injectable } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { BpmProductVersionModel } from '../models/product-version.model';
@@ -110,8 +109,6 @@ export class DiscoveryApiServiceMock {
     }
 
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        return of({});
+        return of({} as any);
     }
 }
-
-/* tslint:enable */

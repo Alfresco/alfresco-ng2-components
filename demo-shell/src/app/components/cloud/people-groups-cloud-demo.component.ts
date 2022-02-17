@@ -29,16 +29,16 @@ import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
 })
 export class PeopleGroupCloudDemoComponent {
 
-    DEFAULT_FILTER_MODE: string = 'appName';
-    DEFAULT_GROUP_PLACEHOLDER: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
-    DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"id": "1", email": "user@user.com", "firstName":"user", "lastName": "lastName", "username": "user"}]`;
+    defaultFilterMode: string = 'appName';
+    defaultGroupPlaceholder: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
+    defaultPeoplePlaceholder: string = `[{"id": "1", email": "user@user.com", "firstName":"user", "lastName": "lastName", "username": "user"}]`;
 
     peopleMode: ComponentSelectionMode = 'single';
     preSelectUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
-    peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
+    peopleFilterMode: string = this.defaultFilterMode;
     peoplePreselectValidation = false;
     groupPreselectValidation = false;
     peopleReadonly = false;
@@ -49,7 +49,7 @@ export class PeopleGroupCloudDemoComponent {
     invalidGroups: IdentityGroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
-    groupFilterMode: string = this.DEFAULT_FILTER_MODE;
+    groupFilterMode: string = this.defaultFilterMode;
 
     setPeoplePreselectValue(value: string): void {
         this.preSelectUsers = this.getArrayFromString(value);

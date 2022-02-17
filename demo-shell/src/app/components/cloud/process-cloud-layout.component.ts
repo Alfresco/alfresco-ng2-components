@@ -39,7 +39,7 @@ export class ProcessCloudLayoutComponent {
             'custom-something': () => CustomWidgetComponent,
             'custom-boolean': () => CustomWidgetComponent,
             'custom-date': () => CustomWidgetComponent,
-            'custom': () => CustomWidgetComponent
+            custom: () => CustomWidgetComponent
         });
     }
 }

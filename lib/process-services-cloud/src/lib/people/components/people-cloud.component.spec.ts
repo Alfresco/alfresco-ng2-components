@@ -44,9 +44,7 @@ describe('PeopleCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockUsers)
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
@@ -55,8 +53,9 @@ describe('PeopleCloudComponent', () => {
         { id: mockUsers[2].id, username: mockUsers[2].username }
     ];
 
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     function getElement<T = HTMLElement>(selector: string): T {
-        return <T> fixture.nativeElement.querySelector(selector);
+        return fixture.nativeElement.querySelector(selector);
     }
 
     setupTestBed({
@@ -125,10 +124,10 @@ describe('PeopleCloudComponent', () => {
         it('should not be able to search for a user that his username matches one of the preselected users username', (done) => {
             component.preSelectUsers = [{ username: mockUsers[0].username }];
             const changes = new SimpleChange(null, [{ username: mockUsers[0].username }], false);
-            component.ngOnChanges({ 'preSelectUsers': changes });
+            component.ngOnChanges({ preSelectUsers: changes });
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -145,10 +144,10 @@ describe('PeopleCloudComponent', () => {
         it('should not be able to search for a user that his id matches one of the preselected users id', (done) => {
             component.preSelectUsers = [{ id: mockUsers[0].id }];
             const changes = new SimpleChange(null, [{ id: mockUsers[0].id }], false);
-            component.ngOnChanges({ 'preSelectUsers': changes });
+            component.ngOnChanges({ preSelectUsers: changes });
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -165,10 +164,10 @@ describe('PeopleCloudComponent', () => {
         it('should not be able to search for a user that his email matches one of the preselected users email', (done) => {
             component.preSelectUsers = [{ email: mockUsers[0].email }];
             const changes = new SimpleChange(null, [{ email: mockUsers[0].email }], false);
-            component.ngOnChanges({ 'preSelectUsers': changes });
+            component.ngOnChanges({ preSelectUsers: changes });
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -186,7 +185,7 @@ describe('PeopleCloudComponent', () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -204,7 +203,7 @@ describe('PeopleCloudComponent', () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -222,7 +221,7 @@ describe('PeopleCloudComponent', () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'first-name';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -350,7 +349,7 @@ describe('PeopleCloudComponent', () => {
             component.appName = 'mock-app-name';
 
             const change = new SimpleChange(null, 'mock-app-name', false);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -592,8 +591,8 @@ describe('PeopleCloudComponent', () => {
 
         beforeEach(() => {
             component.mode = 'single';
-            component.preSelectUsers = <any> mockPreselectedUsers;
-            component.ngOnChanges({ 'preSelectUsers': changes });
+            component.preSelectUsers = mockPreselectedUsers;
+            component.ngOnChanges({ preSelectUsers: changes });
 
             fixture.detectChanges();
             element = fixture.nativeElement;
@@ -620,8 +619,8 @@ describe('PeopleCloudComponent', () => {
 
             const changes = new SimpleChange(null, mockPreselectedUsers, false);
 
-            component.preSelectUsers = <any> mockPreselectedUsers;
-            component.ngOnChanges({ 'preSelectUsers': changes });
+            component.preSelectUsers = mockPreselectedUsers;
+            component.ngOnChanges({ preSelectUsers: changes });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -644,7 +643,7 @@ describe('PeopleCloudComponent', () => {
             ];
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.ngOnChanges({ 'preSelectUsers': change });
+            component.ngOnChanges({ preSelectUsers: change });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -669,7 +668,7 @@ describe('PeopleCloudComponent', () => {
             ];
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.ngOnChanges({ 'preSelectUsers': change });
+            component.ngOnChanges({ preSelectUsers: change });
 
             const removeUserSpy = spyOn(component.removeUser, 'emit');
 
@@ -700,8 +699,8 @@ describe('PeopleCloudComponent', () => {
             it('should chip list be disabled and show one single chip - single mode', () => {
                 component.mode = 'single';
                 component.readOnly = true;
-                component.preSelectUsers = <any> mockPreselectedUsers;
-                component.ngOnChanges({ 'preSelectUsers': change });
+                component.preSelectUsers = mockPreselectedUsers;
+                component.ngOnChanges({ preSelectUsers: change });
 
                 fixture.detectChanges();
 
@@ -717,8 +716,8 @@ describe('PeopleCloudComponent', () => {
             it('should chip list be disabled and show mat chips for all the preselected users - multiple mode', () => {
                 component.mode = 'multiple';
                 component.readOnly = true;
-                component.preSelectUsers = <any> mockPreselectedUsers;
-                component.ngOnChanges({ 'preSelectUsers': change });
+                component.preSelectUsers = mockPreselectedUsers;
+                component.ngOnChanges({ preSelectUsers: change });
 
                 fixture.detectChanges();
 
@@ -751,9 +750,9 @@ describe('PeopleCloudComponent', () => {
 
             component.mode = 'single';
             component.validate = true;
-            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.preSelectUsers = [mockPreselectedUsers[0], mockPreselectedUsers[1]];
             component.ngOnChanges({
-                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+                preSelectUsers: new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
             });
         });
 
@@ -766,9 +765,9 @@ describe('PeopleCloudComponent', () => {
             component.warning.subscribe(() => warnings++);
             component.mode = 'single';
             component.validate = false;
-            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.preSelectUsers = [mockPreselectedUsers[0], mockPreselectedUsers[1]];
             component.ngOnChanges({
-                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+                preSelectUsers: new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
             });
 
             expect(warnings).toBe(0);
@@ -798,9 +797,9 @@ describe('PeopleCloudComponent', () => {
 
             component.mode = 'multiple';
             component.validate = true;
-            component.preSelectUsers = <any> [mockPreselectedUsers[0], mockPreselectedUsers[1]];
+            component.preSelectUsers = [mockPreselectedUsers[0], mockPreselectedUsers[1]];
             component.ngOnChanges({
-                'preSelectUsers': new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+                preSelectUsers: new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
             });
         });
     });

@@ -52,7 +52,7 @@ describe('AboutGithubLinkComponent', () => {
         expect(titleElement.innerText).toEqual('mock-application-name');
     });
 
-    it('should display version', async() => {
+    it('should display version', async () => {
         component.version = aboutGithubDetails.version;
         fixture.detectChanges();
         await fixture.whenStable();
@@ -60,14 +60,14 @@ describe('AboutGithubLinkComponent', () => {
         expect(version.innerText).toEqual('ABOUT.VERSION: 0.0.7');
     });
 
-    it('should display adf github link as default if url is not specified', async() => {
+    it('should display adf github link as default if url is not specified', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
         const githubUrl = fixture.nativeElement.querySelector('[data-automation-id="adf-github-url"]');
         expect(githubUrl.innerText).toEqual(aboutGithubDetails.defualrUrl);
     });
 
-    it('should display the github link', async() => {
+    it('should display the github link', async () => {
         component.url = aboutGithubDetails.url;
         fixture.detectChanges();
         await fixture.whenStable();

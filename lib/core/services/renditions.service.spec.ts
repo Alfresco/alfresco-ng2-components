@@ -52,7 +52,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRenditionsList)
         });
@@ -66,7 +66,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRenditionsListWithACreated)
         });
@@ -79,7 +79,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRenditionsList)
         });
@@ -93,7 +93,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: ''
         });
@@ -118,7 +118,7 @@ describe('RenditionsService', () => {
         );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 403,
+            status: 403,
             contentType: 'application/json',
             responseText: 'error'
         });
@@ -131,7 +131,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRendition)
         });
@@ -144,7 +144,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 403,
+            status: 403,
             contentType: 'application/json'
         });
     });
@@ -156,7 +156,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRenditionCreated)
         });
@@ -169,7 +169,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeRendition)
         });
@@ -182,7 +182,7 @@ describe('RenditionsService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 400,
+            status: 400,
             contentType: 'application/json'
         });
     });

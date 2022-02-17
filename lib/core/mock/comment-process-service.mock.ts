@@ -18,11 +18,11 @@
 import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
 
-export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export let fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
+export const fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
 
-export let fakeTasksComment = {
+export const fakeTasksComment = {
     size: 2, total: 2, start: 0,
     data: [
         {
@@ -34,7 +34,7 @@ export let fakeTasksComment = {
     ]
 };
 
-export let fakeProcessComment = new CommentModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
+export const fakeProcessComment = new CommentModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
     id: 13,
     firstName: 'Wilbur',
     lastName: 'Adams',

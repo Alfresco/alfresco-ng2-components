@@ -73,8 +73,8 @@ export class DataTableComponent {
         { value: 'multiple', viewValue: 'Multiple' }
     ];
 
-    private _imageUrl = 'http://placehold.it/140x100';
-    private _createdBy: any = {
+    private imageUrl = 'http://placehold.it/140x100';
+    private createdBy: any = {
         name: 'Administrator',
         email: 'admin@alfresco.com'
     };
@@ -91,7 +91,7 @@ export class DataTableComponent {
 
         if (col.key === 'status') {
             const users = row.getValue('users');
-            return (value || []).map((status, index) => ({ 'name': `${users[index].firstName} ${users[index].lastName}`, status }));
+            return (value || []).map((status, index) => ({ name: `${users[index].firstName} ${users[index].lastName}`, status }));
         }
 
         return value;
@@ -110,7 +110,7 @@ export class DataTableComponent {
                             Excepteur sint occaecat cupidatat non proident,
                             sunt in culpa qui officia deserunt mollit anim id est laborum.`,
                     createdOn: new Date(2016, 6, 2, 15, 8, 1),
-                    createdBy: this._createdBy,
+                    createdBy: this.createdBy,
                     icon: 'material-icons://folder_open',
                     json: null,
                     users: [
@@ -132,7 +132,7 @@ export class DataTableComponent {
                     id: 2,
                     name: 'Name 2',
                     createdOn: new Date(2016, 6, 2, 15, 8, 2),
-                    createdBy: this._createdBy,
+                    createdBy: this.createdBy,
                     icon: 'material-icons://accessibility',
                     json: null,
                     users: [
@@ -154,7 +154,7 @@ export class DataTableComponent {
                     id: 3,
                     name: 'Name 3',
                     createdOn: new Date(2016, 6, 2, 15, 8, 3),
-                    createdBy: this._createdBy,
+                    createdBy: this.createdBy,
                     icon: 'material-icons://alarm',
                     json: null,
                     users: [
@@ -176,7 +176,7 @@ export class DataTableComponent {
                     id: 4,
                     name: 'Image 8',
                     createdOn: new Date(2016, 6, 2, 15, 8, 4),
-                    createdBy: this._createdBy,
+                    createdBy: this.createdBy,
                     icon: 'material-icons://alarm',
                     json: {
                         id: 4,
@@ -207,7 +207,7 @@ export class DataTableComponent {
                     id: 5,
                     name: 'I am using custom resolver',
                     createdOn: new Date(2016, 6, 2, 15, 8, 4),
-                    createdBy: this._createdBy,
+                    createdBy: this.createdBy,
                     icon: 'material-icons://person_outline',
                     users: [
                         {
@@ -244,11 +244,11 @@ export class DataTableComponent {
     addRow() {
         const id = this.data.getRows().length + 1;
         const row = new ObjectDataRow({
-            id: id,
+            id,
             name: 'Name ' + id,
             createdOn: new Date(),
             icon: 'material-icons://extension',
-            createdBy: this._createdBy
+            createdBy: this.createdBy
         });
         this.data.getRows().push(row);
         this.data.sort();
@@ -259,30 +259,30 @@ export class DataTableComponent {
             {
                 id: 10,
                 name: 'Name 10',
-                createdBy: this._createdBy,
+                createdBy: this.createdBy,
                 createdOn: new Date(2016, 6, 2, 15, 8, 5),
                 icon: 'material-icons://face'
             },
             {
                 id: 11,
                 name: 'Name 11',
-                createdBy: this._createdBy,
+                createdBy: this.createdBy,
                 createdOn: new Date(2016, 6, 2, 15, 8, 6),
                 icon: 'material-icons://language'
             },
             {
                 id: 12,
                 name: 'Name 12',
-                createdBy: this._createdBy,
+                createdBy: this.createdBy,
                 createdOn: new Date(2016, 6, 2, 15, 8, 7),
                 icon: 'material-icons://pets'
             },
             {
                 id: 13,
                 name: 'Image 13',
-                createdBy: this._createdBy,
+                createdBy: this.createdBy,
                 createdOn: new Date(2016, 6, 2, 15, 8, 8),
-                icon: this._imageUrl
+                icon: this.imageUrl
             }
         ];
         const rows = objects.map((obj) => new ObjectDataRow(obj));

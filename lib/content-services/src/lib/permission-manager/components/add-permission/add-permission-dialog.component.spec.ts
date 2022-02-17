@@ -100,7 +100,7 @@ describe('AddPermissionDialog', () => {
         expect(confirmButton.disabled).toBeTruthy();
     });
 
-    it('should enable the button when a selection is done', async() => {
+    it('should enable the button when a selection is done', async () => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
         let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
@@ -244,7 +244,7 @@ describe('AddPermissionDialog', () => {
         confirmButton.click();
     });
 
-    it('should stream the confirmed selection on the confirm subject', async() => {
+    it('should stream the confirmed selection on the confirm subject', async () => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
         data.confirm.subscribe((selection) => {

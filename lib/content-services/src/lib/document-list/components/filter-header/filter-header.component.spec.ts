@@ -36,7 +36,7 @@ describe('FilterHeaderComponent', () => {
         dataLoaded: new Subject()
     };
 
-    const paginationMock = <Pagination> { maxItems: 10, skipCount: 0 };
+    const paginationMock = { maxItems: 10, skipCount: 0 };
 
     const documentListMock = {
         node: 'my-node',

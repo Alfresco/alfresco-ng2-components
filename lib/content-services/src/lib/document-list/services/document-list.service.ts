@@ -27,14 +27,14 @@ import { catchError, map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
 
+const ROOT_ID = '-root-';
+
 @Injectable({
     providedIn: 'root'
 })
 export class DocumentListService implements DocumentListLoader {
 
-    static ROOT_ID = '-root-';
-
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodes(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
@@ -48,6 +48,7 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Deletes a node.
+     *
      * @param nodeId ID of the node to delete
      * @returns Empty response when the operation is complete
      */
@@ -83,13 +84,14 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets the folder node with the specified relative name path below the root node.
+     *
      * @param folder Path to folder.
      * @param opts Options.
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
-        let rootNodeId = DocumentListService.ROOT_ID;
+        let rootNodeId = ROOT_ID;
         if (opts && opts.rootFolderId) {
             rootNodeId = opts.rootFolderId;
         }
@@ -128,6 +130,7 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets a node via its node ID.
+     *
      * @param nodeId ID of the target node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
@@ -146,6 +149,7 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets a folder node via its node ID.
+     *
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
@@ -170,6 +174,7 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Load a folder by Node Id.
+     *
      * @param nodeId ID of the folder node
      * @param pagination
      * @param includeFields List of data field names to include in the results
@@ -193,9 +198,9 @@ export class DocumentListService implements DocumentListLoader {
             this.getFolder(null, {
                 maxItems: pagination.maxItems,
                 skipCount: pagination.skipCount,
-                orderBy: orderBy,
+                orderBy,
                 rootFolderId: nodeId,
-                where: where
+                where
             }, includeFields)]).pipe(
                 map((results) => new DocumentLoaderNode(results[0], results[1]))
             );

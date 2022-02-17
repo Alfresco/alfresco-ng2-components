@@ -28,29 +28,26 @@ import { FormControl, Validators } from '@angular/forms';
 })
 
 export class AttachFormComponent implements OnInit, OnChanges {
-    constructor(private taskService: TaskListService,
-                private logService: LogService,
-                private formService: FormService) { }
 
     /** Id of the task. */
     @Input()
-    taskId;
+    taskId: any;
 
     /** Identifier of the form to attach. */
     @Input()
-    formKey;
+    formKey: any;
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
-    cancelAttachForm: EventEmitter<void> = new EventEmitter<void>();
+    cancelAttachForm = new EventEmitter<void>();
 
     /** Emitted when the form is attached successfully. */
     @Output()
-    success: EventEmitter<void> = new EventEmitter<void>();
+    success = new EventEmitter<void>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     forms: Form[];
 
@@ -59,6 +56,10 @@ export class AttachFormComponent implements OnInit, OnChanges {
     selectedFormId: number;
 
     attachFormControl: FormControl;
+
+    constructor(private taskService: TaskListService,
+        private logService: LogService,
+        private formService: FormService) { }
 
     ngOnInit() {
         this.attachFormControl = new FormControl('', Validators.required);

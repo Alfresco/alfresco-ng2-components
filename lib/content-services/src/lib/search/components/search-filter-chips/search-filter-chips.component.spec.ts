@@ -119,7 +119,7 @@ describe('SearchFilterChipsComponent', () => {
             }
         };
 
-        searchFacetFiltersService.responseFacets = <any> [
+        searchFacetFiltersService.responseFacets = [
             { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
                         { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
@@ -168,7 +168,7 @@ describe('SearchFilterChipsComponent', () => {
             }
         };
 
-        searchFacetFiltersService.responseFacets = <any> [
+        searchFacetFiltersService.responseFacets = [
             { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList( [
                         { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
@@ -271,7 +271,7 @@ describe('SearchFilterChipsComponent', () => {
             inputElement.triggerEventHandler('change', { target: { value: '*' } });
             expect(queryBuilder.update).toHaveBeenCalled();
 
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             await fixture.whenStable();
             fixture.detectChanges();
 
@@ -285,7 +285,7 @@ describe('SearchFilterChipsComponent', () => {
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             fixture.detectChanges();
@@ -356,7 +356,7 @@ describe('SearchFilterChipsComponent', () => {
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             const facetElement = fixture.debugElement.query(By.css(chip));
@@ -368,7 +368,7 @@ describe('SearchFilterChipsComponent', () => {
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
             fixture.detectChanges();
-            queryBuilder.executed.next(<any> mockSearchResult);
+            queryBuilder.executed.next(mockSearchResult);
             fixture.detectChanges();
 
             spyOn(queryBuilder, 'update').and.stub();

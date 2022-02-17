@@ -17,6 +17,7 @@
 
 import { ExtensionElement } from './extension-element';
 
+// eslint-disable-next-line no-shadow
 export enum ContentActionType {
     default = 'default',
     button = 'button',
@@ -36,13 +37,13 @@ export interface ContentActionRef extends ExtensionElement {
     data?: any;
     color?: string;
     actions?: {
-        click?: string;
         [key: string]: string;
+        click?: string;
     };
     rules?: {
+        [key: string]: string;
         enabled?: string;
         visible?: string;
-        [key: string]: string;
     };
 }
 

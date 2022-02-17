@@ -20,7 +20,7 @@ import { Observable, Subject } from 'rxjs';
 import { FilterParamsModel } from '../models/filter-cloud.model';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     /** Display filters available to the current user for the application with the specified name. */
     @Input()

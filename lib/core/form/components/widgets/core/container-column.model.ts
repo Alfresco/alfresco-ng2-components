@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { FormFieldModel } from './form-field.model';
+/* eslint-disable @angular-eslint/component-selector */
 
 export class ContainerColumnModel {
 
     size: number = 12;
-    fields: FormFieldModel[] = [];
+    fields: any[] = [];
     colspan: number = 1;
     rowspan: number = 1;
 

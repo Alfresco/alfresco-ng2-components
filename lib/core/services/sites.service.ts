@@ -40,7 +40,7 @@ import { LogService } from './log.service';
 })
 export class SitesService {
 
-    _sitesApi: SitesApi;
+    private _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
@@ -51,6 +51,7 @@ export class SitesService {
 
     /**
      * Create a site
+     *
      * @param siteBody SiteBodyCreate to create site
      * @returns site SiteEntry
      */
@@ -63,6 +64,7 @@ export class SitesService {
 
     /**
      * Gets a list of all sites in the repository.
+     *
      * @param opts Options supported by JS-API
      * @returns List of sites
      */
@@ -80,11 +82,12 @@ export class SitesService {
 
     /**
      * Gets the details for a site.
+     *
      * @param siteId ID of the target site
      * @param opts Options supported by JS-API
      * @returns Information about the site
      */
-    getSite(siteId: string, opts?: any): Observable<SiteEntry | {}> {
+    getSite(siteId: string, opts?: any): Observable<SiteEntry | any> {
         return from(this.sitesApi.getSite(siteId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -93,6 +96,7 @@ export class SitesService {
 
     /**
      * Deletes a site.
+     *
      * @param siteId Site to delete
      * @param permanentFlag True: deletion is permanent; False: site is moved to the trash
      * @returns Null response notifying when the operation is complete
@@ -108,24 +112,27 @@ export class SitesService {
 
     /**
      * Gets a site's content.
+     *
      * @param siteId ID of the target site
      * @returns Site content
      */
-    getSiteContent(siteId: string): Observable<SiteEntry | {}> {
+    getSiteContent(siteId: string): Observable<SiteEntry | any> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
     /**
      * Gets a list of all a site's members.
+     *
      * @param siteId ID of the target site
      * @returns Site members
      */
-    getSiteMembers(siteId: string): Observable<SiteEntry | {}> {
+    getSiteMembers(siteId: string): Observable<SiteEntry | any> {
         return this.getSite(siteId, { relations: ['members'] });
     }
 
     /**
      * Gets a list of all a site's members.
+     *
      * @param siteId ID of the target site
      * @param opts Optional parameters supported by JS-API
      * @returns Observable<SiteMemberPaging>
@@ -136,6 +143,7 @@ export class SitesService {
 
     /**
      * Gets the username of the user currently logged into ACS.
+     *
      * @returns Username string
      */
     getEcmCurrentLoggedUserName(): string {
@@ -145,6 +153,7 @@ export class SitesService {
     /**
      * Looks for a site inside the path of a Node and returns its guid if it finds one.
      * (return an empty string if no site is found)
+     *
      * @param node Node to look for parent site
      * @returns Site guid
      */
@@ -162,6 +171,7 @@ export class SitesService {
 
     /**
      * Gets a list of site membership requests.
+     *
      * @param opts Options supported by JS-API
      * @returns Site membership requests
      */
@@ -174,6 +184,7 @@ export class SitesService {
 
     /**
      * Creates a site membership for person **personId** on site **siteId**.
+     *
      * @param siteId The identifier of a site
      * @param siteMembershipBodyCreate The person to add and their role
      * @param opts Optional parameters
@@ -188,6 +199,7 @@ export class SitesService {
 
     /**
      * Update a site membership
+     *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @param siteMembershipBodyUpdate The persons new role
@@ -203,6 +215,7 @@ export class SitesService {
 
     /**
      * Delete a site membership
+     *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @return  Null response notifying when the operation is complete
@@ -216,6 +229,7 @@ export class SitesService {
 
     /**
      * Accept site membership requests.
+     *
      * @param siteId The identifier of a site.
      * @param inviteeId The invitee user name.
      * @param opts Options supported by JS-API
@@ -230,6 +244,7 @@ export class SitesService {
 
     /**
      * Reject site membership requests.
+     *
      * @param siteId The identifier of a site.
      * @param inviteeId The invitee user name.
      * @param opts Options supported by JS-API
@@ -244,6 +259,7 @@ export class SitesService {
 
     /**
      * List group membership for site
+     *
      * @param siteId The identifier of a site.
      * @param opts Options supported by JS-API
      * @returns  Observable<SiteGroupPaging>
@@ -257,6 +273,7 @@ export class SitesService {
 
     /**
      * Create a site membership for group
+     *
      * @param siteId The identifier of a site.
      * @param siteMembershipBodyCreate The Group to add and its role
      * @returns Observable<SiteGroupEntry>
@@ -270,6 +287,7 @@ export class SitesService {
 
     /**
      * Get information about site membership of group
+     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @return Observable<SiteGroupEntry>
@@ -283,6 +301,7 @@ export class SitesService {
 
     /**
      * Update site membership of group
+     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @param siteMembershipBodyUpdate The group new role
@@ -297,6 +316,7 @@ export class SitesService {
 
     /**
      * Delete a group membership for site
+     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @return Observable<void>

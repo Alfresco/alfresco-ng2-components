@@ -116,7 +116,7 @@ describe('HighlightDirective', () => {
         const highlighter = TestBed.inject(HighlightTransformService);
         spyOn(highlighter, 'highlight').and.callThrough();
 
-        const callback = function() {
+        const callback = () => {
             component.highlightDirectives.first.highlight('raddish', '');
             fixture.detectChanges();
         };

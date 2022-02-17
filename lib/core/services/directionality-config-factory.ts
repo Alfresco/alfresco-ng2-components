@@ -17,6 +17,7 @@
 
 import { DirectionalityConfigService } from '../services/directionality-config.service';
 
-export function directionalityConfigFactory(
-    directionalityConfigService: DirectionalityConfigService
-): Function { return () => directionalityConfigService; }
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function directionalityConfigFactory(directionalityConfigService: DirectionalityConfigService) {
+    return () => directionalityConfigService;
+}

@@ -45,7 +45,7 @@ export interface FormDefinition {
     tabs: FormTab[];
     fields: Container[] | HeaderRepresentation[];
     outcomes: FormOutcome[];
-    metadata: {};
+    metadata: any;
     variables: any[];
 }
 
@@ -56,7 +56,7 @@ export interface Container {
     name: string;
     numberOfColumns: number;
     fields: {
-        [key: string]: FormFieldRepresentation[]
+        [key: string]: FormFieldRepresentation[];
     };
 }
 
@@ -82,7 +82,7 @@ export interface RestField extends FormField {
 export interface HeaderRepresentation extends Container {
     numberOfColumns: number;
     params: {
-        [key: string]: any
+        [key: string]: any;
     };
     visibilityCondition: VisibilityCondition;
 }
@@ -123,7 +123,7 @@ export interface FormField {
     readOnly?: boolean;
     colspan: number;
     params: {
-        [anyKey: string]: any
+        [anyKey: string]: any;
     };
     visibilityCondition: null | VisibilityCondition;
 }
@@ -200,6 +200,7 @@ export interface TextField extends FormField {
     placeholder: string | null;
 }
 
+// eslint-disable-next-line no-shadow
 export enum PeopleModeOptions {
     single = 'single',
     multiple = 'multiple'
@@ -210,9 +211,11 @@ export interface PeopleField extends FormField {
     optionType: PeopleModeOptions;
 }
 
+// eslint-disable-next-line no-shadow
 export enum FormFieldType {
     text = 'text',
     multiline = 'multi-line-text',
+    // eslint-disable-next-line id-blacklist
     number = 'integer',
     checkbox = 'boolean',
     date = 'date',

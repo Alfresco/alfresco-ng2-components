@@ -29,13 +29,11 @@ export interface ClickNotification {
     target: any;
 }
 
-export function transformKeyToObject(key: string, value): Object {
+export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
 
-    return objectLevels.reduce<{}>((previousValue, currentValue) => {
-        return { [currentValue]: previousValue};
-    }, value);
-}
+    return objectLevels.reduce<any>((previousValue, currentValue) => ({ [currentValue]: previousValue}), value);
+};
 
 @Injectable({
     providedIn: 'root'
@@ -62,6 +60,7 @@ export class CardViewUpdateService {
 
     /**
      * Updates the cardview items property
+     *
      * @param notification
      */
     updateElement(notification: CardViewBaseItemModel) {

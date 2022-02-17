@@ -32,7 +32,6 @@ export class AuthGuardSsoRoleService implements CanActivate {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-        let hasRole;
         let hasRealmRole = false;
         let hasClientRole = true;
 
@@ -51,7 +50,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
             }
         }
 
-        hasRole = hasRealmRole && hasClientRole;
+        const hasRole = hasRealmRole && hasClientRole;
 
         if (!hasRole && route.data && route.data['redirectUrl']) {
             this.router.navigate(['/' + route.data['redirectUrl']]);

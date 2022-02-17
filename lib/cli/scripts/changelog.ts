@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import * as shell from 'shelljs';
 import * as path from 'path';
 import * as program from 'commander';
@@ -56,6 +58,7 @@ interface DiffOptions {
 
 /**
  * Get the remote URL for the cloned git repository
+ *
  * @param workingDir Repository directory
  * @returns URL pointing to the git remote
  */
@@ -68,6 +71,7 @@ function getRemote(workingDir: string): string {
 
 /**
  * Get the list of commits based on the configuration options
+ *
  * @param options Logging options
  * @returns Collection of Commit objects
  */
@@ -78,7 +82,7 @@ function getCommits(options: DiffOptions): Array<Commit> {
         .join('\|');
 
     if (!authorFilter) {
-        authorFilter = "bot\|Alfresco Build User";
+        authorFilter = `bot\|Alfresco Build User`;
     }
 
 

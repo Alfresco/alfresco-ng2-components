@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let subProcess = {
+export const subProcess = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'SubProcess',
     width: 300,
@@ -25,7 +25,7 @@ export let subProcess = {
     properties: [{}]
 };
 
-export let subProcessActive = {
+export const subProcessActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -37,7 +37,7 @@ export let subProcessActive = {
     properties: [{}]
 };
 
-export let subProcessCompleted = {
+export const subProcessCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -49,7 +49,7 @@ export let subProcessCompleted = {
     properties: [{}]
 };
 
-export let eventSubProcess = {
+export const eventSubProcess = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'EventSubProcess',
     width: 300,
@@ -59,7 +59,7 @@ export let eventSubProcess = {
     properties: [{}]
 };
 
-export let eventSubProcessActive = {
+export const eventSubProcessActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -71,7 +71,7 @@ export let eventSubProcessActive = {
     properties: [{}]
 };
 
-export let eventSubProcessCompleted = {
+export const eventSubProcessCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

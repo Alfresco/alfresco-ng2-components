@@ -45,7 +45,7 @@ describe('NodeFavoriteDirective', () => {
             spyOn(directive, 'markFavoritesNodes');
 
             const change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             expect(directive.markFavoritesNodes).not.toHaveBeenCalledWith();
         });
@@ -56,7 +56,7 @@ describe('NodeFavoriteDirective', () => {
             let selection = [{ entry: { id: '1', name: 'name1' } }];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             expect(directive.markFavoritesNodes).toHaveBeenCalledWith(selection);
 
@@ -66,7 +66,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             expect(directive.markFavoritesNodes).toHaveBeenCalledWith(selection);
         });
@@ -79,13 +79,13 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.hasFavorites()).toBe(true);
 
             change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.hasFavorites()).toBe(false);
@@ -107,7 +107,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             tick();
             expect(favoritesApiSpy.calls.count()).toBe(2);
@@ -121,7 +121,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             tick();
             expect(directive.favorites.length).toBe(2);
@@ -134,7 +134,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             tick();
             expect(directive.favorites.length).toBe(1);
@@ -148,7 +148,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
 
             tick();
 
@@ -164,7 +164,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.favorites.length).toBe(3);
@@ -188,7 +188,7 @@ describe('NodeFavoriteDirective', () => {
 
         it('should not perform action if favorites collection is empty', fakeAsync(() => {
             const change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             directive.toggleFavorite();
@@ -333,7 +333,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(true);
@@ -348,7 +348,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(true);
@@ -362,7 +362,7 @@ describe('NodeFavoriteDirective', () => {
             ];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({'selection': change});
+            directive.ngOnChanges({selection: change});
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(false);

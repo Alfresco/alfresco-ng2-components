@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+import { ErrorMessageModel } from '../core/error-message.model';
 
-import { ErrorMessageModel } from '../core/index';
+/* eslint-disable @angular-eslint/component-selector */
 
 export class DynamicRowValidationSummary extends ErrorMessageModel {
 

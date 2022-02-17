@@ -26,17 +26,17 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeAction } from '../document-list/models/node-action.enum';
 
-const fakeNodeEntry: NodeEntry = <NodeEntry> {
+const fakeNodeEntry = {
     entry: {
         id: 'fake',
         name: 'fake-name'
     }
-};
+} as NodeEntry;
 
-const fakeNode: Node = <Node>  {
+const fakeNode = {
     id: 'fake',
     name: 'fake-name'
-};
+} as Node;
 
 const fakeSiteList: SitePaging = new SitePaging({
     list: {
@@ -94,10 +94,10 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should not open the lock node dialog if have no permission', () => {
-        const testNode: Node = <Node> {
+        const testNode = {
             id: 'fake',
             isFile: false
-        };
+        } as Node;
 
         service.openLockNodeDialog(testNode).subscribe(() => {
         }, (error) => {
@@ -143,26 +143,26 @@ describe('ContentNodeDialogService', () => {
     }));
 
     describe('for the copy/move dialog', () => {
-        const siteNode: Node = <Node> {
+        const siteNode: Node = {
             id: 'site-node-id',
             nodeType: 'st:site'
-        };
-        const sites: Node = <Node> {
+        } as Node;
+        const sites: Node = {
             id: 'sites-id',
             nodeType: 'st:sites'
-        };
-        const site: Site = <Site> {
+        } as Node;
+        const site: Site = {
             id: 'site-id',
             guid: 'any-guid'
-        };
-        const nodeEntryWithRightPermissions: Node = <Node> {
+        } as Site;
+        const nodeEntryWithRightPermissions: Node = {
             id: 'node-id',
             allowableOperations: ['create']
-        };
-        const nodeEntryNoPermissions: Node = <Node> {
+        } as Node;
+        const nodeEntryNoPermissions: Node = {
             id: 'node-id',
             allowableOperations: []
-        };
+        } as Node;
 
         const siteFixture = [
             {

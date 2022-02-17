@@ -17,7 +17,7 @@
 
 import { RuleContext, RuleParameter } from '../config/rule.extensions';
 
-export function not(context: RuleContext, ...args: RuleParameter[]): boolean {
+export const not = (context: RuleContext, ...args: RuleParameter[]): boolean => {
     if (!args || args.length === 0) {
         return false;
     }
@@ -31,9 +31,9 @@ export function not(context: RuleContext, ...args: RuleParameter[]): boolean {
             }
             return !evaluator(context, ...(arg.parameters || []));
         });
-}
+};
 
-export function every(context: RuleContext, ...args: RuleParameter[]): boolean {
+export const every = (context: RuleContext, ...args: RuleParameter[]): boolean => {
     if (!args || args.length === 0) {
         return false;
     }
@@ -47,9 +47,9 @@ export function every(context: RuleContext, ...args: RuleParameter[]): boolean {
             }
             return evaluator(context, ...(arg.parameters || []));
         });
-}
+};
 
-export function some(context: RuleContext, ...args: RuleParameter[]): boolean {
+export const some = (context: RuleContext, ...args: RuleParameter[]): boolean => {
     if (!args || args.length === 0) {
         return false;
     }
@@ -63,4 +63,4 @@ export function some(context: RuleContext, ...args: RuleParameter[]): boolean {
             }
             return evaluator(context, ...(arg.parameters || []));
         });
-}
+};

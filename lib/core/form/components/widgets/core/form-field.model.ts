@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 import moment from 'moment-es6';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
@@ -23,10 +23,10 @@ import { ErrorMessageModel } from './error-message.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
 import { FormFieldRule } from './form-field-rule';
+import { ProcessFormModel } from './process-form-model.interface';
+import { isNumberValue } from './form-field-utils';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -143,7 +143,7 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
-    constructor(form: FormModel, json?: any) {
+    constructor(form: any, json?: any) {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
@@ -151,30 +151,30 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
-            this._required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
-            this.overrideId = <boolean> json.overrideId;
+            this._required = json.required;
+            this._readOnly = json.readOnly || json.type === 'readonly';
+            this.overrideId = json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
             this.restResponsePath = json.restResponsePath;
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
-            this.colspan = <number> json.colspan;
-            this.rowspan = <number> json.rowspan;
-            this.minLength = <number> json.minLength || 0;
-            this.maxLength = <number> json.maxLength || 0;
+            this.colspan = json.colspan;
+            this.rowspan = json.rowspan;
+            this.minLength = json.minLength || 0;
+            this.maxLength = json.maxLength || 0;
             this.minValue = json.minValue;
             this.maxValue = json.maxValue;
             this.regexPattern = json.regexPattern;
-            this.options = <FormFieldOption[]> json.options || [];
-            this.hasEmptyValue = <boolean> json.hasEmptyValue;
+            this.options = json.options || [];
+            this.hasEmptyValue = json.hasEmptyValue;
             this.className = json.className;
             this.optionType = json.optionType;
-            this.params = <FormFieldMetadata> json.params || {};
+            this.params = json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
-            this.enableFractions = <boolean> json.enableFractions;
+            this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
@@ -247,7 +247,7 @@ export class FormFieldModel extends FormWidgetModel {
         return name + '_LABEL';
     }
 
-    private getProcessVariableValue(field: any, form: FormModel): any {
+    private getProcessVariableValue(field: any, form: ProcessFormModel): any {
         let fieldName = field.name;
         if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
@@ -255,8 +255,8 @@ export class FormFieldModel extends FormWidgetModel {
         return form.getProcessVariableValue(fieldName);
     }
 
-    private containerFactory(json: any, form: FormModel): void {
-        this.numberOfColumns = <number> json.numberOfColumns || 1;
+    private containerFactory(json: any, form: any): void {
+        this.numberOfColumns = json.numberOfColumns || 1;
 
         this.fields = json.fields;
 
@@ -332,7 +332,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
-                if (NumberFieldValidator.isNumber(value)) {
+                if (isNumberValue(value)) {
                     dateValue = moment(value);
                 } else {
                     dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
@@ -453,6 +453,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     /**
      * Skip the invalid field type
+     *
      * @param type
      */
     isInvalidFieldType(type: string) {

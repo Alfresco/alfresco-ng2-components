@@ -48,9 +48,7 @@ describe('AnalyticsReportParametersComponent', () => {
         service = TestBed.inject(AnalyticsService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        spyOn(component, 'isFormValid').and.callFake(() => {
-            return validForm;
-        });
+        spyOn(component, 'isFormValid').and.callFake(() => validForm);
         fixture.detectChanges();
     });
 
@@ -90,7 +88,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -110,7 +108,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -139,7 +137,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -201,7 +199,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -220,7 +218,7 @@ describe('AnalyticsReportParametersComponent', () => {
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
             component.toggleParameters();
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -245,7 +243,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -283,7 +281,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
         });
 
@@ -317,7 +315,7 @@ describe('AnalyticsReportParametersComponent', () => {
             component.appId = appId;
             component.reportId = '1';
             const change = new SimpleChange(null, appId, true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({appId: change});
 
         });
 
@@ -330,7 +328,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -380,7 +378,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
         });
 
@@ -392,7 +390,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             const reportId = 1;
             const change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({reportId: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 404,
@@ -411,7 +409,7 @@ describe('AnalyticsReportParametersComponent', () => {
             beforeEach(async () => {
                 const reportId = 1;
                 const change = new SimpleChange(null, reportId, true);
-                component.ngOnChanges({'reportId': change});
+                component.ngOnChanges({reportId: change});
                 fixture.detectChanges();
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -522,8 +520,8 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should show export and save button when the form became valid', fakeAsync(() => {
                 validForm = false;
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
+                let saveButton = element.querySelector<HTMLButtonElement>('#save-button');
+                let exportButton = element.querySelector<HTMLButtonElement>('#export-button');
                 expect(saveButton).toBeNull();
                 expect(exportButton).toBeNull();
                 validForm = true;
@@ -531,8 +529,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
 
-                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
-                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
+                    saveButton = element.querySelector<HTMLButtonElement>('#save-button');
+                    exportButton = element.querySelector<HTMLButtonElement>('#export-button');
 
                     expect(saveButton).not.toBeNull();
                     expect(saveButton).toBeDefined();

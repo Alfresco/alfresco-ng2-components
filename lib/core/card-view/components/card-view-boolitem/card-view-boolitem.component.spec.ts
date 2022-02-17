@@ -184,7 +184,7 @@ describe('CardViewBoolItemComponent', () => {
             spyOn(cardViewUpdateService, 'update');
             const property = { ... component.property };
 
-            component.changed(<MatCheckboxChange> { checked: true });
+            component.changed({ checked: true } as MatCheckboxChange);
 
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, true);
         });
@@ -192,7 +192,7 @@ describe('CardViewBoolItemComponent', () => {
         it('should update the property value after a changed', async () => {
             component.property.value = true;
 
-            component.changed(<MatCheckboxChange> { checked: false });
+            component.changed({ checked: false } as MatCheckboxChange);
 
             fixture.detectChanges();
             await fixture.whenStable();

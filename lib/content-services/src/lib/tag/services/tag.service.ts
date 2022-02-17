@@ -24,7 +24,7 @@ import { TagBody, TagPaging, TagEntry, TagsApi } from '@alfresco/js-api';
 @Injectable({
     providedIn: 'root'
 })
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class TagService {
 
     _tagsApi: TagsApi;
@@ -43,6 +43,7 @@ export class TagService {
 
     /**
      * Gets a list of tags added to a node.
+     *
      * @param nodeId ID of the target node
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
@@ -54,6 +55,7 @@ export class TagService {
 
     /**
      * Gets a list of all the tags already defined in the repository.
+     *
      * @param opts Options supported by JS-API
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
@@ -64,6 +66,7 @@ export class TagService {
 
     /**
      * Adds a tag to a node.
+     *
      * @param nodeId ID of the target node
      * @param tagName Name of the tag to add
      * @returns TagEntry object (defined in JS-API) with details of the new tag
@@ -85,6 +88,7 @@ export class TagService {
 
     /**
      * Removes a tag from a node.
+     *
      * @param nodeId ID of the target node
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes

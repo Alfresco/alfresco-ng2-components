@@ -20,28 +20,28 @@ import moment from 'moment-es6';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
+const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
+const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
+
 @Pipe({ name: 'processName' })
 export class ProcessNamePipe implements PipeTransform {
-    static DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
-    static PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
-
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
     transform(processNameFormat: string, processInstance?: ProcessInstance): string {
         let processName = processNameFormat;
-        if (processName.match(ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
+        if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
             processName = processName.replace(
-                ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP,
+                DATE_TIME_IDENTIFIER_REG_EXP,
                 this.localizedDatePipe.transform(presentDateTime, 'medium')
             );
         }
 
-        if (processName.match(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+        if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
             const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(
-                ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
+                PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName
             );
         }

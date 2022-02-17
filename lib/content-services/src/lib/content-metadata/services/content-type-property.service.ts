@@ -85,7 +85,7 @@ export class ContentTypePropertiesService {
             value: currentValue,
             key: 'nodeType',
             editable: true,
-            options$: options$,
+            options$,
             displayNoneOption: false
         });
 
@@ -98,7 +98,7 @@ export class ContentTypePropertiesService {
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
-                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
+                return updatedTypes.map((contentType) => ({ key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id }));
             }));
     }
 
@@ -121,7 +121,7 @@ export class ContentTypePropertiesService {
             title: 'CORE.METADATA.CONTENT_TYPE.DIALOG.TITLE',
             description: 'CORE.METADATA.CONTENT_TYPE.DIALOG.DESCRIPTION',
             confirmMessage: 'CORE.METADATA.CONTENT_TYPE.DIALOG.CONFIRM',
-            select: select,
+            select,
             nodeType
         };
 

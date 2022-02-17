@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export const ACTIVITI_CLOUD_APPS = {
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
@@ -271,6 +273,7 @@ export const ACTIVITI_CLOUD_APPS = {
             poolForm: {
                 name: 'pool-usertaskform',
                 widgets: {
+                    // eslint-disable-next-line id-blacklist
                     string: 'Text0rfn8p'
                 }
             },
@@ -297,7 +300,8 @@ export const ACTIVITI_CLOUD_APPS = {
                 attachFileWidget2: 'Attachfile04mfeb',
                 attachFileLocalChildFolder: 'Attachfilelocalchildfolder',
                 attachFileContentServices: 'Attachfilecontentservices',
-                attachFileLocalMultiple: 'Attachfilelocalmultiple'
+                attachFileLocalMultiple: 'Attachfilelocalmultiple',
+                attachFileInvalidPath: 'Attachfileinvalidpath'
             },
             attachSingleMultiple: {
                 name: 'attach-single-multiple',

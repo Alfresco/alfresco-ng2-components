@@ -17,6 +17,7 @@
 
 import { VersionCompatibilityService } from './version-compatibility.service';
 
-export function versionCompatibilityFactory(
-    versionCompatibilityService: VersionCompatibilityService
-): Function { return () => versionCompatibilityService; }
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function versionCompatibilityFactory(versionCompatibilityService: VersionCompatibilityService) {
+    return () => versionCompatibilityService;
+}

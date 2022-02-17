@@ -363,9 +363,7 @@ describe('FormModel', () => {
         });
 
         const field: any = {
-            validate() {
-                return true;
-            }
+            validate: () => true
         };
         form.validateField(field);
 
@@ -409,14 +407,10 @@ describe('FormModel', () => {
 
         spyOn(form, 'getFormFields').and.returnValue([testField]);
 
-        const validator = <FormFieldValidator> {
-            isSupported(): boolean {
-                return true;
-            },
-            validate(): boolean {
-                return true;
-            }
-        };
+        const validator = {
+            isSupported: (): boolean => true,
+            validate: (): boolean => true
+        } as FormFieldValidator;
 
         spyOn(validator, 'validate').and.callThrough();
 
@@ -449,7 +443,7 @@ describe('FormModel', () => {
         const defaultLength = FORM_FIELD_VALIDATORS.length;
 
         expect(form.fieldValidators.length).toBe(defaultLength);
-        form.fieldValidators.push(<any> {});
+        form.fieldValidators.push({} as any);
 
         expect(form.fieldValidators.length).toBe(defaultLength + 1);
         expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
@@ -461,63 +455,63 @@ describe('FormModel', () => {
         beforeEach(() => {
             const variables = [
                 {
-                    'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
-                    'name': 'name1',
-                    'type': 'string',
-                    'value': 'hello'
+                    id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                    name: 'name1',
+                    type: 'string',
+                    value: 'hello'
                 },
                 {
-                    'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
-                    'name': 'name2',
-                    'type': 'date',
-                    'value': '29.09.2019'
+                    id: '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                    name: 'name2',
+                    type: 'date',
+                    value: '29.09.2019'
                 },
                 {
-                    'id': 'booleanVar',
-                    'name': 'bool',
-                    'type': 'boolean',
-                    'value': 'true'
+                    id: 'booleanVar',
+                    name: 'bool',
+                    type: 'boolean',
+                    value: 'true'
                 }
             ];
 
             const processVariables = [
                 {
-                    'serviceName': 'denys-variable-mapping-rb',
-                    'serviceFullName': 'denys-variable-mapping-rb',
-                    'serviceVersion': '',
-                    'appName': 'denys-variable-mapping',
-                    'appVersion': '',
-                    'serviceType': null,
-                    'id': 3,
-                    'type': 'string',
-                    'name': 'variables.name1',
-                    'createTime': 1566989626284,
-                    'lastUpdatedTime': 1566989626284,
-                    'executionId': null,
-                    'value': 'hello',
-                    'markedAsDeleted': false,
-                    'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-                    'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-                    'taskVariable': true
+                    serviceName: 'denys-variable-mapping-rb',
+                    serviceFullName: 'denys-variable-mapping-rb',
+                    serviceVersion: '',
+                    appName: 'denys-variable-mapping',
+                    appVersion: '',
+                    serviceType: null,
+                    id: 3,
+                    type: 'string',
+                    name: 'variables.name1',
+                    createTime: 1566989626284,
+                    lastUpdatedTime: 1566989626284,
+                    executionId: null,
+                    value: 'hello',
+                    markedAsDeleted: false,
+                    processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    taskVariable: true
                 },
                 {
-                    'serviceName': 'denys-variable-mapping-rb',
-                    'serviceFullName': 'denys-variable-mapping-rb',
-                    'serviceVersion': '',
-                    'appName': 'denys-variable-mapping',
-                    'appVersion': '',
-                    'serviceType': null,
-                    'id': 1,
-                    'type': 'boolean',
-                    'name': 'booleanVar',
-                    'createTime': 1566989626283,
-                    'lastUpdatedTime': 1566989626283,
-                    'executionId': null,
-                    'value': 'true',
-                    'markedAsDeleted': false,
-                    'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-                    'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-                    'taskVariable': true
+                    serviceName: 'denys-variable-mapping-rb',
+                    serviceFullName: 'denys-variable-mapping-rb',
+                    serviceVersion: '',
+                    appName: 'denys-variable-mapping',
+                    appVersion: '',
+                    serviceType: null,
+                    id: 1,
+                    type: 'boolean',
+                    name: 'booleanVar',
+                    createTime: 1566989626283,
+                    lastUpdatedTime: 1566989626283,
+                    executionId: null,
+                    value: 'true',
+                    markedAsDeleted: false,
+                    processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    taskVariable: true
                 }
             ];
 
@@ -624,7 +618,7 @@ describe('FormModel', () => {
     });
 
     describe('setNodeIdValueForViewersLinkedToUploadWidget', () => {
-        const fakeNodeWithProperties: Node = <Node> {
+        const fakeNodeWithProperties: Node = {
             id: 'fake-properties',
             name: 'fake-properties-name',
             content: {
@@ -634,7 +628,7 @@ describe('FormModel', () => {
                 'pfx:property_one': 'testValue',
                 'pfx:property_two': true
             }
-        };
+        } as Node;
         let form: FormModel;
 
         it('should set the node id to the viewers linked to the upload widget in the event', () => {

@@ -75,7 +75,7 @@ export class Application {
     async getApplicationsByStatus(status: string): Promise<ResultSetPaging> {
         Logger.info(`[Application] Return application by status: ${status}`);
         return this.requestApiHelper.get<ResultSetPaging>(this.endPoint, {
-            queryParams: { status: status, sort: 'name' }
+            queryParams: { status, sort: 'name' }
         });
     }
 }

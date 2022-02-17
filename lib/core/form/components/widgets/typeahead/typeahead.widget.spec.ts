@@ -47,8 +47,8 @@ describe('TypeaheadWidgetComponent', () => {
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         translationService = TestBed.inject(TranslateService);
-        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
-        spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
+        spyOn(translationService, 'instant').and.callFake((key) => key);
+        spyOn(translationService, 'get').and.callFake((key) => of(key));
 
         formService = new FormService(null, alfrescoApiService, null);
         widget = new TypeaheadWidgetComponent(formService, null);
@@ -61,7 +61,7 @@ describe('TypeaheadWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -82,7 +82,7 @@ describe('TypeaheadWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -99,7 +99,7 @@ describe('TypeaheadWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            taskId: taskId
+            taskId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -121,7 +121,7 @@ describe('TypeaheadWidgetComponent', () => {
         const fieldId = '<field-id>';
 
         const form = new FormModel({
-            processDefinitionId: processDefinitionId
+            processDefinitionId
         });
 
         widget.field = new FormFieldModel(form, {
@@ -297,7 +297,7 @@ describe('TypeaheadWidgetComponent', () => {
 
             it('should show typeahead options', async () => {
                 const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                const typeaheadHTMLElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadHTMLElement = typeaheadElement.nativeElement as HTMLInputElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';
@@ -314,7 +314,7 @@ describe('TypeaheadWidgetComponent', () => {
 
             it('should hide the option when the value is empty', async () => {
                 const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                const typeaheadHTMLElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadHTMLElement = typeaheadElement.nativeElement as HTMLInputElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';

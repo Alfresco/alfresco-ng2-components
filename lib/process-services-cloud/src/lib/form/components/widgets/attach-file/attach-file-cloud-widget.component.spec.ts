@@ -25,7 +25,6 @@ import {
     FormFieldModel,
     FormModel,
     FormFieldTypes,
-    FormFieldMetadata,
     FormService,
     DownloadService,
     AppConfigService,
@@ -84,22 +83,22 @@ describe('AttachFileCloudWidgetComponent', () => {
     let openUploadFileDialogSpy: jasmine.Spy;
     let localizedDataPipe: LocalizedDatePipe;
 
-    function createUploadWidgetField(form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) {
+    const createUploadWidgetField = (form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) => {
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.UPLOAD,
-            value: value,
+            value,
             id: fieldId,
-            readOnly: readOnly,
-            name: name,
+            readOnly,
+            name,
             tooltip: 'attach file widget',
-            params: <FormFieldMetadata> { ...params, multiple: multiple }
+            params: { ...params, multiple }
         });
-    }
+    };
 
-    function clickOnAttachFileWidget(id: string) {
+    const clickOnAttachFileWidget = (id: string) => {
         const attachButton: HTMLButtonElement = element.querySelector(`#${id}`);
         attachButton.click();
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -204,7 +203,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('Upload widget with displayable ContentModel properties', () => {
 
-        it('should display CM Properties if the file contains value', async() => {
+        it('should display CM Properties if the file contains value', async () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], displayableCMParams);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -214,7 +213,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(element.querySelector('#fileProperty-1155-age').textContent).toBe('34');
         });
 
-        it('should display defaultValue if the file does not contain value for respective displayableCMProperties', async() => {
+        it('should display defaultValue if the file does not contain value for respective displayableCMProperties', async () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngResponse], displayableCMParams);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -223,7 +222,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(element.querySelector('#fileProperty-1155-age').textContent).toBe('--');
         });
 
-        it('should not display CM Properties in table if the field does not contain displayableCMProperties', async() => {
+        it('should not display CM Properties in table if the field does not contain displayableCMProperties', async () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], allSourceParams);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -232,7 +231,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(element.querySelector('#fileProperty-1155-age')).toBeNull();
         });
 
-        it('should display date property in converted form based on dataType', async() => {
+        it('should display date property in converted form based on dataType', async () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], displayableCMParams);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -366,7 +365,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             appConfigService.config = Object.assign(appConfigService.config, {
                 'alfresco-deployed-apps': [
                     {
-                      'name': 'fakeapp'
+                      name: 'fakeapp'
                     }
                   ]
             });
@@ -464,10 +463,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const menuButton = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-1155-option-menu'))
-                    .nativeElement
-            );
+            const menuButton = fixture.debugElement.query(By.css('#file-1155-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
 
             fixture.detectChanges();
@@ -498,7 +494,7 @@ describe('AttachFileCloudWidgetComponent', () => {
                 value: []
             });
             widget.field.id = 'attach-file-alfresco';
-            widget.field.params = <FormFieldMetadata> menuTestSourceParam;
+            widget.field.params = menuTestSourceParam;
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -511,16 +507,10 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should remove file when remove is clicked', (done) => {
             fixture.detectChanges();
-            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-option-menu'))
-                    .nativeElement
-            );
+            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
             fixture.detectChanges();
-            const removeOption: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-remove'))
-                    .nativeElement
-            );
+            const removeOption = fixture.debugElement.query(By.css('#file-fake-properties-remove')).nativeElement as HTMLButtonElement;
             removeOption.click();
             fixture.detectChanges();
             fixture.whenRenderingDone().then(() => {
@@ -536,19 +526,11 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-option-menu'))
-                    .nativeElement
-            );
-
+            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
             fixture.detectChanges();
 
-            const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-download-file'))
-                    .nativeElement
-            );
-
+            const downloadOption = fixture.debugElement.query(By.css('#file-fake-properties-download-file')).nativeElement as HTMLButtonElement;
             downloadOption.click();
 
             fixture.detectChanges();
@@ -568,18 +550,10 @@ describe('AttachFileCloudWidgetComponent', () => {
             );
 
             fixture.detectChanges();
-            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(
-                    By.css('#file-fake-properties-option-menu')
-                ).nativeElement
-            );
+            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
             fixture.detectChanges();
-            const showOption: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(
-                    By.css('#file-fake-properties-show-file')
-                ).nativeElement
-            );
+            const showOption = fixture.debugElement.query(By.css('#file-fake-properties-show-file')).nativeElement as HTMLButtonElement;
             showOption.click();
         });
 
@@ -588,19 +562,11 @@ describe('AttachFileCloudWidgetComponent', () => {
             widget.field.value = [fakeNodeWithProperties];
             fixture.detectChanges();
 
-            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-option-menu'))
-                    .nativeElement
-            );
-
+            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
             fixture.detectChanges();
 
-            const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata'))
-                    .nativeElement
-            );
-
+            const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata')).nativeElement as HTMLButtonElement;
             retrieveMetadataOption.click();
             expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
 
@@ -612,7 +578,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should display the default menu options if no options are provided', () => {
-            widget.field.params = <FormFieldMetadata> onlyLocalParams;
+            widget.field.params = onlyLocalParams;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const inputDebugElement = fixture.debugElement.query(
@@ -622,30 +588,14 @@ describe('AttachFileCloudWidgetComponent', () => {
                     target: { files: [fakeLocalPngAnswer] }
                 });
                 fixture.detectChanges();
-                const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(
-                        By.css('#file-1155-option-menu')
-                    ).nativeElement
-                );
+                const menuButton = fixture.debugElement.query(By.css('#file-1155-option-menu')).nativeElement as HTMLButtonElement;
                 menuButton.click();
                 fixture.detectChanges();
-                const showOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(
-                        By.css('#file-1155-show-file')
-                    ).nativeElement
-                );
-                const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-download-file'))
-                        .nativeElement
-                );
-                const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
-                        .nativeElement
-                );
-                const removeOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-remove'))
-                        .nativeElement
-                );
+
+                const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
+                const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
+                const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata')).nativeElement as HTMLButtonElement;
+                const removeOption = fixture.debugElement.query(By.css('#file-1155-remove')).nativeElement as HTMLButtonElement;
 
                 expect(showOption).not.toBeNull();
                 expect(downloadOption).not.toBeNull();
@@ -668,7 +618,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
 
             widget.field.id = 'attach-file-alfresco';
-            widget.field.params = <FormFieldMetadata> menuTestSourceParam;
+            widget.field.params = menuTestSourceParam;
             fixture.detectChanges();
             await fixture.whenStable();
         });

@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 
 export interface RatingServiceInterface {
 
-    getRating(nodeId: string, ratingType: any): Observable<RatingEntry | {}>;
-    postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | {}>;
+    getRating(nodeId: string, ratingType: any): Observable<RatingEntry | any>;
+    postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | any>;
     deleteRating(nodeId: string, ratingType: any): Observable<any>;
 }

@@ -125,8 +125,7 @@ describe('SearchDateRangeComponent', () => {
             queryFragments: {
                 createdDateRange: 'query'
             },
-            update() {
-            }
+            update: () => {}
         };
 
         component.id = 'createdDateRange';
@@ -144,8 +143,7 @@ describe('SearchDateRangeComponent', () => {
     it('should update query builder on value changes', () => {
         const context: any = {
             queryFragments: {},
-            update() {
-            }
+            update: () => {}
         };
 
         component.id = 'createdDateRange';
@@ -203,7 +201,7 @@ describe('SearchDateRangeComponent', () => {
     });
 
     it('should be able to set a fixed maximum date', async () => {
-        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: maxDate };
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate };
         fixture.detectChanges();
 
         const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="Tue Mar 10 2020 23:59:59 GMT+0"]');

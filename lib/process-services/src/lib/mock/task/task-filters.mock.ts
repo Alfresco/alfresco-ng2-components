@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FilterRepresentationModel } from '../../task-list/models/filter.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../../task-list/models/filter.model';
 
-export let fakeFiltersResponse: any = {
+export const fakeFiltersResponse: any = {
     size: 2, total: 2, start: 0,
     data: [
         {
@@ -31,7 +31,7 @@ export let fakeFiltersResponse: any = {
     ]
 };
 
-export let fakeTaskFilters = [
+export const fakeTaskFilters = [
     new FilterRepresentationModel({
         name: 'FakeInvolvedTasks',
         icon: 'glyphicon-align-left',
@@ -52,7 +52,7 @@ export let fakeTaskFilters = [
     })
 ];
 
-export let fakeAppFilter = {
+export const fakeAppFilter = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -62,11 +62,14 @@ export let fakeAppFilter = {
     ]
 };
 
-export let fakeFilter = {
-    sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
+export const fakeFilter: TaskQueryRequestRepresentationModel = {
+    sort: 'created-desc',
+    text: '',
+    state: 'open',
+    assignment: 'fake-assignee'
 };
 
-export let fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
+export const fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 1,
     name: 'CONTAIN FILTER',
     recent: true,
@@ -83,7 +86,7 @@ export let fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepr
     }
 });
 
-export let fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
+export const fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 2,
     name: 'NO TASK FILTER',
     recent: false,

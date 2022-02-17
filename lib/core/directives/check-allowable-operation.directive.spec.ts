@@ -43,7 +43,7 @@ describe('CheckAllowableOperationDirective', () => {
     });
 
     beforeEach(() => {
-        changeDetectorMock = <ChangeDetectorRef> { detectChanges: () => {} };
+        changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
     });
 
     describe('HTML nativeElement as subject', () => {
@@ -107,7 +107,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'enableElement').and.stub();
 
-            directive.nodes = <any> [{}, {}];
+            directive.nodes = [{}, {}] as any[];
 
             expect(directive.updateElement()).toBeTruthy();
             expect(directive.enableElement).toHaveBeenCalled();
@@ -120,7 +120,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
-            directive.nodes = <any> [{}, {}];
+            directive.nodes = [{}, {}] as any[];
 
             expect(directive.updateElement()).toBeFalsy();
             expect(directive.disableElement).toHaveBeenCalled();
@@ -137,7 +137,7 @@ describe('CheckAllowableOperationDirective', () => {
             const testComponent = new TestComponent();
             testComponent.disabled = false;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
-            directive.nodes = <any> [{}, {}];
+            directive.nodes = [{}, {}] as any[];
 
             directive.updateElement();
 
@@ -153,7 +153,7 @@ describe('CheckAllowableOperationDirective', () => {
             const testComponent = new TestComponent();
             testComponent.disabled = true;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
-            directive.nodes = <any> [{}, {}];
+            directive.nodes = [{}, {}] as any[];
 
             directive.updateElement();
 

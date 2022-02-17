@@ -20,6 +20,8 @@ import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
+const TEXT_PADDING = 3;
+
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
@@ -43,8 +45,6 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     @Output()
     error = new EventEmitter();
 
-    TEXT_PADDING = 3;
-
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {
         super(elementRef, raphaelService);
@@ -58,16 +58,16 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     }
 
     draw(position: Point, text: string) {
-        const textPaper = this.paper.text(position.x + this.TEXT_PADDING, position.y + this.TEXT_PADDING, text).attr({
+        const textPaper = this.paper.text(position.x + TEXT_PADDING, position.y + TEXT_PADDING, text).attr({
             'text-anchor': 'middle',
             'font-family': 'Arial',
             'font-size': '11',
-            'fill': '#373e48'
+            fill: '#373e48'
         });
 
         const formattedText = this.formatText(textPaper, text, this.elementWidth);
         textPaper.attr({
-            'text': formattedText
+            text: formattedText
         });
         textPaper.transform(this.transform);
         return textPaper;
@@ -76,7 +76,7 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     private formatText(textPaper, text, elementWidth) {
         const pText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         textPaper.attr({
-            'text': pText
+            text: pText
         });
         const letterWidth = textPaper.getBBox().width / text.length;
         const removedLineBreaks = text.split('\n');

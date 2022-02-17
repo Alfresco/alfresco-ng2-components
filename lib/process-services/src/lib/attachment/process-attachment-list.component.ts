@@ -117,46 +117,6 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         });
     }
 
-    private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
-        if (processInstanceId) {
-            this.reset();
-            this.isLoading = true;
-            const isRelatedContent = 'true';
-            this.activitiContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
-                (res: any) => {
-                    res.data.forEach((content) => {
-                        this.attachments.push({
-                            id: content.id,
-                            name: content.name,
-                            created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-                        });
-                    });
-                    this.success.emit(this.attachments);
-                    this.isLoading = false;
-                },
-                (err) => {
-                    this.error.emit(err);
-                    this.isLoading = false;
-                });
-        }
-    }
-
-    private deleteAttachmentById(contentId: number) {
-        if (contentId) {
-            this.activitiContentService.deleteRelatedContent(contentId).subscribe(
-                () => {
-                    this.attachments = this.attachments.filter((content) => {
-                        return content.id !== contentId;
-                    });
-                },
-                (err) => {
-                    this.error.emit(err);
-                });
-        }
-    }
-
     isEmpty(): boolean {
         return this.attachments && this.attachments.length === 0;
     }
@@ -227,5 +187,43 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
 
     isDisabled(): boolean {
         return this.disabled;
+    }
+
+    private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
+        if (processInstanceId) {
+            this.reset();
+            this.isLoading = true;
+            const isRelatedContent = 'true';
+            this.activitiContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
+                (res: any) => {
+                    res.data.forEach((content) => {
+                        this.attachments.push({
+                            id: content.id,
+                            name: content.name,
+                            created: content.created,
+                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                        });
+                    });
+                    this.success.emit(this.attachments);
+                    this.isLoading = false;
+                },
+                (err) => {
+                    this.error.emit(err);
+                    this.isLoading = false;
+                });
+        }
+    }
+
+    private deleteAttachmentById(contentId: number) {
+        if (contentId) {
+            this.activitiContentService.deleteRelatedContent(contentId).subscribe(
+                () => {
+                    this.attachments = this.attachments.filter((content) => content.id !== contentId);
+                },
+                (err) => {
+                    this.error.emit(err);
+                });
+        }
     }
 }

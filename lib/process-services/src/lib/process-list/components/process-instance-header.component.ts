@@ -52,6 +52,27 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
         }
     }
 
+    getProcessStatus(): string {
+        if (this.processInstance) {
+            return this.isRunning() ? 'Running' : 'Completed';
+        }
+        return 'Unknown';
+    }
+
+    getStartedByFullName(): string {
+        let fullName = '';
+        if (this.processInstance && this.processInstance.startedBy) {
+            fullName += this.processInstance.startedBy.firstName || '';
+            fullName += fullName ? ' ' : '';
+            fullName += this.processInstance.startedBy.lastName || '';
+        }
+        return fullName;
+    }
+
+    isRunning(): boolean {
+        return this.processInstance && !this.processInstance.ended;
+    }
+
     private initDefaultProperties(): any[] {
         return [
             new CardViewTextItemModel(
@@ -114,26 +135,5 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    getProcessStatus(): string {
-        if (this.processInstance) {
-            return this.isRunning() ? 'Running' : 'Completed';
-        }
-        return 'Unknown';
-    }
-
-    getStartedByFullName(): string {
-        let fullName = '';
-        if (this.processInstance && this.processInstance.startedBy) {
-            fullName += this.processInstance.startedBy.firstName || '';
-            fullName += fullName ? ' ' : '';
-            fullName += this.processInstance.startedBy.lastName || '';
-        }
-        return fullName;
-    }
-
-    isRunning(): boolean {
-        return this.processInstance && !this.processInstance.ended;
     }
 }

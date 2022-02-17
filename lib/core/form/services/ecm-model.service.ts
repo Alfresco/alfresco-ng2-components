@@ -65,9 +65,7 @@ export class EcmModelService {
     }
 
     searchActivitiEcmModel() {
-        return this.getEcmModels().pipe(map(function (ecmModels: any) {
-            return ecmModels.list.entries.find((model) => model.entry.name === EcmModelService.MODEL_NAME);
-        }));
+        return this.getEcmModels().pipe(map((ecmModels: any) => ecmModels.list.entries.find((model) => model.entry.name === EcmModelService.MODEL_NAME)));
     }
 
     createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
@@ -129,9 +127,8 @@ export class EcmModelService {
     }
 
     public searchEcmType(typeName: string, modelName: string): Observable<any> {
-        return this.getEcmType(modelName).pipe(map(function (customTypes: any) {
-            return customTypes.list.entries.find((type) => type.entry.prefixedName === typeName || type.entry.title === typeName);
-        }));
+        return this.getEcmType(modelName).pipe(map((customTypes: any) =>
+            customTypes.list.entries.find((type) => type.entry.prefixedName === typeName || type.entry.title === typeName)));
     }
 
     public activeEcmModel(modelName: string): Observable<any> {

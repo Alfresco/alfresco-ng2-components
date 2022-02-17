@@ -74,9 +74,9 @@ export class NodeLockDialogComponent implements OnInit {
 
     private get nodeBodyLock(): NodeBodyLock {
         return new NodeBodyLock({
-            'timeToExpire': this.lockTimeInSeconds,
-            'type': this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
-            'lifetime': 'PERSISTENT'
+            timeToExpire: this.lockTimeInSeconds,
+            type: this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
+            lifetime: 'PERSISTENT'
         });
     }
 

@@ -15,20 +15,11 @@
  * limitations under the License.
  */
 
-export let startTaskMock = {
-    'name': 'fakeName',
-    'description': 'fakeDescription',
-    'assignee': null,
-    'dueDate': '2017-11-03T15:25:42.749+0000',
-    'formKey': null,
-    'category': 'fakeAppId'
+export const startTaskMock = {
+    name: 'fakeName',
+    description: 'fakeDescription',
+    assignee: null,
+    dueDate: '2017-11-03T15:25:42.749+0000',
+    formKey: null,
+    category: 'fakeAppId'
 };
-//
-// export let noDataMock = {
-//     'name': '',
-//     'description': '',
-//     'assignee': {},
-//     'dueDate': '',
-//     'formKey': '',
-//     'category': ';'
-// };

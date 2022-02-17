@@ -44,14 +44,13 @@ describe('GroupCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockIdentityGroups)
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     function getElement<T = HTMLElement>(selector: string): T {
-        return <T> fixture.nativeElement.querySelector(selector);
+        return fixture.nativeElement.querySelector(selector);
     }
 
     setupTestBed({
@@ -110,10 +109,10 @@ describe('GroupCloudComponent', () => {
         it('should not be able to search for a group that its name matches one of the preselected groups name', (done) => {
             component.preSelectGroups = [{ name: mockIdentityGroups[0].name }];
             const changes = new SimpleChange(null, [{ name: mockIdentityGroups[0].name }], false);
-            component.ngOnChanges({ 'preSelectGroups': changes });
+            component.ngOnChanges({ preSelectGroups: changes });
             fixture.detectChanges();
 
-            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            const inputHTMLElement = element.querySelector<HTMLInputElement>('input');
             inputHTMLElement.focus();
             inputHTMLElement.value = 'mock-group';
             inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -242,7 +241,7 @@ describe('GroupCloudComponent', () => {
             component.appName = 'mock-app-name';
 
             const change = new SimpleChange(null, 'mock-app-name', false);
-            component.ngOnChanges({ 'appName': change });
+            component.ngOnChanges({ appName: change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -486,8 +485,8 @@ describe('GroupCloudComponent', () => {
 
         beforeEach(() => {
             component.mode = 'single';
-            component.preSelectGroups = <any> mockIdentityGroups;
-            component.ngOnChanges({ 'preSelectGroups': changes });
+            component.preSelectGroups = mockIdentityGroups;
+            component.ngOnChanges({ preSelectGroups: changes });
             fixture.detectChanges();
         });
 
@@ -503,15 +502,15 @@ describe('GroupCloudComponent', () => {
 
         beforeEach(() => {
             component.mode = 'multiple';
-            component.preSelectGroups = <any> mockIdentityGroups;
-            component.ngOnChanges({ 'preSelectGroups': change });
+            component.preSelectGroups = mockIdentityGroups;
+            component.ngOnChanges({ preSelectGroups: change });
             fixture.detectChanges();
         });
 
         it('should render all preselected groups', () => {
             component.mode = 'multiple';
             fixture.detectChanges();
-            component.ngOnChanges({ 'preSelectGroups': change });
+            component.ngOnChanges({ preSelectGroups: change });
             fixture.detectChanges();
             const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
             expect(chips.length).toBe(5);
@@ -551,7 +550,7 @@ describe('GroupCloudComponent', () => {
             ];
             const change = new SimpleChange(null, component.preSelectGroups, false);
             component.mode = 'multiple';
-            component.ngOnChanges({ 'preSelectGroups': change });
+            component.ngOnChanges({ preSelectGroups: change });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -579,7 +578,7 @@ describe('GroupCloudComponent', () => {
 
             const change = new SimpleChange(null, component.preSelectGroups, false);
             component.mode = 'multiple';
-            component.ngOnChanges({ 'preSelectGroups': change });
+            component.ngOnChanges({ preSelectGroups: change });
 
             const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             fixture.detectChanges();
@@ -610,8 +609,8 @@ describe('GroupCloudComponent', () => {
             it('should chip list be disabled and show one single chip - single mode', () => {
                 component.mode = 'single';
                 component.readOnly = true;
-                component.preSelectGroups = <any> mockIdentityGroups;
-                component.ngOnChanges({ 'preSelectGroups': change });
+                component.preSelectGroups = mockIdentityGroups;
+                component.ngOnChanges({ preSelectGroups: change });
 
                 fixture.detectChanges();
 
@@ -627,8 +626,8 @@ describe('GroupCloudComponent', () => {
             it('should chip list be disabled and show all the chips - multiple mode', () => {
                 component.mode = 'multiple';
                 component.readOnly = true;
-                component.preSelectGroups = <any> mockIdentityGroups;
-                component.ngOnChanges({ 'preSelectGroups': change });
+                component.preSelectGroups = mockIdentityGroups;
+                component.ngOnChanges({ preSelectGroups: change });
 
                 fixture.detectChanges();
 
@@ -663,8 +662,8 @@ describe('GroupCloudComponent', () => {
 
                 component.mode = 'single';
                 component.validate = true;
-                component.preSelectGroups = <any> [mockIdentityGroups[0], mockIdentityGroups[1]];
-                component.ngOnChanges({ 'preSelectGroups': new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false) });
+                component.preSelectGroups = [mockIdentityGroups[0], mockIdentityGroups[1]];
+                component.ngOnChanges({ preSelectGroups: new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false) });
             });
 
             it('should check validation for all the groups and emit warning - multiple mode', (done) => {
@@ -694,9 +693,9 @@ describe('GroupCloudComponent', () => {
 
                 component.mode = 'multiple';
                 component.validate = true;
-                component.preSelectGroups = <any> [mockIdentityGroups[0], mockIdentityGroups[1]];
+                component.preSelectGroups = [mockIdentityGroups[0], mockIdentityGroups[1]];
                 component.ngOnChanges({
-                    'preSelectGroups': new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false)
+                    preSelectGroups: new SimpleChange(null, [mockIdentityGroups[0], mockIdentityGroups[1]], false)
                 });
             });
         });

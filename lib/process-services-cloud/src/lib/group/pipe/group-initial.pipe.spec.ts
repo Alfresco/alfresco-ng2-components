@@ -25,7 +25,7 @@ describe('InitialGroupNamePipe', () => {
 
     beforeEach(() => {
         pipe = new InitialGroupNamePipe();
-        fakeGroup = <IdentityGroupModel> {name: 'mock'};
+        fakeGroup = {name: 'mock'};
     });
 
     it('should return with the group initial', () => {

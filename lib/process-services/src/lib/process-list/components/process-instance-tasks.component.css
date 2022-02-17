@@ -57,7 +57,7 @@
 
 .no-results {
     margin-left: 9px;
-    font-size: 14px;
+    font-size: var(--theme-body-1-font-size);
     font-weight: 400;
     letter-spacing: 0;
     line-height: 18px;

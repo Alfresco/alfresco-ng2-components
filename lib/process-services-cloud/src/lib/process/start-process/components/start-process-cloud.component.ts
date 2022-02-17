@@ -31,6 +31,11 @@ import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud
 import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
+
+const MAX_NAME_LENGTH: number = 255;
+const PROCESS_DEFINITION_DEBOUNCE: number = 300;
+const PROCESS_FORM_DEBOUNCE: number = 400;
+
 @Component({
     selector: 'adf-cloud-start-process',
     templateUrl: './start-process-cloud.component.html',
@@ -38,11 +43,6 @@ import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
-
-    static MAX_NAME_LENGTH: number = 255;
-    static PROCESS_DEFINITION_DEBOUNCE: number = 300;
-    static PROCESS_FORM_DEBOUNCE: number = 400;
-
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
@@ -52,7 +52,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Maximum length of the process name. */
     @Input()
-    maxNameLength: number = StartProcessCloudComponent.MAX_NAME_LENGTH;
+    maxNameLength: number = MAX_NAME_LENGTH;
 
     /** Name of the process. */
     @Input()
@@ -64,7 +64,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Variables to attach to the payload. */
     @Input()
-    variables: {};
+    variables: any;
 
     /** Parameter to pass form field values in the start form if one is associated. */
     @Input()
@@ -121,15 +121,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         });
 
         this.processDefinition.valueChanges
-            .pipe(debounceTime(StartProcessCloudComponent.PROCESS_DEFINITION_DEBOUNCE))
+            .pipe(debounceTime(PROCESS_DEFINITION_DEBOUNCE))
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
-                this.selectProcessDefinitionByProcesDefinitionName(processDefinitionName);
+                this.selectProcessDefinitionByProcessDefinitionName(processDefinitionName);
             });
 
         this.processForm.valueChanges
             .pipe(
-                debounceTime(StartProcessCloudComponent.PROCESS_FORM_DEBOUNCE),
+                debounceTime(PROCESS_FORM_DEBOUNCE),
                 tap(() => this.disableStartButton = true),
                 distinctUntilChanged(),
                 filter(() => this.isProcessSelectionValid()),
@@ -170,8 +170,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private getMaxNameLength(): number {
-        return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
-            StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
+        return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     private generateProcessInstance(): Observable<ProcessInstanceCloud> {
@@ -187,7 +186,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
+    private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
 
         if (this.isProcessFormValid() &&
@@ -205,9 +204,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {
-        return this.processDefinitionList.filter((processDefinitionCloud) => {
-            return !processDefinitionName || this.getProcessDefinition(processDefinitionCloud, processDefinitionName);
-        });
+        return this.processDefinitionList.filter((processDefinitionCloud) => !processDefinitionName || this.getProcessDefinition(processDefinitionCloud, processDefinitionName));
     }
 
     private getProcessIfExists(processDefinition: string): ProcessDefinitionCloud {

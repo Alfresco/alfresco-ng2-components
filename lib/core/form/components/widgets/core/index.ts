@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 export * from './form-field-metadata';
 export * from './form-values';
@@ -25,6 +25,7 @@ export * from './form-field-templates';
 export * from './form-widget.model';
 export * from './form-field.model';
 export * from './form.model';
+export * from './process-form-model.interface';
 export * from './container.model';
 export * from './container-column.model';
 export * from './tab.model';
@@ -41,3 +42,4 @@ export * from './process-variable.model';
 export * from './upload-widget-content-link.model';
 export * from './form-field-file-source';
 export * from './form-field-rule';
+export * from './form-field-utils';

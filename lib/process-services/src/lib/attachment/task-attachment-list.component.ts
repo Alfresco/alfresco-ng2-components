@@ -114,41 +114,11 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         });
     }
 
-    private loadAttachmentsByTaskId(taskId: string) {
-        if (taskId) {
-            this.isLoading = true;
-            this.reset();
-            const isRelatedContent = 'true';
-            this.activitiContentService.getTaskRelatedContent(taskId, { isRelatedContent }).subscribe(
-                (res: any) => {
-                    const attachList = [];
-                    res.data.forEach((content) => {
-                        attachList.push({
-                            id: content.id,
-                            name: content.name,
-                            created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-                        });
-                    });
-                    this.attachments = attachList;
-                    this.success.emit(this.attachments);
-                    this.isLoading = false;
-                },
-                (err) => {
-                    this.error.emit(err);
-                    this.isLoading = false;
-                });
-        }
-    }
-
     deleteAttachmentById(contentId: number) {
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 () => {
-                    this.attachments = this.attachments.filter((content) => {
-                        return content.id !== contentId;
-                    });
+                    this.attachments = this.attachments.filter((content) => content.id !== contentId);
                 },
                 (err) => {
                     this.error.emit(err);
@@ -226,5 +196,33 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
 
     isDisabled(): boolean {
         return this.disabled;
+    }
+
+    private loadAttachmentsByTaskId(taskId: string) {
+        if (taskId) {
+            this.isLoading = true;
+            this.reset();
+            const isRelatedContent = 'true';
+            this.activitiContentService.getTaskRelatedContent(taskId, { isRelatedContent }).subscribe(
+                (res: any) => {
+                    const attachList = [];
+                    res.data.forEach((content) => {
+                        attachList.push({
+                            id: content.id,
+                            name: content.name,
+                            created: content.created,
+                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                        });
+                    });
+                    this.attachments = attachList;
+                    this.success.emit(this.attachments);
+                    this.isLoading = false;
+                },
+                (err) => {
+                    this.error.emit(err);
+                    this.isLoading = false;
+                });
+        }
     }
 }

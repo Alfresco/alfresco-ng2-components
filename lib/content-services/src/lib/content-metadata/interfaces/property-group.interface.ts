@@ -22,7 +22,7 @@ export interface PropertyGroup {
     title: string;
     description?: string;
     properties: {
-        [key: string]: Property
+        [key: string]: Property;
     };
 }
 

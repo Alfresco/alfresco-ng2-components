@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export enum NodeAction {
     ATTACH = 'ATTACH',
     CHOOSE = 'CHOOSE',

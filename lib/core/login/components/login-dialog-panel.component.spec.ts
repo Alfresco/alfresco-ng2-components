@@ -55,7 +55,7 @@ describe('LoginDialogPanelComponent', () => {
         fixture.destroy();
     });
 
-    function loginWithCredentials(username: string, password: string) {
+    const loginWithCredentials = (username: string, password: string) => {
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -65,7 +65,7 @@ describe('LoginDialogPanelComponent', () => {
 
         component.submitForm();
         fixture.detectChanges();
-    }
+    };
 
     it('should be created', () => {
         expect(element.querySelector('#adf-login-form')).not.toBeNull();

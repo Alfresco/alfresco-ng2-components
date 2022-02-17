@@ -17,7 +17,7 @@
 
 import { ProcessListModel } from '../../process-list/models/process-list.model';
 
-export let fakeProcessInstance = new ProcessListModel({
+export const fakeProcessInstance = new ProcessListModel({
     size: 2,
     total: 2,
     start: 0,
@@ -85,7 +85,7 @@ export let fakeProcessInstance = new ProcessListModel({
     ]
 });
 
-export let fakeProcessInstancesWithNoName = {
+export const fakeProcessInstancesWithNoName = {
     size: 2,
     total: 2,
     start: 0,
@@ -125,14 +125,14 @@ export let fakeProcessInstancesWithNoName = {
     ]
 };
 
-export let fakeProcessInstancesEmpty = new ProcessListModel({
+export const fakeProcessInstancesEmpty = new ProcessListModel({
     size: 0,
     total: 0,
     start: 0,
     data: []
 });
 
-export let fakeProcessCustomSchema = [
+export const fakeProcessCustomSchema = [
     {
         key: 'fakeName',
         type: 'text',
@@ -147,7 +147,7 @@ export let fakeProcessCustomSchema = [
     }
 ];
 
-export let fakeProcessColumnSchema = {
+export const fakeProcessColumnSchema = {
     default: [
         {
             key: 'default-name',

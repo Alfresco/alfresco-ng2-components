@@ -65,7 +65,7 @@ describe('ProcessInstanceListComponent', () => {
 
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
-            'presets': fakeProcessColumnSchema
+            presets: fakeProcessColumnSchema
         };
     });
 
@@ -283,12 +283,12 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should show custom resolved value in the column', async () => {
         appConfig.config['adf-process-list'] = {
-            'presets': {
-                'fakeProcessCustomSchema': [
+            presets: {
+                fakeProcessCustomSchema: [
                     {
-                        'key': 'variables',
-                        'type': 'text',
-                        'title': 'Variables'
+                        key: 'variables',
+                        type: 'text',
+                        title: 'Variables'
                     }
                 ]
             }
@@ -335,7 +335,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({appId: change});
         });
 
         it('should reload the list when the state parameter changes', (done) => {
@@ -351,7 +351,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'state': change});
+            component.ngOnChanges({state: change});
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
@@ -367,7 +367,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'sort': change});
+            component.ngOnChanges({sort: change});
         });
 
         it('should reload the process list when the processDefinitionId parameter changes', (done) => {
@@ -383,7 +383,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'processDefinitionId': change});
+            component.ngOnChanges({processDefinitionId: change});
         });
 
         it('should reload the process list when the processDefinitionId parameter changes to null', (done) => {
@@ -399,7 +399,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'processDefinitionId': change});
+            component.ngOnChanges({processDefinitionId: change});
         });
 
         it('should reload the process list when the processInstanceId parameter changes', (done) => {
@@ -415,7 +415,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'processInstanceId': change});
+            component.ngOnChanges({processInstanceId: change});
         });
 
         it('should reload the process list when the processInstanceId parameter changes to null', (done) => {
@@ -431,7 +431,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({'processInstanceId': change});
+            component.ngOnChanges({processInstanceId: change});
         });
 
         it('should update the columns when presetColumn schema changes', () => {
@@ -442,7 +442,7 @@ describe('ProcessInstanceListComponent', () => {
 
             component.presetColumn = 'fakeRunningProcessSchema';
             const presetColumnChange = new SimpleChange(null, 'fakeRunningProcessSchema', false);
-            component.ngOnChanges({ 'presetColumn': presetColumnChange });
+            component.ngOnChanges({ presetColumn: presetColumnChange });
 
             const newColumnSchema = component.mergeJsonAndHtmlSchema();
             const expectedColumn1 = new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[0]);
@@ -569,12 +569,12 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
         </data-columns>
     </adf-process-instance-list>`
 })
-
 class ProcessListContextMenuComponent implements OnInit {
-
-    appId: number;
     @Output()
     contextAction = new EventEmitter<any>();
+
+    appId: number;
+
     private performAction$ = new Subject<any>();
 
     ngOnInit() {

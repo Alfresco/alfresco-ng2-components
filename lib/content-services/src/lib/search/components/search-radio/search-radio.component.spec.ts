@@ -42,13 +42,13 @@ describe('SearchRadioComponent', () => {
    describe('Pagination', () => {
         it('should show 5 items when pageSize not defined', () => {
             component.id = 'radio';
-            component.context = <any> {
+            component.context = {
                 queryFragments: {
-                    'radio': 'query'
+                    radio: 'query'
                 },
-                update() {}
-            };
-            component.settings = <any> { options: sizeOptions };
+                update: () => {}
+            } as any;
+            component.settings = { options: sizeOptions } as any;
 
             component.ngOnInit();
             fixture.detectChanges();
@@ -61,13 +61,13 @@ describe('SearchRadioComponent', () => {
 
         it('should show all items when pageSize is high', () => {
             component.id = 'radio';
-            component.context = <any> {
+            component.context = {
                 queryFragments: {
-                    'radio': 'query'
+                    radio: 'query'
                 },
-                update() {}
-            };
-            component.settings = <any> { pageSize: 15, options: sizeOptions };
+                update: () => {}
+            } as any;
+            component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
             fixture.detectChanges();
 
@@ -80,13 +80,13 @@ describe('SearchRadioComponent', () => {
 
    it('should able to check the radio button', async () => {
         component.id = 'radio';
-        component.context = <any> {
+        component.context = {
             queryFragments: {
-                'radio': 'query'
+                radio: 'query'
             },
             update: () => {}
-        };
-        component.settings = <any> { options: sizeOptions };
+        } as any;
+        component.settings = { options: sizeOptions } as any;
         spyOn(component.context, 'update').and.stub();
         fixture.detectChanges();
         await fixture.whenStable();

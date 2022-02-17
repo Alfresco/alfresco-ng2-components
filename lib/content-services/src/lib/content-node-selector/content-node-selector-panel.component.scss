@@ -4,7 +4,7 @@ $content-node-selector-thumbnail-width: 35px !default;
 .adf-search-results-label {
     flex: 1;
     font-weight: 600;
-    font-size: 14px;
+    font-size: var(--theme-body-1-font-size);
     font-style: normal;
     font-stretch: normal;
     line-height: 1.43;
@@ -15,7 +15,7 @@ $content-node-selector-thumbnail-width: 35px !default;
 .adf-toolbar .mat-toolbar {
     max-height: 48px;
     border-bottom-width: 0;
-    font-size: 14px;
+    font-size: var(--theme-body-1-font-size);
 
     &.mat-toolbar-single-row {
         height: auto;
@@ -64,7 +64,7 @@ $content-node-selector-thumbnail-width: 35px !default;
             margin-bottom: 0;
 
             .mat-select-trigger {
-                font-size: 14px;
+                font-size: var(--theme-body-1-font-size);
             }
         }
 

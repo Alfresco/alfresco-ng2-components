@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
 
 export class TabModel extends FormWidgetModel {
 
@@ -33,7 +32,7 @@ export class TabModel extends FormWidgetModel {
         return this.fields && this.fields.length > 0;
     }
 
-    constructor(form: FormModel, json?: any) {
+    constructor(form: any, json?: any) {
         super(form, json);
 
         if (json) {

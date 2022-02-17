@@ -105,9 +105,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     searchTag(searchTagName: string) {
         if (this.tagsEntries) {
-            return this.tagsEntries.find((currentTag) => {
-                return (searchTagName === currentTag.entry.tag);
-            });
+            return this.tagsEntries.find((currentTag) => (searchTagName === currentTag.entry.tag));
         }
     }
 

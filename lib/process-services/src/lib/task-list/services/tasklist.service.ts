@@ -33,26 +33,25 @@ import {
     providedIn: 'root'
 })
 export class TaskListService {
-
-    private _modelsApi;
+    private _modelsApi: ModelsApi;
     get modelsApi(): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
         return this._modelsApi;
     }
 
-    private _tasksApi;
+    private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {
         this._tasksApi = this._tasksApi ?? new TasksApi(this.apiService.getInstance());
         return this._tasksApi;
     }
 
-    private _taskActionsApi;
+    private _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {
         this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
         return this._taskActionsApi;
     }
 
-    private _checklistsApi;
+    private _checklistsApi: ChecklistsApi;
     get checklistsApi(): ChecklistsApi {
         this._checklistsApi = this._checklistsApi ?? new ChecklistsApi(this.apiService.getInstance());
         return this._checklistsApi;
@@ -64,6 +63,7 @@ export class TaskListService {
 
     /**
      * Gets all the filters in the list that belong to a task.
+     *
      * @param taskId ID of the target task
      * @param filterList List of filters to search through
      * @returns Filters belonging to the task
@@ -77,22 +77,8 @@ export class TaskListService {
     }
 
     /**
-     * Gets the search query for a task based on the supplied filter.
-     * @param filter The filter to use
-     * @returns The search query
-     */
-    private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
-        const requestNode = {
-            appDefinitionId: filterModel.appId,
-            assignment: filterModel.filter.assignment,
-            state: filterModel.filter.state,
-            sort: filterModel.filter.sort
-        };
-        return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    /**
      * Checks if a taskId is filtered with the given filter.
+     *
      * @param taskId ID of the target task
      * @param filterModel The filter you want to check
      * @returns The filter if it is related or null otherwise
@@ -101,15 +87,14 @@ export class TaskListService {
         const requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
         return from(this.callApiTasksFiltered(requestNodeForFilter))
             .pipe(
-                map(res => {
-                    return res.data.find((element) => element.id === taskId) ? filterModel : null;
-                }),
+                map(res => res.data.find((element) => element.id === taskId) ? filterModel : null),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets all the tasks matching the supplied query.
+     *
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
@@ -122,6 +107,7 @@ export class TaskListService {
 
     /**
      * Gets tasks matching a query and state value.
+     *
      * @param requestNode Query to search for tasks
      * @param state Task state. Can be "open" or "completed".
      * @returns List of tasks
@@ -136,6 +122,7 @@ export class TaskListService {
 
     /**
      * Gets all tasks matching a query and state value.
+     *
      * @param requestNode Query to search for tasks.
      * @param state Task state. Can be "open" or "completed".
      * @returns List of tasks
@@ -155,6 +142,7 @@ export class TaskListService {
 
     /**
      * Gets all tasks matching the supplied query but ignoring the task state.
+     *
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
@@ -173,21 +161,21 @@ export class TaskListService {
 
     /**
      * Gets details for a task.
+     *
      * @param taskId ID of the target task.
      * @returns Task details
      */
     getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
         return from(this.callApiTaskDetails(taskId))
             .pipe(
-                map(details => {
-                    return new TaskDetailsModel(details);
-                }),
+                map(details => new TaskDetailsModel(details)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets the checklist for a task.
+     *
      * @param id ID of the target task
      * @returns Array of checklist task details
      */
@@ -207,13 +195,14 @@ export class TaskListService {
 
     /**
      * Gets all available reusable forms.
+     *
      * @returns Array of form details
      */
     getFormList(): Observable<Form[]> {
         const opts = {
-            'filter': 'myReusableForms', // String | filter
-            'sort': 'modifiedDesc', // String | sort
-            'modelType': 2 // Integer | modelType
+            filter: 'myReusableForms', // String | filter
+            sort: 'modifiedDesc', // String | sort
+            modelType: 2 // Integer | modelType
         };
 
         return from(this.modelsApi.getModels(opts))
@@ -231,12 +220,13 @@ export class TaskListService {
 
     /**
      * Attaches a form to a task.
+     *
      * @param taskId ID of the target task
      * @param formId ID of the form to add
      * @returns Null response notifying when the operation is complete
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return from(this.taskActionsApi.attachForm(taskId, { 'formId': formId }))
+        return from(this.taskActionsApi.attachForm(taskId, { formId }))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -244,21 +234,21 @@ export class TaskListService {
 
     /**
      * Adds a subtask (ie, a checklist task) to a parent task.
+     *
      * @param task The task to add
      * @returns The subtask that was added
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return from(this.callApiAddTask(task))
             .pipe(
-                map((response: TaskDetailsModel) => {
-                    return new TaskDetailsModel(response);
-                }),
+                map((response) => new TaskDetailsModel(response)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Deletes a subtask (ie, a checklist task) from a parent task.
+     *
      * @param taskId The task to delete
      * @returns Null response notifying when the operation is complete
      */
@@ -271,6 +261,7 @@ export class TaskListService {
 
     /**
      * Deletes a form from a task.
+     *
      * @param taskId Task id related to form
      * @returns Null response notifying when the operation is complete
      */
@@ -283,6 +274,7 @@ export class TaskListService {
 
     /**
      * Gives completed status to a task.
+     *
      * @param taskId ID of the target task
      * @returns Null response notifying when the operation is complete
      */
@@ -295,6 +287,7 @@ export class TaskListService {
 
     /**
      * Gets the total number of the tasks found by a query.
+     *
      * @param requestNode Query to search for tasks
      * @returns Number of tasks
      */
@@ -308,21 +301,21 @@ export class TaskListService {
 
     /**
      * Creates a new standalone task.
+     *
      * @param task Details of the new task
      * @returns Details of the newly created task
      */
     createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return from(this.callApiCreateTask(task))
             .pipe(
-                map((response: TaskDetailsModel) => {
-                    return new TaskDetailsModel(response);
-                }),
+                map((response) => new TaskDetailsModel(response)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Assigns a task to a user or group.
+     *
      * @param taskId The task to assign
      * @param requestNode User or group to assign the task to
      * @returns Details of the assigned task
@@ -331,32 +324,31 @@ export class TaskListService {
         const assignee = { assignee: requestNode.id };
         return from(this.callApiAssignTask(taskId, assignee))
             .pipe(
-                map((response: TaskDetailsModel) => {
-                    return new TaskDetailsModel(response);
-                }),
+                map((response) => new TaskDetailsModel(response)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Assigns a task to a user.
+     *
      * @param taskId ID of the task to assign
      * @param userId ID of the user to assign the task to
      * @returns Details of the assigned task
      */
     assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
-        const assignee = <AssigneeIdentifierRepresentation> { assignee: userId };
+        const assignee = { assignee: userId };
+
         return from(this.callApiAssignTask(taskId, assignee))
             .pipe(
-                map((response: TaskDetailsModel) => {
-                    return new TaskDetailsModel(response);
-                }),
+                map((response) => new TaskDetailsModel(response)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Claims a task for the current user.
+     *
      * @param taskId ID of the task to claim
      * @returns Details of the claimed task
      */
@@ -369,6 +361,7 @@ export class TaskListService {
 
     /**
      * Un-claims a task for the current user.
+     *
      * @param taskId ID of the task to unclaim
      * @returns Null response notifying when the operation is complete
      */
@@ -381,6 +374,7 @@ export class TaskListService {
 
     /**
      * Updates the details (name, description, due date) for a task.
+     *
      * @param taskId ID of the task to update
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      * @returns Updated task details
@@ -388,26 +382,28 @@ export class TaskListService {
     updateTask(taskId: string, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
         return from(this.tasksApi.updateTask(taskId, updated))
             .pipe(
-                map((result) => <TaskDetailsModel> result),
+                map((result) => result as TaskDetailsModel),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Fetches the Task Audit information in PDF format.
+     *
      * @param taskId ID of the target task
      * @returns Binary PDF data
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
         return from(this.tasksApi.getTaskAuditPdf(taskId))
             .pipe(
-                map((data) => <Blob> data),
+                map((data) => data as Blob),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Fetch the Task Audit information in JSON format
+     *
      * @param taskId ID of the target task
      * @returns JSON data
      */
@@ -416,6 +412,22 @@ export class TaskListService {
             .pipe(
                 catchError((err) => this.handleError(err))
             );
+    }
+
+    /**
+     * Gets the search query for a task based on the supplied filter.
+     *
+     * @param filter The filter to use
+     * @returns The search query
+     */
+     private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
+        const requestNode = {
+            appDefinitionId: filterModel.appId,
+            assignment: filterModel.filter.assignment,
+            state: filterModel.filter.state,
+            sort: filterModel.filter.sort
+        };
+        return new TaskQueryRequestRepresentationModel(requestNode);
     }
 
     private callApiTasksFiltered(requestNode: TaskQueryRepresentation): Promise<TaskListModel> {

@@ -157,7 +157,7 @@ export class WidgetVisibilityService {
 
     getFormValue(form: FormModel, fieldId: string): any {
         const formField = this.getFormFieldById(form, fieldId);
-        let value = undefined;
+        let value;
 
         if (this.isFormFieldValid(formField)) {
             value = this.getFieldValue(form.values, fieldId);
@@ -174,7 +174,8 @@ export class WidgetVisibilityService {
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
-        let labelFilterByName, valueFound;
+        let labelFilterByName;
+        let valueFound;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {
@@ -248,7 +249,7 @@ export class WidgetVisibilityService {
 
     private getFormTabContainers(form: FormModel): ContainerModel[] {
         if (!!form) {
-            return <ContainerModel[]> form.fields.filter(field => field.type === 'container' && field.tab);
+            return form.fields.filter(field => field.type === 'container' && field.tab) as ContainerModel[];
         }
         return [];
     }
@@ -344,7 +345,7 @@ export class WidgetVisibilityService {
             .pipe(
                 map((res) => {
                     const jsonRes = this.toJson(res);
-                    this.processVarList = <TaskProcessVariableModel[]> jsonRes;
+                    this.processVarList = jsonRes;
                     return jsonRes;
                 }),
                 catchError(() => this.handleError())

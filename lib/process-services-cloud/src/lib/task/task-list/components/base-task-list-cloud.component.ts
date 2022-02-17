@@ -30,7 +30,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -124,7 +124,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+        this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -184,6 +184,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     /**
      * Resets the pagination values and
      * Reloads the task list
+     *
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {

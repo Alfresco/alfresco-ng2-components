@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
@@ -25,6 +25,9 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
+const SHOW_FORMAT = 'DD/MM/YYYY';
 
 @Component({
     selector: 'adf-date-range-widget',
@@ -36,18 +39,14 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit, OnDestroy {
-
-    public FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
-    public SHOW_FORMAT: string = 'DD/MM/YYYY';
-
     @Input('group')
-    public dateRange: FormGroup;
+    dateRange: FormGroup;
 
     @Input()
     field: any;
 
     @Output()
-    dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
+    dateRangeChanged = new EventEmitter<any>();
 
     minDate: Moment;
     maxDate: Moment;
@@ -67,16 +66,16 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.SHOW_FORMAT;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
+        momentDateAdapter.overrideDisplayFormat = SHOW_FORMAT;
 
         if (this.field) {
             if (this.field.value && this.field.value.startDate) {
-                this.startDatePicker = moment(this.field.value.startDate, this.FORMAT_DATE_ACTIVITI);
+                this.startDatePicker = moment(this.field.value.startDate, FORMAT_DATE_ACTIVITI);
             }
 
             if (this.field.value && this.field.value.endDate) {
-                this.endDatePicker = moment(this.field.value.endDate, this.FORMAT_DATE_ACTIVITI);
+                this.endDatePicker = moment(this.field.value.endDate, FORMAT_DATE_ACTIVITI);
             }
         }
 
@@ -106,14 +105,14 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
     }
 
     convertToMomentDateWithTime(date: string) {
-        return moment(date, this.FORMAT_DATE_ACTIVITI, true).format(this.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+        return moment(date, FORMAT_DATE_ACTIVITI, true).format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
     dateCheck(formControl: AbstractControl) {
         const startDate = moment(formControl.get('startDate').value);
         const endDate = moment(formControl.get('endDate').value);
         const isAfterCheck = startDate.isAfter(endDate);
-        return isAfterCheck ? {'greaterThan': true} : null;
+        return isAfterCheck ? {greaterThan: true} : null;
     }
 
     isStartDateGreaterThanEndDate() {

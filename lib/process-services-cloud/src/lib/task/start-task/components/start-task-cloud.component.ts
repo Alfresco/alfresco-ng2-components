@@ -35,6 +35,9 @@ import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.m
 import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
 
+const MAX_NAME_LENGTH = 255;
+const DATE_FORMAT: string = 'DD/MM/YYYY';
+
 @Component({
     selector: 'adf-cloud-start-task',
     templateUrl: './start-task-cloud.component.html',
@@ -44,20 +47,14 @@ import { TaskPriorityOption } from '../../models/task.model';
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
-
 export class StartTaskCloudComponent implements OnInit, OnDestroy {
-
-    static MAX_NAME_LENGTH = 255;
-
-    public DATE_FORMAT: string = 'DD/MM/YYYY';
-
     /** (required) Name of the app. */
     @Input()
     appName: string = '';
 
     /** Maximum length of the task name. */
     @Input()
-    maxNameLength: number = StartTaskCloudComponent.MAX_NAME_LENGTH;
+    maxNameLength: number = MAX_NAME_LENGTH;
 
     /** Name of the task. */
     @Input()
@@ -140,8 +137,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     private getMaxNameLength(): number {
-        return this.maxNameLength > StartTaskCloudComponent.MAX_NAME_LENGTH ?
-            StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
+        return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     private loadCurrentUser() {
@@ -186,7 +182,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const momentDate = moment(newDateValue, DATE_FORMAT, true);
             if (!momentDate.isValid()) {
                 this.dateError = true;
             }
@@ -209,9 +205,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onCandidateGroupRemove(candidateGroup: any) {
         if (candidateGroup.name) {
-            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => {
-                return name !== candidateGroup.name;
-            });
+            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => name !== candidateGroup.name);
         }
     }
 
@@ -226,7 +220,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public whitespaceValidator(control: FormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
         const isValid = control.value.length === 0 || !isWhitespace;
-        return isValid ? null : { 'whitespace': true };
+        return isValid ? null : { whitespace: true };
     }
 
     get nameController(): FormControl {

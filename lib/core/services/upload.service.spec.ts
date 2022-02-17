@@ -17,14 +17,14 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
+import { FileModel, FileUploadStatus } from '../models/file.model';
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
 
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { AssocChildBody, AssociationBody, RepositoryInfo } from '@alfresco/js-api';
+import { RepositoryInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { DiscoveryApiService } from './discovery-api.service';
 import { BehaviorSubject } from 'rxjs';
@@ -76,7 +76,7 @@ describe('UploadService', () => {
 
         service = TestBed.inject(UploadService);
         service.queue = [];
-        service.activeTask = null;
+        service.clearCache();
 
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
@@ -93,26 +93,26 @@ describe('UploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File);
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
         const filesFake = [
-            new FileModel(<File> { name: 'fake-name', size: 10 }),
-            new FileModel(<File> { name: 'fake-name2', size: 20 })
+            new FileModel({ name: 'fake-name', size: 10 } as File),
+            new FileModel({ name: 'fake-name2', size: 20 } as File)
         ];
         service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
 
     it('should not have the queue uploading if all files are complete, cancelled, aborted, errored or deleted', () => {
-        const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
-        const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
-        const file3 = new FileModel(<File> { name: 'fake-file-3', size: 30 });
-        const file4 = new FileModel(<File> { name: 'fake-file-4', size: 40 });
-        const file5 = new FileModel(<File> { name: 'fake-file-5', size: 50 });
+        const file1 = new FileModel({ name: 'fake-file-1', size: 10 } as File);
+        const file2 = new FileModel({ name: 'fake-file-2', size: 20 } as File);
+        const file3 = new FileModel({ name: 'fake-file-3', size: 30 } as File);
+        const file4 = new FileModel({ name: 'fake-file-4', size: 40 } as File);
+        const file5 = new FileModel({ name: 'fake-file-5', size: 50 } as File);
 
         file1.status = FileUploadStatus.Complete;
         file2.status = FileUploadStatus.Cancelled;
@@ -126,8 +126,8 @@ describe('UploadService', () => {
     });
 
     it('should have the queue still uploading if some files are still pending, starting or in progress', () => {
-        const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
-        const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
+        const file1 = new FileModel({ name: 'fake-file-1', size: 10 } as File);
+        const file2 = new FileModel({ name: 'fake-file-2', size: 20 } as File);
 
         service.addToQueue(file1, file2);
 
@@ -167,8 +167,8 @@ describe('UploadService', () => {
             done();
         });
         const fileFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
+            { name: 'fake-name', size: 10 } as File,
+            { parentId: '-root-', path: 'fake-dir' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -178,7 +178,7 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'text/plain',
             responseText: 'File uploaded'
         });
@@ -193,8 +193,8 @@ describe('UploadService', () => {
             done();
         });
         const fileFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-' }
+            { name: 'fake-name', size: 10 } as File,
+            { parentId: '-root-' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(null, emitter);
@@ -202,7 +202,7 @@ describe('UploadService', () => {
             .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 404,
+            status: 404,
             contentType: 'text/plain',
             responseText: 'Error file uploaded'
         });
@@ -217,7 +217,7 @@ describe('UploadService', () => {
             done();
         });
 
-        const fileFake = new FileModel(<File> { name: 'fake-name', size: 10000000 });
+        const fileFake = new FileModel({ name: 'fake-name', size: 10000000 } as File);
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -237,14 +237,14 @@ describe('UploadService', () => {
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'text/plain',
                 responseText: 'File deleted'
         });
             done();
         });
 
-        const fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File);
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -256,7 +256,7 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'json',
             responseText: {
                 entry: {
@@ -278,14 +278,14 @@ describe('UploadService', () => {
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'text/plain',
                 responseText: 'File deleted'
             });
             done();
         });
 
-        const fileFake = new FileModel(<File> {name: 'fake-name', size: 10}, null, 'fakeId');
+        const fileFake = new FileModel({name: 'fake-name', size: 10} as File, null, 'fakeId');
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -297,7 +297,7 @@ describe('UploadService', () => {
         expect(request.method).toBe('PUT');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'json',
             responseText: {
                 entry: {
@@ -313,7 +313,7 @@ describe('UploadService', () => {
     it('If newVersion is set, name should be a param', () => {
         const emitter = new EventEmitter();
         const filesFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
+            { name: 'fake-name', size: 10 } as File,
             { newVersion: true }
         );
         service.addToQueue(filesFake);
@@ -347,8 +347,8 @@ describe('UploadService', () => {
             done();
         });
         const filesFake = new FileModel(
-            <File> { name: 'fake-file-name', size: 10 },
-            <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
+            { name: 'fake-file-name', size: 10 } as File,
+            { parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
@@ -358,7 +358,7 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'text/plain',
             responseText: 'File uploaded'
         });
@@ -367,10 +367,8 @@ describe('UploadService', () => {
     describe('versioningEnabled', () => {
         it('should upload with "versioningEnabled" parameter taken from file options', () => {
             const model = new FileModel(
-                <File> { name: 'file-name', size: 10 },
-                <FileUploadOptions> {
-                    versioningEnabled: true
-                }
+                { name: 'file-name', size: 10 } as File,
+                { versioningEnabled: true }
             );
 
             service.addToQueue(model);
@@ -395,8 +393,8 @@ describe('UploadService', () => {
 
         it('should not use "versioningEnabled" if not explicitly provided', () => {
             const model = new FileModel(
-                <File> { name: 'file-name', size: 10 },
-                <FileUploadOptions> {}
+                { name: 'file-name', size: 10 } as File,
+                {}
             );
 
             service.addToQueue(model);
@@ -421,13 +419,13 @@ describe('UploadService', () => {
 
     it('should append the extra upload options to the request', () => {
         const filesFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> {
+            { name: 'fake-name', size: 10 } as File,
+            {
                 parentId: '123',
                 path: 'fake-dir',
-                secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
+                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
-                targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
+                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
             });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue();
@@ -443,9 +441,9 @@ describe('UploadService', () => {
                 newVersion: false,
                 parentId: '123',
                 path: 'fake-dir',
-                secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
+                secondaryChildren: [ { assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
-                targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
+                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
             },
             {
                 renditions: 'doclib',
@@ -465,8 +463,8 @@ describe('UploadService', () => {
             done();
         });
 
-        const fileFake1 = new FileModel(<File> { name: 'fake-name1', size: 10 });
-        const fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
+        const fileFake1 = new FileModel({ name: 'fake-name1', size: 10 } as File);
+        const fileFake2 = new FileModel({ name: 'fake-name2', size: 10 } as File);
         const fileList = [fileFake1, fileFake2];
         service.addToQueue(...fileList);
         service.uploadFilesInTheQueue();
@@ -511,7 +509,7 @@ describe('UploadService', () => {
     });
 
     it('should call onUploadDeleted if file was deleted', () => {
-        const file = <FileModel> { status: FileUploadStatus.Deleted };
+        const file = { status: FileUploadStatus.Deleted } as FileModel;
         spyOn(service.fileUploadDeleted, 'next');
 
         service.cancelUpload(file);
@@ -520,7 +518,7 @@ describe('UploadService', () => {
     });
 
     it('should call fileUploadError if file has error status', () => {
-        const file = <any> ({ status: FileUploadStatus.Error });
+        const file = { status: FileUploadStatus.Error } as FileModel;
         spyOn(service.fileUploadError, 'next');
 
         service.cancelUpload(file);
@@ -529,7 +527,7 @@ describe('UploadService', () => {
     });
 
     it('should call fileUploadCancelled if file is in pending', () => {
-        const file = <any> ({ status: FileUploadStatus.Pending });
+        const file = { status: FileUploadStatus.Pending } as FileModel;
         spyOn(service.fileUploadCancelled, 'next');
 
         service.cancelUpload(file);
@@ -541,7 +539,7 @@ describe('UploadService', () => {
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as RepositoryInfo);
 
         const filesFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
+            { name: 'fake-name', size: 10 } as File,
             { newVersion: true}
         );
         service.addToQueue(filesFake);

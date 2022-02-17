@@ -38,20 +38,7 @@ const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
     providedIn: 'root'
 })
 export class UploadService {
-    private cache: { [key: string]: any } = {};
-    private totalComplete: number = 0;
-    private totalAborted: number = 0;
-    private totalError: number = 0;
-    private excludedFileList: string[] = [];
-    private excludedFoldersList: string[] = [];
-    private matchingOptions: any = null;
-    private folderMatchingOptions: any = null;
-    private abortedFile: string;
-    private isThumbnailGenerationEnabled: boolean;
-
-    activeTask: Promise<any> = null;
     queue: FileModel[] = [];
-
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -63,19 +50,30 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    _uploadApi: UploadApi;
+    private cache: { [key: string]: any } = {};
+    private totalComplete: number = 0;
+    private totalAborted: number = 0;
+    private totalError: number = 0;
+    private excludedFileList: string[] = [];
+    private excludedFoldersList: string[] = [];
+    private matchingOptions: any = null;
+    private folderMatchingOptions: any = null;
+    private abortedFile: string;
+    private isThumbnailGenerationEnabled: boolean;
+
+    private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    _versionsApi: VersionsApi;
+    private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
@@ -92,19 +90,32 @@ export class UploadService {
             });
     }
 
+    clearCache() {
+        this.cache = {};
+    }
+
+    /**
+     * Returns the number of concurrent threads for uploading.
+     *
+     * @returns Number of concurrent threads (default 1)
+     */
+    getThreadsCount(): number {
+        return this.appConfigService.get<number>('upload.threads', 1);
+    }
+
     /**
      * Checks whether the service still has files uploading or awaiting upload.
+     *
      * @returns True if files in the queue are still uploading, false otherwise
      */
     isUploading(): boolean {
         const finishedFileStates = [FileUploadStatus.Complete, FileUploadStatus.Cancelled, FileUploadStatus.Aborted, FileUploadStatus.Error, FileUploadStatus.Deleted];
-        return this.queue.reduce((stillUploading: boolean, currentFile: FileModel) => {
-            return stillUploading || finishedFileStates.indexOf(currentFile.status) === -1;
-        }, false);
+        return this.queue.reduce((stillUploading: boolean, currentFile: FileModel) => stillUploading || finishedFileStates.indexOf(currentFile.status) === -1, false);
     }
 
     /**
      * Gets the file Queue
+     *
      * @returns Array of files that form the queue
      */
     getQueue(): FileModel[] {
@@ -113,6 +124,7 @@ export class UploadService {
 
     /**
      * Adds files to the uploading queue to be uploaded
+     *
      * @param files One or more separate parameters or an array of files to queue
      * @returns Array of files that were not blocked from upload by the ignore list
      */
@@ -125,69 +137,23 @@ export class UploadService {
         return allowedFiles;
     }
 
-    private filterElement(file: FileModel) {
-        this.excludedFileList = <string[]> this.appConfigService.get('files.excluded');
-        this.excludedFoldersList = <string[]> this.appConfigService.get('folders.excluded');
-        let isAllowed = true;
-
-        if (this.excludedFileList) {
-            this.matchingOptions = this.appConfigService.get('files.match-options');
-            isAllowed = this.isFileNameAllowed(file);
-        }
-
-        if (isAllowed && this.excludedFoldersList) {
-            this.folderMatchingOptions = this.appConfigService.get('folders.match-options');
-            isAllowed = this.isParentFolderAllowed(file);
-        }
-        return isAllowed;
-    }
-
-    private isParentFolderAllowed(file: FileModel): boolean {
-        let isAllowed: boolean = true;
-        const currentFile: any = file.file;
-        const fileRelativePath = currentFile.webkitRelativePath ? currentFile.webkitRelativePath : file.options.path;
-        if (currentFile && fileRelativePath) {
-            isAllowed =
-                this.excludedFoldersList.filter((folderToExclude) => {
-                    return fileRelativePath
-                        .split('/')
-                        .some((pathElement) => {
-                            const minimatch = new Minimatch(folderToExclude, this.folderMatchingOptions);
-                            return minimatch.match(pathElement);
-                        });
-                }).length === 0;
-        }
-        return isAllowed;
-    }
-
-    private isFileNameAllowed(file: FileModel): boolean {
-        return (
-            this.excludedFileList.filter((pattern) => {
-                const minimatch = new Minimatch(pattern, this.matchingOptions);
-                return minimatch.match(file.name);
-            }).length === 0
-        );
-    }
-
     /**
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
+     *
      * @param successEmitter Emitter to invoke on file success status change
      * @param errorEmitter Emitter to invoke on file error status change
      */
     uploadFilesInTheQueue(successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): void {
-        if (!this.activeTask) {
-            const file = this.queue.find(
-                (currentFile) => currentFile.status === FileUploadStatus.Pending
-            );
-            if (file) {
+        const files = this.getFilesToUpload();
+
+        if (files && files.length > 0) {
+            for (const file of files) {
                 this.onUploadStarting(file);
 
                 const promise = this.beginUpload(file, successEmitter, errorEmitter);
-                this.activeTask = promise;
                 this.cache[file.name] = promise;
 
                 const next = () => {
-                    this.activeTask = null;
                     setTimeout(() => this.uploadFilesInTheQueue(successEmitter, errorEmitter), 100);
                 };
 
@@ -205,6 +171,7 @@ export class UploadService {
      * Cancels uploading of files.
      * If the file is smaller than 1 MB the file will be uploaded and then the node deleted
      * to prevent having files that were aborted but still uploaded.
+     *
      * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
     cancelUpload(...files: FileModel[]) {
@@ -234,6 +201,7 @@ export class UploadService {
 
     /**
      * Gets an upload promise for a file.
+     *
      * @param file The target file
      * @returns Promise that is resolved if the upload is successful or error otherwise
      */
@@ -264,7 +232,7 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.nodesApi.updateNodeContent(file.id, <any> file.file, opts);
+            return this.nodesApi.updateNodeContent(file.id, file.file as any, opts);
         } else {
             const nodeBody = { ... file.options };
             delete nodeBody['versioningEnabled'];
@@ -277,6 +245,21 @@ export class UploadService {
                 opts
             );
         }
+    }
+
+    private getFilesToUpload(): FileModel[] {
+        const cached = Object.keys(this.cache);
+        const threadsCount = this.getThreadsCount();
+
+        if (cached.length >= threadsCount) {
+            return [];
+        }
+
+        const files = this.queue
+            .filter(toUpload => !cached.includes(toUpload.name) && toUpload.status === FileUploadStatus.Pending)
+            .slice(0, threadsCount);
+
+        return files;
     }
 
     private beginUpload(file: FileModel, successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): any {
@@ -442,6 +425,48 @@ export class UploadService {
         return (
             file.size > MIN_CANCELLABLE_FILE_SIZE &&
             file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE
+        );
+    }
+
+    private filterElement(file: FileModel) {
+        this.excludedFileList = this.appConfigService.get<string[]>('files.excluded');
+        this.excludedFoldersList = this.appConfigService.get<string[]>('folders.excluded');
+        let isAllowed = true;
+
+        if (this.excludedFileList) {
+            this.matchingOptions = this.appConfigService.get('files.match-options');
+            isAllowed = this.isFileNameAllowed(file);
+        }
+
+        if (isAllowed && this.excludedFoldersList) {
+            this.folderMatchingOptions = this.appConfigService.get('folders.match-options');
+            isAllowed = this.isParentFolderAllowed(file);
+        }
+        return isAllowed;
+    }
+
+    private isParentFolderAllowed(file: FileModel): boolean {
+        let isAllowed: boolean = true;
+        const currentFile: any = file.file;
+        const fileRelativePath = currentFile.webkitRelativePath ? currentFile.webkitRelativePath : file.options.path;
+        if (currentFile && fileRelativePath) {
+            isAllowed =
+                this.excludedFoldersList.filter((folderToExclude) => fileRelativePath
+                    .split('/')
+                    .some((pathElement) => {
+                        const minimatch = new Minimatch(folderToExclude, this.folderMatchingOptions);
+                        return minimatch.match(pathElement);
+                    })).length === 0;
+        }
+        return isAllowed;
+    }
+
+    private isFileNameAllowed(file: FileModel): boolean {
+        return (
+            this.excludedFileList.filter((pattern) => {
+                const minimatch = new Minimatch(pattern, this.matchingOptions);
+                return minimatch.match(file.name);
+            }).length === 0
         );
     }
 }

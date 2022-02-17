@@ -76,9 +76,9 @@ describe('ContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 201,
+            status: 201,
             contentType: 'application/json',
-            responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+            responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
         });
     });
 
@@ -91,9 +91,9 @@ describe('ContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 201,
+            status: 201,
             contentType: 'application/json',
-            responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+            responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
         });
     });
 

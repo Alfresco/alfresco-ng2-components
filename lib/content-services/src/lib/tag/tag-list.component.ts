@@ -58,6 +58,7 @@ export class TagListComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor
+     *
      * @param tagService
      */
     constructor(private tagService: TagService) {

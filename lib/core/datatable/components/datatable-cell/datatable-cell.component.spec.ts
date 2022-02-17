@@ -47,9 +47,9 @@ describe('DataTableCellComponent', () => {
     });
 
     it('should use column format', () => {
-        const component = new DateCellComponent(null, <any> {
+        const component = new DateCellComponent(null, {
             nodeUpdated: new Subject<any>()
-        }, appConfigService);
+        } as any, appConfigService);
         component.column = {
             key: 'created',
             type: 'date',
@@ -72,7 +72,7 @@ describe('DataTableCellComponent', () => {
             type: 'text'
         };
 
-        component.row = <any> {
+        component.row = {
             cache: {
                 name: 'some-name'
             },
@@ -82,14 +82,14 @@ describe('DataTableCellComponent', () => {
                     name: 'test-name'
                 }
             }
-        };
+        } as any;
 
         component.ngOnInit();
 
-        alfrescoApiService.nodeUpdated.next(<Node> {
+        alfrescoApiService.nodeUpdated.next({
             id: 'id',
             name: 'updated-name'
-        });
+        } as Node);
 
         expect(component.row['node'].entry.name).toBe('updated-name');
         expect(component.row['cache'].name).toBe('updated-name');
@@ -107,7 +107,7 @@ describe('DataTableCellComponent', () => {
             type: 'text'
         };
 
-        component.row = <any> {
+        component.row = {
             cache: {
                 name: 'some-name'
             },
@@ -117,14 +117,14 @@ describe('DataTableCellComponent', () => {
                     name: 'test-name'
                 }
             }
-        };
+        } as any;
 
         component.ngOnInit();
 
-        alfrescoApiService.nodeUpdated.next(<Node> {
+        alfrescoApiService.nodeUpdated.next({
             id: 'id',
             name: 'updated-name'
-        });
+        } as Node);
 
         expect(component.row['node'].entry.name).not.toBe('updated-name');
         expect(component.row['cache'].name).not.toBe('updated-name');
@@ -142,7 +142,7 @@ describe('DataTableCellComponent', () => {
             type: 'text'
         };
 
-        component.row = <any> {
+        component.row = {
             cache: {
                 name: 'some-name'
             },
@@ -155,7 +155,7 @@ describe('DataTableCellComponent', () => {
                     }
                 }
             }
-        };
+        } as any;
 
         component.ngOnInit();
 

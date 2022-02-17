@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { logger } from '../logger';
 import { PluginInterface } from './plugin-model';
 

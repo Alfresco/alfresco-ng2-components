@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+// eslint-disable-next-line no-shadow
 export enum NOTIFICATION_TYPE {
     INFO = 'info',
     WARN = 'warning',
@@ -23,7 +24,7 @@ export enum NOTIFICATION_TYPE {
 }
 
 export interface NotificationInitiator {
-    key: string | Symbol;
+    key: string | symbol;
     displayName: string;
     firstName?: string;
     lastName?: string;

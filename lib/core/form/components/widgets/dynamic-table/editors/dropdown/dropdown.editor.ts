@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { LogService } from '../../../../../../services/log.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -99,7 +99,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement> event).value;
+        let value: any = event.value;
         value = column.options.find((opt) => opt.name === value);
         row.value[column.id] = value;
     }

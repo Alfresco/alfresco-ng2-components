@@ -95,8 +95,8 @@ describe('DiagramTooltipComponent', () => {
             ];
             fixture.detectChanges();
 
-            const propertyNames = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyName')),
-                propertyValues = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyValue'));
+            const propertyNames = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyName'));
+            const propertyValues = fixture.debugElement.queryAll(By.css('.adf-diagram-general-property > .adf-diagram-propertyValue'));
 
             expect(propertyNames.length).toBe(2);
             expect(propertyValues.length).toBe(2);
@@ -112,8 +112,8 @@ describe('DiagramTooltipComponent', () => {
 
             fixture.detectChanges();
 
-            const propertyValue = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-value')),
-                propertyValueType = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-valuetype'));
+            const propertyValue = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-value'));
+            const propertyValueType = fixture.debugElement.queryAll(By.css('.adf-diagram-heat-value > .adf-diagram-valuetype'));
 
             expect(propertyValue.length).toBe(1);
             expect(propertyValueType.length).toBe(1);

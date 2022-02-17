@@ -62,12 +62,10 @@ describe('NodePermissionService', () => {
         nodeService = TestBed.inject(NodesApiService);
     });
 
-    function returnUpdatedNode(nodeBody: Node) {
-        return of(new Node({
-            id: 'fake-updated-node',
-            permissions: nodeBody.permissions
-        }));
-    }
+    const returnUpdatedNode = (nodeBody: Node) => of(new Node({
+        id: 'fake-updated-node',
+        permissions: nodeBody.permissions
+    }));
 
     it('should return a list of roles taken from the site groups', (done) => {
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
@@ -95,9 +93,9 @@ describe('NodePermissionService', () => {
     it('should be able to update a locally set permission role', (done) => {
         const fakeAccessStatus: any = 'DENIED';
         const fakePermission: PermissionElement = {
-            'authorityId': 'GROUP_EVERYONE',
-            'name': 'Contributor',
-            'accessStatus' : fakeAccessStatus
+            authorityId: 'GROUP_EVERYONE',
+            name: 'Contributor',
+            accessStatus : fakeAccessStatus
         };
 
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
@@ -114,11 +112,11 @@ describe('NodePermissionService', () => {
     });
 
     it('should be able to remove a locally set permission', (done) => {
-        const fakePermission = <PermissionElement> {
-            'authorityId': 'FAKE_PERSON_1',
-            'name': 'Contributor',
-            'accessStatus' : 'ALLOWED'
-        };
+        const fakePermission = {
+            authorityId: 'FAKE_PERSON_1',
+            name: 'Contributor',
+            accessStatus : 'ALLOWED'
+        } as PermissionElement;
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeToRemovePermission));
 
@@ -189,7 +187,9 @@ describe('NodePermissionService', () => {
 
         service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority)
             .subscribe(
-                () => { fail('should throw exception'); },
+                () => {
+                    fail('should throw exception');
+                },
                 (errorMessage) => {
                     expect(errorMessage).not.toBeNull();
                     expect(errorMessage).toBeDefined();

@@ -24,7 +24,7 @@ import { ViewUtilService } from '../services/view-util.service';
     selector: 'adf-media-player',
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
-    host: { 'class': 'adf-media-player' },
+    host: { class: 'adf-media-player' },
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {

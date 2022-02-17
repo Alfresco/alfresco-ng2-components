@@ -72,7 +72,7 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
             'custom-something': () => CustomWidgetComponent,
             'custom-boolean': () => CustomWidgetComponent,
             'custom-date': () => CustomWidgetComponent,
-            'custom': () => CustomWidgetComponent
+            custom: () => CustomWidgetComponent
         });
     }
 
@@ -122,7 +122,7 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
 
         const fileReader = new FileReader();
         fileReader.onload = () => {
-            this.formConfig = <string> fileReader.result;
+            this.formConfig = fileReader.result as string;
         };
         fileReader.readAsText(file);
 

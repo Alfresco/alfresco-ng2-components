@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../utils/moment-date-adapter';
@@ -70,7 +70,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {

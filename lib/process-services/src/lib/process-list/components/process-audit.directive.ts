@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { DownloadService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
@@ -25,10 +25,10 @@ const JSON_FORMAT: string = 'json';
 const PDF_FORMAT: string = 'pdf';
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'button[adf-process-audit]',
     host: {
-        'role': 'button',
+        role: 'button',
         '(click)': 'onClickAudit()'
     }
 })

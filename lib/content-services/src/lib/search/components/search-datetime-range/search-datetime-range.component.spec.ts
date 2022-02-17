@@ -117,8 +117,7 @@ describe('SearchDatetimeRangeComponent', () => {
             queryFragments: {
                 createdDatetimeRange: 'query'
             },
-            update() {
-            }
+            update: () => {}
         };
 
         component.id = 'createdDatetimeRange';
@@ -138,8 +137,7 @@ describe('SearchDatetimeRangeComponent', () => {
     it('should update the query in UTC format when values change', async () => {
         const context: any = {
             queryFragments: {},
-            update() {
-            }
+            update: () => {}
         };
 
         component.id = 'createdDateRange';
@@ -165,8 +163,7 @@ describe('SearchDatetimeRangeComponent', () => {
     it('should be able to update the query in UTC format from a GMT format', async () => {
         const context: any = {
             queryFragments: {},
-            update() {
-            }
+            update: () => {}
         };
         const fromInGmt = '2021-02-24T17:00:00+02:00';
         const toInGmt = '2021-02-28T15:00:00+02:00';
@@ -225,7 +222,7 @@ describe('SearchDatetimeRangeComponent', () => {
     });
 
     it('should be able to set a fixed maximum datetime', async () => {
-        component.settings = { field: 'cm:created', datetimeFormat: datetimeFormatFixture, maxDatetime: maxDatetime };
+        component.settings = { field: 'cm:created', datetimeFormat: datetimeFormatFixture, maxDatetime };
 
         fixture.detectChanges();
         await fixture.whenStable();

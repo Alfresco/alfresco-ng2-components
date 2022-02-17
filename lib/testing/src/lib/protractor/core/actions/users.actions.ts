@@ -118,7 +118,7 @@ export class UsersActions {
     }
 
     async createUserWithName(firstName: string, lastName: string): Promise<UserModel> {
-        const user = new UserModel({ firstName: firstName, lastName: lastName });
+        const user = new UserModel({ firstName, lastName });
         return this.createUser(user);
     }
 

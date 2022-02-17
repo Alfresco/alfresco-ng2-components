@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let intermediateCatchingTimeEvent = {
+export const intermediateCatchingTimeEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'IntermediateCatchEvent',
     width: 31,
@@ -26,7 +26,7 @@ export let intermediateCatchingTimeEvent = {
     eventDefinition: {type: 'timer'}
 };
 
-export let intermediateCatchingTimeEventActive = {
+export const intermediateCatchingTimeEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -39,7 +39,7 @@ export let intermediateCatchingTimeEventActive = {
     eventDefinition: {type: 'timer'}
 };
 
-export let intermediateCatchingTimeEventCompleted = {
+export const intermediateCatchingTimeEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -52,7 +52,7 @@ export let intermediateCatchingTimeEventCompleted = {
     eventDefinition: {type: 'timer'}
 };
 
-export let intermediateCatchingErrorEvent = {
+export const intermediateCatchingErrorEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'IntermediateCatchEvent',
     width: 31,
@@ -63,7 +63,7 @@ export let intermediateCatchingErrorEvent = {
     eventDefinition: {type: 'error'}
 };
 
-export let intermediateCatchingErrorEventActive = {
+export const intermediateCatchingErrorEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -76,7 +76,7 @@ export let intermediateCatchingErrorEventActive = {
     eventDefinition: {type: 'error'}
 };
 
-export let intermediateCatchingErrorEventCompleted = {
+export const intermediateCatchingErrorEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -89,7 +89,7 @@ export let intermediateCatchingErrorEventCompleted = {
     eventDefinition: {type: 'error'}
 };
 
-export let intermediateCatchingSignalEvent = {
+export const intermediateCatchingSignalEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'IntermediateCatchEvent',
     width: 31,
@@ -100,7 +100,7 @@ export let intermediateCatchingSignalEvent = {
     eventDefinition: {type: 'signal'}
 };
 
-export let intermediateCatchingSignalEventActive = {
+export const intermediateCatchingSignalEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -113,7 +113,7 @@ export let intermediateCatchingSignalEventActive = {
     eventDefinition: {type: 'signal'}
 };
 
-export let intermediateCatchingSignalEventCompleted = {
+export const intermediateCatchingSignalEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -126,7 +126,7 @@ export let intermediateCatchingSignalEventCompleted = {
     eventDefinition: {type: 'signal'}
 };
 
-export let intermediateCatchingMessageEvent = {
+export const intermediateCatchingMessageEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'IntermediateCatchEvent',
     width: 31,
@@ -137,7 +137,7 @@ export let intermediateCatchingMessageEvent = {
     eventDefinition: {type: 'message'}
 };
 
-export let intermediateCatchingMessageEventActive = {
+export const intermediateCatchingMessageEventActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -150,7 +150,7 @@ export let intermediateCatchingMessageEventActive = {
     eventDefinition: {type: 'message'}
 };
 
-export let intermediateCatchingMessageEventCompleted = {
+export const intermediateCatchingMessageEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

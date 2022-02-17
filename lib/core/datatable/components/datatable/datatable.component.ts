@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
+
 import {
     ViewChildren, QueryList, HostListener,
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy, AfterViewInit
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -39,11 +41,13 @@ import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
 
+// eslint-disable-next-line no-shadow
 export enum DisplayMode {
     List = 'list',
     Gallery = 'gallery'
 }
 
+// eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
     Never = 'never',
     Always = 'always',
@@ -57,7 +61,7 @@ export enum ShowHeaderMode {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable' }
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -122,7 +126,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: { [key: string]: any; };
+    rowStyle: { [key: string]: any };
 
     /** The CSS class to apply to every row. */
     @Input()
@@ -203,7 +207,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private click$: Observable<DataRowEvent>;
 
     private differ: any;
-    private rowMenuCache: object = {};
+    private rowMenuCache: any = {};
 
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
@@ -328,7 +332,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         this.singleClickStreamSub = singleClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
             const event: DataRowEvent = dataRowEvents[0];
-            this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
+            this.handleRowSelection(event.value, event.event as any);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
                 this.elementRef.nativeElement.dispatchEvent(
@@ -429,7 +433,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     public getSchemaFromHtml(): any {
         let schema = [];
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map((c) => <DataColumn> c);
+            schema = this.columnList.columns.map((c) => c as DataColumn);
         }
         return schema;
     }
@@ -513,8 +517,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     onRowKeyUp(row: DataRow, keyboardEvent: KeyboardEvent) {
         const event = new CustomEvent('row-keyup', {
             detail: {
-                row: row,
-                keyboardEvent: keyboardEvent,
+                row,
+                keyboardEvent,
                 sender: this
             },
             bubbles: true
@@ -611,7 +615,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     onImageLoadingError(event: Event, row: DataRow) {
         if (event) {
-            const element = <any> event.target;
+            const element = event.target as any;
 
             if (this.fallbackThumbnail) {
                 element.src = this.fallbackThumbnail;
@@ -747,9 +751,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter((column) => {
-            return column.sortable === true;
-        });
+        return this.data.getColumns().filter((column) => column.sortable === true);
     }
 
     isEmpty() {
@@ -776,7 +778,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {
-                row: row,
+                row,
                 selection: this.selection
             },
             bubbles: true
@@ -821,9 +823,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getNameColumnValue() {
-        return this.data.getColumns().find( (el: any) => {
-            return el.key.includes('name');
-        });
+        return this.data.getColumns().find( (el: any) => el.key.includes('name'));
     }
 
     getAutomationValue(row: DataRow): any {
@@ -856,7 +856,7 @@ export interface DataTableDropEvent {
         target: 'cell' | 'header';
         event: Event;
         column: DataColumn;
-        row?: DataRow
+        row?: DataRow;
     };
 
     preventDefault(): void;

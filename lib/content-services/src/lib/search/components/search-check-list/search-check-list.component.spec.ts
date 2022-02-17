@@ -42,10 +42,10 @@ describe('SearchCheckListComponent', () => {
 
     it('should setup options from settings', () => {
         const options: any = [
-            { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
-            { 'name': 'Document', 'value': "TYPE:'cm:content'" }
+            { name: 'Folder', value: `TYPE:'cm:folder'` },
+            { name: 'Document', value: `TYPE:'cm:content'` }
         ];
-        component.settings = <any> { options: options };
+        component.settings = { options } as any;
         component.ngOnInit();
 
         expect(component.options.items).toEqual(options);
@@ -53,8 +53,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should handle enter key as click on checkboxes', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: false }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
 
         component.ngOnInit();
@@ -70,42 +70,42 @@ describe('SearchCheckListComponent', () => {
     });
 
     it('should setup operator from the settings', () => {
-        component.settings = <any> { operator: 'AND' };
+        component.settings = { operator: 'AND' } as any;
         component.ngOnInit();
         expect(component.operator).toBe('AND');
     });
 
     it('should use OR operator by default', () => {
-        component.settings = <any> { operator: null };
+        component.settings = { operator: null } as any;
         component.ngOnInit();
         expect(component.operator).toBe('OR');
     });
 
     it('should update query builder on checkbox change', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: false }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
 
         component.id = 'checklist';
-        component.context = <any> {
+        component.context = {
             queryFragments: {},
-            update() {}
-        };
+            update: () => {}
+        } as any;
 
         component.ngOnInit();
 
         spyOn(component.context, 'update').and.stub();
 
         component.changeHandler(
-            <any> { checked: true },
+            { checked: true } as any,
             component.options.items[0]
         );
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder'`);
 
         component.changeHandler(
-            <any> { checked: true },
+            { checked: true } as any,
             component.options.items[1]
         );
 
@@ -116,8 +116,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should reset selected boxes', () => {
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: true }
         ]);
 
         component.reset();
@@ -128,18 +128,18 @@ describe('SearchCheckListComponent', () => {
 
     it('should update query builder on reset', () => {
         component.id = 'checklist';
-        component.context = <any> {
+        component.context = {
             queryFragments: {
-                'checklist': 'query'
+                checklist: 'query'
             },
-            update() {}
-        };
+            update: () => {}
+        } as any;
         spyOn(component.context, 'update').and.stub();
 
         component.ngOnInit();
         component.options = new SearchFilterList<SearchListOption>([
-            { name: 'Folder', value: "TYPE:'cm:folder'", checked: true },
-            { name: 'Document', value: "TYPE:'cm:content'", checked: true }
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: true }
         ]);
 
         component.reset();
@@ -151,13 +151,13 @@ describe('SearchCheckListComponent', () => {
     describe('Pagination', () => {
         it('should show 5 items when pageSize not defined', () => {
             component.id = 'checklist';
-            component.context = <any> {
+            component.context = {
                 queryFragments: {
-                    'checklist': 'query'
+                    checklist: 'query'
                 },
-                update() {}
-            };
-            component.settings = <any> { options: sizeOptions };
+                update: () => {}
+            } as any;
+            component.settings = { options: sizeOptions } as any;
 
             component.ngOnInit();
             fixture.detectChanges();
@@ -170,13 +170,13 @@ describe('SearchCheckListComponent', () => {
 
         it('should show all items when pageSize is high', () => {
             component.id = 'checklist';
-            component.context = <any> {
+            component.context = {
                 queryFragments: {
-                    'checklist': 'query'
+                    checklist: 'query'
                 },
-                update() {}
-            };
-            component.settings = <any> { pageSize: 15, options: sizeOptions };
+                update: () => {}
+            } as any;
+            component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
             fixture.detectChanges();
 
@@ -189,13 +189,13 @@ describe('SearchCheckListComponent', () => {
 
     it('should able to check/reset the checkbox', () => {
         component.id = 'checklist';
-        component.context = <any> {
+        component.context = {
             queryFragments: {
-                'checklist': 'query'
+                checklist: 'query'
             },
             update: () => {}
-        };
-        component.settings = <any> { options: sizeOptions };
+        } as any;
+        component.settings = { options: sizeOptions } as any;
         spyOn(component, 'submitValues').and.stub();
         component.ngOnInit();
         fixture.detectChanges();

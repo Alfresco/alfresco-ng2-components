@@ -57,14 +57,14 @@
 
     &--text {
         color: var(--theme-text-fg-color);
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
     }
 }
 
 .adf-document-list__this-space-is-empty {
     height: 32px;
     opacity: 0.26;
-    font-size: 24px;
+    font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
     color: var(--theme-text-fg-color);
@@ -83,7 +83,7 @@
 .adf-document-list__any-files-here-to-add {
     height: 24px;
     opacity: 0.54;
-    font-size: 16px;
+    font-size: var(--theme-subheading-2-font-size);
     line-height: 1.5;
     letter-spacing: -0.4px;
     color: var(--theme-text-fg-color);
@@ -111,7 +111,7 @@
 .adf-empty-list-header {
     height: 32px;
     opacity: 0.26 !important;
-    font-size: 24px;
+    font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
     color: var(--theme-text-fg-color);
@@ -128,7 +128,7 @@
 .adf-empty-folder {
     &-this-space-is-empty {
         height: 32px;
-        font-size: 24px;
+        font-size: var(--theme-headline-font-size);
         line-height: 1.33;
         letter-spacing: -1px;
         color: var(--theme-text-color);
@@ -151,7 +151,7 @@
 
     &-any-files-here-to-add {
         min-height: 24px;
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
         line-height: 1.5;
         letter-spacing: -0.4px;
         color: var(--theme-foreground-text-color);

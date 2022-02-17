@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,13 +24,12 @@ import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '@alfresco/adf-core';
 
 const DEFAULT_FOLDER_PARENT_ID = '-my-';
+const DIALOG_WIDTH: number = 400;
 
 @Directive({
     selector: '[adf-create-folder]'
 })
 export class FolderCreateDirective {
-    static DIALOG_WIDTH: number = 400;
-
     /** Parent folder where the new folder will be located after creation. */
     @Input('adf-create-folder')
     parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
@@ -63,12 +62,11 @@ export class FolderCreateDirective {
     ) {}
 
     private get dialogConfig() {
-        const { DIALOG_WIDTH: width } = FolderCreateDirective;
         const { parentNodeId, title: createTitle, nodeType } = this;
 
         return {
             data: { parentNodeId, createTitle, nodeType },
-            width: `${width}px`
+            width: `${DIALOG_WIDTH}px`
         };
     }
 

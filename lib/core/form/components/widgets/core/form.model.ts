@@ -18,7 +18,6 @@
 import { FormFieldEvent } from './../../../events/form-field.event';
 import { ValidateFormFieldEvent } from './../../../events/validate-form-field.event';
 import { ValidateFormEvent } from './../../../events/validate-form.event';
-import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
@@ -32,6 +31,8 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
 import { FormFieldTemplates } from './form-field-templates';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
+import { FormValidationService } from '../../../services/form-validation-service.interface';
+import { ProcessFormModel } from './process-form-model.interface';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -42,7 +43,7 @@ export interface FormRepresentationModel {
     taskName?: string;
     processDefinitionId?: string;
     customFieldTemplates?: {
-        [key: string]: string
+        [key: string]: string;
     };
     selectedOutcome?: string;
     fields?: any[];
@@ -54,7 +55,7 @@ export interface FormRepresentationModel {
     };
 }
 
-export class FormModel {
+export class FormModel implements ProcessFormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
@@ -84,7 +85,7 @@ export class FormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService, enableFixedSpace?: boolean) {
+    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormValidationService, enableFixedSpace?: boolean) {
         this.readOnly = readOnly;
         this.json = json;
 
@@ -247,6 +248,7 @@ export class FormModel {
 
     /**
      * Returns a form variable that matches the identifier.
+     *
      * @param identifier The `name` or `id` value.
      */
     getFormVariable(identifier: string): FormVariableModel {
@@ -263,6 +265,7 @@ export class FormModel {
     /**
      * Returns a value of the form variable that matches the identifier.
      * Provides additional conversion of types (date, boolean).
+     *
      * @param identifier The `name` or `id` value
      */
     getFormVariableValue(identifier: string): any {
@@ -277,6 +280,7 @@ export class FormModel {
 
     /**
      * Returns a process variable value.
+     *
      * @param name Variable name
      */
     getProcessVariableValue(name: string): any {
@@ -337,7 +341,7 @@ export class FormModel {
             const field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                const container = <ContainerModel> field;
+                const container = field;
                 formFieldModel.push(container.field);
 
                 container.field.columns.forEach((column) => {
@@ -355,24 +359,24 @@ export class FormModel {
 
     protected parseOutcomes() {
         if (this.json.fields) {
-            const saveOutcome = new FormOutcomeModel(<any> this, {
+            const saveOutcome = new FormOutcomeModel(this, {
                 id: FormModel.SAVE_OUTCOME,
                 name: 'SAVE',
                 isSystem: true
             });
-            const completeOutcome = new FormOutcomeModel(<any> this, {
+            const completeOutcome = new FormOutcomeModel(this, {
                 id: FormModel.COMPLETE_OUTCOME,
                 name: 'COMPLETE',
                 isSystem: true
             });
-            const startProcessOutcome = new FormOutcomeModel(<any> this, {
+            const startProcessOutcome = new FormOutcomeModel(this, {
                 id: FormModel.START_PROCESS_OUTCOME,
                 name: 'START PROCESS',
                 isSystem: true
             });
 
             const customOutcomes = (this.json.outcomes || []).map(
-                (obj) => new FormOutcomeModel(<any> this, obj)
+                (obj) => new FormOutcomeModel(this, obj)
             );
 
             this.outcomes = [saveOutcome].concat(

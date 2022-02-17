@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let flow = {
+export const flow = {
     id: 'sid-5BA99724-A3BD-4F8E-B69F-222F9FF66335',
     sourceRef: 'startEvent1',
     targetRef: 'sid-811B9223-E72E-4991-AAA5-4E1A01095D08',

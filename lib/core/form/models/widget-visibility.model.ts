@@ -100,6 +100,7 @@ export class WidgetVisibilityModel {
     }
 }
 
+// eslint-disable-next-line no-shadow
 export enum WidgetTypeEnum {
     field = 'field',
     variable = 'variable',

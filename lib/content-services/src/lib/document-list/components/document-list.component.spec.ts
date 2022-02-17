@@ -86,8 +86,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         eventMock = {
-            preventDefault: function () {
-            }
+            preventDefault: () => {}
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
@@ -237,11 +236,13 @@ describe('DocumentList', () => {
         const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
         documentList.selection = [{ entry: mockNode3 }];
         const changes: SimpleChanges = {
-            'preselectNodes': {
+            preselectNodes: {
                 previousValue: undefined,
                 currentValue: mockPreselectedNodes,
                 firstChange: true,
-                isFirstChange(): boolean { return this.firstChange; }
+                isFirstChange(): boolean {
+                    return this.firstChange;
+                }
             }
         };
         documentList.ngOnChanges(changes);
@@ -254,11 +255,13 @@ describe('DocumentList', () => {
         const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
         documentList.selection = [{ entry: mockNode3 }];
         const changes: SimpleChanges = {
-            'mockChange': {
+            mockChange: {
                 previousValue: undefined,
                 currentValue: ['mockChangeValue'],
                 firstChange: true,
-                isFirstChange(): boolean { return this.firstChange; }
+                isFirstChange(): boolean {
+                    return this.firstChange;
+                }
             }
         };
         documentList.ngOnChanges(changes);
@@ -299,14 +302,14 @@ describe('DocumentList', () => {
     it('should add the custom columns', () => {
         fixture.detectChanges();
 
-        const column = <DataColumn> {
+        const column = {
             title: 'title',
             key: 'source',
             cssClass: 'css',
             srTitle: '',
             type: 'text',
             format: ''
-        };
+        } as DataColumn;
 
         const columns = documentList.data.getColumns();
         columns.push(column);
@@ -452,8 +455,7 @@ describe('DocumentList', () => {
 
     it('should not execute action without node provided', () => {
         const action = new ContentActionModel();
-        action.handler = function () {
-        };
+        action.handler = () => {};
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
@@ -1163,7 +1165,7 @@ describe('DocumentList', () => {
 
     it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
         fixture.detectChanges();
-        const filter = <RowFilter> {};
+        const filter = {} as RowFilter;
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
 
@@ -1177,14 +1179,14 @@ describe('DocumentList', () => {
         spyFolder.calls.reset();
         documentList.currentFolderId = null;
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, {} as RowFilter, true) });
 
         expect(spyFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         fixture.detectChanges();
-        const resolver = <ImageResolver> {};
+        const resolver = {} as ImageResolver;
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
         documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
@@ -1320,9 +1322,7 @@ describe('DocumentList', () => {
     });
 
     it('should allow to perform navigation for virtual sources', () => {
-        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => {
-            return of(new DocumentLoaderNode(null, { list: { pagination: {} } }));
-        });
+        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => of(new DocumentLoaderNode(null, { list: { pagination: {} } })));
 
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
@@ -1721,18 +1721,18 @@ describe('DocumentList', () => {
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
             fakeDatatableRows[0].isSelected = true;
             documentList.data.setRows(fakeDatatableRows);
-            let selectedRows = documentList.data.getSelectedRows();
+            let selection = documentList.data.getSelectedRows();
 
-            expect(selectedRows.length).toEqual(1);
+            expect(selection.length).toEqual(1);
 
             documentList.unselectRowFromNodeId(mockPreselectedNodes[0].entry.id);
-            selectedRows = documentList.data.getSelectedRows();
+            selection = documentList.data.getSelectedRows() as ShareDataRow[];
 
-            expect(selectedRows).toEqual([]);
+            expect(selection).toEqual([]);
             expect(getSelectionSpy).toHaveBeenCalled();
             expect(getRowByNodeIdSpy).toHaveBeenCalledWith(mockPreselectedNodes[0].entry.id);
             expect(datatableSelectRowSpy).toHaveBeenCalledWith(fakeDatatableRows[0], false);
-            expect(onNodeUnselectSpy).toHaveBeenCalledWith({ row: undefined, selection: <ShareDataRow[]> selectedRows });
+            expect(onNodeUnselectSpy).toHaveBeenCalledWith({ row: undefined, selection });
         });
 
         it('should preselect the rows of the preselected nodes', () => {
@@ -1778,16 +1778,16 @@ describe('DocumentList', () => {
             documentList.selectionMode = 'multiple';
             documentList.preselectNodes = mockPreselectedNodes;
             documentList.onPreselectNodes();
-            const selectedRows = documentList.data.getSelectedRows();
+            const selection = documentList.data.getSelectedRows() as ShareDataRow[];
 
             expect(hasPreselectedNodesSpy).toHaveBeenCalled();
             expect(preselectRowsOfPreselectedNodesSpy).toHaveBeenCalled();
             expect(getPreselectedRowsBasedOnSelectionModeSpy).toHaveBeenCalled();
-            expect(selectedRows.length).toEqual(3);
-            expect(selectedRows[0].id).toEqual(mockNode1.id);
-            expect(selectedRows[1].id).toEqual(mockNode2.id);
-            expect(selectedRows[2].id).toEqual(mockNode3.id);
-            expect(onNodeSelectSpy).toHaveBeenCalledWith({ row: undefined, selection: <ShareDataRow[]> selectedRows });
+            expect(selection.length).toEqual(3);
+            expect(selection[0].id).toEqual(mockNode1.id);
+            expect(selection[1].id).toEqual(mockNode2.id);
+            expect(selection[2].id).toEqual(mockNode3.id);
+            expect(onNodeSelectSpy).toHaveBeenCalledWith({ row: undefined, selection });
         });
     });
 });

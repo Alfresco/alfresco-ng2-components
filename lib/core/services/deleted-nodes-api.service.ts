@@ -48,10 +48,11 @@ export class DeletedNodesApiService {
 
     /**
      * Gets a list of nodes in the trash.
+     *
      * @param options Options for JS-API call
      * @returns List of nodes in the trash
      */
-    getDeletedNodes(options?: Object): Observable<NodePaging> {
+    getDeletedNodes(options?: any): Observable<NodePaging> {
         const defaultOptions = {
             include: [ 'path', 'properties' ],
             maxItems: this.preferences.paginationSize,

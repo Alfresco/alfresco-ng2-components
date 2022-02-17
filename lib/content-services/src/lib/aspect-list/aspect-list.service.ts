@@ -85,9 +85,7 @@ export class AspectListService {
     private filterAspectByConfig(visibleAspectList: string[], aspectEntries: AspectEntry[]): AspectEntry[] {
         let result = aspectEntries ? aspectEntries : [];
         if (visibleAspectList?.length > 0 && aspectEntries) {
-            result = aspectEntries.filter((value) => {
-                return visibleAspectList.includes(value?.entry?.id);
-            });
+            result = aspectEntries.filter((value) => visibleAspectList.includes(value?.entry?.id));
         }
         return result;
     }

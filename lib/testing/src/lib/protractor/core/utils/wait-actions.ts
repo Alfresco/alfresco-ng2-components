@@ -20,9 +20,8 @@ import { ApiService } from '../../../shared/api/api.service';
 import { ApiUtil } from '../../../shared/api/api.util';
 import { Logger } from './logger';
 
+const DELAY_API_CALL = 5000;
 export class WaitActions {
-
-    DELAY_API_CALL = 5000;
     apiService: ApiService;
     nodesApi: NodesApi;
 
@@ -32,13 +31,9 @@ export class WaitActions {
     }
 
     async nodeIsPresent(nodeId: string): Promise<NodeEntry | null> {
-
-        const predicate = (result) => {
-            return result.entry.id === nodeId;
-        };
+        const predicate = (result) => result.entry.id === nodeId;
 
         const apiCall = async () => {
-
             try {
                 return this.nodesApi.getNode(nodeId);
             } catch (error) {
@@ -47,17 +42,13 @@ export class WaitActions {
             }
         };
 
-        return ApiUtil.waitForApi(apiCall, predicate, this.DELAY_API_CALL);
+        return ApiUtil.waitForApi(apiCall, predicate, DELAY_API_CALL);
     }
 
     async nodeIsUnlock(nodeId: string): Promise<NodeEntry | null> {
-
-        const predicate = (result) => {
-            return result.entry.isLocked === false;
-        };
+        const predicate = (result) => result.entry.isLocked === false;
 
         const apiCall = async () => {
-
             try {
                 return this.nodesApi.getNode(nodeId);
             } catch (error) {
@@ -66,7 +57,6 @@ export class WaitActions {
             }
         };
 
-        return ApiUtil.waitForApi(apiCall, predicate, this.DELAY_API_CALL);
+        return ApiUtil.waitForApi(apiCall, predicate, DELAY_API_CALL);
     }
-
 }

@@ -20,6 +20,9 @@ import { SitesService, LogService, InfiniteSelectScrollDirective } from '@alfres
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
 
+/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export enum Relations {
     Members = 'members',
     Containers = 'containers'
@@ -30,7 +33,7 @@ export enum Relations {
     styleUrls: ['./sites-dropdown.component.scss'],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-sites-dropdown' }
+    host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
 
@@ -169,8 +172,6 @@ export class DropdownSitesComponent implements OnInit {
 
     private isCurrentUserMember(site, loggedUserName): boolean {
         return site.entry.visibility === 'PUBLIC' ||
-            !!site.relations.members.list.entries.find((member) => {
-                return member.entry.id.toLowerCase() === loggedUserName.toLowerCase();
-            });
+            !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase());
     }
 }

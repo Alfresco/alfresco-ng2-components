@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';

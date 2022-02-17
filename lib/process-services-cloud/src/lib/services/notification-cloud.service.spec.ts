@@ -29,7 +29,7 @@ describe('NotificationCloudService', () => {
     let apolloSubscribeSpy: jasmine.Spy;
     let apiService: AlfrescoApiService;
     const useMock: any = {
-        subscribe() {}
+        subscribe: () => {}
     };
 
     const queryMock = `
@@ -47,9 +47,7 @@ describe('NotificationCloudService', () => {
         oauth2Auth: {
             token: '1234567'
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 

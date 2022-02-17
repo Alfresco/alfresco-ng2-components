@@ -26,29 +26,23 @@ export const rootInitiator: NotificationInitiator  = {
     displayName: 'SYSTEM'
 };
 
-export function info(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
-    return {
-        type: NOTIFICATION_TYPE.INFO,
-        datetime: new Date(),
-        initiator,
-        messages: [].concat(messages)
-    };
-}
+export const info = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
+    type: NOTIFICATION_TYPE.INFO,
+    datetime: new Date(),
+    initiator,
+    messages: [].concat(messages)
+});
 
-export function warning(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
-    return {
-        type: NOTIFICATION_TYPE.WARN,
-        datetime: new Date(),
-        initiator,
-        messages: [].concat(messages)
-    };
-}
+export const warning = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
+    type: NOTIFICATION_TYPE.WARN,
+    datetime: new Date(),
+    initiator,
+    messages: [].concat(messages)
+});
 
-export function error(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {
-    return {
-        type: NOTIFICATION_TYPE.ERROR,
-        datetime: new Date(),
-        initiator,
-        messages: [].concat(messages)
-    };
-}
+export const error = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
+    type: NOTIFICATION_TYPE.ERROR,
+    datetime: new Date(),
+    initiator,
+    messages: [].concat(messages)
+});

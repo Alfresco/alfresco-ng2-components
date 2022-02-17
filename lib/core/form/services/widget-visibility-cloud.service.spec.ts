@@ -596,7 +596,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.rightType = 'field';
             visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
 
-            const container = <ContainerModel> fakeFormWithField.fields[0];
+            const container = fakeFormWithField.fields[0];
             const column0 = container.field.columns[0];
             const column1 = container.field.columns[1];
 
@@ -989,12 +989,12 @@ describe('WidgetVisibilityCloudService', () => {
                                     type: 'radio-buttons',
                                     options: [
                                         {
-                                            'id': 'radioBoxYes',
-                                            'name': 'Yes'
+                                            id: 'radioBoxYes',
+                                            name: 'Yes'
                                         },
                                         {
-                                            'id': 'radioBoxNo',
-                                            'name': 'No'
+                                            id: 'radioBoxNo',
+                                            name: 'No'
                                         }
                                     ]
                                 }, {

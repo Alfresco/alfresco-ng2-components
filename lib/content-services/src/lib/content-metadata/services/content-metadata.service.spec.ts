@@ -57,13 +57,13 @@ describe('ContentMetaDataService', () => {
         ]
     });
 
-    function setConfig(presetName, presetConfig) {
+    const setConfig = (presetName, presetConfig) => {
         appConfig.config['content-metadata'] = {
             presets: {
                 [presetName]: presetConfig
             }
         };
-    }
+    };
 
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
@@ -74,14 +74,14 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return all the properties of the node', () => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
             aspectNames: ['exif:exif'],
             createdByUser: {displayName: 'test-user'},
             modifiedByUser: {displayName: 'test-user-modified'}
-        };
+        } as Node;
 
         service.getBasicProperties(fakeNode).subscribe(
             (res) => {
@@ -94,7 +94,7 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return the content type property', () => {
-        const fakeNode: Node = <Node> {
+        const fakeNode: Node = {
             name: 'Node',
             id: 'fake-id',
             isFile: true,
@@ -103,7 +103,7 @@ describe('ContentMetaDataService', () => {
             createdByUser: {displayName: 'test-user'},
             modifiedByUser: {displayName: 'test-user-modified'},
             properties: []
-        };
+        } as Node;
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'} as any));
 
         service.getContentTypeProperty(fakeNode).subscribe(
@@ -128,7 +128,7 @@ describe('ContentMetaDataService', () => {
     describe('AspectOriented preset', () => {
 
         it('should return response with exif property', (done) => {
-            const fakeNode: Node = <Node> { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } ;
+            const fakeNode: Node = { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } as Node;
             setConfig('default', { 'exif:exif': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
@@ -146,7 +146,7 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should filter the record options for node ', (done) => {
-            const fakeNode: Node = <Node> { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } ;
+            const fakeNode: Node = { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } as Node;
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
@@ -167,17 +167,17 @@ describe('ContentMetaDataService', () => {
     describe('LayoutOriented preset', () => {
 
         it('should return the node property', (done) => {
-            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [
                 {
-                    'id': 'app.content.metadata.customGroup2',
-                    'title': 'Properties',
-                    'items': [
+                    id: 'app.content.metadata.customGroup2',
+                    title: 'Properties',
+                    items: [
                         {
-                            'id': 'app.content.metadata.content',
-                            'aspect': 'cm:content',
-                            'properties': '*'
+                            id: 'app.content.metadata.content',
+                            aspect: 'cm:content',
+                            properties: '*'
                         }
                     ]
                 }
@@ -199,28 +199,28 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should filter the exif property', (done) => {
-            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [
                 {
-                    'id': 'app.content.metadata.customGroup',
-                    'title': 'Exif',
-                    'items': [
+                    id: 'app.content.metadata.customGroup',
+                    title: 'Exif',
+                    items: [
                         {
-                            'id': 'app.content.metadata.exifAspect2',
-                            'aspect': 'exif:exif',
-                            'properties': '*'
+                            id: 'app.content.metadata.exifAspect2',
+                            aspect: 'exif:exif',
+                            properties: '*'
                         }
                     ]
                 },
                 {
-                    'id': 'app.content.metadata.customGroup2',
-                    'title': 'Properties',
-                    'items': [
+                    id: 'app.content.metadata.customGroup2',
+                    title: 'Properties',
+                    items: [
                         {
-                            'id': 'app.content.metadata.content',
-                            'aspect': 'cm:content',
-                            'properties': '*'
+                            id: 'app.content.metadata.content',
+                            aspect: 'cm:content',
+                            properties: '*'
                         }
                     ]
                 }
@@ -242,19 +242,19 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should exclude the property if this property is excluded from config', (done) => {
-            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [
                 {
-                    'id': 'app.content.metadata.customGroup',
-                    'title': 'Exif',
-                    'includeAll': true,
-                    'exclude': ['cm:content'],
-                    'items': [
+                    id: 'app.content.metadata.customGroup',
+                    title: 'Exif',
+                    includeAll: true,
+                    exclude: ['cm:content'],
+                    items: [
                         {
-                            'id': 'app.content.metadata.exifAspect2',
-                            'aspect': 'exif:exif',
-                            'properties': '*'
+                            id: 'app.content.metadata.exifAspect2',
+                            aspect: 'exif:exif',
+                            properties: '*'
                         }
                     ]
                 }
@@ -276,29 +276,29 @@ describe('ContentMetaDataService', () => {
     });
 
     describe('Provided preset config', () => {
-       it('should create the metadata config on the fly when preset config is provided', async(done) => {
-            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+       it('should create the metadata config on the fly when preset config is provided', async (done) => {
+            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [
                 {
-                    'id': 'app.content.metadata.customGroup',
-                    'title': 'Exif',
-                    'items': [
+                    id: 'app.content.metadata.customGroup',
+                    title: 'Exif',
+                    items: [
                         {
-                            'id': 'app.content.metadata.exifAspect2',
-                            'aspect': 'exif:exif',
-                            'properties': '*'
+                            id: 'app.content.metadata.exifAspect2',
+                            aspect: 'exif:exif',
+                            properties: '*'
                         }
                     ]
                 },
                 {
-                    'id': 'app.content.metadata.customGroup2',
-                    'title': 'Properties',
-                    'items': [
+                    id: 'app.content.metadata.customGroup2',
+                    title: 'Properties',
+                    items: [
                         {
-                            'id': 'app.content.metadata.content',
-                            'aspect': 'cm:content',
-                            'properties': '*'
+                            id: 'app.content.metadata.content',
+                            aspect: 'cm:content',
+                            properties: '*'
                         }
                     ]
                 }

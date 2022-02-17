@@ -94,8 +94,8 @@ describe('ProcessService', () => {
     });
 
     describe('start process instance', () => {
-
-        const processDefId = '1234', processName = 'My process instance';
+        const processDefId = '1234';
+        const processName = 'My process instance';
         let startNewProcessInstance: jasmine.Spy;
 
         beforeEach(() => {

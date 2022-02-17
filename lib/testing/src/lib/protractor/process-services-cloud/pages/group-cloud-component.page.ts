@@ -79,7 +79,7 @@ export class GroupCloudComponentPage {
         }
     }
 
-    async checkGroupWidgetIsReadOnly (): Promise <boolean> {
+    async checkGroupWidgetIsReadOnly(): Promise <boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.groupField);
             return true;
@@ -101,5 +101,4 @@ export class GroupCloudComponentPage {
         const errorLocator = $('[data-automation-id="adf-cloud-group-no-results"]');
         await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
     }
-
 }

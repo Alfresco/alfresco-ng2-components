@@ -17,7 +17,7 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
         max-height: 400px;
         margin-left: 45px;
         margin-top: -22px;
-        font-size: 15px;
+        font-size: var(--theme-subheading-1-font-size);
         z-index: 5;
         color: var(--theme-text-fg-color);
         background-color: var(--theme-card-bg-color);

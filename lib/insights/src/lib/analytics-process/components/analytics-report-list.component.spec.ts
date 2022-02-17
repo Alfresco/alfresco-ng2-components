@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
+import { AnalyticsReportListComponent, LAYOUT_GRID, LAYOUT_LIST } from '../components/analytics-report-list.component';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
@@ -27,14 +27,14 @@ declare let jasmine: any;
 describe('AnalyticsReportListComponent', () => {
 
     const reportList = [
-        { 'id': 2002, 'name': 'Fake Test Process definition heat map' },
-        { 'id': 2003, 'name': 'Fake Test Process definition overview' },
-        { 'id': 2004, 'name': 'Fake Test Process instances overview' },
-        { 'id': 2005, 'name': 'Fake Test Task overview' },
-        { 'id': 2006, 'name': 'Fake Test Task service level agreement' }
+        { id: 2002, name: 'Fake Test Process definition heat map' },
+        { id: 2003, name: 'Fake Test Process definition overview' },
+        { id: 2004, name: 'Fake Test Process instances overview' },
+        { id: 2005, name: 'Fake Test Task overview' },
+        { id: 2006, name: 'Fake Test Task service level agreement' }
     ];
 
-    const reportSelected = { 'id': 2003, 'name': 'Fake Test Process definition overview' };
+    const reportSelected = { id: 2003, name: 'Fake Test Process definition overview' };
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
@@ -159,13 +159,13 @@ describe('AnalyticsReportListComponent', () => {
 
         it('Should return false if the current report is different', () => {
             component.selectReport(reportSelected);
-            const anotherReport = { 'id': 111, 'name': 'Another Fake Test Process definition overview' };
+            const anotherReport = { id: 111, name: 'Another Fake Test Process definition overview' };
             expect(component.isSelected(anotherReport)).toBe(false);
         });
 
         it('Should reload the report list', (done) => {
             component.initObserver();
-            const report = new ReportParametersModel({ 'id': 2002, 'name': 'Fake Test Process definition heat map' });
+            const report = new ReportParametersModel({ id: 2002, name: 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
             component.reload();
@@ -213,14 +213,14 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = AnalyticsReportListComponent.LAYOUT_GRID;
+            component.layoutType = LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
         });
 
         it('should display a list when configured to', () => {
-            component.layoutType = AnalyticsReportListComponent.LAYOUT_LIST;
+            component.layoutType = LAYOUT_LIST;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);

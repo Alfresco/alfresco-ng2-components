@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
+/* eslint-disable */
 let log = null;
 
 log = {
@@ -31,4 +31,4 @@ log = {
 };
 
 export let logger = log;
-/* tslint:enable */
+/* eslint-enable */

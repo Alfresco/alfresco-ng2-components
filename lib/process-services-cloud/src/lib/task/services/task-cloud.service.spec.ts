@@ -32,75 +32,45 @@ describe('Task Cloud Service', () => {
     let identityUserService: IdentityUserService;
     let translateService: TranslationService;
 
-    function returnFakeTaskCompleteResults(): any {
-        return {
-            reply: () => {},
-            oauth2Auth: {
-                callCustomApi : () => {
-                    return Promise.resolve(taskCompleteCloudMock);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnFakeTaskCompleteResults = (): any => ({
+        reply: () => {},
+        oauth2Auth: {
+            callCustomApi : () => Promise.resolve(taskCompleteCloudMock)
+        },
+        isEcmLoggedIn: () => false
+    });
 
-    function returnFakeTaskCompleteResultsError(): any {
-        return {
-            reply: () => {},
-            oauth2Auth: {
-                callCustomApi : () => {
-                    return Promise.reject(taskCompleteCloudMock);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnFakeTaskCompleteResultsError = (): any => ({
+        reply: () => {},
+        oauth2Auth: {
+            callCustomApi : () => Promise.reject(taskCompleteCloudMock)
+        },
+        isEcmLoggedIn: () => false
+    });
 
-    function returnFakeTaskDetailsResults(): any {
-        return {
-            reply: () => {},
-            oauth2Auth: {
-                callCustomApi : () => {
-                    return Promise.resolve(fakeTaskDetailsCloud);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnFakeTaskDetailsResults = (): any => ({
+        reply: () => {},
+        oauth2Auth: {
+            callCustomApi : () => Promise.resolve(fakeTaskDetailsCloud)
+        },
+        isEcmLoggedIn: () => false
+    });
 
-    function returnFakeCandidateUsersResults(): any {
-        return {
-            reply: () => {},
-            oauth2Auth: {
-                callCustomApi : () => {
-                    return Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3']);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnFakeCandidateUsersResults = (): any => ({
+        reply: () => {},
+        oauth2Auth: {
+            callCustomApi : () => Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3'])
+        },
+        isEcmLoggedIn: () => false
+    });
 
-    function returnFakeCandidateGroupResults(): any {
-        return {
-            reply: () => {},
-            oauth2Auth: {
-                callCustomApi : () => {
-                    return Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
-                }
-            },
-            isEcmLoggedIn() {
-                return false;
-            }
-        };
-    }
+    const returnFakeCandidateGroupResults = (): any => ({
+        reply: () => {},
+        oauth2Auth: {
+            callCustomApi : () => Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3'])
+        },
+        isEcmLoggedIn: () => false
+    });
 
     setupTestBed({
         imports: [

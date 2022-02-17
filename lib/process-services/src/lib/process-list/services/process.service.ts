@@ -42,25 +42,25 @@ declare let moment: any;
 })
 export class ProcessService {
 
-    private _tasksApi;
+    private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {
         this._tasksApi = this._tasksApi ?? new TasksApi(this.alfrescoApiService.getInstance());
         return this._tasksApi;
     }
 
-    private _processDefinitionsApi;
+    private _processDefinitionsApi: ProcessDefinitionsApi;
     get processDefinitionsApi(): ProcessDefinitionsApi {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
         return this._processDefinitionsApi;
     }
 
-    private _processInstancesApi;
+    private _processInstancesApi: ProcessInstancesApi;
     get processInstancesApi(): ProcessInstancesApi {
         this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.alfrescoApiService.getInstance());
         return this._processInstancesApi;
     }
 
-    private _processInstanceVariablesApi;
+    private _processInstanceVariablesApi: ProcessInstanceVariablesApi;
     get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
         this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
         return this._processInstanceVariablesApi;
@@ -71,6 +71,7 @@ export class ProcessService {
 
     /**
      * Gets process instances for a filter and optionally a process definition.
+     *
      * @param requestNode Filter for instances
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of process instances
@@ -93,6 +94,7 @@ export class ProcessService {
 
     /**
      * Gets processes for a filter and optionally a process definition.
+     *
      * @param requestNode Filter for instances
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of processes
@@ -100,42 +102,20 @@ export class ProcessService {
     getProcesses(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
         return this.getProcessInstances(requestNode, processDefinitionKey)
             .pipe(
-                map(response => {
-                    return {
+                map(response => ({
                         ...response,
                         data: (response.data || []).map(instance => {
                             instance.name = this.getProcessNameOrDescription(instance, 'medium');
                             return instance;
                         })
-                    };
-                }),
+                    })),
                 catchError(() => of(new ProcessListModel({})))
             );
     }
 
-    private getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {
-        let name = '';
-
-        if (processInstance) {
-            name = processInstance.name ||
-                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
-        }
-
-        return name;
-    }
-
-    private getFormatDate(value: Date, format: string) {
-        const datePipe = new DatePipe('en-US');
-
-        try {
-            return datePipe.transform(value, format);
-        } catch (err) {
-            return '';
-        }
-    }
-
     /**
      * Fetches the Process Audit information as a PDF.
+     *
      * @param processId ID of the target process
      * @returns Binary PDF data
      */
@@ -148,6 +128,7 @@ export class ProcessService {
 
     /**
      * Fetches the Process Audit information in a JSON format.
+     *
      * @param processId ID of the target process
      * @returns JSON data
      */
@@ -160,6 +141,7 @@ export class ProcessService {
 
     /**
      * Gets Process Instance metadata.
+     *
      * @param processInstanceId ID of the target process
      * @returns Metadata for the instance
      */
@@ -172,16 +154,17 @@ export class ProcessService {
 
     /**
      * Gets task instances for a process instance.
+     *
      * @param processInstanceId ID of the process instance
      * @param state Task state filter (can be "active" or "completed")
      * @returns Array of task instance details
      */
     getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]> {
         const taskOpts = state ? {
-            processInstanceId: processInstanceId,
-            state: state
+            processInstanceId,
+            state
         } : {
-            processInstanceId: processInstanceId
+            processInstanceId
         };
         return from(this.tasksApi.listTasks(taskOpts))
             .pipe(
@@ -196,6 +179,7 @@ export class ProcessService {
 
     /**
      * Gets process definitions associated with an app.
+     *
      * @param appId ID of a target app
      * @returns Array of process definitions
      */
@@ -218,6 +202,7 @@ export class ProcessService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
+     *
      * @param processDefinitionId Process definition ID
      * @param name Process name
      * @param outcome Process outcome
@@ -227,8 +212,8 @@ export class ProcessService {
      */
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: FormValues, variables?: ProcessInstanceVariable[]): Observable<ProcessInstance> {
         const startRequest: any = {
-            name: name,
-            processDefinitionId: processDefinitionId
+            name,
+            processDefinitionId
         };
         if (outcome) {
             startRequest.outcome = outcome;
@@ -250,6 +235,7 @@ export class ProcessService {
 
     /**
      * Cancels a process instance.
+     *
      * @param processInstanceId ID of process to cancel
      * @returns Null response notifying when the operation is complete
      */
@@ -264,6 +250,7 @@ export class ProcessService {
 
     /**
      * Gets the variables for a process instance.
+     *
      * @param processInstanceId ID of the target process
      * @returns Array of instance variable info
      */
@@ -279,6 +266,7 @@ export class ProcessService {
 
     /**
      * Creates or updates variables for a process instance.
+     *
      * @param processInstanceId ID of the target process
      * @param variables Variables to update
      * @returns Array of instance variable info
@@ -293,6 +281,7 @@ export class ProcessService {
 
     /**
      * Deletes a variable for a process instance.
+     *
      * @param processInstanceId ID of the target process
      * @param variableName Name of the variable to delete
      * @returns Null response notifying when the operation is complete
@@ -312,5 +301,26 @@ export class ProcessService {
 
     private handleProcessError(error: any) {
         return throwError(error || 'Server error');
+    }
+
+    private getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {
+        let name = '';
+
+        if (processInstance) {
+            name = processInstance.name ||
+                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
+        }
+
+        return name;
+    }
+
+    private getFormatDate(value: Date, format: string) {
+        const datePipe = new DatePipe('en-US');
+
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            return '';
+        }
     }
 }

@@ -40,7 +40,7 @@ export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemMode
     }
 
     changed(change: MatCheckboxChange) {
-        this.cardViewUpdateService.update(<CardViewBoolItemModel> { ...this.property }, change.checked );
+        this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked );
         this.property.value = change.checked;
     }
 }

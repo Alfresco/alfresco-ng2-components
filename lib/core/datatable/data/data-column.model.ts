@@ -38,7 +38,7 @@ export interface DataColumn {
     srTitle?: string;
     cssClass?: string;
     template?: TemplateRef<any>;
-    formatTooltip?: Function;
+    formatTooltip?: (...args) => string;
     copyContent?: boolean;
     editable?: boolean;
     focus?: boolean;

@@ -20,7 +20,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-// import { fakeNodePaging } from './../../../mock/document-list.component.mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
@@ -28,17 +27,17 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchCategory } from '../../models/search-category.interface';
 
 const mockCategory: SearchCategory = {
-    'id': 'queryName',
-    'name': 'Name',
-    'columnKey': 'name',
-    'enabled': true,
-    'expanded': true,
-    'component': {
-        'selector': 'text',
-        'settings': {
-            'pattern': "cm:name:'(.*?)'",
-            'field': 'cm:name',
-            'placeholder': 'Enter the name'
+    id: 'queryName',
+    name: 'Name',
+    columnKey: 'name',
+    enabled: true,
+    expanded: true,
+    component: {
+        selector: 'text',
+        settings: {
+            pattern: `cm:name:'(.*?)'`,
+            field: 'cm:name',
+            placeholder: 'Enter the name'
         }
     }
 };
@@ -152,6 +151,7 @@ describe('SearchFilterContainerComponent', () => {
             fixture.detectChanges();
 
             expect(component.focusTrap).toBeDefined();
+            // eslint-disable-next-line no-underscore-dangle
             expect(component.focusTrap._element).toBe(component.filterContainer.nativeElement);
         });
 

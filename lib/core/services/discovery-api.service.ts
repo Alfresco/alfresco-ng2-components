@@ -49,9 +49,10 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Content Services.
+     *
      * @returns ProductVersionModel containing product details
      */
-    public getEcmProductInfo(): Observable<RepositoryInfo> {
+    getEcmProductInfo(): Observable<RepositoryInfo> {
         const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
 
         return from(discoveryApi.getRepositoryInformation())
@@ -63,9 +64,10 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Process Services.
+     *
      * @returns ProductVersionModel containing product details
      */
-    public getBpmProductInfo(): Observable<BpmProductVersionModel> {
+    getBpmProductInfo(): Observable<BpmProductVersionModel> {
         const aboutApi = new AboutApi(this.apiService.getInstance());
 
         return from(aboutApi.getAppVersion())
@@ -75,7 +77,7 @@ export class DiscoveryApiService {
             );
     }
 
-    public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
+    getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         const systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
 
         return from(systemPropertiesApi.getProperties())

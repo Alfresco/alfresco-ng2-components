@@ -28,6 +28,7 @@ export class FileUtils {
         const files: FileInfo[] = [];
         return new Promise((resolve) => {
             const iterations = [];
+            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
             (function traverse() {
                 reader.readEntries((entries) => {
                     if (!entries.length) {
@@ -36,10 +37,10 @@ export class FileUtils {
                         iterations.push(Promise.all(entries.map((entry) => {
                             if (entry.isFile) {
                                 return new Promise<void>((resolveFile) => {
-                                    entry.file(function (file: File) {
+                                    entry.file((file: File) => {
                                         files.push({
-                                            entry: entry,
-                                            file: file,
+                                            entry,
+                                            file,
                                             relativeFolder: entry.fullPath.replace(/\/[^\/]*$/, '')
                                         });
                                         resolveFile();

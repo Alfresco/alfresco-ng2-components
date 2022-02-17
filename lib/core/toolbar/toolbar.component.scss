@@ -17,7 +17,7 @@
 
     .mat-toolbar-row {
         height: 48px;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         white-space: normal;
     }
 

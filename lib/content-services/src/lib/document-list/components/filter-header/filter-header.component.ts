@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PaginationModel, DataSorting } from '@alfresco/adf-core';
 import { DocumentListComponent } from '../document-list.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
@@ -30,7 +30,7 @@ import { NodePaging, MinimalNode } from '@alfresco/js-api';
     templateUrl: './filter-header.component.html',
     providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService}]
 })
-export class FilterHeaderComponent implements OnInit, OnChanges {
+export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     /** (optional) Initial filter value to sort . */
     @Input()

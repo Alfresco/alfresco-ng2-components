@@ -816,31 +816,31 @@ describe('FormFieldModel', () => {
             form = new FormModel({
                 variables: [
                     {
-                        'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
-                        'name': 'name2',
-                        'type': 'string',
-                        'value': 'default hello'
+                        id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                        name: 'name2',
+                        type: 'string',
+                        value: 'default hello'
                     }
                 ],
                 processVariables: [
                     {
-                        'serviceName': 'denys-variable-mapping-rb',
-                        'serviceFullName': 'denys-variable-mapping-rb',
-                        'serviceVersion': '',
-                        'appName': 'denys-variable-mapping',
-                        'appVersion': '',
-                        'serviceType': null,
-                        'id': 3,
-                        'type': 'string',
-                        'name': 'variables.name1',
-                        'createTime': 1566989626284,
-                        'lastUpdatedTime': 1566989626284,
-                        'executionId': null,
-                        'value': 'hello',
-                        'markedAsDeleted': false,
-                        'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-                        'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-                        'taskVariable': true
+                        serviceName: 'denys-variable-mapping-rb',
+                        serviceFullName: 'denys-variable-mapping-rb',
+                        serviceVersion: '',
+                        appName: 'denys-variable-mapping',
+                        appVersion: '',
+                        serviceType: null,
+                        id: 3,
+                        type: 'string',
+                        name: 'variables.name1',
+                        createTime: 1566989626284,
+                        lastUpdatedTime: 1566989626284,
+                        executionId: null,
+                        value: 'hello',
+                        markedAsDeleted: false,
+                        processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                        taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                        taskVariable: true
                     }
                 ]
             });

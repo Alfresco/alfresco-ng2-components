@@ -26,7 +26,7 @@ import { UploadBase } from './base-upload/upload-base';
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.scss'],
-    host: {'class': 'adf-upload-drag-area'},
+    host: { class: 'adf-upload-drag-area' },
     viewProviders: [
         {provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
     ],
@@ -72,11 +72,10 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
      * @param latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
     showUndoNotificationBar(latestFilesAdded: FileModel[]) {
-        let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translationService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translationService.get('FILE_UPLOAD.ACTION.UNDO');
+        const messageTranslate = this.translationService.instant('FILE_UPLOAD.MESSAGES.PROGRESS');
+        const actionTranslate = this.translationService.instant('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
+        this.notificationService.openSnackMessageAction(messageTranslate, actionTranslate, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }

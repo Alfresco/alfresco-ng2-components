@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let startEvent = {
+export const startEvent = {
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -25,7 +25,7 @@ export let startEvent = {
     properties: [{}]
 };
 
-export let startEventActive = {
+export const startEventActive = {
     completed: false,
     current: true,
     id: 'startEvent1',
@@ -37,7 +37,7 @@ export let startEventActive = {
     properties: [{}]
 };
 
-export let startEventCompleted = {
+export const startEventCompleted = {
     completed: true,
     current: false,
     id: 'startEvent1',
@@ -49,7 +49,7 @@ export let startEventCompleted = {
     properties: [{}]
 };
 
-export let startTimeEvent = {
+export const startTimeEvent = {
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -60,7 +60,7 @@ export let startTimeEvent = {
     properties: [{}]
 };
 
-export let startTimeEventActive = {
+export const startTimeEventActive = {
     completed: false,
     current: true,
     id: 'startEvent1',
@@ -73,7 +73,7 @@ export let startTimeEventActive = {
     properties: [{}]
 };
 
-export let startTimeEventCompleted = {
+export const startTimeEventCompleted = {
     completed: true,
     current: false,
     id: 'startEvent1',
@@ -86,7 +86,7 @@ export let startTimeEventCompleted = {
     properties: [{}]
 };
 
-export let startSignalEvent = {
+export const startSignalEvent = {
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -97,7 +97,7 @@ export let startSignalEvent = {
     properties: [{}]
 };
 
-export let startSignalEventActive = {
+export const startSignalEventActive = {
     completed: false,
     current: true,
     id: 'startEvent1',
@@ -110,7 +110,7 @@ export let startSignalEventActive = {
     properties: [{}]
 };
 
-export let startSignalEventCompleted = {
+export const startSignalEventCompleted = {
     completed: true,
     current: false,
     id: 'startEvent1',
@@ -123,7 +123,7 @@ export let startSignalEventCompleted = {
     properties: [{}]
 };
 
-export let startMessageEvent = {
+export const startMessageEvent = {
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -134,7 +134,7 @@ export let startMessageEvent = {
     properties: [{}]
 };
 
-export let startMessageEventActive = {
+export const startMessageEventActive = {
     completed: false,
     current: true,
     id: 'startEvent1',
@@ -147,7 +147,7 @@ export let startMessageEventActive = {
     properties: [{}]
 };
 
-export let startMessageEventCompleted = {
+export const startMessageEventCompleted = {
     completed: true,
     current: false,
     id: 'startEvent1',
@@ -160,7 +160,7 @@ export let startMessageEventCompleted = {
     properties: [{}]
 };
 
-export let startErrorEvent = {
+export const startErrorEvent = {
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -171,7 +171,7 @@ export let startErrorEvent = {
     properties: [{}]
 };
 
-export let startErrorEventActive = {
+export const startErrorEventActive = {
     completed: false,
     current: true,
     id: 'startEvent1',
@@ -184,7 +184,7 @@ export let startErrorEventActive = {
     properties: [{}]
 };
 
-export let startErrorEventCompleted = {
+export const startErrorEventCompleted = {
     completed: true,
     current: false,
     id: 'startEvent1',
@@ -197,7 +197,7 @@ export let startErrorEventCompleted = {
     properties: [{}]
 };
 
-export let endEvent = {
+export const endEvent = {
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
     type: 'EndEvent',
     width: 28,
@@ -207,7 +207,7 @@ export let endEvent = {
     properties: [{}]
 };
 
-export let endEventActive = {
+export const endEventActive = {
     completed: false,
     current: true,
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
@@ -219,7 +219,7 @@ export let endEventActive = {
     properties: [{}]
 };
 
-export let endEventCompleted = {
+export const endEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
@@ -231,7 +231,7 @@ export let endEventCompleted = {
     properties: [{}]
 };
 
-export let endErrorEvent = {
+export const endErrorEvent = {
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
     type: 'EndEvent',
     width: 28,
@@ -242,7 +242,7 @@ export let endErrorEvent = {
     properties: [{}]
 };
 
-export let endErrorEventActive = {
+export const endErrorEventActive = {
     completed: false,
     current: true,
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
@@ -255,7 +255,7 @@ export let endErrorEventActive = {
     properties: [{}]
 };
 
-export let endErrorEventCompleted = {
+export const endErrorEventCompleted = {
     completed: true,
     current: false,
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',

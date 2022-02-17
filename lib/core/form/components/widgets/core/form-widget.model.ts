@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { FormModel } from './form.model';
+ /* eslint-disable @angular-eslint/component-selector */
 
 export abstract class FormWidgetModel {
 
@@ -31,7 +29,7 @@ export abstract class FormWidgetModel {
     readonly json: any;
     readonly field: any;
 
-    protected constructor(form: FormModel, json: any) {
+    protected constructor(form: any, json: any) {
         this.form = form;
         this.json = json;
 

@@ -33,17 +33,16 @@ import { ContentMetadataService } from '../../services/content-metadata.service'
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 
+const DEFAULT_SEPARATOR = ', ';
+
 @Component({
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
-    host: { 'class': 'adf-content-metadata' },
+    host: { class: 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
-
-    static DEFAULT_SEPARATOR = ', ';
-
     protected onDestroy$ = new Subject<boolean>();
 
     /** (required) The node entity to fetch metadata about */
@@ -106,7 +105,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private appConfig: AppConfigService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
-        this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || ContentMetadataComponent.DEFAULT_SEPARATOR;
+        this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');
     }
 
@@ -233,9 +232,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     showGroup(group: CardViewGroup): boolean {
-        const properties = group.properties.filter((property) => {
-            return !this.isEmpty(property.displayValue);
-        });
+        const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
 
         return properties.length > 0;
     }

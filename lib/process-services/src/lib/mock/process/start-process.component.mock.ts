@@ -18,24 +18,24 @@
 import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
 import { ProcessInstance } from '../../process-list/models/process-instance.model';
 
-export let newProcess = new ProcessInstance({
+export const newProcess = new ProcessInstance({
     id: '32323',
     name: 'Process'
 });
 
-export let testProcessDef = new ProcessDefinitionRepresentation({
+export const testProcessDef = new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
 });
 
-export let testProcessDefinitions = [new ProcessDefinitionRepresentation({
+export const testProcessDefinitions = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
 })];
 
-export let testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
+export const testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
@@ -45,7 +45,7 @@ export let testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
     hasStartForm: true
 })];
 
-export let testProcessDefWithForm = [new ProcessDefinitionRepresentation({
+export const testProcessDefWithForm = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: true

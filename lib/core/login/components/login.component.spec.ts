@@ -26,7 +26,6 @@ import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { of, throwError } from 'rxjs';
-import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -43,11 +42,10 @@ describe('LoginComponent', () => {
     let appConfigService: AppConfigService;
     let alfrescoApiService: AlfrescoApiService;
 
-    let usernameInput, passwordInput;
+    let usernameInput;
+    let passwordInput;
 
-    const getLoginErrorElement = () => {
-        return element.querySelector('#login-error');
-    };
+    const getLoginErrorElement = () => element.querySelector('#login-error');
 
     const getLoginErrorMessage = () => {
         const errorMessage = undefined;
@@ -93,7 +91,7 @@ describe('LoginComponent', () => {
         fixture.destroy();
     });
 
-    function loginWithCredentials(username: string, password: string) {
+    const loginWithCredentials = (username: string, password: string) => {
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -103,7 +101,7 @@ describe('LoginComponent', () => {
 
         element.querySelector('.adf-login-button').click();
         fixture.detectChanges();
-    }
+    };
 
     it('should be autocomplete off', () => {
         expect(
@@ -615,7 +613,7 @@ describe('LoginComponent', () => {
         describe('implicitFlow ', () => {
 
             beforeEach(() => {
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: false };
+                appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: false };
                 appConfigService.load();
                 alfrescoApiService.reset();
             });
@@ -633,7 +631,7 @@ describe('LoginComponent', () => {
 
             it('should not render the implicitFlow button in case silentLogin is enabled', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
+                appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: true };
 
                 spyOn(component, 'redirectToImplicitLogin').and.stub();
 

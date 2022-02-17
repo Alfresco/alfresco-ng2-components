@@ -149,7 +149,7 @@ describe('LibraryMembershipDirective', () => {
             expect(deleteMembershipSpy).not.toHaveBeenCalled();
         }));
 
-        it("should add 'workspace' to send appropriate email", fakeAsync(() => {
+        it(`should add 'workspace' to send appropriate email`, fakeAsync(() => {
             mockSupportedVersion = true;
             const selection = { entry: { id: 'no-membership-requested' } };
             const change = new SimpleChange(null, selection, true);

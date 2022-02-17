@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ACTIVITY_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
@@ -43,7 +44,7 @@ export class DiagramTaskComponent implements OnInit {
         this.textPosition =  {x: this.data.x + ( this.data.width / 2 ), y: this.data.y + ( this.data.height / 2 )};
 
         this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
-        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.ACTIVITY_STROKE_COLOR);
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, ACTIVITY_STROKE_COLOR);
         this.options.strokeWidth = this.diagramColorService.getBpmnStrokeWidth(this.data);
         this.options.fillOpacity = this.diagramColorService.getFillOpacity();
     }

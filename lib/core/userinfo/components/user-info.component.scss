@@ -25,7 +25,7 @@
         border-radius: 100px;
         text-align: center;
         font-weight: bolder;
-        font-size: 18px;
+        font-size: var(--theme-adf-picture-1-font-size);
         text-transform: uppercase;
         vertical-align: middle;
         line-height: 40px;
@@ -64,7 +64,7 @@
     &-userinfo-tab .mat-tab-label {
         flex: auto;
         font-weight: 500;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         text-transform: uppercase;
         line-height: 48px;
         text-align: center;
@@ -84,7 +84,7 @@
     }
 
     &-userinfo-supporting-text {
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 400;
         letter-spacing: 0;
         line-height: 18px;
@@ -100,12 +100,12 @@
     }
 
     &-userinfo-title {
-        font-size: 21px;
+        font-size: var(--theme-title-font-size);
     }
 
     &-userinfo__detail-profile {
         align-items: flex-start;
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 400;
         letter-spacing: 0;
         line-height: 18px;
@@ -116,7 +116,7 @@
 
     &-userinfo__detail-title {
         text-overflow: ellipsis;
-        font-size: 16px;
+        font-size: var(--theme-subheading-2-font-size);
         font-weight: 400;
         letter-spacing: 0.04em;
         line-height: 20px;
@@ -124,7 +124,7 @@
     }
 
     &-userinfo__secondary-info {
-        font-size: 14px;
+        font-size: var(--theme-body-1-font-size);
         font-weight: 400;
         letter-spacing: 0;
         line-height: 18px;

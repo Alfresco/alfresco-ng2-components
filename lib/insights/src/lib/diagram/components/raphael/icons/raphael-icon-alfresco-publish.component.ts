@@ -71,8 +71,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          C3.24683871,3.62387097 3.24683871,5.54219355 4.43006452,6.72541935 C5.61329032,7.90864516 7.5316129,7.90864516
          8.71483871,6.72541935 C8.80464516,6.6356129 8.88529032,6.54025806 8.96154839,6.44270968 C7.57341935,5.98864516
          6.57045161,4.68387097 6.57032258,3.144`).attr({
-            'stroke': this.stroke,
-            'fill': '#87C040',
+            stroke: this.stroke,
+            fill: '#87C040',
             'stroke-width': this.strokeWidth
         });
 
@@ -86,8 +86,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
         5.91935484 C14.947871,5.82954839 14.8526452,5.74890323 14.7550968,5.67264516 C14.3010323,7.06064516 12.996129,8.06374194
         11.4563871,8.06374194 L8.61277419,8.06374194 L10.7529032,10.204 C11.936129,11.3872258 13.8545806,11.3872258 15.0376774,10.204
         C16.2209032,9.02077419 16.2209032,7.10245161 15.0376774,5.91935484`).attr({
-            'stroke': this.stroke,
-            'fill': '#87C040',
+            stroke: this.stroke,
+            fill: '#87C040',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX + ',' + startY);
@@ -96,8 +96,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          C6.19458065,2.89032258 5.98141935,4.52309677 4.89225806,5.61225806 L2.88154839,7.62309677 L5.9083871,7.62309677
          C7.58154839,7.62309677 8.93806452,6.26658065 8.93806452,4.59329032 C8.93819355,2.92 7.58167742,1.5636129
          5.9083871,1.5636129`).attr({
-            'stroke': this.stroke,
-            'fill': '#ED9A2D',
+            stroke: this.stroke,
+            fill: '#ED9A2D',
             'stroke-width': this.strokeWidth
         });
 
@@ -108,8 +108,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          C0.206451613,1.10554839 0.125806452,1.20077419 0.0495483871,1.29845161 C1.43754839,1.75251613 2.44064516,3.05729032
          2.44064516,4.59703226 L2.44064516,7.44077419 L4.57574194,5.30554839 L4.58090323,5.30051613 C5.76412903,4.11729032
          5.76412903,2.19896774 4.58090323,1.0156129`).attr({
-            'stroke': this.stroke,
-            'fill': '#5698C6',
+            stroke: this.stroke,
+            fill: '#5698C6',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX2 + ',' + startY);
@@ -139,8 +139,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          C4.04258065,4.74103226 2.12412903,4.74090323 0.941032258,5.92412903 C-0.242193548,7.10735484 -0.242193548,9.02567742
          0.941032258,10.2089032 C1.03070968,10.2985806 1.12464516,10.3814194 1.22206452,10.4575484 C1.22529032,10.448 1.22929032,10.4388387
          1.23251613,10.4292903`).attr({
-            'stroke': this.stroke,
-            'fill': '#5698C6',
+            stroke: this.stroke,
+            fill: '#5698C6',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX + ',' + startY);
@@ -152,8 +152,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          7.54722581,3.20090323 7.54722581,4.58890323 L7.54722581,4.59612903M10.1385806,5.29819355 L8.444,6.99290323 L8.444,4.71522581
          L8.44129032,4.58606452 C8.44129032,3.19896774 9.37341935,2.02954839 10.6454194,1.67019355 C11.2925161,2.82412903
          11.1251613,4.3116129 10.1436129,5.29316129 L10.1385806,5.29819355`).attr({
-            'stroke': this.stroke,
-            'fill': '#446BA5',
+            stroke: this.stroke,
+            fill: '#446BA5',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX + ',' + startY);
@@ -161,8 +161,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
         path1 = this.paper.path(`M11.4548387,7.61677419 L9.05832258,7.61677419 L10.6689032,6.00619355 L10.7583226,5.91303226
          C11.7390968,4.93212903 13.2251613,4.7643871 14.3787097,5.40967742 C14.0202581,6.68322581 12.8500645,7.61677419
          11.4620645,7.61677419 L11.4548387,7.61677419`).attr({
-            'stroke': this.stroke,
-            'fill': '#FFF101',
+            stroke: this.stroke,
+            fill: '#FFF101',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX + ',' + startY);
@@ -176,8 +176,8 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
          5.85690323,10.8347097 L5.86193548,10.8296774M4.53251613,8.50993548 L6.92903226,8.50993548 L5.31845161,10.1205161
          L5.22903226,10.2136774 C4.24812903,11.1945806 2.76219355,11.3623226 1.60851613,10.7170323 C1.96709677,9.44335484
          3.13716129,8.50993548 4.52529032,8.50993548 L4.53251613,8.50993548`).attr({
-            'stroke': this.stroke,
-            'fill': '#45AB47',
+            stroke: this.stroke,
+            fill: '#45AB47',
             'stroke-width': this.strokeWidth
         });
         path1.transform('T' + startX + ',' + startY);

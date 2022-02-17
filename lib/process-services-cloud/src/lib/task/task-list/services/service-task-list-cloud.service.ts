@@ -34,6 +34,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Finds a task using an object with optional query properties.
+     *
      * @param requestNode Query object
      * @returns Task information
      */
@@ -54,6 +55,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Finds a service task integration context using an object with optional query properties.
+     *
      * @param appName string
      * @param serviceTaskId string
      * @returns Service Task Integration Context information
@@ -70,8 +72,8 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         }
     }
 
-    protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): Object {
-        const queryParam: Object = {};
+    protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
+        const queryParam: any = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&

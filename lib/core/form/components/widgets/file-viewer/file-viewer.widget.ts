@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 
- /* tslint:disable:component-selector  */
+ /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',

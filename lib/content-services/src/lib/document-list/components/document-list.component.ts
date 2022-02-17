@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-/* tslint:disable:rxjs-no-subject-value */
+/* eslint-disable rxjs/no-subject-value */
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
@@ -208,7 +209,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: { [key: string]: any; };
+    rowStyle: { [key: string]: any };
 
     /** The CSS class to apply to every row */
     @Input()
@@ -371,13 +372,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (node && node.entry) {
             const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
-                return actions.map((currentAction: ContentActionModel) => {
-                    return {
-                        model: currentAction,
-                        node: node,
-                        subject: this.contextActionHandler
-                    };
-                });
+                return actions.map((currentAction: ContentActionModel) => ({
+                    model: currentAction,
+                    node,
+                    subject: this.contextActionHandler
+                }));
             }
         }
         return null;
@@ -447,7 +446,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         let schema: DataColumn[] = [];
 
         if (this.hasCustomLayout) {
-            schema = this.columnList.columns.map((c) => <DataColumn> c);
+            schema = this.columnList.columns.map((c) => c as DataColumn);
         }
 
         if (!this.data) {
@@ -614,14 +613,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
             this.currentFolderId = node;
-            this.folderChange.emit(new NodeEntryEvent(<Node> { id: node }));
+            this.folderChange.emit(new NodeEntryEvent({ id: node } as Node));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
                 this.currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
+                this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId } as Node));
                 this.reload();
                 return true;
             }
@@ -644,6 +643,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /**
      * Invoked when executing content action for a document or folder.
+     *
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */
@@ -816,7 +816,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+    onNodeSelect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
@@ -829,7 +829,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
-    onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+    onNodeUnselect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-unselect', {
             detail: {
@@ -845,7 +845,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
             const args = event.value;
-            const node = (<ShareDataRow> args.row).node;
+            const node = args.row.node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
             }
@@ -855,7 +855,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
             const args = event.value;
-            const node = (<ShareDataRow> args.row).node;
+            const node = args.row.node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
             }
@@ -865,8 +865,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
             const args = event.value;
-            const node = (<ShareDataRow> args.row).node;
-            const action = (<ContentActionModel> args.action);
+            const node = args.row.node;
+            const action = args.action;
             this.executeContentAction(node, action);
         }
     }
@@ -952,12 +952,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.hasPreselectedNodes()) {
             this.preselectRowsOfPreselectedNodes();
             const preselectedRows = this.getPreselectedRowsBasedOnSelectionMode();
-            const selectedNodes = this.data.getSelectedRows();
+            const selection = this.data.getSelectedRows() as ShareDataRow[];
 
             for (const node of preselectedRows) {
                 this.dataTable.selectRow(node, true);
             }
-            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
+            this.onNodeSelect({ row: undefined, selection });
         }
     }
 
@@ -990,8 +990,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (rowToUnselect?.isSelected) {
             rowToUnselect.isSelected = false;
             this.dataTable.selectRow(rowToUnselect, false);
-            const selection = this.getSelectionBasedOnSelectionMode();
-            this.onNodeUnselect({ row: undefined, selection: <ShareDataRow[]> selection });
+            const selection = this.getSelectionBasedOnSelectionMode() as ShareDataRow[];
+            this.onNodeUnselect({ row: undefined, selection });
         }
     }
 

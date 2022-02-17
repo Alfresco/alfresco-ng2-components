@@ -126,7 +126,7 @@ describe('AuthenticationService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -137,9 +137,9 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -155,14 +155,14 @@ describe('AuthenticationService', () => {
                 });
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
-                    'status': 204
+                    status: 204
                 });
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -251,7 +251,7 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json'
             });
         });
@@ -268,12 +268,12 @@ describe('AuthenticationService', () => {
                 });
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
-                    'status': 200
+                    status: 200
                 });
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200
+                status: 200
             });
         });
 
@@ -288,7 +288,7 @@ describe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 403
+                status: 403
             });
         });
 
@@ -340,9 +340,9 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -356,9 +356,9 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -372,15 +372,15 @@ describe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 403,
+                status: 403,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    'error': {
-                        'errorKey': 'Login failed',
-                        'statusCode': 403,
-                        'briefSummary': '05150009 Login failed',
-                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                        'descriptionURL': 'https://api-explorer.alfresco.com'
+                    error: {
+                        errorKey: 'Login failed',
+                        statusCode: 403,
+                        briefSummary: '05150009 Login failed',
+                        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                        descriptionURL: 'https://api-explorer.alfresco.com'
                     }
                 })
             });
@@ -408,13 +408,13 @@ describe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 200
+                status: 200
             });
         });
 
@@ -432,11 +432,11 @@ describe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 403
+                status: 403
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 200
+                status: 200
             });
         });
 
@@ -453,13 +453,13 @@ describe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 201,
+                status: 201,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 403
+                status: 403
             });
         });
 
@@ -477,11 +477,11 @@ describe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 403
+                status: 403
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 403
+                status: 403
             });
         });
 
