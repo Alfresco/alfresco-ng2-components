@@ -248,6 +248,7 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Returns a form variable that matches the identifier.
+     *
      * @param identifier The `name` or `id` value.
      */
     getFormVariable(identifier: string): FormVariableModel {
@@ -264,6 +265,7 @@ export class FormModel implements ProcessFormModel {
     /**
      * Returns a value of the form variable that matches the identifier.
      * Provides additional conversion of types (date, boolean).
+     *
      * @param identifier The `name` or `id` value
      */
     getFormVariableValue(identifier: string): any {
@@ -278,6 +280,7 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Returns a process variable value.
+     *
      * @param name Variable name
      */
     getProcessVariableValue(name: string): any {
@@ -338,7 +341,7 @@ export class FormModel implements ProcessFormModel {
             const field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                const container = <ContainerModel> field;
+                const container = field;
                 formFieldModel.push(container.field);
 
                 container.field.columns.forEach((column) => {
@@ -356,24 +359,24 @@ export class FormModel implements ProcessFormModel {
 
     protected parseOutcomes() {
         if (this.json.fields) {
-            const saveOutcome = new FormOutcomeModel(<any> this, {
+            const saveOutcome = new FormOutcomeModel(this, {
                 id: FormModel.SAVE_OUTCOME,
                 name: 'SAVE',
                 isSystem: true
             });
-            const completeOutcome = new FormOutcomeModel(<any> this, {
+            const completeOutcome = new FormOutcomeModel(this, {
                 id: FormModel.COMPLETE_OUTCOME,
                 name: 'COMPLETE',
                 isSystem: true
             });
-            const startProcessOutcome = new FormOutcomeModel(<any> this, {
+            const startProcessOutcome = new FormOutcomeModel(this, {
                 id: FormModel.START_PROCESS_OUTCOME,
                 name: 'START PROCESS',
                 isSystem: true
             });
 
             const customOutcomes = (this.json.outcomes || []).map(
-                (obj) => new FormOutcomeModel(<any> this, obj)
+                (obj) => new FormOutcomeModel(this, obj)
             );
 
             this.outcomes = [saveOutcome].concat(

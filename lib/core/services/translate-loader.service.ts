@@ -46,7 +46,7 @@ export class TranslateLoaderService implements TranslateLoader {
         if (registered) {
             registered.path = path;
         } else {
-            this.providers.push(new ComponentTranslationModel({ name: name, path: path }));
+            this.providers.push(new ComponentTranslationModel({ name, path }));
         }
     }
 
@@ -131,14 +131,12 @@ export class TranslateLoaderService implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         let hasFailures = false;
         const batch = [
-            ...this.getComponentToFetch(lang).map((observable) => {
-                return observable.pipe(
-                    catchError((error) => {
-                        hasFailures = true;
-                        return of(error);
-                    })
-                );
-            })
+            ...this.getComponentToFetch(lang).map((observable) => observable.pipe(
+                catchError((error) => {
+                    hasFailures = true;
+                    return of(error);
+                })
+            ))
         ];
 
         return new Observable((observer) => {

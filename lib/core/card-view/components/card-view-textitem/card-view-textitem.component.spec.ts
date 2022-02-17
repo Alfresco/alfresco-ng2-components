@@ -904,28 +904,28 @@ describe('CardViewTextItemComponent', () => {
         });
     });
 
-    function updateTextField(key, value) {
+    const updateTextField = (key, value) => {
         const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         editInput.nativeElement.value = value;
         editInput.nativeElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
-    }
+    };
 
-    function getTextFieldValue(key): string {
+    const getTextFieldValue = (key): string => {
         const textItemInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         expect(textItemInput).not.toBeNull();
         return textItemInput.nativeElement.value;
-    }
+    };
 
-    function getTextField(key): DebugElement {
+    const getTextField = (key): DebugElement => {
         const textItemInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         expect(textItemInput).not.toBeNull();
         return textItemInput;
-    }
+    };
 
-    function getTextFieldError(key): string {
+    const getTextFieldError = (key): string => {
         const textItemInputError = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${key}"] li`));
         expect(textItemInputError).not.toBeNull();
         return textItemInputError.nativeElement.innerText;
-    }
+    };
 });

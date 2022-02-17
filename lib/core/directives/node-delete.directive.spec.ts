@@ -137,7 +137,7 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should process node successfully', (done) => {
-            component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }];
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
@@ -272,7 +272,7 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should emit event when delete is done', (done) => {
-            component.selection = <any> [{ entry: { id: '1', name: 'name1' } }];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }];
             fixture.detectChanges();
 
             element.nativeElement.click();

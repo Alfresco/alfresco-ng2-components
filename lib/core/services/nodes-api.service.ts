@@ -50,6 +50,7 @@ export class NodesApiService {
 
     /**
      * Gets the stored information about a node.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Node information
@@ -68,6 +69,7 @@ export class NodesApiService {
 
     /**
      * Gets the items contained in a folder node.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns List of child items from the folder
@@ -87,6 +89,7 @@ export class NodesApiService {
 
     /**
      * Creates a new document node inside a folder.
+     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new node
      * @param options Optional parameters supported by JS-API
@@ -101,6 +104,7 @@ export class NodesApiService {
 
     /**
      * Creates a new folder node inside a parent folder.
+     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new folder
      * @param options Optional parameters supported by JS-API
@@ -113,6 +117,7 @@ export class NodesApiService {
 
     /**
      * Updates the information about a node.
+     *
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
      * @param options Optional parameters supported by JS-API
@@ -132,6 +137,7 @@ export class NodesApiService {
 
     /**
      * Moves a node to the trashcan.
+     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
@@ -144,6 +150,7 @@ export class NodesApiService {
 
     /**
      * Restores a node previously moved to the trashcan.
+     *
      * @param nodeId ID of the node to restore
      * @returns Details of the restored node
      */
@@ -156,6 +163,7 @@ export class NodesApiService {
 
     /**
      * Get the metadata and the nodeType for a nodeId cleaned by the prefix.
+     *
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
@@ -166,6 +174,7 @@ export class NodesApiService {
 
     /**
      * Create a new Node from form metadata.
+     *
      * @param path Path to the node
      * @param nodeType Node type
      * @param name Node name
@@ -186,6 +195,7 @@ export class NodesApiService {
 
     /**
      * Create a new Node inside `-root-` folder
+     *
      * @param name Node name
      * @param nodeType Node type
      * @param properties Node body properties
@@ -194,16 +204,16 @@ export class NodesApiService {
      */
     public createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
         const body = {
-            name: name,
-            nodeType: nodeType,
-            properties: properties,
+            name,
+            nodeType,
+            properties,
             relativePath: path
         };
         return from(this.nodesApi.createNode('-root-', body, {}));
     }
 
     private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
             const r = Math.random() * 16 | 0;
             const v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);

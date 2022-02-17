@@ -78,7 +78,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            field.emptyOption = <FormFieldOption> { id: '<empty>' };
+            field.emptyOption = { id: '<empty>' } as FormFieldOption;
             expect(validator.validate(field)).toBeFalsy();
 
             field.value = '<non-empty>';
@@ -94,7 +94,7 @@ describe('FormFieldValidator', () => {
                 selectionType: 'multiple'
             });
 
-            field.emptyOption = <FormFieldOption> { id: 'empty' };
+            field.emptyOption = { id: 'empty' } as FormFieldOption;
             expect(validator.validate(field)).toBeFalsy();
 
             field.value = [];

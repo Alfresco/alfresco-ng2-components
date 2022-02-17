@@ -74,7 +74,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
             const params = this.field.params;
             if (params && params.restrictWithGroup) {
-                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
+                const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
 

@@ -194,6 +194,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         let isValidDateInstance = false;
 
         if (date) {
+            // eslint-disable-next-line no-underscore-dangle
             isValidDateInstance = date._isAMomentObject;
         }
 

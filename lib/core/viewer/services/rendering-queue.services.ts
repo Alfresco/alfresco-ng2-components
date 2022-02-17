@@ -139,6 +139,7 @@ export class RenderingQueueServices {
      * Render a page or thumbnail view. This calls the appropriate function
      * based on the views state. If the view is already rendered it will return
      * false.
+     *
      * @param view
      */
     renderView(view: any) {
@@ -155,7 +156,7 @@ export class RenderingQueueServices {
                 break;
             case this.renderingStates.INITIAL:
                 this.highestPriorityPage = view.renderingId;
-                const continueRendering = function () {
+                const continueRendering = function() {
                     this.renderHighestPriority();
                 }.bind(this);
                 view.draw().then(continueRendering, continueRendering);

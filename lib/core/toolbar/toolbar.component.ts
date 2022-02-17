@@ -24,7 +24,7 @@ import { ThemePalette } from '@angular/material/core';
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-toolbar' }
+    host: { class: 'adf-toolbar' }
 })
 export class ToolbarComponent {
 

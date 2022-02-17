@@ -173,7 +173,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ 'urlFile': change });
+                component.ngOnChanges({ urlFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -181,7 +181,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ 'blobFile': change });
+                component.ngOnChanges({ blobFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
    });
@@ -398,14 +398,12 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-                spyOn(dialog, 'open').and.callFake(() => {
-                    return {
-                        afterClosed: () => {
-                            done();
-                            return of('');
-                        }
-                    } as any;
-                });
+                spyOn(dialog, 'open').and.callFake(() => ({
+                    afterClosed: () => {
+                        done();
+                        return of('');
+                    }
+                } as any));
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
 

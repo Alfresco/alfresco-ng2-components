@@ -15,76 +15,76 @@
  * limitations under the License.
  */
 
-export let fakeUser1 = {
-    'enabled': true,
-    'firstName': 'firstName',
-    'lastName': 'lastName',
-    'email': 'fake-email@dom.com',
-    'emailNotificationsEnabled': true,
-    'company': {},
-    'id': 'fake-email@dom.com',
-    'avatarId': '123-123-123'
+export const fakeUser1 = {
+    enabled: true,
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'fake-email@dom.com',
+    emailNotificationsEnabled: true,
+    company: {},
+    id: 'fake-email@dom.com',
+    avatarId: '123-123-123'
 };
 
-export let fakeUser2 = {
-    'enabled': true,
-    'firstName': 'some',
-    'lastName': 'one',
-    'email': 'some-one@somegroup.com',
-    'emailNotificationsEnabled': true,
-    'company': {},
-    'id': 'fake-email@dom.com',
-    'avatarId': '001-001-001'
+export const fakeUser2 = {
+    enabled: true,
+    firstName: 'some',
+    lastName: 'one',
+    email: 'some-one@somegroup.com',
+    emailNotificationsEnabled: true,
+    company: {},
+    id: 'fake-email@dom.com',
+    avatarId: '001-001-001'
 };
 
-export let fakeContentComments = {
+export const fakeContentComments = {
     list: {
-        'pagination': {
-            'count': 4,
-            'hasMoreItems': false,
-            'totalItems': 4,
-            'skipCount': 0,
-            'maxItems': 100
+        pagination: {
+            count: 4,
+            hasMoreItems: false,
+            totalItems: 4,
+            skipCount: 0,
+            maxItems: 100
         },
         entries: [{
-            'entry': {
-                'createdAt': '2018-03-27T10:55:45.725+0000',
-                'createdBy': fakeUser1,
-                'edited': false,
-                'modifiedAt': '2018-03-27T10:55:45.725+0000',
-                'canEdit': true,
-                'modifiedBy': fakeUser1,
-                'canDelete': true,
-                'id': '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                'content': 'fake-message-1'
+            entry: {
+                createdAt: '2018-03-27T10:55:45.725+0000',
+                createdBy: fakeUser1,
+                edited: false,
+                modifiedAt: '2018-03-27T10:55:45.725+0000',
+                canEdit: true,
+                modifiedBy: fakeUser1,
+                canDelete: true,
+                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                content: 'fake-message-1'
             }
         }, {
-            'entry': {
-                'createdAt': '2018-03-27T10:55:45.725+0000',
-                'createdBy': fakeUser2,
-                'edited': false,
-                'modifiedAt': '2018-03-27T10:55:45.725+0000',
-                'canEdit': true,
-                'modifiedBy': fakeUser2,
-                'canDelete': true,
-                'id': '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                'content': 'fake-message-2'
+            entry: {
+                createdAt: '2018-03-27T10:55:45.725+0000',
+                createdBy: fakeUser2,
+                edited: false,
+                modifiedAt: '2018-03-27T10:55:45.725+0000',
+                canEdit: true,
+                modifiedBy: fakeUser2,
+                canDelete: true,
+                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                content: 'fake-message-2'
             }
         }
         ]
     }
 };
 
-export let fakeContentComment = {
-    'entry': {
-        'createdAt': '2018-03-29T11:49:51.735+0000',
-        'createdBy': fakeUser1,
-        'edited': false,
-        'modifiedAt': '2018-03-29T11:49:51.735+0000',
-        'canEdit': true,
-        'modifiedBy': fakeUser1,
-        'canDelete': true,
-        'id': '4d07cdc5-f00c-4391-b39d-a842b12478b2',
-        'content': 'fake-comment-message'
+export const fakeContentComment = {
+    entry: {
+        createdAt: '2018-03-29T11:49:51.735+0000',
+        createdBy: fakeUser1,
+        edited: false,
+        modifiedAt: '2018-03-29T11:49:51.735+0000',
+        canEdit: true,
+        modifiedBy: fakeUser1,
+        canDelete: true,
+        id: '4d07cdc5-f00c-4391-b39d-a842b12478b2',
+        content: 'fake-comment-message'
     }
 };

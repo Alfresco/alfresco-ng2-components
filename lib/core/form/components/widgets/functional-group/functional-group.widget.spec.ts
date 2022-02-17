@@ -57,7 +57,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         fixture.destroy();
     });
 
-    async function typeIntoInput(text: string) {
+    const typeIntoInput = async (text: string) => {
         component.searchTerm.setValue(text);
         fixture.detectChanges();
 
@@ -72,7 +72,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         await fixture.whenStable();
         fixture.detectChanges();
-    }
+    };
 
     it('should setup text from underlying field on init', async () => {
         const group: GroupModel = { name: 'group-1'};

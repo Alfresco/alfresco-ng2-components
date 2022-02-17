@@ -285,9 +285,7 @@ export class ViewUtilService {
                                 clearInterval(intervalId);
                                 return resolve(rendition);
                             }
-                        }, () => {
-                            return reject();
-                        });
+                        }, () => reject());
                     } else {
                         this.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
                             const status: string = rendition.entry.status.toString();
@@ -297,9 +295,7 @@ export class ViewUtilService {
                                 clearInterval(intervalId);
                                 return resolve(rendition);
                             }
-                        }, () => {
-                            return reject();
-                        });
+                        }, () => reject());
                     }
                 } else {
                     clearInterval(intervalId);

@@ -44,9 +44,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
 
     applyPipes(displayValue) {
         if (this.pipes.length) {
-            displayValue = this.pipes.reduce((accumulator, { pipe, params = [] }) => {
-                return pipe.transform(accumulator, ...params);
-            }, displayValue);
+            displayValue = this.pipes.reduce((accumulator, { pipe, params = [] }) => pipe.transform(accumulator, ...params), displayValue);
         }
 
         return displayValue;

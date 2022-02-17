@@ -31,50 +31,48 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 
 const fakePngAnswer = new RelatedContentRepresentation({
-    'id': 1155,
-    'name': 'a_png_file.png',
-    'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
-    'relatedContent': false,
-    'contentAvailable': true,
-    'link': false,
-    'mimeType': 'image/png',
-    'simpleType': 'image',
-    'previewStatus': 'queued',
-    'thumbnailStatus': 'queued'
+    id: 1155,
+    name: 'a_png_file.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    mimeType: 'image/png',
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued'
 });
 
 const fakeJpgAnswer = {
-    'id': 1156,
-    'name': 'a_jpg_file.jpg',
-    'created': '2017-07-25T17:17:37.118Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
-    'relatedContent': false,
-    'contentAvailable': true,
-    'link': false,
-    'mimeType': 'image/jpeg',
-    'simpleType': 'image',
-    'previewStatus': 'queued',
-    'thumbnailStatus': 'queued'
+    id: 1156,
+    name: 'a_jpg_file.jpg',
+    created: '2017-07-25T17:17:37.118Z',
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    mimeType: 'image/jpeg',
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued'
 };
 
 describe('UploadWidgetComponent', () => {
 
-    function  fakeCreationFile  (name: string, id: string | number) {
-        return {
-            'id': id,
-            'name': name,
-            'created': '2017-07-25T17:17:37.118Z',
-            'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
-            'relatedContent': false,
-            'contentAvailable': true,
-            'link': false,
-            'mimeType': 'image/jpeg',
-            'simpleType': 'image',
-            'previewStatus': 'queued',
-            'thumbnailStatus': 'queued'
-        };
-    }
+    const fakeCreationFile = (name: string, id: string | number) => ({
+        id,
+        name,
+        created: '2017-07-25T17:17:37.118Z',
+        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
+        relatedContent: false,
+        contentAvailable: true,
+        link: false,
+        mimeType: 'image/jpeg',
+        simpleType: 'image',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued'
+    });
 
     let contentService: ProcessContentService;
 
@@ -231,7 +229,7 @@ describe('UploadWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton = <HTMLInputElement> element.querySelector('#file-1155-remove');
+            const deleteButton = element.querySelector<HTMLInputElement>('#file-1155-remove');
             deleteButton.click();
 
             expect(uploadWidgetComponent.field.updateForm).toHaveBeenCalled();
@@ -261,7 +259,7 @@ describe('UploadWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            inputElement = <HTMLInputElement> element.querySelector('#upload-id');
+            inputElement = element.querySelector<HTMLInputElement>('#upload-id');
             expect(inputElement).toBeDefined();
             expect(inputElement).not.toBeNull();
             expect(uploadWidgetComponent.field.value).not.toBeNull();
@@ -379,7 +377,7 @@ describe('UploadWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const buttonElement = <HTMLButtonElement> element.querySelector('#file-1156-remove');
+            const buttonElement = element.querySelector<HTMLButtonElement>('#file-1156-remove');
             buttonElement.click();
             fixture.detectChanges();
             const jpegElement = element.querySelector('#file-1156');

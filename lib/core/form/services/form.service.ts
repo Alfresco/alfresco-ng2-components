@@ -137,6 +137,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Parses JSON data to create a corresponding Form model.
+     *
      * @param json JSON to create the form
      * @param data Values for the form fields
      * @param readOnly Should the form fields be read-only?
@@ -148,7 +149,7 @@ export class FormService implements FormValidationService {
             const form = new FormModel(json, data, readOnly, this, fixedSpace);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(<any> form, {
+                    new FormOutcomeModel(form, {
                         id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true
@@ -162,6 +163,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Creates a Form with a field for each metadata property.
+     *
      * @param formName Name of the new form
      * @returns The new form
      */
@@ -187,6 +189,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Create a Form.
+     *
      * @param formName Name of the new form
      * @returns The new form
      */
@@ -205,6 +208,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Saves a form.
+     *
      * @param formId ID of the form to save
      * @param formModel Model data for the form
      * @returns Data for the saved form
@@ -217,32 +221,32 @@ export class FormService implements FormValidationService {
 
     /**
      * Searches for a form by name.
+     *
      * @param name The form name to search for
      * @returns Form model(s) matching the search name
      */
     searchFrom(name: string): Observable<any> {
         const opts = {
-            'modelType': 2
+            modelType: 2
         };
 
         return from(
             this.modelsApi.getModels(opts)
         )
             .pipe(
-                map(function (forms: any) {
-                    return forms.data.find((formData) => formData.name === name);
-                }),
+                map((forms: any) => forms.data.find((formData) => formData.name === name)),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets all the forms.
+     *
      * @returns List of form models
      */
     getForms(): Observable<any> {
         const opts = {
-            'modelType': 2
+            modelType: 2
         };
 
         return from(this.modelsApi.getModels(opts))
@@ -254,6 +258,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets process definitions.
+     *
      * @returns List of process definitions
      */
     getProcessDefinitions(): Observable<any> {
@@ -266,6 +271,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets instance variables for a process.
+     *
      * @param processInstanceId ID of the target process
      * @returns List of instance variable information
      */
@@ -279,6 +285,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets all the tasks.
+     *
      * @returns List of tasks
      */
     getTasks(): Observable<any> {
@@ -291,6 +298,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a task.
+     *
      * @param taskId Task Id
      * @returns Task info
      */
@@ -304,12 +312,13 @@ export class FormService implements FormValidationService {
 
     /**
      * Saves a task form.
+     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @returns Null response when the operation is complete
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        const saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
+        const saveFormRepresentation = { values: formValues } as SaveFormRepresentation;
 
         return from(this.taskFormsApi.saveTaskForm(taskId, saveFormRepresentation))
             .pipe(
@@ -319,13 +328,14 @@ export class FormService implements FormValidationService {
 
     /**
      * Completes a Task Form.
+     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @param outcome Form Outcome
      * @returns Null response when the operation is complete
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        const completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
+        const completeFormRepresentation = { values: formValues } as CompleteFormRepresentation;
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -338,6 +348,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a form related to a task.
+     *
      * @param taskId ID of the target task
      * @returns Form definition
      */
@@ -351,6 +362,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a form definition.
+     *
      * @param formId ID of the target form
      * @returns Form definition
      */
@@ -364,14 +376,15 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets the form definition with a given name.
+     *
      * @param name The form name
      * @returns Form definition
      */
     getFormDefinitionByName(name: string): Observable<any> {
         const opts = {
-            'filter': 'myReusableForms',
-            'filterText': name,
-            'modelType': 2
+            filter: 'myReusableForms',
+            filterText: name,
+            modelType: 2
         };
 
         return from(this.modelsApi.getModels(opts))
@@ -383,6 +396,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets the start form instance for a given process.
+     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -396,6 +410,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a process instance.
+     *
      * @param processId ID of the process to get
      * @returns Process instance
      */
@@ -409,6 +424,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets the start form definition for a given process.
+     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -422,6 +438,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets values of fields populated by a REST backend.
+     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @returns Field values
@@ -435,6 +452,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
+     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @returns Field values
@@ -448,6 +466,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets column values of fields populated by a REST backend using a process ID.
+     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -462,6 +481,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets column values of fields populated by a REST backend.
+     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -476,6 +496,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Returns a URL for the profile picture of a user.
+     *
      * @param userId ID of the target user
      * @returns URL string
      */
@@ -485,18 +506,19 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a list of workflow users.
+     *
      * @param filter Filter to select specific users
      * @param groupId Group ID for the search
      * @returns Array of users
      */
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        const option: any = { filter: filter };
+        const option: any = { filter };
         if (groupId) {
             option.groupId = groupId;
         }
         return from(this.usersApi.getUsers(option))
             .pipe(
-                switchMap(response => <UserProcessModel[]> response.data || []),
+                switchMap(response => response.data as UserProcessModel[] || []),
                 map((user) => {
                     user.userImage = this.getUserProfileImageApi(user.id.toString());
                     return of(user);
@@ -509,24 +531,26 @@ export class FormService implements FormValidationService {
 
     /**
      * Gets a list of groups in a workflow.
+     *
      * @param filter Filter to select specific groups
      * @param groupId Group ID for the search
      * @returns Array of groups
      */
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        const option: any = { filter: filter };
+        const option: any = { filter };
         if (groupId) {
             option.groupId = groupId;
         }
         return from(this.groupsApi.getGroups(option))
             .pipe(
-                map((response: any) => <GroupModel[]> response.data || []),
+                map((response: any) => response.data || []),
                 catchError((err) => this.handleError(err))
             );
     }
 
     /**
      * Gets the ID of a form.
+     *
      * @param form Object representing a form
      * @returns ID string
      */
@@ -542,6 +566,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Creates a JSON representation of form data.
+     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -554,6 +579,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Creates a JSON array representation of form data.
+     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -566,6 +592,7 @@ export class FormService implements FormValidationService {
 
     /**
      * Reports an error message.
+     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

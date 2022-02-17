@@ -39,6 +39,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+// eslint-disable-next-line no-shadow
 enum LoginSteps {
     Landing = 0,
     Checking = 1,
@@ -195,6 +196,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * Method called on submit form
+     *
      * @param values
      * @param event
      */
@@ -220,6 +222,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * The method check the error in the form and push the error in the formError object
+     *
      * @param data
      */
     onValueChanged(data: any) {
@@ -306,6 +309,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * Add a custom form error for a field
+     *
      * @param field
      * @param msg
      */
@@ -315,6 +319,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * Add a custom validation rule error for a field
+     *
      * @param field
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
@@ -341,6 +346,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * The method return if a field is valid or not
+     *
      * @param field
      */
     isErrorStyle(field: AbstractControl) {

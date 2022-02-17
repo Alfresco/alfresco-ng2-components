@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+// eslint-disable-next-line no-shadow
 export enum SearchTextStateEnum {
     expanded = 'expanded',
     collapsed = 'collapsed'

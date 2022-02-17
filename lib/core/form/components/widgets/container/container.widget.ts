@@ -97,9 +97,8 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
     private getMaxColumnFieldSize(): number {
         let maxFieldSize = 0;
         if (this.content?.columns?.length > 0) {
-            maxFieldSize = this.content?.columns?.reduce((prevColumn, currentColumn) => {
-                return currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn;
-            })?.fields?.length;
+            maxFieldSize = this.content?.columns?.reduce((prevColumn, currentColumn) =>
+                currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn)?.fields?.length;
         }
         return maxFieldSize;
     }

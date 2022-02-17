@@ -28,6 +28,7 @@ describe('DownloadService', () => {
         it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
             const navigatorAny: any = window.navigator;
 
+            // eslint-disable-next-line no-underscore-dangle
             navigatorAny.__defineGetter__('msSaveOrOpenBlob', () => {
                 done();
             });

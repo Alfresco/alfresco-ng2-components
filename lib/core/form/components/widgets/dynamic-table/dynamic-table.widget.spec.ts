@@ -107,7 +107,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should select row on click', () => {
-        const row = <DynamicTableRow> {selected: false};
+        const row = {selected: false} as DynamicTableRow;
         widget.onRowClicked(row);
 
         expect(row.selected).toBeTruthy();
@@ -115,7 +115,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should require table to select clicked row', () => {
-        const row = <DynamicTableRow> {selected: false};
+        const row = {selected: false} as DynamicTableRow;
         widget.content = null;
         widget.onRowClicked(row);
 
@@ -123,7 +123,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should reset selected row', () => {
-        const row = <DynamicTableRow> {selected: false};
+        const row = {selected: false} as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.content.selectedRow).toBe(row);
@@ -135,7 +135,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should check selection', () => {
-        const row = <DynamicTableRow> {selected: false};
+        const row = {selected: false} as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.hasSelection()).toBeTruthy();
@@ -153,8 +153,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection up', () => {
-        const row1 = <DynamicTableRow> {};
-        const row2 = <DynamicTableRow> {};
+        const row1 = {} as DynamicTableRow;
+        const row2 = {} as DynamicTableRow;
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row2;
 
@@ -168,8 +168,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection down', () => {
-        const row1 = <DynamicTableRow> {};
-        const row2 = <DynamicTableRow> {};
+        const row1 = {} as DynamicTableRow;
+        const row2 = {} as DynamicTableRow;
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row1;
 
@@ -183,7 +183,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should delete selected row', () => {
-        const row = <DynamicTableRow> {};
+        const row = {} as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         widget.deleteSelection();
@@ -213,7 +213,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.editMode).toBeFalsy();
         expect(widget.editRow).toBeFalsy();
 
-        const row = <DynamicTableRow> {value: true};
+        const row = {value: true} as DynamicTableRow;
         widget.content.selectedRow = row;
 
         expect(widget.editSelection()).toBeTruthy();
@@ -223,7 +223,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should copy row', () => {
-        const row = <DynamicTableRow> {value: {opt: {key: '1', value: 1}}};
+        const row = {value: {opt: {key: '1', value: 1}}} as DynamicTableRow;
         const copy = widget.copyRow(row);
         expect(copy.value).toEqual(row.value);
     });
@@ -235,14 +235,14 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should retrieve cell value', () => {
         const value = '<value>';
-        const row = <DynamicTableRow> {value: {key: value}};
-        const column = <DynamicTableColumn> {id: 'key'};
+        const row = {value: {key: value}} as DynamicTableRow;
+        const column = {id: 'key'} as DynamicTableColumn;
 
         expect(widget.getCellValue(row, column)).toBe(value);
     });
 
     it('should save changes and add new row', () => {
-        const row = <DynamicTableRow> {isNew: true, value: {key: 'value'}};
+        const row = {isNew: true, value: {key: 'value'}} as DynamicTableRow;
         widget.editMode = true;
         widget.editRow = row;
 
@@ -255,7 +255,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should save changes and update row', () => {
-        const row = <DynamicTableRow> {isNew: false, value: {key: 'value'}};
+        const row = {isNew: false, value: {key: 'value'}} as DynamicTableRow;
         widget.editMode = true;
         widget.editRow = row;
         widget.content.selectedRow = row;
@@ -275,7 +275,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should cancel changes', () => {
         widget.editMode = true;
-        widget.editRow = <DynamicTableRow> {};
+        widget.editRow = {} as DynamicTableRow;
         widget.onCancelChanges();
 
         expect(widget.editMode).toBeFalsy();
@@ -311,15 +311,15 @@ describe('DynamicTableWidgetComponent', () => {
    });
 
     it('should prepend default currency for amount columns', () => {
-        const row = <DynamicTableRow> {value: {key: '100'}};
-        const column = <DynamicTableColumn> {id: 'key', type: 'Amount'};
+        const row = {value: {key: '100'}} as DynamicTableRow;
+        const column = {id: 'key', type: 'Amount'} as DynamicTableColumn;
         const actual = widget.getCellValue(row, column);
         expect(actual).toBe('$ 100');
     });
 
     it('should prepend custom currency for amount columns', () => {
-        const row = <DynamicTableRow> {value: {key: '100'}};
-        const column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: 'GBP'};
+        const row = {value: {key: '100'}} as DynamicTableRow;
+        const column = {id: 'key', type: 'Amount', amountCurrency: 'GBP'} as DynamicTableColumn;
         const actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
@@ -357,7 +357,7 @@ describe('DynamicTableWidgetComponent', () => {
         });
 
         it('should focus on add button when a new row is saved', async () => {
-            const addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
+            const addNewRowButton = element.querySelector<HTMLButtonElement>('#fake-dynamic-table-add-row');
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
             expect(addNewRowButton).not.toBeNull();

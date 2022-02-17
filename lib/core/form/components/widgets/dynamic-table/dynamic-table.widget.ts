@@ -72,7 +72,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     forceFocusOnAddButton() {
         if (this.content) {
             this.cd.detectChanges();
-            const buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            const buttonAddRow = this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
             if (this.isDynamicTableReady(buttonAddRow)) {
                 buttonAddRow.focus();
             }
@@ -139,7 +139,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     addNewRow(): boolean {
         if (this.content && !this.readOnly) {
-            this.editRow = <DynamicTableRow> {
+            this.editRow = {
                 isNew: true,
                 selected: false,
                 value: {}
@@ -195,9 +195,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {
-        return <DynamicTableRow> {
-            value: this.copyObject(row.value)
-        };
+        return { value: this.copyObject(row.value) } as DynamicTableRow;
     }
 
     private copyObject(obj: any): any {

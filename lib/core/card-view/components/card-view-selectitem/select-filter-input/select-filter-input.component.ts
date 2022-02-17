@@ -25,7 +25,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-select-filter-input',
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
-    host: { 'class': 'adf-select-filter-input' },
+    host: { class: 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit, OnDestroy {
@@ -79,6 +79,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
 
                     this.previousSelected = values;
                     if (restoreSelection) {
+                        // eslint-disable-next-line no-underscore-dangle
                         this.matSelect._onChange(values);
                     }
                 });

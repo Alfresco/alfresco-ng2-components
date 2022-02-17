@@ -74,6 +74,7 @@ export class FileUploadOptions {
     versioningEnabled?: boolean;
 }
 
+// eslint-disable-next-line no-shadow
 export enum FileUploadStatus {
     Pending = 0,
     Complete = 1,

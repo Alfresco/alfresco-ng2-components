@@ -52,7 +52,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -68,7 +68,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -87,7 +87,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -107,7 +107,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -146,7 +146,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -186,7 +186,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -201,7 +201,7 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
@@ -216,26 +216,22 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
+            status: 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
         });
     });
 
     it('Should create an ECM type with properties', (done) => {
-        spyOn(service, 'createEcmType').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'createEcmType').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
-        spyOn(service, 'addPropertyToAType').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'addPropertyToAType').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.createEcmTypeWithProperties('nameType', new FormModel()).subscribe(() => {
             expect(service.createEcmType).toHaveBeenCalled();
@@ -245,19 +241,15 @@ describe('EcmModelService', () => {
     });
 
     it('Should return the already existing type', (done) => {
-        spyOn(service, 'searchEcmType').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next({test: 'I-EXIST'});
-                observer.complete();
-            });
-        });
+        spyOn(service, 'searchEcmType').and.callFake(() => new Observable((observer) => {
+            observer.next({test: 'I-EXIST'});
+            observer.complete();
+        }));
 
-        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.saveFomType('nameType', new FormModel()).subscribe(() => {
             expect(service.searchEcmType).toHaveBeenCalled();
@@ -267,19 +259,15 @@ describe('EcmModelService', () => {
     });
 
     it('Should create an ECM type with properties if the ecm Type is not defined already', (done) => {
-        spyOn(service, 'searchEcmType').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'searchEcmType').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
-        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.saveFomType('nameType', new FormModel()).subscribe(() => {
             expect(service.searchEcmType).toHaveBeenCalled();
@@ -289,19 +277,15 @@ describe('EcmModelService', () => {
     });
 
     it('Should create an ECM model for the activiti if not defined already', (done) => {
-        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
-        spyOn(service, 'createActivitiEcmModel').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'createActivitiEcmModel').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(() => {
             expect(service.searchActivitiEcmModel).toHaveBeenCalled();
@@ -311,19 +295,15 @@ describe('EcmModelService', () => {
     });
 
     it('If a model for the activiti is already define has to save the new type', (done) => {
-        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next({test: 'I-EXIST'});
-                observer.complete();
-            });
-        });
+        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => new Observable((observer) => {
+            observer.next({test: 'I-EXIST'});
+            observer.complete();
+        }));
 
-        spyOn(service, 'saveFomType').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(service, 'saveFomType').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(() => {
             expect(service.searchActivitiEcmModel).toHaveBeenCalled();

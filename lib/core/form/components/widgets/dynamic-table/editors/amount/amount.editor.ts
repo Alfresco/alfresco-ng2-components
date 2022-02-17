@@ -45,7 +45,7 @@ export class AmountEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        const value: number = Number((<HTMLInputElement> event.target).value);
+        const value: number = Number(event.target.value);
         row.value[column.id] = value;
     }
 

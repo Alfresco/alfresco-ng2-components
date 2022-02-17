@@ -30,7 +30,7 @@ import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } f
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     host: {
-        'class': 'adf-search-text-input'
+        class: 'adf-search-text-input'
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
@@ -127,11 +127,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     animationStates: SearchAnimationDirection = {
         ltr : {
             active: { value: 'active', params: { 'margin-left': 13 } },
-            inactive: { value: 'inactive', params: { 'transform': 'translateX(82%)' } }
+            inactive: { value: 'inactive', params: { transform: 'translateX(82%)' } }
         },
         rtl: {
             active:  { value: 'active', params: { 'margin-right': 13 } },
-            inactive: { value: 'inactive', params: { 'transform': 'translateX(-82%)' } }
+            inactive: { value: 'inactive', params: { transform: 'translateX(-82%)' } }
         }
     };
 
@@ -141,7 +141,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
 
-    constructor (
+    constructor(
         private userPreferencesService: UserPreferencesService
     ) {
         this.toggleSearch
@@ -192,11 +192,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive' ?
                 { value: 'active', params: { 'margin-left': 13 } } :
-                { value: 'inactive', params: { 'transform': 'translateX(82%)' } };
+                { value: 'inactive', params: { transform: 'translateX(82%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive' ?
                 { value: 'active', params: { 'margin-right': 13 } } :
-                { value: 'inactive', params: { 'transform': 'translateX(-82%)' } };
+                { value: 'inactive', params: { transform: 'translateX(-82%)' } };
         }
     }
 
@@ -222,9 +222,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
             const focusEvents: Observable<FocusEvent> = this.focusListener
             .pipe(
                 debounceTime(50),
-                filter(($event: any) => {
-                    return this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus');
-                }),
+                filter(($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')),
                 takeUntil(this.onDestroy$)
             );
 

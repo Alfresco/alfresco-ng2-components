@@ -52,8 +52,8 @@ describe('InfoDrawerComponent', () => {
 
     it('should emit when tab is changed', () => {
         const tabEmitSpy = spyOn(component.currentTab, 'emit');
-        const event = {index: 1, tab: {textLabel: 'DETAILS'}};
-        component.onTabChange(<MatTabChangeEvent> event);
+        const event = {index: 1, tab: {textLabel: 'DETAILS'}} as MatTabChangeEvent;
+        component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
 

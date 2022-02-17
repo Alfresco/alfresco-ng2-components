@@ -23,6 +23,7 @@ import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 
 /* spellchecker: disable */
+// eslint-disable-next-line no-shadow
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
     PROVIDERS = 'providers',
@@ -44,6 +45,7 @@ export enum AppConfigValues {
     NOTIFY_DURATION = 'notificationDefaultDuration'
 }
 
+// eslint-disable-next-line no-shadow
 export enum Status {
     INIT = 'init',
     LOADING = 'loading',
@@ -81,6 +83,7 @@ export class AppConfigService {
 
     /**
      * Requests notification of a property value when it is loaded.
+     *
      * @param property The desired property value
      * @returns Property value, when loaded
      */
@@ -94,6 +97,7 @@ export class AppConfigService {
 
     /**
      * Gets the value of a named property.
+     *
      * @param key Name of the property
      * @param defaultValue Value to return if the key is not found
      * @returns Value of the property
@@ -119,11 +123,12 @@ export class AppConfigService {
             return defaultValue;
         }
 
-        return <T> result;
+        return result;
     }
 
     /**
      * Gets the location.protocol value.
+     *
      * @returns The location.protocol string
      */
     getLocationProtocol(): string {
@@ -132,6 +137,7 @@ export class AppConfigService {
 
     /**
      * Gets the location.hostname property.
+     *
      * @returns Value of the property
      */
     getLocationHostname(): string {
@@ -140,6 +146,7 @@ export class AppConfigService {
 
     /**
      * Gets the location.port property.
+     *
      * @param prefix Text added before port value
      * @returns Port with prefix
      */
@@ -172,6 +179,7 @@ export class AppConfigService {
 
     /**
      * Loads the config file.
+     *
      * @returns Notification when loading is complete
      */
     load(): Promise<any> {

@@ -31,7 +31,7 @@ describe('LanguageMenuComponent', () => {
     let userPreferencesService: UserPreferencesService;
     let languageService: LanguageService;
 
-    const languages = <any> [
+    const languages = [
         {
             key: 'fake-key-1',
             label: 'fake-label-1'
@@ -45,7 +45,7 @@ describe('LanguageMenuComponent', () => {
             label: 'fake-label-3',
             direction: 'rtl'
         }
-    ];
+    ] as any[];
 
     beforeEach(() => {
         TestBed.configureTestingModule({

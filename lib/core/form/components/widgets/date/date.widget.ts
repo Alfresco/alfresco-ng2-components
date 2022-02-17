@@ -70,7 +70,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {

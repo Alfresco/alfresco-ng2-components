@@ -22,25 +22,25 @@ describe('FileModel', () => {
     describe('extension', () => {
 
         it('should return the extension if file has it', () => {
-            const file = new FileModel(<File> { name: 'tyrion-lannister.doc' });
+            const file = new FileModel({ name: 'tyrion-lannister.doc' } as File);
 
             expect(file.extension).toBe('doc');
         });
 
         it('should return the empty string if file has NOT got it', () => {
-            const file = new FileModel(<File> { name: 'daenerys-targaryen' });
+            const file = new FileModel({ name: 'daenerys-targaryen' } as File);
 
             expect(file.extension).toBe('');
         });
 
         it('should return the empty string if file is starting with . and doesn\'t have extension', () => {
-            const file = new FileModel(<File> { name: '.white-walkers' });
+            const file = new FileModel({ name: '.white-walkers' } as File);
 
             expect(file.extension).toBe('');
         });
 
         it('should return the last extension string if file contains many dot', () => {
-            const file = new FileModel(<File> { name: 'you.know.nothing.jon.snow.exe' });
+            const file = new FileModel({ name: 'you.know.nothing.jon.snow.exe' } as File);
 
             expect(file.extension).toBe('exe');
         });

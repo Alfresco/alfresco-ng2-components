@@ -23,7 +23,7 @@ import { AppConfigService } from './../../app-config/app-config.service';
     selector: 'adf-txt-viewer',
     templateUrl: './txt-viewer.component.html',
     styleUrls: ['./txt-viewer.component.scss'],
-    host: { 'class': 'adf-txt-viewer' },
+    host: { class: 'adf-txt-viewer' },
     encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {

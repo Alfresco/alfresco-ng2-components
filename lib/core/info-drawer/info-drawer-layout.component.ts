@@ -22,7 +22,7 @@ import { Component, Directive, Input, ViewEncapsulation } from '@angular/core';
     templateUrl: './info-drawer-layout.component.html',
     styleUrls: ['./info-drawer-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-info-drawer-layout' }
+    host: { class: 'adf-info-drawer-layout' }
 })
 export class InfoDrawerLayoutComponent {
     /** The visibility of the header. */

@@ -59,7 +59,7 @@ describe('CardViewItemDispatcherComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewItemDispatcherComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewItem> {
+        component.property = {
             type: 'shiny-custom-element',
             label: 'Shiny custom element',
             value: null,
@@ -111,7 +111,7 @@ describe('CardViewItemDispatcherComponent', () => {
         it('should update the subcomponent\'s input parameters', () => {
             const expectedEditable = false;
             const expectedDisplayEmpty = true;
-            const expectedProperty = <CardViewItem> {};
+            const expectedProperty = {};
             const expectedCustomInput = 1;
             const expectedDisplayNoneOption = false;
             const expectedDisplayClearAction = false;

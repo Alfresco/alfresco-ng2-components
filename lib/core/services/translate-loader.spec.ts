@@ -40,7 +40,7 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         translationService = TestBed.inject(TranslationService);
-        customLoader = <TranslateLoaderService> translationService.translate.currentLoader;
+        customLoader = translationService.translate.currentLoader as TranslateLoaderService;
 
         jasmine.Ajax.install();
     });

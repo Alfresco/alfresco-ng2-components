@@ -260,9 +260,9 @@ describe('PaginationComponent', () => {
         it('should take pagination from the external component', () => {
             const pagination: Pagination = {};
 
-            const customComponent = <PaginatedComponent> {
+            const customComponent = {
                 pagination: new BehaviorSubject<Pagination>({})
-            };
+            } as PaginatedComponent;
 
             component.target = customComponent;
             component.ngOnInit();
@@ -275,9 +275,9 @@ describe('PaginationComponent', () => {
             const pagination1: Pagination = {};
             const pagination2: Pagination = {};
 
-            const customComponent = <PaginatedComponent> {
+            const customComponent = {
                 pagination: new BehaviorSubject<Pagination>({})
-            };
+            } as PaginatedComponent;
 
             component.target = customComponent;
             component.ngOnInit();
@@ -290,12 +290,12 @@ describe('PaginationComponent', () => {
         });
 
         it('should send pagination event to paginated component', () => {
-            const customComponent = <PaginatedComponent> {
+            const customComponent = {
                 pagination: new BehaviorSubject<Pagination>({}),
-                updatePagination() {},
+                updatePagination: () => {},
                 supportedPageSizes: [],
                 rows: []
-            };
+            } as PaginatedComponent;
             spyOn(customComponent, 'updatePagination').and.stub();
 
             component.target = customComponent;
@@ -310,11 +310,11 @@ describe('PaginationComponent', () => {
         });
 
         it('should go to previous page if current page has 0 items', () => {
-            const customComponent = <PaginatedComponent> {
-                updatePagination() {},
+            const customComponent = {
+                updatePagination: () => {},
                 pagination: new BehaviorSubject<Pagination>({}),
                 rows: []
-            };
+            } as PaginatedComponent;
 
             component.target = customComponent;
             component.ngOnInit();
@@ -338,9 +338,9 @@ describe('PaginationComponent', () => {
 
         it('should not show pagination when external component count is zero', () => {
             const pagination: Pagination = {};
-            const customComponent = <PaginatedComponent> {
+            const customComponent = {
                 pagination: new BehaviorSubject<Pagination>({ count: 0, maxItems: 5, totalItems: 5 })
-            };
+            } as PaginatedComponent;
             component.target = customComponent;
             component.ngOnInit();
             customComponent.pagination.next(pagination);

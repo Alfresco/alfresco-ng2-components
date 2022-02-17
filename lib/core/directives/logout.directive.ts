@@ -50,7 +50,7 @@ export class LogoutDirective implements OnInit {
         }
     }
 
-    getRedirectUri () {
+    getRedirectUri() {
         if (this.redirectUri === undefined ) {
             return this.appConfig.get<string>('loginRoute', '/login');
         }

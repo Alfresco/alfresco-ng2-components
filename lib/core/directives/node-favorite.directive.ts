@@ -74,7 +74,7 @@ export class NodeFavoriteDirective implements OnChanges {
         if (every) {
             const batch = this.favorites.map((selected: NodeEntry | SharedLinkEntry) => {
                 // shared files have nodeId
-                const id = (<SharedLinkEntry> selected).entry.nodeId || selected.entry.id;
+                const id = (selected as SharedLinkEntry).entry.nodeId || selected.entry.id;
 
                 return from(this.favoritesApi.deleteFavorite('-me-', id));
             });
@@ -92,7 +92,7 @@ export class NodeFavoriteDirective implements OnChanges {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            from(this.favoritesApi.createFavorite('-me-', <any> body))
+            from(this.favoritesApi.createFavorite('-me-', body as any))
                 .subscribe(
                     () => {
                         notFavorite.map((selected) => selected.entry.isFavorite = true);
@@ -138,8 +138,8 @@ export class NodeFavoriteDirective implements OnChanges {
         }
 
         // ACS 5.x and 6.x without 'isFavorite' include
-        const { name, isFile, isFolder } = <Node> node;
-        const id = (<SharedLink> node).nodeId || node.id;
+        const { name, isFile, isFolder } = node as Node;
+        const id = (node as SharedLink).nodeId || node.id;
 
         const promise = this.favoritesApi.getFavorite('-me-', id);
 
@@ -153,17 +153,15 @@ export class NodeFavoriteDirective implements OnChanges {
                     isFavorite: true
                 }
             })),
-            catchError(() => {
-                return of({
-                    entry: {
-                        id,
-                        isFolder,
-                        isFile,
-                        name,
-                        isFavorite: false
-                    }
-                });
-            })
+            catchError(() => of({
+                entry: {
+                    id,
+                    isFolder,
+                    isFile,
+                    name,
+                    isFavorite: false
+                }
+            }))
         );
     }
 

@@ -23,6 +23,7 @@ import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate 
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
+// eslint-disable-next-line no-shadow
 export enum ContentGroups {
     ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
 }
@@ -50,7 +51,7 @@ export class PeopleContentService {
     private hasContentAdminRole: boolean = false;
     hasCheckedIsContentAdmin: boolean = false;
 
-    _peopleApi: PeopleApi;
+    private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
         return this._peopleApi;
@@ -61,6 +62,7 @@ export class PeopleContentService {
 
     /**
      * Gets information about a user identified by their username.
+     *
      * @param personId ID of the target user
      * @returns User information
      */
@@ -74,6 +76,7 @@ export class PeopleContentService {
 
     /**
      * Gets information about the user who is currently logged in.
+     *
      * @returns User information
      */
     getCurrentPerson(): Observable<any> {
@@ -82,6 +85,7 @@ export class PeopleContentService {
 
     /**
      * Gets a list of people.
+     *
      * @param requestQuery maxItems and skipCount parameters supported by JS-API
      * @returns Response containing pagination and list of entries
      */
@@ -94,31 +98,31 @@ export class PeopleContentService {
 
         const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
-            map(response => {
-                return {
-                    pagination: response.list.pagination,
-                    entries: response.list.entries.map((person: PersonEntry) => <EcmUserModel> person.entry)
-                };
-            }),
+            map(response => ({
+                pagination: response.list.pagination,
+                entries: response.list.entries.map((person) => person.entry as EcmUserModel)
+            })),
             catchError((err) => this.handleError(err))
         );
     }
 
     /**
      * Creates new person.
+     *
      * @param newPerson Object containing the new person details.
      * @param opts Optional parameters
      * @returns Created new person
      */
     createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
-            map((res: PersonEntry) => <EcmUserModel> res?.entry),
+            map((res) => res?.entry as EcmUserModel),
             catchError((error) => this.handleError(error))
         );
     }
 
     /**
      * Updates the person details
+     *
      * @param personId The identifier of a person
      * @param details The person details
      * @param opts Optional parameters
@@ -126,7 +130,7 @@ export class PeopleContentService {
      */
     updatePerson(personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(
-            map((res: PersonEntry) => <EcmUserModel> res?.entry),
+            map((res) => res?.entry as EcmUserModel),
             catchError((error) => this.handleError(error))
         );
     }

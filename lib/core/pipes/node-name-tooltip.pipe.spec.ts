@@ -35,7 +35,7 @@ describe('NodeNameTooltipPipe', () => {
     });
 
     it('should not transform when missing node entry', () => {
-        expect(pipe.transform(<any> {})).toBe(null);
+        expect(pipe.transform({} as any)).toBe(null);
     });
 
     it('should use title and description when all fields present', () => {
@@ -57,8 +57,8 @@ describe('NodeNameTooltipPipe', () => {
             entry: {
                 name: nodeName
             }
-        };
-        const tooltip = pipe.transform(<NodeEntry> node);
+        } as NodeEntry;
+        const tooltip = pipe.transform(node);
         expect(tooltip).toBe(nodeName);
     });
 

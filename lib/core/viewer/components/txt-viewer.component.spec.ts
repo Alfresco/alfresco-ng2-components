@@ -49,7 +49,7 @@ describe('Text View component', () => {
             const urlFile = './fake-test-file.txt';
             const change = new SimpleChange(null, urlFile, true);
 
-            component.ngOnChanges({ 'urlFile': change }).then(() => {
+            component.ngOnChanges({ urlFile: change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
@@ -63,7 +63,7 @@ describe('Text View component', () => {
 
             const change = new SimpleChange(null, blobFile, true);
 
-            component.ngOnChanges({ 'blobFile': change }).then(() => {
+            component.ngOnChanges({ blobFile: change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');

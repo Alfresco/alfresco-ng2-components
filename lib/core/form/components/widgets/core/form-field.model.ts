@@ -151,30 +151,30 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.roles = json.roles;
-            this._required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
-            this.overrideId = <boolean> json.overrideId;
+            this._required = json.required;
+            this._readOnly = json.readOnly || json.type === 'readonly';
+            this.overrideId = json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
             this.restResponsePath = json.restResponsePath;
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
-            this.colspan = <number> json.colspan;
-            this.rowspan = <number> json.rowspan;
-            this.minLength = <number> json.minLength || 0;
-            this.maxLength = <number> json.maxLength || 0;
+            this.colspan = json.colspan;
+            this.rowspan = json.rowspan;
+            this.minLength = json.minLength || 0;
+            this.maxLength = json.maxLength || 0;
             this.minValue = json.minValue;
             this.maxValue = json.maxValue;
             this.regexPattern = json.regexPattern;
-            this.options = <FormFieldOption[]> json.options || [];
-            this.hasEmptyValue = <boolean> json.hasEmptyValue;
+            this.options = json.options || [];
+            this.hasEmptyValue = json.hasEmptyValue;
             this.className = json.className;
             this.optionType = json.optionType;
-            this.params = <FormFieldMetadata> json.params || {};
+            this.params = json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
-            this.enableFractions = <boolean> json.enableFractions;
+            this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
@@ -256,7 +256,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private containerFactory(json: any, form: any): void {
-        this.numberOfColumns = <number> json.numberOfColumns || 1;
+        this.numberOfColumns = json.numberOfColumns || 1;
 
         this.fields = json.fields;
 
@@ -453,6 +453,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     /**
      * Skip the invalid field type
+     *
      * @param type
      */
     isInvalidFieldType(type: string) {

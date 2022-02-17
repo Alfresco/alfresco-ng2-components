@@ -113,7 +113,7 @@ describe('Comment ProcessService Service', () => {
             it('should call service to add comment', () => {
                 service.addProcessInstanceComment(processId, message);
                 expect(addProcessInstanceComment).toHaveBeenCalledWith({
-                    message: message
+                    message
                 }, processId);
             });
 
@@ -158,7 +158,7 @@ describe('Comment ProcessService Service', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '111', message: 'fake-comment-message',
@@ -180,7 +180,7 @@ describe('Comment ProcessService Service', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeTasksComment)
             });

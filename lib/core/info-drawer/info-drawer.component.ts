@@ -40,7 +40,7 @@ export class InfoDrawerTabComponent {
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-info-drawer' }
+    host: { class: 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
     /** The title of the info drawer (string or translation key). */

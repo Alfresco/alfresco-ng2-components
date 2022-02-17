@@ -44,45 +44,45 @@ import { TextWidgetComponent } from './widgets';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-function typeIntoInput(targetInput: HTMLInputElement, message: string) {
+const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
     targetInput.value = message;
     targetInput.dispatchEvent(new Event('input'));
-}
+};
 
-function typeIntoDate(targetInput: DebugElement, date: { srcElement: { value: string } }) {
+const typeIntoDate = (targetInput: DebugElement, date: { srcElement: { value: string } }) => {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
     targetInput.triggerEventHandler('change', date);
-}
+};
 
-function expectElementToBeHidden(targetElement: HTMLElement): void {
+const expectElementToBeHidden = (targetElement: HTMLElement): void => {
     expect(targetElement).not.toBeNull();
     expect(targetElement).toBeDefined();
     expect(targetElement.hidden).toBe(true, `${targetElement.id} should be hidden but it is not`);
-}
+};
 
-function expectElementToBeVisible(targetElement: HTMLElement): void {
+const expectElementToBeVisible = (targetElement: HTMLElement): void => {
     expect(targetElement).not.toBeNull();
     expect(targetElement).toBeDefined();
     expect(targetElement.hidden).toBe(false, `${targetElement.id} should be visibile but it is not`);
-}
+};
 
-function expectInputElementValueIs(targetElement: HTMLInputElement, value: string): void {
+const expectInputElementValueIs = (targetElement: HTMLInputElement, value: string): void => {
     expect(targetElement).not.toBeNull();
     expect(targetElement).toBeDefined();
     expect(targetElement.value).toBe(value, `invalid value for ${targetElement.name}`);
-}
+};
 
-function expectElementToBeInvalid(fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void {
+const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).not.toBeNull();
     expect(invalidElementContainer).toBeDefined();
-}
+};
 
-function expectElementToBeValid(fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void {
+const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).toBeNull();
-}
+};
 
 describe('Form Renderer Component', () => {
 
@@ -630,7 +630,7 @@ describe('Form Renderer Component', () => {
     describe('Custom Widget', () => {
 
         it('Should be able to correctly display a custom process cloud widget', async () => {
-            formRenderingService.register({ 'bananaforevah': () => TextWidgetComponent }, true);
+            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -641,7 +641,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
-            formRenderingService.register({ 'bananaforevah': () => TextWidgetComponent }, true);
+            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();

@@ -33,7 +33,7 @@ import Cropper from 'cropperjs';
     selector: 'adf-img-viewer',
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
-    host: { 'class': 'adf-image-viewer' },
+    host: { class: 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {

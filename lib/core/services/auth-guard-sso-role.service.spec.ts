@@ -51,31 +51,31 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be true if the Role is present int the JWT token', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { 'roles': ['role1', 'role2'] };
+        router.data = { roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
     });
 
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role3'] } });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role3'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { 'roles': ['role1', 'role2'] };
+        router.data = { roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
     });
 
     it('Should not redirect if canActivate is', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { 'roles': ['role1', 'role2'] };
+        router.data = { roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate return false if the data Role to check is empty', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1', 'role3'] } });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1', 'role3'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
@@ -105,7 +105,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { 'roles': ['role1', 'role2'], 'redirectUrl': 'no-role-url' };
+        router.data = { roles: ['role1', 'role2'], redirectUrl: 'no-role-url' };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
@@ -117,7 +117,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { 'roles': ['role1', 'role2'] };
+        router.data = { roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).not.toHaveBeenCalled();
@@ -129,7 +129,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
 
         route.params = { appName: 'fakeapp' };
-        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
@@ -140,7 +140,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(true);
 
         route.params = { appName: 'fakeapp' };
-        route.data = { 'clientRoles': ['fakeapp'], 'roles': ['role1', 'role2'] };
+        route.data = { clientRoles: ['fakeapp'], roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
@@ -150,12 +150,12 @@ describe('Auth Guard SSO role service', () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            'realm_access': { roles: ['role1'] },
-            'resource_access': { fakeapp: { roles: ['role2'] } }
+            realm_access: { roles: ['role1'] },
+            resource_access: { fakeapp: { roles: ['role2'] } }
         });
 
         route.params = { appName: 'fakeapp' };
-        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(route)).toBeTruthy();
     });
@@ -165,12 +165,12 @@ describe('Auth Guard SSO role service', () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
 
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            'realm_access': { roles: ['role1'] },
-            'resource_access': { fakeapp: { roles: ['role3'] } }
+            realm_access: { roles: ['role1'] },
+            resource_access: { fakeapp: { roles: ['role3'] } }
         });
 
         route.params = { appName: 'fakeapp' };
-        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
@@ -185,7 +185,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
 
         route.params = { appName: 'fakeapp' };
-        route.data = { 'clientRoles': ['appName'], 'roles': ['role1', 'role2'] };
+        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
@@ -201,7 +201,7 @@ describe('Auth Guard SSO role service', () => {
             spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
             expect(await authGuard.canActivate(router)).toBeTruthy();
         });
@@ -210,7 +210,7 @@ describe('Auth Guard SSO role service', () => {
             spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentUserCapability()));
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
             expect(await authGuard.canActivate(router)).toBeFalsy();
         });
@@ -218,7 +218,7 @@ describe('Auth Guard SSO role service', () => {
         it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
             const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['fakeRole'] };
+            router.data = { roles: ['fakeRole'] };
 
             await authGuard.canActivate(router);
 
@@ -230,20 +230,20 @@ describe('Auth Guard SSO role service', () => {
         it('Should canActivate be false when the user has one of the excluded roles', async () => {
             spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'], 'excludedRoles': ['role1'] };
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'], excludedRoles: ['role1'] };
 
             expect(await authGuard.canActivate(router)).toBeFalsy();
         });
 
         it('Should canActivate be true when the user has none of the excluded roles', async () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role2'] } });
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role2'] } });
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['role1', 'role2'], 'excludedRoles': ['role3'] };
+            router.data = { roles: ['role1', 'role2'], excludedRoles: ['role3'] };
 
             expect(await authGuard.canActivate(router)).toBeTruthy();
         });
@@ -251,10 +251,10 @@ describe('Auth Guard SSO role service', () => {
         it('Should canActivate be false when the user is a content admin and the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
             spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['role1'], 'excludedRoles': ['ALFRESCO_ADMINISTRATORS'] };
+            router.data = { roles: ['role1'], excludedRoles: ['ALFRESCO_ADMINISTRATORS'] };
 
             expect(await authGuard.canActivate(router)).toBeFalsy();
         });

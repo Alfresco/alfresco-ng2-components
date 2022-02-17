@@ -55,9 +55,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     if (shallPass) {
       return next.handle(req)
         .pipe(
-          catchError((error) => {
-            return observableThrowError(error);
-          })
+          catchError((error) => observableThrowError(error))
         );
     }
 
@@ -68,9 +66,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
           const kcReq = req.clone({ headers: headerWithContentType});
           return next.handle(kcReq)
             .pipe(
-              catchError((error) => {
-                return observableThrowError(error);
-              })
+              catchError((error) => observableThrowError(error))
            );
       })
       );

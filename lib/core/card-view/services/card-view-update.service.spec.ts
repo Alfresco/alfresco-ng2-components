@@ -50,14 +50,14 @@ describe('CardViewUpdateService', () => {
     describe('Service', () => {
 
         let cardViewUpdateService: CardViewUpdateService;
-        const property: CardViewBaseItemModel = <CardViewBaseItemModel> {
+        const property: CardViewBaseItemModel = {
             label: 'property-label',
             value: 'property-value',
             key: 'property-key',
             default: 'property-default',
             editable: false,
             clickable: false
-        };
+        } as CardViewBaseItemModel;
 
         beforeEach(() => {
             cardViewUpdateService = TestBed.inject(CardViewUpdateService);
@@ -85,7 +85,7 @@ describe('CardViewUpdateService', () => {
         }));
 
         it('should send updated node when aspect changed', fakeAsync(() => {
-            const fakeNode: MinimalNode = <MinimalNode> { id: 'Bigfoot'};
+            const fakeNode: MinimalNode = { id: 'Bigfoot'} as MinimalNode;
             cardViewUpdateService.updatedAspect$.subscribe((node: MinimalNode) => {
                 expect(node.id).toBe('Bigfoot');
             });

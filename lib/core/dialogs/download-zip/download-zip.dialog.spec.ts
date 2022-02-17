@@ -93,41 +93,35 @@ describe('DownloadZipDialogComponent', () => {
     });
 
     it('should call cancelDownload when CANCEL button is clicked', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         fixture.detectChanges();
         spyOn(component, 'cancelDownload');
 
-        const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
+        const cancelButton = element.querySelector<HTMLButtonElement>('#cancel-button');
         cancelButton.click();
 
         expect(component.cancelDownload).toHaveBeenCalled();
     });
 
     it('should call createDownload when component is initialize', () => {
-        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         fixture.detectChanges();
         expect(createDownloadSpy).toHaveBeenCalled();
     });
 
     it('should close dialog when download is completed', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         component.download('fakeUrl', 'fileName');
         spyOn(component, 'cancelDownload');
@@ -136,12 +130,10 @@ describe('DownloadZipDialogComponent', () => {
     });
 
     it('should close dialog when download is cancelled', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         fixture.detectChanges();
         component.download('url', 'filename');
@@ -159,7 +151,7 @@ describe('DownloadZipDialogComponent', () => {
 
         expect(component.downloadZip).toHaveBeenCalled();
 
-        const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
+        const cancelButton = element.querySelector<HTMLButtonElement>('#cancel-button');
         cancelButton.click();
 
         expect(component.cancelDownload).toHaveBeenCalled();

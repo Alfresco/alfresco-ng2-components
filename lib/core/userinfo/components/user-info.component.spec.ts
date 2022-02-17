@@ -79,18 +79,18 @@ describe('User info component', () => {
     const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
     const identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' };
 
-    function openUserInfo() {
+    const openUserInfo = () => {
         fixture.detectChanges();
-        const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+        const imageButton = element.querySelector<HTMLButtonElement>('#logged-user-img');
         imageButton.click();
         fixture.detectChanges();
-    }
+    };
 
-    async function whenFixtureReady() {
+    const whenFixtureReady = async () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-    }
+    };
 
     setupTestBed({
         imports: [
@@ -259,7 +259,7 @@ describe('User info component', () => {
                 });
 
                 it('should show N/A when the job title is null', () => {
-                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
+                    const imageButton = element.querySelector<HTMLButtonElement>('#user-initials-image');
                     imageButton.click();
                     fixture.detectChanges();
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
@@ -270,7 +270,7 @@ describe('User info component', () => {
                 });
 
                 it('should not show the tabs', () => {
-                    const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
+                    const imageButton = element.querySelector<HTMLButtonElement>('#user-initials-image');
                     imageButton.click();
                     fixture.detectChanges();
                     const tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
@@ -511,7 +511,7 @@ describe('User info component', () => {
             it('should show full name next the user image', async () => {
                 await whenFixtureReady();
 
-                const imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#identity-user-image');
+                const imageButton = element.querySelector<HTMLButtonElement>('#identity-user-image');
                 imageButton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();

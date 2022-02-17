@@ -73,7 +73,7 @@ export class DateTimeEditorComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_TIME_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_TIME_FORMAT);

@@ -29,6 +29,7 @@ export class HighlightTransformService {
 
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
+     *
      * @param text Text to search within
      * @param search Text pattern to search for
      * @param wrapperClass CSS class used to provide highlighting style
@@ -40,9 +41,7 @@ export class HighlightTransformService {
 
         if (search && text) {
             let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-            pattern = pattern.split(' ').filter((t) => {
-                return t.length > 0;
-            }).join('|');
+            pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
 
             const regex = new RegExp(pattern, 'gi');
             result = text.replace(/<[^>]+>/g, '').replace(regex, (match) => {

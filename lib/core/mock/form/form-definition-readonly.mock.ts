@@ -59,7 +59,7 @@ export const formReadonlyTwoTextFields: any = {
         visibilityCondition: null,
         numberOfColumns: 2,
         fields: {
-          '1': [
+          1: [
             {
               fieldType: 'FormFieldRepresentation',
               id: 'firstname',
@@ -134,7 +134,7 @@ export const formReadonlyTwoTextFields: any = {
               visibilityCondition: null
             }
           ],
-          '2': [
+          2: [
             {
               fieldType: 'FormFieldRepresentation',
               id: 'lastname',

@@ -52,10 +52,12 @@ export class ContextMenuOverlayService {
 
         // prevent native contextmenu on overlay element if config.hasBackdrop is true
         if (overlayConfig.hasBackdrop) {
-            (<any> overlay)._backdropElement
+            // eslint-disable-next-line no-underscore-dangle
+            (overlay as any)._backdropElement
                 .addEventListener('contextmenu', (event) => {
                     event.preventDefault();
-                    (<any> overlay)._backdropClick.next(null);
+                    // eslint-disable-next-line no-underscore-dangle
+                    (overlay as any)._backdropClick.next(null);
                 }, true);
         }
 
@@ -96,7 +98,7 @@ export class ContextMenuOverlayService {
                 right: clientX,
                 top: clientY,
                 width: 0
-            })
+            } as any)
         };
 
         const positionStrategy = this.overlay.position()

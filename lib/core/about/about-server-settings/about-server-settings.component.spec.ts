@@ -40,8 +40,8 @@ describe('AboutServerSettingsComponent', () => {
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = Object.assign(appConfigService.config, {
-            'ecmHost': aboutGithubDetails.ecmHost,
-            'bpmHost': aboutGithubDetails.bpmHost
+            ecmHost: aboutGithubDetails.ecmHost,
+            bpmHost: aboutGithubDetails.bpmHost
         });
         fixture.detectChanges();
     });
@@ -50,7 +50,7 @@ describe('AboutServerSettingsComponent', () => {
         fixture.destroy();
     });
 
-    it('should fetch process and content hosts from the app.config.json file', async() => {
+    it('should fetch process and content hosts from the app.config.json file', async () => {
         await fixture.whenStable();
         expect(component.bpmHost).toEqual(aboutGithubDetails.bpmHost);
         expect(component.ecmHost).toEqual(aboutGithubDetails.ecmHost);

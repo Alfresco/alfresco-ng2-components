@@ -17,7 +17,7 @@
 
 import { BpmUserModel } from '../models';
 
-export let fakeBpmUserNoImage = {
+export const fakeBpmUserNoImage = {
     apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
@@ -39,7 +39,7 @@ export let fakeBpmUserNoImage = {
     type: 'fake-type'
 };
 
-export let fakeBpmUser = new BpmUserModel({
+export const fakeBpmUser = new BpmUserModel({
     apps: [],
     capabilities: null,
     company: 'fake-company',
@@ -61,7 +61,7 @@ export let fakeBpmUser = new BpmUserModel({
     type: 'fake-type'
 });
 
-export let fakeBpmEditedUser = {
+export const fakeBpmEditedUser = {
     apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',

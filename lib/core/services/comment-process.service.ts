@@ -41,27 +41,27 @@ export class CommentProcessService {
 
     /**
      * Adds a comment to a task.
+     *
      * @param taskId ID of the target task
      * @param message Text for the comment
      * @returns Details about the comment
      */
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
-        return from(this.commentsApi.addTaskComment({ message: message }, taskId))
+        return from(this.commentsApi.addTaskComment({ message }, taskId))
             .pipe(
-                map((response) => {
-                    return new CommentModel({
-                        id: response.id,
-                        message: response.message,
-                        created: response.created,
-                        createdBy: response.createdBy
-                    });
-                }),
+                map((response) => new CommentModel({
+                    id: response.id,
+                    message: response.message,
+                    created: response.created,
+                    createdBy: response.createdBy
+                })),
                 catchError((err: any) => this.handleError(err))
             );
     }
 
     /**
      * Gets all comments that have been added to a task.
+     *
      * @param taskId ID of the target task
      * @returns Details for each comment
      */
@@ -87,6 +87,7 @@ export class CommentProcessService {
 
     /**
      * Gets all comments that have been added to a process instance.
+     *
      * @param processInstanceId ID of the target process instance
      * @returns Details for each comment
      */
@@ -112,22 +113,21 @@ export class CommentProcessService {
 
     /**
      * Adds a comment to a process instance.
+     *
      * @param processInstanceId ID of the target process instance
      * @param message Text for the comment
      * @returns Details of the comment added
      */
     addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
         return from(
-            this.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
+            this.commentsApi.addProcessInstanceComment({ message }, processInstanceId)
         ).pipe(
-            map((response) => {
-                return new CommentModel({
-                    id: response.id,
-                    message: response.message,
-                    created: response.created,
-                    createdBy: response.createdBy
-                });
-            }),
+            map((response) => new CommentModel({
+                id: response.id,
+                message: response.message,
+                created: response.created,
+                createdBy: response.createdBy
+            })),
             catchError((err: any) => this.handleError(err))
         );
     }

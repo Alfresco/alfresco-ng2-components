@@ -53,7 +53,7 @@ export class FavoritesApiService {
         const entries: any[] = this
             .remapFavoriteEntries(data?.list?.entries || []);
 
-        return <NodePaging> {
+        return {
             list: { entries, pagination }
         };
     }
@@ -69,6 +69,7 @@ export class FavoritesApiService {
 
     /**
      * Gets the favorites for a user.
+     *
      * @param personId ID of the user
      * @param options Options supported by JS-API
      * @returns List of favorites

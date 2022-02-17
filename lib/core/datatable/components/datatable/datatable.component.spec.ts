@@ -66,13 +66,13 @@ class FakeDataRow implements DataRow {
     }
 }
 
-export function resolverFn(row: DataRow, col: DataColumn) {
+export const resolverFn = (row: DataRow, col: DataColumn) => {
     const value = row.getValue(col.key);
     if (col.key === 'name') {
         return  `${row.getValue('firstName')} - ${row.getValue('lastName')}`;
     }
     return value;
-}
+};
 
 describe('DataTable', () => {
 
@@ -599,10 +599,10 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.onRowClick(rows[0], <any> {
-            metaKey: true, preventDefault() {
-            }
-        });
+        dataTable.onRowClick(rows[0], {
+            metaKey: true,
+            preventDefault: () => {}
+        } as any);
     });
 
     it('should unselect the row searching it by row id, when row id is defined', () => {
@@ -724,7 +724,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         const table = new DataTableComponent(null, null);
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -736,7 +736,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         dataTable.rowClick.subscribe((e) => {
@@ -751,7 +751,7 @@ describe('DataTable', () => {
 
     it('should emit double click if there are two single click in 250ms', (done) => {
 
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
         fixture.detectChanges();
@@ -768,8 +768,7 @@ describe('DataTable', () => {
    });
 
     it('should emit double click if there are more than two single click in 250ms', (done) => {
-
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
         fixture.detectChanges();
@@ -788,8 +787,7 @@ describe('DataTable', () => {
    });
 
     it('should emit single click if there are two single click in more than 250ms', (done) => {
-
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         let clickCount = 0;
 
         dataTable.data = new ObjectDataTableAdapter([], []);
@@ -811,7 +809,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row-click dom event', (done) => {
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-click', (e) => {
@@ -825,7 +823,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row-dblclick dom event', (done) => {
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-dblclick', (e) => {
@@ -854,7 +852,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort if column is missing', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
@@ -864,7 +862,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
@@ -879,7 +877,7 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
@@ -900,7 +898,7 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
@@ -970,9 +968,9 @@ describe('DataTable', () => {
 
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBeTruthy();
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
+        dataTable.onSelectAllClick({ checked: false } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBeFalsy();
     });
 
@@ -982,7 +980,7 @@ describe('DataTable', () => {
         dataTable.data = data;
         dataTable.multiselect = true;
         dataTable.ngAfterContentInit();
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
 
         expect(dataTable.selection.every((entry) => entry.isSelected));
 
@@ -1000,13 +998,13 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(true);
         }
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
+        dataTable.onSelectAllClick({ checked: false } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(false);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);
@@ -1015,9 +1013,9 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
     });
 
@@ -1032,16 +1030,16 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
 
         dataTable.multiselect = true;
-        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: true });
+        dataTable.onCheckboxChange(rows[0], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(true);
         expect(dataTable.isSelectAllChecked).toBe(false);
 
-        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: true });
+        dataTable.onCheckboxChange(rows[1], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(false);
         expect(dataTable.isSelectAllChecked).toBe(true);
 
-        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: false });
-        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: false });
+        dataTable.onCheckboxChange(rows[0], { checked: false } as MatCheckboxChange);
+        dataTable.onCheckboxChange(rows[1], { checked: false } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(false);
         expect(dataTable.isSelectAllChecked).toBe(false);
     });
@@ -1051,16 +1049,16 @@ describe('DataTable', () => {
         const rows = data.getRows();
 
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', data, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', data, true) });
 
         expect(rows[0].isSelected).toBe(false);
         expect(rows[1].isSelected).toBe(false);
 
-        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: true });
+        dataTable.onCheckboxChange(rows[1], { checked: true } as MatCheckboxChange);
         expect(rows[0].isSelected).toBe(false);
         expect(rows[1].isSelected).toBe(true);
 
-        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: true });
+        dataTable.onCheckboxChange(rows[0], { checked: true } as MatCheckboxChange);
         expect(rows[0].isSelected).toBe(true);
         expect(rows[1].isSelected).toBe(true);
     });
@@ -1073,7 +1071,7 @@ describe('DataTable', () => {
         dataTable.multiselect = false;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);
@@ -1082,53 +1080,45 @@ describe('DataTable', () => {
 
     it('should require row and column for icon value check', () => {
         expect(dataTable.isIconValue(null, null)).toBeFalsy();
-        expect(dataTable.isIconValue(<DataRow> {}, null)).toBeFalsy();
-        expect(dataTable.isIconValue(null, <DataColumn> {})).toBeFalsy();
+        expect(dataTable.isIconValue({} as DataRow, null)).toBeFalsy();
+        expect(dataTable.isIconValue(null, {} as DataColumn)).toBeFalsy();
     });
 
     it('should use special material url scheme', () => {
-        const column = <DataColumn> {};
+        const column = {} as DataColumn;
 
         const row: any = {
-            getValue: function() {
-                return 'material-icons://android';
-            }
+            getValue: () => 'material-icons://android'
         };
 
         expect(dataTable.isIconValue(row, column)).toBeTruthy();
     });
 
     it('should not use special material url scheme', () => {
-        const column = <DataColumn> {};
+        const column = {} as DataColumn;
 
         const row: any = {
-            getValue: function() {
-                return 'http://www.google.com';
-            }
+            getValue: () => 'http://www.google.com'
         };
 
         expect(dataTable.isIconValue(row, column)).toBeFalsy();
     });
 
     it('should parse icon value', () => {
-        const column = <DataColumn> {};
+        const column = {} as DataColumn;
 
         const row: any = {
-            getValue: function() {
-                return 'material-icons://android';
-            }
+            getValue: () => 'material-icons://android'
         };
 
         expect(dataTable.asIconValue(row, column)).toBe('android');
     });
 
     it('should not parse icon value', () => {
-        const column = <DataColumn> {};
+        const column = {} as DataColumn;
 
         const row: any = {
-            getValue: function() {
-                return 'http://www.google.com';
-            }
+            getValue: () => 'http://www.google.com'
         };
 
         expect(dataTable.asIconValue(row, column)).toBe(null);
@@ -1142,29 +1132,29 @@ describe('DataTable', () => {
 
     it('should require column and direction to evaluate sorting state', () => {
         expect(dataTable.isColumnSorted(null, null)).toBeFalsy();
-        expect(dataTable.isColumnSorted(<DataColumn> {}, null)).toBeFalsy();
+        expect(dataTable.isColumnSorted({} as DataColumn, null)).toBeFalsy();
         expect(dataTable.isColumnSorted(null, 'asc')).toBeFalsy();
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
-        expect(dataTable.isColumnSorted(<DataColumn> {}, 'asc')).toBeFalsy();
+        expect(dataTable.isColumnSorted({} as DataColumn, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
-        expect(dataTable.isColumnSorted(<DataColumn> { key: 'column_1' }, 'asc')).toBeTruthy();
-        expect(dataTable.isColumnSorted(<DataColumn> { key: 'column_2' }, 'desc')).toBeFalsy();
+        expect(dataTable.isColumnSorted({ key: 'column_1' } as DataColumn, 'asc')).toBeTruthy();
+        expect(dataTable.isColumnSorted({ key: 'column_2' } as DataColumn, 'desc')).toBeFalsy();
     });
 
     it('should replace image source with fallback thumbnail on error', () => {
-        const event = <any> {
+        const event = {
             target: {
                 src: 'missing-image'
             }
-        };
+        } as any;
         const row = new FakeDataRow();
         dataTable.fallbackThumbnail = '<fallback>';
         dataTable.onImageLoadingError(event, row);
@@ -1173,11 +1163,11 @@ describe('DataTable', () => {
 
     it('should replace image source with miscellaneous icon when fallback is not available', () => {
         const originalSrc = 'missing-image';
-        const event = <any> {
+        const event = {
             target: {
                 src: originalSrc
             }
-        };
+        } as any;
         const row = new FakeDataRow();
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event, row);
@@ -1185,39 +1175,39 @@ describe('DataTable', () => {
     });
 
     it('should not get cell tooltip when row is not provided', () => {
-        const col = <DataColumn> { key: 'name', type: 'text' };
+        const col = { key: 'name', type: 'text' } as DataColumn;
         expect(dataTable.getCellTooltip(null, col)).toBeNull();
     });
 
     it('should not get cell tooltip when column is not provided', () => {
-        const row = <DataRow> {};
+        const row = {} as DataRow;
         expect(dataTable.getCellTooltip(row, null)).toBeNull();
     });
 
     it('should not get cell tooltip when formatter is not provided', () => {
-        const col = <DataColumn> { key: 'name', type: 'text' };
-        const row = <DataRow> {};
+        const col = { key: 'name', type: 'text' } as DataColumn;
+        const row = {} as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
     it('should use formatter function to generate tooltip', () => {
         const tooltip = 'tooltip value';
-        const col = <DataColumn> {
+        const col = {
             key: 'name',
             type: 'text',
             formatTooltip: () => tooltip
-        };
-        const row = <DataRow> {};
+        } as DataColumn;
+        const row = {} as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBe(tooltip);
     });
 
     it('should return null value from the tooltip formatter', () => {
-        const col = <DataColumn> {
+        const col = {
             key: 'name',
             type: 'text',
             formatTooltip: () => null
-        };
-        const row = <DataRow> {};
+        } as DataColumn;
+        const row = {} as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
@@ -1227,15 +1217,13 @@ describe('DataTable', () => {
             emitted++;
         });
 
-        const column = <DataColumn> {};
+        const column = {} as any;
         const row: any = {
-            getValue: function() {
-                return 'id';
-            }
+            getValue: () => 'id'
         };
 
         dataTable.getRowActions(row, column);
-        dataTable.ngOnChanges({ 'data': new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         dataTable.getRowActions(row, column);
 
         expect(emitted).toBe(2);
@@ -1340,7 +1328,7 @@ describe('DataTable', () => {
 
         const newDataColumnsSchema = { key: 'new-column'};
         const columnsChange = new SimpleChange(null, [newDataColumnsSchema], false);
-        dataTable.ngOnChanges({ 'columns': columnsChange });
+        dataTable.ngOnChanges({ columns: columnsChange });
         const expectedNewDataColumns = [new ObjectDataColumn(newDataColumnsSchema)];
         expect(dataTable.data.getColumns()).toEqual(expectedNewDataColumns);
     });

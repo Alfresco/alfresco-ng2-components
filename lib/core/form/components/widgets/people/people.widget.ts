@@ -21,7 +21,6 @@ import { PeopleProcessService } from '../../../../services/people-process.servic
 import { UserProcessModel } from '../../../../models';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
-import { GroupModel } from '../core/group.model';
 import { WidgetComponent } from './../widget.component';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -97,7 +96,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             }
             const params = this.field.params;
             if (params && params.restrictWithGroup) {
-                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
+                const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
         }

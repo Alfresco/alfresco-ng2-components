@@ -26,13 +26,13 @@ import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 })
 export class RenditionsService {
 
-    _renditionsApi: RenditionsApi;
+    private _renditionsApi: RenditionsApi;
     get renditionsApi(): RenditionsApi {
         this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
         return this._renditionsApi;
     }
 
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
@@ -43,6 +43,7 @@ export class RenditionsService {
 
     /**
      * Gets the first available rendition found for a node.
+     *
      * @param nodeId ID of the target node
      * @returns Information object for the rendition
      */
@@ -58,6 +59,7 @@ export class RenditionsService {
 
     /**
      * Generates a rendition for a node using the first available encoding.
+     *
      * @param nodeId ID of the target node
      * @returns Null response to indicate completion
      */
@@ -75,6 +77,7 @@ export class RenditionsService {
 
     /**
      * Checks if the specified rendition is available for a node.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @returns True if the rendition is available, false otherwise
@@ -100,6 +103,7 @@ export class RenditionsService {
 
     /**
      * Checks if the node can be converted using the specified rendition.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @returns True if the node can be converted, false otherwise
@@ -121,6 +125,7 @@ export class RenditionsService {
 
     /**
      * Gets a URL linking to the specified rendition of a node.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @returns URL string
@@ -131,6 +136,7 @@ export class RenditionsService {
 
     /**
      * Gets information about a rendition of a node.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @returns Information object about the rendition
@@ -141,6 +147,7 @@ export class RenditionsService {
 
     /**
      * Gets a list of all renditions for a node.
+     *
      * @param nodeId ID of the target node
      * @returns Paged list of rendition details
      */
@@ -150,6 +157,7 @@ export class RenditionsService {
 
     /**
      * Creates a rendition for a node.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @returns Null response to indicate completion
@@ -160,6 +168,7 @@ export class RenditionsService {
 
     /**
      * Repeatedly attempts to create a rendition, through to success or failure.
+     *
      * @param nodeId ID of the target node
      * @param encoding Name of the rendition encoding
      * @param pollingInterval Time interval (in milliseconds) between checks for completion

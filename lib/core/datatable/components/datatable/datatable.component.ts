@@ -41,11 +41,13 @@ import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
 
+// eslint-disable-next-line no-shadow
 export enum DisplayMode {
     List = 'list',
     Gallery = 'gallery'
 }
 
+// eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
     Never = 'never',
     Always = 'always',
@@ -330,7 +332,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         this.singleClickStreamSub = singleClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
             const event: DataRowEvent = dataRowEvents[0];
-            this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
+            this.handleRowSelection(event.value, event.event as any);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
                 this.elementRef.nativeElement.dispatchEvent(
@@ -431,7 +433,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     public getSchemaFromHtml(): any {
         let schema = [];
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map((c) => <DataColumn> c);
+            schema = this.columnList.columns.map((c) => c as DataColumn);
         }
         return schema;
     }
@@ -515,8 +517,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     onRowKeyUp(row: DataRow, keyboardEvent: KeyboardEvent) {
         const event = new CustomEvent('row-keyup', {
             detail: {
-                row: row,
-                keyboardEvent: keyboardEvent,
+                row,
+                keyboardEvent,
                 sender: this
             },
             bubbles: true
@@ -613,7 +615,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     onImageLoadingError(event: Event, row: DataRow) {
         if (event) {
-            const element = <any> event.target;
+            const element = event.target as any;
 
             if (this.fallbackThumbnail) {
                 element.src = this.fallbackThumbnail;
@@ -749,9 +751,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter((column) => {
-            return column.sortable === true;
-        });
+        return this.data.getColumns().filter((column) => column.sortable === true);
     }
 
     isEmpty() {
@@ -778,7 +778,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {
-                row: row,
+                row,
                 selection: this.selection
             },
             bubbles: true
@@ -823,9 +823,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getNameColumnValue() {
-        return this.data.getColumns().find( (el: any) => {
-            return el.key.includes('name');
-        });
+        return this.data.getColumns().find( (el: any) => el.key.includes('name'));
     }
 
     getAutomationValue(row: DataRow): any {

@@ -81,14 +81,14 @@ describe('CommentsComponent', () => {
 
     it('should load comments when taskId specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
 
         expect(getProcessCommentsSpy).toHaveBeenCalled();
     });
 
     it('should load comments when nodeId specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'nodeId': change});
+        component.ngOnChanges({nodeId: change});
 
         expect(getContentCommentsSpy).toHaveBeenCalled();
     });
@@ -98,7 +98,7 @@ describe('CommentsComponent', () => {
         getProcessCommentsSpy.and.returnValue(throwError({}));
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
 
         expect(emitSpy).toHaveBeenCalled();
     });
@@ -110,7 +110,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments when the task has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -121,7 +121,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments count when the task has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -142,7 +142,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments input by default', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({taskId: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -169,7 +169,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should fetch new comments when taskId changed', () => {
-            component.ngOnChanges({'taskId': change});
+            component.ngOnChanges({taskId: change});
             expect(getProcessCommentsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -179,7 +179,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should not fetch new comments when taskId changed to null', () => {
-            component.ngOnChanges({'taskId': nullChange});
+            component.ngOnChanges({taskId: nullChange});
             expect(getProcessCommentsSpy).not.toHaveBeenCalled();
         });
     });
@@ -194,7 +194,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should fetch new comments when nodeId changed', () => {
-            component.ngOnChanges({'nodeId': change});
+            component.ngOnChanges({nodeId: change});
             expect(getContentCommentsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -204,7 +204,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should not fetch new comments when nodeId changed to null', () => {
-            component.ngOnChanges({'nodeId': nullChange});
+            component.ngOnChanges({nodeId: nullChange});
             expect(getContentCommentsSpy).not.toHaveBeenCalled();
         });
     });
@@ -276,7 +276,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should clear comment when escape key is pressed', async () => {
-            const event = new KeyboardEvent('keydown', {'key': 'Escape'});
+            const event = new KeyboardEvent('keydown', {key: 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
             element.dispatchEvent(event);
 
@@ -363,7 +363,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should clear comment when escape key is pressed', async () => {
-            const event = new KeyboardEvent('keydown', {'key': 'Escape'});
+            const event = new KeyboardEvent('keydown', {key: 'Escape'});
             let element = fixture.nativeElement.querySelector('#comment-input');
             element.dispatchEvent(event);
 

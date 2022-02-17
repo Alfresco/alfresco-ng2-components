@@ -20,152 +20,114 @@ import { mockAssignedRoles, mockAvailableRoles, mockEffectiveRoles, mockIdentity
 
 export const queryUsersMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockIdentityUsers);
-        }
+        callCustomApi: () => Promise.resolve(mockIdentityUsers)
     }
 };
 
 export const createUserMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const updateUserMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const deleteUserMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const getInvolvedGroupsMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockGroups);
-        }
+        callCustomApi: () => Promise.resolve(mockGroups)
     }
 };
 
 export const joinGroupMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const leaveGroupMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const getAvailableRolesMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockAvailableRoles);
-        }
+        callCustomApi: () => Promise.resolve(mockAvailableRoles)
     }
 };
 
 export const getAssignedRolesMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockAssignedRoles);
-        }
+        callCustomApi: () => Promise.resolve(mockAssignedRoles)
     }
 };
 
 export const getEffectiveRolesMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockEffectiveRoles);
-        }
+        callCustomApi: () => Promise.resolve(mockEffectiveRoles)
     }
 };
 
 export const assignRolesMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const removeRolesMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const roleMappingApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(roleMappingMock);
-        }
+        callCustomApi: () => Promise.resolve(roleMappingMock)
     }
 };
 
 export const noRoleMappingApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve([]);
-        }
+        callCustomApi: () => Promise.resolve([])
     }
 };
 
 export const groupsMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockIdentityGroups);
-        }
+        callCustomApi: () => Promise.resolve(mockIdentityGroups)
     }
 };
 
 export const createGroupMappingApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const updateGroupMappingApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const deleteGroupMappingApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve();
-        }
+        callCustomApi: () => Promise.resolve()
     }
 };
 
 export const applicationDetailsMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve([{id: 'mock-app-id', name: 'mock-app-name'}]);
-        }
+        callCustomApi: () => Promise.resolve([{id: 'mock-app-id', name: 'mock-app-name'}])
     }
 };
