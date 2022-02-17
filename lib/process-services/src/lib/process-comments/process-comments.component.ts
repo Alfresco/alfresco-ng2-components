@@ -42,15 +42,12 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     comments: CommentModel [] = [];
+    comment$: Observable<CommentModel>;
+    message: string;
+    beingAdded: boolean = false;
 
     private commentObserver: Observer<CommentModel>;
-    comment$: Observable<CommentModel>;
-
     private onDestroy$ = new Subject<boolean>();
-
-    message: string;
-
-    beingAdded: boolean = false;
 
     constructor(private commentProcessService: CommentProcessService) {
         this.comment$ = new Observable<CommentModel>(observer =>  this.commentObserver = observer).pipe(share());
@@ -73,31 +70,6 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
                 this.resetComments();
             }
         }
-    }
-
-    private getProcessInstanceComments(processInstanceId: string): void {
-        this.resetComments();
-        if (processInstanceId) {
-            this.commentProcessService.getProcessInstanceComments(processInstanceId).subscribe(
-                (res: CommentModel[]) => {
-                    res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
-                        const date1 = new Date(comment1.created);
-                        const date2 = new Date(comment2.created);
-                        return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                    });
-                    res.forEach((comment) => {
-                        this.commentObserver.next(comment);
-                    });
-                },
-                (err) => {
-                    this.error.emit(err);
-                }
-            );
-        }
-    }
-
-    private resetComments(): void {
-        this.comments = [];
     }
 
     add(): void {
@@ -131,4 +103,28 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
         this.error.emit(error);
     }
 
+    private getProcessInstanceComments(processInstanceId: string): void {
+        this.resetComments();
+        if (processInstanceId) {
+            this.commentProcessService.getProcessInstanceComments(processInstanceId).subscribe(
+                (res: CommentModel[]) => {
+                    res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
+                        const date1 = new Date(comment1.created);
+                        const date2 = new Date(comment2.created);
+                        return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+                    });
+                    res.forEach((comment) => {
+                        this.commentObserver.next(comment);
+                    });
+                },
+                (err) => {
+                    this.error.emit(err);
+                }
+            );
+        }
+    }
+
+    private resetComments(): void {
+        this.comments = [];
+    }
 }

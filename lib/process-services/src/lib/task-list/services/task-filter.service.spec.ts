@@ -57,7 +57,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeFiltersResponse)
             });
@@ -75,7 +75,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeFiltersResponse)
             });
@@ -94,7 +94,7 @@ describe('Activiti Task filter Service', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeFiltersResponse)
             });
@@ -120,7 +120,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeAppFilter)
             });
@@ -142,7 +142,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
@@ -150,7 +150,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
@@ -158,7 +158,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(2).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
@@ -166,7 +166,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(3).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
@@ -197,7 +197,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
@@ -205,7 +205,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
@@ -213,7 +213,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(2).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
@@ -221,7 +221,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.at(3).respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
@@ -244,7 +244,7 @@ describe('Activiti Task filter Service', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
+                status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '2233', name: 'FakeNameFilter', filter: { assignment: 'fake-assignment' }

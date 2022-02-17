@@ -51,7 +51,7 @@ describe('ProcessAuditDirective', () => {
     let component: BasicButtonComponent;
     let service: ProcessService;
 
-    function createFakePdfBlob(): Blob {
+    const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
@@ -67,7 +67,8 @@ describe('ProcessAuditDirective', () => {
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
         return new Blob([pdfData], {type: 'application/pdf'});
-    }
+    };
+
     const blob = createFakePdfBlob();
 
     setupTestBed({

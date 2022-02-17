@@ -46,9 +46,9 @@ export class PeopleComponent {
     peopleSearch: PeopleSearchComponent;
 
     showAssignment: boolean = false;
+    peopleSearch$: Observable<UserProcessModel[]>;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
-    peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
         this.peopleSearch$ = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)

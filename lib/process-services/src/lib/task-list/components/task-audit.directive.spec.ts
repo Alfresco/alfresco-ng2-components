@@ -52,7 +52,7 @@ describe('TaskAuditDirective', () => {
     let component: BasicButtonComponent;
     let service: TaskListService;
 
-    function createFakePdfBlob(): Blob {
+    const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
@@ -68,7 +68,7 @@ describe('TaskAuditDirective', () => {
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
         return new Blob([pdfData], {type: 'application/pdf'});
-    }
+    };
 
     setupTestBed({
         imports: [

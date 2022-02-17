@@ -34,13 +34,13 @@ export class SingleProcessList extends ProcessList {
     constructor(name?: string) {
         const instance = new ProcessInstance({
             id: '123',
-            name: name
+            name
         });
         super([instance]);
     }
 }
 
-export let exampleProcess = new ProcessInstance({
+export const exampleProcess = new ProcessInstance({
     id: '123',
     name: 'Process 123',
     started: '2016-11-10T03:37:30.010+0000',
@@ -52,7 +52,7 @@ export let exampleProcess = new ProcessInstance({
     }
 });
 
-export let processEnded = new ProcessInstance({
+export const processEnded = new ProcessInstance({
     id: '123',
     name: 'Process 123',
     started: '2016-11-10T03:37:30.010+0000',
@@ -65,7 +65,7 @@ export let processEnded = new ProcessInstance({
     ended: '2016-11-11T03:37:30.010+0000'
 });
 
-export let mockRunningProcess = new ProcessInstance({
+export const mockRunningProcess = new ProcessInstance({
     id: '123',
     name: 'Process 123',
     started: '2016-11-10T03:37:30.010+0000',
@@ -78,7 +78,7 @@ export let mockRunningProcess = new ProcessInstance({
     ended: null
 });
 
-export let exampleProcessNoName = new ProcessInstance({
+export const exampleProcessNoName = new ProcessInstance({
     id: '123',
     name: null,
     started: '2016-11-10T03:37:30.010+0000',
@@ -91,7 +91,7 @@ export let exampleProcessNoName = new ProcessInstance({
     processDefinitionName: 'My Process'
 });
 
-export let fakeProcessInstances = {
+export const fakeProcessInstances = {
     size: 2,
     total: 2,
     start: 0,

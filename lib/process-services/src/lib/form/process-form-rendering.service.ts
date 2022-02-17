@@ -28,7 +28,7 @@ export class ProcessFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
-            'upload': () => AttachFileWidgetComponent,
+            upload: () => AttachFileWidgetComponent,
             'select-folder': () => AttachFolderWidgetComponent
         }, true);
     }

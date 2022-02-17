@@ -38,27 +38,27 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 
 const fakeRepositoryListAnswer = [
     {
-        'authorized': true,
-        'serviceId': 'alfresco-9999-SHAREME',
-        'metaDataAllowed': true,
-        'name': 'SHAREME',
-        'repositoryUrl': 'http://localhost:0000/SHAREME',
-        'id': 1000
+        authorized: true,
+        serviceId: 'alfresco-9999-SHAREME',
+        metaDataAllowed: true,
+        name: 'SHAREME',
+        repositoryUrl: 'http://localhost:0000/SHAREME',
+        id: 1000
     },
     {
-        'authorized': true,
-        'serviceId': 'alfresco-0000-GOKUSHARE',
-        'metaDataAllowed': true,
-        'name': 'GOKUSHARE',
-        'repositoryUrl': 'http://localhost:0000/GOKUSHARE'
+        authorized: true,
+        serviceId: 'alfresco-0000-GOKUSHARE',
+        metaDataAllowed: true,
+        name: 'GOKUSHARE',
+        repositoryUrl: 'http://localhost:0000/GOKUSHARE'
     },
     {
-        'authorized': true,
-        'serviceId': 'alfresco-2000-external',
-        'metaDataAllowed': true,
-        'name': 'external',
-        'repositoryUrl': 'http://externalhost.com/alfresco',
-        'id': 2000
+        authorized: true,
+        serviceId: 'alfresco-2000-external',
+        metaDataAllowed: true,
+        name: 'external',
+        repositoryUrl: 'http://externalhost.com/alfresco',
+        id: 2000
     }
 ];
 
@@ -66,21 +66,21 @@ const onlyLocalParams = {
     fileSource: {
         serviceId: 'local-file'
     }
-};
+} as FormFieldMetadata;
 
 const allSourceParams = {
     fileSource: {
         serviceId: 'all-file-sources'
     },
     link: false
-};
+} as FormFieldMetadata;
 
 const allSourceParamsWithLinkEnabled = {
     fileSource: {
         serviceId: 'all-file-sources'
     },
     link: true
-};
+} as FormFieldMetadata;
 
 const definedSourceParams = {
     fileSource: {
@@ -90,7 +90,7 @@ const definedSourceParams = {
             accountId: 'goku-share-account-id'
         }
     }
-};
+} as FormFieldMetadata;
 
 const externalDefinedSourceParams = {
     fileSource: {
@@ -100,44 +100,44 @@ const externalDefinedSourceParams = {
             accountId: 'external-account-id'
         }
     }
-};
+} as FormFieldMetadata;
 
-const fakeMinimalNode: Node = <Node> {
+const fakeMinimalNode: Node = {
     id: 'fake',
     name: 'fake-name',
     content: {
         mimeType: 'application/pdf'
     }
-};
+} as Node;
 
 const fakePngUpload: any = {
-    'id': 1166,
-    'name': 'fake-png.png',
-    'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
-    'relatedContent': false,
-    'contentAvailable': true,
-    'link': false,
-    'isExternal': false,
-    'mimeType': 'image/png',
-    'simpleType': 'image',
-    'previewStatus': 'queued',
-    'thumbnailStatus': 'queued'
+    id: 1166,
+    name: 'fake-png.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    isExternal: false,
+    mimeType: 'image/png',
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued'
 };
 
 const fakePngAnswer: any = {
-    'id': 1155,
-    'name': 'a_png_file.png',
-    'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
-    'relatedContent': false,
-    'contentAvailable': true,
-    'isExternal': false,
-    'link': false,
-    'mimeType': 'image/png',
-    'simpleType': 'image',
-    'previewStatus': 'queued',
-    'thumbnailStatus': 'queued'
+    id: 1155,
+    name: 'a_png_file.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
+    relatedContent: false,
+    contentAvailable: true,
+    isExternal: false,
+    link: false,
+    mimeType: 'image/png',
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued'
 };
 
 describe('AttachFileWidgetComponent', () => {
@@ -183,19 +183,19 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'simple-upload-button';
-        widget.field.params = <FormFieldMetadata> onlyLocalParams;
+        widget.field.params = onlyLocalParams;
         fixture.detectChanges();
         await fixture.whenStable();
         expect(element.querySelector('#simple-upload-button')).not.toBeNull();
     });
 
-    it('should show up all the repository option on menu list', async() => {
+    it('should show up all the repository option on menu list', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParams;
+        widget.field.params = allSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         fixture.detectChanges();
         await fixture.whenRenderingDone();
@@ -226,7 +226,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParamsWithLinkEnabled;
+        widget.field.params = allSourceParamsWithLinkEnabled;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         fixture.detectChanges();
         await fixture.whenRenderingDone();
@@ -260,7 +260,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParamsWithLinkEnabled;
+        widget.field.params = allSourceParamsWithLinkEnabled;
 
         fixture.detectChanges();
         await fixture.whenRenderingDone();
@@ -285,7 +285,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParams;
+        widget.field.params = allSourceParams;
 
         fixture.detectChanges();
         await fixture.whenRenderingDone();
@@ -310,7 +310,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParams;
+        widget.field.params = allSourceParams;
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -345,7 +345,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParams;
+        widget.field.params = allSourceParams;
         widget.field.params.multiple = true;
 
         fixture.detectChanges();
@@ -373,7 +373,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> definedSourceParams;
+        widget.field.params = definedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
         spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
@@ -403,7 +403,7 @@ describe('AttachFileWidgetComponent', () => {
             value: []
         });
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> onlyLocalParams;
+        widget.field.params = onlyLocalParams;
         spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
 
         fixture.detectChanges();
@@ -423,7 +423,7 @@ describe('AttachFileWidgetComponent', () => {
         });
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
         widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> onlyLocalParams;
+        widget.field.params = onlyLocalParams;
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -439,7 +439,7 @@ describe('AttachFileWidgetComponent', () => {
                 value: []
             });
             widget.field.id = 'attach-file-attach';
-            widget.field.params = <FormFieldMetadata>  onlyLocalParams;
+            widget.field.params = onlyLocalParams;
             spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
             spyOn(processContentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
 
@@ -476,7 +476,7 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const removeOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-remove')).nativeElement;
+            const removeOption = fixture.debugElement.query(By.css('#file-1155-remove')).nativeElement as HTMLButtonElement;
             removeOption.click();
 
             fixture.detectChanges();
@@ -494,7 +494,7 @@ describe('AttachFileWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const downloadOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
             downloadOption.click();
 
             fixture.detectChanges();
@@ -503,7 +503,7 @@ describe('AttachFileWidgetComponent', () => {
             expect(downloadService.downloadBlob).toHaveBeenCalled();
         });
 
-        it('should raise formContentClicked event when show file is clicked', async() => {
+        it('should raise formContentClicked event when show file is clicked', async () => {
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
             formService.formContentClicked.subscribe((file) => {
                 expect(file).not.toBeNull();
@@ -516,13 +516,13 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const showOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
             showOption.click();
             fixture.detectChanges();
             await fixture.whenStable();
         });
 
-        it('should not display the show button file when is an external file', async() => {
+        it('should not display the show button file when is an external file', async () => {
             fakePngAnswer.isExternal = true;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -531,11 +531,11 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const showOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
             expect(showOption.disabled).toBeTruthy();
         });
 
-        it('should not display the download button file when is an external file', async() => {
+        it('should not display the download button file when is an external file', async () => {
             fakePngAnswer.isExternal = true;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -544,11 +544,11 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const downloadOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
             expect(downloadOption.disabled).toBeTruthy();
         });
 
-        it('should  display the download button file when is an internal file', async() => {
+        it('should  display the download button file when is an internal file', async () => {
             fakePngAnswer.isExternal = false;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -557,12 +557,12 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const downloadOption: HTMLButtonElement = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement;
+            const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
             expect(downloadOption.disabled).toBeFalsy();
 
         });
 
-        it('should not display the show button file when there is no contentAvailable', async() => {
+        it('should not display the show button file when there is no contentAvailable', async () => {
             fakePngAnswer.contentAvailable = false;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
 
@@ -571,7 +571,7 @@ describe('AttachFileWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            const showOption = <HTMLButtonElement> fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement;
+            const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
             expect(showOption.disabled).toBeTruthy();
         });
    });
@@ -579,7 +579,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should be able to upload files when a defined folder from external content service', async () => {
         widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.UPLOAD, value: [] });
         widget.field.id = 'attach-external-file-attach';
-        widget.field.params = <FormFieldMetadata> externalDefinedSourceParams;
+        widget.field.params = externalDefinedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
         spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));
@@ -604,7 +604,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should pass a valid repository id to open the external login', async () => {
         widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.UPLOAD, value: [] });
         widget.field.id = 'attach-external-file-attach';
-        widget.field.params = <FormFieldMetadata> externalDefinedSourceParams;
+        widget.field.params = externalDefinedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
         const openLoginSpy = spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));

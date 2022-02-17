@@ -40,6 +40,7 @@ import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 
+const MAX_LENGTH = 255;
 @Component({
     selector: 'adf-start-process',
     templateUrl: './start-process.component.html',
@@ -47,8 +48,6 @@ import { ProcessNamePipe } from '../../pipes/process-name.pipe';
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
-
-    MAX_LENGTH: number = 255;
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -92,7 +91,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when the process starts. */
     @Output()
-    start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+    start = new EventEmitter<ProcessInstance>();
 
     /** Emitted when the process is canceled. */
     @Output()
@@ -100,15 +99,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Emitted when process definition selection changes. */
     @Output()
-    processDefinitionSelection: EventEmitter<ProcessDefinitionRepresentation> = new EventEmitter<ProcessDefinitionRepresentation>();
+    processDefinitionSelection = new EventEmitter<ProcessDefinitionRepresentation>();
 
     /** Emitted when application selection changes. */
     @Output()
-    applicationSelection: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
+    applicationSelection = new EventEmitter<AppDefinitionRepresentationModel>();
 
     @ViewChild('startForm')
     startForm: StartFormComponent;
@@ -121,7 +120,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
     filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
-    maxProcessNameLength: number = this.MAX_LENGTH;
+    maxProcessNameLength: number = MAX_LENGTH;
     alfrescoRepositoryName: string;
     applications: AppDefinitionRepresentationModel[] = [];
     selectedApplication: AppDefinitionRepresentationModel;
@@ -179,29 +178,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    private isAppIdChanged(changes: SimpleChanges) {
-        return changes['appId'] && changes['appId'].currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
-    }
-
-    private isProcessDefinitionChanged(changes: SimpleChanges) {
-        return changes['processDefinitionName'] && changes['processDefinitionName'].currentValue &&
-        changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue;
-    }
-
-    private _filter(value: string): ProcessDefinitionRepresentation[] {
-        if (value !== null && value !== undefined) {
-            const filterValue = value.toLowerCase();
-            const filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
-
-            if (this.processFilterSelector) {
-                this.selectedProcessDef = this.getSelectedProcess(filterValue);
-            }
-            return filteredProcess;
-        }
-
-        return [];
-    }
-
     getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
         let processSelected = this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
 
@@ -232,9 +208,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 }
 
                 if (this.processDefinitionName) {
-                    const filteredProcessDefinition = processDefinitionRepresentations.find((processDefinition) => {
-                        return processDefinition.name === this.processDefinitionName;
-                    });
+                    const filteredProcessDefinition = processDefinitionRepresentations.find((processDefinition) => processDefinition.name === this.processDefinitionName);
                     if (filteredProcessDefinition) {
                         currentProcessDef = filteredProcessDefinition;
                     }
@@ -257,9 +231,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     filterProcessDefinitionByName() {
         if (this.processDefinitionName) {
-            const filteredProcessDef = this.processDefinitions.find((processDefinition) => {
-                return processDefinition.name === this.processDefinitionName;
-            });
+            const filteredProcessDef = this.processDefinitions.find((processDefinition) => processDefinition.name === this.processDefinitionName);
 
             if (filteredProcessDef) {
                 this.processDefinitionSelectionChanged(filteredProcessDef);
@@ -320,14 +292,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.applicationSelection.emit(this.selectedApplication);
         this.toggleProcessNameAndDefinitionsDropdown();
         this.loadProcessDefinitionsBasedOnSelectedApp();
-    }
-
-    private isAppSelected(): boolean {
-        return !!(this.selectedApplication && this.selectedApplication.id);
-    }
-
-    private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
-        return apps.filter((app) => app.id);
     }
 
     hasApplications(): boolean {
@@ -408,19 +372,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.selectedProcessDef && this.selectedProcessDef.id && this.processNameInput.valid && this.isStartFormMissingOrValid();
     }
 
-    private resetSelectedProcessDefinition() {
-        this.selectedProcessDef = undefined;
-        if (this.processDefinitionInput) {
-            this.processDefinitionInput.setValue('');
-        }
-    }
-
-    private resetProcessDefinitions() {
-        this.processDefinitions = [];
-        this.resetSelectedProcessDefinition();
-    }
-
-    public onOutcomeClick(outcome: string) {
+    onOutcomeClick(outcome: string) {
         this.startProcess(outcome);
     }
 
@@ -461,16 +413,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.processDefinitionInput;
     }
 
-    private toggleProcessNameAndDefinitionsDropdown() {
-        if (!this.isAppSelected()) {
-            this.processDefinitionController.disable();
-            this.nameController.disable();
-        } else {
-            this.processDefinitionController.enable();
-            this.nameController.enable();
-        }
-    }
-
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionRepresentation) {
         if (processDefinition) {
             const processInstanceDetails = new ProcessInstance({ processDefinitionName: processDefinition.name });
@@ -487,5 +429,58 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     isLoading(): boolean {
         return this.showSelectApplicationDropdown ? this.isAppsLoading : false;
+    }
+
+    private isAppSelected(): boolean {
+        return !!(this.selectedApplication && this.selectedApplication.id);
+    }
+
+    private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
+        return apps.filter((app) => app.id);
+    }
+
+    private resetSelectedProcessDefinition() {
+        this.selectedProcessDef = undefined;
+        if (this.processDefinitionInput) {
+            this.processDefinitionInput.setValue('');
+        }
+    }
+
+    private resetProcessDefinitions() {
+        this.processDefinitions = [];
+        this.resetSelectedProcessDefinition();
+    }
+
+    private toggleProcessNameAndDefinitionsDropdown() {
+        if (!this.isAppSelected()) {
+            this.processDefinitionController.disable();
+            this.nameController.disable();
+        } else {
+            this.processDefinitionController.enable();
+            this.nameController.enable();
+        }
+    }
+
+    private isAppIdChanged(changes: SimpleChanges) {
+        return changes['appId'] && changes['appId'].currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
+    }
+
+    private isProcessDefinitionChanged(changes: SimpleChanges) {
+        return changes['processDefinitionName'] && changes['processDefinitionName'].currentValue &&
+        changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue;
+    }
+
+    private _filter(value: string): ProcessDefinitionRepresentation[] {
+        if (value !== null && value !== undefined) {
+            const filterValue = value.toLowerCase();
+            const filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
+
+            if (this.processFilterSelector) {
+                this.selectedProcessDef = this.getSelectedProcess(filterValue);
+            }
+            return filteredProcess;
+        }
+
+        return [];
     }
 }

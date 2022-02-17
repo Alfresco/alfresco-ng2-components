@@ -18,12 +18,12 @@
 import { AppDefinitionRepresentationModel, TaskDetailsModel } from '../../task-list';
 import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
 
-export let mockError = {
+export const mockError = {
     message: null,
     messageKey: 'GENERAL.ERROR.FORBIDDEN'
 };
 
-export let fakeApp1 = new AppDefinitionRepresentationModel({
+export const fakeApp1 = new AppDefinitionRepresentationModel({
     deploymentId: 26,
     name: 'HR processes',
     icon: 'glyphicon-cloud',
@@ -33,7 +33,7 @@ export let fakeApp1 = new AppDefinitionRepresentationModel({
     id: 1
 });
 
-export let fakeApp2 = new AppDefinitionRepresentationModel({
+export const fakeApp2 = new AppDefinitionRepresentationModel({
     deploymentId: 2501,
     name: 'Sales onboarding',
     icon: 'glyphicon-asterisk',
@@ -43,7 +43,7 @@ export let fakeApp2 = new AppDefinitionRepresentationModel({
     id: 1000
 });
 
-export let fakeTasksList = {
+export const fakeTasksList = {
     data: [new TaskDetailsModel({
         id: 1,
         name: 'Task 1',
@@ -57,7 +57,7 @@ export let fakeTasksList = {
     })]
 };
 
-export let fakeProcessDef = new ProcessDefinitionRepresentation({
+export const fakeProcessDef = new ProcessDefinitionRepresentation({
     id: '32323',
     key: 'blah',
     name: 'Process 1'

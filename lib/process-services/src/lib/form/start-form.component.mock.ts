@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let startFormDateWidgetMock = {
+export const startFormDateWidgetMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -38,7 +38,7 @@ export let startFormDateWidgetMock = {
         }]
 };
 
-export let startFormNumberWidgetMock = {
+export const startFormNumberWidgetMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -61,7 +61,7 @@ export let startFormNumberWidgetMock = {
         }]
 };
 
-export let startFormAmountWidgetMock = {
+export const startFormAmountWidgetMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -84,7 +84,7 @@ export let startFormAmountWidgetMock = {
         }]
 };
 
-export let startFormRadioButtonWidgetMock = {
+export const startFormRadioButtonWidgetMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -107,7 +107,7 @@ export let startFormRadioButtonWidgetMock = {
         }]
 };
 
-export let startFormTextDefinitionMock = {
+export const startFormTextDefinitionMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -130,7 +130,7 @@ export let startFormTextDefinitionMock = {
         }]
 };
 
-export let startFormDropdownDefinitionMock = {
+export const startFormDropdownDefinitionMock = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -179,7 +179,7 @@ export let startFormDropdownDefinitionMock = {
         }]
 };
 
-export let startMockForm = {
+export const startMockForm = {
     id: 4,
     name: 'Claim Review Process',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -593,7 +593,7 @@ export let startMockForm = {
     globalDateFormat: 'D - M - YYYY'
 };
 
-export let startMockFormWithTab = {
+export const startMockFormWithTab = {
     id: 4,
     taskName: 'Mock Title',
     processDefinitionId: 'ClaimReviewProcess:2: 93',
@@ -1056,7 +1056,7 @@ export const taskFormSingleUploadMock = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                '1': [
+                1: [
                     {
                         fieldType: 'AttachFileFieldRepresentation',
                         id: 'fake-single-upload',
@@ -1138,7 +1138,7 @@ export const taskFormMultipleUploadMock = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                '1': [
+                1: [
                     {
                         fieldType: 'AttachFileFieldRepresentation',
                         id: 'fake-multiple-upload',

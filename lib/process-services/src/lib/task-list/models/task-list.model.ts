@@ -27,10 +27,9 @@ export class TaskListModel  {
     constructor(input?: any) {
         if (input) {
             Object.assign(this, input);
+
             if (input.data) {
-                this.data = input.data.map((item: any) => {
-                    return new TaskDetailsModel(item);
-                });
+                this.data = input.data.map((item: any) => new TaskDetailsModel(item));
             }
         }
     }

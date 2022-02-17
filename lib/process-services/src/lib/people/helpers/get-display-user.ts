@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export function getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+export const getDisplayUser = (firstName: string, lastName: string, delimiter: string = '-'): string => {
     firstName = (firstName !== null ? firstName : '');
     lastName = (lastName !== null ? lastName : '');
     return firstName + delimiter + lastName;
-}
+};

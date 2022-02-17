@@ -98,7 +98,7 @@ describe('StartTaskComponent', () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('task');
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalled();
         });
@@ -108,7 +108,7 @@ describe('StartTaskComponent', () => {
             component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -123,7 +123,7 @@ describe('StartTaskComponent', () => {
             component.appId = 42;
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalled();
         });
@@ -132,7 +132,7 @@ describe('StartTaskComponent', () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskDetailsModel = new TaskDetailsModel(null);
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(createNewTaskSpy).not.toHaveBeenCalled();
             expect(successSpy).not.toHaveBeenCalled();
@@ -166,7 +166,7 @@ describe('StartTaskComponent', () => {
             component.appId = 42;
             component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -191,7 +191,7 @@ describe('StartTaskComponent', () => {
             component.appId = 42;
             component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -237,7 +237,7 @@ describe('StartTaskComponent', () => {
             component.appId = 42;
             component.assigneeId = testUser.id;
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -255,7 +255,7 @@ describe('StartTaskComponent', () => {
             component.appId = 42;
             component.getAssigneeId(testUser.id);
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -273,7 +273,7 @@ describe('StartTaskComponent', () => {
             component.assigneeId = null;
             component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
                 id: 91,
@@ -289,7 +289,7 @@ describe('StartTaskComponent', () => {
         spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id'})));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
-        const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        const createTaskButton = element.querySelector<HTMLElement>('#button-start');
         fixture.detectChanges();
         createTaskButton.click();
         expect(attachFormToATask).not.toHaveBeenCalled();
@@ -333,7 +333,7 @@ describe('StartTaskComponent', () => {
 
     it('should cancel start task on cancel button click', () => {
         const emitSpy = spyOn(component.cancel, 'emit');
-        const cancelTaskButton = <HTMLElement> element.querySelector('#button-cancel');
+        const cancelTaskButton = element.querySelector<HTMLElement>('#button-cancel');
         fixture.detectChanges();
         cancelTaskButton.click();
         expect(emitSpy).not.toBeNull();
@@ -355,10 +355,10 @@ describe('StartTaskComponent', () => {
     });
 
     it('should get formatted fullname', () => {
-        const testUser1 = { 'id': 1001, 'firstName': 'Wilbur', 'lastName': 'Adams', 'email': 'wilbur@app.activiti.com' };
-        const testUser2 = { 'id': 1002, 'firstName': '', 'lastName': 'Adams', 'email': 'adams@app.activiti.com' };
-        const testUser3 = { 'id': 1003, 'firstName': 'Wilbur', 'lastName': '', 'email': 'wilbur@app.activiti.com' };
-        const testUser4 = { 'id': 1004, 'firstName': '', 'lastName': '', 'email': 'test@app.activiti.com' };
+        const testUser1 = { id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' };
+        const testUser2 = { id: 1002, firstName: '', lastName: 'Adams', email: 'adams@app.activiti.com' };
+        const testUser3 = { id: 1003, firstName: 'Wilbur', lastName: '', email: 'wilbur@app.activiti.com' };
+        const testUser4 = { id: 1004, firstName: '', lastName: '', email: 'test@app.activiti.com' };
 
         const testFullName1 = component.getDisplayUser(testUser1.firstName, testUser1.lastName, ' ');
         const testFullName2 = component.getDisplayUser(testUser2.firstName, testUser2.lastName, ' ');
@@ -375,7 +375,7 @@ describe('StartTaskComponent', () => {
         component.taskForm.controls['name'].setValue('fakeName');
         const errorSpy = spyOn(component.error, 'emit');
         spyOn(service, 'createNewTask').and.returnValue(throwError({}));
-        const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        const createTaskButton = element.querySelector<HTMLElement>('#button-start');
         fixture.detectChanges();
         createTaskButton.click();
         expect(errorSpy).toHaveBeenCalled();

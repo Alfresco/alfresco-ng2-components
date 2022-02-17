@@ -17,7 +17,7 @@
 
 import { AppDefinitionRepresentationModel } from '../task-list';
 
-export let nonDeployedApps = [new AppDefinitionRepresentationModel({
+export const nonDeployedApps = [new AppDefinitionRepresentationModel({
     id: '1',
     name: '1',
     icon: 'icon1'
@@ -30,7 +30,7 @@ export let nonDeployedApps = [new AppDefinitionRepresentationModel({
     name: '3',
     icon: 'icon3'
 })];
-export let deployedApps = [new AppDefinitionRepresentationModel({
+export const deployedApps = [new AppDefinitionRepresentationModel({
     id: 1,
     name: 'App1',
     icon: 'icon1',
@@ -74,6 +74,6 @@ export let deployedApps = [new AppDefinitionRepresentationModel({
     tenantId: 9,
     modelId: 66
 })];
-export let defaultApp = [new AppDefinitionRepresentationModel({
+export const defaultApp = [new AppDefinitionRepresentationModel({
     defaultAppId: 'tasks'
 })];

@@ -34,10 +34,8 @@ export class SelectAppsDialogComponent {
                 @Inject(MAT_DIALOG_DATA) public data: any) {
 
         this.appsProcessService.getDeployedApplications().subscribe(
-            (apps: any[]) => {
-                this.processApps = apps.filter((currentApp) => {
-                    return currentApp.id;
-                });
+            (apps) => {
+                this.processApps = apps.filter((currentApp) => currentApp.id);
             }
         );
     }

@@ -95,12 +95,12 @@ describe('ProcessInstanceTasksComponent', () => {
     it('should display active tasks', async () => {
         const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceDetails': change });
+        component.ngOnChanges({ processInstanceDetails: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.ngOnChanges({ 'processInstanceDetails': change });
+        component.ngOnChanges({ processInstanceDetails: change });
         const listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
         expect(listEl).not.toBeNull();
         expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
@@ -109,7 +109,7 @@ describe('ProcessInstanceTasksComponent', () => {
     it('should display completed tasks', async () => {
         const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceDetails': change });
+        component.ngOnChanges({ processInstanceDetails: change });
 
         fixture.detectChanges();
         await fixture.whenStable();

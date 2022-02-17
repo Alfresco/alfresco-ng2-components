@@ -98,6 +98,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appId
+     *
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
@@ -130,6 +131,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the filter list filtered by appName
+     *
      * @param appName
      */
     getFiltersByAppName(appName: string) {
@@ -145,6 +147,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
+     *
      * @param filter
      */
     selectFilter(filter: ProcessInstanceFilterRepresentation) {
@@ -174,6 +177,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select the Running filter
+     *
      * @deprecated in 3.9.0, Use the filterParam Input() with a running filter instance instead
      */
     selectRunningFilter() {
@@ -205,17 +209,17 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Return current filter icon
+     */
+    getFilterIcon(icon: string): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
+    }
+
+    /**
      * Reset the filters properties
      */
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    /**
-     * Return current filter icon
-     */
-    getFilterIcon(icon: string): string {
-        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }

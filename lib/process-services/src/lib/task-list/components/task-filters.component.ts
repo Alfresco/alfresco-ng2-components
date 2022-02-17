@@ -241,17 +241,17 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Return current filter icon
+     */
+    getFilterIcon(icon): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
+    }
+
+    /**
      * Reset the filters properties
      */
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    /**
-     * Return current filter icon
-     */
-    getFilterIcon(icon): string {
-        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }

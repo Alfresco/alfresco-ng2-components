@@ -18,7 +18,7 @@
 import { UserRepresentation } from '@alfresco/js-api';
 import { TaskDetailsModel } from '../../task-list/models/task-details.model';
 
-export let standaloneTaskWithForm = new TaskDetailsModel({
+export const standaloneTaskWithForm = new TaskDetailsModel({
     id: '100',
     name: 'Standalone Task With Form',
     description: null,
@@ -58,7 +58,7 @@ export let standaloneTaskWithForm = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let standaloneTaskWithoutForm = new TaskDetailsModel({
+export const standaloneTaskWithoutForm = new TaskDetailsModel({
     id: '200',
     name: 'Standalone Task Without Form',
     description: null,
@@ -98,7 +98,7 @@ export let standaloneTaskWithoutForm = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let completedStandaloneTaskWithoutForm = new TaskDetailsModel({
+export const completedStandaloneTaskWithoutForm = new TaskDetailsModel({
     id: '200',
     name: 'Standalone Task Without Form',
     description: null,
@@ -138,7 +138,7 @@ export let completedStandaloneTaskWithoutForm = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let taskDetailsMock = new TaskDetailsModel({
+export const taskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -178,7 +178,7 @@ export let taskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
+export const initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -213,7 +213,7 @@ export let initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
+export const initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -261,7 +261,7 @@ export let initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: true
 });
 
-export let taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
+export const taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -296,7 +296,7 @@ export let taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export let claimableTaskDetailsMock = new TaskDetailsModel({
+export const claimableTaskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -336,7 +336,7 @@ export let claimableTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export let claimedTaskDetailsMock = new TaskDetailsModel({
+export const claimedTaskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -389,7 +389,7 @@ export let claimedTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: true
 });
 
-export let claimedByGroupMemberMock = new TaskDetailsModel({
+export const claimedByGroupMemberMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -439,7 +439,7 @@ export let claimedByGroupMemberMock = new TaskDetailsModel({
     memberOfCandidateUsers: true
 });
 
-export let taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
+export const taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -481,7 +481,7 @@ export let taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
     ]
 });
 
-export let completedTaskWithFormMock = new TaskDetailsModel({
+export const completedTaskWithFormMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -511,7 +511,7 @@ export let completedTaskWithFormMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export let completedTaskDetailsMock = new TaskDetailsModel({
+export const completedTaskDetailsMock = new TaskDetailsModel({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -541,38 +541,38 @@ export let completedTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export let taskDetailsWithOutFormMock = new TaskDetailsModel({
-    'id': '91',
-    'name': 'Request translation',
-    'description': 'fake description',
-    'category': null,
-    'assignee': {'id': 1001, 'firstName': 'Admin', 'lastName': 'Paul', 'email': 'fake-email@gmail.com' },
-    'created': '2016-11-03T15:25:42.749+0000',
-    'dueDate': '2016-11-03T15:25:42.749+0000',
-    'endDate': null,
-    'duration': null,
-    'priority': 50,
-    'parentTaskId': null,
-    'parentTaskName': null,
-    'processInstanceId': '86',
-    'processInstanceName': null,
-    'processDefinitionId': 'TranslationProcess:2:8',
-    'processDefinitionName': 'Translation Process',
-    'processDefinitionDescription': null,
-    'processDefinitionKey': 'TranslationProcess',
-    'processDefinitionCategory': 'http://www.activiti.org/processdef',
-    'processDefinitionVersion': 2,
-    'processDefinitionDeploymentId': '5',
-    'formKey': null,
-    'processInstanceStartUserId': '1001',
-    'initiatorCanCompleteTask': false,
-    'adhocTaskCanBeReassigned': false,
-    'taskDefinitionKey': 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
-    'executionId': '86',
-    'involvedPeople': [],
-    'memberOfCandidateUsers': false,
-    'managerOfCandidateGroup': false,
-    'memberOfCandidateGroup': false
+export const taskDetailsWithOutFormMock = new TaskDetailsModel({
+    id: '91',
+    name: 'Request translation',
+    description: 'fake description',
+    category: null,
+    assignee: {id: 1001, firstName: 'Admin', lastName: 'Paul', email: 'fake-email@gmail.com' },
+    created: '2016-11-03T15:25:42.749+0000',
+    dueDate: '2016-11-03T15:25:42.749+0000',
+    endDate: null,
+    duration: null,
+    priority: 50,
+    parentTaskId: null,
+    parentTaskName: null,
+    processInstanceId: '86',
+    processInstanceName: null,
+    processDefinitionId: 'TranslationProcess:2:8',
+    processDefinitionName: 'Translation Process',
+    processDefinitionDescription: null,
+    processDefinitionKey: 'TranslationProcess',
+    processDefinitionCategory: 'http://www.activiti.org/processdef',
+    processDefinitionVersion: 2,
+    processDefinitionDeploymentId: '5',
+    formKey: null,
+    processInstanceStartUserId: '1001',
+    initiatorCanCompleteTask: false,
+    adhocTaskCanBeReassigned: false,
+    taskDefinitionKey: 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
+    executionId: '86',
+    involvedPeople: [],
+    memberOfCandidateUsers: false,
+    managerOfCandidateGroup: false,
+    memberOfCandidateGroup: false
 });
 
 export const taskFormMock = {
@@ -619,7 +619,7 @@ export const taskFormMock = {
                    visibilityCondition: null,
                    numberOfColumns: 2,
                    fields: {
-                       '1': [
+                       1: [
                            {
                                fieldType: 'FormFieldRepresentation',
                                id: 'text1',
@@ -655,7 +655,7 @@ export const taskFormMock = {
                                visibilityCondition: null
                            }
                        ],
-                       '2': [
+                       2: [
                            {
                                fieldType: 'FormFieldRepresentation',
                                id: 'text2',
@@ -727,7 +727,7 @@ export const taskFormMock = {
                    visibilityCondition: null,
                    numberOfColumns: 2,
                    fields: {
-                       '1': [
+                       1: [
                            {
                                fieldType: 'FormFieldRepresentation',
                                id: 'text3',
@@ -773,7 +773,7 @@ export const taskFormMock = {
                                }
                            }
                        ],
-                       '2': [
+                       2: [
                            {
                                fieldType: 'FormFieldRepresentation',
                                id: 'numberField',
@@ -831,9 +831,9 @@ export const taskFormMock = {
            globalDateFormat: 'D-M-YYYY'
        };
 
-export let tasksMock = [new TaskDetailsModel(taskDetailsMock)];
+export const tasksMock = [new TaskDetailsModel(taskDetailsMock)];
 
-export let noDataMock = [
+export const noDataMock = [
     new TaskDetailsModel({
         id: 1005,
         message: 'example-message',

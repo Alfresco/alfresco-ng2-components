@@ -123,23 +123,23 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
-    formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formSaved = new EventEmitter<FormModel>();
 
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
-    formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when the form field content is clicked. */
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     /** Emitted when the form is loaded or reloaded. */
     @Output()
-    formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when a checklist task is created. */
     @Output()
-    taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+    taskCreated = new EventEmitter<TaskDetailsModel>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
@@ -147,13 +147,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
     @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+    executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
     /** Emitted when a task is assigned. */
     @Output()
@@ -161,11 +161,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a task is claimed. */
     @Output()
-    claimedTask: EventEmitter<string> = new EventEmitter<string>();
+    claimedTask = new EventEmitter<string>();
 
     /** Emitted when a task is unclaimed. */
     @Output()
-    unClaimedTask: EventEmitter<string> = new EventEmitter<string>();
+    unClaimedTask = new EventEmitter<string>();
 
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
@@ -174,14 +174,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     showAssignee: boolean = false;
     showAttachForm: boolean = false;
     internalReadOnlyForm: boolean = false;
+    errorDialogRef: MatDialogRef<TemplateRef<any>>;
+    peopleSearch: Observable<UserProcessModel[]>;
+    data: any;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
-    public errorDialogRef: MatDialogRef<TemplateRef<any>>;
     private onDestroy$ = new Subject<boolean>();
-
-    peopleSearch: Observable<UserProcessModel[]>;
-
-    data: any;
 
     constructor(private taskListService: TaskListService,
                 private peopleProcessService: PeopleProcessService,
@@ -226,100 +224,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         return this.showAttachForm;
     }
 
-    /**
-     * Reset the task details
-     */
-    private reset() {
-        this.taskDetails = null;
-    }
-
     isTaskActive() {
         return this.taskDetails && this.taskDetails.duration === null;
     }
 
-    /**
-     * Save a task detail and update it after a successful response
-     *
-     * @param updateNotification
-     */
-    private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.taskListService
-            .updateTask(this.taskId, updateNotification.changed)
-            .pipe(catchError(() => {
-                this.cardViewUpdateService.updateElement(updateNotification.target);
-                return of(null);
-            }))
-            .subscribe(() => this.loadDetails(this.taskId));
-    }
-
-    private clickTaskDetails(clickNotification: ClickNotification) {
-        if (clickNotification.target.key === 'assignee') {
-            this.showAssignee = true;
-        }
-        if (clickNotification.target.key === 'formName') {
-            this.showAttachForm = true;
-        }
-    }
-
-    /**
-     * Load the activiti task details
-     * @param taskId
-     */
-    private loadDetails(taskId: string) {
-        this.taskPeople = [];
-
-        if (taskId) {
-            this.taskListService.getTaskDetails(taskId).subscribe(
-                (res: TaskDetailsModel) => {
-                    this.showAttachForm = false;
-                    this.taskDetails = res;
-
-                    if (this.taskDetails.name === 'null') {
-                        this.taskDetails.name = 'No name';
-                    }
-
-                    const endDate: any = res.endDate;
-                    if (endDate && !isNaN(endDate.getTime())) {
-                        this.internalReadOnlyForm = true;
-                    } else {
-                        this.internalReadOnlyForm = this.readOnlyForm;
-                    }
-
-                    if (this.taskDetails && this.taskDetails.involvedPeople) {
-                        this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new UserProcessModel(user));
-                        });
-                    }
-                });
-        }
-    }
-
     isAssigned(): boolean {
         return !!this.taskDetails.assignee;
-    }
-
-    /**
-     * Retrieve the next open task
-     * @param processInstanceId
-     * @param processDefinitionId
-     */
-    private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        const requestNode = new TaskQueryRequestRepresentationModel(
-            {
-                processInstanceId: processInstanceId,
-                processDefinitionId: processDefinitionId
-            }
-        );
-        this.taskListService.getTasks(requestNode).subscribe(
-            (response) => {
-                if (response && response.length > 0) {
-                    this.taskDetails = new TaskDetailsModel(response[0]);
-                } else {
-                    this.reset();
-                }
-            }, (error) => {
-                this.error.emit(error);
-            });
     }
 
     /**
@@ -430,5 +340,76 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     isReadOnlyComment(): boolean {
         return (this.taskDetails && this.taskDetails.isCompleted()) && (this.taskPeople && this.taskPeople.length === 0);
+    }
+
+    private reset() {
+        this.taskDetails = null;
+    }
+
+    private updateTaskDetails(updateNotification: UpdateNotification) {
+        this.taskListService
+            .updateTask(this.taskId, updateNotification.changed)
+            .pipe(catchError(() => {
+                this.cardViewUpdateService.updateElement(updateNotification.target);
+                return of(null);
+            }))
+            .subscribe(() => this.loadDetails(this.taskId));
+    }
+
+    private clickTaskDetails(clickNotification: ClickNotification) {
+        if (clickNotification.target.key === 'assignee') {
+            this.showAssignee = true;
+        }
+        if (clickNotification.target.key === 'formName') {
+            this.showAttachForm = true;
+        }
+    }
+
+    private loadDetails(taskId: string) {
+        this.taskPeople = [];
+
+        if (taskId) {
+            this.taskListService.getTaskDetails(taskId).subscribe(
+                (res: TaskDetailsModel) => {
+                    this.showAttachForm = false;
+                    this.taskDetails = res;
+
+                    if (this.taskDetails.name === 'null') {
+                        this.taskDetails.name = 'No name';
+                    }
+
+                    const endDate: any = res.endDate;
+                    if (endDate && !isNaN(endDate.getTime())) {
+                        this.internalReadOnlyForm = true;
+                    } else {
+                        this.internalReadOnlyForm = this.readOnlyForm;
+                    }
+
+                    if (this.taskDetails && this.taskDetails.involvedPeople) {
+                        this.taskDetails.involvedPeople.forEach((user) => {
+                            this.taskPeople.push(new UserProcessModel(user));
+                        });
+                    }
+                });
+        }
+    }
+
+    private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
+        const requestNode = new TaskQueryRequestRepresentationModel(
+            {
+                processInstanceId,
+                processDefinitionId
+            }
+        );
+        this.taskListService.getTasks(requestNode).subscribe(
+            (response) => {
+                if (response && response.length > 0) {
+                    this.taskDetails = new TaskDetailsModel(response[0]);
+                } else {
+                    this.reset();
+                }
+            }, (error) => {
+                this.error.emit(error);
+            });
     }
 }

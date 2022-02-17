@@ -17,7 +17,7 @@
 
 import { FilterProcessRepresentationModel } from '../../process-list/models/filter-process.model';
 
-export let fakeProcessFilters = [
+export const fakeProcessFilters = [
     new FilterProcessRepresentationModel({
         id: 10,
         name: 'FakeCompleted',
@@ -38,14 +38,14 @@ export let fakeProcessFilters = [
     })
 ];
 
-export let fakeProcessFiltersResponse = {
+export const fakeProcessFiltersResponse = {
     size: 1, total: 1, start: 0,
     data: [new FilterProcessRepresentationModel({
-        'name': 'Running',
-        'appId': '22',
-        'id': 333,
-        'recent': true,
-        'icon': 'glyphicon-random',
-        'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+        name: 'Running',
+        appId: '22',
+        id: 333,
+        recent: true,
+        icon: 'glyphicon-random',
+        filter: { sort: 'created-desc', name: '', state: 'running' }
     })]
 };

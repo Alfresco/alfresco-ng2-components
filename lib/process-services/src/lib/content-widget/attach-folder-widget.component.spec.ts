@@ -30,10 +30,10 @@ import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const fakeMinimalNode: Node = <Node> {
+const fakeMinimalNode: Node = {
     id: 'fake',
     name: 'fake-name'
-};
+} as Node;
 
 const definedSourceParams = {
     folderSource : {

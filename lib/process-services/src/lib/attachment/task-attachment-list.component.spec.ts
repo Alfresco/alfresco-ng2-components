@@ -98,7 +98,7 @@ describe('TaskAttachmentList', () => {
     });
 
     afterEach(() => {
-        const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+        const overlayContainers = window.document.querySelectorAll('.cdk-overlay-container');
         overlayContainers.forEach((overlayContainer) => {
             overlayContainer.innerHTML = '';
         });
@@ -110,7 +110,7 @@ describe('TaskAttachmentList', () => {
 
     it('should load attachments when taskId specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         expect(getTaskRelatedContentSpy).toHaveBeenCalled();
     });
 
@@ -118,7 +118,7 @@ describe('TaskAttachmentList', () => {
         const emitSpy = spyOn(component.error, 'emit');
         getTaskRelatedContentSpy.and.returnValue(throwError({}));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
@@ -129,7 +129,7 @@ describe('TaskAttachmentList', () => {
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });
 
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
     });
 
     it('should not attach when no taskId is specified', () => {
@@ -139,7 +139,7 @@ describe('TaskAttachmentList', () => {
 
     it('should display attachments when the task has attachments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
@@ -159,13 +159,13 @@ describe('TaskAttachmentList', () => {
 
     it('should show the empty default message when has no custom template', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         component.hasCustomTemplate = false;
 
         fixture.detectChanges();
@@ -177,7 +177,7 @@ describe('TaskAttachmentList', () => {
 
     it('should display all actions if attachments are not read only', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -195,7 +195,7 @@ describe('TaskAttachmentList', () => {
 
     it('should not display remove action if attachments are read only', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         component.disabled = true;
         fixture.detectChanges();
         await fixture.whenStable();
@@ -215,13 +215,13 @@ describe('TaskAttachmentList', () => {
 
     it('should show the empty list component when the attachments list is empty', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -231,13 +231,13 @@ describe('TaskAttachmentList', () => {
 
     it('should show the empty list component when the attachments list is empty for completed task', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
+            size: 0,
+            total: 0,
+            start: 0,
+            data: []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         component.disabled = true;
 
         fixture.whenStable().then(() => {
@@ -249,7 +249,7 @@ describe('TaskAttachmentList', () => {
     it('should not show the empty list component when the attachments list is not empty for completed task', async () => {
         getTaskRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({ taskId: change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -281,7 +281,7 @@ describe('TaskAttachmentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const isRelatedContent = 'true';
-            component.ngOnChanges({ 'taskId': change });
+            component.ngOnChanges({ taskId: change });
             expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', { isRelatedContent });
         });
 
@@ -291,7 +291,7 @@ describe('TaskAttachmentList', () => {
         });
 
         it('should NOT fetch new attachments when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({ taskId: nullChange });
             expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
         });
     });
