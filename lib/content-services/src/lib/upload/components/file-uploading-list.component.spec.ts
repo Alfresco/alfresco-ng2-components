@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileUploadStatus, NodesApiService, UploadService, setupTestBed } from '@alfresco/adf-core';
+import { TranslationService, FileUploadStatus, NodesApiService, UploadService, setupTestBed, FileModel } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
