@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-export let processCloudPresetsDefaultModel = {
-    'default': [
+export const processCloudPresetsDefaultModel = {
+    default: [
         {
-            'key': 'name',
-            'type': 'text',
-            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
-            'sortable': true
+            key: 'name',
+            type: 'text',
+            title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
+            sortable: true
         },
         {
-            'key': 'startDate',
-            'type': 'date',
-            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
-            'cssClass': 'hidden',
-            'sortable': true,
-            'format': 'timeAgo'
+            key: 'startDate',
+            type: 'date',
+            title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
+            cssClass: 'hidden',
+            sortable: true,
+            format: 'timeAgo'
         }
     ]
 };

@@ -43,10 +43,8 @@ describe('Form Definition Selector Cloud Service', () => {
         service = TestBed.inject(FormDefinitionSelectorCloudService);
         apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue({
-            oauth2Auth: oauth2Auth,
-            isEcmLoggedIn() {
-                return false;
-            },
+            oauth2Auth,
+            isEcmLoggedIn: () => false,
             reply: jasmine.createSpy('reply')
         } as any);
     });

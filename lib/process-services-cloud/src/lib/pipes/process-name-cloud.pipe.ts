@@ -20,28 +20,28 @@ import moment from 'moment-es6';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../process/start-process/models/process-instance-cloud.model';
 
+export const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
+export const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
+
 @Pipe({ name: 'processNameCloud' })
 export class ProcessNameCloudPipe implements PipeTransform {
-    static DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
-    static PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
-
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
     transform(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
-        if (processName.match(ProcessNameCloudPipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
+        if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
             processName = processName.replace(
-                ProcessNameCloudPipe.DATE_TIME_IDENTIFIER_REG_EXP,
+                DATE_TIME_IDENTIFIER_REG_EXP,
                 this.localizedDatePipe.transform(presentDateTime, 'medium')
             );
         }
 
-        if (processName.match(ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+        if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
             const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(
-                ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
+                PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName
             );
         }

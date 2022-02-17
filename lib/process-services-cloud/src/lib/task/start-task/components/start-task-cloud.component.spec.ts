@@ -42,9 +42,7 @@ describe('StartTaskCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(taskDetailsMock)
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 

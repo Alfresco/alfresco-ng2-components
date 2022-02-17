@@ -22,6 +22,8 @@ import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
+const PRESET_KEY = 'adf-cloud-task-list.presets';
+
 @Component({
     selector: 'adf-cloud-task-list',
     templateUrl: './base-task-list-cloud.component.html',
@@ -29,9 +31,6 @@ import { TaskCloudService } from '../../services/task-cloud.service';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskListCloudComponent extends BaseTaskListCloudComponent {
-
-    static PRESET_KEY = 'adf-cloud-task-list.presets';
-
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
      * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
@@ -136,7 +135,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, TaskListCloudComponent.PRESET_KEY);
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
     }
 
     load(requestNode: TaskQueryCloudRequestModel) {

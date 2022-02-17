@@ -26,6 +26,7 @@ import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/fo
 })
 export class ProcessFilterDialogCloudComponent implements OnInit {
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 

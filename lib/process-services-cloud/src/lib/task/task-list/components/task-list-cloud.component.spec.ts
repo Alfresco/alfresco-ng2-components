@@ -98,19 +98,19 @@ describe('TaskListCloudComponent', () => {
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-task-list': {
-                'presets': {
-                    'fakeCustomSchema': [
+                presets: {
+                    fakeCustomSchema: [
                         {
-                            'key': 'fakeName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                            'sortable': true
+                            key: 'fakeName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                            sortable: true
                         },
                         {
-                            'key': 'fakeTaskName',
-                            'type': 'text',
-                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                            'sortable': true
+                            key: 'fakeTaskName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            sortable: true
                         }
                     ]
                 }
@@ -221,7 +221,7 @@ describe('TaskListCloudComponent', () => {
             done();
         });
         component.appName = appName.currentValue;
-        component.ngOnChanges({ 'appName': appName });
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
     });
 
@@ -275,10 +275,10 @@ describe('TaskListCloudComponent', () => {
             const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
             const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
             component.ngOnChanges({
-                'priority': priorityChange,
-                'status': statusChange,
-                'lastModifiedFrom': lastModifiedFromChange,
-                'owner': ownerChange
+                priority: priorityChange,
+                status: statusChange,
+                lastModifiedFrom: lastModifiedFromChange,
+                owner: ownerChange
             });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
@@ -298,7 +298,7 @@ describe('TaskListCloudComponent', () => {
             ];
             const sortChange = new SimpleChange(undefined, mockSort, true);
             component.ngOnChanges({
-                'sorting': sortChange
+                sorting: sortChange
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
@@ -383,7 +383,7 @@ describe('TaskListCloudComponent', () => {
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
         let componentCustom: CustomTaskListComponent;
         let customCopyComponent: CustomCopyContentTaskListComponent;
-        let element: any;
+        let element: HTMLElement;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
         setupTestBed({
@@ -425,13 +425,13 @@ describe('TaskListCloudComponent', () => {
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             copyFixture.whenStable().then(() => {
                 copyFixture.detectChanges();
-                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
+                const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
                 spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                 copyFixture.detectChanges();
                 expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
             });
             customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
+            customCopyComponent.taskList.ngOnChanges({ appName });
             copyFixture.detectChanges();
         }));
 
@@ -440,7 +440,7 @@ describe('TaskListCloudComponent', () => {
             customCopyComponent.taskList.success.subscribe(() => {
                 copyFixture.whenStable().then(() => {
                     copyFixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
+                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="standalone-subtask"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     copyFixture.detectChanges();
                     expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
@@ -448,7 +448,7 @@ describe('TaskListCloudComponent', () => {
                 });
             });
             customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
+            customCopyComponent.taskList.ngOnChanges({ appName });
             copyFixture.detectChanges();
         });
     });
@@ -483,7 +483,7 @@ describe('TaskListCloudComponent', () => {
 
     describe('Copy cell content directive from app.config specifications', () => {
 
-        let element: any;
+        let element: HTMLElement;
         let taskSpy: jasmine.Spy;
 
         setupTestBed({
@@ -498,26 +498,26 @@ describe('TaskListCloudComponent', () => {
             taskListCloudService = TestBed.inject(TaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-task-list': {
-                    'presets': {
-                        'fakeCustomSchema': [
+                    presets: {
+                        fakeCustomSchema: [
                             {
-                                'key': 'id',
-                                'type': 'text',
-                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                                'sortable': true,
-                                'copyContent': true
+                                key: 'id',
+                                type: 'text',
+                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                                sortable: true,
+                                copyContent: true
                             },
                             {
-                                'key': 'name',
-                                'type': 'text',
-                                'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                                'sortable': true
+                                key: 'name',
+                                type: 'text',
+                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                                sortable: true
                             },
                             {
-                                'key': 'entry.priority',
-                                'type': 'text',
-                                'title': 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
-                                'sortable': true
+                                key: 'entry.priority',
+                                type: 'text',
+                                title: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
+                                sortable: true
                             }
                         ]
                     }
@@ -542,7 +542,7 @@ describe('TaskListCloudComponent', () => {
             component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
+                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     fixture.detectChanges();
                     expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
@@ -551,7 +551,7 @@ describe('TaskListCloudComponent', () => {
 
             component.presetColumn = 'fakeCustomSchema';
             component.appName = appName.currentValue;
-            component.ngOnChanges({ 'appName': appName });
+            component.ngOnChanges({ appName });
             component.ngAfterContentInit();
         }));
 

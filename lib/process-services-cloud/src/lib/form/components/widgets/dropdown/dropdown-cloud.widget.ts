@@ -31,6 +31,12 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
+export const DEFAULT_OPTION = {
+    id: 'empty',
+    name: 'Choose one...'
+};
+export const HIDE_FILTER_LIMIT = 5;
+
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
@@ -51,13 +57,7 @@ import { filter, map, takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-    static DEFAULT_OPTION = {
-        id: 'empty',
-        name: 'Choose one...'
-    };
-
     typeId = 'DropdownCloudWidgetComponent';
-    HIDE_FILTER_LIMIT = 5;
     showInputFilter = false;
     isRestApiFailed = false;
     restApiHostName: string;
@@ -151,7 +151,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isDefaultValue(value: string): boolean {
-        return value === DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
+        return value === DEFAULT_OPTION.id;
     }
 
     private getFormFieldById(fieldId): FormFieldModel {
@@ -200,7 +200,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private addDefaultOption() {
-        this.field.options = [DropdownCloudWidgetComponent.DEFAULT_OPTION];
+        this.field.options = [DEFAULT_OPTION];
         this.updateOptions();
     }
 
@@ -252,7 +252,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         let optionValue: string = '';
-        if (option.id === DropdownCloudWidgetComponent.DEFAULT_OPTION.id || option.name !== fieldValue) {
+        if (option.id === DEFAULT_OPTION.id || option.name !== fieldValue) {
             optionValue = option.id;
         } else {
             optionValue = option.name;
@@ -278,7 +278,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     updateOptions(): void {
-        this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', this.HIDE_FILTER_LIMIT);
+        this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', HIDE_FILTER_LIMIT);
         this.list$ = combineLatest([of(this.field.options), this.filter$])
             .pipe(
                 map(([items, search]) => {

@@ -17,4 +17,4 @@
 
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 
-export let taskDetailsMock = new StartTaskCloudRequestModel({ assignee: 'fake-assigne', name: 'fake-name' });
+export const taskDetailsMock = new StartTaskCloudRequestModel({ assignee: 'fake-assigne', name: 'fake-name' });

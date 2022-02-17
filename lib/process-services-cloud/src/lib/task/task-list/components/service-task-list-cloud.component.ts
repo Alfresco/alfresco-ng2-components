@@ -24,6 +24,8 @@ import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
+const PRESET_KEY = 'adf-cloud-service-task-list.presets';
+
 @Component({
     selector: 'adf-cloud-service-task-list',
     templateUrl: './base-task-list-cloud.component.html',
@@ -31,9 +33,6 @@ import { TaskCloudService } from '../../services/task-cloud.service';
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
-
-    static PRESET_KEY = 'adf-cloud-service-task-list.presets';
-
     @Input()
     queryParams: { [key: string]: any } = {};
 
@@ -41,7 +40,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
     }
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {

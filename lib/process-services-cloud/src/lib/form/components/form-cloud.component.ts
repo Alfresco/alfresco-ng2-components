@@ -210,7 +210,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.data = data[1];
 
                     const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
-                    this.visibilityService.refreshVisibility(<any> parsedForm, this.data);
+                    this.visibilityService.refreshVisibility(parsedForm, this.data);
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
@@ -239,7 +239,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 (form) => {
                     this.formCloudRepresentationJSON = form;
                     const parsedForm = this.parseForm(form);
-                    this.visibilityService.refreshVisibility(<any> parsedForm);
+                    this.visibilityService.refreshVisibility(parsedForm);
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
@@ -300,11 +300,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /**
      * Get custom set of outcomes for a Form Definition.
+     *
      * @param form Form definition model.
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(<any> form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 

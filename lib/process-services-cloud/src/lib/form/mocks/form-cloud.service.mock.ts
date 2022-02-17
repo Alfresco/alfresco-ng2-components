@@ -32,22 +32,20 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
 
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap((task) => {
-                return this.getForm(appName, task.formKey, version).pipe(
-                    map((form: FormContent) => {
-                        const flattenForm = {
-                            ...form.formRepresentation,
-                            ...form.formRepresentation.formDefinition,
-                            taskId: task.id,
-                            taskName: task.name,
-                            processDefinitionId: task.processDefinitionId,
-                            processInstanceId: task.processInstanceId
-                        };
-                        delete flattenForm.formDefinition;
-                        return flattenForm;
-                    })
-                );
-            })
+            switchMap((task) => this.getForm(appName, task.formKey, version).pipe(
+                map((form: FormContent) => {
+                    const flattenForm = {
+                        ...form.formRepresentation,
+                        ...form.formRepresentation.formDefinition,
+                        taskId: task.id,
+                        taskName: task.name,
+                        processDefinitionId: task.processDefinitionId,
+                        processInstanceId: task.processInstanceId
+                    };
+                    delete flattenForm.formDefinition;
+                    return flattenForm;
+                })
+            ))
         );
     }
 

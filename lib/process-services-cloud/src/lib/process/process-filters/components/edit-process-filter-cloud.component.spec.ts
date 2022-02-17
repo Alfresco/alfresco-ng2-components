@@ -69,9 +69,7 @@ describe('EditProcessFilterCloudComponent', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
         },
-        isEcmLoggedIn() {
-            return false;
-        },
+        isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
 
@@ -97,13 +95,11 @@ describe('EditProcessFilterCloudComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({
-            afterClosed() {
-                return of({
-                    action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
-                    icon: 'icon',
-                    name: 'fake-name'
-                });
-            }
+            afterClosed: () => of({
+                action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
+                icon: 'icon',
+                name: 'fake-name'
+            })
         } as any);
         getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
@@ -128,7 +124,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     it('should fetch process instance filter by id', async () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -144,7 +140,7 @@ describe('EditProcessFilterCloudComponent', () => {
     it('should display filter name as title', async () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.showProcessFilterName = true;
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -161,7 +157,7 @@ describe('EditProcessFilterCloudComponent', () => {
     it('should not display filter name as title if the flag is false', async () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.showProcessFilterName = false;
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -172,7 +168,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     it('should not display mat-spinner if isloading set to false', async () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -191,7 +187,7 @@ describe('EditProcessFilterCloudComponent', () => {
     it('should display mat-spinner if isloading set to true', async () => {
         component.isLoading = true;
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -204,7 +200,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         beforeEach(() => {
             const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
         });
 
@@ -288,7 +284,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 }));
 
                 const processFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': processFilterIdChange });
+                component.ngOnChanges({ id: processFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -324,7 +320,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 }));
 
                 const processFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': processFilterIdChange });
+                component.ngOnChanges({ id: processFilterIdChange });
                 fixture.detectChanges();
 
                 component.toggleFilterActions = true;
@@ -466,7 +462,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -476,7 +472,7 @@ describe('EditProcessFilterCloudComponent', () => {
         expect(component.processFilterProperties[1].key).toEqual('processName');
     });
 
-    it('should get form attributes', async() => {
+    it('should get form attributes', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -485,7 +481,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -495,7 +491,7 @@ describe('EditProcessFilterCloudComponent', () => {
         expect(component.editProcessFilterForm.get('completedDateType')).toBeDefined();
     });
 
-    it('should get form attributes for suspendedData', async() => {
+    it('should get form attributes for suspendedData', async () => {
         const filter = new ProcessFilterCloudModel({
             id: 'filter-id',
             name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
@@ -517,7 +513,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -535,7 +531,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -569,7 +565,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -587,7 +583,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -611,7 +607,7 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
         fixture.detectChanges();
 
         const controller = component.editProcessFilterForm.get('appVersionMultiple');
@@ -638,7 +634,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -659,7 +655,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     it('should display default sort properties', async () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -697,7 +693,7 @@ describe('EditProcessFilterCloudComponent', () => {
         await fixture.whenStable();
 
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -733,7 +729,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
         component.sortProperties = ['name'];
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-        component.ngOnChanges({ 'id': processFilterIdChange });
+        component.ngOnChanges({ id: processFilterIdChange });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -760,7 +756,7 @@ describe('EditProcessFilterCloudComponent', () => {
             const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
             getProcessFilterByIdSpy.and.returnValue(of(fakeFilter));
 
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
         });
 
@@ -882,7 +878,7 @@ describe('EditProcessFilterCloudComponent', () => {
             await fixture.whenStable();
 
             const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -920,7 +916,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
             const date = moment();
@@ -943,7 +939,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
             component.filterChange.subscribe(() => {
@@ -977,7 +973,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
             component.filterChange.subscribe(() => {
@@ -998,7 +994,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
             const dateFilter = {
@@ -1088,7 +1084,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'initiator'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
+            component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
             expect(component.initiatorOptions).toEqual([ { username: 'user1' }, { username: 'user2'} ]);

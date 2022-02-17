@@ -102,7 +102,7 @@ describe('DateRangeFilterComponent', () => {
 
     it('should not emit any date change events when any type is selected', () => {
         spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
+        const value = { value: DateCloudFilterType.RANGE } as MatSelectChange;
         component.onSelectionChange(value);
         expect(component.dateChanged.emit).not.toHaveBeenCalled();
     });
@@ -114,7 +114,7 @@ describe('DateRangeFilterComponent', () => {
     });
 
     it('should show date-range picker when type is range', async () => {
-        const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
+        const value = { value: DateCloudFilterType.RANGE } as MatSelectChange;
         component.onSelectionChange(value);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -127,7 +127,9 @@ describe('DateRangeFilterComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
+        // eslint-disable-next-line no-underscore-dangle
         expect(component.dateRangeForm.get('from').value).toEqual(moment(mockFilterProperty.value._startFrom));
+        // eslint-disable-next-line no-underscore-dangle
         expect(component.dateRangeForm.get('to').value).toEqual(moment(mockFilterProperty.value._startTo));
     });
 

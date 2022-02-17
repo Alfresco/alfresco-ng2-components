@@ -29,6 +29,8 @@ import { IdentityGroupModel, IdentityUserModel, TranslationService, UserPreferen
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export interface DropdownOption {
     value: string;
     label: string;
@@ -202,6 +204,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     /**
      * Return filter name
+     *
      * @param filterName
      */
     getSanitizeFilterName(filterName: string): string {
@@ -322,9 +325,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     get createSortProperties(): FilterOptions[] {
         this.checkMandatorySortProperties();
 
-        return this.sortProperties.map((property: string) => {
-            return { label: property, value: property };
-        });
+        return this.sortProperties.map((property: string) => ({ label: property, value: property }));
     }
 
     createAndFilterActions(): TaskFilterAction[] {

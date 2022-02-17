@@ -53,6 +53,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the form definition of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param version Version of the form
@@ -60,27 +61,26 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      */
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap(task => {
-                return this.getForm(appName, task.formKey, version).pipe(
-                    map((form: FormContent) => {
-                        const flattenForm = {
-                            ...form.formRepresentation,
-                            ...form.formRepresentation.formDefinition,
-                            taskId: task.id,
-                            taskName: task.name,
-                            processDefinitionId: task.processDefinitionId,
-                            processInstanceId: task.processInstanceId
-                        };
-                        delete flattenForm.formDefinition;
-                        return flattenForm;
-                    })
-                );
-            })
+            switchMap(task => this.getForm(appName, task.formKey, version).pipe(
+                map((form: FormContent) => {
+                    const flattenForm = {
+                        ...form.formRepresentation,
+                        ...form.formRepresentation.formDefinition,
+                        taskId: task.id,
+                        taskName: task.name,
+                        processDefinitionId: task.processDefinitionId,
+                        processInstanceId: task.processInstanceId
+                    };
+                    delete flattenForm.formDefinition;
+                    return flattenForm;
+                })
+            ))
         );
     }
 
     /**
      * Saves a task form.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -120,6 +120,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Completes a task form.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -131,11 +132,12 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
-        const completeFormRepresentation = <CompleteFormRepresentation> {
+        const completeFormRepresentation = {
             values: formValues,
-            taskId: taskId,
-            processInstanceId: processInstanceId
-        };
+            taskId,
+            processInstanceId
+        } as CompleteFormRepresentation;
+
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -147,6 +149,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets details of a task
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Details of the task
@@ -161,6 +164,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the variables of a task.
+     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Task variables
@@ -169,14 +173,13 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
 
         return this.get(apiUrl).pipe(
-            map((res: any) => {
-                return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
-            })
+            map((res: any) => res.list.entries.map((variable) => new TaskVariableCloud(variable.entry)))
         );
     }
 
     /**
      * Gets a form definition.
+     *
      * @param appName Name of the app
      * @param formKey key of the target task
      * @param version Version of the form
@@ -200,6 +203,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Parses JSON data to create a corresponding form.
+     *
      * @param json JSON data to create the form
      * @param data Values for the form's fields
      * @param readOnly Toggles whether or not the form should be read-only
@@ -221,7 +225,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             const form = new FormModel(flattenForm, formValues, readOnly);
             if (!json.fields) {
                 form.outcomes = [
-                    new FormOutcomeModel(<any> form, {
+                    new FormOutcomeModel(form, {
                         id: '$save',
                         name: FormOutcomeModel.SAVE_ACTION,
                         isSystem: true

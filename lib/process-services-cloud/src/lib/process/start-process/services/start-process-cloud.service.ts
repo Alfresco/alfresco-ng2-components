@@ -37,6 +37,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the process definitions associated with an app.
+     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
@@ -45,9 +46,7 @@ export class StartProcessCloudService extends BaseCloudService {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
             return this.get(url).pipe(
-                map((res: any) => {
-                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
-                })
+                map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
@@ -57,6 +56,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Create a process based on a process definition, name, form values or variables.
+     *
      * @param appName name of the Application
      * @param payload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just created
@@ -72,6 +72,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Starts an already created process using the process instance id.
+     *
      * @param createdProcessInstanceId process instance id of the process previously created
      * @returns Details of the process instance just started
      */
@@ -85,6 +86,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
+     *
      * @param appName name of the Application
      * @param payload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just started
@@ -98,6 +100,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Update an existing process instance
+     *
      * @param appName name of the Application
      * @param processInstanceId process instance to update
      * @param payload Details of the process (definition key, name, variables, etc)
@@ -114,6 +117,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Delete an existing process instance
+     *
      * @param appName name of the Application
      * @param processInstanceId process instance to update
      */

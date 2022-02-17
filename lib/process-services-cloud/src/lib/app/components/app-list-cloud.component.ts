@@ -22,17 +22,16 @@ import { AppsProcessCloudService } from '../services/apps-process-cloud.service'
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { catchError } from 'rxjs/operators';
 
+export const LAYOUT_LIST: string = 'LIST';
+export const LAYOUT_GRID: string = 'GRID';
+export const RUNNING_STATUS: string = 'RUNNING';
+
 @Component({
     selector: 'adf-cloud-app-list',
     templateUrl: './app-list-cloud.component.html',
     styleUrls: ['./app-list-cloud.component.scss']
 })
 export class AppListCloudComponent implements OnInit, AfterContentInit {
-
-    public static LAYOUT_LIST: string = 'LIST';
-    public static LAYOUT_GRID: string = 'GRID';
-    public static RUNNING_STATUS: string = 'RUNNING';
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -40,7 +39,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
      * values, "GRID" and "LIST".
      */
     @Input()
-    layoutType: string = AppListCloudComponent.LAYOUT_GRID;
+    layoutType: string = LAYOUT_GRID;
 
     /** Emitted when an app entry is clicked. */
     @Output()
@@ -57,7 +56,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
             this.setDefaultLayoutType();
         }
 
-        this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(AppListCloudComponent.RUNNING_STATUS)
+        this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(RUNNING_STATUS)
             .pipe(
                 catchError(() => {
                     this.loadingError$.next(true);
@@ -80,7 +79,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
      * Check if the value of the layoutType property is an allowed value
      */
     isValidType(): boolean {
-        if (this.layoutType && (this.layoutType === AppListCloudComponent.LAYOUT_LIST || this.layoutType === AppListCloudComponent.LAYOUT_GRID)) {
+        if (this.layoutType && (this.layoutType === LAYOUT_LIST || this.layoutType === LAYOUT_GRID)) {
             return true;
         }
         return false;
@@ -90,20 +89,20 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
      * Assign the default value to LayoutType
      */
     setDefaultLayoutType(): void {
-        this.layoutType = AppListCloudComponent.LAYOUT_GRID;
+        this.layoutType = LAYOUT_GRID;
     }
 
     /**
      * Return true if the layout type is LIST
      */
     isList(): boolean {
-        return this.layoutType === AppListCloudComponent.LAYOUT_LIST;
+        return this.layoutType === LAYOUT_LIST;
     }
 
     /**
      * Return true if the layout type is GRID
      */
     isGrid(): boolean {
-        return this.layoutType === AppListCloudComponent.LAYOUT_GRID;
+        return this.layoutType === LAYOUT_GRID;
     }
 }

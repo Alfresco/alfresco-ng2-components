@@ -200,6 +200,7 @@ export interface TextField extends FormField {
     placeholder: string | null;
 }
 
+// eslint-disable-next-line no-shadow
 export enum PeopleModeOptions {
     single = 'single',
     multiple = 'multiple'
@@ -210,6 +211,7 @@ export interface PeopleField extends FormField {
     optionType: PeopleModeOptions;
 }
 
+// eslint-disable-next-line no-shadow
 export enum FormFieldType {
     text = 'text',
     multiline = 'multi-line-text',

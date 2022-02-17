@@ -88,15 +88,15 @@ export const fakeServiceTask = {
 export const fakeCustomSchema =
     [
         new ObjectDataColumn({
-            'key': 'fakeName',
-            'type': 'text',
-            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-            'sortable': true
+            key: 'fakeName',
+            type: 'text',
+            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+            sortable: true
         }),
         new ObjectDataColumn({
-            'key': 'fakeTaskName',
-            'type': 'text',
-            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-            'sortable': true
+            key: 'fakeTaskName',
+            type: 'text',
+            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+            sortable: true
         })
     ];

@@ -21,7 +21,7 @@ import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
-import { AppListCloudComponent } from './app-list-cloud.component';
+import { AppListCloudComponent, LAYOUT_GRID, LAYOUT_LIST } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,9 +38,7 @@ describe('AppListCloudComponent', () => {
             oauth2Auth: {
                 callCustomApi: () => Promise.resolve(fakeApplicationInstance)
             },
-            isEcmLoggedIn() {
-                return false;
-            },
+            isEcmLoggedIn: () => false,
             reply: jasmine.createSpy('reply')
     };
 
@@ -155,7 +153,7 @@ describe('AppListCloudComponent', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = AppListCloudComponent.LAYOUT_GRID;
+            component.layoutType = LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
@@ -170,7 +168,7 @@ describe('AppListCloudComponent', () => {
     describe('List Layout ', () => {
 
         beforeEach(() => {
-            component.layoutType = AppListCloudComponent.LAYOUT_LIST;
+            component.layoutType = LAYOUT_LIST;
         });
 
         it('should display a LIST when configured to', () => {

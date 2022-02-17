@@ -124,7 +124,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+        this.pagination = new BehaviorSubject<PaginationModel>({
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -184,6 +184,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     /**
      * Resets the pagination values and
      * Reloads the task list
+     *
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {

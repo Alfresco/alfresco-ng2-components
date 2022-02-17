@@ -59,12 +59,10 @@ export class ProcessCloudContentService {
         return from(
             this.uploadApi.uploadFile(file, '', nodeId, '', { overwrite: true })
         ).pipe(
-            map((res: any) => {
-                return {
-                    ...res.entry,
-                    nodeId: res.entry.id
-                };
-            }),
+            map((res: any) => ({
+                ...res.entry,
+                nodeId: res.entry.id
+            })),
             catchError(err => this.handleError(err))
         );
     }

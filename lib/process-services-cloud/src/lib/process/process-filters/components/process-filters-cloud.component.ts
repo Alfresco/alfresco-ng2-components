@@ -111,12 +111,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      */
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
-            this.currentFilter = this.filters.find((filter, index) => {
-                return paramFilter.id === filter.id ||
+            this.currentFilter = this.filters.find((filter, index) => paramFilter.id === filter.id ||
                 (paramFilter.name && this.checkFilterNamesEquality(paramFilter.name, filter.name)) ||
                 (paramFilter.key && (paramFilter.key === filter.key)) ||
-                paramFilter.index === index;
-            });
+                paramFilter.index === index);
         }
     }
 
@@ -146,7 +144,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      * Select filter with the id
      */
     public selectFilterById(id: string) {
-        this.selectFilterAndEmit(<ProcessFilterCloudModel> {id: id});
+        this.selectFilterAndEmit({id});
     }
 
     /**

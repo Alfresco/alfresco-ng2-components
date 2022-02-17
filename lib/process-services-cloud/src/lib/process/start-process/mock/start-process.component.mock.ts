@@ -74,29 +74,25 @@ export const fakeProcessDefinitions: ProcessDefinitionCloud[] = [
     })
 ];
 
-export function fakeSingleProcessDefinition(name: string): ProcessDefinitionCloud[] {
-    return [
-        new ProcessDefinitionCloud({
-            appName: 'startformwithoutupload',
-            formKey: 'form-a5d50817-5183-4850-802d-17af54b2632f',
-            id: 'd00c0237-8772-11e9-859a-428f83d5904f',
-            key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
-            name: name
-        })
-    ];
-}
+export const fakeSingleProcessDefinition = (name: string): ProcessDefinitionCloud[] => [
+    new ProcessDefinitionCloud({
+        appName: 'startformwithoutupload',
+        formKey: 'form-a5d50817-5183-4850-802d-17af54b2632f',
+        id: 'd00c0237-8772-11e9-859a-428f83d5904f',
+        key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
+        name
+    })
+];
 
-export function fakeSingleProcessDefinitionWithoutForm(name: string): ProcessDefinitionCloud[] {
-    return [
-        new ProcessDefinitionCloud({
-            appName: 'startformwithoutupload',
-            formKey: '',
-            id: 'd00c0237-8772-11e9-859a-428f83d5904f',
-            key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
-            name: name
-        })
-    ];
-}
+export const fakeSingleProcessDefinitionWithoutForm = (name: string): ProcessDefinitionCloud[] => [
+    new ProcessDefinitionCloud({
+        appName: 'startformwithoutupload',
+        formKey: '',
+        id: 'd00c0237-8772-11e9-859a-428f83d5904f',
+        key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
+        name
+    })
+];
 
 export const fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
@@ -122,129 +118,129 @@ export const fakeProcessPayload = new ProcessPayloadCloud({
 });
 
 export const fakeStartForm = {
-    'formRepresentation': {
-        'id': 'form-de8895be-d0d7-4434-beef-559b15305d72',
-        'name': 'StartEventForm',
-        'description': '',
-        'version': 0,
-        'formDefinition': {
-            'tabs': [],
-            'fields': [
+    formRepresentation: {
+        id: 'form-de8895be-d0d7-4434-beef-559b15305d72',
+        name: 'StartEventForm',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    'type': 'container',
-                    'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
-                    'name': 'Label',
-                    'tab': null,
-                    'fields': {
-                        '1': [
+                    type: 'container',
+                    id: '5a6b24c1-db2b-45e9-9aff-142395433d23',
+                    name: 'Label',
+                    tab: null,
+                    fields: {
+                        1: [
                             {
-                                'type': 'text',
-                                'id': 'firstName',
-                                'name': 'firstName',
-                                'colspan': 1,
-                                'params': {
-                                    'existingColspan': 1,
-                                    'maxColspan': 2
+                                type: 'text',
+                                id: 'firstName',
+                                name: 'firstName',
+                                colspan: 1,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 },
-                                'visibilityCondition': null,
-                                'placeholder': null,
-                                'value': null,
-                                'required': false,
-                                'minLength': 0,
-                                'maxLength': 0,
-                                'regexPattern': null
+                                visibilityCondition: null,
+                                placeholder: null,
+                                value: null,
+                                required: false,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null
                             }
                         ],
-                        '2': [
+                        2: [
                             {
-                                'type': 'text',
-                                'id': 'lastName',
-                                'name': 'lastName',
-                                'colspan': 1,
-                                'params': {
-                                    'existingColspan': 1,
-                                    'maxColspan': 2
+                                type: 'text',
+                                id: 'lastName',
+                                name: 'lastName',
+                                colspan: 1,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 },
-                                'visibilityCondition': null,
-                                'placeholder': null,
-                                'value': null,
-                                'required': false,
-                                'minLength': 0,
-                                'maxLength': 0,
-                                'regexPattern': null
+                                visibilityCondition: null,
+                                placeholder: null,
+                                value: null,
+                                required: false,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null
                             }
                         ]
                     },
-                    'numberOfColumns': 2
+                    numberOfColumns: 2
                 }
             ],
-            'outcomes': [],
-            'metadata': {},
-            'variables': []
+            outcomes: [],
+            metadata: {},
+            variables: []
         }
     }
 };
 
 export const fakeStartFormNotValid = {
-    'formRepresentation': {
-        'id': 'form-a5d50817-5183-4850-802d-17af54b2632f',
-        'name': 'simpleform',
-        'description': '',
-        'version': 0,
-        'formDefinition': {
-            'tabs': [],
-            'fields': [
+    formRepresentation: {
+        id: 'form-a5d50817-5183-4850-802d-17af54b2632f',
+        name: 'simpleform',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    'type': 'container',
-                    'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
-                    'name': 'Label',
-                    'tab': null,
-                    'fields': {
-                        '1': [
+                    type: 'container',
+                    id: '5a6b24c1-db2b-45e9-9aff-142395433d23',
+                    name: 'Label',
+                    tab: null,
+                    fields: {
+                        1: [
                             {
-                                'type': 'text',
-                                'id': 'firstName',
-                                'name': 'firstName',
-                                'colspan': 1,
-                                'params': {
-                                    'existingColspan': 1,
-                                    'maxColspan': 2
+                                type: 'text',
+                                id: 'firstName',
+                                name: 'firstName',
+                                colspan: 1,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 },
-                                'visibilityCondition': null,
-                                'placeholder': null,
-                                'value': null,
-                                'required': true,
-                                'minLength': 15,
-                                'maxLength': 0,
-                                'regexPattern': null
+                                visibilityCondition: null,
+                                placeholder: null,
+                                value: null,
+                                required: true,
+                                minLength: 15,
+                                maxLength: 0,
+                                regexPattern: null
                             }
                         ],
-                        '2': [
+                        2: [
                             {
-                                'type': 'text',
-                                'id': 'lastName',
-                                'name': 'lastName',
-                                'colspan': 1,
-                                'params': {
-                                    'existingColspan': 1,
-                                    'maxColspan': 2
+                                type: 'text',
+                                id: 'lastName',
+                                name: 'lastName',
+                                colspan: 1,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 },
-                                'visibilityCondition': null,
-                                'placeholder': null,
-                                'value': null,
-                                'required': false,
-                                'minLength': 0,
-                                'maxLength': 0,
-                                'regexPattern': null
+                                visibilityCondition: null,
+                                placeholder: null,
+                                value: null,
+                                required: false,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null
                             }
                         ]
                     },
-                    'numberOfColumns': 2
+                    numberOfColumns: 2
                 }
             ],
-            'outcomes': [],
-            'metadata': {},
-            'variables': []
+            outcomes: [],
+            metadata: {},
+            variables: []
         }
     }
 };

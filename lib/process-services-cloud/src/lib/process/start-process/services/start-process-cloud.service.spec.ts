@@ -38,9 +38,7 @@ describe('StartProcessCloudService', () => {
                 }
             })
         },
-        isEcmLoggedIn() {
-            return false;
-        }
+        isEcmLoggedIn: () => false
     };
 
     setupTestBed({
