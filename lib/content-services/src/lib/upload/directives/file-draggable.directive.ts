@@ -66,6 +66,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /**
      * Method called when files is dropped in the drag and drop area.
+     *
      * @param event DOM event.
      */
     onDropFiles(event: any): void {
@@ -77,6 +78,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
             if (items) {
                 const files: File[] = [];
 
+                // eslint-disable-next-line @typescript-eslint/prefer-for-of
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].webkitGetAsEntry) {
                         const item = items[i].webkitGetAsEntry();

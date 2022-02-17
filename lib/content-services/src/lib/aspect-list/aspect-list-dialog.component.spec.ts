@@ -102,7 +102,7 @@ describe('AspectListDialogComponent', () => {
     describe('Without passing node id', () => {
 
         beforeEach(async () => {
-            data = <AspectListDialogComponentData> {
+            data = {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
                 overTableMessage: 'Over here',
@@ -239,7 +239,7 @@ describe('AspectListDialogComponent', () => {
     describe('Passing the node id', () => {
 
         beforeEach(async () => {
-            data = <AspectListDialogComponentData> {
+            data = {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
                 overTableMessage: 'Over here',

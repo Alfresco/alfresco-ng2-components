@@ -31,6 +31,8 @@ export interface SelectedBucket {
     bucket: FacetFieldBucket;
 }
 
+const DEFAULT_PAGE_SIZE: number = 5;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -45,15 +47,14 @@ export class SearchFacetFiltersService implements OnDestroy {
     /** shows the facet chips */
     selectedBuckets: SelectedBucket[] = [];
 
-    private DEFAULT_PAGE_SIZE = 5;
-    private readonly facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
+    private readonly facetQueriesPageSize = DEFAULT_PAGE_SIZE;
     private readonly onDestroy$ = new Subject<boolean>();
 
     constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
                 private translationService: TranslationService) {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
-            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
+            this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || DEFAULT_PAGE_SIZE;
         }
 
         this.queryBuilder.configUpdated
@@ -110,12 +111,12 @@ export class SearchFacetFiltersService implements OnDestroy {
                     if (!this.responseFacets) {
                         this.responseFacets = [];
                     }
-                    this.responseFacets.push(<FacetField> {
+                    this.responseFacets.push({
                         ...field,
                         type: responseField.type || itemType,
                         label: field.label,
-                        pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                        currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                        pageSize: field.pageSize | DEFAULT_PAGE_SIZE,
+                        currentPageSize: field.pageSize | DEFAULT_PAGE_SIZE,
                         buckets: bucketList
                     });
                 }
@@ -167,12 +168,12 @@ export class SearchFacetFiltersService implements OnDestroy {
                     if (!this.responseFacets) {
                         this.responseFacets = [];
                     }
-                    this.responseFacets.push(<FacetField> {
+                    this.responseFacets.push({
                         field: group,
                         type: responseField.type || 'query',
                         label: group,
-                        pageSize: this.DEFAULT_PAGE_SIZE,
-                        currentPageSize: this.DEFAULT_PAGE_SIZE,
+                        pageSize: DEFAULT_PAGE_SIZE,
+                        currentPageSize: DEFAULT_PAGE_SIZE,
                         buckets: bucketList,
                         settings: facetQuerySetting
                     });
@@ -187,12 +188,12 @@ export class SearchFacetFiltersService implements OnDestroy {
 
             respBucket['count'] = this.getCountValue(respBucket);
             respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configField, respBucket.label);
-            return <FacetFieldBucket> {
+            return {
                 ...respBucket,
                 checked: false,
                 display: respBucket.display,
                 label: respBucket.label
-            };
+            } as FacetFieldBucket;
         });
     }
 
@@ -202,7 +203,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                 .find((bucket) => bucket.label === query.label) || {};
 
             respBucket['count'] = this.getCountValue(respBucket);
-            return <FacetFieldBucket> {
+            return {
                 ...respBucket,
                 checked: false,
                 display: respBucket.display,
@@ -327,9 +328,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
                             .filter((bucket) => bucket.checked)
-                            .map((bucket) => {
-                                return {field, bucket};
-                            })
+                            .map((bucket) => ({field, bucket}))
                     );
                 }
             }

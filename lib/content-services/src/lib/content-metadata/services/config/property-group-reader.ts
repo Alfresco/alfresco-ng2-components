@@ -21,15 +21,10 @@ const emptyGroup = {
     properties: {}
 };
 
-function convertObjectToArray(object: any): Property[] {
-    return Object.keys(object).map((key) => object[key]);
-}
+const convertObjectToArray = (object: any): Property[] => Object.keys(object).map((key) => object[key]);
+export const getGroup = (propertyGroups: PropertyGroupContainer, groupName: string): PropertyGroup | undefined => propertyGroups[groupName];
 
-export function getGroup(propertyGroups: PropertyGroupContainer, groupName: string): PropertyGroup | undefined {
-    return propertyGroups[groupName];
-}
-
-export function getProperty(propertyGroups: PropertyGroupContainer, groupName: string, propertyName: string): Property | Property[] | undefined {
+export const getProperty = (propertyGroups: PropertyGroupContainer, groupName: string, propertyName: string): Property | Property[] | undefined => {
     const groupDefinition = getGroup(propertyGroups, groupName) || emptyGroup;
     let propertyDefinitions;
 
@@ -40,4 +35,4 @@ export function getProperty(propertyGroups: PropertyGroupContainer, groupName: s
     }
 
     return propertyDefinitions;
-}
+};

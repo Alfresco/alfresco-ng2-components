@@ -92,9 +92,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
 
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         if (this.config.exclude) {
-            return propertyGroups.filter((preset) => {
-                return !this.config.exclude.includes(preset.name);
-            });
+            return propertyGroups.filter((preset) => !this.config.exclude.includes(preset.name));
         }
         return propertyGroups;
     }
@@ -114,7 +112,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
             if (aspectProperties === '*') {
                 properties = getProperty(propertyGroups, aspectName, aspectProperties);
             } else {
-                properties = (<string[]> aspectProperties)
+                properties = aspectProperties
                     .map((propertyName) => getProperty(propertyGroups, aspectName, propertyName))
                     .filter((props) => props !== undefined);
             }

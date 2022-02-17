@@ -177,12 +177,12 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     private create(): Observable<SiteEntry> {
         const { title, id, description, visibility } = this;
-        const siteBody = <SiteBodyCreate> {
+        const siteBody = {
             id,
             title,
             description,
             visibility
-        };
+        } as SiteBodyCreate;
 
         return this.sitesService.createSite(siteBody);
     }
@@ -206,8 +206,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                     message: 'LIBRARY.ERRORS.CONFLICT'
                 });
             }
-        } catch (error) {
-
+        } catch {
         }
 
         return error;
@@ -274,12 +273,10 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
             }
 
             return new Promise((resolve) => {
-                timer = setTimeout(() => {
-                    return this.sitesService.getSite(control.value).subscribe(
-                        () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                        () => resolve(null)
-                    );
-                }, 300);
+                timer = setTimeout(() => this.sitesService.getSite(control.value).subscribe(
+                    () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+                    () => resolve(null)
+                ), 300);
             });
         };
     }

@@ -36,7 +36,7 @@ describe('LibraryNameColumnComponent', () => {
     });
 
     beforeEach(() => {
-        node = <any> {
+        node = {
             id: 'nodeId',
             path: {
                 elements: []
@@ -76,8 +76,8 @@ describe('LibraryNameColumnComponent', () => {
             node.title = 'title';
 
             const rows = [
-                <any> { node: { entry: { id: 'some-id', title: 'title' } } }
-            ];
+                { node: { entry: { id: 'some-id', title: 'title' } } }
+            ] as any[];
 
             const title = component.makeLibraryTitle(node, rows);
             expect(title).toContain('nodeId');
@@ -87,10 +87,10 @@ describe('LibraryNameColumnComponent', () => {
             node.title = 'title';
 
             const rows = [
-                <any> {
+                {
                     node: { entry: { id: 'some-id', title: 'title-some-id' } }
                 }
-            ];
+            ] as any[];
 
             const title = component.makeLibraryTitle(node, rows);
 

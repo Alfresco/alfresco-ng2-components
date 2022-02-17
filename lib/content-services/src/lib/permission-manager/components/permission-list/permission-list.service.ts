@@ -27,6 +27,8 @@ import { NodePermissionsModel } from '../../models/member.model';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { NodePermissionDialogService } from '../../services/node-permission-dialog.service';
 
+const SITE_MANAGER_ROLE = 'SiteManager';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,7 +54,6 @@ export class PermissionListService {
 
     private node: Node;
     private roles: RoleModel[];
-    private SITE_MANAGER_ROLE = 'SiteManager';
 
     constructor(
         private nodeService: NodesApiService,
@@ -89,7 +90,7 @@ export class PermissionListService {
             if (authorityId) {
                 const permissions = [
                     ...(this.node.permissions.locallySet || []),
-                    { authorityId, name: this.SITE_MANAGER_ROLE, accessStatus: 'ALLOWED' }
+                    { authorityId, name: SITE_MANAGER_ROLE, accessStatus: 'ALLOWED' }
                 ];
                 updateLocalPermission$ = this.nodePermissionService.updatePermissions(this.node, permissions);
             }
@@ -223,8 +224,8 @@ export class PermissionListService {
         let hasLocalManagerPermission = false;
         let authorityId: string;
         if (sitePath) {
-            authorityId = `GROUP_site_${sitePath.name}_${this.SITE_MANAGER_ROLE}`;
-            hasLocalManagerPermission = !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId && permission.name === this.SITE_MANAGER_ROLE);
+            authorityId = `GROUP_site_${sitePath.name}_${SITE_MANAGER_ROLE}`;
+            hasLocalManagerPermission = !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId && permission.name === SITE_MANAGER_ROLE);
         }
 
         if (!hasLocalManagerPermission && authorityId) {
@@ -245,8 +246,8 @@ export class PermissionListService {
     canUpdateThePermission(node: Node, permission: PermissionElement): boolean {
         const sitePath = node.path.elements.find((path) => path.nodeType === 'st:site');
         if (!node.permissions.isInheritanceEnabled && sitePath) {
-           const authorityId = `GROUP_site_${sitePath.name}_${this.SITE_MANAGER_ROLE}`;
-           return !(permission.authorityId === authorityId && permission.name === this.SITE_MANAGER_ROLE);
+           const authorityId = `GROUP_site_${sitePath.name}_${SITE_MANAGER_ROLE}`;
+           return !(permission.authorityId === authorityId && permission.name === SITE_MANAGER_ROLE);
         }
         return true;
     }

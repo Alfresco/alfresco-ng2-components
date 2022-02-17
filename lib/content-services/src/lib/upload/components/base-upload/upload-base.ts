@@ -97,22 +97,19 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
     /**
      * Upload a list of file in the specified path
+     *
      * @param files
      */
     uploadFiles(files: File[]): void {
         const filteredFiles: FileModel[] = files
-            .map<FileModel>((file: File) => {
-                return this.createFileModel(file, this.rootFolderId, ((<any> file).webkitRelativePath || '').replace(/\/[^\/]*$/, ''));
-            });
+            .map<FileModel>((file: File) => this.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^\/]*$/, '')));
 
         this.uploadQueue(filteredFiles);
     }
 
     uploadFilesInfo(files: FileInfo[]): void {
         const filteredFiles: FileModel[] = files
-            .map<FileModel>((fileInfo: FileInfo) => {
-                return this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder);
-            });
+            .map<FileModel>((fileInfo: FileInfo) => this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder));
 
         this.uploadQueue(filteredFiles);
     }
@@ -170,8 +167,8 @@ export abstract class UploadBase implements OnInit, OnDestroy {
             comment: this.comment,
             majorVersion: this.majorVersion,
             newVersion: this.versioning,
-            parentId: parentId,
-            path: path,
+            parentId,
+            path,
             nodeType: this.nodeType
         }, id);
     }

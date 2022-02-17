@@ -92,12 +92,12 @@ describe('SearchControlComponent', () => {
         fixture.destroy();
     });
 
-    function typeWordIntoSearchInput(word: string): void {
+    const typeWordIntoSearchInput = (word: string): void => {
         const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
         inputDebugElement.nativeElement.value = word;
         inputDebugElement.nativeElement.focus();
         inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
-    }
+    };
 
     describe('when input values are inserted', () => {
 
@@ -242,7 +242,7 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const resultElement: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                const resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 resultElement.focus();
                 expect(resultElement).not.toBe(null);
                 inputDebugElement.nativeElement.dispatchEvent(new KeyboardEvent('keypress', { key: 'TAB' }));
@@ -264,14 +264,14 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let resultElement: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                let resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 expect(resultElement).not.toBeNull();
                 const escapeEvent: any = new Event('ESCAPE');
                 escapeEvent.keyCode = 27;
                 inputDebugElement.triggerEventHandler('keydown', escapeEvent);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    resultElement = <HTMLElement> element.querySelector('#result_option_0');
+                    resultElement = element.querySelector<HTMLElement>('#result_option_0');
                     expect(resultElement).toBeNull();
                     done();
                 });
@@ -289,14 +289,14 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let resultElement: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                let resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 expect(resultElement).not.toBeNull();
                 const escapeEvent: any = new Event('ENTER');
                 escapeEvent.keyCode = 13;
                 inputDebugElement.triggerEventHandler('keydown', escapeEvent);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    resultElement = <HTMLElement> element.querySelector('#result_option_0');
+                    resultElement = element.querySelector<HTMLElement>('#result_option_0');
                     expect(resultElement).toBeNull();
                     done();
                 });

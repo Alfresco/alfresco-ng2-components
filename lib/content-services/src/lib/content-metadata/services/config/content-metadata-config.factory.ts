@@ -20,21 +20,15 @@ import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { IndifferentConfigService } from './indifferent-config.service';
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
-import {
-    PresetConfig,
-    ContentMetadataConfig,
-    AspectOrientedConfig,
-    LayoutOrientedConfig
-} from '../../interfaces/content-metadata.interfaces';
+import { PresetConfig, ContentMetadataConfig } from '../../interfaces/content-metadata.interfaces';
+
+const INDIFFERENT_PRESET = '*';
+const DEFAULT_PRESET_NAME = 'default';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentMetadataConfigFactory {
-
-    static readonly INDIFFERENT_PRESET = '*';
-    static readonly DEFAULT_PRESET_NAME = 'default';
-
     constructor(private appConfigService: AppConfigService, private logService: LogService) {}
 
     public get(presetName: string = 'default'): ContentMetadataConfig {
@@ -42,10 +36,10 @@ export class ContentMetadataConfigFactory {
         try {
             presetConfig = this.appConfigService.config['content-metadata'].presets[presetName];
         } catch {
-            if (presetName !== ContentMetadataConfigFactory.DEFAULT_PRESET_NAME) {
+            if (presetName !== DEFAULT_PRESET_NAME) {
                 this.logService.error(`No content-metadata preset for: ${presetName}`);
             }
-            presetConfig = ContentMetadataConfigFactory.INDIFFERENT_PRESET;
+            presetConfig = INDIFFERENT_PRESET;
         }
 
         return this.createConfig(presetConfig);
@@ -55,9 +49,9 @@ export class ContentMetadataConfigFactory {
         let config: ContentMetadataConfig;
 
         if (this.isLayoutOrientedPreset(presetConfig)) {
-            config = new LayoutOrientedConfigService(<LayoutOrientedConfig> presetConfig);
+            config = new LayoutOrientedConfigService(presetConfig);
         } else if (this.isAspectOrientedPreset(presetConfig)) {
-            config = new AspectOrientedConfigService(<AspectOrientedConfig> presetConfig);
+            config = new AspectOrientedConfigService(presetConfig);
         } else {
             config = new IndifferentConfigService();
         }

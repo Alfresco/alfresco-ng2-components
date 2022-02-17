@@ -37,7 +37,7 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-breadcrumb' }
+    host: { class: 'adf-breadcrumb' }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -143,13 +143,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
     parseRoute(node: Node): PathElementEntity[] {
         if (node && node.path) {
-            const route = <PathElementEntity[]> (node.path.elements || []).slice();
+            const route = (node.path.elements || []).slice();
 
-            route.push(<PathElementEntity> {
+            route.push({
                 id: node.id,
                 name: node.name,
-                node: node
-            });
+                node
+            } as PathElementEntity);
 
             const rootPos = this.getElementPosition(route, this.rootId);
             if (rootPos > 0) {

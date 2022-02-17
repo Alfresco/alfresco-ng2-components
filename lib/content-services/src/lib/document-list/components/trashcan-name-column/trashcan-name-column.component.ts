@@ -75,9 +75,7 @@ export class TrashcanNameColumnComponent implements OnInit {
     let isDuplicate = false;
 
     if (entries) {
-      isDuplicate = entries.some((entry: any) => {
-        return entry.id !== id && entry.properties['cm:title'] === title;
-      });
+      isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
     }
 
     return isDuplicate

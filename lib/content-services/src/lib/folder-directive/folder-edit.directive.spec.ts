@@ -93,7 +93,7 @@ describe('FolderEditDirective', () => {
 
     it('should emit success event with node if the folder creation was successful', async () => {
         fixture.detectChanges();
-        const testNode = <Node> {};
+        const testNode: any = {};
 
         element.triggerEventHandler('click', event);
         dialogRefMock.componentInstance.success.next(testNode);

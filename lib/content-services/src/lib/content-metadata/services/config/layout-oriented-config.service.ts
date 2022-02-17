@@ -83,9 +83,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
             excludedConfig = [excludedConfig];
         }
 
-        return propertyGroups.filter((props) => {
-            return !excludedConfig.includes(props.name);
-        });
+        return propertyGroups.filter((props) => !excludedConfig.includes(props.name));
     }
 
     public isIncludeAllEnabled() {
@@ -116,13 +114,11 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     private flattenItems(items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
-            const flattenedProperties = properties.map((property) => {
-                return {
-                    groupName: item.aspect || item.type,
-                    property,
-                    editable: item.editable
-                };
-            });
+            const flattenedProperties = properties.map((property) => ({
+                groupName: item.aspect || item.type,
+                property,
+                editable: item.editable
+            }));
 
             return accumulator.concat(flattenedProperties);
         }, []);

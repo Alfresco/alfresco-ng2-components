@@ -19,10 +19,9 @@ import { DataRow, ObjectUtils, ThumbnailService, ContentService } from '@alfresc
 import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 
+export const ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
+
 export class ShareDataRow implements DataRow {
-
-    static ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
-
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
     isDropTarget: boolean;
@@ -44,7 +43,7 @@ export class ShareDataRow implements DataRow {
                 private thumbnailService?: ThumbnailService,
                 private allowDropFiles?: boolean) {
         if (!obj) {
-            throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
+            throw new Error(ERR_OBJECT_NOT_FOUND);
         }
 
         this.isDropTarget = allowDropFiles !== undefined ? this.allowDropFiles && this.checkNodeTypeAndPermissions(obj) : this.checkNodeTypeAndPermissions(obj);

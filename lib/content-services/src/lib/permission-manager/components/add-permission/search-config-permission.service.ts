@@ -41,7 +41,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
             include: ['properties', 'aspectNames'],
             paging: {
                 maxItems: maxResults,
-                skipCount: skipCount
+                skipCount
             },
             filterQueries: [
                 /* eslint-disable-next-line */

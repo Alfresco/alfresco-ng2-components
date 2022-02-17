@@ -153,11 +153,11 @@ export class ContentNodeSelectorComponent implements OnInit {
         this.selectedTabIndex = tabIndex;
     }
 
-    isFileServerTabSelected (): boolean {
+    isFileServerTabSelected(): boolean {
         return this.selectedTabIndex === 0;
     }
 
-    isLocalUploadTabSelected (): boolean {
+    isLocalUploadTabSelected(): boolean {
         return this.selectedTabIndex === 1;
     }
 

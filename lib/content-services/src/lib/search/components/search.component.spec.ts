@@ -89,7 +89,7 @@ describe('SearchComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const message: HTMLElement = <HTMLElement> element.querySelector('#component-result-message');
+                const message = element.querySelector<HTMLElement>('#component-result-message');
                 expect(message.textContent).toBe('ERROR');
                 done();
             });
@@ -129,7 +129,7 @@ describe('SearchComponent', () => {
                 fixture.detectChanges();
                 const optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
                 expect(optionShowed).toBe(1);
-                const folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
+                const folderOption = element.querySelector<HTMLElement>('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('MyDoc');
                 done();
             });

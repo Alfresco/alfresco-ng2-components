@@ -27,9 +27,7 @@ import { ContentVersionService } from './content-version.service';
     templateUrl: './version-list.component.html',
     styleUrls: ['./version-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-version-list'
-    }
+    host: { class: 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges {
 

@@ -39,8 +39,8 @@ describe('SearchQueryBuilder', () => {
     it('should reset to defaults', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ],
             filterQueries: [
                 { query: 'query1' },
@@ -87,9 +87,9 @@ describe('SearchQueryBuilder', () => {
     it('should use only enabled categories', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: false },
-                <any> { id: 'cat3', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: false } as any,
+                { id: 'cat3', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -222,9 +222,9 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetFields: {
-                'fields': [
-                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                fields: [
+                    { field: 'content.mimetype', mincount: 1, label: 'Type' },
+                    { field: 'content.size', mincount: 1, label: 'Size' }
                 ]
             }
         };
@@ -241,9 +241,9 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetFields: {
-                'fields': [
-                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                fields: [
+                    { field: 'content.mimetype', mincount: 1, label: 'Type' },
+                    { field: 'content.size', mincount: 1, label: 'Size' }
                 ]
             }
         };
@@ -259,8 +259,8 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetFields: {
-                'fields': [
-                    { 'field': 'content.size', 'mincount': 1, 'label': 'Label with spaces' }
+                fields: [
+                    { field: 'content.size', mincount: 1, label: 'Label with spaces' }
                 ]
             }
         };
@@ -276,7 +276,7 @@ describe('SearchQueryBuilder', () => {
     it('should require a query fragment to build query', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -291,7 +291,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with single fragment', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -307,8 +307,8 @@ describe('SearchQueryBuilder', () => {
     it('should build query with multiple fragments', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -328,8 +328,8 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             fields: ['field1', 'field2'],
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -346,8 +346,8 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             fields: [],
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -363,7 +363,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with custom filter queries', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -381,7 +381,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with custom facet queries', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             facetQueries: {
                 queries: [
@@ -401,7 +401,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with custom facet fields', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             facetFields: {
                 fields: [
@@ -431,7 +431,7 @@ describe('SearchQueryBuilder', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             facetFields: {
                 fields: [
@@ -469,7 +469,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with custom facet intervals', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             facetIntervals: {
                 intervals: [
@@ -517,7 +517,7 @@ describe('SearchQueryBuilder', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ],
             facetIntervals: {
                 intervals: [
@@ -558,8 +558,8 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             fields: [],
             categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
+                { id: 'cat1', enabled: true } as any,
+                { id: 'cat2', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -576,7 +576,7 @@ describe('SearchQueryBuilder', () => {
     it('should use pagination settings', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -594,7 +594,7 @@ describe('SearchQueryBuilder', () => {
     it('should build final request with user and custom queries', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -630,7 +630,7 @@ describe('SearchQueryBuilder', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -651,9 +651,9 @@ describe('SearchQueryBuilder', () => {
     it('should use highlight in the  queries', () => {
         const config: SearchConfiguration = {
             highlight: {
-                'prefix': 'my-prefix',
-                'postfix': 'my-postfix',
-                'mergeContiguous': true
+                prefix: 'my-prefix',
+                postfix: 'my-postfix',
+                mergeContiguous: true
             }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -672,7 +672,7 @@ describe('SearchQueryBuilder', () => {
     it('should emit error event', (done) => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -690,7 +690,7 @@ describe('SearchQueryBuilder', () => {
     it('should emit empty results on error', (done) => {
         const config: SearchConfiguration = {
             categories: [
-                <any> { id: 'cat1', enabled: true }
+                { id: 'cat1', enabled: true } as any
             ]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -775,8 +775,8 @@ describe('SearchQueryBuilder', () => {
             configs = [
                 {
                     categories: [
-                        <any> { id: 'cat1', enabled: true },
-                        <any> { id: 'cat2', enabled: true }
+                        { id: 'cat1', enabled: true } as any,
+                        { id: 'cat2', enabled: true } as any
                     ],
                     filterQueries: [
                         { query: 'query1' },
@@ -787,7 +787,7 @@ describe('SearchQueryBuilder', () => {
                 },
                 {
                     categories: [
-                        <any> { id: 'mouse', enabled: true }
+                        { id: 'mouse', enabled: true } as any
                     ],
                     filterQueries: [
                         { query: 'query1' },
@@ -798,7 +798,7 @@ describe('SearchQueryBuilder', () => {
                 },
                 {
                     categories: [
-                        <any> { id: 'cat_and_mouse', enabled: true }
+                        { id: 'cat_and_mouse', enabled: true } as any
                     ],
                     default: false
                 }

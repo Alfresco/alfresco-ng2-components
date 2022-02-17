@@ -25,7 +25,7 @@ import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-metadata-card' }
+    host: { class: 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
 

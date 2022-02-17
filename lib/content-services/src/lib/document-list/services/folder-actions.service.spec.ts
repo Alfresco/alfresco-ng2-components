@@ -46,8 +46,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        const handler: ContentActionHandler = function () {
-        };
+        const handler: ContentActionHandler = () => {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -57,8 +56,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        const handler: ContentActionHandler = function () {
-        };
+        const handler: ContentActionHandler = () => {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -80,8 +78,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        const handler: ContentActionHandler = function () {
-        };
+        const handler: ContentActionHandler = () => {};
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -106,12 +103,10 @@ describe('FolderActionsService', () => {
    });
 
     it('should delete the folder node if there is the delete permission', () => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const permission = 'delete';
         const folder = new FolderNode();
@@ -124,12 +119,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
@@ -145,12 +138,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should call the error on the returned Observable if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const folder = new FolderNode();
         const folderWithPermission: any = folder;
@@ -166,12 +157,10 @@ describe('FolderActionsService', () => {
    });
 
     it('should delete the folder node if there is the delete and others permission ', () => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const permission = 'delete';
         const folder = new FolderNode();
@@ -183,12 +172,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should support deletion only folder node', () => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const permission = 'delete';
         const file = new FileNode();
@@ -203,12 +190,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should require node id to delete', () => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const folder = new FolderNode();
         folder.entry.id = null;
@@ -218,12 +203,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should reload target upon node deletion', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         const permission = 'delete';
         const target = jasmine.createSpyObj('obj', ['reload']);
@@ -242,12 +225,10 @@ describe('FolderActionsService', () => {
     });
 
     it('should emit success event upon node deletion', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
+            observer.next();
+            observer.complete();
+        }));
 
         service.success.subscribe((nodeId) => {
             expect(nodeId).not.toBeNull();

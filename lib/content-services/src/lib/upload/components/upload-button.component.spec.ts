@@ -216,8 +216,8 @@ describe('UploadButtonComponent', () => {
     describe('fileSize', () => {
 
         const files: File[] = [
-            <File> { name: 'bigFile.png', size: 1000 },
-            <File> { name: 'smallFile.png', size: 10 }
+            { name: 'bigFile.png', size: 1000 } as File,
+            { name: 'smallFile.png', size: 10 } as File
         ];
 
         let addToQueueSpy;
@@ -246,7 +246,7 @@ describe('UploadButtonComponent', () => {
 
         it('should allow file of 0 size when the max file size is set to 0', () => {
             const zeroFiles: File[] = [
-                <File> { name: 'zeroFile.png', size: 0 }
+                { name: 'zeroFile.png', size: 0 } as File
             ];
             component.maxFilesSize = 0;
 
@@ -286,9 +286,9 @@ describe('UploadButtonComponent', () => {
     describe('uploadFiles', () => {
 
         const files: File[] = [
-            <File> { name: 'phobos.jpg' },
-            <File> { name: 'deimos.png' },
-            <File> { name: 'ganymede.bmp' }
+            { name: 'phobos.jpg' } as File,
+            { name: 'deimos.png' } as File,
+            { name: 'ganymede.bmp' } as File
         ];
 
         let addToQueueSpy;

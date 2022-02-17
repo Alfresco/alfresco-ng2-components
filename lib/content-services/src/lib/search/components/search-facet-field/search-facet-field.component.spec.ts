@@ -96,7 +96,7 @@ describe('SearchFacetFieldComponent', () => {
         component.field = field;
         fixture.detectChanges();
 
-        component.onToggleBucket(event, <any> field, <any> query);
+        component.onToggleBucket(event, field, query as any);
 
         expect(query.checked).toEqual(false);
         expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, query);
@@ -108,7 +108,7 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         const field: FacetField = { field: 'f1', label: 'f1' };
-        component.onToggleBucket(<any> { checked: true }, field, null);
+        component.onToggleBucket({ checked: true } as any, field, null);
 
         expect(queryBuilder.update).not.toHaveBeenCalled();
     });

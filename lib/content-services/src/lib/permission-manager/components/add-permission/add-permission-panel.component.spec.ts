@@ -55,12 +55,12 @@ describe('AddPermissionPanelComponent', () => {
         fixture.destroy();
     });
 
-    function typeWordIntoSearchInput(word: string): void {
+    const typeWordIntoSearchInput = (word: string): void => {
         const inputDebugElement = debugElement.query(By.css('#searchInput'));
         inputDebugElement.nativeElement.value = word;
         inputDebugElement.nativeElement.focus();
         inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
-    }
+    };
 
     it('should be able to render the component', () => {
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();

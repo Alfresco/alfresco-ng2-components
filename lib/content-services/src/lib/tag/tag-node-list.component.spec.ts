@@ -26,18 +26,18 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('TagNodeList', () => {
 
     const dataTag = {
-        'list': {
-            'pagination': {
-                'count': 3,
-                'hasMoreItems': false,
-                'totalItems': 3,
-                'skipCount': 0,
-                'maxItems': 100
+        list: {
+            pagination: {
+                count: 3,
+                hasMoreItems: false,
+                totalItems: 3,
+                skipCount: 0,
+                maxItems: 100
             },
-            'entries': [{
-                'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
-            }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
+            entries: [{
+                entry: {tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
+            }, {entry: {tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
+                entry: {tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
             }]
         }
     };

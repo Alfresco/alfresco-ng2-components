@@ -26,11 +26,11 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const fakeNode: Node = <Node> {
+const fakeNode = {
     id: 'fake',
     isFile: true,
     isLocked: false
-};
+} as Node;
 
 @Component({
     template: '<div [adf-node-lock]="node"></div>'

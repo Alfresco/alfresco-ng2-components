@@ -52,6 +52,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
 
     /**
      * Constructor
+     *
      * @param tagService
      */
     constructor(private tagService: TagService) {

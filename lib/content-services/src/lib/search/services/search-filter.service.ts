@@ -33,9 +33,9 @@ export class SearchFilterService {
      * Contains string-to-type mappings for registered widgets.
      */
     widgets: { [id: string]: Type<any> } = {
-        'text': SearchTextComponent,
-        'radio': SearchRadioComponent,
-        'slider': SearchSliderComponent,
+        text: SearchTextComponent,
+        radio: SearchRadioComponent,
+        slider: SearchSliderComponent,
         'number-range': SearchNumberRangeComponent,
         'check-list': SearchCheckListComponent,
         'date-range': SearchDateRangeComponent,

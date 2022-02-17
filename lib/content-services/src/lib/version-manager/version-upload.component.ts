@@ -26,7 +26,7 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './version-upload.component.html',
     styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-version-upload' }
+    host: { class: 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit, OnDestroy {
 

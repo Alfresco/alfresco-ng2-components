@@ -55,7 +55,7 @@ describe('ContentMetadataComponent', () => {
         updateService = TestBed.inject(CardViewUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
 
-        node = <Node> {
+        node = {
             id: 'node-id',
             aspectNames: [],
             nodeType: 'cm:node',
@@ -63,15 +63,15 @@ describe('ContentMetadataComponent', () => {
             properties: {},
             createdByUser: {},
             modifiedByUser: {}
-        };
+        } as Node;
 
-        folderNode = <Node> {
+        folderNode = {
             id: 'folder-id',
             aspectNames: [],
             nodeType: '',
             createdByUser: {},
             modifiedByUser: {}
-        };
+        } as Node;
 
         component.node = node;
         component.preset = preset;
@@ -116,7 +116,7 @@ describe('ContentMetadataComponent', () => {
     describe('Saving', () => {
         it('itemUpdate', fakeAsync(() => {
             spyOn(component, 'updateChanges').and.callThrough();
-            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             updateService.update(property, 'updated-value');
 
             tick(600);
@@ -126,7 +126,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('nodeAspectUpdate', fakeAsync(() => {
-            const fakeNode: MinimalNode = <MinimalNode> { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node'};
+            const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node'} as MinimalNode;
             spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
             spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
@@ -138,7 +138,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should save changedProperties on save click', fakeAsync(async () => {
             component.editable = true;
-            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
 
@@ -158,7 +158,7 @@ describe('ContentMetadataComponent', () => {
         it('should throw error on unsuccessful save', fakeAsync((done) => {
             const logService: LogService = TestBed.inject(LogService);
             component.editable = true;
-            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             updateService.update(property, 'updated-value');
             tick(600);
 
@@ -182,7 +182,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
             component.editable = true;
-            const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
+            const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -203,7 +203,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
             component.editable = true;
-            const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
+            const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
             spyOn(updateService, 'updateNodeAspect');
@@ -512,6 +512,5 @@ describe('ContentMetadataComponent', () => {
     });
 });
 
-function queryDom(fixture: ComponentFixture<ContentMetadataComponent>, properties: string = 'properties') {
-    return fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
-}
+const queryDom = (fixture: ComponentFixture<ContentMetadataComponent>, properties: string = 'properties') =>
+    fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));

@@ -52,6 +52,7 @@ export class AddPermissionPanelComponent {
 
     selectedItems: NodeEntry[] = [];
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     EVERYONE: NodeEntry = new NodeEntry({ entry: { nodeType: 'cm:authorityContainer', properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
 
     constructor() {

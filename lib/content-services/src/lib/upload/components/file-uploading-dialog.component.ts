@@ -134,9 +134,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(objId => {
                 if (this.filesUploadingList) {
-                    const uploadedFile = this.filesUploadingList.find((file) => {
-                        return file.data ? file.data.entry.id === objId : false;
-                    });
+                    const uploadedFile = this.filesUploadingList.find((file) => file.data ? file.data.entry.id === objId : false);
                     if (uploadedFile) {
                         uploadedFile.status = FileUploadStatus.Cancelled;
                         this.changeDetector.detectChanges();

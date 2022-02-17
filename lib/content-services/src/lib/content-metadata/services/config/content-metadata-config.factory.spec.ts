@@ -87,13 +87,13 @@ describe('ContentMetadataConfigFactory', () => {
 
         describe('set', () => {
 
-            function setConfig(presetName: string, presetConfig: any) {
+            const setConfig = (presetName: string, presetConfig: any) => {
                 appConfig.config['content-metadata'] = {
                     presets: {
                         [presetName]: presetConfig
                     }
                 };
-            }
+            };
 
             it('should get back the IndifferentConfigService preset if the preset config is indifferent', () => {
                 setConfig('default', '*');

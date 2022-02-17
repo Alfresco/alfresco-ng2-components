@@ -56,7 +56,7 @@ export class AuditService {
 
     getAuditApp(auditApplicationId: string, opts?: any): Observable<AuditAppEntry> {
         const defaultOptions = {
-            auditApplicationId: auditApplicationId
+            auditApplicationId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.auditApi.getAuditApp(queryOptions))
@@ -97,7 +97,7 @@ export class AuditService {
 
     getAuditEntriesForNode(nodeId: string, opts?: any): Observable<AuditEntryPaging> {
         const defaultOptions = {
-            nodeId: nodeId
+            nodeId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.auditApi.listAuditEntriesForNode(queryOptions))

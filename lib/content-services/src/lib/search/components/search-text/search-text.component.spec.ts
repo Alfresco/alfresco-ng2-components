@@ -37,15 +37,15 @@ describe('SearchTextComponent', () => {
         component = fixture.componentInstance;
         component.id = 'text';
         component.settings = {
-            'pattern': `cm:name:'(.*?)'`,
-            'field': 'cm:name',
-            'placeholder': 'Enter the name'
+            pattern: `cm:name:'(.*?)'`,
+            field: 'cm:name',
+            placeholder: 'Enter the name'
         };
 
-        component.context = <any> {
+        component.context = {
             queryFragments: {},
-            update() {}
-        };
+            update: () => {}
+        } as any;
     });
 
     it('should parse value from the context at startup', () => {

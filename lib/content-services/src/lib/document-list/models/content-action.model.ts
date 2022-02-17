@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export class ContentActionModel {
     icon: string;
     title: string;

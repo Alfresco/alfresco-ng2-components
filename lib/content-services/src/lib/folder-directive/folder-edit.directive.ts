@@ -19,25 +19,23 @@
 
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import { Node } from '@alfresco/js-api';
-
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '@alfresco/adf-core';
+
+const DIALOG_WIDTH: number = 400;
 
 @Directive({
     selector: '[adf-edit-folder]'
 })
 export class FolderEditDirective {
-    static DIALOG_WIDTH: number = 400;
-
     /** Folder node to edit. */
     @Input('adf-edit-folder')
     folder: Node;
 
     /** Emitted when an error occurs (eg, a folder with same name already exists). */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Title of folder edit dialog. */
     @Input()
@@ -45,7 +43,7 @@ export class FolderEditDirective {
 
     /** Emitted when the folder has been edited successfully. */
     @Output()
-    success: EventEmitter<Node> = new EventEmitter<Node>();
+    success = new EventEmitter<Node>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -62,7 +60,6 @@ export class FolderEditDirective {
     ) {}
 
     private get dialogConfig() {
-        const { DIALOG_WIDTH: width } = FolderEditDirective;
         const { folder } = this;
 
         return {
@@ -70,7 +67,7 @@ export class FolderEditDirective {
                 folder,
                 editTitle: this.title
             },
-            width: `${width}px`
+            width: `${DIALOG_WIDTH}px`
         };
     }
 

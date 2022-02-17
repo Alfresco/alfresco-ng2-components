@@ -81,12 +81,10 @@ export class AddPermissionComponent implements OnInit {
     }
 
     private transformNodeToPermissionElement(nodes: NodeEntry[], role: string): PermissionElement[] {
-        return nodes.map((node) => {
-            return {
-                'authorityId': node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
-                'name': role,
-                'accessStatus': 'ALLOWED'
-            };
-        });
+        return nodes.map((node) => ({
+            authorityId: node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
+            name: role,
+            accessStatus: 'ALLOWED'
+        }));
     }
 }

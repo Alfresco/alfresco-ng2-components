@@ -76,11 +76,11 @@ describe('Rating component', () => {
 
         it('should the star rating filled with the right grey/colored star', (done) => {
             spyOn(service, 'getRating').and.returnValue(of({
-                'entry': {
+                entry: {
                     myRating: 3,
-                    'ratedAt': '2017-04-06T14:34:28.061+0000',
-                    'id': 'fiveStar',
-                    'aggregate': {'numberOfRatings': 1, 'average': 3.0}
+                    ratedAt: '2017-04-06T14:34:28.061+0000',
+                    id: 'fiveStar',
+                    aggregate: {numberOfRatings: 1, average: 3.0}
                 }
             }));
 
@@ -96,20 +96,20 @@ describe('Rating component', () => {
 
     it('should click on a star to change your vote', (done) => {
         spyOn(service, 'getRating').and.returnValue(of({
-            'entry': {
+            entry: {
                 myRating: 1,
-                'ratedAt': '2017-04-06T14:34:28.061+0000',
-                'id': 'fiveStar',
-                'aggregate': {'numberOfRatings': 1, 'average': 1.0}
+                ratedAt: '2017-04-06T14:34:28.061+0000',
+                id: 'fiveStar',
+                aggregate: {numberOfRatings: 1, average: 1.0}
             }
         }));
 
         const rateSpy = spyOn(service, 'postRating').and.returnValue(of({
-            'entry': {
-                'myRating': 3,
-                'ratedAt': '2017-04-06T14:36:40.731+0000',
-                'id': 'fiveStar',
-                'aggregate': {'numberOfRatings': 1, 'average': 3.0}
+            entry: {
+                myRating: 3,
+                ratedAt: '2017-04-06T14:36:40.731+0000',
+                id: 'fiveStar',
+                aggregate: {numberOfRatings: 1, average: 3.0}
             }
         }));
 
@@ -132,11 +132,11 @@ describe('Rating component', () => {
 
     it('should click on the rated star to remove your vote', () => {
         spyOn(service, 'getRating').and.returnValue(of({
-            'entry': {
+            entry: {
                 myRating: 3,
-                'ratedAt': '2017-04-06T14:34:28.061+0000',
-                'id': 'fiveStar',
-                'aggregate': {'numberOfRatings': 1, 'average': 3.0}
+                ratedAt: '2017-04-06T14:34:28.061+0000',
+                id: 'fiveStar',
+                aggregate: {numberOfRatings: 1, average: 3.0}
             }
         }));
 

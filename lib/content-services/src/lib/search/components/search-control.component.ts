@@ -147,7 +147,7 @@ export class SearchControlComponent implements OnDestroy {
     }
 
     onBlur(event: FocusEvent): void {
-        const nextElement: any = this.getNextElementSibling(<Element> event.target);
+        const nextElement: any = this.getNextElementSibling(event.target as Element);
         if (!nextElement && !this.isListElement(event)) {
             this.focusSubject.next(event);
         }
@@ -155,20 +155,21 @@ export class SearchControlComponent implements OnDestroy {
 
     onSelectFirstResult() {
         if ( this.listResultElement && this.listResultElement.length > 0) {
-            const firstElement: MatListItem = <MatListItem> this.listResultElement.first;
+            const firstElement = this.listResultElement.first as MatListItem;
+            // eslint-disable-next-line no-underscore-dangle
             firstElement._getHostElement().focus();
         }
     }
 
     onRowArrowDown(event: Event): void {
-        const nextElement: any = this.getNextElementSibling(<Element> event.target);
+        const nextElement: any = this.getNextElementSibling(event.target as Element);
         if (nextElement) {
             nextElement.focus();
         }
     }
 
     onRowArrowUp(event: Event): void {
-        const previousElement: any = this.getPreviousElementSibling(<Element> event.target);
+        const previousElement: any = this.getPreviousElementSibling(event.target as Element);
         if (previousElement) {
             previousElement.focus();
         } else {
