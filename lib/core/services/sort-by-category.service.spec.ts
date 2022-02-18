@@ -22,7 +22,6 @@ interface TestSortableByCategoryItem extends SortableByCategoryItem {
 }
 
 describe('SortByCategoryMapperService', () => {
-
     let mapper: SortByCategoryMapperService<TestSortableByCategoryItem>;
 
     const DEFAULT_CATEGORIES = [
@@ -36,8 +35,7 @@ describe('SortByCategoryMapperService', () => {
         mapper = new SortByCategoryMapperService();
     });
 
-    it('should map items by categories ', () => {
-
+    it('should map items by categories', () => {
         const items: TestSortableByCategoryItem[] = [
             { id: 'id1', name: 'firstCategory_222', category: 'category1' },
             { id: 'id2', name: 'secondCategory_AA', category: 'category2' },
@@ -59,7 +57,6 @@ describe('SortByCategoryMapperService', () => {
     });
 
     it('should set all items under default category', () => {
-
         const defaulValues: TestSortableByCategoryItem[] = [{
             name: 'name-a',
             id: 'id',
@@ -81,13 +78,13 @@ describe('SortByCategoryMapperService', () => {
         expect(result[0].items.length).toBe(defaulValues.length);
     });
 
-    it('should not set any category if the array is empty ', () => {
-        const result1 = mapper.mapItems([], DEFAULT_CATEGORIES);
+    it('should work if no items are present', () => {
+        const result = mapper.mapItems([], DEFAULT_CATEGORIES);
 
-        expect(result1.length).toBe(0);
+        expect(result.length).toBe(0);
     });
 
-    it('should not set category if the default categories are empty ', () => {
+    it('should work if the default categories are empty', () => {
         const result = mapper.mapItems([{id: 'id', name: 'name', category: ''}], []);
 
         expect(result.length).toBe(1);
