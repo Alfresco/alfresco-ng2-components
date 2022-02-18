@@ -172,15 +172,15 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
         let skipCount = 0;
-        let maxItems = 1000;
+        const maxItems = 1000;
 
         return this.get(apiUrl, { maxItems, skipCount }).pipe(
             expand((res: any) => {
-                skipCount += maxItems
+                skipCount += maxItems;
                 return res.list.pagination.hasMoreItems ? this.get(apiUrl, {
                     maxItems,
                     skipCount
-                }) : EMPTY
+                }) : EMPTY;
             }),
             map((res: any) => {
                 return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
