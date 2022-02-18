@@ -75,6 +75,10 @@ export class FileUploadingListRowComponent {
         return this.file && (this.file.status === FileUploadStatus.Progress || this.file.status === FileUploadStatus.Starting);
     }
 
+    isUploadComplete(): boolean {
+        return this.file.status === FileUploadStatus.Complete && !this.isUploadVersion();
+    }
+
     isUploadVersionComplete(): boolean {
         return this.file && (this.file.status === FileUploadStatus.Complete && this.isUploadVersion());
     }

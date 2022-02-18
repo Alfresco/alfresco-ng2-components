@@ -42,6 +42,20 @@
         </mat-icon>
     </div>
 
+    <button mat-icon-button
+        adf-toggle-icon
+        #toggleIcon="toggleIcon"
+        *ngIf="isUploadComplete()"
+        class="adf-file-uploading-row__group"
+        [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.REMOVE_FILE' | translate: { file: file.name }"
+        title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
+
+        <mat-icon
+            class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
+            check_circle
+        </mat-icon>
+    </button>
+
     <div
         *ngIf="isUploadVersionComplete()"
         class="adf-file-uploading-row__file-version"
