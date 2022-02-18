@@ -14,12 +14,12 @@ echo "ℹ️ Check Docker Image release for $COMMIT_MESSAGE type $TRAVIS_EVENT_T
 if [[ $TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE == "cron"  || ( $TRAVIS_EVENT_TYPE == "pull_request" && $COMMIT_MESSAGE == *"[create docker image]"* )]];
 then
 
-    if [[ $TRAVIS_BRANCH == "develop" || $TRAVIS_BRANCH == "master" ]];
+    if [[ $TRAVIS_BRANCH == "develop" || $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]];
     then
 
         cd $DIR/../../../
 
-        if [[ $TRAVIS_BRANCH == "master" ]]; then
+        if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]; then
             TAGS=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
         else
             if [[ "${TRAVIS_PULL_REQUEST_BRANCH}" != "" ]];
