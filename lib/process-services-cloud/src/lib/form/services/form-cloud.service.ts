@@ -178,8 +178,8 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             expand((res: any) => {
                 skipCount += maxItems
                 return res.list.pagination.hasMoreItems ? this.get(apiUrl, {
-                    maxItems: maxItems,
-                    skipCount: skipCount
+                    maxItems,
+                    skipCount
                 }) : EMPTY
             }),
             map((res: any) => {
