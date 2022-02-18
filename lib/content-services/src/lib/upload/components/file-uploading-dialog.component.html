@@ -61,7 +61,6 @@
                 <ng-template let-file="$implicit">
                      <adf-file-uploading-list-row
                         [file]="file"
-                        (remove)="uploadList.removeFile(file)"
                         (cancel)="uploadList.cancelFile(file)">
                     </adf-file-uploading-list-row>
                 </ng-template>

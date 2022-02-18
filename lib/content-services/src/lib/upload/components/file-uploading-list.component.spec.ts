@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslationService, FileUploadStatus, NodesApiService, UploadService, setupTestBed, FileModel } from '@alfresco/adf-core';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -77,91 +77,6 @@ describe('FileUploadingListComponent', () => {
         });
     });
 
-    describe('removeFile()', () => {
-        it('should change file status when api returns success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(file.status).toBe(FileUploadStatus.Deleted);
-        });
-
-        it('should change file status when api returns error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(file.status).toBe(FileUploadStatus.Error);
-        });
-
-        it('should call uploadService on error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(uploadService.cancelUpload).toHaveBeenCalled();
-        });
-
-        it('should call uploadService on success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(uploadService.cancelUpload).toHaveBeenCalled();
-        });
-
-        it('should set `Deleted` status on file version instances when original is removed', () => {
-            component.files = [
-                {
-                    data: {
-                        entry: { id: 'nodeId' }
-                    },
-                    name: 'file',
-                    status: FileUploadStatus.Complete,
-                    options: {
-                        newVersion: false
-                    }
-                } as FileModel,
-                {
-                    data: {
-                        entry: { id: 'nodeId' }
-                    },
-                    name: 'file_v1',
-                    status: FileUploadStatus.Complete,
-                    options: {
-                        newVersion: true
-                    }
-                } as FileModel
-            ];
-
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(of(component.files[0]));
-
-            component.removeFile(component.files[0]);
-            fixture.detectChanges();
-
-            expect(nodesApiService.deleteNode).toHaveBeenCalledTimes(1);
-            expect(component.files[0].status).toBe(FileUploadStatus.Deleted);
-            expect(component.files[1].status).toBe(FileUploadStatus.Deleted);
-        });
-
-        describe('Events', () => {
-
-            it('should throw an error event if delete file goes wrong', (done) => {
-                spyOn(nodesApiService, 'deleteNode').and.returnValue(throwError(file));
-
-                component.error.subscribe(() => {
-                    done();
-                });
-
-                component.removeFile(file);
-            });
-        });
-    });
-
     describe('cancelAllFiles()', () => {
         beforeEach(() => {
             component.files = [
@@ -192,15 +107,6 @@ describe('FileUploadingListComponent', () => {
             component.cancelAllFiles();
 
             expect(uploadService.cancelUpload).not.toHaveBeenCalled();
-        });
-
-        it('should call deleteNode when there are completed uploads', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(of({}));
-
-            component.files[0].status = FileUploadStatus.Complete;
-            component.cancelAllFiles();
-
-            expect(nodesApiService.deleteNode).toHaveBeenCalled();
         });
 
         it('should call uploadService when there are uploading files', () => {

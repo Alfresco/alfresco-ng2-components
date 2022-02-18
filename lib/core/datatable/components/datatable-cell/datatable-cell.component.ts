@@ -90,7 +90,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         this.alfrescoApiService.nodeUpdated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(node => {
-                if (this.row) {
+                if (this.row && node && node.id) {
                     if (this.row['node'].entry.id === node.id) {
                         this.row['node'].entry = node;
                         this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', node);

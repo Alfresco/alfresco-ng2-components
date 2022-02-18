@@ -18,7 +18,6 @@
 import {
     FileModel,
     FileUploadStatus,
-    NodesApiService,
     TranslationService,
     UploadService
 } from '@alfresco/adf-core';
@@ -30,8 +29,6 @@ import {
     TemplateRef,
     EventEmitter
 } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-list',
@@ -39,9 +36,6 @@ import { map, catchError } from 'rxjs/operators';
     styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    FileUploadStatus = FileUploadStatus;
-
     @ContentChild(TemplateRef)
     template: any;
 
@@ -54,7 +48,6 @@ export class FileUploadingListComponent {
 
     constructor(
         private uploadService: UploadService,
-        private nodesApi: NodesApiService,
         private translateService: TranslationService) {
     }
 
@@ -81,41 +74,27 @@ export class FileUploadingListComponent {
      * @memberOf FileUploadingListComponent
      */
     removeFile(file: FileModel): void {
-        this.deleteNode(file).subscribe(() => {
-            if (file.status === FileUploadStatus.Error) {
-                this.notifyError(file);
-            }
+        if (file.status === FileUploadStatus.Error) {
+            this.notifyError(file);
+        }
 
+        if (this.isUploadingFile(file)) {
             this.cancelNodeVersionInstances(file);
             this.uploadService.cancelUpload(file);
-        });
+        }
+
+        this.files = this.files.filter(entry => entry !== file);
     }
 
     /**
      * Calls the appropriate methods for each file, depending on state
      */
     cancelAllFiles(): void {
-        const deletedFiles: Observable<FileModel>[] = [];
+        const filesToCancel = this.files.filter(file => this.isUploadingFile(file));
 
-        this.files.forEach((file) => {
-            if (this.isUploadingFile(file)) {
-                this.uploadService.cancelUpload(file);
-            } else if (file.status === FileUploadStatus.Complete) {
-                deletedFiles.push(this.deleteNode(file));
-            }
-        });
-
-        forkJoin(...deletedFiles).subscribe((files: FileModel[]) => {
-            const errors = files.filter(
-                (file) => file.status === FileUploadStatus.Error
-            );
-
-            if (errors.length) {
-                this.notifyError(...errors);
-            }
-
-            this.uploadService.cancelUpload(...files);
-        });
+        if (filesToCancel.length > 0) {
+            this.uploadService.cancelUpload(...filesToCancel);
+        }
     }
 
     /**
@@ -146,21 +125,6 @@ export class FileUploadingListComponent {
                     status === FileUploadStatus.Cancelled ||
                     status === FileUploadStatus.Deleted
             )
-        );
-    }
-
-    private deleteNode(file: FileModel): Observable<FileModel> {
-        const { id } = file.data.entry;
-
-        return this.nodesApi.deleteNode(id, { permanent: true }).pipe(
-            map(() => {
-                file.status = FileUploadStatus.Deleted;
-                return file;
-            }),
-            catchError(() => {
-                file.status = FileUploadStatus.Error;
-                return of(file);
-            })
         );
     }
 
