@@ -24,8 +24,8 @@ import {
     FormModel,
     FormFieldOption
 } from '@alfresco/adf-core';
-import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, from, EMPTY } from 'rxjs';
+import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -171,9 +171,21 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      */
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
+        let skipCount = 0;
+        const maxItems = 1000;
 
-        return this.get(apiUrl).pipe(
-            map((res: any) => res.list.entries.map((variable) => new TaskVariableCloud(variable.entry)))
+        return this.get(apiUrl, { maxItems, skipCount }).pipe(
+            expand((res: any) => {
+                skipCount += maxItems;
+                return res.list.pagination.hasMoreItems ? this.get(apiUrl, {
+                    maxItems,
+                    skipCount
+                }) : EMPTY;
+            }),
+            map((res: any) => {
+                return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
+            }),
+            reduce((acc, res) => acc.concat(res), [])
         );
     }
 
