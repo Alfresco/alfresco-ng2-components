@@ -118,17 +118,6 @@ describe('Upload component', () => {
         await uploadDialog.dialogIsNotDisplayed();
     });
 
-    it('[C260168] Should be possible to cancel upload using dialog icon', async () => {
-        await contentServicesPage.uploadFile(pdfFileModel.location);
-        await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-        await uploadDialog.removeUploadedFile(pdfFileModel.name);
-        await uploadDialog.fileIsCancelled(pdfFileModel.name);
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
-        await uploadDialog.clickOnCloseButton();
-        await uploadDialog.dialogIsNotDisplayed();
-        await contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
-    });
-
     it('[C260176] Should remove files from upload dialog box when closed', async () => {
         await contentServicesPage.uploadFile(pngFileModelTwo.location);
         await contentServicesPage.checkContentIsDisplayed(pngFileModelTwo.name);
