@@ -68,3 +68,4 @@ export * from './language.service';
 export * from './identity-user.service.interface';
 export * from './identity-group.interface';
 export * from './language-item.interface';
+export * from './sort-by-category.service';
