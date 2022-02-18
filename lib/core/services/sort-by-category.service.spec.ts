@@ -81,36 +81,17 @@ describe('SortByCategoryMapperService', () => {
         expect(result[0].items.length).toBe(defaulValues.length);
     });
 
-    it('should set all items under specific category if at least one item has category', () => {
+    it('should not set any category if the array is empty ', () => {
+        const result1 = mapper.mapItems([], DEFAULT_CATEGORIES);
 
-        const defaulValues: TestSortableByCategoryItem[] = [{
-            name: 'name-e',
-            id: 'id',
-            category: DEFAULT_CATEGORIES[1]
-        }, {
-            name: 'name-b',
-            id: 'id2',
-            category: 'category1'
-        }, {
-            name: 'name-d',
-            id: 'id3',
-            category: DEFAULT_CATEGORIES[0]
-        }, {
-            name: 'name-c',
-            id: 'id4',
-            category: 'category2'
-        }];
+        expect(result1.length).toBe(0);
+    });
 
-        const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
+    it('should not set category if the default categories are empty ', () => {
+        const result = mapper.mapItems([{id: 'id', name: 'name', category: ''}], []);
 
-        expect(result.length).toBe(3);
-        expect(result[0].category).toBe('category1');
-        expect(result[0].items[0]).toEqual({ name: 'name-b', id: 'id2', category: 'category1' });
-        expect(result[1].category).toBe('category2');
-        expect(result[1].items[0]).toEqual({ name: 'name-c', id: 'id4', category: 'category2' });
-        expect(result[2].category).toBe('');
-        expect(result[2].items[0]).toEqual({ name: 'name-d', id: 'id3', category: '' });
-        expect(result[2].items[1]).toEqual({ name: 'name-e', id: 'id', category: 'DefaultCategory1' });
+        expect(result.length).toBe(1);
+        expect(result[0].category).toBe('');
     });
 
     it('should set items in ascending order in appropriate category', () => {

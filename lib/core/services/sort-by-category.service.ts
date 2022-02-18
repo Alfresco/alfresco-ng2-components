@@ -89,13 +89,12 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
 
   private mapItemDefaultCategory(listItem: SortableByCategoryItem): string {
     const itemCategory = listItem.category;
-    let category = '';
 
     if (!this.isDefaultCategory(itemCategory)) {
-      category = (itemCategory ?? '');
+      return (itemCategory ?? '');
     }
 
-    return category;
+    return '';
   }
 
   private isDefaultCategory(category?: string): boolean {
