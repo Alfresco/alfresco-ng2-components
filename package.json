@@ -174,7 +174,7 @@
     "webdriver-manager": "12.1.8",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jsdoc": "30.7.6",
+    "eslint-plugin-jsdoc": "37.9.4",
     "eslint-plugin-prefer-arrow": "1.2.2",
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
