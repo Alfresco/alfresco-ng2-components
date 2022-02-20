@@ -165,7 +165,7 @@
     "rxjs-tslint-rules": "^4.34.7",
     "sass-loader": "10.1.1",
     "selenium-webdriver": "4.1.0",
-    "stylelint": "^14.2.0",
+    "stylelint": "^14.5.1",
     "stylelint-config-standard-scss": "^3.0.0",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.12.0",
