@@ -6,7 +6,7 @@
     "./theming/**/*.scss",
     "./**/*.theme.scss"
   ],
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "cropperjs"
   ],
   "lib": {
