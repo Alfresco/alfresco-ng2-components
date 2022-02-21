@@ -11,18 +11,6 @@
   ],
   "lib": {
     "entryFile": "./public-api.ts",
-    "flatModuleFile": "adf-core",
-    "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api",
-      "@alfresco/adf-extensions": "@alfresco/adf-extensions",
-      "minimatch": "minimatch-browser",
-      "@mat-datetimepicker/core": "@mat-datetimepicker/core",
-      "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "moment/src/moment": "moment/src/moment",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "cropperjs": "cropperjs"
-    }
+    "flatModuleFile": "adf-core"
   }
 }

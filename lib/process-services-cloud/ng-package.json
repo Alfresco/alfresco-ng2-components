@@ -8,22 +8,7 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-process-services-cloud",
-    "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api",
-      "minimatch": "minimatch",
-      "@alfresco/adf-core": "@alfresco/adf-core",
-      "@alfresco/adf-content-services": "@alfresco/adf-content-services",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "@apollo/client/core": "@apollo/client/core",
-      "@apollo/client/link/ws": "@apollo/client/link/ws",
-      "@apollo/client/link/error": "@apollo/client/link/error",
-      "@apollo/client/utilities": "@apollo/client/utilities",
-      "apollo-angular": "apollo-angular",
-      "apollo-angular/http": "apollo-angular/http"
-    }
+    "flatModuleFile": "adf-process-services-cloud"
   },
   "whitelistedNonPeerDependencies": [
     "@apollo/client",

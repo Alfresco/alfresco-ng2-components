@@ -8,15 +8,6 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-process-services",
-    "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api",
-      "minimatch": "minimatch",
-      "@alfresco/adf-core": "@alfresco/adf-core",
-      "@alfresco/adf-content-services": "@alfresco/adf-content-services",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "@ngx-translate/core": "@ngx-translate/core"
-    }
+    "flatModuleFile": "adf-process-services"
   }
 }

@@ -1,3 +1,4 @@
+/.angular/cache
 *.log
 node_modules
 bundles
