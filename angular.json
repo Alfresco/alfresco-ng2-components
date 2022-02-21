@@ -11,7 +11,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "allowedCommonJsDependencies": [
               "minimatch",
               "minimatch-browser",
@@ -176,7 +175,13 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.js",
               "node_modules/raphael/raphael.min.js",
               "node_modules/moment/min/moment.min.js"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -190,9 +195,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
               "buildOptimizer": true,
               "verbose": false,
               "fileReplacements": [
@@ -213,9 +216,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
               "buildOptimizer": true,
               "verbose": false,
               "fileReplacements": [
@@ -225,7 +226,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
