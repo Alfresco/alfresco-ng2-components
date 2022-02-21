@@ -14,7 +14,7 @@ echo "ℹ️ Check Docker Image release for $COMMIT_MESSAGE type $TRAVIS_EVENT_T
 if [[ $TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE == "cron"  || ( $TRAVIS_EVENT_TYPE == "pull_request" && $COMMIT_MESSAGE == *"[create docker image]"* )]];
 then
 
-    if [[ $TRAVIS_BRANCH == "develop" || $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]];
+    if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ || $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]];
     then
 
         cd $DIR/../../../
