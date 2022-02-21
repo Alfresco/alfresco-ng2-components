@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 @import '../theming';
 @import './all-theme';
 @include mat.core($alfresco-typography);

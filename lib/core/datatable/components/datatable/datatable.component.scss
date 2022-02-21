@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 @import '../../../styles/mixins';
 
 $data-table-header-font-size: var(--theme-caption-font-size) !default;
