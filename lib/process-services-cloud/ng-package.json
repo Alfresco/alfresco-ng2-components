@@ -10,7 +10,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-process-services-cloud"
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "@apollo/client",
     "apollo-angular",
     "subscriptions-transport-ws"

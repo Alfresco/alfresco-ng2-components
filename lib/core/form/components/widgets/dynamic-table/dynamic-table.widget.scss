@@ -8,9 +8,9 @@ $dynamic-table-hover-color: #eee !default;
 $dynamic-table-selection-color: #e0f7fa !default;
 $dynamic-table-row-height: 56px !default;
 $dynamic-table-column-spacing: 36px !default;
-$dynamic-table-column-padding: 18px !default;
+$dynamic-table-column-padding: calc($dynamic-table-column-spacing / 2);
 $dynamic-table-card-padding: 24px !default;
-$dynamic-table-cell-top: 12px !default;
+$dynamic-table-cell-top: calc($dynamic-table-card-padding / 2);
 $dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
 
 dynamic-table-widget .adf-label {
