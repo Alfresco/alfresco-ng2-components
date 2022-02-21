@@ -6,6 +6,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
+    "_postinstall": "ngcc && node ./decorate-angular-cli.js",
     "ng": "nx",
     "concurrently": "concurrently",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
