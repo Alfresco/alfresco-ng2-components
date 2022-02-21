@@ -60,9 +60,9 @@ stages:
   - name: "e2e Test"
     if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
-    if: type = push AND branch =~ /^master(-patch.*)?$/
+    if: branch =~ /^master(-patch.*)?$/
   - name: "Deprecate develop builds"
-    if: type = push AND branch =~ /^master(-patch.*)?$/
+    if: branch =~ /^master(-patch.*)?$/
 
 addons:
     chrome: stable
