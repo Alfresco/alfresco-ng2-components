@@ -11,7 +11,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "extractCss": true,
             "aot": true,
             "allowedCommonJsDependencies": [
               "minimatch",
@@ -122,47 +121,47 @@
             ],
             "styles": [
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
                 "bundleName": "adf-blue-orange"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
                 "bundleName": "adf-blue-purple"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
                 "bundleName": "adf-cyan-orange"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
                 "bundleName": "adf-cyan-purple"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
                 "bundleName": "adf-green-orange"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
                 "bundleName": "adf-green-purple"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
                 "bundleName": "adf-indigo-pink"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
                 "bundleName": "adf-pink-bluegrey"
               },
               {
-                "inject": false,
+                "inject": true,
                 "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
                 "bundleName": "adf-purple-green"
               },
@@ -190,7 +189,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -214,7 +212,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -411,7 +408,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
@@ -487,7 +484,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/content-services/tsconfig.lib.json",
             "project": "lib/content-services/ng-package.json"
@@ -560,7 +557,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services/tsconfig.lib.json",
             "project": "lib/process-services/ng-package.json"
@@ -600,7 +597,7 @@
       "prefix": "adf-cloud",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
             "project": "lib/process-services-cloud/ng-package.json"
@@ -673,7 +670,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/insights/tsconfig.lib.json",
             "project": "lib/insights/ng-package.json"
@@ -713,7 +710,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/extensions/tsconfig.lib.json",
             "project": "lib/extensions/ng-package.json"
@@ -752,7 +749,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/testing/tsconfig.lib.json",
             "project": "lib/testing/ng-package.json"
@@ -781,7 +778,7 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/cli/tsconfig.json"
           },
