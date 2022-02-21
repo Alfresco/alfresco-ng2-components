@@ -106,6 +106,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1302.4",
     "@angular-devkit/build-angular": "^13.2.4",
     "@angular-eslint/builder": "13.1.0",
     "@angular-eslint/eslint-plugin": "13.1.0",
