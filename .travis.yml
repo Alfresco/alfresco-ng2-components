@@ -40,10 +40,8 @@ env:
 
 branches:
   only:
-  - master
-  - develop
-  - /.*old-env.*/
-  - /.*next-release.*/
+  - /^master(-patch.*)?$/
+  - /^develop(-patch.*)?$/
   - /.*beta.*/
 
 stages:
@@ -62,9 +60,9 @@ stages:
   - name: "e2e Test"
     if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
-    if: branch = master
+    if: type = push AND branch =~ /^master(-patch.*)?$/
   - name: "Deprecate develop builds"
-    if: branch = master
+    if: type = push AND branch =~ /^master(-patch.*)?$/
 
 addons:
     chrome: stable
