@@ -101,7 +101,7 @@ describe('NewVersionUploaderService', () => {
                 spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
                 spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
                     list: { entries: [{ entry: '2' }] }
-                }));
+                } as any));
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
                     file: mockFile
@@ -115,7 +115,7 @@ describe('NewVersionUploaderService', () => {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
-                });
+                } as any);
             }));
 
             it('Should override default dialog panelClass', fakeAsync(() => {
@@ -129,7 +129,7 @@ describe('NewVersionUploaderService', () => {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: 'adf-custom-class',
                     width: '500px'
-                });
+                } as any);
             }));
 
             it('Should set dialog height', fakeAsync(() => {
@@ -143,7 +143,7 @@ describe('NewVersionUploaderService', () => {
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px',
                     height: '600px'
-                });
+                } as any);
             }));
 
             it('Should not override dialog configuration, if dialog configuration is empty', fakeAsync(() => {
@@ -154,7 +154,7 @@ describe('NewVersionUploaderService', () => {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
-                });
+                } as any);
             }));
 
             it('Should dialog add list css class if showVersionsOnly is true', fakeAsync(() => {
@@ -169,7 +169,7 @@ describe('NewVersionUploaderService', () => {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: true },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-list'],
                     width: '630px'
-                });
+                } as any);
             }));
 
         });
@@ -181,7 +181,7 @@ describe('NewVersionUploaderService', () => {
                 spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
                 spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
                     list: { entries: [{ entry: '2' }] }
-                }));
+                } as any);
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
                     file: mockFile

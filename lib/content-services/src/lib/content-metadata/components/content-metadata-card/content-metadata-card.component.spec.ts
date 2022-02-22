@@ -24,7 +24,7 @@ import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodeAspectService } from 'content-services/src/lib/aspect-list';
+import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { of } from 'rxjs';
 

@@ -44,8 +44,6 @@ export class FormRenderingService extends DynamicComponentMapper {
         people: DynamicComponentResolver.fromType(widgets.PeopleWidgetComponent),
         'functional-group': DynamicComponentResolver.fromType(widgets.FunctionalGroupWidgetComponent),
         'dynamic-table': DynamicComponentResolver.fromType(widgets.DynamicTableWidgetComponent),
-        container: DynamicComponentResolver.fromType(widgets.ContainerWidgetComponent),
-        group: DynamicComponentResolver.fromType(widgets.ContainerWidgetComponent),
         document: DynamicComponentResolver.fromType(widgets.DocumentWidgetComponent),
         upload:  DynamicComponentResolver.fromType(widgets.UploadWidgetComponent),
         datetime:  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),

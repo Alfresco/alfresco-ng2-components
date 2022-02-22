@@ -17,8 +17,9 @@
 
 export * from './aspect-list.component';
 export * from './aspect-list-dialog.component';
-export * from './aspect-list.service';
-export * from './node-aspect.service';
+export * from './services/aspect-list.service';
+export * from './services/node-aspect.service';
+export * from './services/dialog-aspect-list.service';
 
 export * from './aspect-list-dialog-data.interface';
 

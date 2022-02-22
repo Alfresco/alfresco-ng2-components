@@ -3,7 +3,6 @@
   "description": "Alfresco ADF insights",
   "version": "4.11.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/adf-insights.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

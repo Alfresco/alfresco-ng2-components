@@ -69,8 +69,7 @@ export class WidgetVisibilityService {
     }
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
-        const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
-        element.isVisible = visible && this.isParentTabVisible(this.form, element);
+        element.isVisible = this.isParentTabVisible(this.form, element) && this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
     refreshOutcomeVisibility(element: FormOutcomeModel) {
@@ -97,7 +96,7 @@ export class WidgetVisibilityService {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else if (accumulator[0] !== undefined) {
             result = Function('"use strict";return (' +
-                 accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
+                accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
                 ')')();
         } else {
             result = actualResult;
@@ -180,7 +179,7 @@ export class WidgetVisibilityService {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {
                 if (Array.isArray(valueList[labelFilterByName])) {
-                    valueFound = valueList[labelFilterByName].map(({name}) => name);
+                    valueFound = valueList[labelFilterByName].map(({ name }) => name);
                 } else {
                     valueFound = valueList[labelFilterByName].name;
                 }
@@ -188,7 +187,7 @@ export class WidgetVisibilityService {
         } else if (valueList[fieldId] && valueList[fieldId].id) {
             valueFound = valueList[fieldId].id;
         } else if (valueList[fieldId] && Array.isArray(valueList[fieldId])) {
-            valueFound = valueList[fieldId].map(({id}) => id);
+            valueFound = valueList[fieldId].map(({ id }) => id);
         } else {
             valueFound = valueList[fieldId];
         }

@@ -19,7 +19,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
+    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 
@@ -63,11 +63,16 @@ import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { takeUntil } from 'rxjs/operators';
+import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 
 @Component({
     selector: 'adf-document-list',
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
+    providers:[{
+        provide: ADF_DOCUMENT_PARENT_COMPONENT,
+        useExisting: DocumentListComponent
+    }],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
@@ -352,7 +357,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     constructor(private documentListService: DocumentListService,
-                private ngZone: NgZone,
                 private elementRef: ElementRef,
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
@@ -507,10 +511,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     reload() {
-        this.ngZone.run(() => {
-            this.resetSelection();
-            this.reloadWithoutResettingSelection();
-        });
+        this.resetSelection();
+        this.reloadWithoutResettingSelection();
     }
 
     reloadWithoutResettingSelection() {

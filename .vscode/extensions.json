@@ -1,6 +1,4 @@
 {
   "recommendations": [
-    "stylelint.vscode-stylelint",
-    "editorconfig.editorconfig",
   ]
 }

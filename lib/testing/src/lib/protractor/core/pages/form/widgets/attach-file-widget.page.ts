@@ -83,7 +83,6 @@ export class AttachFileWidgetPage {
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, fileName);
-        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         const id = await BrowserActions.getAttribute(fileAttached, 'id');
         const optionMenu = widget.$(`button[id='${id}-option-menu']`);
         await BrowserActions.click(optionMenu);
@@ -165,6 +164,6 @@ export class AttachFileWidgetPage {
 
     private async getFileAttachedNotAttachedLocator(fieldId: string, name: string) {
         const widget = await this.formFields.getWidget(fieldId);
-        return widget.$(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        return widget.$(this.filesListLocator).element(by.cssContainingText('mat-list-item span span span', name));
     }
 }

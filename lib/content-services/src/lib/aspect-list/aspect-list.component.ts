@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsul
 import { NodesApiService } from '@alfresco/adf-core';
 import { Observable, Subject, zip } from 'rxjs';
 import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
-import { AspectListService } from './aspect-list.service';
+import { AspectListService } from './services/aspect-list.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AspectEntry } from '@alfresco/js-api';
 @Component({

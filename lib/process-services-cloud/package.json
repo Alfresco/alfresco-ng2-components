@@ -3,7 +3,6 @@
   "description": "Alfresco ADF process services cloud",
   "version": "4.11.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/adf-process-services-cloud.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

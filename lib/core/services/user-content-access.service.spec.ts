@@ -40,7 +40,7 @@ describe('UserContentAccessService', () => {
 
     it('should return true if user is content admin and provider is ECM', async () => {
         appConfigService.config.providers = 'ECM';
-        spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
+        spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}as any));
         spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
         const isContentAdmin = await userContentAccessService.isCurrentUserAdmin();
 
@@ -49,7 +49,7 @@ describe('UserContentAccessService', () => {
 
     it('should return true if user is content admin and provider is ALL', async () => {
         appConfigService.config.providers = 'ALL';
-        spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
+        spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({} as any));
         spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
         const isContentAdmin = await userContentAccessService.isCurrentUserAdmin();
 

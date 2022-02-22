@@ -322,7 +322,7 @@ describe('ViewerComponent', () => {
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
-            spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ entry: {} }));
+            spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({ entry: {} })));
 
             component.nodeId = '37f7f34d-4e64-4db6-bb3f-5c89f7844251';
             component.ngOnChanges();
@@ -445,10 +445,9 @@ describe('ViewerComponent', () => {
             component.nodeId = '12';
             component.urlFile = null;
             component.displayName = null;
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve({
-                id: 'fake-node',
+            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({
                 entry: { content: { name: displayName, id: '12' } }
-            }));
+            })));
 
             spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
 
@@ -933,19 +932,20 @@ describe('ViewerComponent', () => {
                 component.urlFile = '';
                 const displayName = 'the-name';
                 const nodeDetails = {
-                    id: 'fake-node',
                     entry: { name: displayName, id: '12', content: { mimeType: 'txt' } }
                 };
 
                 const contentUrl = '/content/url/path';
 
-                spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(nodeDetails));
+                const node = new NodeEntry(nodeDetails);
+
+                spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(node));
                 spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
 
                 component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(component.nodeEntry).toBe(nodeDetails);
+                    expect(component.nodeEntry).toBe(node);
                     done();
                 });
             });

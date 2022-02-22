@@ -7,7 +7,7 @@ require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
 
-const LOG = process.env.LOG;
+const LOG = process.env.E2E_LOG_LEVEL;
 
 const HOST_ECM = process.env.PROXY_HOST_ECM || HOST || 'ecm';
 const HOST_BPM = process.env.PROXY_HOST_BPM || HOST || 'bpm';

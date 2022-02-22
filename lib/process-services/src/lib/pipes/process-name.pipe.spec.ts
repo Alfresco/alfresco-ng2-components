@@ -17,11 +17,9 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
-import { setupTestBed } from 'core';
-import { CoreTestingModule } from 'core/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment-es6';
-import { LocalizedDatePipe } from '@alfresco/adf-core';
+import { setupTestBed, LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
 describe('ProcessNamePipe', () => {

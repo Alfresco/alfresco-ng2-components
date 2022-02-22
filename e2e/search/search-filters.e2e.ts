@@ -20,7 +20,8 @@ import { SearchFiltersPage } from './pages/search-filters.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { createApiService,
+import {
+    createApiService,
     BrowserActions,
     DocumentListPage,
     LocalStorageUtil,
@@ -104,6 +105,9 @@ describe('Search Filters', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
 
+    });
+
+    beforeEach(async () => {
         jsonFile = SearchConfiguration.getConfiguration();
     });
 
@@ -116,6 +120,37 @@ describe('Search Filters', () => {
         await uploadActions.deleteFileOrFolder(fileTypeTxt2.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypeJpg.entry.id);
         await navigationBarPage.clickLogoutButton();
+    });
+
+    it('[C291980] Should group search facets under specified labels', async () => {
+        const currentYear = moment().year();
+
+        jsonFile.facetQueries.queries[0] = {
+            'query': `created:${currentYear}`,
+            'label': 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR'
+        };
+        jsonFile.facetQueries.queries[1] = {
+            'query': `content.mimetype:text/html`,
+            'label': 'SEARCH.FACET_QUERIES.MIMETYPE',
+            'group': 'Type facet queries'
+        };
+        jsonFile.facetQueries.queries[2] = {
+            'query': `content.size:[0 TO 10240]`,
+            'label': 'SEARCH.FACET_QUERIES.XTRASMALL',
+            'group': 'Size facet queries'
+        };
+
+
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
+        await searchResults.dataTable.waitTillContentLoaded();
+
+        await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
+        await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
+
+        await searchFiltersPage.checkSizeFacetQueryGroupIsDisplayed();
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
@@ -174,25 +209,6 @@ describe('Search Filters', () => {
         resultFileNames.map(async (nameOfResultFiles) => {
             await expect(nameOfResultFiles.toLowerCase()).toContain('.png');
         });
-    });
-
-    it('[C291980] Should group search facets under specified labels', async () => {
-        const currentYear = moment().year();
-
-        jsonFile.facetQueries.queries[0] = {'query': `created:${currentYear}`, 'label': 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR'};
-        jsonFile.facetQueries.queries[1] = {'query': `content.mimetype:text/html`, 'label': 'SEARCH.FACET_QUERIES.MIMETYPE', 'group': 'Type facet queries'};
-        jsonFile.facetQueries.queries[2] = {'query': `content.size:[0 TO 10240]`, 'label': 'SEARCH.FACET_QUERIES.XTRASMALL', 'group': 'Size facet queries'};
-
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter('*');
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
-        await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
-
-        await searchFiltersPage.checkSizeFacetQueryGroupIsDisplayed();
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AspectListService } from '@alfresco/adf-content-services';
+import { DialogAspectListService } from '@alfresco/adf-content-services';
 import { Component } from '@angular/core';
 
 @Component({
@@ -30,14 +30,14 @@ export class AspectListSampleComponent {
 
     currentResult: string[] = [];
 
-    constructor(private aspectListService: AspectListService) { }
+    constructor(private dialogAspectListService: DialogAspectListService) { }
 
     showAspectForNode() {
         this.isShowed = !this.isShowed;
     }
 
     openAspectDialog() {
-        this.aspectListService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = Array.from(result));
+        this.dialogAspectListService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = Array.from(result));
     }
 
     onValueChanged(aspects) {

@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 @import '../../../styles/mixins';
 
 $data-table-header-font-size: var(--theme-caption-font-size) !default;
@@ -48,8 +48,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             margin: 6px;
             padding: 15px;
 
-            @include mat-elevation-transition;
-            @include mat-overridable-elevation(2);
+            @include mat.elevation-transition;
+            @include mat.overridable-elevation(2);
         }
 
         .adf-datatable-row-empty-card {
@@ -682,8 +682,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         border-radius: 6px;
         background-color: var(--theme-background-color);
 
-        @include mat-elevation-transition;
-        @include mat-overridable-elevation(4);
+        @include mat.elevation-transition;
+        @include mat.elevation(4);
     }
 }
 

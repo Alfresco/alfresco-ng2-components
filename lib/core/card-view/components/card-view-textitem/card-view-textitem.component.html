@@ -21,9 +21,9 @@
                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <textarea matInput
                       *ngIf="property.multiline"
-                      [matTextareaAutosize]="true"
-                      [matAutosizeMaxRows]="1"
-                      [matAutosizeMaxRows]="5"
+                      [cdkTextareaAutosize]="true"
+                      [cdkAutosizeMaxRows]="1"
+                      [cdkAutosizeMaxRows]="5"
                       class="adf-property-value"
                       [placeholder]="property.default"
                       [formControl]="textInput"

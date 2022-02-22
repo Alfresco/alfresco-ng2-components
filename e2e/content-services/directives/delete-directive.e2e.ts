@@ -149,7 +149,7 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', folderInfo.name);
         });
 
-        it('[C260193] Delete file when different selections are set', async () => {
+       it('[C260193] Delete file when different selections are set', async () => {
             await contentServicesPage.chooseSelectionMode('None');
             await contentListPage.selectRow(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsNotSelected('Display name', txtFileModel.name);

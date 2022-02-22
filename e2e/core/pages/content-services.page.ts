@@ -93,7 +93,7 @@ export class ContentServicesPage {
     notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
     selectAllCheckbox = $$('.adf-checkbox-sr-only').first();
-    selectionModeDropdown = $('.mat-select[aria-label="Selection Mode"]');
+    selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
     selectedNodesList = $$('.app-content-service-settings li');
     siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
     sortingDropdown = new DropdownPage($('mat-select[data-automation-id="grid-view-sorting"]'));

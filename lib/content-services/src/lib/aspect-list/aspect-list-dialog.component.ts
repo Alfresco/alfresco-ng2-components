@@ -18,6 +18,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
+
 @Component({
     selector: 'adf-aspect-list-dialog',
     templateUrl: './aspect-list-dialog.component.html',

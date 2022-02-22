@@ -1,3 +1,4 @@
+/.angular/cache
 *.log
 node_modules
 bundles
@@ -30,3 +31,5 @@ out-tsc
 e2e-result-*
 licenses.txt
 .DS_Store
+
+.angular

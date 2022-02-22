@@ -168,6 +168,18 @@ describe('TaskHeaderCloudComponent', () => {
             expect(valueEl.nativeElement.value).toBe('67c4z2a8f-01f3-11e9-8e36-0a58646002ad');
         });
 
+        it('should display process instance id', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const labelEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-label-processInstanceId"]'));
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-processInstanceId"]'));
+
+            expect(labelEl.nativeElement.textContent.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID');
+            expect(valueEl.nativeElement.value).toBe('67c4z2a8f-01f3-11e9-8e36-0a58646002ad');
+        });
+
         it('should display placeholder if no due date', async () => {
             component.taskDetails.dueDate = null;
             component.refreshData();

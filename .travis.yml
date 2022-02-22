@@ -47,6 +47,12 @@ branches:
   only:
   - /^master(-patch.*)?$/
   - /^develop(-patch.*)?$/
+  - master
+  - develop
+#remove after upgrade
+  - angular-upgrade-v13
+  - /.*old-env.*/
+  - /.*next-release.*/
   - /.*beta.*/
 
 stages:
@@ -61,9 +67,9 @@ stages:
   - name: "Build Demo shell"
     if: tag IS blank
   - name: "Unit test Lib"
-    if: type = pull_request || (type = cron || type = api)
+    if: type = pull_request || (type = cron || type = api) || branch = "angular-upgrade-v13"
   - name: "e2e Test"
-    if: type = pull_request || (type = cron || type = api)
+    if: type = pull_request || (type = cron || type = api) || branch = "angular-upgrade-v13"
   - name: "Release tag"
     if: branch =~ /^master(-patch.*)?$/
   - name: "Deprecate develop builds"
@@ -123,7 +129,7 @@ jobs:
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
-              - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci
+              - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci --projectBuildConfig=stories:build-storybook
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:
@@ -187,11 +193,15 @@ jobs:
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="core"
               - PROVIDER='ALL'
@@ -203,11 +213,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="content-services/components"
               - PROVIDER="ECM"
@@ -219,11 +233,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="content-services/directives"
               - PROVIDER="ECM"
@@ -235,11 +253,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="content-services/document-list"
               - PROVIDER="ECM"
@@ -251,11 +273,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="content-services/metadata"
               - PROVIDER="ECM"
@@ -267,11 +293,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="content-services/upload"
               - PROVIDER="ECM"
@@ -283,11 +313,15 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
             - FOLDER="search"
             - PROVIDER="ECM"
@@ -296,15 +330,19 @@ jobs:
         - stage: "e2e Test"
           name: "Process: Form"
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
+              - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services/form"
               - PROVIDER="BPM"
@@ -313,15 +351,19 @@ jobs:
         - stage: "e2e Test"
           name: "Process: Process"
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
+              - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services/process"
               - PROVIDER="BPM"
@@ -330,15 +372,19 @@ jobs:
         - stage: "e2e Test"
           name: "Process: Tasks"
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
+              - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services/tasks"
               - PROVIDER="BPM"
@@ -347,19 +393,35 @@ jobs:
         - stage: "e2e Test"
           name: "Process: Widgets"
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
+              - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services/widgets"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
+
+        - stage: "e2e Test"
+          name: "Process Cloud:playwright"
+          before_script:
+              - ./scripts/ci/job_hooks/before_e2e.sh
+              - ./scripts/ci/jobs/dbpci-before-playwright || travis_terminate 1
+              - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
+          script: ./scripts/travis/storybook-testing/storybook-test.sh
+          workspaces:
+            use:
+              - built_libs_cache
+              - built_demo_shell_cache
 
         - stage: "e2e Test"
           name: "Process Cloud : Form"
@@ -368,11 +430,15 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services-cloud/form-field"
               - PROVIDER="ALL"
@@ -386,11 +452,15 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services-cloud/people"
               - PROVIDER="ALL"
@@ -404,11 +474,15 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services-cloud/process"
               - PROVIDER="ALL"
@@ -422,11 +496,15 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
               - FOLDER="process-services-cloud/start-task"
               - PROVIDER="ALL"
@@ -440,11 +518,15 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
+              create:
+                  name: e2e_cache
+                  paths:
+                      - "$SMART_RUNNER_DIRECTORY"
+              use:
+                  - built_libs_cache
+                  - built_demo_shell_cache
+                  - e2e_cache
           env:
              - FOLDER="process-services-cloud/task-list"
              - PROVIDER="ALL"
