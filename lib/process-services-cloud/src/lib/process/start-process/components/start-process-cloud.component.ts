@@ -74,6 +74,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     showSelectProcessDropdown: boolean = true;
 
+    /** Show/hide title. */
+    @Input()
+    showTitle: boolean = true;
+
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();

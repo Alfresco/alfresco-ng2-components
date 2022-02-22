@@ -1,6 +1,8 @@
 <mat-card class="adf-start-process">
-
-    <mat-card-title class="adf-title">{{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
+    <mat-card-title
+        *ngIf="showTitle"
+        class="adf-title">
+            {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
     </mat-card-title>
 
     <mat-card-content>
@@ -9,8 +11,8 @@
         </mat-card-subtitle>
 
         <div *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
-            <form [formGroup]="processForm">
-                <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'">
+            <form [formGroup]="processForm" class="adf-select-proceses-form">
+                <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'" *ngIf="showSelectProcessDropdown">
                     <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
                     <input
                         #inputAutocomplete
@@ -25,7 +27,7 @@
                                 {{ getProcessDefinitionValue(processDef) }}
                             </mat-option>
                         </mat-autocomplete>
-                        <button id="adf-select-process-dropdown" *ngIf="showSelectProcessDropdown" mat-icon-button (click)="displayDropdown($event)">
+                        <button id="adf-select-process-dropdown" mat-icon-button (click)="displayDropdown($event)">
                             <mat-icon>arrow_drop_down</mat-icon>
                         </button>
                     </div>
@@ -34,22 +36,25 @@
                         </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'">
-                    <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
-                    <input
-                        matInput
-                        formControlName="processInstanceName"
-                        id="processName">
-                    <mat-error id="adf-start-process-required-error" *ngIf="processInstanceName.hasError('required')">
-                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
-                    </mat-error>
-                    <mat-error id="adf-start-process-maxlength-error" *ngIf="processInstanceName.hasError('maxlength')">
-                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
-                    </mat-error>
-                    <mat-error *ngIf="processInstanceName.hasError('pattern')">
-                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
-                    </mat-error>
-                </mat-form-field>
+                <adf-inplace-mat-form-field-wrapper [isInvalid]="processInstanceName.invalid">
+                    <mat-form-field class="adf-process-instance-name-input" [floatLabel]="'never'">
+                        <input
+                            matInput
+                            formControlName="processInstanceName"
+                            [ngClass]="{'adf-process-inplace-input-error': processInstanceName.invalid}"
+                            id="processName">
+
+                        <mat-error id="adf-start-process-required-error" *ngIf="processInstanceName.hasError('required')">
+                            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                        </mat-error>
+                        <mat-error id="adf-start-process-maxlength-error" *ngIf="processInstanceName.hasError('maxlength')">
+                            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                        </mat-error>
+                        <mat-error *ngIf="processInstanceName.hasError('pattern')">
+                            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </adf-inplace-mat-form-field-wrapper>
             </form>
 
             <ng-container *ngIf="hasForm() else taskFormCloudButtons">

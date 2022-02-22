@@ -1,9 +1,10 @@
 .adf {
-    &-start-process {
-        mat-form-field {
-            width: 100%;
-        }
+    &-process-instance-name-input {
+        font-size: var(--theme-title-font-size);
+        width: 100%;
+    }
 
+    &-start-process {
         .mat-form-field-label {
             color: var(--theme-colors-mat-grey-dark);
         }
@@ -17,14 +18,17 @@
         }
     }
 
+    &-select-proceses-form {
+        display: flex;
+        flex-direction: column;
+    }
+
     &-title {
         padding-bottom: 1.25em;
     }
 
     &-process-input-container {
-        mat-form-field {
-            width: 100%;
-        }
+        margin: 0 7px;
     }
 
     &-process-input-autocomplete {
@@ -37,7 +41,7 @@
         }
     }
 
-    &-start-form-container {
+    &-form-container {
         .mat-card {
             box-shadow: none !important;
             padding: 0 !important;
