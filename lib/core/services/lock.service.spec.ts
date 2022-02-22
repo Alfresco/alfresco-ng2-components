@@ -21,7 +21,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { AlfrescoApiService } from './alfresco-api.service';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleProcessService', () => {

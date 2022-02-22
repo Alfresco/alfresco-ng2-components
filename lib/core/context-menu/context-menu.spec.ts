@@ -96,11 +96,6 @@ describe('ContextMenuDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should not render contextmenu when action was not performed', () => {
-        const  containerElement = fixture.debugElement.nativeElement.parentElement;
-        expect(containerElement.querySelector('.adf-context-menu button')).toBe(null);
-    });
-
     describe('Events', () => {
         let targetElement: HTMLElement;
         let contextMenu: HTMLElement;

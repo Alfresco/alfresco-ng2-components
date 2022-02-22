@@ -55,8 +55,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
-            },
-            type: { required: true }
+            }
         },
         taskId: {
             control: 'text',
@@ -64,8 +63,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
-            },
-            type: { required: true }
+            }
         }
     }
 } as Meta;

@@ -16,7 +16,7 @@
  */
 
 import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
@@ -128,7 +128,7 @@ describe('PermissionListComponent', () => {
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
         });
 
-        it('should toggle the inherited button',  fakeAsync(() => {
+        it('should toggle the inherited button',  async () => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
             component.ngOnInit();
 
@@ -152,7 +152,7 @@ describe('PermissionListComponent', () => {
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.OFF');
             expect(element.querySelector('span[title="total"]').textContent.trim())
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
-        }));
+        });
 
         it('should not toggle inherited button for read only users',  async () => {
             getNodeSpy.and.returnValue(of(fakeReadOnlyNodeInherited));
@@ -186,7 +186,7 @@ describe('PermissionListComponent', () => {
 
     });
 
-    describe('locally set permission', () => {
+   describe('locally set permission', () => {
         beforeEach(() => {
             getNodeSpy.and.returnValue(of(fakeLocalPermission));
         });

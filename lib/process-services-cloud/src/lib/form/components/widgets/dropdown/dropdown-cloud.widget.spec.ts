@@ -180,7 +180,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
         });
 
-        it('should preselect dropdown widget value when Json (rest call) passed',  async () => {
+        it('should preselect dropdown widget value when Json (rest call) passed', async () => {
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.value = {
@@ -197,7 +197,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 2,
                     name: 'default2_value'
                 }
-            ]));
+            ] as any));
 
             widget.ngOnInit();
             fixture.detectChanges();
@@ -222,7 +222,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 2,
                     name: 'default2_value'
                 }
-            ]));
+            ] as any));
 
             widget.ngOnInit();
             fixture.detectChanges();
@@ -230,7 +230,42 @@ describe('DropdownCloudWidgetComponent', () => {
             await openSelect();
             const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(options[0].nativeElement.innerText).toBe('default1_value');
-            expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
+            expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
+        });
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DROPDOWN,
+                required: true
+            });
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+
+        it('should be invalid if no default option after interaction', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
 
@@ -372,7 +407,11 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('Rest URL options', () => {
 
-            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown', validate: () => true });
+            const parentDropdown = new FormFieldModel(new FormModel(), {
+                id: 'parentDropdown',
+                type: 'dropdown',
+                validate: () => true
+            });
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',

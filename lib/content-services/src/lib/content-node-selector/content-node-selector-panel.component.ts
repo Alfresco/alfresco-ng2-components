@@ -47,11 +47,12 @@ import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
-import { NodeEntryEvent, ShareDataRow } from '../document-list';
+import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
+import { NodeEntryEvent } from '../document-list/components/node.event';
 
 export type ValidationFunction = (entry: Node) => boolean;
 

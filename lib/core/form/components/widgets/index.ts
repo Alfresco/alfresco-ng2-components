@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { ContainerWidgetComponent } from './container/container.widget';
-import { TabsWidgetComponent } from './tabs/tabs.widget';
 import { UnknownWidgetComponent } from './unknown/unknown.widget';
 
 import { AmountWidgetComponent } from './amount/amount.widget';
@@ -54,9 +52,6 @@ import { DisplayRichTextWidgetComponent } from './display-rich-text/display-rich
 export * from './widget.component';
 export * from './core/index';
 
-// containers
-export * from './tabs/tabs.widget';
-export * from './container/container.widget';
 
 // primitives
 export * from './unknown/unknown.widget';
@@ -96,8 +91,6 @@ export * from './text/text-mask.component';
 
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
-    TabsWidgetComponent,
-    ContainerWidgetComponent,
     TextWidgetComponent,
     NumberWidgetComponent,
     CheckboxWidgetComponent,

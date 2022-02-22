@@ -24,8 +24,7 @@ import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
 import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';

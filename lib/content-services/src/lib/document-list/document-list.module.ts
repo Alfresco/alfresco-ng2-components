@@ -68,4 +68,5 @@ import { SearchModule } from './../search/search.module';
         FilterHeaderComponent
     ]
 })
-export class DocumentListModule {}
+export class DocumentListModule {
+}

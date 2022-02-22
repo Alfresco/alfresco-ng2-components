@@ -19,10 +19,17 @@
 
 import { FormFieldModel } from './form-field.model';
 import { FormWidgetModel } from './form-widget.model';
+import { ContainerColumnModel } from './container-column.model';
+import { FormFieldTypes } from './form-field-types';
 
 export class ContainerModel extends FormWidgetModel {
 
     field: FormFieldModel;
+
+    readonly columns: ContainerColumnModel[] = [];
+    isExpanded: boolean = true;
+    readonly rowspan: number = 1;
+    readonly colspan: number = 1;
 
     get isVisible(): boolean {
         return this.field.isVisible;
@@ -33,7 +40,34 @@ export class ContainerModel extends FormWidgetModel {
 
         if (field) {
             this.field = field;
+            this.columns = field.columns || [];
+            this.isExpanded = !this.isCollapsedByDefault();
+            this.colspan = field.colspan;
+            this.rowspan = field.rowspan;
         }
     }
 
+    isGroup(): boolean {
+        return this.type === FormFieldTypes.GROUP;
+    }
+
+    isCollapsible(): boolean {
+        let allowCollapse = false;
+
+        if (this.isGroup() && this.field.params['allowCollapse']) {
+            allowCollapse = this.field.params['allowCollapse'];
+        }
+
+        return allowCollapse;
+    }
+
+    isCollapsedByDefault(): boolean {
+        let collapseByDefault = false;
+
+        if (this.isCollapsible() && this.field.params['collapseByDefault']) {
+            collapseByDefault = this.field.params['collapseByDefault'];
+        }
+
+        return collapseByDefault;
+    }
 }

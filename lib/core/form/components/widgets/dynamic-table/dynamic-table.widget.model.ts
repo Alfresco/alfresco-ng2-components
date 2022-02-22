@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import moment from 'moment-es6';
+import moment from 'moment';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';

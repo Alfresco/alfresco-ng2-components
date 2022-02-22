@@ -19,33 +19,35 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
 
 @Component({
-  selector: 'adf-user-role-column',
-  template: `
-      <mat-form-field floatLabel="never" class="adf-role-selector-field" *ngIf="!readonly">
-          <mat-select
-              (click)="$event.stopPropagation()"
-              [placeholder]="placeholder | translate"
-              [value]="value"
-              (selectionChange)="onRoleChanged($event.value)">
-              <mat-option *ngFor="let role of roles" [value]="role.role">
-                  {{ role.label | adfLocalizedRole }}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
+    selector: 'adf-user-role-column',
+    template: `
+        <mat-form-field floatLabel="never" class="adf-role-selector-field" *ngIf="!readonly">
+            <mat-select
+                (click)="$event.stopPropagation()"
+                [placeholder]="placeholder | translate"
+                [value]="value"
+                (selectionChange)="onRoleChanged($event.value)">
+                <mat-option *ngFor="let role of roles" [value]="role.role">
+                    {{ role.label | adfLocalizedRole }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-      <span class="adf-datatable-cell-value adf-readonly-role" [title]="value | adfLocalizedRole" *ngIf="readonly">
+        <span class="adf-datatable-cell-value adf-readonly-role" [title]="value | adfLocalizedRole" *ngIf="readonly">
           {{value | adfLocalizedRole}}
       </span>
-  `,
+    `,
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
     styles: [
         `.adf-role-selector-field {
             width: 100%;
-            .mat-form-field {
-                width: 100%;
-                max-width: 200px;
-            }
         }
+
+        .adf-role-selector-field .mat-form-field {
+            width: 100%;
+            max-width: 200px;
+        }
+
         .adf-readonly-role {
             padding-left: 0 !important;
         }

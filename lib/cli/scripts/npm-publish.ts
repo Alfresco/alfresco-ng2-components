@@ -20,7 +20,7 @@
 import * as path from 'path';
 import fs = require('fs');
 import { exec } from './exec';
-import * as program from 'commander';
+import program from 'commander';
 import { logger } from './logger';
 
 export interface PublishArgs {

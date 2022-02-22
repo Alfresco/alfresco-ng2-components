@@ -1,9 +1,8 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "4.11.0",
+  "version": "5.0.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/adf-core.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -26,23 +25,26 @@
     "editorjs-paragraph-with-alignment": "3.0.0"
   },
   "peerDependencies": {
-    "@angular/animations": ">=10.0.2",
-    "@angular/cdk": ">=10.0.1",
-    "@angular/common": ">=10.0.2",
-    "@angular/core": ">=10.0.2",
-    "@angular/flex-layout": ">=10.0.0-beta.32",
-    "@angular/forms": ">=10.0.2",
-    "@angular/material": ">=10.0.1",
-    "@angular/material-moment-adapter": ">=10.0.1",
-    "@angular/router": ">=10.0.2",
-    "@mat-datetimepicker/core": ">=4.1.0",
-    "@mat-datetimepicker/moment": ">=4.1.0",
+    "@angular/animations": ">=13.2.4",
+    "@angular/cdk": ">=13.2.4",
+    "@angular/common": ">=13.2.4",
+    "@angular/compiler": ">=13.2.4",
+    "@angular/core": ">=13.2.4",
+    "@angular/flex-layout": ">=13.0.0-beta.38",
+    "@angular/forms": ">=13.2.4",
+    "@angular/material": ">=13.2.4",
+    "@angular/material-moment-adapter": ">=13.2.4",
+    "@angular/platform-browser": ">=13.2.4",
+    "@angular/platform-browser-dynamic": ">=13.2.4",
+    "@angular/router": ">=13.2.4",
+    "@mat-datetimepicker/core": ">=9.0.68",
+    "@mat-datetimepicker/moment": ">=9.0.68",
     "@alfresco/js-api": "4.12.0-244",
-    "@alfresco/adf-extensions": "4.11.0",
+    "@alfresco/adf-extensions": ">=5.0.0",
     "@ngx-translate/core": ">=13.0.0",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
-    "pdfjs-dist": ">=2.3.200"
+    "pdfjs-dist": ">=2.5.207"
   },
   "keywords": [
     "core",

@@ -33,7 +33,7 @@ export class PeopleGroupCloudComponentPage {
     groupAppInput = $('input[data-automation-id="app-group-app-input"]');
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation = $$('mat-checkbox.app-preselect-value').first();
+    preselectValidation = $$('mat-checkbox.app-preselect-value label').first();
     preselectValidationStatus = $$('mat-checkbox.app-preselect-value label input').first();
 
     async navigateTo() {

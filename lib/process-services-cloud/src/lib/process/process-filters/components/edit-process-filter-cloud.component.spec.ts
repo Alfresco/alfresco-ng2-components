@@ -31,7 +31,7 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';

@@ -16,11 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { from, Observable, of, Subject, zip } from 'rxjs';
-import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
-import { AspectListDialogComponent } from './aspect-list-dialog.component';
+import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
 
@@ -37,7 +34,6 @@ export class AspectListService {
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
-                private dialog: MatDialog,
                 private logService: LogService) {
     }
 
@@ -101,34 +97,4 @@ export class AspectListService {
         return visibleAspectList;
     }
 
-    openAspectListDialog(nodeId?: string): Observable<string[]> {
-        const select = new Subject<string[]>();
-        select.subscribe({
-            complete: this.close.bind(this)
-        });
-
-        const data: AspectListDialogComponentData = {
-            title: 'ADF-ASPECT-LIST.DIALOG.TITLE',
-            description: 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
-            overTableMessage: 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
-            select,
-            nodeId
-        };
-
-        this.openDialog(data, 'adf-aspect-list-dialog', '750px');
-        return select;
-    }
-
-    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string) {
-        this.dialog.open(AspectListDialogComponent, {
-            data,
-            panelClass,
-            width,
-            disableClose: true
-        });
-    }
-
-    close() {
-        this.dialog.closeAll();
-    }
 }

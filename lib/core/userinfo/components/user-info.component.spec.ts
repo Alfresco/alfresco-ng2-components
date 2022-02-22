@@ -144,7 +144,7 @@ describe('User info component', () => {
             isEcmLoggedInStub = spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             isLoggedInStub = spyOn(authService, 'isLoggedIn').and.returnValue(true);
             isBpmLoggedInStub = spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-            getCurrenEcmtUserInfoStub = spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
+            getCurrenEcmtUserInfoStub = spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser as any));
         });
 
         describe('ui ', () => {

@@ -32,8 +32,8 @@ export class LoginShellPage {
     usernameError = $('span[data-automation-id="username-error"]');
     passwordError = $('span[data-automation-id="password-required"]');
     loginError = $('.adf-login-error-message');
-    usernameInactive = $('input[id="username"][aria-invalid="false"]');
-    passwordInactive = $('input[id="password"][aria-invalid="false"]');
+    usernameInactive = $('input[id="username"][class*="ng-invalid"]');
+    passwordInactive = $('input[id="password"][class*="ng-invalid"]');
     adfLogo = $('.adf-img-logo');
 
     usernameHighlighted = $('input[id="username"][aria-invalid="true"]');
@@ -115,6 +115,7 @@ export class LoginShellPage {
 
     async checkPasswordHighlighted(): Promise<void> {
         await BrowserActions.click(this.adfLogo);
+        await browser.sleep(900000);
         await BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
     }
 

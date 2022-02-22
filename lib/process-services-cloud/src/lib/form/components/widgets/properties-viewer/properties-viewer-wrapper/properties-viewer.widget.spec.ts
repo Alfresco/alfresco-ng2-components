@@ -22,10 +22,10 @@ import {
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper.component';
-import { ProcessServiceCloudTestingModule } from 'process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
-import { fakeNodeWithProperties } from 'process-services-cloud/src/lib/form/mocks/attach-file-cloud-widget.mock';
-import { BasicPropertiesService } from 'content-services';
+import { fakeNodeWithProperties } from '../../../../mocks/attach-file-cloud-widget.mock';
+import { BasicPropertiesService } from '@alfresco/adf-content-services';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let component: PropertiesViewerWrapperComponent;

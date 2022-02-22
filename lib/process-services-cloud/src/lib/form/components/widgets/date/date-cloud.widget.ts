@@ -19,8 +19,7 @@
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {

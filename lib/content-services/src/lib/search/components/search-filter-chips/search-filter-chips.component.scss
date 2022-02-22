@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 .adf-search-filter-chip {
     &.mat-chip {
@@ -53,6 +53,6 @@
         min-width: 320px;
         border-radius: 12px;
 
-        @include mat-elevation(2);
+        @include mat.elevation(2);
     }
 }

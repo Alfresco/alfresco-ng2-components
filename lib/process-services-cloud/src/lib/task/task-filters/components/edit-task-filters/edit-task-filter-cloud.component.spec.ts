@@ -34,7 +34,7 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';

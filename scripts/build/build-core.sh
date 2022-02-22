@@ -5,18 +5,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../..
 
 echo "====== Core ======"
-echo "====== Build ======"
-
-if [ "$CI" = "true" ]; then
-    echo "Building core for production"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build core --configuration production || exit 1
-else
-    echo "Building core for development"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build core || exit 1
-fi
-
-echo "====== Bundle styles ======"
-npm run scss-bundle:core || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/core/bundles/assets/adf-core/i18n
@@ -28,33 +16,6 @@ cp -R ./lib/core/app-config/schema.json lib/dist/core/app.config.schema.json
 echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
-echo "====== Bundle prebuilt styles ======"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-blue-orange.scss" -o "./lib/dist/core/prebuilt-themes/adf-blue-orange.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-blue-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-blue-purple.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-cyan-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-cyan-purple.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-green-purple.scss" -o "./lib/dist/core/prebuilt-themes/adf-green-purple.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-pink-bluegrey.scss" -o "./lib/dist/core/prebuilt-themes/adf-pink-bluegrey.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-cyan-orange.scss" -o "./lib/dist/core/prebuilt-themes/adf-cyan-orange.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-green-orange.scss" -o ".lib/dist/core/prebuilt-themes/adf-green-orange.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-indigo-pink.scss" -o "./lib/dist/core/prebuilt-themes/adf-indigo-pink.scss" -p "./"
-npx scss-bundle -e "./lib/core/styles/prebuilt/adf-purple-green.scss" -o "./lib/dist/core/prebuilt-themes/adf-purple-green.scss" -p "./"
-
-node-sass "./lib/dist/core/prebuilt-themes/adf-blue-orange.scss"  "./lib/dist/core/prebuilt-themes/adf-blue-orange.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-blue-purple.scss"  "./lib/dist/core/prebuilt-themes/adf-blue-purple.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-cyan-purple.scss"  "./lib/dist/core/prebuilt-themes/adf-cyan-purple.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-green-purple.scss"  "./lib/dist/core/prebuilt-themes/adf-green-purple.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-pink-bluegrey.scss"  "./lib/dist/core/prebuilt-themes/adf-pink-bluegrey.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-cyan-orange.scss"  "./lib/dist/core/prebuilt-themes/adf-cyan-orange.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-green-orange.scss"  "./lib/dist/core/prebuilt-themes/adf-green-orange.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-indigo-pink.scss"  "./lib/dist/core/prebuilt-themes/adf-indigo-pink.css"
-node-sass "./lib/dist/core/prebuilt-themes/adf-purple-green.scss"  "./lib/dist/core/prebuilt-themes/adf-purple-green.css"
-
-rm "./lib/dist/core/prebuilt-themes/adf-blue-orange.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-blue-purple.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-cyan-purple.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-green-purple.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-pink-bluegrey.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-cyan-orange.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-green-orange.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-indigo-pink.scss"
-rm "./lib/dist/core/prebuilt-themes/adf-purple-green.scss"
+echo "====== Prebuilt Themes ====="
+npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
+rm ./lib/dist/core/prebuilt-themes/*.js

@@ -1,4 +1,4 @@
-@import '~@angular/flex-layout/mq';
+@use '../../../styles/flex' as flex;
 @import '../../../styles/mixins';
 
 .adf-sidenav-layout {
@@ -24,7 +24,7 @@
         flex: 0 0;
     }
 
-    @include layout-bp(lt-sm) {
+    @include flex.layout-bp(lt-sm) {
         .mat-drawer {
             width: calc(-50px + 100vw) !important;
             max-width: 300px !important;

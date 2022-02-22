@@ -1,11 +1,11 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 :host {
     display: block;
 }
 
 div.adf-tooltip-card {
-    @include mat-elevation(8);
+    @include mat.elevation(8);
 
     background-color: var(--theme-card-bg-color);
     border: 1px solid var(--theme-primary-color);
