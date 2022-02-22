@@ -2,6 +2,7 @@
 
 $adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
+$adf-info-drawer-icon-size-half: 24px !default;
 
 .adf {
     &-info-drawer {
@@ -75,7 +76,7 @@ $adf-info-drawer-icon-size: 48px !default;
                 .adf-manage-versions-empty,
                 .adf-manage-versions-no-permission {
                     margin: 0;
-                    padding: calc($adf-info-drawer-icon-size / 2);
+                    padding: $adf-info-drawer-icon-size-half;
                     color: var(--theme-text-color);
                     text-align: center;
                     display: flex;
@@ -85,7 +86,7 @@ $adf-info-drawer-icon-size: 48px !default;
                         width: $adf-info-drawer-icon-size;
                         height: $adf-info-drawer-icon-size;
                         font-size: $adf-info-drawer-icon-size;
-                        margin: 0 auto calc($adf-info-drawer-icon-size / 2);
+                        margin: 0 auto $adf-info-drawer-icon-size-half;
                         display: block;
                     }
                 }
