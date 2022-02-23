@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 .adf {
     &-sidebar-action-menu {
@@ -58,6 +58,6 @@
         margin-top: 7.5px;
         border-radius: 2px;
 
-        @include mat-elevation(2);
+        @include mat.elevation(2);
     }
 }

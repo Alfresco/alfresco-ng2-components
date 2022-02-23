@@ -31,6 +31,10 @@ echo "====== Run testing ====="
 echo "====== Run Cli ====="
 ./build-cli.sh || exit 1
 
+echo "====== Prebuilt Themes ====="
+./build-themes.sh || exit 1
+
+
 echo "====== Copy schema ====="
 
 cp ../../lib/core/app-config/schema.json ../../lib/dist/core/app.config.schema.json
