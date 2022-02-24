@@ -22,5 +22,6 @@ export * from './models/process-cloud-preset.model';
 export * from './models/process-list-sorting.model';
 
 export * from './services/process-list-cloud.service';
+export * from './services/process-task-list-cloud.service';
 
 export * from './process-list-cloud.module';

@@ -17,16 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
-import { TaskCloudNodePaging } from '../models/task-cloud.model';
 import { map } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { TaskQueryCloudRequestModel } from '../../../task/task-list/models/filter-cloud-model';
+import { TaskCloudNodePaging } from '../../../task/task-list/models/task-cloud.model';
+import { TaskListCloudSortingModel } from '../../../task/task-list/models/task-list-sorting.model';
 
 @Injectable({ providedIn: 'root' })
-export class TaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
+export class ProcessTaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
@@ -43,7 +43,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
      */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
+            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances/${requestNode.processInstanceId}/tasks`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
