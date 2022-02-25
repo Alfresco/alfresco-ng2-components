@@ -23,6 +23,7 @@ import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { map, catchError, retry } from 'rxjs/operators';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 interface ProcessedNodeData {
     entry: Node | DeletedNode;
@@ -70,7 +71,7 @@ export class NodeDeleteDirective implements OnChanges {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -81,7 +82,8 @@ export class NodeDeleteDirective implements OnChanges {
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService,
-                private elementRef: ElementRef) {
+                private elementRef: ElementRef,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
     }
 
     ngOnChanges() {

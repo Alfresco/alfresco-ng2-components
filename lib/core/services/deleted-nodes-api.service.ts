@@ -22,6 +22,7 @@ import { NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class DeletedNodesApiService {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -42,7 +43,8 @@ export class DeletedNodesApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
+        private preferences: UserPreferencesService,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory
     ) {
     }
 

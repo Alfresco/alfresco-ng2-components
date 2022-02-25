@@ -17,12 +17,12 @@
 
 import moment from 'moment-es6';
 
-import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiClientFactory } from '../../../../core/alfresco-api';
 
 @Component({
     selector: 'adf-node-lock',
@@ -37,15 +37,14 @@ export class NodeLockDialogComponent implements OnInit {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
-        private alfrescoApi: AlfrescoApiService,
-        @Optional()
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory,
         @Inject(MAT_DIALOG_DATA)
         public data: any
     ) {

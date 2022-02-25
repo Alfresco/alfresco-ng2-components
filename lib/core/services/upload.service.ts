@@ -30,6 +30,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
 import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -69,7 +70,7 @@ export class UploadService {
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -82,7 +83,8 @@ export class UploadService {
     constructor(
         protected apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
-        private discoveryApiService: DiscoveryApiService) {
+        private discoveryApiService: DiscoveryApiService,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
 
         this.discoveryApiService.ecmProductInfo$.pipe(filter(info => !!info))
             .subscribe(({ status }) => {

@@ -18,26 +18,29 @@
 /*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
 
 import { Injectable } from '@angular/core';
-import {  DiscoveryApi } from '@alfresco/js-api';
+import {  DiscoveryApi, NodesApi } from '@alfresco/js-api';
 import { AngularAlfrescoApi } from './angular-alfresco-api';
 
 @Injectable()
 export class AlfrescoApiClientFactory {
     // Here we should all the APIs from js-api
     private discoveryApi: DiscoveryApi = null;
+    private nodesApi: NodesApi = null;
 
     constructor(
         private angularAlfrescoApi?: AngularAlfrescoApi) {
     }
 
     getDiscoveryApi() {
-        // DiscoveryApi needs to rely on a lot thinner interface: JsApiHttpClient;
-        this.discoveryApi = this.discoveryApi || new DiscoveryApi(this.angularAlfrescoApi as any);
+        // DiscoveryApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
+        this.discoveryApi = this.discoveryApi ?? new DiscoveryApi(this.angularAlfrescoApi as any);
         return this.discoveryApi;
     }
 
     getNodesApi () {
-        // TODO
+        // NodesApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
+        this.nodesApi = this.nodesApi ?? new NodesApi(this.angularAlfrescoApi as any);
+        return this.nodesApi;
     }
 
     getSearchApi() {

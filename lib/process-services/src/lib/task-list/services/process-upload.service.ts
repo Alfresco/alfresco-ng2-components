@@ -18,6 +18,7 @@
 import { AlfrescoApiService, AppConfigService, DiscoveryApiService, UploadService } from '@alfresco/adf-core';
 import { ActivitiContentApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
+import { AlfrescoApiClientFactory } from '../../../../../core/alfresco-api';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -31,8 +32,12 @@ export class ProcessUploadService extends UploadService {
         return this._contentApi;
     }
 
-    constructor(protected apiService: AlfrescoApiService, appConfigService: AppConfigService, discoveryApiService: DiscoveryApiService) {
-        super(apiService, appConfigService, discoveryApiService);
+    constructor(
+        protected apiService: AlfrescoApiService,
+        appConfigService: AppConfigService,
+        discoveryApiService: DiscoveryApiService,
+        alfrescoApiClientFactory: AlfrescoApiClientFactory) {
+        super(apiService, appConfigService, discoveryApiService, alfrescoApiClientFactory);
     }
 
     getUploadPromise(file: any): any {

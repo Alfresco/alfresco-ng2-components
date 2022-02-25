@@ -21,6 +21,7 @@ import { VersionsApi, Node, VersionEntry, VersionPaging, NodesApi, NodeEntry, Co
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import { ContentVersionService } from './content-version.service';
+import { AlfrescoApiClientFactory } from '../../../../core/alfresco-api';
 
 @Component({
     selector: 'adf-version-list',
@@ -45,7 +46,7 @@ export class VersionListComponent implements OnChanges {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -87,8 +88,9 @@ export class VersionListComponent implements OnChanges {
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
                 private contentVersionService: ContentVersionService,
-                private dialog: MatDialog) {
-    }
+                private dialog: MatDialog,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory
+    ) {}
 
     ngOnChanges() {
         this.loadVersionHistory();

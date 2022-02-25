@@ -22,6 +22,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -36,11 +37,12 @@ export class NodesApiService {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
     constructor(private apiService: AlfrescoApiService,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory,
                 private preferences: UserPreferencesService) {
     }
 

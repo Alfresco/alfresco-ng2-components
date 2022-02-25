@@ -38,6 +38,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     request<T = any>(options: RequestOptions): Promise<T> {
 
         const responseType = this.getResponseType(options);
+        const params = new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) });
 
         return this.httpClient.request(
             options.httpMethod,
@@ -46,9 +47,22 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             ...(options.bodyParam ? { body: options.bodyParam } : {}),
             ...(options.headerParams ? { headers: new HttpHeaders(options.headerParams) } : {}),
             observe: 'body',
-            ...(options.queryParams ? { params: new HttpParams({ fromObject: options.queryParams })} : {}),
-            ...(responseType ? { responseType } : {}),
+            ...(options.queryParams ? { params } : {}),
+            ...(responseType ? { responseType } : {})
         }).toPromise() as unknown as Promise<T>;
+    }
+
+    // Poor man's sanitizer
+    private removeUndefinedValues (obj: {[key: string]: any}) {
+        const newObj = {};
+        Object.keys(obj).forEach((key) => {
+            if (obj[key] === Object(obj[key])) {
+                newObj[key] = this.removeUndefinedValues(obj[key]);
+            } else if (obj[key] !== undefined && obj[key] !== null) {
+                newObj[key] = obj[key];
+            }
+        });
+        return newObj;
     }
 
     private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' {

@@ -44,6 +44,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { AlfrescoApiClientFactory } from '../../alfresco-api';
 
 @Component({
     selector: 'adf-viewer',
@@ -292,7 +293,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -310,7 +311,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private uploadService: UploadService,
                 private el: ElementRef,
                 public dialog: MatDialog,
-                private cdr: ChangeDetectorRef) {
+                private cdr: ChangeDetectorRef,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 

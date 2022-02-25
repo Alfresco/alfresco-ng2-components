@@ -21,8 +21,8 @@ import { NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { Observable, from, Subject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
+import { AlfrescoApiClientFactory } from '../../../../core/alfresco-api';
 
 @Directive({
     selector: '[adf-share]',
@@ -46,15 +46,15 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
     constructor(
         private dialog: MatDialog,
         private zone: NgZone,
-        private alfrescoApiService: AlfrescoApiService) {
-    }
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory
+    ) {}
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

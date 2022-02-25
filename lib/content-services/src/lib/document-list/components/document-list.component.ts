@@ -43,7 +43,6 @@ import {
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
-    AlfrescoApiService,
     UserPreferenceValues,
     LockService,
     DataRow
@@ -63,6 +62,7 @@ import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { takeUntil } from 'rxjs/operators';
+import { AlfrescoApiClientFactory } from '../../../../../core/alfresco-api';
 
 @Component({
     selector: 'adf-document-list',
@@ -347,7 +347,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -358,7 +358,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private userPreferencesService: UserPreferencesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory,
                 private lockService: LockService) {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)

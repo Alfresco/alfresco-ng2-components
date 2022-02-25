@@ -84,6 +84,7 @@ export class DataTableComponent {
     }
 
     resolver(row: DataRow, col: DataColumn): any {
+        debugger;
         const value = row.getValue(col.key);
         if (col.key === 'users') {
             return (value || []).map(user => `${user.firstName} ${user.lastName}`).toString();

@@ -26,7 +26,6 @@ import {
     FormValues,
     ContentLinkModel,
     AppConfigService,
-    AlfrescoApiService,
     UploadWidgetContentLinkModel,
     DestinationFolderPath
 } from '@alfresco/adf-core';
@@ -36,6 +35,7 @@ import { ProcessCloudContentService } from '../../../services/process-cloud-cont
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
+import { AlfrescoApiClientFactory } from '../../../../../../../core/alfresco-api';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 export const ALIAS_ROOT_FOLDER = '-root-';
@@ -67,7 +67,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
     displayedColumns = ['icon', 'fileName', 'action'];
@@ -80,8 +80,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
-        private apiService: AlfrescoApiService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
+        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }

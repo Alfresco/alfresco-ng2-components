@@ -16,7 +16,7 @@
  */
 
 import {
-    AlfrescoApiService, ContentService, LogService, PaginationModel
+    ContentService, LogService, PaginationModel
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
@@ -26,6 +26,7 @@ import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
+import { AlfrescoApiClientFactory } from '../../../../../core/alfresco-api';
 
 const ROOT_ID = '-root-';
 
@@ -36,14 +37,14 @@ export class DocumentListService implements DocumentListLoader {
 
     private _nodesApi: NodesApi;
     get nodes(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
     constructor(private contentService: ContentService,
-                private apiService: AlfrescoApiService,
                 private logService: LogService,
-                private customResourcesService: CustomResourcesService) {
+                private customResourcesService: CustomResourcesService,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
     }
 
     /**

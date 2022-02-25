@@ -22,6 +22,7 @@ import {
     Node, NodesApi
 } from '@alfresco/js-api';
 import { ReplaySubject, Subject } from 'rxjs';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,10 @@ export class ExternalAlfrescoApiService {
     protected alfrescoApi: AlfrescoApiCompatibility;
     _nodesApi: NodesApi;
 
+    constructor(
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory
+    ) {}
+
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
     }
@@ -47,7 +52,7 @@ export class ExternalAlfrescoApiService {
     }
 
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 

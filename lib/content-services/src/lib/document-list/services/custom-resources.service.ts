@@ -33,6 +33,7 @@ import {
     NodesApi
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
+import { AlfrescoApiClientFactory } from '../../../../../core/alfresco-api';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -79,12 +80,15 @@ export class CustomResourcesService {
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory
+    ) {}
 
     /**
      * Gets files recently accessed by a user.

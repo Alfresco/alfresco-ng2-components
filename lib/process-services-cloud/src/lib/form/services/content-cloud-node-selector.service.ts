@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
+import { LogService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     ContentNodeSelectorComponent,
@@ -27,6 +27,7 @@ import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, mapTo } from 'rxjs/operators';
 import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
+import { AlfrescoApiClientFactory } from '../../../../../core/alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -35,17 +36,17 @@ export class ContentCloudNodeSelectorService {
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
     sourceNodeNotFound = false;
 
     constructor(
-        private apiService: AlfrescoApiService,
         private notificationService: NotificationService,
         private logService: LogService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
     }
 
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {

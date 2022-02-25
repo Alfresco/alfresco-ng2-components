@@ -28,6 +28,7 @@ import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 import { DownloadService } from './download.service';
 import { ThumbnailService } from './thumbnail.service';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +47,7 @@ export class ContentService {
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this.alfrescoApiClientFactory.getNodesApi();
         return this._nodesApi;
     }
 
@@ -55,7 +56,8 @@ export class ContentService {
                 private logService: LogService,
                 private sanitizer: DomSanitizer,
                 private downloadService: DownloadService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
     }
 
     /**
