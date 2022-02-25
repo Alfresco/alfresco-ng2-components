@@ -21,7 +21,7 @@ import {
   HttpHandler, HttpInterceptor, HttpRequest,
   HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
 } from '@angular/common/http';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Injectable()

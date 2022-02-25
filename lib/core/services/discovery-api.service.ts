@@ -18,11 +18,12 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { AboutApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
 
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
+import { AlfrescoApiClientFactory } from '../alfresco-api';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,8 @@ export class DiscoveryApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+        private alfrescoApiClientFactory: AlfrescoApiClientFactory) {
 
         this.authenticationService.onLogin
             .pipe(
@@ -53,7 +55,8 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-        const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        // const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        const discoveryApi = this.alfrescoApiClientFactory.getDiscoveryApi();
 
         return from(discoveryApi.getRepositoryInformation())
             .pipe(

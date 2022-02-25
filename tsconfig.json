@@ -32,6 +32,7 @@
       "@alfresco/js-api": ["node_modules/@alfresco/js-api"],
       "@alfresco/adf-extensions": ["lib/extensions"],
       "@alfresco/adf-core": ["lib/core"],
+      "@alfresco/adf-core/*": ["lib/core/*"],
       "@alfresco/adf-content-services": ["lib/content-services"],
       "@alfresco/adf-process-services": ["lib/process-services"],
       "@alfresco/adf-insights": ["lib/insights"],
