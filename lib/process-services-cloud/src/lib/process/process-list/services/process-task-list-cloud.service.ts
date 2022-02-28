@@ -21,9 +21,9 @@ import { Observable, throwError } from 'rxjs';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { TaskQueryCloudRequestModel } from '../../../task/task-list/models/filter-cloud-model';
-import { TaskCloudNodePaging } from '../../../task/task-list/models/task-cloud.model';
-import { TaskListCloudSortingModel } from '../../../task/task-list/models/task-list-sorting.model';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessTaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {

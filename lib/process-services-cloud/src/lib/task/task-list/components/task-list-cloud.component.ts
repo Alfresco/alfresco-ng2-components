@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, Input, Inject } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
