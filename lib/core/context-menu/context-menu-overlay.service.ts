@@ -102,26 +102,33 @@ export class ContextMenuOverlayService {
         };
 
         const positionStrategy = this.overlay.position()
-            .connectedTo(
-                new ElementRef(fakeElement),
-                { originX: 'start', originY: 'bottom' },
-                { overlayX: 'start', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'top' },
-                { overlayX: 'start', overlayY: 'bottom' })
-            .withFallbackPosition(
-                { originX: 'end', originY: 'top' },
-                { overlayX: 'start', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'top' },
-                { overlayX: 'end', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'end', originY: 'center' },
-                { overlayX: 'start', overlayY: 'center' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'center' },
-                { overlayX: 'end', overlayY: 'center' }
-            );
+            .flexibleConnectedTo(new ElementRef(fakeElement))
+            .withPositions([
+                {
+                    originX: 'start', originY: 'bottom' ,
+                    overlayX: 'start', overlayY: 'top'
+                },
+                {
+                    originX: 'start', originY: 'top',
+                    overlayX: 'start', overlayY: 'bottom'
+                },
+                {
+                    originX: 'end', originY: 'top',
+                    overlayX: 'start', overlayY: 'top'
+                },
+                {
+                    originX: 'start', originY: 'top',
+                    overlayX: 'end', overlayY: 'top'
+                },
+                {
+                    originX: 'end', originY: 'center',
+                    overlayX: 'start', overlayY: 'center'
+                },
+                {
+                    originX: 'start', originY: 'center',
+                    overlayX: 'end', overlayY: 'center'
+                }
+            ]);
 
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,
