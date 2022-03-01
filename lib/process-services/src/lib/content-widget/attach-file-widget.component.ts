@@ -227,6 +227,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
+    isSelected(): boolean {
+        return this.hasFile;
+    }
+
     private isExternalHost(repository: AlfrescoEndpointRepresentation): boolean {
         const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
         const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);

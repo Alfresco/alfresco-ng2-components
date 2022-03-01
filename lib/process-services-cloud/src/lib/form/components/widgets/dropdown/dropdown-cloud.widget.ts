@@ -310,4 +310,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             return this.field?.restUrl;
         }
     }
+
+    showRequiredMessage(): boolean {
+        return (this.isInvalidFieldRequired() || this.field.value === 'empty') && this.isTouched() && !this.isRestApiFailed;
+    }
 }

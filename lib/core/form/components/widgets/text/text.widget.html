@@ -1,7 +1,7 @@
 <div class="adf-textfield adf-text-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+     [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly">
     <mat-form-field [hideRequiredMarker]="true">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <input matInput
                class="adf-input"
                type="text"
@@ -14,9 +14,10 @@
                [textMask]="{mask: mask, isReversed: isMaskReversed}"
                [placeholder]="placeholder"
                [matTooltip]="field.tooltip"
+               (blur)="markAsTouched()"
                 matTooltipPosition="above"
                 matTooltipShowDelay="1000">
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

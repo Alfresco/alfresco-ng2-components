@@ -1,5 +1,5 @@
 <div [ngClass]="field.className"
-     [class.adf-invalid]="!field.isValid">
+     [class.adf-invalid]="!field.isValid && isTouched()">
     <mat-checkbox
         [id]="field.id"
         color="primary"
@@ -8,9 +8,12 @@
         [(ngModel)]="field.value"
         (ngModelChange)="onFieldChanged(field)"
         [matTooltip]="field.tooltip"
+        (click)="markAsTouched()"
         matTooltipPosition="right"
         matTooltipShowDelay="1000">
         {{field.name | translate }}
-        <span *ngIf="field.required" >*</span>
+        <span class="adf-asterisk" *ngIf="field.required" >*</span>
     </mat-checkbox>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

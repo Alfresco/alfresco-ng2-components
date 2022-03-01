@@ -1,9 +1,9 @@
 <div class="adf-people-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid"
+     [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly"
      id="people-widget-content">
     <mat-form-field>
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <input #inputValue
                matInput
                class="adf-input"
@@ -13,6 +13,7 @@
                [formControl]="searchTerm"
                [placeholder]="field.placeholder"
                [matAutocomplete]="auto"
+               (blur)="markAsTouched()"
                [matTooltip]="field.tooltip"
                matTooltipPosition="above"
                matTooltipShowDelay="1000">
@@ -33,5 +34,5 @@
         </mat-autocomplete>
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

@@ -1,7 +1,7 @@
 <div class="adf-dropdown-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+     [class.adf-invalid]="(!field.isValid && isTouched()) || isRestApiFailed" [class.adf-readonly]="field.readOnly">
     <div class="adf-dropdown-widget-top-labels">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
             *ngIf="isRequired()">*</span>
         </label>
     </div>
@@ -13,7 +13,9 @@
                     [compareWith]="compareDropdownValues"
                     (ngModelChange)="selectionChangedForField(field)"
                     [matTooltip]="field.tooltip"
+                    [required]="isRequired()"
                     panelClass="adf-select-filter"
+                    (blur)="markAsTouched()"
                     matTooltipPosition="above"
                     matTooltipShowDelay="1000"
                     [multiple]="field.hasMultipleValues">
@@ -27,7 +29,7 @@
         </mat-select>
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
+    <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage()"
                   required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     <error-widget class="adf-dropdown-failed-message" *ngIf="isRestApiFailed"
                   required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"></error-widget>

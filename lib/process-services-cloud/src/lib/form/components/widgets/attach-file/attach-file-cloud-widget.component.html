@@ -1,10 +1,10 @@
 <div class="adf-attach-file-widget-container">
-    <div class="adf-attach-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
+    <div class="adf-attach-widget {{field.className}}"
         [class.adf-readonly]="field.readOnly">
         <label class="adf-label" [attr.for]="field.id">{{field.name}}
-            <span *ngIf="isRequired()">*</span>
+            <span class="adf-asterisk" *ngIf="isRequired()">*</span>
         </label>
-        <div class="adf-attach-widget-container">
+        <div class="adf-attach-widget-container" (focusout)="markAsTouched()">
             <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">
                 <button (click)="openSelectDialog()" mat-raised-button color="primary" [id]="field.id"
                     [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000">
@@ -36,5 +36,5 @@
     </div>
 
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

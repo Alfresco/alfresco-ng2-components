@@ -5,8 +5,12 @@ ul > li > form-field > .adf-focus {
     }
 }
 
+.mat-form-field-label {
+    color: var(--theme-colors-mat-grey-dark) !important;
+}
+
 .adf {
-    &-error-text-container {
+    &-error-container {
         height: 20px;
         margin-top: -12px;
     }
@@ -16,40 +20,37 @@ ul > li > form-field > .adf-focus {
         height: 16px;
         font-size: var(--theme-caption-font-size);
         line-height: 1.33;
-        float: left;
         color: var(--theme-warn-color);
     }
 
     &-error-icon {
-        float: right;
         font-size: var(--theme-adf-icon-1-font-size);
         color: var(--theme-warn-color);
     }
 
     &-label {
-        color: rgb(186, 186, 186);
+        color: var(--theme-secondary-text-color);
+    }
+
+    &-asterisk {
+        padding-left: 2px;
+        color: var(--theme-warn-color);
     }
 
     &-invalid {
-        .mat-form-field-underline {
-            background-color: #f44336 !important;
+
+        .mat-checkbox-layout {
+            padding-bottom: 12px;
         }
 
-        .mat-checkbox {
-            color: var(--theme-warn-color);
-
-            .mat-checkbox-frame {
-                border-color: var(--theme-warn-color);
-            }
+        .mat-form-field-underline {
+            background-color: var(--theme-warn-color) !important;
         }
 
         .mat-select {
-            &-value {
-                color: var(--theme-warn-color);
-            }
 
             &-arrow {
-                color: var(--theme-warn-color);
+                color: var(--theme-secondary-text-color) !important;
             }
         }
 
@@ -58,19 +59,11 @@ ul > li > form-field > .adf-focus {
         }
 
         .mat-form-field-prefix {
-            color: var(--theme-warn-color);
+            color: var(--theme-secondary-text-color);
         }
 
         .adf-input {
             border-color: var(--theme-warn-color);
-        }
-
-        .adf-label {
-            color: var(--theme-warn-color);
-
-            &::after {
-                background-color: var(--theme-warn-color);
-            }
         }
     }
 }

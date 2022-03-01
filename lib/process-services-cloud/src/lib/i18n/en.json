@@ -302,7 +302,7 @@
       "INVALID_PATTERN": "Must match the pattern {{pattern}}",
       "INVALID_MIN_LENGTH": "Must be at least {{requiredLength}} characters",
       "INVALID_MAX_LENGTH": "Length exceeded, {{requiredLength}} characters max",
-      "REQUIRED": "Field required"
+      "REQUIRED": "This is a required field"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {

@@ -84,6 +84,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     readOnly: boolean = false;
 
+    /** Mark this field as required
+     */
+    @Input()
+    required = false;
+
     /** Array of users to be pre-selected. All users in the
      * array are pre-selected in multi selection mode, but only the first user
      * is pre-selected in single selection mode.
@@ -140,6 +145,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     _subscriptAnimationState: string = 'enter';
     clientId: string;
     isFocused: boolean;
+    touched: boolean = false;
 
     validateUsersMessage: string;
     searchedValue = '';
@@ -533,6 +539,22 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     isValidationLoading(): boolean {
         return this.isValidationEnabled() && this.validationLoading;
+    }
+
+    markAsTouched(): void {
+        this.touched = true;
+    }
+
+    isTouched(): boolean {
+        return this.touched;
+    }
+
+    isSelected(): boolean {
+        return this.selectedUsers && !!this.selectedUsers.length;
+    }
+
+    isDirty(): boolean {
+        return this.isTouched() && !this.isSelected();
     }
 
     setFocus(isFocused: boolean) {

@@ -56,6 +56,8 @@ export class WidgetComponent implements AfterViewInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
+    touched: boolean = false;
+
     constructor(public formService?: FormService) {
     }
 
@@ -76,6 +78,10 @@ export class WidgetComponent implements AfterViewInit {
         return !!this.field.validationSummary;
     }
 
+    isTouched(): boolean {
+        return this.touched;
+    }
+
     hasValue(): boolean {
         return this.field &&
             this.field.value !== null &&
@@ -83,7 +89,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     isInvalidFieldRequired() {
-        return !this.field.isValid && !this.field.validationSummary && this.isRequired();
+        return !this.field.isValid && (!this.field.validationSummary || !this.field.value) && this.isRequired();
     }
 
     ngAfterViewInit() {
@@ -100,5 +106,9 @@ export class WidgetComponent implements AfterViewInit {
 
     event(event: Event): void {
         this.formService.formEvents.next(event);
+    }
+
+    markAsTouched() {
+        this.touched = true;
     }
 }
