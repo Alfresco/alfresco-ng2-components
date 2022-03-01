@@ -11,8 +11,8 @@
         </mat-card-subtitle>
 
         <div *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
-            <form [formGroup]="processForm" class="adf-select-proceses-form">
-                <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'" *ngIf="showSelectProcessDropdown">
+            <form [formGroup]="processForm" class="adf-select-process-form">
+                <mat-form-field class="adf-process-input-container" floatLabel="always" *ngIf="showSelectProcessDropdown">
                     <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
                     <input
                         #inputAutocomplete
