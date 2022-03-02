@@ -21,15 +21,23 @@ import {
     Input,
     ViewEncapsulation
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
+export interface InplaceFormInputError {
+    message: string;
+    parameters?: any;
+}
 @Component({
-    selector: 'adf-inplace-mat-form-field-wrapper',
-    templateUrl: './inplace-mat-form-field-wrapper.component.html',
-    styleUrls: ['./inplace-mat-form-field-wrapper.component.scss'],
+    selector: 'adf-inplace-form-input',
+    templateUrl: './inplace-form-input.component.html',
+    styleUrls: ['./inplace-form-input.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InplaceMatFormFieldWrapperComponent {
+export class InplaceFormInputComponent {
     @Input()
-    isInvalid: boolean;
+    control: FormControl;
+
+    @Input()
+    error: InplaceFormInputError | undefined;
 }

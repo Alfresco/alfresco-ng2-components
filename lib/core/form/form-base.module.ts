@@ -40,7 +40,7 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
 import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
-import { InplaceMatFormFieldWrapperComponent } from './components/inplace-mat-form-field-wrapper/inplace-mat-form-field-wrapper.component';
+import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
 
 @NgModule({
     imports: [
@@ -69,7 +69,7 @@ import { InplaceMatFormFieldWrapperComponent } from './components/inplace-mat-fo
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE,
         WidgetComponent,
-        InplaceMatFormFieldWrapperComponent
+        InplaceFormInputComponent
     ],
     exports: [
         ContentWidgetComponent,
@@ -77,7 +77,7 @@ import { InplaceMatFormFieldWrapperComponent } from './components/inplace-mat-fo
         FormListComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
-        InplaceMatFormFieldWrapperComponent,
+        InplaceFormInputComponent,
         ...WIDGET_DIRECTIVES
     ]
 })

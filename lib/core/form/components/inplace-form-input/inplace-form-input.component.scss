@@ -1,4 +1,4 @@
-.adf-inplace-mat-form-field-wrapper {
+.adf-inplace-input-container {
     .mat-form-field-underline {
         display: none;
     }
@@ -14,7 +14,11 @@
         }
     }
 
-    input {
+    .adf-inplace-input-mat-form-field {
+        width: 100%;
+    }
+
+    .adf-inplace-input {
         padding: 7px;
         border: 1px solid transparent;
         border-radius: 4px;
