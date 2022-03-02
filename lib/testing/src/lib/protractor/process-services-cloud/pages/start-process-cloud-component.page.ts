@@ -23,7 +23,7 @@ import { FormFields } from '../../core/pages/form/form-fields';
 export class StartProcessCloudPage {
 
     defaultProcessName = $('input[id="processName"]');
-    processNameInput = $('#processName');
+    processNameInput = $('[data-automation-id="adf-inplace-input"]');
     selectProcessDropdownArrow = $('button[id="adf-select-process-dropdown"]');
     cancelProcessButton = $('#cancel_process');
     formStartProcessButton = $('button[data-automation-id="adf-form-start process"]');
