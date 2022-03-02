@@ -21,7 +21,7 @@ import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {
 
-    changeTabAnimation = $('div[class="mat-ripple-element"]');
+    changeTabAnimation = $('.mat-tab-labels div[class="mat-ripple-element"]');
 
     public disabledContentNodeSelectorTabInfoIcon = TestElement.byCss('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]');
 
