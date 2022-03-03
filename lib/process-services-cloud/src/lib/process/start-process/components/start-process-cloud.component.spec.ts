@@ -165,7 +165,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'OLE');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'OLE');
             typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
             tick(550);
@@ -242,7 +242,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -269,7 +269,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -297,7 +297,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -327,7 +327,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(4500);
