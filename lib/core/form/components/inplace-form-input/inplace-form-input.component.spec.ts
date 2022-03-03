@@ -56,7 +56,6 @@ describe('InplaceFormInputComponent', () => {
     });
 
     it('should show error', () => {
-        component.error = { message: 'ERROR' };
         formControl.setValidators(() => ({ error: 'error' }));
         formControl.setValue('value');
         formControl.markAsTouched();
@@ -69,6 +68,5 @@ describe('InplaceFormInputComponent', () => {
         );
 
         expect(error).toBeTruthy();
-        expect(error.innerText).toBe('ERROR');
     });
 });

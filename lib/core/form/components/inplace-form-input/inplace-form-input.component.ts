@@ -23,10 +23,6 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-export interface InplaceFormInputError {
-    message: string;
-    parameters?: any;
-}
 @Component({
     selector: 'adf-inplace-form-input',
     templateUrl: './inplace-form-input.component.html',
@@ -37,7 +33,4 @@ export interface InplaceFormInputError {
 export class InplaceFormInputComponent {
     @Input()
     control: FormControl;
-
-    @Input()
-    error: InplaceFormInputError | undefined;
 }

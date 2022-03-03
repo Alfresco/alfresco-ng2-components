@@ -41,10 +41,16 @@
                         </mat-error>
                 </mat-form-field>
 
-                <adf-inplace-form-input
-                    [control]="processInstanceName"
-                    [error]="getProcessInstanceNameError()"
-                >
+                <adf-inplace-form-input [control]="processInstanceName">
+                    <span *ngIf="processInstanceName.hasError('required')">
+                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                    </span>
+                    <span id="adf-start-process-maxlength-error" *ngIf="processInstanceName.hasError('maxlength')">
+                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                    </span>
+                    <span *ngIf="processInstanceName.hasError('pattern')">
+                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
+                    </span>
                 </adf-inplace-form-input>
             </form>
 

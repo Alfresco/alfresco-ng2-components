@@ -10,8 +10,8 @@
             data-automation-id="adf-inplace-input"
         >
 
-        <mat-error *ngIf="error" data-automation-id="adf-inplace-input-error">
-            {{ error.message | translate : error.parameters }}
+        <mat-error data-automation-id="adf-inplace-input-error">
+            <ng-content></ng-content>
         </mat-error>
     </mat-form-field>
 </div>

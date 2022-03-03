@@ -23,7 +23,7 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel, InplaceFormInputError } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -398,25 +398,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processInstanceName.setValue(defaultProcessName);
         this.processInstanceName.markAsDirty();
         this.processInstanceName.markAsTouched();
-    }
-
-    getProcessInstanceNameError(): InplaceFormInputError {
-        if (this.processInstanceName.hasError('required')) {
-            return { message: 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' };
-        }
-
-        if (this.processInstanceName.hasError('maxlength')) {
-            return {
-                message: 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH',
-                parameters: { characters : this.maxNameLength }
-            };
-        }
-
-        if (this.processInstanceName.hasError('pattern')) {
-            return { message: 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.SPACE_VALIDATOR' };
-        }
-
-        return { message: '' };
     }
 
     ngOnDestroy() {
