@@ -1,4 +1,4 @@
-@import '@angular/flex-layout/mq';
+@use '../styles/flex' as flex;
 
 $adf-pagination-height: 48px !default;
 $adf-pagination-icon-button-size: 32px !default;
@@ -29,7 +29,7 @@ $adf-pagination-empty-border: none !default;
         }
     }
 
-    @include layout-bp(lt-sm) {
+    @include flex.layout-bp(lt-sm) {
         & {
             flex-wrap: wrap;
             padding: 0 16px;
