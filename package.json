@@ -49,7 +49,8 @@
     "postbuild:ci": "node ./scripts/app-config-replace.js",
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "06s": "",
-    "clean": "rimraf dist node_modules lib/dist"
+    "clean": "rimraf dist node_modules lib/dist",
+    "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
   },
   "repository": {
     "type": "git",
