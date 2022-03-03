@@ -8,18 +8,21 @@
  */
 
 import { test as base } from '@playwright/test';
-import { PeopleComponent } from '../page-object/components/people.component';
-import { BaseStories } from '../page-object/base.stories';
-import { ComponentTitles } from '../models/model';
+import { BaseStories } from '../../page-object';
+import { ComponentTitles } from '../../models/component-titles.model';
+import { PeopleComponent } from '../components/people.component';
+import { GroupComponent } from '../components/group.component';
 
 interface Pages {
     processServicesCloud: BaseStories;
     peopleComponent: PeopleComponent;
+    groupComponent: GroupComponent;
 }
 
 export const test = base.extend<Pages>({
     processServicesCloud: async ({ page }, use) => { await use(new BaseStories(page, ComponentTitles.processServicesCloud)); },
-    peopleComponent: async ({ page }, use) => { await use(new PeopleComponent(page)); }
+    peopleComponent: async ({ page }, use) => { await use(new PeopleComponent(page)); },
+    groupComponent: async ({ page }, use) => { await use(new GroupComponent(page)); }
 });
 
 export { expect } from '@playwright/test';

@@ -9,8 +9,9 @@
 
 import { PlaywrightTestConfig, ReporterDescription, WebServerConfig } from '@playwright/test';
 import { dotenvConfig } from '@alfresco/adf-cli/tooling';
-import { paths } from './paths';
-import { timeouts } from './timeouts';
+import { paths } from './utils/paths';
+import { timeouts } from './utils/timeouts';
+import path from 'path';
 
 export const getGlobalConfig = (): PlaywrightTestConfig => {
     dotenvConfig();
@@ -21,10 +22,10 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
 
     if (!!env.CI) {
         startCommand = 'nx run stories:storybook';
-        report = ['html', { outputFolder: paths.report, open: 'never' }];
+        report = ['html', { outputFolder: path.resolve(`../${paths.report}`), open: 'never' }];
     } else {
         startCommand = 'nx run stories:build-storybook && nx run stories:storybook';
-        report = ['html', { outputFolder: paths.report, open: 'on-failure' }];
+        report = ['html', { outputFolder: path.resolve(`../${paths.report}`), open: 'on-failure' }];
     }
 
     const webServer: WebServerConfig = {
@@ -39,8 +40,6 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
     return {
         timeout: timeouts.globalTest,
         globalTimeout: timeouts.globalSpec,
-        testDir: './specs/',
-        //globalSetup: require.resolve('../global-setup/global.setup'),
         testMatch: /.*\.e2e\.ts/,
 
         expect: {
@@ -82,6 +81,17 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
                 ]
             }
         },
+
+        projects: [
+            {
+                name: 'Process Services Cloud : People',
+                testMatch: /.people-cloud*\.e2e\.ts/
+            },
+            {
+                name: 'Process Services Cloud : Groups',
+                testMatch: /.groups-cloud*\.e2e\.ts/
+            }
+        ],
 
         webServer
     };

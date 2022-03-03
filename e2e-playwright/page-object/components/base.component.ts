@@ -7,7 +7,7 @@
  */
 
 import { Locator, Page } from '@playwright/test';
-import { PlaywrightBase } from './playwright-base';
+import { PlaywrightBase } from '../playwright-base';
 
 export abstract class BaseComponent extends PlaywrightBase {
     private rootElement: string;

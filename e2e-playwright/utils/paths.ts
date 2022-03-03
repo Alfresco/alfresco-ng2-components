@@ -9,6 +9,7 @@
 const rootFolder = 'e2e-output/playwright-data';
 
 export const paths = {
+    rootFolder,
     files: `${rootFolder}/downloads`,
     report: `${rootFolder}/report`,
     userStates: `${rootFolder}/user-states`

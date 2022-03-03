@@ -7,9 +7,9 @@
  */
 
 import { Page } from '@playwright/test';
-import { timeouts } from '../timeouts';
-import { ComponentTitles } from '../models/model';
-import { PlaywrightBase } from './playwright-base';
+import { timeouts } from '../../utils/timeouts';
+import { ComponentTitles } from '../../models/component-titles.model';
+import { PlaywrightBase } from '../playwright-base';
 
 interface NavigateParameters { componentName: string; story: string };
 
