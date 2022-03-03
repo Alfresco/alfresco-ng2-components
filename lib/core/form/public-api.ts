@@ -18,6 +18,7 @@
 export * from './components/form-field/form-field.component';
 export * from './components/form-base.component';
 export * from './components/form-list.component';
+export * from './components/inplace-form-input/inplace-form-input.component';
 export * from './components/widgets/content/content.widget';
 export * from './components/form-custom-button.directive';
 export * from './components/form-renderer.component';

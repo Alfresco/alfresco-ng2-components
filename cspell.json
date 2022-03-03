@@ -131,7 +131,8 @@
     "processstring",
     "typeahed",
     "minmax",
-    "jsons"
+    "jsons",
+    "Inplace"
   ],
   "dictionaries": [
     "html",
