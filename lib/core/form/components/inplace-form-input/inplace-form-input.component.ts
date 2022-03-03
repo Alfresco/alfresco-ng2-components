@@ -16,7 +16,6 @@
  */
 
 import {
-    ChangeDetectionStrategy,
     Component,
     Input,
     ViewEncapsulation
@@ -27,7 +26,6 @@ import { FormControl } from '@angular/forms';
     selector: 'adf-inplace-form-input',
     templateUrl: './inplace-form-input.component.html',
     styleUrls: ['./inplace-form-input.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {
