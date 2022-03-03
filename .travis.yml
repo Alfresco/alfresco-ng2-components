@@ -441,6 +441,28 @@ jobs:
           workspaces:
             use: built_libs_cache
 
+        - stage: "Storybook Playwright Tests"
+          name: "Process Cloud : People"
+          before_script:
+            - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+            - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+          command: "npx playwright test --config='e2e-playwright/playwright.config.ts' --project='Process Services Cloud : People'"
+          workspaces:
+            use:
+              - built_libs_cache
+              - built_demo_shell_cache
+
+        - stage: "Storybook Playwright Tests"
+          name: "Process Cloud : Groups"
+          before_script:
+            - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+            - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+          command: "npx playwright test --config='e2e-playwright/playwright.config.ts' --project='Process Services Cloud : Groups'"
+          workspaces:
+            use:
+              - built_libs_cache
+              - built_demo_shell_cache
+
 notifications:
   slack:
     on_pull_requests: false
