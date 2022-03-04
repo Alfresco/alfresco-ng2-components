@@ -1,0 +1,35 @@
+.adf-inplace-input-container {
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-form-field-infix {
+        display: flex;
+        border-top: 0;
+    }
+
+    &-error {
+        input {
+            border: 1px solid var(--theme-warn-color) !important;
+        }
+    }
+
+    .adf-inplace-input-mat-form-field {
+        width: 100%;
+    }
+
+    .adf-inplace-input {
+        padding: 7px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+
+        &:focus {
+            border: 1px solid var(--theme-primary-color);
+        }
+
+        &:hover:not(:focus) {
+            border: 1px solid var(--theme-bg-hover-color);
+            background-color: var(--theme-bg-hover-color);
+        }
+    }
+}

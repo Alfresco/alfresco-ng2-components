@@ -23,7 +23,7 @@ import { FormFields } from '../../core/pages/form/form-fields';
 export class StartProcessCloudPage {
 
     defaultProcessName = $('input[id="processName"]');
-    processNameInput = $('#processName');
+    processNameInput = $('[data-automation-id="adf-inplace-input"]');
     selectProcessDropdownArrow = $('button[id="adf-select-process-dropdown"]');
     cancelProcessButton = $('#cancel_process');
     formStartProcessButton = $('button[data-automation-id="adf-form-start process"]');
@@ -89,6 +89,8 @@ export class StartProcessCloudPage {
     async isStartProcessButtonEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
         await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.startProcessButton);
+
         return this.startProcessButton.isEnabled();
     }
 

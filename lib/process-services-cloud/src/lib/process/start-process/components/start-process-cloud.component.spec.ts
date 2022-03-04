@@ -165,7 +165,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'OLE');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'OLE');
             typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
             tick(550);
@@ -242,7 +242,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -269,7 +269,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -297,7 +297,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -327,7 +327,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(4500);
@@ -580,18 +580,6 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.appName = 'myApp';
             fixture.detectChanges();
-        });
-
-        it('should have labels for process name and type', async () => {
-            component.appName = 'myApp';
-            component.processDefinitionName = 'NewProcess 2';
-            component.ngOnChanges({ appName: firstChange });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
-            expect(inputLabelsNodes.length).toBe(2);
         });
 
         it('should have floating labels for process name and type', async () => {
@@ -861,6 +849,40 @@ describe('StartProcessCloudComponent', () => {
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
 
             expect(escapeKeyboardEvent.cancelBubble).toBe(true);
+        });
+
+        it('should hide title', () => {
+            component.showTitle = false;
+            fixture.detectChanges();
+
+            const title = fixture.debugElement.query(By.css('.adf-title'));
+
+            expect(title).toBeFalsy();
+        });
+
+        it('should show title', () => {
+            const title = fixture.debugElement.query(By.css('.adf-title'));
+
+            expect(title).toBeTruthy();
+        });
+
+        it('should show process definition dropdown', () => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            fixture.detectChanges();
+
+            const processDropdown = fixture.debugElement.query(By.css('[data-automation-id="adf-select-cloud-process-dropdown"]'));
+
+            expect(processDropdown).toBeTruthy();
+        });
+
+        it('should hide process definition dropdown', () => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.showSelectProcessDropdown = false;
+            fixture.detectChanges();
+
+            const processDropdown = fixture.debugElement.query(By.css('#processDefinitionName'));
+
+            expect(processDropdown).toBeFalsy();
         });
     });
 });
