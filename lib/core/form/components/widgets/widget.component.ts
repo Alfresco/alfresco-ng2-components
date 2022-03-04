@@ -18,6 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { FormFieldEvent } from '../../events/form-field.event';
+import { FormRulesEvent } from '../../events/form-rules.event';
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
 
@@ -56,6 +58,8 @@ export class WidgetComponent implements AfterViewInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
+    touched: boolean = false;
+
     constructor(public formService?: FormService) {
     }
 
@@ -76,6 +80,10 @@ export class WidgetComponent implements AfterViewInit {
         return !!this.field.validationSummary;
     }
 
+    isTouched(): boolean {
+        return this.touched;
+    }
+
     hasValue(): boolean {
         return this.field &&
             this.field.value !== null &&
@@ -83,7 +91,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     isInvalidFieldRequired() {
-        return !this.field.isValid && !this.field.validationSummary && this.isRequired();
+        return !this.field.isValid && (!this.field.validationSummary || !this.field.value) && this.isRequired();
     }
 
     ngAfterViewInit() {
@@ -96,9 +104,15 @@ export class WidgetComponent implements AfterViewInit {
 
     onFieldChanged(field: FormFieldModel) {
         this.fieldChanged.emit(field);
+        this.formService.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormFieldEvent(this.field?.form, this.field), null));
     }
 
     event(event: Event): void {
         this.formService.formEvents.next(event);
+        this.formService.formRulesEvent.next(new FormRulesEvent(event?.type, new FormFieldEvent(this.field?.form, this.field), event));
+    }
+
+    markAsTouched() {
+        this.touched = true;
     }
 }

@@ -88,7 +88,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
-    currentScaleMode: string = 'auto';
+    currentScaleMode: 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto' = 'init';
     currentScale: number = 1;
 
     MAX_AUTO_SCALE: number = 1.25;
@@ -107,7 +107,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     private eventBus = new pdfjsViewer.EventBus();
-    private pdfjsDefaultOptions  = {
+    private pdfjsDefaultOptions = {
         disableAutoFetch: true,
         disableStream: true
     };
@@ -124,17 +124,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
-        this.currentScale = this.getUserScaling();
         this.pdfjsWorkerDestroy$.pipe(catchError(() => null), delay(700)).subscribe(() => this.destroyPdJsWorker());
     }
 
     getUserScaling(): number {
-        const scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined) / 100;
+        let scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined);
+
         if (scaleConfig) {
-            return this.checkLimits(scaleConfig);
-        } else {
-            return 1;
+            scaleConfig = scaleConfig / 100;
+            scaleConfig = this.checkLimits(scaleConfig);
         }
+
+        return scaleConfig;
     }
 
     checkLimits(scaleConfig: number): number {
@@ -205,8 +206,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             return pdfDocument.getPage(1);
         })
-        .then(() => this.scalePage('auto'))
-        .catch(() => this.error.emit());
+            .then(() => this.scalePage('init'))
+            .catch(() => this.error.emit());
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
@@ -291,45 +292,52 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
             const pageHeightScale = (heightContainer - padding) / currentPage.width * currentPage.scale;
 
-            let scale = this.getUserScaling();
-            if (!scale) {
-                switch (this.currentScaleMode) {
-                    case 'page-actual':
-                        scale = 1;
-                        break;
-                    case 'page-width':
-                        scale = pageWidthScale;
-                        break;
-                    case 'page-height':
-                        scale = pageHeightScale;
-                        break;
-                    case 'page-fit':
-                        scale = Math.min(pageWidthScale, pageHeightScale);
-                        break;
-                    case 'auto':
-                        let horizontalScale;
-                        if (this.isLandscape) {
-                            horizontalScale = Math.min(pageHeightScale, pageWidthScale);
-                        } else {
-                            horizontalScale = pageWidthScale;
-                        }
-                        horizontalScale = Math.round(horizontalScale);
-                        scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
-                        scale = this.checkPageFitInContainer(scale);
+            let scale;
+            switch (this.currentScaleMode) {
+                case 'init':
+                    scale = this.getUserScaling();
+                    if (!scale) {
+                        scale = this.autoScaling(pageHeightScale, pageWidthScale);
+                    }
+                    break;
+                case 'page-actual':
+                    scale = 1;
+                    break;
+                case 'page-width':
+                    scale = pageWidthScale;
+                    break;
+                case 'page-height':
+                    scale = pageHeightScale;
+                    break;
+                case 'page-fit':
+                    scale = this.getUserScaling();
+                    if (!scale) {
+                        scale = this.autoScaling(pageHeightScale, pageWidthScale);
+                    }
+                    break;
+                case 'auto':
+                    scale = this.autoScaling(pageHeightScale, pageWidthScale);
 
-                        break;
-                    default:
-                        this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
-                        return;
-                }
-
-                this.setScaleUpdatePages(scale);
-            } else {
-                this.currentScale = 0;
-                scale = this.checkPageFitInContainer(scale);
-                this.setScaleUpdatePages(scale);
+                    break;
+                default:
+                    this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
+                    return;
             }
+
+            this.setScaleUpdatePages(scale);
         }
+    }
+
+    private autoScaling(pageHeightScale: number, pageWidthScale: number) {
+        let horizontalScale;
+        if (this.isLandscape) {
+            horizontalScale = Math.min(pageHeightScale, pageWidthScale);
+        } else {
+            horizontalScale = pageWidthScale;
+        }
+        horizontalScale = Math.round(horizontalScale);
+        const scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
+        return this.checkPageFitInContainer(scale);
     }
 
     private getDocumentContainer() {

@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Groups Cloud Component",
     "CONFIRM-DIALOG": "Confirmation Dialog",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Service Task List"
+    "SERVICE_TASK_LIST": "Service Task List",
+    "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Replace columns",
     "LOAD_NODE": "Load Node",
     "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items"
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
+    "USE_CUSTOM_COLUMN_HEADER": "Use custom template for 'User' header",
+    "CUSTOM_COLUMN_HEADER": "Custom User Header Template"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "All Preselected Groups",
     "INVALID_USERS": "Invalid Users",
     "INVALID_GROUPS": "Invalid Groups",
-    "READONLY_MODE": "Read-only Mode"
+    "READONLY_MODE": "Read-only Mode",
+    "GROUPS_RESTRICTION": "Groups Restriction"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselection",

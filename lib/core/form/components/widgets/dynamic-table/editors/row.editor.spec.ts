@@ -25,6 +25,7 @@ import { AlfrescoApiService } from '../../../../../services';
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule, setupTestBed } from '../../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { DynamicRowValidationSummary } from '../dynamic-row-validation-summary.model';
 
 describe('RowEditorComponent', () => {
 
@@ -71,7 +72,7 @@ describe('RowEditorComponent', () => {
 
     it('should emit [save] event', (done) => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            {isValid: true, message: null}
+            new DynamicRowValidationSummary({ isValid: true, message: null })
         );
         component.save.subscribe((event) => {
             expect(event.table).toBe(component.table);
@@ -84,7 +85,7 @@ describe('RowEditorComponent', () => {
 
     it('should not emit [save] event for invalid row', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            {isValid: false, message: 'error'}
+            new DynamicRowValidationSummary({ isValid: false, message: 'error' })
         );
         let raised = false;
         component.save.subscribe(() => raised = true);

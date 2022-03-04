@@ -20,7 +20,6 @@ import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
-    LocalStorageUtil,
     LoginPage,
     StringUtil,
     TaskHeaderCloudPage,
@@ -30,7 +29,7 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import moment = require('moment');
+import * as moment from 'moment';
 
 const isValueInvalid = (value: any): boolean => {
     return value === null || value === undefined;
@@ -68,7 +67,6 @@ describe('Task Header cloud component', () => {
     let subTask: any;
     let subTaskCreatedDate: string;
     let completedEndDate: string;
-    let defaultDate: string;
     let groupInfo: any;
     let testUser: any;
     let unclaimedTask: any;
@@ -76,7 +74,6 @@ describe('Task Header cloud component', () => {
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
-    const defaultFormat = 'M/D/YY';
 
     const createCompletedTask = async function () {
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
@@ -117,7 +114,6 @@ describe('Task Header cloud component', () => {
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
         dueDate = moment(completedTask.entry.dueDate).format(dateTimeFormat);
         completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
-        defaultDate = moment(completedTask.entry.createdDate).format(defaultFormat);
 
         subTask = await createSubTask(createdTaskId);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
@@ -240,30 +236,5 @@ describe('Task Header cloud component', () => {
 
         await peopleCloudComponentPage.searchAssignee('modeler');
         await peopleCloudComponentPage.checkNoResultsFoundError();
-    });
-
-    describe('Default Date format', () => {
-        beforeEach(async () => {
-            await LocalStorageUtil.setConfigField('dateValues', '{' +
-                '"defaultDateFormat": "shortDate",' +
-                '"defaultDateTimeFormat": "M/d/yy, h:mm a",' +
-                '"defaultLocale": "uk"' +
-                '}');
-            await navigationBarPage.navigateToProcessServicesCloudPage();
-            await appListCloudComponent.checkApsContainer();
-            await appListCloudComponent.goToApp(simpleApp);
-        });
-
-        it('[C311280] Should pick up the default date format from the app configuration', async () => {
-            await taskFilter.clickTaskFilter('completed-tasks');
-            await taskList.getDataTable().waitTillContentLoaded();
-
-            await taskList.checkContentIsDisplayedByName(completedTaskName);
-            await taskList.selectRow(completedTaskName);
-            await tasksCloudDemoPage.waitTillContentLoaded();
-
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-            await expect(await taskHeaderCloudPage.getCreated()).toEqual(defaultDate);
-        });
     });
 });

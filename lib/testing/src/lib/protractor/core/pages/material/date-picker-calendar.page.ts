@@ -30,7 +30,7 @@ export class DatePickerCalendarPage {
     periodButton = $('button[class*=mat-calendar-period-button]');
 
     async getSelectedDate(): Promise<string> {
-        return BrowserActions.getAttribute($('td[class*="mat-calendar-body-active"]'), 'aria-label');
+        return BrowserActions.getAttribute($('button[class*="mat-calendar-body-active"]'), 'aria-label');
     }
 
     async checkDatesAfterDateAreDisabled(date): Promise<void> {

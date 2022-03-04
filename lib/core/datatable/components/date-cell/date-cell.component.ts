@@ -41,8 +41,7 @@ import { takeUntil } from 'rxjs/operators';
         <ng-template #standard_date>
             <span
                 class="adf-datatable-cell-value"
-                title="{{ tooltip | adfLocalizedDate: format }}"
-                class="adf-datatable-cell-value"
+                title="{{ tooltip | adfLocalizedDate: tooltipDateFormat }}"
                 [attr.aria-label]="value$ | async | adfLocalizedDate: format">
                 {{ value$ | async | adfLocalizedDate: format }}
             </span>
@@ -57,6 +56,7 @@ export class DateCellComponent extends DataTableCellComponent {
 
     currentLocale: string;
     dateFormat: string;
+    tooltipDateFormat: string;
 
     get format(): string {
         if (this.column) {
@@ -73,6 +73,7 @@ export class DateCellComponent extends DataTableCellComponent {
         super(alfrescoApiService);
 
         this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
+        this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);
         if (userPreferenceService) {
             userPreferenceService
                 .select(UserPreferenceValues.Locale)

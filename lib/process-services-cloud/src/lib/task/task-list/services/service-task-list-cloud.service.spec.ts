@@ -16,15 +16,17 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { of } from 'rxjs';
 
 describe('Activiti ServiceTaskList Cloud Service', () => {
 
     let service: ServiceTaskListCloudService;
     let alfrescoApiService: AlfrescoApiService;
+    let logService: LogService;
 
     const returnCallQueryParameters = (): any => ({
         oauth2Auth: {
@@ -50,6 +52,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         service = TestBed.inject(ServiceTaskListCloudService);
+        logService = TestBed.inject(LogService);
     });
 
     it('should append to the call all the parameters', (done) => {
@@ -101,4 +104,69 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
             }
         );
     });
+
+    describe('run replayServiceTaskRequest method', () => {
+
+        let logServiceErrorSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            spyOn(service, 'getBasePath').and.returnValue('http://localhost/fakeName');
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+            logServiceErrorSpy = spyOn(logService, 'error');
+        });
+
+
+        it('should execute post method if all parameters are provided', async () => {
+            const expected = {
+                expectedQueryUrl: 'http://localhost/fakeName/rb/admin/v1/executions/executionId_1/replay/service-task',
+                expectedPayload: {
+                    flowNodeId: 'flowNodeId_1'
+                }
+            };
+
+            const spyOnPost = spyOn<any>(service, 'post').and.returnValue(of({}));
+            const params = ['fakeName', 'executionId_1', 'flowNodeId_1'] as const;
+            await service.replayServiceTaskRequest(...params).toPromise();
+            expect(spyOnPost).toHaveBeenCalledWith(expected.expectedQueryUrl, expected.expectedPayload);
+            expect(logServiceErrorSpy).not.toHaveBeenCalled();
+
+        });
+
+        it('should throw an exeption and execute logService error if appName is null', () => {
+            const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
+            const params = [null, 'executionId_1', 'flowNodeId_1'] as const;
+            service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                expect(logServiceErrorSpy).toHaveBeenCalled();
+            });
+        });
+
+        it('should throw an exeption and execute logService error if executionId is null', () => {
+            const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
+            const params = ['fakeName', null, 'flowNodeId_1'] as const;
+            service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                expect(logServiceErrorSpy).toHaveBeenCalled();
+            });
+        });
+
+        it('should throw an exeption and execute logService error if flowNodeId is null', () => {
+            const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
+            const params = ['fakeName', 'executionId_1', null] as const;
+            service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                expect(logServiceErrorSpy).toHaveBeenCalled();
+            });
+        });
+
+        it('should throw an exeption and execute logService error if appName, executionId and flowNodeId are null', () => {
+            const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
+            const params = [null, null, null] as const;
+            service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
+                expect(error).toEqual(expectedErrorMessage);
+                expect(logServiceErrorSpy).toHaveBeenCalled();
+            });
+        });
+    });
+
 });

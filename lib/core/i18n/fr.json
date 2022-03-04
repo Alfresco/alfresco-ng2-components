@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Télécharger",
       "REMOVE_FILE": "Supprimer",
       "UPLOAD": "Importer",
-      "REQUIRED": "*Obligatoire",
+      "REQUIRED": "Champ obligatoire",
+      "REST_API_FAILED": "Le serveur '{{ hostname }}' n'est pas accessible",
       "FILE_NAME": "Nom de fichier",
       "NO_FILE_ATTACHED": "Aucun fichier joint",
       "VALIDATOR": {

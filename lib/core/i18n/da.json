@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Download",
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Upload",
-      "REQUIRED": "*Påkrævet",
+      "REQUIRED": "Obligatorisk felt",
+      "REST_API_FAILED": "Serveren '{{ hostname }}' er ikke tilgængelig",
       "FILE_NAME": "Filnavn",
       "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
       "VALIDATOR": {

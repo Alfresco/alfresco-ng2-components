@@ -21,6 +21,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
     -   [Using the copyContent option](#using-the-copycontent-option)
+    -   [Example of column customData](#example-of-column-customdata)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -45,10 +46,14 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | ---- | ---- | ------------- | ----------- |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
+| customData | `any` |  | You can specify any custom data which can be used by any specific feature |
+| draggable | `boolean` | false | Toggles drag and drop for header column. |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
 | focus | `boolean` | true | Enable or disable cell focus |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
+| id | `string` | "" | Column identifier. |
+| isHidden | `boolean` | false | Hides columns |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
@@ -346,6 +351,35 @@ HTML `<data-column>` element example:
         ...
     </data-columns>
 </adf-tasklist>
+```
+
+### Example of column customData
+
+If you would like to pass any custom data related to your specific feature, you can use customData
+
+HTML `<data-column>` element example:
+
+```html
+<data-column [customData]="MyCustomData" key="id" title="Id"></data-column>
+```
+
+You can use generic type for [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) in order to get intellisense working e.g.
+
+```ts
+const dataColumn: DataColumn<{ shouldPerformActionIfDisplayed: boolean }> = {
+    ...
+    customData: { shouldPerformActionIfDisplayed: true }
+}
+
+// We should get proper types
+consol.log(dataColumn.customData.shouldPerformActionIfDisplayed);
+
+// Now we can use this data in our feature e.g.
+const shouldPerformAction = this.columns
+    .filter(column => column.isHidden)
+    .some(column => column.customData?.shouldPerformActionIfDisplayed === true);
+
+if (shouldPerformAction) { /* action */}
 ```
 
 ## See also

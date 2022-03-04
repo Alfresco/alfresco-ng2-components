@@ -2,6 +2,10 @@
     &-amount-widget {
         width: 100%;
         margin-top: 15px;
+
+        .adf-left-label {
+            line-height: 36px;
+        }
     }
 
     &-amount-widget__input {

@@ -19,8 +19,7 @@
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
@@ -74,14 +73,30 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
-            }
+            if (this.field.dynamicDateRangeSelection) {
+                const today = this.getTodaysFormattedDate();
+                if (Number.isInteger(this.field.minDateRangeValue)) {
+                    this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
+                    this.field.minValue = this.minDate.format(DATE_FORMAT_CLOUD);
+                }
+                if (Number.isInteger(this.field.maxDateRangeValue)) {
+                    this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
+                    this.field.maxValue = this.maxDate.format(DATE_FORMAT_CLOUD);
+                }
+            } else {
+                if (this.field.minValue) {
+                    this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
+                }
 
-            if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
+                if (this.field.maxValue) {
+                    this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
+                }
             }
         }
+    }
+
+    getTodaysFormattedDate() {
+        return moment().format(DATE_FORMAT_CLOUD);
     }
 
     ngOnDestroy() {

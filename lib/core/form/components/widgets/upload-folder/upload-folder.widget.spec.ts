@@ -14,3 +14,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { setupTestBed } from '../../../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../../../testing';
+import { UploadFolderWidgetComponent } from './upload-folder.widget';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { FormFieldTypes } from '../core/form-field-types';
+
+describe('UploadFolderWidgetComponent', () => {
+
+    let widget: UploadFolderWidgetComponent;
+    let fixture: ComponentFixture<UploadFolderWidgetComponent>;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [
+            CoreTestingModule
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(UploadFolderWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
+    });
+
+    describe('when is required', () => {
+
+        it('should be able to display label with asterisk', async () => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.UPLOAD,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+    });
+});

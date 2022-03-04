@@ -23,6 +23,7 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 import { GroupCloudComponentPage } from './group-cloud-component.page';
+import { DatePickerPage } from '../../core/pages/material/date-picker.page';
 
 export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspended' | 'Completed';
 
@@ -52,6 +53,11 @@ export class EditTaskFilterCloudComponentPage {
     orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
     completedDateDropdown = new DropdownPage($(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
     assignmentDropdown = new DropdownPage($(`.adf-task-assignment-filter`));
+    processDefinitionNameDropdown = new DropdownPage($('mat-select[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]'));
+    createdDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`));
+    createdDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`));
+    dueDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
+    dueDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`));
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
     peopleCloudComponent = new PeopleCloudComponentPage();
@@ -240,6 +246,26 @@ export class EditTaskFilterCloudComponentPage {
         return this.appNameDropdown.getSelectedOptionText();
     }
 
+    async setCreatedDateRangeDropDown(option: string): Promise<void> {
+        await this.createdDateRangeDropdown.checkDropdownIsVisible();
+        await this.createdDateRangeDropdown.selectDropdownOption(option);
+    }
+
+    async setCreatedDateRangeWithin(start: Date, end: Date): Promise<void> {
+        await this.setCreatedDateRangeDropDown('Date within');
+        await this.createdDateRangeWithin.setDateRange(start, end);
+    }
+
+    async setDueDateRangeDropDown(option: string): Promise<void> {
+        await this.dueDateRangeDropdown.checkDropdownIsVisible();
+        await this.dueDateRangeDropdown.selectDropdownOption(option);
+    }
+
+    async setDueDateRangeWithin(start: Date, end: Date): Promise<void> {
+        await this.setDueDateRangeDropDown('Date within');
+        await this.dueDateRangeWithin.setDateRange(start, end);
+    }
+
     async setId(option: string): Promise<void> {
         await this.setProperty('taskId', option);
     }
@@ -266,6 +292,12 @@ export class EditTaskFilterCloudComponentPage {
 
     async setProcessInstanceId(option: string): Promise<void> {
         await this.setProperty('processInstanceId', option);
+    }
+
+    async setProcessDefinitionNameDropDown(option: string): Promise<void> {
+        await browser.waitForAngular();
+        await this.processDefinitionNameDropdown.checkDropdownIsVisible();
+        await this.processDefinitionNameDropdown.selectDropdownOption(option);
     }
 
     async setProperty(property: string, option: string): Promise<void> {

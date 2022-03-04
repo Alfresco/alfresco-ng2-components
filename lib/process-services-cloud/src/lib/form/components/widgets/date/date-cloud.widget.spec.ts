@@ -17,8 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent, DATE_FORMAT_CLOUD } from './date-cloud.widget';
-import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
-import moment from 'moment-es6';
+import { setupTestBed, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
+import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -229,5 +229,270 @@ describe('DateWidgetComponent', () => {
                     });
             });
     });
+
+    describe('when form model has left labels', () => {
+
+        it('should have left labels classes on leftLabels true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).not.toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).not.toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).not.toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels false', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels not present', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+    });
+
+    describe('Set dynamic dates', () => {
+        it('should min date equal to the today date minus minimum date range value', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                minDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const todayDate = moment().format(DATE_FORMAT_CLOUD);
+            const expected = moment(todayDate).subtract(widget.field.minDateRangeValue, 'days');
+            expect(widget.minDate).toEqual(expected);
+        });
+
+        it('should min date and max date be undefined if dynamic min and max date are not set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).toBeUndefined();
+            expect(widget.maxDate).toBeUndefined();
+        });
+
+        it('should max date be undefined if only minimum date range value is set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                minDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).toBeUndefined();
+        });
+
+        it('should min date be undefined if only maximum date range value is set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should max date equal to the today date plus maximum date range value', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 5
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const todayDate = moment().format(DATE_FORMAT_CLOUD);
+            const expected = moment(todayDate).add(widget.field.maxDateRangeValue, 'days');
+            expect(widget.maxDate).toEqual(expected);
+        });
+
+        it('should maxDate and minDate be undefined if minDateRangeValue and maxDateRangeValue are null', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: null,
+                minDateRangeValue: null
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).toBeUndefined();
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should minDate be undefined if minDateRangeValue is null and maxDateRangeValue is greater than 0', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 15,
+                minDateRangeValue: null
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).not.toBeUndefined();
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should maxDate be undefined if maxDateRangeValue is null and minDateRangeValue is greater than 0', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: null,
+                minDateRangeValue: 10
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).not.toBeUndefined();
+            expect(widget.maxDate).toBeUndefined();
+        });
+
+        describe('check date validation by dynamic date ranges', () => {
+            it('should minValue be equal to today date minus minDateRangeValue', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: null,
+                    minDateRangeValue: 1,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMinValueString = '2022-07-21';
+
+                expect(widget.field.minValue).toEqual(expectedMinValueString);
+                expect(widget.maxDate).toBeUndefined();
+                expect(widget.field.maxValue).toBeNull();
+            });
+
+            it('should maxValue be equal to today date plus maxDateRangeValue', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: 8,
+                    minDateRangeValue: null,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMaxValueString = '2022-07-30';
+
+                expect(widget.field.maxValue).toEqual(expectedMaxValueString);
+                expect(widget.minDate).toBeUndefined();
+                expect(widget.field.minValue).toBeNull();
+            });
+
+            it('should maxValue and minValue be null if maxDateRangeValue and minDateRangeValue are null', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: null,
+                    minDateRangeValue: null,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(widget.minDate).toBeUndefined();
+                expect(widget.maxDate).toBeUndefined();
+                expect(widget.field.minValue).toBeNull();
+                expect(widget.field.maxValue).toBeNull();
+            });
+
+            it('should maxValue and minValue not be null if maxDateRangeVale and minDateRangeValue are not null', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: 8,
+                    minDateRangeValue: 10,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMaxValueString = '2022-07-30';
+                const expectedMinValueString = '2022-07-12';
+
+                expect(widget.field.maxValue).toEqual(expectedMaxValueString);
+                expect(widget.field.minValue).toEqual(expectedMinValueString);
+            });
+
+        });
+
+
+    });
+
 
 });

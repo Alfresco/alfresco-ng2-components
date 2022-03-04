@@ -27,7 +27,7 @@ import {
     AppConfigService
 } from '@alfresco/adf-core';
 import { ShareDialogComponent } from './content-node-share.dialog';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 

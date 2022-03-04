@@ -59,7 +59,7 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
 
     translateParameters: any = null;
 
-    _subscriptAnimationState: string = '';
+    subscriptAnimationState: string = '';
 
     constructor(public formService: FormService) {
         super(formService);
@@ -68,13 +68,13 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['required']) {
             this.required = changes.required.currentValue;
-            this._subscriptAnimationState = 'enter';
+            this.subscriptAnimationState = 'enter';
         }
         if (changes['error'] && changes['error'].currentValue) {
             if (changes.error.currentValue.isActive()) {
                 this.error = changes.error.currentValue;
                 this.translateParameters = this.error.getAttributesAsJsonObj();
-                this._subscriptAnimationState = 'enter';
+                this.subscriptAnimationState = 'enter';
             }
         }
     }

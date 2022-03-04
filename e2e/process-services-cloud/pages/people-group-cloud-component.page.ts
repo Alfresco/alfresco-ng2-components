@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, $, $$ } from 'protractor';
+import { by, element, $, $$, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
@@ -24,10 +24,8 @@ export class PeopleGroupCloudComponentPage {
     peopleCloudMultipleSelectionChecked = $('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]');
     peopleCloudSingleSelection = $('mat-radio-button[data-automation-id="app-people-single-mode"]');
     peopleCloudMultipleSelection = $('mat-radio-button[data-automation-id="app-people-multiple-mode"]');
-    peopleCloudFilterRole = $('mat-radio-button[data-automation-id="app-people-filter-role"]');
     groupCloudSingleSelection = $('mat-radio-button[data-automation-id="app-group-single-mode"]');
     groupCloudMultipleSelection = $('mat-radio-button[data-automation-id="app-group-multiple-mode"]');
-    groupCloudFilterRole = $('mat-radio-button[data-automation-id="app-group-filter-role"]');
     peopleRoleInput = $('input[data-automation-id="app-people-roles-input"]');
     peopleAppInput = $('input[data-automation-id="app-people-app-input"]');
     peoplePreselect = $('input[data-automation-id="app-people-preselect-input"]');
@@ -35,10 +33,13 @@ export class PeopleGroupCloudComponentPage {
     groupAppInput = $('input[data-automation-id="app-group-app-input"]');
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation = $$('mat-checkbox.app-preselect-value').first();
+    preselectValidation = $$('mat-checkbox.app-preselect-value label').first();
     preselectValidationStatus = $$('mat-checkbox.app-preselect-value label input').first();
-    peopleFilterByAppName = $('.app-people-control-options mat-radio-button[value="appName"]');
-    groupFilterByAppName = $('.app-groups-control-options mat-radio-button[value="appName"]');
+
+    async navigateTo() {
+        await browser.get('#/cloud/people-group-cloud');
+        await browser.waitForAngular();
+    }
 
     async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
@@ -62,18 +63,6 @@ export class PeopleGroupCloudComponentPage {
 
     async checkPeopleCloudMultipleSelectionIsSelected(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelectionChecked);
-    }
-
-    async checkPeopleCloudFilterRole(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
-    }
-
-    async clickPeopleCloudFilterRole(): Promise<void> {
-        await BrowserActions.click(this.peopleCloudFilterRole);
-    }
-
-    async clickGroupCloudFilterRole(): Promise<void> {
-        await BrowserActions.click(this.groupCloudFilterRole);
     }
 
     async enterPeopleRoles(roles: string): Promise<void> {
@@ -106,14 +95,6 @@ export class PeopleGroupCloudComponentPage {
 
     async getPreselectValidationStatus(): Promise<string> {
         return BrowserActions.getAttribute(this.preselectValidationStatus, 'aria-checked');
-    }
-
-    async clickPeopleFilerByApp(): Promise<void> {
-        await BrowserActions.click(this.peopleFilterByAppName);
-    }
-
-    async clickGroupFilerByApp(): Promise<void> {
-        await BrowserActions.click(this.groupFilterByAppName);
     }
 
     async enterPeopleAppName(appName: string): Promise<void> {

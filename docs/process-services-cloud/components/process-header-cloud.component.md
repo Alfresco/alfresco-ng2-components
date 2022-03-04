@@ -50,6 +50,14 @@ However, you can also choose which properties to show using a configuration in `
 
 With this configuration, only the four listed properties will be shown.
 
+You can also define the date format of the date properties using a configuration in `app.config.json`:
+
+```json
+    "adf-cloud-process-header": {
+      "defaultDateFormat": "full"
+    }
+```
+
 ## See also
 
 -   [Process header cloud service](../../process-services-cloud/services/process-header-cloud.service.md)

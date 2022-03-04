@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2022 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,76 +15,30 @@
  * limitations under the License.
  */
 
-export const fakeUser1 = {
-    enabled: true,
-    firstName: 'firstName',
-    lastName: 'lastName',
-    email: 'fake-email@dom.com',
-    emailNotificationsEnabled: true,
-    company: {},
-    id: 'fake-email@dom.com',
-    avatarId: '123-123-123'
-};
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { CommentModel } from '../models/comment.model';
+import { CommentContentServiceInterface } from '../services/comment-content.service.interface';
+import { testUser } from '../mock/comment-content.mock';
 
-export const fakeUser2 = {
-    enabled: true,
-    firstName: 'some',
-    lastName: 'one',
-    email: 'some-one@somegroup.com',
-    emailNotificationsEnabled: true,
-    company: {},
-    id: 'fake-email@dom.com',
-    avatarId: '001-001-001'
-};
+@Injectable()
+export class CommentContentServiceMock implements CommentContentServiceInterface {
+    private comments: CommentModel [] = [];
 
-export const fakeContentComments = {
-    list: {
-        pagination: {
-            count: 4,
-            hasMoreItems: false,
-            totalItems: 4,
-            skipCount: 0,
-            maxItems: 100
-        },
-        entries: [{
-            entry: {
-                createdAt: '2018-03-27T10:55:45.725+0000',
-                createdBy: fakeUser1,
-                edited: false,
-                modifiedAt: '2018-03-27T10:55:45.725+0000',
-                canEdit: true,
-                modifiedBy: fakeUser1,
-                canDelete: true,
-                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                content: 'fake-message-1'
-            }
-        }, {
-            entry: {
-                createdAt: '2018-03-27T10:55:45.725+0000',
-                createdBy: fakeUser2,
-                edited: false,
-                modifiedAt: '2018-03-27T10:55:45.725+0000',
-                canEdit: true,
-                modifiedBy: fakeUser2,
-                canDelete: true,
-                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                content: 'fake-message-2'
-            }
-        }
-        ]
+    addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
+        const comment = new CommentModel({
+            id: nodeId,
+            message: message,
+            created: new Date(),
+            createdBy: testUser,
+            isSelected: false
+        });
+        this.comments.push(comment);
+
+        return of(comment);
     }
-};
 
-export const fakeContentComment = {
-    entry: {
-        createdAt: '2018-03-29T11:49:51.735+0000',
-        createdBy: fakeUser1,
-        edited: false,
-        modifiedAt: '2018-03-29T11:49:51.735+0000',
-        canEdit: true,
-        modifiedBy: fakeUser1,
-        canDelete: true,
-        id: '4d07cdc5-f00c-4391-b39d-a842b12478b2',
-        content: 'fake-comment-message'
-    }
-};
+    getNodeComments(_nodeId: string): Observable<CommentModel[]>{
+        return of(this.comments);
+    };
+}

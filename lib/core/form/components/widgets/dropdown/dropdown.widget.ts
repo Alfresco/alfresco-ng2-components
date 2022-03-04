@@ -113,4 +113,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
         return this.field.type === 'readonly';
     }
 
+    showRequiredMessage(): boolean {
+        return (this.isInvalidFieldRequired() || this.field.value === 'empty') && this.isTouched();
+    }
 }

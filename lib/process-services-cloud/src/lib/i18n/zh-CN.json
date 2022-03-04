@@ -330,6 +330,8 @@
       "CREATED": "已创建",
       "END_DATE": "结束日期",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "流程实例 ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "没有流程实例 ID",
       "DESCRIPTION": "说明",
       "DESCRIPTION_DEFAULT": "没有描述",
       "FORM_NAME": "表单名称",

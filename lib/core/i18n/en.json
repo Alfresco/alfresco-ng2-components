@@ -41,7 +41,7 @@
       "DOWNLOAD_FILE": "Download",
       "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
-      "REQUIRED": "*Required",
+      "REQUIRED": "This is a required field",
       "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
       "FILE_NAME": "File Name",
       "NO_FILE_ATTACHED": "No file attached",
@@ -186,7 +186,8 @@
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "Client ID",
-      "PUBLIC_URLS": "Public urls silent Login"
+      "PUBLIC_URLS": "Public urls silent Login",
+      "SECRET": "Secret"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentation",
       "SPREADSHEET": "Spreadsheet",
       "MISCELLANEOUS": "Miscellaneous"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply"
     }
   },
   "USER_PROFILE": {

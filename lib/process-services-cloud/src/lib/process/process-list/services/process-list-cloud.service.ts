@@ -73,7 +73,7 @@ export class ProcessListCloudService extends BaseCloudService {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&
                 this.isPropertyValueValid(requestNode, property)) {
-                queryParam[property] = requestNode[property];
+                queryParam[property] = this.getQueryParamValueFromRequestNode(requestNode, property as keyof ProcessQueryCloudRequestModel);
             }
         }
 
@@ -82,6 +82,17 @@ export class ProcessListCloudService extends BaseCloudService {
         }
 
         return queryParam;
+    }
+
+    private getQueryParamValueFromRequestNode(
+        requestNode: ProcessQueryCloudRequestModel,
+        property: keyof ProcessQueryCloudRequestModel
+    ) {
+        if (property === 'variableKeys' && requestNode[property]?.length > 0) {
+            return `${requestNode[property].map(variableId => variableId).join(',')}`;
+        }
+
+        return requestNode[property];
     }
 
     protected buildFilterForAllStatus(): string[] {

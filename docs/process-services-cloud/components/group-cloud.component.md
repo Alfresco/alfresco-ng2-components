@@ -42,10 +42,11 @@ Searches Groups.
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | Group selection mode (single/multiple). |
 | preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
 | readOnly | `boolean` | false | Show the info in readonly mode |
+| required | `boolean` | false | Mark this field as required |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | searchGroupsControl | `FormControl` |  | FormControl to search the group |
 | title | `string` |  | Title of the field |
-| validate | `boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
+| validate | `boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 

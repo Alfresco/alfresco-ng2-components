@@ -18,10 +18,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DataColumnModule } from '../data-column/data-column.module';
-import { DataTableModule } from '../datatable/datatable.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatLineModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../pipes/pipe.module';
 
 import { CommentListComponent } from './comment-list.component';
@@ -30,13 +32,14 @@ import { CommentsComponent } from './comments.component';
 @NgModule({
     imports: [
         PipeModule,
-        DataColumnModule,
-        DataTableModule,
         FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatListModule,
+        MatLineModule
     ],
     declarations: [
         CommentListComponent,

@@ -177,6 +177,10 @@ describe('UserPreferencesService', () => {
 
     describe('with language config', () => {
 
+        beforeEach(() => {
+            preferences = TestBed.inject(UserPreferencesService);
+        });
+
         it('should store default textOrientation based on language', () => {
             appConfig.config.languages = [
                 {

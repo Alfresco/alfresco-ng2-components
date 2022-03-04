@@ -259,8 +259,8 @@ export class HostSettingsComponent implements OnInit {
         return this.oauthConfig.get('scope') as FormControl;
     }
 
-    get secretId(): FormControl {
-        return this.oauthConfig.get('secretId') as FormControl;
+    get secret(): FormControl {
+        return this.oauthConfig.get('secret') as FormControl;
     }
 
     get implicitFlow(): FormControl {

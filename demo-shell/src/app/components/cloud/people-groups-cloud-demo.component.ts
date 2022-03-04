@@ -16,10 +16,9 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ComponentSelectionMode } from '@alfresco/adf-process-services-cloud';
+import { ComponentSelectionMode, IdentityUserModel, IdentityGroupModel } from '@alfresco/adf-process-services-cloud';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
-import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-people-groups-cloud',
@@ -37,6 +36,7 @@ export class PeopleGroupCloudDemoComponent {
     preSelectUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
+    groupsRestriction: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.defaultFilterMode;
     peoplePreselectValidation = false;
@@ -73,6 +73,10 @@ export class PeopleGroupCloudDemoComponent {
 
     setGroupAppName(value: string): void {
         this.groupAppName = value;
+    }
+
+    setPeopleGroupsRestriction(value: string): void {
+        this.groupsRestriction = this.getArrayFromString(value);
     }
 
     onChangePeopleMode(event: MatRadioChange): void {

@@ -156,11 +156,11 @@ describe('Process list cloud', () => {
             await setFilter({ sort: 'Name' });
             await setFilter({ order: SORT_DIRECTION.ASC });
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
+            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Name')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Name')).toBe(true);
+            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Process Name')).toBe(true);
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
@@ -252,8 +252,6 @@ describe('Process list cloud', () => {
             await processList.checkContentIsDisplayedById(completedProcess.entry.id);
             await expect(await processList.getDataTable().numberOfRows()).toBe(1);
 
-            await editProcessFilter.openFilter();
-
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
@@ -276,7 +274,6 @@ describe('Process list cloud', () => {
             await editProcessFilter.saveAs('SavedFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
 
-            await editProcessFilter.openFilter();
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
@@ -288,7 +285,6 @@ describe('Process list cloud', () => {
             await editProcessFilter.saveAs('SwitchFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
 
-            await editProcessFilter.openFilter();
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
             await expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
             await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);

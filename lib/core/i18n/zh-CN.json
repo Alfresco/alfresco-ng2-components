@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "下载",
       "REMOVE_FILE": "删除",
       "UPLOAD": "上传",
-      "REQUIRED": "*必需",
+      "REQUIRED": "必填字段",
+      "REST_API_FAILED": "无法访问服务器 '{{ hostname }}'",
       "FILE_NAME": "文件名",
       "NO_FILE_ATTACHED": "无附加文件",
       "VALIDATOR": {

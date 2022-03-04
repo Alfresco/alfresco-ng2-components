@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor, $ } from 'protractor';
+import { browser, protractor, $ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { Logger } from '../utils/logger';
 
+export interface LoginOptions {
+    waitForUserIcon: boolean;
+}
 export class LoginPage {
 
     loginUrl = `${browser.baseUrl}/login`;
@@ -29,7 +32,7 @@ export class LoginPage {
     usernameField = $('#username');
     passwordField = $('#password');
     loginButton = $('input[type="submit"]');
-    header = element(by.tagName('adf-layout-header'));
+    userIcon = $(`[id*='user-initials']`);
     loginError = $(`div[data-automation-id="login-error"]`);
     visibilityLabel = $('#v');
 
@@ -62,23 +65,21 @@ export class LoginPage {
         }
     }
 
-    async login(username: string, password: string) {
+    async login(username: string, password: string, options: LoginOptions = { waitForUserIcon: true }) {
         Logger.log('Login With ' + username);
-
         const authType = await LocalStorageUtil.getConfigField('authType');
 
         if (!authType || authType === 'OAUTH') {
-            await this.loginSSOIdentityService(username, password);
+            await this.loginSSOIdentityService(username, password, options);
         } else {
-            await this.loginBasicAuth(username, password);
+            await this.loginBasicAuth(username, password, options);
         }
 
         await browser.waitForAngular();
     }
 
-    async loginSSOIdentityService(username: string, password: string) {
+    async loginSSOIdentityService(username: string, password: string, options: LoginOptions = { waitForUserIcon: true }) {
         browser.ignoreSynchronization = true;
-
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
 
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
@@ -94,16 +95,20 @@ export class LoginPage {
         await this.enterPassword(password);
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header, BrowserVisibility.DEFAULT_TIMEOUT * 2);
+        if (options.waitForUserIcon) {
+            await BrowserVisibility.waitUntilElementIsVisible(this.userIcon, BrowserVisibility.DEFAULT_TIMEOUT * 2);
+        }
     }
 
-    async loginBasicAuth(username: string, password: string): Promise<void> {
+    async loginBasicAuth(username: string, password: string, options: LoginOptions = { waitForUserIcon: true }): Promise<void> {
         await this.goToLoginPage();
 
         await this.enterUsernameBasicAuth(username);
         await this.enterPasswordBasicAuth(password);
         await this.clickSignInBasicAuthButton();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        if (options.waitForUserIcon) {
+            await BrowserVisibility.waitUntilElementIsVisible(this.userIcon);
+        }
     }
 
     async clickSignInBasicAuthButton(): Promise<void> {

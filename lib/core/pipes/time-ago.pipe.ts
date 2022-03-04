@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import moment from 'moment';
 import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';

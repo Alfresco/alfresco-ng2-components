@@ -49,6 +49,7 @@ import { ValidateFormEvent } from '../events/validate-form.event';
 import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { ValidateDynamicTableRowEvent } from '../events/validate-dynamic-table-row.event';
 import { FormValidationService } from './form-validation-service.interface';
+import { FormRulesEvent } from '../events/form-rules.event';
 
 @Injectable({
     providedIn: 'root'
@@ -129,6 +130,8 @@ export class FormService implements FormValidationService {
     executeOutcome = new Subject<FormOutcomeEvent>();
 
     updateFormValuesRequested = new Subject<FormValues>();
+
+    formRulesEvent = new Subject<FormRulesEvent>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,

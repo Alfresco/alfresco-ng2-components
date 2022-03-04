@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -f
 
+# By default NEXT_VERSION is set to the current version, so we can change only the aplha suffix as well
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+NEXT_VERSION=`node -p "require('$DIR/../package.json')".version;`;
+
 eval EXEC_PATCH=false
 eval EXEC_MAJOR=false
 eval EXEC_MINOR=false

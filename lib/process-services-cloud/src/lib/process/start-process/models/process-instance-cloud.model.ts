@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
 export interface ProcessInstanceCloud {
     appName?: string;
     id?: string;
@@ -28,4 +29,5 @@ export interface ProcessInstanceCloud {
     processDefinitionId?: string;
     processDefinitionKey?: string;
     processDefinitionName?: string;
+    variables?: ProcessInstanceVariable[];
 }

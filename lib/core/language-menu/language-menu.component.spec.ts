@@ -108,4 +108,14 @@ describe('LanguageMenuComponent', () => {
         component.changeLanguage(languages[1]);
         expect(spy.calls.mostRecent().args[0]).toBe('textOrientation', 'ltr');
     });
+
+    it('should emit changedLanguage event with language details', () => {
+        const changedLanguageSpy = spyOn(component.changedLanguage, 'emit');
+        appConfig.config.languages = languages;
+        userPreferencesService.locale = 'fake-key-3';
+        fixture.detectChanges();
+
+        component.changeLanguage(languages[2]);
+        expect(changedLanguageSpy).toHaveBeenCalledWith(languages[2]);
+    });
 });

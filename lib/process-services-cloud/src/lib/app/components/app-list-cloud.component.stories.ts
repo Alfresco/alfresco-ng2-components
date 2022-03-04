@@ -31,7 +31,9 @@ export default {
     argTypes: {
         layoutType: {
             options: ['GRID', 'LIST'],
-            type: 'radio'
+            control: {
+                type: 'radio'
+            }
         }
     }
 } as Meta;

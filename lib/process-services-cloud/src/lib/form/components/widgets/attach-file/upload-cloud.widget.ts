@@ -24,6 +24,7 @@ import { mergeMap } from 'rxjs/operators';
 import { WidgetComponent, LogService, FormService, ThumbnailService, NotificationService } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
+import { VersionManagerUploadData } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'upload-cloud-widget',
@@ -76,6 +77,13 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         if (this.field) {
             this.removeElementFromList(file);
         }
+    }
+
+    replaceOldFileVersionWithNew(versionManagerData: VersionManagerUploadData) {
+        const currentUploadedFileIndex = this.uploadedFiles.findIndex(file => file.name === versionManagerData.currentVersion.name);
+        this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion.value.entry};
+        this.field.value = [...this.uploadedFiles];
+        this.field.form.values[this.field.id] = [...this.uploadedFiles];
     }
 
     onFileChanged(event: any) {
@@ -196,6 +204,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private getDestinationFolderPathValue(): any {
-        return this.field.form.getProcessVariableValue(this.field.params.fileSource?.destinationFolderPath?.name);
+        return this.field.form.getFormVariableValue(this.field.params.fileSource?.destinationFolderPath?.name);
     }
 }

@@ -24,12 +24,14 @@ import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule, setupTestBed } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;
     let component: FunctionalGroupWidgetComponent;
     let formService: FormService;
     let getWorkflowGroupsSpy: jasmine.Spy;
+    let element: HTMLElement;
     const groups: GroupModel[] = [
         { id: '1', name: 'group 1' },
         { id: '2', name: 'group 2' }
@@ -49,6 +51,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         fixture = TestBed.createComponent(FunctionalGroupWidgetComponent);
         component = fixture.componentInstance;
         component.field = new FormFieldModel(new FormModel());
+        element = fixture.nativeElement;
         fixture.detectChanges();
     });
 
@@ -147,5 +150,37 @@ describe('FunctionalGroupWidgetComponent', () => {
         component.minTermLength = 4;
         await typeIntoInput('123');
         expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            component.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.FUNCTIONAL_GROUP,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const functionalGroupInput = fixture.nativeElement.querySelector('input');
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+            functionalGroupInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
     });
 });

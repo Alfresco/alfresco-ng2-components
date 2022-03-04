@@ -22,7 +22,6 @@ import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
 
 export class PeopleCloudComponentPage {
-
     peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
     assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
     selectionReady = $('div[data-automation-id="adf-people-cloud-row"]');
@@ -50,7 +49,7 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name, 100);
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
@@ -103,8 +102,13 @@ export class PeopleCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }
 
-    async checkSelectedPeople(person: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+    async checkSelectedPeople(person: string): Promise<boolean> {
+        try {
+            await TestElement.byText('mat-chip-list mat-chip', person).waitVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     async getAssigneeFieldContent(): Promise<string> {
@@ -163,9 +167,13 @@ export class PeopleCloudComponentPage {
         }
     }
 
-    async checkNoResultsFoundError(): Promise<void> {
-        const errorLocator = $('[data-automation-id="adf-people-cloud-no-results"]');
-        await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
+    async checkNoResultsFoundError(): Promise<boolean> {
+        try {
+            await TestElement.byCss('[data-automation-id="adf-people-cloud-no-results"]').waitVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
 }

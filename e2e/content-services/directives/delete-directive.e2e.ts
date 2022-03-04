@@ -134,20 +134,7 @@ describe('Delete Directive', () => {
         });
 
         it('[C260188] Delete multiple content', async () => {
-            await contentListPage.selectRowWithKeyboard(txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.selectRowWithKeyboard(file0BytesModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', file0BytesModel.name);
-            await contentListPage.selectRowWithKeyboard(folderSecond.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', file0BytesModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', folderSecond.name);
-            await contentListPage.selectRowWithKeyboard(folderInfo.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', folderInfo.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', file0BytesModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', folderSecond.name);
+            await contentListPage.selectRowsWithKeyboard(txtFileModel.name, file0BytesModel.name, folderSecond.name, folderInfo.name);
             await contentServicesPage.clickDeleteOnToolbar();
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', folderInfo.name);
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', txtFileModel.name);
@@ -156,16 +143,13 @@ describe('Delete Directive', () => {
         });
 
         it('[C260192] Delete file and folder with hierarchy', async () => {
-            await contentListPage.selectRowWithKeyboard(txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.selectRowWithKeyboard(folderInfo.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', folderInfo.name);
+            await contentListPage.selectRowsWithKeyboard(txtFileModel.name, folderInfo.name);
             await contentServicesPage.clickDeleteOnToolbar();
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', txtFileModel.name);
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', folderInfo.name);
         });
 
-        it('[C260193] Delete file when different selections are set', async () => {
+       it('[C260193] Delete file when different selections are set', async () => {
             await contentServicesPage.chooseSelectionMode('None');
             await contentListPage.selectRow(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsNotSelected('Display name', txtFileModel.name);
@@ -174,7 +158,7 @@ describe('Delete Directive', () => {
             await contentServicesPage.chooseSelectionMode('Single');
             await contentListPage.selectRow(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.selectRowWithKeyboard(folderInfo.name);
+            await contentListPage.selectRowsWithKeyboard(folderInfo.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', folderInfo.name);
             await contentListPage.dataTable.checkRowIsNotSelected('Display name', txtFileModel.name);
             await contentServicesPage.clickDeleteOnToolbar();
@@ -182,10 +166,7 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsDisplayed('Display name', txtFileModel.name);
 
             await contentServicesPage.chooseSelectionMode('Multiple');
-            await contentListPage.selectRow(txtFileModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
-            await contentListPage.selectRowWithKeyboard(file0BytesModel.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', file0BytesModel.name);
+            await contentListPage.selectRowsWithKeyboard(txtFileModel.name, file0BytesModel.name);
             await contentServicesPage.clickDeleteOnToolbar();
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', txtFileModel.name);
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', file0BytesModel.name);
@@ -281,9 +262,6 @@ describe('Delete Directive', () => {
             await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
             await contentListPage.selectRowWithKeyboard(folderB.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', folderB.entry.name);
-            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
-            await contentListPage.selectRowWithKeyboard(folderA.entry.name);
-            await contentListPage.dataTable.checkRowIsSelected('Display name', folderA.entry.name);
             await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
             await contentListPage.selectRowWithKeyboard(fileTxt.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', fileTxt.entry.name);

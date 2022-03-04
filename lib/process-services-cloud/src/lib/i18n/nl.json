@@ -330,6 +330,8 @@
       "CREATED": "Gemaakt",
       "END_DATE": "Einddatum",
       "ID": "Id",
+      "PROCESS_INSTANCE_ID": "Procesinstantie-id",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Geen procesinstantie-id",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "FORM_NAME": "Formuliernaam",

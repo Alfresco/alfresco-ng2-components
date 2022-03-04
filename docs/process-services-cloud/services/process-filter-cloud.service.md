@@ -34,22 +34,22 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Checks if given filter is a default filter
     -   _filterName:_ `string`  - Name of the target process filter
     -   **Returns** `boolean` - Boolean value for whether the filter is a default filter
--   **readQueryParams**(obj: `Object`): [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)<br/>
+-   **readQueryParams**(obj: `any`): [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)<br/>
 
-    -   _obj:_ `Object`  - 
+    -   _obj:_ `any`  - 
     -   **Returns** [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) - 
 
 -   **updateFilter**(updatedFilter: [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>`<br/>
     Update process instance filter
     -   _updatedFilter:_ [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>` - Observable of process instance filters with updated filter
--   **writeQueryParams**(value: `Object`, filterProperties: `string[]`, appName?: `string`, id?: `string`): `Object`<br/>
+-   **writeQueryParams**(value: `any`, filterProperties: `string[]`, appName?: `string`, id?: `string`): `any`<br/>
 
-    -   _value:_ `Object`  - 
+    -   _value:_ `any`  - 
     -   _filterProperties:_ `string[]`  - 
     -   _appName:_ `string`  - (Optional) 
     -   _id:_ `string`  - (Optional) 
-    -   **Returns** `Object` -
+    -   **Returns** `any` -
 
 ## Inject Preference service
 

@@ -330,6 +330,8 @@
       "CREATED": "Oprettet",
       "END_DATE": "Slutdato",
       "ID": "Id",
+      "PROCESS_INSTANCE_ID": "Procesforekomst-id",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Ingen procesforekomst-id",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "FORM_NAME": "Formularnavn",

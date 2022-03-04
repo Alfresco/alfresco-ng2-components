@@ -17,13 +17,13 @@
 
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from 'core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 
 describe('DateRangeFilterComponent', () => {

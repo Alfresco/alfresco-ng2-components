@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
 
@@ -69,6 +69,25 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
+        }
+    }
+
+    /**
+     * Replay a service task based on the related execution id and flow-node id
+     *
+     * @param appName string
+     * @param executionId string
+     * @param flowNodeId string
+     * @returns Replay task informations
+     */
+    replayServiceTaskRequest(appName: string, executionId: string, flowNodeId: string): Observable<any> {
+        if (appName && executionId && flowNodeId) {
+            const payload = { flowNodeId };
+            const queryUrl = `${this.getBasePath(appName)}/rb/admin/v1/executions/${executionId}/replay/service-task`;
+            return this.post(queryUrl, payload);
+        } else {
+            this.logService.error('Appname, executionId and flowNodeId are mandatory to replaying a service task');
+            return throwError('Appname/executionId/flowNodeId not configured');
         }
     }
 

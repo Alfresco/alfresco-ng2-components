@@ -16,11 +16,12 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
+import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -50,6 +51,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     title: string;
     preSelectGroup: IdentityGroupModel[];
     search: FormControl;
+    validate = false;
 
     constructor(formService: FormService) {
         super(formService);
@@ -61,6 +63,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.mode = this.field.optionType as ComponentSelectionMode;
             this.title = this.field.placeholder;
             this.preSelectGroup = this.field.value ? this.field.value : [];
+            this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),

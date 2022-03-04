@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, TranslationService, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, TranslationService, AlfrescoApiService } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
@@ -24,6 +24,7 @@ import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-res
 import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 
 describe('Task Cloud Service', () => {
 

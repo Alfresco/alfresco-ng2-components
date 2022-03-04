@@ -20,18 +20,20 @@ import {
     AppConfigService, UserPreferencesService,
     DataTableSchema, UserPreferenceValues,
     PaginatedComponent, PaginationModel,
-    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn
+    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn, ObjectDataTableAdapter
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
-import { takeUntil } from 'rxjs/operators';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseTaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
+export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableSchema<T> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -74,6 +76,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles main datatable actions. */
+    @Input()
+    showMainDatatableActions: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -112,6 +118,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
+    dataAdapter: ObjectDataTableAdapter | undefined;
+
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
@@ -120,7 +128,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     constructor(appConfigService: AppConfigService,
                 private taskCloudService: TaskCloudService,
                 private userPreferences: UserPreferencesService,
-                presetKey: string) {
+                presetKey: string,
+                private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
@@ -153,16 +162,30 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     ngAfterContentInit() {
-        this.createDatatableSchema();
-    }
+        this.cloudPreferenceService.getPreferences(this.appName).pipe(
+            take(1),
+            map((preferences => {
+                const preferencesList = preferences?.list?.entries ?? [];
+                const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
 
-    reload() {
-        this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName || this.requestNode.appName === '') {
-            this.load(this.requestNode);
-        } else {
-            this.rows = [];
-        }
+                return {
+                    columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                };
+            }))
+        ).subscribe(({ columnsOrder, columnsVisibility }) => {
+                if (columnsOrder) {
+                    this.columnsOrder = columnsOrder;
+                }
+
+                if (columnsVisibility) {
+                    this.columnsVisibility = columnsVisibility;
+                }
+
+                this.createDatatableSchema();
+            }
+        );
     }
 
     isListEmpty(): boolean {
@@ -235,6 +258,40 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         this.executeRowAction.emit(row);
     }
 
+    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+
+        if (this.appName) {
+                this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnOrder,
+                this.columnsOrder
+            );
+        }
+    }
+
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
+
+        this.createColumns();
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnsVisibility,
+                this.columnsVisibility
+            );
+        }
+
+        this.reload();
+    }
+
     setSorting(sortDetail) {
         const sorting = sortDetail ? {
             orderBy: sortDetail.key,
@@ -263,6 +320,5 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         }, row.obj);
     }
 
-    abstract load(requestNode);
-    abstract createRequestNode();
+    abstract reload();
 }

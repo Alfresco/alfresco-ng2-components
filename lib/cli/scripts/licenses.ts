@@ -22,7 +22,7 @@ import * as fs from 'fs';
 import * as checker from 'license-checker';
 import * as licenseList from 'spdx-license-list';
 import * as ejs from 'ejs';
-import * as program from 'commander';
+import program from 'commander';
 
 interface PackageInfo {
     name: string;

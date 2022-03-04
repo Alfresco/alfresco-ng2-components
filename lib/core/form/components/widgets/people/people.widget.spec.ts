@@ -155,6 +155,38 @@ describe('PeopleWidgetComponent', () => {
         });
     });
 
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.PEOPLE,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const peopleInput = fixture.nativeElement.querySelector('input');
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+            peopleInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+    });
+
     describe('when template is ready', () => {
 
         const fakeUserResult = [

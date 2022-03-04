@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { LanguageService } from '../services/language.service';
 import { Observable } from 'rxjs';
 import { LanguageItem } from '../services/language-item.interface';
@@ -31,6 +31,9 @@ import { LanguageItem } from '../services/language-item.interface';
 })
 export class LanguageMenuComponent {
 
+    @Output()
+    changedLanguage: EventEmitter<LanguageItem> = new EventEmitter<LanguageItem>();
+
     languages$: Observable<LanguageItem[]>;
 
     constructor(private languageService: LanguageService) {
@@ -38,6 +41,7 @@ export class LanguageMenuComponent {
     }
 
     changeLanguage(language: LanguageItem) {
+        this.changedLanguage.emit(language);
         this.languageService.changeLanguage(language);
     }
 }

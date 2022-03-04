@@ -38,6 +38,7 @@ export * from './components/empty-list/empty-list.component';
 export * from './components/filesize-cell/filesize-cell.component';
 export * from './components/json-cell/json-cell.component';
 export * from './components/location-cell/location-cell.component';
+export * from './components/columns-selector/columns-selector.component';
 export * from './data/data-table.schema';
 
 export * from './directives/loading-template.directive';
@@ -47,5 +48,6 @@ export * from './directives/header-filter-template.directive';
 export * from './directives/custom-empty-content-template.directive';
 export * from './directives/custom-loading-template.directive';
 export * from './directives/custom-no-permission-template.directive';
+export * from './directives/main-data-table-action-template.directive';
 
 export * from './datatable.module';

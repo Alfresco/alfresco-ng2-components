@@ -1,8 +1,7 @@
 <div class="adf-attach-widget {{field.className}}"
-    [class.adf-invalid]="!field.isValid"
     [class.adf-readonly]="field.readOnly">
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate}}
-        <span *ngIf="isRequired()">*</span>
+        <span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </label>
     <div class="adf-attach-widget-container">
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
@@ -16,7 +15,8 @@
                         (change)="onAttachFileChanged($event)" />
             </a>
         </div>
-        <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
+        <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()"
+            *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
             <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
                     {{ 'FORM.FIELD.UPLOAD' | translate }}
                     <mat-icon>attach_file</mat-icon>
@@ -69,7 +69,7 @@
                  (keyup.enter)="onAttachFileClicked(file)"
                  role="button"
                  tabindex="0"/>
-            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" (keyup.enter)="onAttachFileClicked(file)"
+            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
             <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
                 <mat-icon>more_vert</mat-icon>
@@ -99,4 +99,4 @@
 </div>
 
 <error-widget [error]="field.validationSummary"></error-widget>
-<error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+<error-widget *ngIf="!field.isValid && isTouched() && !isSelected()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

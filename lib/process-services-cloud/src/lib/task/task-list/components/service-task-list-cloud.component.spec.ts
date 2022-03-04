@@ -24,8 +24,8 @@ import { fakeServiceTask, fakeCustomSchema } from '../mock/fake-task-response.mo
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
-import { skip } from 'rxjs/operators';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
+import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 
 @Component({
@@ -111,6 +111,8 @@ describe('ServiceTaskListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -384,6 +386,8 @@ describe('ServiceTaskListCloudComponent', () => {
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
             element = copyFixture.debugElement.nativeElement;
+
+            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {

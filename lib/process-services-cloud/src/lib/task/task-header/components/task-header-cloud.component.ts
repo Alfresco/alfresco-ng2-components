@@ -74,10 +74,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     inEdit: boolean = false;
     parentTaskName: string;
     dateFormat: string;
-    dateTimeFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
     isLoading = true;
+    processInstanceId: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -87,9 +87,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private appConfig: AppConfigService,
         private cardViewUpdateService: CardViewUpdateService
     ) {
-        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
-        this.dateTimeFormat = this.appConfig.get('dateValue.defaultDateTimeFormat');
     }
 
     ngOnInit() {
@@ -129,6 +128,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 this.taskDetails = taskDetails;
                 this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
                 this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
+                this.processInstanceId = taskDetails.processInstanceId;
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {
@@ -176,7 +176,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
                     editable: true,
-                    format: this.dateTimeFormat,
+                    format: this.dateFormat,
                     locale: this.dateLocale
                 }
             ),
@@ -228,6 +228,15 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ID',
                     value: this.taskDetails.id,
                     key: 'id'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID',
+                    value: this.processInstanceId,
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
+                    key: 'processInstanceId',
+                    clickable: true
                 }
             ),
             new CardViewTextItemModel(

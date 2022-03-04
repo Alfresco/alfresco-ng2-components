@@ -23,16 +23,16 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { PeopleContentService } from './people-content.service';
-import { of } from 'rxjs';
-import { getFakeUserWithContentAdminCapability, getFakeUserWithContentUserCapability } from '../mock/ecm-user.service.mock';
+import { UserAccessService } from './user-access.service';
+import { UserContentAccessService } from './user-content-access.service';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
-    let peopleContentService: PeopleContentService;
+    let userContentAccessService: UserContentAccessService;
+    let userAccessService: UserAccessService;
 
     setupTestBed({
         imports: [
@@ -46,78 +46,78 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
-        peopleContentService = TestBed.inject(PeopleContentService);
+        userContentAccessService = TestBed.inject(UserContentAccessService);
+        userAccessService = TestBed.inject(UserAccessService);
+        userAccessService.resetAccess();
     });
 
-    it('Should canActivate be true if the Role is present int the JWT token', async () => {
+    function spyUserAccess(realmRoles: string[], resourceAccess: any) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({
+            realm_access: { roles: realmRoles },
+            resource_access: resourceAccess
+        });
+    }
 
+    it('Should canActivate be true if the Role is present int the JWT token', async () => {
+        spyUserAccess(['MOCK_USER_ROLE'], {});
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['role1', 'role2'] };
+        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
+
+        expect(await authGuard.canActivate(router)).toBeTruthy();
+    });
+
+    it('Should canActivate be true if case of empty roles to check', async () => {
+        spyUserAccess([], {});
+        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        router.data = { roles: [] };
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
     });
 
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role3'] } });
-
+        spyUserAccess(['MOCK_ROOT_USER_ROLE'], {});
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['role1', 'role2'] };
+        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
     });
 
     it('Should not redirect if canActivate is', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
+        spyUserAccess(['MOCK_USER_ROLE'], {});
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['role1', 'role2'] };
+        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
     });
 
     it('Should canActivate return false if the data Role to check is empty', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1', 'role3'] } });
-
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-
-        expect(await authGuard.canActivate(router)).toBeFalsy();
-    });
-
-    it('Should canActivate return false if the realm_access is not present', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
-
+        spyUserAccess(['MOCK_USER_ROLE', 'MOCK_ROOT_USER_ROLE'], {});
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
     });
 
     it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
+        spyUserAccess([], {});
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['role1', 'role2'], redirectUrl: 'no-role-url' };
+        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], redirectUrl: 'no-role-url' };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
     });
 
     it('Should not redirect if canActivate is false and redirectUrl is not in  data', async () => {
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
+        spyUserAccess([], {});
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['role1', 'role2'] };
+        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).not.toHaveBeenCalled();
@@ -125,52 +125,40 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be false hasRealm is true and hasClientRole is false', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(true);
-        spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
+        spyUserAccess([''], {});
 
-        route.params = { appName: 'fakeapp' };
-        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
+        route.params = { appName: 'mockApp' };
+        route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
 
     it('Should canActivate be false if hasRealm is false and hasClientRole is true', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(false);
-        spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(true);
+        spyUserAccess([], {});
 
-        route.params = { appName: 'fakeapp' };
-        route.data = { clientRoles: ['fakeapp'], roles: ['role1', 'role2'] };
+        route.params = { appName: 'mockApp' };
+        route.data = { clientRoles: ['mockApp'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
 
     it('Should canActivate be true if both Real Role and Client Role are present int the JWT token', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+        spyUserAccess(['MOCK_USER_ROLE'], { mockApp: { roles: ['MOCK_ADMIN_ROLE'] } });
 
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            realm_access: { roles: ['role1'] },
-            resource_access: { fakeapp: { roles: ['role2'] } }
-        });
-
-        route.params = { appName: 'fakeapp' };
-        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
+        route.params = { appName: 'mockApp' };
+        route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(route)).toBeTruthy();
     });
 
     it('Should canActivate be false if the Client Role is not present int the JWT token with the correct role', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+        spyUserAccess(['MOCK_USER_ROLE'], { mockApp: { roles: ['MOCK_ROOT_USER_ROLE'] } });
 
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            realm_access: { roles: ['role1'] },
-            resource_access: { fakeapp: { roles: ['role3'] } }
-        });
-
-        route.params = { appName: 'fakeapp' };
-        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
+        route.params = { appName: 'mockApp' };
+        route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
     });
@@ -181,11 +169,10 @@ describe('Auth Guard SSO role service', () => {
         spyOn(materialDialog, 'closeAll');
 
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyOn(jwtHelperService, 'hasRealmRoles').and.returnValue(true);
-        spyOn(jwtHelperService, 'hasRealmRolesForClientRole').and.returnValue(false);
+        spyUserAccess([], {});
 
-        route.params = { appName: 'fakeapp' };
-        route.data = { clientRoles: ['appName'], roles: ['role1', 'role2'] };
+        route.params = { appName: 'mockApp' };
+        route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
@@ -193,70 +180,78 @@ describe('Auth Guard SSO role service', () => {
 
     describe('Content Admin', () => {
 
-        afterEach(() => {
-           peopleContentService.hasCheckedIsContentAdmin = false;
-        });
-
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(true));
+
+            spyUserAccess([], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
-            expect(await authGuard.canActivate(router)).toBeTruthy();
+            expect(await authGuard.canActivate(router)).toBe(true);
         });
 
         it('Should not give access to a content section (ALFRESCO_ADMINISTRATORS) when the user does not have content admin capability', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentUserCapability()));
+            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+
+            spyUserAccess([], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
-            expect(await authGuard.canActivate(router)).toBeFalsy();
+            expect(await authGuard.canActivate(router)).toBe(false);
         });
 
         it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
-            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+            const isCurrentAdminSpy = spyOn(userContentAccessService, 'isCurrentUserAdmin').and.stub();
+            spyUserAccess([], {});
+
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['fakeRole'] };
 
             await authGuard.canActivate(router);
 
-            expect(getCurrentPersonSpy).not.toHaveBeenCalled();
+            expect(isCurrentAdminSpy).not.toHaveBeenCalled();
         });
     });
 
     describe('Excluded Roles', () => {
         it('Should canActivate be false when the user has one of the excluded roles', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
+            spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'], excludedRoles: ['role1'] };
+            router.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
 
-            expect(await authGuard.canActivate(router)).toBeFalsy();
+            expect(await authGuard.canActivate(router)).toBe(false);
         });
 
         it('Should canActivate be true when the user has none of the excluded roles', async () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role2'] } });
+            spyUserAccess(['MOCK_ADMIN_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['role1', 'role2'], excludedRoles: ['role3'] };
-
-            expect(await authGuard.canActivate(router)).toBeTruthy();
+            router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
+            const result = await authGuard.canActivate(router);
+            expect(result).toBeTruthy();
         });
 
-        it('Should canActivate be false when the user is a content admin and the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role1'] } });
+        it('Should canActivate be true when the user has none of the excluded role and is not a content admin', async () => {
+            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+            spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['role1'], excludedRoles: ['ALFRESCO_ADMINISTRATORS'] };
+            router.data = { roles: ['MOCK_USER_ROLE'], excludedRoles: ['ALFRESCO_ADMINISTRATORS'] };
 
-            expect(await authGuard.canActivate(router)).toBeFalsy();
+            expect(await authGuard.canActivate(router)).toBe(true);
+        });
+
+        it('Should canActivate be false if the user is a content admin but has one of the excluded roles', async () => {
+            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+            spyUserAccess(['MOCK_USER_ROLE'], {});
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'], excludedRoles: ['MOCK_USER_ROLE'] };
+
+            expect(await authGuard.canActivate(router)).toBe(false);
         });
     });
 });

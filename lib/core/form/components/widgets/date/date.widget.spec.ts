@@ -16,13 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('DateWidgetComponent', () => {
 
@@ -96,6 +97,38 @@ describe('DateWidgetComponent', () => {
 
         widget.onDateChanged({ value: moment('12/12/2012') });
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATE,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const dateInput = fixture.nativeElement.querySelector('input');
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+            dateInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterix', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
     });
 
     describe('template check', () => {

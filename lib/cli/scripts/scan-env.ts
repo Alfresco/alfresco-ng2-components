@@ -1,5 +1,5 @@
-import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } from '@alfresco/js-api';
-import * as program from 'commander';
+import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import program from 'commander';
 import { logger } from './logger';
 
 interface PeopleTally { enabled: number; disabled: number }
@@ -29,6 +29,7 @@ export default async function main(_args: string[]) {
     program
         .version('0.1.0')
         .option('--host <type>', 'Remote environment host')
+        .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password <type>', 'password ')
         .option('-u, --username <type>', 'username ')
         .parse(process.argv);
@@ -79,12 +80,12 @@ async function attemptLogin() {
             authType: 'OAUTH',
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
-                clientId: 'alfresco',
+                clientId: `${program.clientId}`,
                 scope: 'openid',
                 redirectUri: '/',
                 implicitFlow: false
             }
-        });
+        } as unknown as AlfrescoApiConfig);
         await jsApiConnection.login(program.username, program.password);
         logger.info(`    ${green}Login SSO successful${reset}`);
     } catch (err) {

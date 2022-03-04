@@ -16,33 +16,27 @@
  */
 
 import { ObjectDataColumn } from '@alfresco/adf-core';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { getTaskCloudModelMock } from '../../../mock/task-cloud-model.mock';
 
-export const fakeGlobalTask = {
+export const fakeGlobalTask = getTaskCloudModelMock({
+    appName: 'test-ciprian2',
+    appVersion: '',
+    id: '11fe013d-c263-11e8-b75b-0a5864600540',
+    assignee: null,
+    name: 'standalone-subtask',
+    createdDate: '1538059139420',
+    priority: 0,
+    processDefinitionId: null,
+    processInstanceId: null,
+    status: 'CREATED',
+    lastModified: '1538059139420',
+    standalone: true
+});
+
+export const fakeGlobalTasks = {
     list: {
-        entries: [
-            {
-                appName: 'test-ciprian2',
-                appVersion: '',
-                id: '11fe013d-c263-11e8-b75b-0a5864600540',
-                assignee: null,
-                name: 'standalone-subtask',
-                description: null,
-                createdDate: 1538059139420,
-                dueDate: null,
-                claimedDate: null,
-                priority: 0,
-                category: null,
-                processDefinitionId: null,
-                processInstanceId: null,
-                status: 'CREATED',
-                owner: 'devopsuser',
-                parentTaskId: '71fda20b-c25b-11e8-b75b-0a5864600540',
-                lastModified: 1538059139420,
-                lastModifiedTo: null,
-                lastModifiedFrom: null,
-                standalone: true
-            }
-        ],
+        entries: [fakeGlobalTask],
         pagination: {
             skipCount: 0,
             maxItems: 100,
@@ -87,13 +81,13 @@ export const fakeServiceTask = {
 
 export const fakeCustomSchema =
     [
-        new ObjectDataColumn({
+        new ObjectDataColumn<ProcessListDataColumnCustomData>({
             key: 'fakeName',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
             sortable: true
         }),
-        new ObjectDataColumn({
+        new ObjectDataColumn<ProcessListDataColumnCustomData>({
             key: 'fakeTaskName',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',

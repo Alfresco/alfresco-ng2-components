@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
 
 @Injectable({
     providedIn: 'root'

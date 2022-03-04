@@ -17,12 +17,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { AuthenticationService, ContentService } from '../../services';
+import { AuthenticationService, ContentService, PeopleContentService } from '../../services';
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
 import { BpmUserService } from '../../services/bpm-user.service';
-import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
@@ -71,7 +70,7 @@ describe('User info component', () => {
     let element: HTMLElement;
     let authService: AuthenticationService;
     let contentService: ContentService;
-    let ecmUserService: EcmUserService;
+    let peopleContentService: PeopleContentService;
     let bpmUserService: BpmUserService;
     let identityUserService: IdentityUserService;
 
@@ -106,7 +105,7 @@ describe('User info component', () => {
         element = fixture.nativeElement;
 
         authService = TestBed.inject(AuthenticationService);
-        ecmUserService = TestBed.inject(EcmUserService);
+        peopleContentService = TestBed.inject(PeopleContentService);
         bpmUserService = TestBed.inject(BpmUserService);
         contentService = TestBed.inject(ContentService);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -145,7 +144,7 @@ describe('User info component', () => {
             isEcmLoggedInStub = spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             isLoggedInStub = spyOn(authService, 'isLoggedIn').and.returnValue(true);
             isBpmLoggedInStub = spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-            getCurrenEcmtUserInfoStub = spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
+            getCurrenEcmtUserInfoStub = spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser as any));
         });
 
         describe('ui ', () => {
@@ -353,34 +352,6 @@ describe('User info component', () => {
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).not.toBeNull();
                 expect(fullNameElement.textContent).toContain('fake-last-name');
                 expect(fullNameElement.textContent).not.toContain('fake-first-name');
-            });
-
-            it('should not show first name if it is null string', async () => {
-                const wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
-                    firstName: 'null',
-                    lastName: 'fake-last-name'
-                });
-                getCurrentUserInfoStub.and.returnValue(of(wrongFirstNameBpmUser));
-                await whenFixtureReady();
-
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-last-name');
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
-            });
-
-            it('should not show last name if it is null string', async () => {
-                const wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
-                    firstName: 'fake-first-name',
-                    lastName: 'null'
-                });
-                getCurrentUserInfoStub.and.returnValue(of(wrongLastNameBpmUser));
-                await whenFixtureReady();
-
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-first-name');
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
             });
 
             it('should not show the tabs', async () => {

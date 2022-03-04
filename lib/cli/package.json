@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-cli",
   "description": "Alfresco ADF cli and utils",
-  "version": "4.8.0",
+  "version": "5.0.0-angular.13.2",
   "author": "Alfresco Software, Ltd.",
   "bin": {
     "adf-cli": "./bin/adf-cli",
@@ -20,8 +20,8 @@
     "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./resources ./dist && cp -R ./templates ./dist && cp ./package.json ./dist/"
   },
   "dependencies": {
-    "@alfresco/js-api": "4.9.0-4253",
-    "commander": "^4.0.0",
+    "@alfresco/js-api": "4.12.0-244",
+    "commander": "6.2.1",
     "ejs": "^2.6.1",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^4.0.5",

@@ -24,6 +24,8 @@ import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
 import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
+import { IDENTITY_GROUP_SERVICE_TOKEN } from './services/identity-group-service.token';
+import { IdentityGroupService } from './services/identity-group.service';
 
 @NgModule({
     imports: [
@@ -35,6 +37,9 @@ import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
         CoreModule
     ],
     declarations: [GroupCloudComponent, InitialGroupNamePipe],
+    providers: [
+        { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }
+    ],
     exports: [GroupCloudComponent, InitialGroupNamePipe]
 })
 export class GroupCloudModule { }

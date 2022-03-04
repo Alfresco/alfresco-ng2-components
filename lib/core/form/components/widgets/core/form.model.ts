@@ -22,7 +22,6 @@ import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormValues } from './form-values';
-import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
 
 import { FormVariableModel } from './form-variable.model';
@@ -33,7 +32,12 @@ import { FormFieldTemplates } from './form-field-templates';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { FormValidationService } from '../../../services/form-validation-service.interface';
 import { ProcessFormModel } from './process-form-model.interface';
+import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
+export interface ConfirmMessage {
+    show: boolean;
+    message: string;
+}
 export interface FormRepresentationModel {
     [key: string]: any;
 
@@ -54,7 +58,6 @@ export interface FormRepresentationModel {
         fields?: any[];
     };
 }
-
 export class FormModel implements ProcessFormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -65,16 +68,19 @@ export class FormModel implements ProcessFormModel {
     readonly id: string | number;
     readonly name: string;
     readonly taskId: string;
+    readonly confirmMessage: ConfirmMessage;
     readonly taskName = FormModel.UNSET_TASK_NAME;
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
 
+    fieldsCache: FormFieldModel[] = [];
+
     json: any;
     nodeId: string;
     values: FormValues = {};
     tabs: TabModel[] = [];
-    fields: FormWidgetModel[] = [];
+    fields: (ContainerModel | FormFieldModel)[] = [];
     outcomes: FormOutcomeModel[] = [];
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     customFieldTemplates: FormFieldTemplates = {};
@@ -98,32 +104,20 @@ export class FormModel implements ProcessFormModel {
             this.customFieldTemplates = json.customFieldTemplates || {};
             this.selectedOutcome = json.selectedOutcome;
             this.className = json.className || '';
-            this.variables = json.variables || [];
+            this.variables = json.variables || json.formDefinition?.variables || [];
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace ? true : false;
-
-            const tabCache: FormWidgetModelCache<TabModel> = {};
+            this.confirmMessage = json.confirmMessage || {};
 
             this.tabs = (json.tabs || []).map((tabJson) => {
-                const model = new TabModel(this, tabJson);
-                tabCache[model.id] = model;
-                return model;
+                return new TabModel(this, tabJson);
             });
 
             this.fields = this.parseRootFields(json);
+            this.fieldsCache = this.getFormFields();
 
             if (formValues) {
                 this.loadData(formValues);
-            }
-
-            for (let i = 0; i < this.fields.length; i++) {
-                const field = this.fields[i];
-                if (field.tab) {
-                    const tab = tabCache[field.tab];
-                    if (tab) {
-                        tab.fields.push(field);
-                    }
-                }
             }
 
             this.parseOutcomes();
@@ -150,10 +144,9 @@ export class FormModel implements ProcessFormModel {
 
         const errorsField: FormFieldModel[] = [];
 
-        const fields = this.getFormFields();
-        for (let i = 0; i < fields.length; i++) {
-            if (!fields[i].validate()) {
-                errorsField.push(fields[i]);
+        for (let i = 0; i < this.fieldsCache.length; i++) {
+            if (!this.fieldsCache[i].validate()) {
+                errorsField.push(this.fieldsCache[i]);
             }
         }
 
@@ -201,7 +194,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     // Activiti supports 3 types of root fields: container|group|dynamic-table
-    private parseRootFields(json: any): FormWidgetModel[] {
+    private parseRootFields(json: any): (ContainerModel | FormFieldModel)[] {
         let fields = [];
 
         if (json.fields) {
@@ -210,29 +203,32 @@ export class FormModel implements ProcessFormModel {
             fields = json.formDefinition.fields;
         }
 
-        const formWidgetModel: FormWidgetModel[] = [];
-
+        const rootElements: (ContainerModel | FormFieldModel)[] = [];
+        let currentRootElement;
         for (const field of fields) {
-            if (field.type === FormFieldTypes.DISPLAY_VALUE) {
-                // workaround for dynamic table on a completed/readonly form
-                if (field.params) {
-                    const originalField = field.params['field'];
-                    if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        formWidgetModel.push(new ContainerModel(new FormFieldModel(this, field)));
-                    }
-                }
+            if (field?.type === FormFieldTypes.DYNAMIC_TABLE) {
+                currentRootElement = new FormFieldModel(this, field);
             } else {
-                formWidgetModel.push(new ContainerModel(new FormFieldModel(this, field)));
+                currentRootElement = new ContainerModel(new FormFieldModel(this, field));
             }
+
+            if (field.tab) {
+                const tab = this.tabs.find((tab) => field.tab === tab.id);
+                if (tab) {
+                    tab.fields.push(currentRootElement);
+                }
+            }
+
+            rootElements.push(currentRootElement);
         }
 
-        return formWidgetModel;
+        return rootElements;
     }
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
     private loadData(formValues: FormValues) {
-        for (const field of this.getFormFields()) {
+        for (const field of this.fieldsCache) {
             const variableId = `variables.${field.name}`;
 
             if (this.isDefined(formValues[variableId]) || this.isDefined(formValues[field.id])) {
@@ -331,26 +327,31 @@ export class FormModel implements ProcessFormModel {
     }
 
     getFieldById(fieldId: string): FormFieldModel {
-        return this.getFormFields().find((field) => field.id === fieldId);
+        return this.fieldsCache.find((field) => field.id === fieldId);
     }
 
     getFormFields(): FormFieldModel[] {
-        const formFieldModel: FormFieldModel[] = [];
+        if (this.fieldsCache.length > 0) {
+            return this.fieldsCache;
+        } else {
+            const formFieldModel: FormFieldModel[] = [];
 
-        for (let i = 0; i < this.fields.length; i++) {
-            const field = this.fields[i];
+            for (let i = 0; i < this.fields.length; i++) {
+                const field = this.fields[i];
 
-            if (field instanceof ContainerModel) {
-                const container = field;
-                formFieldModel.push(container.field);
+                if (field instanceof ContainerModel) {
+                    formFieldModel.push(field.field);
 
-                container.field.columns.forEach((column) => {
-                    formFieldModel.push(...column.fields);
-                });
+                    field.field.columns.forEach((column) => {
+                        formFieldModel.push(...column.fields);
+                    });
+                }else{
+                    formFieldModel.push(field);
+                }
             }
-        }
 
-        return formFieldModel;
+            return formFieldModel;
+        }
     }
 
     markAsInvalid(): void {
@@ -388,7 +389,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
-        this.getFormFields().forEach(field => {
+        this.fieldsCache.forEach(field => {
             if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isValidDropDown(field.id))) {
                 this.values[field.id] = valuesToSetIfNotPresent[field.id];
                 field.json.value = this.values[field.id];
@@ -409,7 +410,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
-        const subscribedViewers = this.getFormFields().filter(field =>
+        const subscribedViewers = this.fieldsCache.filter(field =>
             linkedUploadWidgetContentSelected.uploadWidgetId === field.params['uploadWidget']
         );
 
@@ -418,5 +419,45 @@ export class FormModel implements ProcessFormModel {
             viewer.json.value = this.values[viewer.id];
             viewer.value = viewer.parseValue(viewer.json);
         });
+    }
+
+    changeFieldVisibility(fieldId: string, visibility: boolean): void {
+        const visibilityRule: WidgetVisibilityModel = new WidgetVisibilityModel();
+
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            visibilityRule.operator = visibility ? 'empty' : '!empty';
+            visibilityRule.leftType = WidgetTypeEnum.field;
+            field.visibilityCondition = visibilityRule;
+            field.isVisible = visibility;
+        }
+    }
+
+    changeFieldDisabled(fieldId: string, disabled: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.readOnly = this.readOnly || disabled;
+        }
+    }
+
+    changeFieldRequired(fieldId: string, required: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.required = required;
+        }
+    }
+
+    changeFieldValue(fieldId: string, value: any): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.value = value;
+        }
+    }
+
+    changeVariableValue(variableId: string, value: any): void {
+        const variable = this.getFormVariable(variableId);
+        if (!!variable) {
+            variable.value = value;
+        }
     }
 }

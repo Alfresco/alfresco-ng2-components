@@ -11,10 +11,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "allowedCommonJsDependencies": [
               "minimatch",
               "minimatch-browser",
-              "moment-es6",
               "superagent",
               "event-emitter",
               "brace-expansion",
@@ -392,9 +392,9 @@
       }
     },
     "core": {
+      "projectType": "library",
       "root": "lib/core",
       "sourceRoot": "lib/core",
-      "projectType": "library",
       "prefix": "adf",
       "architect": {
         "build": {
@@ -407,8 +407,12 @@
             "production": {
               "project": "lib/core/ng-package.json",
               "tsConfig": "lib/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "lib/core/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -416,8 +420,10 @@
             "main": "lib/core/test.ts",
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
-            "codeCoverage": true,
-            "sourceMap": true
+            "sourceMap": true,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css"
+            ]
           }
         },
         "lint": {
@@ -489,7 +495,6 @@
             "main": "lib/content-services/src/test.ts",
             "tsConfig": "lib/content-services/tsconfig.spec.json",
             "karmaConfig": "lib/content-services/karma.conf.js",
-            "codeCoverage": true,
             "sourceMap": true
           }
         },
@@ -562,7 +567,6 @@
             "main": "lib/process-services/src/test.ts",
             "tsConfig": "lib/process-services/tsconfig.spec.json",
             "karmaConfig": "lib/process-services/karma.conf.js",
-            "codeCoverage": true,
             "sourceMap": true
           }
         },
@@ -602,7 +606,6 @@
             "main": "lib/process-services-cloud/src/test.ts",
             "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
             "karmaConfig": "lib/process-services-cloud/karma.conf.js",
-            "codeCoverage": true,
             "sourceMap": true
           }
         },
@@ -675,7 +678,6 @@
             "main": "lib/insights/src/test.ts",
             "tsConfig": "lib/insights/tsconfig.spec.json",
             "karmaConfig": "lib/insights/karma.conf.js",
-            "codeCoverage": true,
             "sourceMap": true
           }
         },
@@ -714,7 +716,6 @@
             "main": "lib/extensions/src/test.ts",
             "tsConfig": "lib/extensions/tsconfig.spec.json",
             "karmaConfig": "lib/extensions/karma.conf.js",
-            "codeCoverage": true,
             "sourceMap": true
           }
         },
@@ -736,13 +737,26 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@nrwl/node:webpack",
           "options": {
-            "tsConfig": "lib/testing/tsconfig.lib.json",
-            "project": "lib/testing/ng-package.json"
+            "projectRoot": "lib/testing",
+            "outputPath": "lib/dist/testing",
+            "main": "lib/testing/index.ts",
+            "generatePackageJson" : true,
+            "tsConfig": "lib/testing/tsconfig.lib.prod.json",
+            "additionalEntryPoints": [
+              {
+                "entryName": "shared",
+                "entryPath": "/lib/testing/src/lib/shared/index.ts"
+              }
+            ]
           },
           "configurations": {
             "production": {
+              "projectRoot": "lib/testing",
+              "outputPath": "lib/dist/testing",
+              "main": "lib/testing/index.ts",
+              "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
             }
           }
@@ -765,13 +779,15 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@nrwl/workspace:run-commands",
           "options": {
-            "tsConfig": "lib/cli/tsconfig.json"
+            "commands": [
+              "cd lib/cli && npm i && npm run dist"
+            ]
           },
           "configurations": {
             "production": {
-              "tsConfig": "lib/cli/tsconfig.lib.prod.json"
+              "tsConfig": "lib/cli/tsconfig.json"
             }
           }
         },

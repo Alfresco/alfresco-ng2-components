@@ -1,0 +1,21 @@
+<div
+    class="adf-inplace-input-container"
+    [ngClass]="{'adf-inplace-input-container-error': control.invalid && control.touched}"
+>
+    <mat-form-field class="adf-inplace-input-mat-form-field">
+        <input
+            matInput
+            [formControl]="control"
+            class="adf-inplace-input"
+            data-automation-id="adf-inplace-input"
+        >
+
+        <mat-label data-automation-id="adf-inplace-input-label">
+            <ng-content select="[label]"></ng-content>
+        </mat-label>
+
+        <mat-error data-automation-id="adf-inplace-input-error">
+            <ng-content select="[error]"></ng-content>
+        </mat-error>
+    </mat-form-field>
+</div>

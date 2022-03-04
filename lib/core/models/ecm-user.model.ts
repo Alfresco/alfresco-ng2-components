@@ -65,4 +65,8 @@ export class EcmUserModel {
         this.properties = obj && obj.properties;
         this.capabilities = obj && obj.capabilities;
     }
+
+    isAdmin(): boolean {
+        return this.capabilities?.isAdmin;
+    }
 }

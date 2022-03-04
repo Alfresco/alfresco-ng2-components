@@ -16,6 +16,7 @@
  */
 
 import { ObjectDataColumn } from '@alfresco/adf-core';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 
 export const fakeProcessCloudList = {
     list: {
@@ -34,7 +35,8 @@ export const fakeProcessCloudList = {
                     status: 'RUNNING',
                     lastModified: 1540381146276,
                     lastModifiedTo: null,
-                    lastModifiedFrom: null
+                    lastModifiedFrom: null,
+                    variables: [{ id: 'variableId', value: 'variableValue'}]
                 }
             },
             {
@@ -84,13 +86,13 @@ export const fakeProcessCloudList = {
 
 export const fakeCustomSchema =
     [
-        new ObjectDataColumn({
+        new ObjectDataColumn<ProcessListDataColumnCustomData>({
             key: 'fakeName',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
             sortable: true
         }),
-        new ObjectDataColumn({
+        new ObjectDataColumn<ProcessListDataColumnCustomData>({
             key: 'fakeTaskName',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',

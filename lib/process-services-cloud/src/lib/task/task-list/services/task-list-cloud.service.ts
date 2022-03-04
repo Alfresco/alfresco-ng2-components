@@ -17,15 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
-import { TaskCloudNodePaging } from '../models/task-cloud.model';
+import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { map } from 'rxjs/operators';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 
 @Injectable({ providedIn: 'root' })
-export class TaskListCloudService extends BaseCloudService {
+export class TaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
@@ -65,11 +66,17 @@ export class TaskListCloudService extends BaseCloudService {
 
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
-        for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) &&
-                !this.isExcludedField(property) &&
-                this.isPropertyValueValid(requestNode, property)) {
-                queryParam[property] = requestNode[property];
+        for (const propertyKey in requestNode) {
+            if (
+                requestNode.hasOwnProperty(propertyKey) &&
+                !this.isExcludedField(propertyKey) &&
+                this.isPropertyValueValid(requestNode, propertyKey)
+            ) {
+                if (propertyKey === 'variableKeys' && requestNode[propertyKey]?.length > 0) {
+                    queryParam[propertyKey] = requestNode[propertyKey].join(',');
+                } else {
+                    queryParam[propertyKey] = requestNode[propertyKey];
+                }
             }
         }
         return queryParam;

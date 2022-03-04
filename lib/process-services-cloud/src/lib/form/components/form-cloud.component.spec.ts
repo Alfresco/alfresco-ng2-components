@@ -17,7 +17,15 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Component, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import {
+    Component,
+    DebugElement,
+    SimpleChange,
+    NgModule,
+    Injector,
+    ComponentFactoryResolver,
+    ViewChild
+} from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
@@ -55,6 +63,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material/dialog';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -68,15 +80,17 @@ describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
+    let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
+    let documentRootLoader: HarnessLoader;
 
     @Component({
         selector: 'adf-cloud-custom-widget',
         template: '<div></div>'
     })
-    // eslint-disable-next-line @angular-eslint/component-class-suffix
+        // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }
@@ -85,7 +99,8 @@ describe('FormCloudComponent', () => {
         declarations: [CustomWidget],
         exports: [CustomWidget]
     })
-    class CustomUploadModule { }
+    class CustomUploadModule {
+    }
 
     const buildWidget = (type: string, injector: Injector): any => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
@@ -130,12 +145,14 @@ describe('FormCloudComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
 
         translateService = TestBed.inject(TranslateService);
+        matDialog = TestBed.inject(MatDialog);
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
 
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
+        documentRootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
     });
 
@@ -220,6 +237,41 @@ describe('FormCloudComponent', () => {
         formComponent.showTitle = false;
 
         expect(formComponent.isTitleEnabled()).toBeFalsy();
+    });
+
+    it('should show a valid validation icon in case showValidationIcon is true', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+
+        expect(formComponent.showValidationIcon).toBeTruthy();
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).not.toBeNull();
+        const validationIcon = fixture.debugElement.query(By.css('#adf-valid-form-icon'));
+        expect(validationIcon.nativeElement.innerText).toEqual('check_circle');
+    });
+
+    it('should show a error icon in case showValidationIcon is true and form invalid', () => {
+        const formModel = new FormModel();
+        formModel.isValid = false;
+        formComponent.form = formModel;
+
+        expect(formComponent.showValidationIcon).toBeTruthy();
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).not.toBeNull();
+        const validationIcon = fixture.debugElement.query(By.css('#adf-invalid-form-icon'));
+        expect(validationIcon.nativeElement.innerText).toEqual('error');
+    });
+
+    it('should not show any validation icon in case showValidationIcon is false', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.showValidationIcon = false;
+
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).toBeNull();
     });
 
     it('should return primary color for complete button', () => {
@@ -737,6 +789,63 @@ describe('FormCloudComponent', () => {
         expect(completed).toBeTruthy();
     });
 
+    it('should open confirmation dialog on complete task', async () => {
+        formComponent.form = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.completeTaskForm();
+        let dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(1);
+
+        await dialogs[0].close();
+        dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(0);
+    });
+
+    it('should submit form when user confirms', () => {
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as any);
+        fixture.detectChanges();
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        } as any);
+        formComponent.form = formModel;
+        formComponent.taskId = 'id';
+        formComponent.appName = 'appName';
+
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel as any));
+        formComponent.completeTaskForm('complete');
+
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+
+    it('should not confirm form if user rejects', () => {
+        const outcome = 'complete';
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.form = formModel;
+        spyOn(formComponent['formCloudService'], 'completeTaskForm');
+
+        formComponent.completeTaskForm(outcome);
+
+        expect(matDialog.open).toHaveBeenCalled();
+        expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
+    });
+
     it('should require json to parse form', () => {
         expect(formComponent.parseForm(null)).toBeNull();
     });
@@ -1029,16 +1138,16 @@ describe('FormCloudComponent', () => {
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
     template: `
-    <adf-cloud-form #adfCloudForm>
-        <adf-cloud-form-custom-outcomes>
-            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
-            CUSTOM-BUTTON-1
-            </button>
-            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
-                CUSTOM-BUTTON-2
-            </button>
-        </adf-cloud-form-custom-outcomes>
-    </adf-cloud-form>`
+        <adf-cloud-form #adfCloudForm>
+            <adf-cloud-form-custom-outcomes>
+                <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
+                    CUSTOM-BUTTON-1
+                </button>
+                <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
+                    CUSTOM-BUTTON-2
+                </button>
+            </adf-cloud-form-custom-outcomes>
+        </adf-cloud-form>`
 })
 
 class FormCloudWithCustomOutComesComponent {
@@ -1046,8 +1155,11 @@ class FormCloudWithCustomOutComesComponent {
     @ViewChild('adfCloudForm', { static: true })
     adfCloudForm: FormCloudComponent;
 
-    onCustomButtonOneClick() { }
-    onCustomButtonTwoClick() { }
+    onCustomButtonOneClick() {
+    }
+
+    onCustomButtonTwoClick() {
+    }
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {
@@ -1147,15 +1259,15 @@ describe('retrieve metadata on submit', () => {
     } as Node;
 
     beforeEach(() => {
-       const apiService = TestBed.inject(AlfrescoApiService);
-       spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
-       formService = TestBed.inject(FormService);
+        formService = TestBed.inject(FormService);
 
-       fixture = TestBed.createComponent(FormCloudComponent);
-       formComponent = fixture.componentInstance;
-       formComponent.form = formComponent.parseForm(fakeMetadataForm);
-       fixture.detectChanges();
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+        formComponent.form = formComponent.parseForm(fakeMetadataForm);
+        fixture.detectChanges();
     });
 
     it('should set values when updateFormValuesRequested is updated', async () => {
@@ -1180,8 +1292,8 @@ describe('retrieve metadata on submit', () => {
         expect(addValuesNotPresent).toHaveBeenCalledWith(values);
         expect(formComponent.form.values['pfx_property_one']).toBe('testValue');
         expect(formComponent.form.values['pfx_property_two']).toBe(true);
-        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
-        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
+        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
         expect(formComponent.form.values['pfx_property_five']).toEqual('green');
         expect(formDataRefreshed).toHaveBeenCalled();
     });

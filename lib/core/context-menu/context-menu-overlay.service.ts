@@ -101,34 +101,15 @@ export class ContextMenuOverlayService {
             } as any)
         };
 
-        const positionStrategy = this.overlay.position()
+        const positionStrategy = this.overlay
+            .position()
             .flexibleConnectedTo(new ElementRef(fakeElement))
-            .withPositions([
-                {
-                    originX: 'start', originY: 'bottom' ,
-                    overlayX: 'start', overlayY: 'top'
-                },
-                {
-                    originX: 'start', originY: 'top',
-                    overlayX: 'start', overlayY: 'bottom'
-                },
-                {
-                    originX: 'end', originY: 'top',
-                    overlayX: 'start', overlayY: 'top'
-                },
-                {
-                    originX: 'start', originY: 'top',
-                    overlayX: 'end', overlayY: 'top'
-                },
-                {
-                    originX: 'end', originY: 'center',
-                    overlayX: 'start', overlayY: 'center'
-                },
-                {
-                    originX: 'start', originY: 'center',
-                    overlayX: 'end', overlayY: 'center'
-                }
-            ]);
+            .withPositions([{
+                originX: 'start',
+                originY: 'bottom',
+                overlayX: 'start',
+                overlayY: 'top'
+            }]);
 
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,

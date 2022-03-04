@@ -62,7 +62,16 @@ do
  tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
 
 
- if [ $PACKAGE == 'adf-core' ]; then
+if [ $PACKAGE == 'adf-testing' ]; then
+    if [ ! -f package/'main.js' ]; then
+        error_out '31;1' "$PACKAGE testing not ok!" >&2
+        exit 1
+     else
+         echo "testing ok!"
+     fi
+fi
+
+if [ $PACKAGE == 'adf-core' ]; then
     if [ ! -f package/prebuilt-themes/'adf-blue-orange.css' ]; then
         error_out '31;1' "$PACKAGE prebuilt-theme not found!" >&2
         exit 1
@@ -79,41 +88,27 @@ do
 
  fi
 
- if [ ! -f package/bundles/$PACKAGE'.umd.js' ]; then
-    error_out '31;1' "$PACKAGE bundles not found!" >&2
+if [ $PACKAGE != 'adf-testing' ]; then
+
+ if [ ! -f package/fesm2015/$PACKAGE'.mjs' ]; then
+    error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
     exit 1
  else
-     echo "bundles ok!"
+     echo "fesm2015 ok!"
  fi
 
- if [ ! -f package/bundles/$PACKAGE'.umd.js.map' ]; then
-    error_out '31;1' "$PACKAGE js.map not found!" >&2
+ if [ ! -f package/esm2020/$PACKAGE'.mjs' ]; then
+    error_out '31;1' "esm2020/$PACKAGE.mjs not found!" >&2
     exit 1
  else
-     echo "js.map ok!"
+     echo "esm2020 ok!"
  fi
 
- if [ ! -f package/fesm2015/$PACKAGE'.js' ]; then
-    error_out '31;1' "fesm2015/$PACKAGE.js not found!" >&2
+ if [ ! -f package/fesm2020/$PACKAGE'.mjs' ]; then
+    error_out '31;1' "fesm2020/$PACKAGE.mjs not found!" >&2
     exit 1
  else
-     echo "esm5 ok!"
- fi
-
- if [ ! -f package/esm2015/$PACKAGE'.js' ]; then
-    error_out '31;1' "esm2015/$PACKAGE.js not found!" >&2
-    exit 1
- else
-     echo "esm2015 ok!"
- fi
-
-  if [ ! -f package/_theming.scss ]; then
-    if [ $PACKAGE == 'adf-core' ]; then
-       error_out '31;1' "$PACKAGE style not found!" >&2
-       exit 1
-    fi
- else
-     echo "no style needed"
+     echo "fesm2020 ok!"
  fi
 
  if [ ! -f package/README.md ]; then
@@ -134,6 +129,7 @@ do
     fi
  else
      echo "i18n ok!"
+ fi
  fi
 
  cd ..

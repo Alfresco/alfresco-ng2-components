@@ -256,7 +256,7 @@ TEST_APP: {
 The following command is in charge of checking plugin status by given plugin name:
 
 ```bash
-adf-cli check-plugin-env --host "gateway_env" --pluginName "Name of the plugin" --appName "appName" -u "username" -p "password" 
+adf-cli check-plugin-env --host "gateway_env" --pluginName "Name of the plugin" --clientId "clientId" --appName "appName" -u "username" -p "password" 
 --ui "uiName"
 ```
 
@@ -265,5 +265,5 @@ adf-cli check-plugin-env --host "gateway_env" --pluginName "Name of the plugin" 
 The following command will scan the environment to show various information on its current status:
 
 ```bash
-adf-cli scan-env --host "https://example.com" -u "admin" -p "password"
+adf-cli scan-env --host "https://example.com" --clientId "clientId" -u "admin" -p "password"
 ```

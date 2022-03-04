@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "تنزيل",
       "REMOVE_FILE": "إزالة",
       "UPLOAD": "تحميل",
-      "REQUIRED": "*مطلوب",
+      "REQUIRED": "حقل مطلوب",
+      "REST_API_FAILED": "الخادم '{{hostname}}' لا يمكن الوصول إليه",
       "FILE_NAME": "اسم الملف",
       "NO_FILE_ATTACHED": "لا ملف مرفق",
       "VALIDATOR": {

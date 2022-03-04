@@ -22,7 +22,7 @@
  * @class util.Resources
  */
 var path = require('path');
-const ACTIVITI_CLOUD_APPS = require('../../lib/dist/testing/src');
+const ACTIVITI_CLOUD_APPS = require('../../lib/dist/testing');
 
 const RESOURCES = {
     ...ACTIVITI_CLOUD_APPS,

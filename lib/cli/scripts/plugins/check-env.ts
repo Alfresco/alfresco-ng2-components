@@ -10,7 +10,8 @@ export class CheckEnv {
     constructor(
         private host: string,
         private username: string,
-        private password: string
+        private password: string,
+        private clientId: string = 'alfresco'
     ) {}
 
     async checkEnv() {
@@ -22,7 +23,7 @@ export class CheckEnv {
                 authType: 'OAUTH',
                 oauth2: {
                     host: `${this.host}/auth/realms/alfresco`,
-                    clientId: 'alfresco',
+                    clientId: `${this.clientId}`,
                     scope: 'openid'
                 }
             } as any);

@@ -28,7 +28,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { ProcessListPage } from './../pages/process-list.page';
 import { ProcessDetailsPage } from './../pages/process-details.page';
-import moment = require('moment');
+import * as moment from 'moment';
 import { ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Process Instance Details', () => {

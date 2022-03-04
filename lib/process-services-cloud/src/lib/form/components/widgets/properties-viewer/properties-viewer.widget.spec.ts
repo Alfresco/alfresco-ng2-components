@@ -24,10 +24,10 @@ import {
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
-import { ProcessServiceCloudTestingModule } from 'process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
-import { BasicPropertiesService } from 'content-services';
+import { BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 
 describe('PropertiesViewerWidgetComponent', () => {

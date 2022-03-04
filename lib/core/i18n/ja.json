@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "ダウンロード",
       "REMOVE_FILE": "削除",
       "UPLOAD": "アップロード",
-      "REQUIRED": "*必須",
+      "REQUIRED": "これは必須フィールドです",
+      "REST_API_FAILED": "'{{ hostname }}' サーバーは、到達不能です",
       "FILE_NAME": "ファイル名",
       "NO_FILE_ATTACHED": "ファイルが添付されていません",
       "VALIDATOR": {

@@ -22,7 +22,7 @@ import { VersionListComponent } from './version-list.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
+import { Node, VersionPaging, VersionEntry, NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
@@ -63,7 +63,7 @@ describe('VersionListComponent', () => {
         component.node = { id: nodeId, allowableOperations: ['update'] } as Node;
 
         spyOn(component, 'downloadContent').and.stub();
-        spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve({ entry: { id: 'nodeInfoId' } }));
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: { id: 'nodeInfoId' } })));
     });
 
     it('should raise confirmation dialog on delete', () => {
@@ -299,7 +299,7 @@ describe('VersionListComponent', () => {
             fixture.detectChanges();
             tick();
 
-            expect(component.restored.emit).toHaveBeenCalledWith({ id: 'nodeInfoId' });
+            expect(component.restored.emit).toHaveBeenCalledWith(new Node({ id: 'nodeInfoId' }));
         }));
 
         it('should reload the version list after a version restore', fakeAsync(() => {

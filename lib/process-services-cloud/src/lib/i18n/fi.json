@@ -330,6 +330,8 @@
       "CREATED": "Luotu",
       "END_DATE": "Päättymispäivä",
       "ID": "Tunnus",
+      "PROCESS_INSTANCE_ID": "Prosessiesiintymätunnus",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Ei prosessiesiintymätunnusta",
       "DESCRIPTION": "Kuvaus",
       "DESCRIPTION_DEFAULT": "Ei kuvausta",
       "FORM_NAME": "Lomakkeen nimi",

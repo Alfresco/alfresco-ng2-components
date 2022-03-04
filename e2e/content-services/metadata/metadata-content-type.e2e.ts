@@ -109,7 +109,7 @@ describe('content type', () => {
     });
 
     it('[C593560] Should the user be able to select a new content type and save it only after the confirmation dialog',  async () => {
-        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/files(overlay:files/${pdfFile.id}/view)`);
         await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
@@ -134,7 +134,7 @@ describe('content type', () => {
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/files(overlay:files/${pdfFile.id}/view)`);
         await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
@@ -150,7 +150,7 @@ describe('content type', () => {
     });
 
     it('[C593559] Should the user be able to select a new content type and not save it when press cancel in the confirmation dialog',  async () => {
-        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/files(overlay:files/${docxFileModel.id}/view)`);
         await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
@@ -173,7 +173,7 @@ describe('content type', () => {
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/files(overlay:files/${docxFileModel.id}/view)`);
         await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();

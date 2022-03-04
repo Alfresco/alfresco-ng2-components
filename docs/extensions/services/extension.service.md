@@ -22,10 +22,10 @@ Manages and runs basic extension functionality.
     Retrieves an action using its ID value.
     -   _id:_ `string`  - The ID value to look for
     -   **Returns** [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts) - Action or null if not found
--   **getAuthGuards**(ids: `string[]`): `Array<Type<__type>>`<br/>
+-   **getAuthGuards**(ids: `string[]`): `Array<Type<any>>`<br/>
     Retrieves one or more auth guards using an array of ID values.
     -   _ids:_ `string[]`  - Array of ID value to look for
-    -   **Returns** `Array<Type<__type>>` - Array of auth guards or empty array if none were found
+    -   **Returns** `Array<Type<any>>` - Array of auth guards or empty array if none were found
 -   **getComponentById**(id: `string`): `Type<>`<br/>
     Retrieves a registered [extension component](../../../lib/extensions/src/lib/services/component-register.service.ts) using its ID value.
     -   _id:_ `string`  - The ID value to look for
@@ -55,11 +55,11 @@ Manages and runs basic extension functionality.
 -   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>`<br/>
     Loads and registers an extension config file and plugins (specified by path properties).
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>` - The loaded config data
--   **runExpression**(value: `string|__type`, context?: `any`): `Function`<br/>
+-   **runExpression**(value: `string|any`, context?: `any`): `any`<br/>
     Runs a lightweight expression stored in a string.
-    -   _value:_ `string|__type`  - String containing the expression or literal value
+    -   _value:_ `string|any`  - String containing the expression or literal value
     -   _context:_ `any`  - (Optional) Parameter object for the expression with details of app state
-    -   **Returns** `Function` - Result of evaluated expression, if found, or the literal value otherwise
+    -   **Returns** `any` - Result of evaluated expression, if found, or the literal value otherwise
 -   **setAuthGuards**(values: `Function`)<br/>
     Adds one or more new auth guards to the existing set.
     -   _values:_ `Function`  - The new auth guards to add

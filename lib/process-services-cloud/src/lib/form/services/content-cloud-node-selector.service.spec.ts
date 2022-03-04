@@ -19,9 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock, NotificationService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContentCloudNodeSelectorService } from 'process-services-cloud';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
+import { ContentCloudNodeSelectorService } from './content-cloud-node-selector.service';
 
 describe('ContentCloudNodeSelectorService', () => {
     let service: ContentCloudNodeSelectorService;
@@ -62,7 +62,7 @@ describe('ContentCloudNodeSelectorService', () => {
         dialog = TestBed.inject(MatDialog);
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
-        openDialogSpy = spyOn(dialog, 'open').and.returnValue({
+        openDialogSpy = spyOn(dialog, 'open').and.returnValue(<any> {
             afterOpened: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
@@ -74,7 +74,10 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should be able to fetch nodeId from given relative path', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
-        const relativePathNodeEntry = await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
+        const relativePathNodeEntry = await service.getNodeIdFromPath({
+            alias: 'mock-alias',
+            path: 'mock-relativePath'
+        });
 
         expect(relativePathNodeEntry).toBe(relativePathNodeResponseBody.entry.id);
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', {

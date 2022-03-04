@@ -18,3 +18,4 @@
 export * from './data-table-builder';
 export * from './column';
 export * from './data-table-item';
+export * from './columns-selector';

@@ -16,19 +16,24 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { setupTestBed, TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
-import { GroupCloudModule } from 'process-services-cloud/src/lib/group/public-api';
+import { GroupCloudModule } from '../../../../group/group-cloud.module';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType } from '../../models/filter-cloud.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
     let fixture: ComponentFixture<TaskAssignmentFilterCloudComponent>;
     let identityUserService: IdentityUserService;
-    const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserMock = {
+        firstName: 'fake-identity-first-name',
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    };
 
     setupTestBed({
         imports: [
@@ -60,7 +65,7 @@ describe('EditTaskFilterCloudComponent', () => {
     afterEach(() => fixture.destroy());
 
     it('should emit the current user info when assignment is the current user', () => {
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock as any);
         spyOn(component.assignedChange, 'emit');
         component.onAssignmentTypeChange(AssignmentType.CURRENT_USER);
         fixture.detectChanges();

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { IdentityGroupModel } from '../models/identity-group.model';
 import { InitialGroupNamePipe } from './group-initial.pipe';
-import { IdentityGroupModel } from '@alfresco/adf-core';
 
 describe('InitialGroupNamePipe', () => {
 

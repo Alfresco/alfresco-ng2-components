@@ -330,6 +330,8 @@
       "CREATED": "Criado",
       "END_DATE": "Data de término",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "ID de instância de processo",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Nehum ID de instância de processo",
       "DESCRIPTION": "Descrição",
       "DESCRIPTION_DEFAULT": "Nenhuma descrição",
       "FORM_NAME": "Nome de formulário",
