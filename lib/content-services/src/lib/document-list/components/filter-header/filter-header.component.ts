@@ -17,13 +17,13 @@
 
 import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PaginationModel, DataSorting } from '@alfresco/adf-core';
-import { DocumentListComponent } from '../document-list.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NodePaging, MinimalNode } from '@alfresco/js-api';
+import { ADF_DOCUMENT_PARENT_COMPONENT, DocumentListParentComponent } from '../document-list.interface';
 
 @Component({
     selector: 'adf-filter-header',
@@ -47,7 +47,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(DocumentListComponent) private documentList: DocumentListComponent,
+    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: DocumentListParentComponent,
                 @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }

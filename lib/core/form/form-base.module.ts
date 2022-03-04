@@ -77,7 +77,9 @@ import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
         FormListComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
-        ...WIDGET_DIRECTIVES
+        ...WIDGET_DIRECTIVES,
+        WidgetComponent,
+        TabsWidgetComponent
     ]
 })
 export class FormBaseModule {

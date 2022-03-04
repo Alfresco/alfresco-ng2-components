@@ -51,6 +51,7 @@ import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
 export * from './widget.component';
 export * from './core/index';
 
+
 // primitives
 export * from './unknown/unknown.widget';
 export * from './text/text.widget';
