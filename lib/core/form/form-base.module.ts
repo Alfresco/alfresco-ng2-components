@@ -41,7 +41,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
 import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
-import { ContainerWidgetComponent } from './components/widgets/container/container.widget';
 
 @NgModule({
     imports: [
