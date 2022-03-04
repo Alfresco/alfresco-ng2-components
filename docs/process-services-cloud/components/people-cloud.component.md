@@ -30,6 +30,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | User selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | readOnly | `boolean` | false | Show the info in readonly mode |
+| required | `boolean` | false | Mark this field as required |
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl` |  | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |

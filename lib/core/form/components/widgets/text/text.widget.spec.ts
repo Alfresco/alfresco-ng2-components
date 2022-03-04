@@ -93,33 +93,6 @@ describe('TextWidgetComponent', () => {
                 expect(textWidgetLabel.innerText).toBe('text-name');
             });
 
-            it('should be able to set a Text Widget as required', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    required: true
-                });
-
-                fixture.detectChanges();
-                const textWidgetLabel = element.querySelector('label');
-                expect(textWidgetLabel.innerText).toBe('text-name*');
-                expect(widget.field.isValid).toBe(false);
-
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
-
-                await fixture.whenStable();
-                fixture.detectChanges();
-                expect(widget.field.isValid).toBe(true);
-
-                enterValueInTextField(element.querySelector('#text-id'), '');
-                await fixture.whenStable();
-                fixture.detectChanges();
-                expect(widget.field.isValid).toBe(false);
-            });
-
             it('should be able to set a placeholder for Text widget', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
@@ -219,6 +192,42 @@ describe('TextWidgetComponent', () => {
                 const tooltip = textElement.getAttribute('ng-reflect-message');
 
                 expect(tooltip).toEqual(widget.field.tooltip);
+            });
+        });
+
+        describe('when is required', () => {
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    required: true
+                });
+            });
+
+            it('should be marked as invalid after interaction', async () => {
+                const textInput = fixture.nativeElement.querySelector('input');
+                expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+                textInput.dispatchEvent(new Event('blur'));
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+            });
+
+            it('should be able to display label with asterisk', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+                expect(asterisk).toBeTruthy();
+                expect(asterisk.textContent).toEqual('*');
             });
         });
 

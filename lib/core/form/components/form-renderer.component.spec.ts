@@ -45,43 +45,39 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
-    expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
+    expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
     targetInput.value = message;
     targetInput.dispatchEvent(new Event('input'));
 };
 
 const typeIntoDate = (targetInput: DebugElement, date: { srcElement: { value: string } }) => {
-    expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
+    expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
     targetInput.triggerEventHandler('change', date);
 };
 
 const expectElementToBeHidden = (targetElement: HTMLElement): void => {
-    expect(targetElement).not.toBeNull();
-    expect(targetElement).toBeDefined();
+    expect(targetElement).toBeTruthy();
     expect(targetElement.hidden).toBe(true, `${targetElement.id} should be hidden but it is not`);
 };
 
 const expectElementToBeVisible = (targetElement: HTMLElement): void => {
-    expect(targetElement).not.toBeNull();
-    expect(targetElement).toBeDefined();
+    expect(targetElement).toBeTruthy();
     expect(targetElement.hidden).toBe(false, `${targetElement.id} should be visibile but it is not`);
 };
 
 const expectInputElementValueIs = (targetElement: HTMLInputElement, value: string): void => {
-    expect(targetElement).not.toBeNull();
-    expect(targetElement).toBeDefined();
+    expect(targetElement).toBeTruthy();
     expect(targetElement.value).toBe(value, `invalid value for ${targetElement.name}`);
 };
 
 const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
-    expect(invalidElementContainer).not.toBeNull();
-    expect(invalidElementContainer).toBeDefined();
+    expect(invalidElementContainer).toBeTruthy();
 };
 
 const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
-    expect(invalidElementContainer).toBeNull();
+    expect(invalidElementContainer).toBeFalsy();
 };
 
 describe('Form Renderer Component', () => {
@@ -407,6 +403,12 @@ describe('Form Renderer Component', () => {
 
             const numberInputRequired: HTMLInputElement = fixture.nativeElement.querySelector('#Number0x8cbv');
             expectElementToBeVisible(numberInputRequired);
+            expectElementToBeValid('Number0x8cbv', fixture);
+
+            numberInputRequired.dispatchEvent(new Event('blur'));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             expectElementToBeInvalid('Number0x8cbv', fixture);
 
             typeIntoInput(numberInputRequired, '5');
@@ -444,6 +446,7 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(numberInputElement);
             expectElementToBeValid('Number0him2z', fixture);
 
+            numberInputElement.dispatchEvent(new Event('blur'));
             typeIntoInput(numberInputElement, '9');
             fixture.detectChanges();
             await fixture.whenStable();

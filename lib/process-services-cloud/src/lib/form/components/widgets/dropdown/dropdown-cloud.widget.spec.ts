@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -231,6 +231,41 @@ describe('DropdownCloudWidgetComponent', () => {
             const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(options[0].nativeElement.innerText).toBe('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
+        });
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DROPDOWN,
+                required: true
+            });
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+
+        it('should be invalid if no default option after interaction', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
 

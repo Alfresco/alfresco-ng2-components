@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormFieldModel, FormFieldTypes, FormModel, setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PeopleCloudWidgetComponent } from './people-cloud.widget';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('PeopleCloudWidgetComponent', () => {
-    let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
-    let widget: PeopleCloudWidgetComponent;
+describe('GroupCloudWidgetComponent', () => {
+    let fixture: ComponentFixture<GroupCloudWidgetComponent>;
+    let widget: GroupCloudWidgetComponent;
     let element: HTMLElement;
-    let identityUserService: IdentityUserService;
-    const currentUser = { id: 'id', username: 'user' };
-    const fakeUser = { id: 'fake-id', username: 'fake' };
 
     setupTestBed({
         imports: [
@@ -36,7 +33,7 @@ describe('PeopleCloudWidgetComponent', () => {
             ProcessServiceCloudTestingModule
         ],
         declarations: [
-            PeopleCloudWidgetComponent
+            GroupCloudWidgetComponent
         ],
         schemas: [
             CUSTOM_ELEMENTS_SCHEMA
@@ -44,32 +41,16 @@ describe('PeopleCloudWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        identityUserService = TestBed.inject(IdentityUserService);
-        fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
+        fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(fakeUser);
-    });
-
-    it('should preselect the current user', () => {
-        widget.field = new FormFieldModel(new FormModel(), { value: null, selectLoggedUser: true });
-        fixture.detectChanges();
-        expect(widget.preSelectUsers).toEqual([fakeUser]);
-        expect(identityUserService.getCurrentUserInfo).toHaveBeenCalled();
-    });
-
-    it('should not preselect the current user if value exist', () => {
-        widget.field = new FormFieldModel(new FormModel(), { value: [currentUser], selectLoggedUser: true });
-        fixture.detectChanges();
-        expect(widget.preSelectUsers).toEqual([currentUser]);
-        expect(identityUserService.getCurrentUserInfo).not.toHaveBeenCalled();
     });
 
     describe('when is required', () => {
 
         beforeEach(() => {
             widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.PEOPLE,
+                type: FormFieldTypes.GROUP,
                 required: true
             });
         });
@@ -90,8 +71,8 @@ describe('PeopleCloudWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const cloudPeopleInput = element.querySelector('adf-cloud-people');
-            cloudPeopleInput.dispatchEvent(new Event('blur'));
+            const cloudGroupInput = element.querySelector('adf-cloud-group');
+            cloudGroupInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
             await fixture.whenStable();

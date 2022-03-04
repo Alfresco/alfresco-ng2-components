@@ -201,6 +201,24 @@ describe('AttachFileCloudWidgetComponent', () => {
         expect(contentNodeSelectorPanelService.customModels).toEqual([]);
     });
 
+    describe('when is required', () => {
+
+        it('should be able to display label with asterisk', async () => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.UPLOAD,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+    });
+
     describe('Upload widget with displayable ContentModel properties', () => {
 
         it('should display CM Properties if the file contains value', async () => {
