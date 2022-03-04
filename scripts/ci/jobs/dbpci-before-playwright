@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# At the moment we only need to install chromium
+npx playwright install chromium
