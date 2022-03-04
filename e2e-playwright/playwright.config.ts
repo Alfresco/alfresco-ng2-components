@@ -16,7 +16,7 @@ import path from 'path';
 export const getGlobalConfig = (): PlaywrightTestConfig => {
     dotenvConfig();
     const env = process.env;
-    const baseUrl = `${env.PLAYWRIGHT_E2E_HOST}:4400`;
+    const baseUrl = `${env.PLAYWRIGHT_STORYBOOK_E2E_HOST}:${env.PLAYWRIGHT_STORYBOOK_E2E_PORT}`;
     let startCommand: string;
     let report: ReporterDescription;
 
