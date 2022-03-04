@@ -38,7 +38,7 @@ import {
     LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
-    AspectListService
+    AspectListService, DialogAspectListService
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
@@ -234,6 +234,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private contentMetadataService: ContentMetadataService,
                 private sharedLinksApiService: SharedLinksApiService,
                 private aspectListService: AspectListService,
+                private dialogAspectListService: DialogAspectListService,
                 private nodeService: NodesApiService) {
     }
 
@@ -474,7 +475,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onAspectUpdate(event: any) {
-        this.aspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
+        this.dialogAspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
             this.nodeService.updateNode(event.value.entry.id, {aspectNames : [...aspectList]}).subscribe(() => {
                 this.openSnackMessageInfo('Node Aspects Updated');
             });
