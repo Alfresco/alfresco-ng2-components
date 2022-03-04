@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder, browser, $$ } from 'protractor';
+import { by, ElementFinder, browser, $$, protractor } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -60,6 +60,17 @@ export class DocumentListPage {
 
     async selectRowWithKeyboard(nodeName: string): Promise<void> {
         await this.dataTable.selectRowWithKeyboard('Display name', nodeName);
+    }
+
+    async selectRowsWithKeyboard(...contentNames: string[]): Promise<void> {
+        let option: any;
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        for (const name of contentNames) {
+            option = await this.dataTable.getRow('Display name', name);
+            await option.click();
+            await this.dataTable.checkRowIsSelected('Display name', name);
+        }
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
     async rightClickOnRow(nodeName: string): Promise<void> {
