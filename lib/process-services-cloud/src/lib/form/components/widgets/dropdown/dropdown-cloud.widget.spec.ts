@@ -160,6 +160,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should show error message if the restUrl failed to fetch options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+            const errorIcon: string = 'error_outline';
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.restIdProperty = 'name';
@@ -173,11 +174,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-
             expect(jsonDataSpy).toHaveBeenCalled();
             expect(widget.isRestApiFailed).toBe(true);
             expect(widget.field.options.length).toEqual(0);
-            expect(failedErrorMsgElement.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed',  async () => {
@@ -426,6 +426,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const errorIcon: string = 'error_outline';
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 
@@ -450,7 +451,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toBe(0);
-                expect(failedErrorMsgElement2.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
+                expect(failedErrorMsgElement2.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
 
                 jsonDataSpy.and.returnValue(of(mockSecondRestDropdownOptions));
                 selectParentOption('IT');
