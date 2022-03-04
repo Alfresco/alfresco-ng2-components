@@ -40,6 +40,8 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
 import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
+import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
+import { ContainerWidgetComponent } from './components/widgets/container/container.widget';
 
 @NgModule({
     imports: [
@@ -67,7 +69,8 @@ import { ViewerModule } from '../viewer/viewer.module';
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE,
-        WidgetComponent
+        WidgetComponent,
+        TabsWidgetComponent
     ],
     exports: [
         ContentWidgetComponent,

@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { Node, PathElementEntity } from '@alfresco/js-api';
-import { DocumentListComponent } from '../document-list';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
