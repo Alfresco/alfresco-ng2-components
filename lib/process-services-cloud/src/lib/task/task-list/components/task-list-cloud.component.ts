@@ -15,12 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Inject } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { TaskListCloudService } from '../services/task-list-cloud.service';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { of } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs/operators';
+import { VariableMapperService } from '../../../services/variable-mapper.sevice';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { TaskCloudModel } from '../../../models/task-cloud.model';
+import { PaginatedEntries } from '@alfresco/js-api';
+import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
+import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -30,7 +40,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends BaseTaskListCloudComponent {
+export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
      * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
@@ -131,25 +141,47 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     candidateGroupId: string = '';
 
-    constructor(private taskListCloudService: TaskListCloudService,
+    rows: TaskInstanceCloudListViewModel[] = [];
+    dataAdapter: TasksListDatatableAdapter | undefined;
+
+    constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
+                userPreferences: UserPreferencesService,
+                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface,
+                private viewModelCreator: VariableMapperService
+            ) {
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    load(requestNode: TaskQueryCloudRequestModel) {
+    reload() {
         this.isLoading = true;
-        this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
-            (tasks) => {
-                this.rows = tasks.list.entries;
-                this.success.emit(tasks);
-                this.isLoading = false;
-                this.pagination.next(tasks.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
+
+        this.isColumnSchemaCreated$.pipe(
+            take(1),
+            switchMap(() => of(this.createRequestNode())),
+            tap((requestNode) => this.requestNode = requestNode),
+            switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode))
+        ).subscribe((tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
+            const tasksWithVariables = tasks.list.entries.map((task) => ({
+                ...task,
+                variables: task.processVariables
+            }));
+
+            this.rows = this.viewModelCreator.mapVariablesByColumnTitle(
+                tasksWithVariables,
+                this.columns
+            );
+
+            this.dataAdapter = new TasksListDatatableAdapter(this.rows, this.columns);
+
+            this.success.emit(tasks);
+            this.isLoading = false;
+            this.pagination.next(tasks.list.pagination);
+        }, (error) => {
+            this.error.emit(error);
+            this.isLoading = false;
+        });
     }
 
     createRequestNode(): TaskQueryCloudRequestModel {
@@ -181,8 +213,25 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
             completedDate: this.completedDate,
-            candidateGroupId: this.candidateGroupId
+            candidateGroupId: this.candidateGroupId,
+            variableKeys: this.getRequestNodeVariables()
         };
+
         return new TaskQueryCloudRequestModel(requestNode);
+    }
+
+    private getRequestNodeVariables(): string[] | undefined {
+        const displayedVariableColumns: string[] = (this.columns ?? [])
+            .filter(column =>
+                column.customData?.columnType === 'process-variable-column' &&
+                column.isHidden !== true
+            )
+            .map(column => {
+                const variableDefinitionsPayload = column.customData.variableDefinitionsPayload;
+                return variableDefinitionsPayload;
+            })
+            .reduce((allRequestKeys, requestKeys) => [...requestKeys, ...allRequestKeys], []);
+
+        return displayedVariableColumns.length ? displayedVariableColumns : undefined;
     }
 }

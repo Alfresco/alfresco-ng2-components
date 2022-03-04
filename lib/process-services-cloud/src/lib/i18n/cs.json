@@ -330,6 +330,8 @@
       "CREATED": "Vytvořeno",
       "END_DATE": "Datum ukončení",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "ID instance procesu",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Žádní ID instance procesu",
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
       "FORM_NAME": "Název formuláře",

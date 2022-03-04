@@ -1,7 +1,7 @@
 <div class="adf-radio-buttons-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" [id]="field.id">
+    [class.adf-readonly]="field.readOnly" [id]="field.id">
     <div class="adf-radio-button-container">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
             <mat-radio-button
                 [matTooltip]="field.tooltip"
@@ -19,5 +19,4 @@
         </mat-radio-group>
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

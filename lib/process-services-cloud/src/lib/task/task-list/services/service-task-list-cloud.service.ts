@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
 

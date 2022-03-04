@@ -17,7 +17,7 @@ Reusable header for Alfresco applications.
     logo="logo.png" 
     [redirectUrl]="'/home'"
     color="primary"
-    (toggled)=toggleMenu($event)>
+    (clicked)=toggleMenu($event)>
 </adf-layout-header>
 ```
 

@@ -40,7 +40,7 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
 import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
-import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
+import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
 
 @NgModule({
     imports: [
@@ -69,7 +69,7 @@ import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE,
         WidgetComponent,
-        TabsWidgetComponent
+        InplaceFormInputComponent
     ],
     exports: [
         ContentWidgetComponent,
@@ -77,9 +77,9 @@ import { TabsWidgetComponent } from './components/widgets/tabs/tabs.widget';
         FormListComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
-        ...WIDGET_DIRECTIVES,
+        InplaceFormInputComponent,
         WidgetComponent,
-        TabsWidgetComponent
+        ...WIDGET_DIRECTIVES
     ]
 })
 export class FormBaseModule {

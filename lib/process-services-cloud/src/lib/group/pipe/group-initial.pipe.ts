@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { IdentityGroupModel } from '@alfresco/adf-core';
+import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Pipe({
     name: 'groupNameInitial'

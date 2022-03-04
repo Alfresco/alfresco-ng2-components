@@ -27,7 +27,7 @@ based on the field type or the metadata information.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| field | [`FormFieldModel`](../../core/models/form-field.model.md) | null | Contains all the necessary data needed to determine what UI [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
+| field | [`FormFieldModel`](../../core/models/form-field.model.md) | null | Contains all the necessary data needed to determine what UI Widget to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the [`FormFieldModel`](../../core/models/form-field.model.md) definitions. |
 
 ## Details
 
@@ -57,5 +57,6 @@ Forms defined in APS have the following default mappings for the form fields:
 | Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
 | Display value | readonly | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
+| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](../../../lib/core/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](../../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
 | N/A | N/A | [`UnknownWidgetComponent`](../../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |

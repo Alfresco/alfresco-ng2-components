@@ -136,7 +136,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab[0].nativeElement.innerText).not.toBe('Tab3');
-        expect(tab[0].nativeElement.innerText).toContain('TAB-ICON');
+        expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });
 });
 

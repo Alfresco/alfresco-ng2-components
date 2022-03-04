@@ -123,6 +123,9 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setProcessDefinitionNameDropDown(option: string) {
+        await this.processDefinitionNameDropdown.checkDropdownIsVisible();
+        await this.processDefinitionNameDropdown.checkDropdownIsClickable();
+        await this.processDefinitionNameDropdown.checkOptionIsDisplayed('ALL');
         await this.processDefinitionNameDropdown.selectDropdownOption(option);
     }
 

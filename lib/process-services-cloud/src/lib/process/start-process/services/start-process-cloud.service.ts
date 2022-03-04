@@ -23,6 +23,7 @@ import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
+import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -41,11 +42,11 @@ export class StartProcessCloudService extends BaseCloudService {
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions(appName: string, queryParams?: { include: 'variables' }): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
-            return this.get(url).pipe(
+            return this.get(url, queryParams).pipe(
                 map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
@@ -125,5 +126,25 @@ export class StartProcessCloudService extends BaseCloudService {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
 
         return this.delete(url);
+    }
+
+    /**
+     * Gets the static values mapped to the start form of a process definition.
+     *
+     * @param appName Name of the app
+     * @param processDefinitionId ID of the target process definition
+     * @returns Static mappings for the start event
+     */
+     getStartEventFormStaticValuesMapping(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
+        const apiUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions/${processDefinitionId}/static-values`;
+        return this.get(apiUrl).pipe(
+            map((res: { [key: string]: any }) => {
+                const result = [];
+                if (res) {
+                    Object.keys(res).forEach(mapping => result.push(new TaskVariableCloud({ name: mapping, value: res[mapping] })));
+                }
+                return result;
+            })
+        );
     }
 }

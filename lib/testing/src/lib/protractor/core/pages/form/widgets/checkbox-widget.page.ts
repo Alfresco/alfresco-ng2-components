@@ -30,7 +30,7 @@ export class CheckboxWidgetPage {
     }
 
     async clickCheckboxInput(fieldId: string): Promise<void> {
-        const checkboxInput = $$(`mat-checkbox[id="${fieldId}"] div`).first();
+        const checkboxInput = $$(`mat-checkbox[id="${fieldId}"] span`).first();
         await BrowserActions.click(checkboxInput);
     }
 

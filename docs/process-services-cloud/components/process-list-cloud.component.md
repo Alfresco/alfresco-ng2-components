@@ -70,6 +70,7 @@ when the process list is empty:
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showActions | `boolean` | false | Toggles the data actions column. |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| showMainDatatableActions | `boolean` | false | Toggle main datatable actions. |
 | sorting | [`ProcessListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
 | startFrom | `string` | "" | Filter the processes. Display only process with startedDate greater then the supplied date. |
 | startTo | `string` | "" | Filter the processes. Display only process with startedDate less than the supplied date. |

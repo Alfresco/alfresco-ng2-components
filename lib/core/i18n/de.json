@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Herunterladen",
       "REMOVE_FILE": "Entfernen",
       "UPLOAD": "Hochladen",
-      "REQUIRED": "*Erforderlich",
+      "REQUIRED": "Feld erforderlich",
+      "REST_API_FAILED": "Der Server '{{ hostname }}' ist nicht erreichbar",
       "FILE_NAME": "Dateiname",
       "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {

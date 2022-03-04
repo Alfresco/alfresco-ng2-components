@@ -130,22 +130,26 @@ describe('DropdownWidgetComponent', () => {
             });
         });
 
-        it('should be able to display label with asterix', async () => {
-            const label = 'MyLabel123';
-            widget.field.name = label;
-
+        it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('label').innerText).toBe(label + '*');
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should be invalid if no default option', async () => {
+        it('should be invalid if no default option after interaction', async () => {
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
+
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-invalid')).toBeDefined();
-            expect(element.querySelector('.adf-invalid')).not.toBeNull();
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
 
         it('should be valid if default option', async () => {
@@ -155,7 +159,7 @@ describe('DropdownWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-invalid')).toBeNull();
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
         });
     });
 

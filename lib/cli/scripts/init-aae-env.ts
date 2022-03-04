@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
+import program from 'commander';
 import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
-import { AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 
 let alfrescoJsApiModeler: any;
@@ -285,7 +285,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
             redirectUri: '/'
         }
     };
-    return new AlfrescoApi(config);
+    return new AlfrescoApi(config as unknown as AlfrescoApiConfig);
 }
 
 async function deployMissingApps(tag?: string) {

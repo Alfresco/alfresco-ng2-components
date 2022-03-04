@@ -16,12 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
+import { catchError, map, tap } from 'rxjs/operators';
+import { PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
+import { AuthenticationService } from './authentication.service';
+import { ContentService } from './content.service';
 
 // eslint-disable-next-line no-shadow
 export enum ContentGroups {
@@ -48,8 +50,7 @@ export interface PeopleContentQueryRequestModel {
     providedIn: 'root'
 })
 export class PeopleContentService {
-    private hasContentAdminRole: boolean = false;
-    hasCheckedIsContentAdmin: boolean = false;
+    private currentUser: EcmUserModel;
 
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
@@ -57,7 +58,15 @@ export class PeopleContentService {
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(
+        private apiService: AlfrescoApiService,
+        authenticationService: AuthenticationService,
+        private logService: LogService,
+        private contentService: ContentService
+    ) {
+        authenticationService.onLogout.subscribe(() => {
+            this.resetLocalCurrentUser();
+        });
     }
 
     /**
@@ -66,21 +75,44 @@ export class PeopleContentService {
      * @param personId ID of the target user
      * @returns User information
      */
-    getPerson(personId: string): Observable<any> {
-        const promise = this.peopleApi.getPerson(personId);
+    getPerson(personId: string): Observable<EcmUserModel> {
+        return from(this.peopleApi.getPerson(personId))
+        .pipe(
+            map((personEntry) => new EcmUserModel(personEntry.entry)),
+            tap( user => this.currentUser = user),
+            catchError((error) => this.handleError(error)));
+    }
 
-        return from(promise).pipe(
-            catchError((error) => this.handleError(error))
-        );
+    getCurrentPerson(): Observable<EcmUserModel> {
+        return this.getCurrentUserInfo();
     }
 
     /**
-     * Gets information about the user who is currently logged in.
+     * Gets information about the current user alias -me-
      *
      * @returns User information
      */
-    getCurrentPerson(): Observable<any> {
+    getCurrentUserInfo(): Observable<EcmUserModel> {
+        if (this.currentUser) {
+            return of(this.currentUser);
+        }
         return this.getPerson('-me-');
+    }
+
+     /**
+      * Used to know if the current user has the admin capability
+      *
+      * @returns true or false
+      */
+    isCurrentUserAdmin(): boolean {
+        return this.currentUser?.isAdmin() ?? false;
+    }
+
+    /**
+     * Reset the local current user object
+     */
+    resetLocalCurrentUser() {
+        this.currentUser = undefined;
     }
 
     /**
@@ -135,13 +167,14 @@ export class PeopleContentService {
         );
     }
 
-    async isContentAdmin(): Promise<boolean> {
-        if (!this.hasCheckedIsContentAdmin) {
-            const user: PersonEntry = await this.getCurrentPerson().toPromise();
-            this.hasContentAdminRole = user?.entry?.capabilities?.isAdmin;
-            this.hasCheckedIsContentAdmin = true;
-        }
-        return this.hasContentAdminRole;
+    /**
+     * Returns a profile image as a URL.
+     *
+     * @param avatarId Target avatar
+     * @returns Image URL
+     */
+     getUserProfileImage(avatarId: string): string {
+        return this.contentService.getContentUrl(avatarId);
     }
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {

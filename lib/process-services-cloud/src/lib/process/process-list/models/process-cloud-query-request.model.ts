@@ -42,6 +42,8 @@ export class ProcessQueryCloudRequestModel {
    maxItems: number;
    skipCount: number;
    sorting?: ProcessListCloudSortingModel[];
+   variableKeys?: string[];
+
     constructor(obj?: any) {
        if (obj) {
            this.appName = obj.appName;
@@ -68,6 +70,7 @@ export class ProcessQueryCloudRequestModel {
            this.maxItems = obj.maxItems;
            this.skipCount = obj.skipCount;
            this.sorting = obj.sorting;
+           this.variableKeys = obj.variableKeys;
        }
    }
 }

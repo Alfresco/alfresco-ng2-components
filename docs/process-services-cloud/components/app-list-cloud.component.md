@@ -47,7 +47,7 @@ For example :
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| layoutType | `string` |  | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
+| layoutType | `string` | LAYOUT_GRID | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
 
 ### Events
 

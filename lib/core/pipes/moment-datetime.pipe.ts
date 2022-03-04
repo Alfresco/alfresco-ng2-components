@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 import { Pipe, PipeTransform } from '@angular/core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 @Pipe({ name: 'adfMomentDateTime' })
 export class MomentDateTimePipe implements PipeTransform {

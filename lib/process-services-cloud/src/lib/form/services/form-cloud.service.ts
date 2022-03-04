@@ -182,9 +182,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
                     skipCount
                 }) : EMPTY;
             }),
-            map((res: any) => {
-                return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
-            }),
+            map((res: any) => res.list.entries.map((variable) => new TaskVariableCloud(variable.entry))),
             reduce((acc, res) => acc.concat(res), [])
         );
     }

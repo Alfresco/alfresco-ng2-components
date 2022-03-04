@@ -121,20 +121,20 @@ describe('CopyClipboardDirective', () => {
     it('should copy the content of element when click it', fakeAsync(() => {
         const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
-        spyOn(document, 'execCommand');
+        spyOn(navigator.clipboard, 'writeText');
         spanHTMLElement.dispatchEvent(new Event('click'));
         tick();
         fixture.detectChanges();
-        expect(document.execCommand).toHaveBeenCalledWith('copy');
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
     }));
 
     it('should not copy the content of element when click it', fakeAsync(() => {
         const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
-        spyOn(document, 'execCommand');
+        spyOn(navigator.clipboard, 'writeText');
         spanHTMLElement.dispatchEvent(new Event('mouseleave'));
         tick();
         fixture.detectChanges();
-        expect(document.execCommand).not.toHaveBeenCalled();
+        expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
     }));
 });

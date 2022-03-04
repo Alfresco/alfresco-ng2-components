@@ -16,10 +16,16 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { IdentityGroupService, mockIdentityGroups, IdentityGroupServiceMock } from '@alfresco/adf-core';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
+import { IdentityGroupService } from '../services/identity-group.service';
+import {
+    IdentityGroupServiceMock,
+    mockFoodGroups,
+    mockMeatChicken,
+    mockVegetableAubergine
+} from '../mock/group-cloud.mock';
 
 export default {
     component: GroupCloudComponent,
@@ -37,15 +43,6 @@ export default {
         mode: {
             options: ['single', 'multiple'],
             control: 'radio'
-        },
-        roles: {
-            options: ['empty', 'user', 'admin'],
-            control: 'radio',
-            mapping: {
-                empty: [],
-                user: ['MOCK-USER-ROLE'],
-                admin: ['MOCK-ADMIN-ROLE']
-            }
         }
     }
 } as Meta;
@@ -60,7 +57,6 @@ primary.args = {
     mode: 'single',
     preSelectGroups: [],
     readOnly: false,
-    roles: [],
     title: 'Groups',
     validate: false
 };
@@ -70,7 +66,7 @@ validPreselectedGroups.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectGroups: mockIdentityGroups
+    preSelectGroups: mockFoodGroups
 };
 
 export const mandatoryPreselectedGroups = template.bind({});
@@ -78,9 +74,7 @@ mandatoryPreselectedGroups.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectGroups: [{ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [], readonly: true },
-    { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] },
-    { id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true }]
+    preSelectGroups: [mockVegetableAubergine, { ...mockMeatChicken, readonly: true }]
 };
 
 export const invalidPreselectedGroups = template.bind({});
@@ -88,13 +82,7 @@ invalidPreselectedGroups.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectGroups: [{ id: 'invalid-group', name: 'invalid groups' }]
-};
-
-export const adminRoleGroups = template.bind({});
-adminRoleGroups.args = {
-    ...primary.args,
-    roles: 'admin'
+    preSelectGroups: [{ id: 'invalid-group', name: 'Invalid Group' }]
 };
 
 export const invalidOrEmptyAppName = template.bind({});

@@ -18,12 +18,14 @@
 export const taskPresetsCloudDefaultModel = {
     default: [
         {
+            id: 'name',
             key: 'name',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
             sortable: true
         },
         {
+            id: 'created',
             key: 'created',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
@@ -31,6 +33,7 @@ export const taskPresetsCloudDefaultModel = {
             sortable: true
         },
         {
+            id: 'assignee',
             key: 'assignee',
             type: 'text',
             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',

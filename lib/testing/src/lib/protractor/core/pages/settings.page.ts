@@ -31,10 +31,10 @@ export class SettingsPage {
     basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
     identityHostText = $('input[id="identityHost"]');
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = $('mat-slide-toggle[name="silentLogin"] label');
-    silentLoginToggleElement = $('mat-slide-toggle[name="silentLogin"]');
-    implicitFlowLabel = $('mat-slide-toggle[name="implicitFlow"] label');
-    implicitFlowElement = $('mat-slide-toggle[name="implicitFlow"]');
+    silentLoginToggleLabel = $('mat-slide-toggle[formcontrolname="silentLogin"] label');
+    silentLoginToggleElement = $('mat-slide-toggle[formcontrolname="silentLogin"]');
+    implicitFlowLabel = $('mat-slide-toggle[formcontrolname="implicitFlow"] label');
+    implicitFlowElement = $('mat-slide-toggle[formcontrolname="implicitFlow"]');
     applyButton = $('button[data-automation-id*="host-button"]');
     backButton = element(by.cssContainingText('button .mat-button-wrapper', 'Back'));
     validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));

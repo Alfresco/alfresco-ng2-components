@@ -1,0 +1,7 @@
+{
+  "description" : "this config file is used in the unit test",
+  "ecmHost": "http://{hostname}:{port}/ecm",
+  "bpmHost": "http://{hostname}:{port}/bpm",
+  "baseShareUrl": null,
+  "logLevel" : "silent"
+}

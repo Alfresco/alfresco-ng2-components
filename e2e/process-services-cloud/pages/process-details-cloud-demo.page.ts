@@ -23,11 +23,11 @@ export class ProcessDetailsCloudDemoPage {
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     async checkTaskIsDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsDisplayed('Name', taskName);
+        await this.dataTable.checkContentIsDisplayed('Task Name', taskName);
     }
 
     async selectProcessTaskByName(taskName: string): Promise<void> {
-        await this.dataTable.selectRow('Name', taskName);
+        await this.dataTable.selectRow('Task Name', taskName);
     }
 
     async checkListedSelectedProcessInstance(processInstanceId: string): Promise<void> {

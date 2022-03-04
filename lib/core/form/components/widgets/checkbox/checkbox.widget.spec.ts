@@ -21,9 +21,9 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { CheckboxWidgetComponent } from './checkbox.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { FormBaseModule } from 'core/form/form-base.module';
+import { FormBaseModule } from '../../../form-base.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateLoaderService } from 'core/services';
+import { TranslateLoaderService } from '../../../../services/translate-loader.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -69,11 +69,27 @@ describe('CheckboxWidgetComponent', () => {
             });
         });
 
-        it('should be marked as invalid when required', async () => {
+        it('should be marked as invalid when required after interaction', async () => {
+            const checkbox = element.querySelector('mat-checkbox');
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            checkbox.dispatchEvent(new Event('click'));
+            checkbox.dispatchEvent(new Event('click'));
+
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-invalid')).not.toBeNull();
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
         });
 
         it('should be checked if boolean true is passed', fakeAsync(() => {

@@ -16,7 +16,7 @@
  */
 
 /* eslint-disable @angular-eslint/component-selector */
-import moment from 'moment-es6';
+import moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -54,6 +54,9 @@ export class FormFieldModel extends FormWidgetModel {
     maxLength: number = 0;
     minValue: string;
     maxValue: string;
+    maxDateRangeValue: number = 0;
+    minDateRangeValue: number = 0;
+    dynamicDateRangeSelection: boolean;
     regexPattern: string;
     options: FormFieldOption[] = [];
     restUrl: string;
@@ -75,6 +78,8 @@ export class FormFieldModel extends FormWidgetModel {
     selectionType: 'single' | 'multiple' = null;
     rule?: FormFieldRule;
     selectLoggedUser: boolean;
+    groupsRestriction: string[];
+    leftLabels: boolean = false;
 
     // container model members
     numberOfColumns: number = 1;
@@ -165,6 +170,9 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxLength = json.maxLength || 0;
             this.minValue = json.minValue;
             this.maxValue = json.maxValue;
+            this.minDateRangeValue = json.minDateRangeValue;
+            this.maxDateRangeValue = json.maxDateRangeValue;
+            this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
             this.options = json.options || [];
             this.hasEmptyValue = json.hasEmptyValue;
@@ -183,6 +191,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.selectionType = json.selectionType;
             this.rule = json.rule;
             this.selectLoggedUser = json.selectLoggedUser;
+            this.groupsRestriction = json.groupsRestriction?.groups;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -215,6 +224,10 @@ export class FormFieldModel extends FormWidgetModel {
             if (FormFieldTypes.isContainerType(this.type)) {
                 this.containerFactory(json, form);
             }
+        }
+
+        if (form?.json) {
+            this.leftLabels = form.json.leftLabels || false;
         }
 
         const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;

@@ -70,6 +70,10 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.allowDropFiles = allowDropFiles;
     }
 
+    getColumnType(_row: DataRow, col: DataColumn): string {
+        return col.type;
+    }
+
     getRows(): Array<DataRow> {
         return this.rows;
     }

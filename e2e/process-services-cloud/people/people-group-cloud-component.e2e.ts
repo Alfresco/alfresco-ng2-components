@@ -196,7 +196,7 @@ describe('People Groups Cloud Component', () => {
             await expect(await peopleCloudComponent.checkSelectedPeople('someUsername'));
 
             await peopleGroupCloudComponentPage.clickPreselectValidation();
-            await expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true');
+            await expect(await peopleGroupCloudComponentPage.getPreselectValidationStatus()).toBe('true', 'Validation not present');
 
             await peopleGroupCloudComponentPage.enterPeoplePreselect(`[{"id":"${noRoleUser.idIdentityService}"}]`);
             await expect(await peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName} ${noRoleUser.lastName}`));

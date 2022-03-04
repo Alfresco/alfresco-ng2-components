@@ -29,7 +29,8 @@ export interface DataColumnTypes {
 
 export type DataColumnType = keyof DataColumnTypes;
 
-export interface DataColumn {
+export interface DataColumn<T = unknown> {
+    id?: string;
     key: string;
     type: DataColumnType;
     format?: string;
@@ -44,4 +45,7 @@ export interface DataColumn {
     focus?: boolean;
     sortingKey?: string;
     header?: TemplateRef<any>;
+    draggable?: boolean;
+    isHidden?: boolean;
+    customData?: T;
 }

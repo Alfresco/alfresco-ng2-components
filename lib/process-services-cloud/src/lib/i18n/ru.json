@@ -330,6 +330,8 @@
       "CREATED": "Создано",
       "END_DATE": "Дата окончания",
       "ID": "Идентификатор",
+      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Нет идентификатора экземпляра процесса",
       "DESCRIPTION": "Описание",
       "DESCRIPTION_DEFAULT": "Нет описания",
       "FORM_NAME": "Имя формы",

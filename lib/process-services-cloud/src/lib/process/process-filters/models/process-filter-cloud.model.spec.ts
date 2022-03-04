@@ -16,7 +16,7 @@
  */
 
 import moment from 'moment';
-import { DateCloudFilterType } from 'process-services-cloud';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { ProcessFilterCloudModel } from './process-filter-cloud.model';
 
 describe('ProcessFilterCloudModel', () => {

@@ -19,8 +19,8 @@ import { TemplateRef } from '@angular/core';
 import { DataColumn, DataColumnType } from './data-column.model';
 
 // Simple implementation of the DataColumn interface.
-export class ObjectDataColumn implements DataColumn {
-
+export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
+    id?: string;
     key: string;
     type: DataColumnType;
     format: string;
@@ -33,8 +33,12 @@ export class ObjectDataColumn implements DataColumn {
     focus?: boolean;
     sortingKey?: string;
     header?: TemplateRef<any>;
+    draggable: boolean;
+    isHidden: boolean;
+    customData?: T;
 
     constructor(input: any) {
+        this.id = input.id ?? '';
         this.key = input.key;
         this.type = input.type || 'text';
         this.format = input.format;
@@ -47,5 +51,8 @@ export class ObjectDataColumn implements DataColumn {
         this.focus = input.focus;
         this.sortingKey = input.sortingKey;
         this.header = input.header;
+        this.draggable = input.draggable ?? false;
+        this.isHidden = input.isHidden ?? false;
+        this.customData = input.customData;
     }
 }

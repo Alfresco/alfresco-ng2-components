@@ -35,6 +35,7 @@ export class TaskHeaderCloudPage {
     idCardTextItem = new CardTextItemPage('id');
     descriptionCardTextItem = new CardTextItemPage('description');
     taskPropertyList = $('adf-cloud-task-header adf-card-view .adf-property-list');
+    processInstanceIdCardTextItem = new CardTextItemPage('processInstanceId');
 
     async getAssignee(): Promise<string> {
         return this.assigneeCardTextItem.getFieldValue();
@@ -74,6 +75,10 @@ export class TaskHeaderCloudPage {
 
     async getId(): Promise<string> {
         return this.idCardTextItem.getFieldValue();
+    }
+
+    async getProcessInstanceId(): Promise<string> {
+        return this.processInstanceIdCardTextItem.getFieldValue();
     }
 
     async getDescription(): Promise<string> {

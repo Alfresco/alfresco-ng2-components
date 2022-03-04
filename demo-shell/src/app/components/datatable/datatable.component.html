@@ -10,7 +10,7 @@
     Sticky header
 </mat-slide-toggle>
 
-<div style="height: 310px; overflow-y: auto;" data-automation-id="datatable">
+<div data-automation-id="datatable" class="adf-datatable-demo-app">
     <adf-datatable
         #dataTable
         [data]="data"
@@ -20,6 +20,7 @@
         [actions]="true"
         [resolverFn]="resolver"
         rowStyleClass="custom-row-style"
+        [showMainDatatableActions]="true"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)">
         <!-- HTML column definition demo -->
@@ -39,7 +40,26 @@
             </data-column>
         </data-columns>
         -->
+
+        <adf-main-menu-datatable-template>
+            <ng-template let-mainMenuTrigger>
+                <adf-datatable-column-selector
+                    [columns]="data.getColumns()"
+                    [mainMenuTrigger]="mainMenuTrigger"
+                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+                </adf-datatable-column-selector>
+            </ng-template>
+        </adf-main-menu-datatable-template>
+
     </adf-datatable>
+
+    <ng-template #customColumnHeaderTemplate>
+        <div>
+            <span class="adf-datatable-demo-app-custom-user-header">
+                {{ 'DATATABLE.CUSTOM_COLUMN_HEADER'| translate }}
+            </span>
+        </div>
+    </ng-template>
 </div>
 
 <div>
@@ -49,6 +69,7 @@
 <div data-automation-id="multiselect">
     <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
 </div>
+
 <div>
     <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
     <mat-form-field>
@@ -59,9 +80,11 @@
         </mat-select>
     </mat-form-field>
 </div>
-<div>
+
+<div class="adf-datatable-demo-app-actions">
     <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
     <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
     <button mat-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
     <button mat-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
+    <button mat-raised-button (click)="showCustomHeaderColumn()">{{ 'DATATABLE.USE_CUSTOM_COLUMN_HEADER'| translate }}</button>
 </div>

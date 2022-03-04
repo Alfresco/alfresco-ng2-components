@@ -23,7 +23,7 @@ import { FilterSearch } from './../../../search/models/filter-search.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NodePaging, MinimalNode } from '@alfresco/js-api';
-import { ADF_DOCUMENT_PARENT_COMPONENT, DocumentListParentComponent } from '../document-list.interface';
+import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 
 @Component({
     selector: 'adf-filter-header',
@@ -47,7 +47,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: DocumentListParentComponent,
+    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
                 @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }

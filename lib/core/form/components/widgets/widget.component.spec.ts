@@ -22,6 +22,7 @@ import { WidgetComponent } from './widget.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { filter } from 'rxjs/operators';
 
 describe('WidgetComponent', () => {
 
@@ -54,7 +55,15 @@ describe('WidgetComponent', () => {
 
             element.click();
         });
-   });
+
+        it('should click event be redirect on the form rules event service', (done) => {
+            widget.formService.formRulesEvent.pipe(filter(event => event.type === 'click')).subscribe(() => {
+                done();
+            });
+
+            element.click();
+        });
+    });
 
     it('should check field', () => {
         expect(widget.hasField()).toBeFalsy();
@@ -64,7 +73,7 @@ describe('WidgetComponent', () => {
 
     it('should send an event after view init', (done) => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;
 
         widget.fieldChanged.subscribe((field) => {
@@ -79,11 +88,22 @@ describe('WidgetComponent', () => {
 
     it('should send an event when a field is changed', (done) => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');
+            done();
+        });
+
+        widget.onFieldChanged(fakeField);
+    });
+
+    it('should send a rule event when a field is changed', (done) => {
+        const fakeForm = new FormModel();
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        widget.formService.formRulesEvent.subscribe((event) => {
+            expect(event.type).toEqual('fieldValueChanged');
             done();
         });
 
@@ -96,10 +116,10 @@ describe('WidgetComponent', () => {
         widget.field = new FormFieldModel(null);
         expect(widget.isRequired()).toBeFalsy();
 
-        widget.field = new FormFieldModel(null, {required: false});
+        widget.field = new FormFieldModel(null, { required: false });
         expect(widget.isRequired()).toBeFalsy();
 
-        widget.field = new FormFieldModel(null, {required: true});
+        widget.field = new FormFieldModel(null, { required: true });
         expect(widget.isRequired()).toBeTruthy();
     });
 });

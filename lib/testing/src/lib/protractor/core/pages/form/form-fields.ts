@@ -36,9 +36,9 @@ export class FormFields {
     completeButton = $('#adf-form-complete');
     completeNoFormButton = $('#adf-no-form-complete-button');
     cancelButton = $('#adf-no-form-cancel-button');
-    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
+    errorMessage: Locator = by.css('.adf-error-container .adf-error-text');
 
-    getWidget = (fieldId: string): ElementFinder => $(`adf-form-field div[id='field-${fieldId}-container']`);
+    getWidget = (fieldId: string): ElementFinder => $(`div[id='field-${fieldId}-container']`);
 
     async setFieldValue(field: string, value: string): Promise<void> {
         const fieldElement = $(`#${field}`);
@@ -51,7 +51,7 @@ export class FormFields {
     }
 
     async checkWidgetIsVisible(fieldId: string): Promise<void> {
-        const fieldElement = $$(`adf-form-field div[id='field-${fieldId}-container']`).first();
+        const fieldElement = $$(`div[id='field-${fieldId}-container']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
@@ -62,12 +62,12 @@ export class FormFields {
     }
 
     async checkWidgetIsClickable(fieldId: string): Promise<void> {
-        const fieldElement = $$(`adf-form-field div[id='field-${fieldId}-container']`).first();
+        const fieldElement = $$(`div[id='field-${fieldId}-container']`).first();
         await BrowserVisibility.waitUntilElementIsClickable(fieldElement);
     }
 
     async checkWidgetIsHidden(fieldId: string): Promise<void> {
-        const hiddenElement = $(`adf-form-field div[id='field-${fieldId}-container']`);
+        const hiddenElement = $(`div[id='field-${fieldId}-container']`);
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 

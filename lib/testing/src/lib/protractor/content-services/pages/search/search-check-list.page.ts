@@ -102,7 +102,7 @@ export class SearchCheckListPage {
     }
 
     async getBucketNumberOfFilterType(option: string): Promise<any> {
-        const fileTypeFilter = this.filter.$$('mat-checkbox[data-automation-id*=".' + option + '"] span').first();
+        const fileTypeFilter = this.filter.$$('mat-checkbox[data-automation-id*=".' + option + '"] div').first();
         await BrowserVisibility.waitUntilElementIsVisible(fileTypeFilter);
         const valueOfBucket = await BrowserActions.getText(fileTypeFilter);
         const numberOfBucket = valueOfBucket.split('(')[1];

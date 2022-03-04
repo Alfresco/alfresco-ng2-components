@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { ProcessVariableDefinition } from './variable-definition';
+
 export class ProcessDefinitionCloud {
     id: string;
     appName: string;
@@ -25,6 +27,7 @@ export class ProcessDefinitionCloud {
     name: string;
     category: string;
     description: string;
+    variableDefinitions?: ProcessVariableDefinition[];
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -36,5 +39,6 @@ export class ProcessDefinitionCloud {
         this.appVersion = obj && obj.appVersion || 0;
         this.category = obj && obj?.category || '';
         this.description = obj && obj?.description || '';
+        this.variableDefinitions = obj?.variableDefinitions ?? [];
     }
 }

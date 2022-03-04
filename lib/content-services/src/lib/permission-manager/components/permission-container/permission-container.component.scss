@@ -22,6 +22,10 @@
 
         .adf-authority-icon-column {
             min-width: 40px;
+
+            .adf-datatable-cell-container {
+                padding: 0;
+            }
         }
 
         .adf-datatable-selected > svg {

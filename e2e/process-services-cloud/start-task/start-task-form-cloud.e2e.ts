@@ -266,7 +266,7 @@ describe('Start Task Form', () => {
             await processList.getDataTable().waitTillContentLoaded();
             await processList.checkContentIsDisplayedByName(startEventFormProcess);
 
-            await processList.getDataTable().selectRow('Name', startEventFormProcess);
+            await processList.getDataTable().selectRow('Process Name', startEventFormProcess);
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('StartEventFormTask');

@@ -103,6 +103,15 @@
                         </mat-error>
                     </mat-form-field>
 
+                    <mat-form-field class="adf-full-width">
+                        <mat-label>{{ 'CORE.HOST_SETTINGS.SECRET'| translate }}</mat-label>
+                        <input matInput name="{{ 'CORE.HOST_SETTINGS.SECRET'| translate }}"
+                               formControlName="secret" placeholder="{{ 'CORE.HOST_SETTINGS.SECRET'| translate }}">
+                        <mat-error *ngIf="secret.hasError('required')">
+                            {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
+                        </mat-error>
+                    </mat-form-field>
+
                     <label for="silentLogin">{{ 'CORE.HOST_SETTINGS.SILENT'| translate }}</label>
                     <mat-slide-toggle class="adf-full-width" name="silentLogin" [color]="'primary'"
                                       formControlName="silentLogin">

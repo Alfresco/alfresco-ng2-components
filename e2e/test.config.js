@@ -7,15 +7,16 @@ require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
 
-const LOG = process.env.LOG;
+const LOG = process.env.E2E_LOG_LEVEL;
 
-const HOST_ECM = process.env.PROXY_HOST_ADF || HOST || 'ecm';
-const HOST_BPM = process.env.PROXY_HOST_ADF || HOST || 'bpm';
+const HOST_ECM = process.env.PROXY_HOST_ECM || HOST || 'ecm';
+const HOST_BPM = process.env.PROXY_HOST_BPM || HOST || 'bpm';
 
 const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'ALL';
 const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'BASIC';
 
 const HOST_SSO = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
+const IDENTITY_HOST = process.env.IDENTITY_HOST || process.env.HOST_SSO + '/auth/admin/realms/alfresco';
 const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || 'alfresco';
 
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
@@ -40,7 +41,7 @@ const appConfig = {
     "log": E2E_LOG_LEVEL,
     "ecmHost": HOST_ECM,
     "bpmHost": HOST_BPM,
-    "identityHost": `${HOST_SSO}/auth/admin/realms/alfresco`,
+    "identityHost": `${IDENTITY_HOST}`,
     "provider": PROVIDER,
     "authType": AUTH_TYPE,
     "oauth2": {

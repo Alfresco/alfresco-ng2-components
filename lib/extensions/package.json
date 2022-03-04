@@ -1,10 +1,9 @@
 {
   "name": "@alfresco/adf-extensions",
   "description": "Provides extensibility support for ADF applications.",
-  "version": "4.8.0",
+  "version": "4.11.0",
   "license": "Apache-2.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/adf-extensions.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -15,7 +14,7 @@
   "peerDependencies": {
     "@angular/common": ">=10.0.2",
     "@angular/core": ">=10.0.2",
-    "@alfresco/js-api": "4.9.0-4253"
+    "@alfresco/js-api": "4.12.0-197"
   },
   "keywords": [
     "extensions",

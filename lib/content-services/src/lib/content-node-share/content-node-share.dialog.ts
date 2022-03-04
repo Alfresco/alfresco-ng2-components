@@ -36,7 +36,7 @@ import {
 } from '@alfresco/adf-core';
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 

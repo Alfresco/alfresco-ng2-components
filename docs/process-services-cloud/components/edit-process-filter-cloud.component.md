@@ -43,7 +43,7 @@ Shows/edits process filter details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| actions | `string[]` |  | List of sort actions. |
+| actions | `string[]` | DEFAULT_ACTIONS | List of sort actions. |
 | appName | `string` | "" | The name of the application. |
 | filterProperties | `string[]` |  | List of process filter properties to display |
 | id | `string` |  | Id of the process instance filter. |

@@ -1,11 +1,11 @@
 <div class="adf-group-widget {{field.className}}"
      [class.is-dirty]="!!field.value"
-     [class.adf-invalid]="!field.isValid"
+     [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-readonly]="field.readOnly"
      id="functional-group-div">
 
     <mat-form-field>
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <input matInput
                class="adf-input"
                type="text"
@@ -13,6 +13,7 @@
                [id]="field.id"
                [formControl]="searchTerm"
                [placeholder]="field.placeholder"
+               (blur)="markAsTouched()"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateOption($event.option.value)" [displayWith]="getDisplayName">
             <mat-option *ngFor="let item of groups$ | async; let i = index"
@@ -25,5 +26,5 @@
 
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

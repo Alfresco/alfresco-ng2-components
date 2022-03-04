@@ -41,3 +41,4 @@ export * from './identity-group.mock';
 export * from './identity-user.mock';
 export * from './identity-group.service.mock';
 export * from './identity-user.service.mock';
+export * from './data-column.mock';

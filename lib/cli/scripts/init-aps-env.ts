@@ -88,9 +88,11 @@ async function main() {
 
         } catch (error) {
             logger.info(`Aps something went wrong. Tenant id ${tenantId}`);
+            process.exit(1);
         }
     } else {
         logger.info('APS license error: check the configuration');
+        process.exit(1);
     }
 
 }

@@ -41,20 +41,20 @@
             data-automation-id="page-selector"
             [attr.aria-label]="'CORE.PAGINATION.ARIA.CURRENT_PAGE' | translate"
             [matMenuTriggerFor]="pagesMenu"
-            *ngIf="pages.length > 1">
+            *ngIf="lastPage > 1">
             <mat-icon>arrow_drop_down</mat-icon>
         </button>
 
         <div *ngIf="pagination.totalItems">
             <span class="adf-pagination__total-pages">
-                {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
+                {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: lastPage } }}
             </span>
         </div>
 
         <mat-menu #pagesMenu="matMenu" class="adf-pagination__page-selector">
             <button
                 mat-menu-item
-                *ngFor="let pageNumber of pages"
+                *ngFor="let pageNumber of limitedPages"
                 (click)="onChangePageNumber(pageNumber)">
                 {{ pageNumber }}
             </button>

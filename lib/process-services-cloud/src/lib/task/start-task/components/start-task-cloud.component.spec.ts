@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, AlfrescoApiService, IdentityUserModel } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
@@ -26,6 +26,8 @@ import { FormDefinitionSelectorCloudService } from '../../../form/services/form-
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
 describe('StartTaskCloudComponent', () => {
 

@@ -111,6 +111,7 @@ for more information about installing and using the source code.
 | [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. |  |
 | The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
+| [Rich Text Editor Component](core/components/rich-text-editor.md) | Displays a rich text editor that allows users to add formatted text | [Source](../lib/core/rich-text-editor/rich-text-editor.component.ts) |
 | [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](../lib/core/search-text/search-text-input.component.ts) |
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
@@ -233,6 +234,7 @@ for more information about installing and using the source code.
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/services/translation.service.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/services/upload.service.ts) |
+| [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/services/user-access.service.ts) |
 | [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/services/user-preferences.service.ts) |
 
 ### Widgets
@@ -354,6 +356,7 @@ for more information about installing and using the source code.
 | [Document Actions service](content-services/services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-actions.service.ts) |
 | [Document List service](content-services/services/document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-list.service.ts) |
 | [Folder Actions service](content-services/services/folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/folder-actions.service.ts) |
+| [New Version Uploader service](content-services/services/new-version-uploader.dialog.service.md) | Display a dialog that allows to upload new file version or to manage the current node versions. | [Source](../lib/content-services/src/lib/new-version-uploader/new-version-uploader.service.ts) |
 | [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts) |
 | [Node Permission service](content-services/services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission.service.ts) |
 | [Rating service](content-services/services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/src/lib/social/services/rating.service.ts) |

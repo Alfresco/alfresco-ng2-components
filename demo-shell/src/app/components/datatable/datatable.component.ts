@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import {
     DataCellEvent,
     DataColumn,
@@ -56,16 +56,19 @@ export class FilteredDataAdapter extends ObjectDataTableAdapter {
 
 @Component({
     selector: 'app-datatable',
-    templateUrl: './datatable.component.html'
+    templateUrl: './datatable.component.html',
+    styleUrls: ['./datatable.component.scss']
 })
 export class DataTableComponent {
+
+    @Input()
+    selectionMode = 'single';
+
+    @ViewChild('customColumnHeaderTemplate') customColumnHeaderTemplate;
 
     multiselect = false;
     data: FilteredDataAdapter;
     stickyHeader = false;
-
-    @Input()
-    selectionMode = 'single';
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -227,13 +230,13 @@ export class DataTableComponent {
             ],
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '' },
-                { type: 'date', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2' },
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
-                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''},
-                { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2'},
-                { type: 'text', key: 'users', title: 'Users', cssClass: 'adf-expand-cell-2'},
-                { type: 'json', key: 'status', title: 'Status', cssClass: 'adf-expand-cell-2'}
+                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '', draggable: true},
+                { type: 'date', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-2', draggable: true },
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true, draggable: true },
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: '', draggable: true},
+                { type: 'json', key: 'json', title: 'Json', cssClass: 'adf-expand-cell-2', draggable: true},
+                { type: 'text', key: 'users', title: 'Users', cssClass: 'adf-expand-cell-2', draggable: true},
+                { type: 'json', key: 'status', title: 'Status', cssClass: 'adf-expand-cell-2', draggable: true}
             ]
         );
 
@@ -298,6 +301,21 @@ export class DataTableComponent {
         this.data.setColumns(columns);
     }
 
+    showCustomHeaderColumn() {
+        const columns = this.data.getColumns().map(column => {
+            if (column.title === 'Users') {
+                return {
+                    ...column,
+                    header: this.customColumnHeaderTemplate
+                };
+            }
+
+            return column;
+        });
+
+        this.data.setColumns(columns);
+    }
+
     onShowRowActionsMenu(event: DataCellEvent) {
         const myAction = {
             title: 'Hello'
@@ -306,6 +324,10 @@ export class DataTableComponent {
         event.value.actions = [
             myAction
         ];
+    }
+
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.data.setColumns(columns);
     }
 
     onExecuteRowAction(event: DataRowActionEvent) {

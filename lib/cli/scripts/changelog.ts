@@ -21,7 +21,7 @@
 
 import * as shell from 'shelljs';
 import * as path from 'path';
-import * as program from 'commander';
+import program from 'commander';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
 

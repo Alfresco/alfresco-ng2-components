@@ -25,11 +25,18 @@ import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/co
 })
 export class DataColumnComponent implements OnInit {
 
+    @Input()
+    id: string = '';
+
     /** Data source key. Can be either a column/property key like `title`
      *  or a property path like `createdBy.name`.
      */
     @Input()
     key: string;
+
+    /** You can specify any custom data which can be used by any specific feature */
+    @Input()
+    customData: any;
 
     /** Value type for the column. Possible settings are 'text', 'image',
      * 'date', 'fileSize', 'location', and 'json'.
@@ -44,6 +51,14 @@ export class DataColumnComponent implements OnInit {
     /** Toggles ability to sort by this column, for example by clicking the column header. */
     @Input()
     sortable: boolean = true;
+
+    /* Enable drag and drop for header column */
+    @Input()
+    draggable: boolean = false;
+
+    /* Hide column */
+    @Input()
+    isHidden: boolean = false;
 
     /** Display title of the column, typically used for column headers. You can use the
      * i18n resource key to get it translated automatically.

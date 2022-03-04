@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Download",
       "REMOVE_FILE": "Remover",
       "UPLOAD": "Carregar",
-      "REQUIRED": "*Obrigatório",
+      "REQUIRED": "Campo obrigatório",
+      "REST_API_FAILED": "Não é possível acessar o servidor '{{ hostname }}'",
       "FILE_NAME": "Nome de arquivo",
       "NO_FILE_ATTACHED": "Nenhum arquivo anexado",
       "VALIDATOR": {

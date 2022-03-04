@@ -6,11 +6,22 @@
     "./theming/**/*.scss",
     "./**/*.theme.scss"
   ],
-  "allowedNonPeerDependencies": [
-    "cropperjs"
-  ],
   "lib": {
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-core"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "cropperjs",
+    "@editorjs/editorjs",
+    "@editorjs/code",
+    "@editorjs/header",
+    "@editorjs/inline-code",
+    "@editorjs/list",
+    "@editorjs/marker",
+    "@editorjs/underline",
+    "@quanzo/change-font-size",
+    "editorjs-text-color-plugin",
+    "editorjs-html",
+    "editorjs-paragraph-with-alignment"
+  ]
 }

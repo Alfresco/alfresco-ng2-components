@@ -67,7 +67,6 @@ describe('AppConfigService', () => {
         spyOn(httpClient, 'get').and.returnValue(of(mockResponse));
 
         extensionService = TestBed.inject(ExtensionService);
-
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.load();
     });

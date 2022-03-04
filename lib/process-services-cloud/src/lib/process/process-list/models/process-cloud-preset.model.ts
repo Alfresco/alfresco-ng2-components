@@ -18,12 +18,14 @@
 export const processCloudPresetsDefaultModel = {
     default: [
         {
+            id: 'id',
             key: 'name',
             type: 'text',
             title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
             sortable: true
         },
         {
+            id: 'startDate',
             key: 'startDate',
             type: 'date',
             title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',

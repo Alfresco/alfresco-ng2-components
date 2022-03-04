@@ -16,11 +16,13 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, IdentityUserModel, FormService, IdentityUserService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
+import { IdentityUserModel } from '../../../../people/models/identity-user.model';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -51,6 +53,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     title: string;
     preSelectUsers: IdentityUserModel[];
     search: FormControl;
+    groupsRestriction: string[];
 
     constructor(formService: FormService, private identityUserService: IdentityUserService) {
         super(formService);
@@ -62,6 +65,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.mode = this.field.optionType as ComponentSelectionMode;
             this.title = this.field.placeholder;
             this.preSelectUsers = this.field.value ? this.field.value : [];
+            this.groupsRestriction = this.field.groupsRestriction;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.search = new FormControl({value: '', disabled: this.field.readOnly}, []),

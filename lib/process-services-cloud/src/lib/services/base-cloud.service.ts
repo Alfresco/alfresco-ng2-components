@@ -39,8 +39,7 @@ export class BaseCloudService {
         path: '',
         httpMethod: '',
         contentTypes: ['application/json'],
-        accepts: ['application/json'],
-        returnType: Object
+        accepts: ['application/json']
     };
 
     constructor(

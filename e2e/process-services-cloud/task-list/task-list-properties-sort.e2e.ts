@@ -142,10 +142,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('name');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Name')).toBe(true);
+            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Task Name')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Name')).toBe(true);
+            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Task Name')).toBe(true);
         });
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {

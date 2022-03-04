@@ -16,10 +16,17 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { IdentityUserService, IdentityUserServiceMock, mockIdentityUsers } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
+import { IdentityUserService } from '../services/identity-user.service';
+import {
+    IdentityUserServiceMock,
+    mockFoodUsers,
+    mockKielbasaSausage,
+    mockShepherdsPie,
+    mockYorkshirePudding
+} from '../mock/people-cloud.mock';
 
 export default {
     component: PeopleCloudComponent,
@@ -28,7 +35,7 @@ export default {
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, PeopleCloudModule],
             providers: [
-                { provide: IdentityUserService, useClass: IdentityUserServiceMock }
+                { provide: IdentityUserService, useClass: IdentityUserServiceMock}
             ]
         })
     ],
@@ -37,15 +44,6 @@ export default {
         mode: {
             options: ['single', 'multiple'],
             control: 'radio'
-        },
-        roles: {
-            options: ['empty', 'user', 'admin'],
-            control: 'radio',
-            mapping: {
-                empty: [],
-                user: ['MOCK-USER-ROLE'],
-                admin: ['MOCK-ADMIN-ROLE']
-            }
         }
     }
 } as Meta;
@@ -61,7 +59,6 @@ primary.args = {
     mode: 'single',
     preSelectUsers: [],
     readOnly: false,
-    roles: [],
     title: 'Users',
     validate: false
 };
@@ -71,7 +68,7 @@ validPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectUsers: mockIdentityUsers
+    preSelectUsers: mockFoodUsers
 };
 
 export const mandatoryPreselectedUsers = template.bind({});
@@ -79,8 +76,7 @@ mandatoryPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectUsers: [{ id: 'mock-user-id-1', username: 'userName1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com', readonly: true },
-                     { id: 'mock-user-id-2', username: 'userName2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com' }]
+    preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
 };
 
 export const invalidPreselectedUsers = template.bind({});
@@ -88,28 +84,22 @@ invalidPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectUsers: [{ id: 'invalid-user', username: 'invalid user', firstName: 'invalid', lastName: 'user', email: 'invalid@xyz.com' }]
+    preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
 };
 
 export const excludedUsers = template.bind({});
 excludedUsers.args = {
     ...primary.args,
     excludedUsers: [
-        { id: 'mock-user-id-2' },
-        { id: 'mock-user-id-3' }
+        mockKielbasaSausage,
+        mockYorkshirePudding
     ]
-};
-
-export const adminRoleUser = template.bind({});
-adminRoleUser.args = {
-    ...primary.args,
-    roles: 'admin'
 };
 
 export const noUsers = template.bind({});
 noUsers.args = {
     ...primary.args,
-    excludedUsers: mockIdentityUsers
+    excludedUsers: mockFoodUsers
 };
 
 export const invalidOrEmptyAppName = template.bind({});

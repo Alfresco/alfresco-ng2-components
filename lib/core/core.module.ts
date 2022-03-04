@@ -60,6 +60,10 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
+import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
+import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
+
 @NgModule({
     imports: [
         TranslateModule,
@@ -94,7 +98,10 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
         SortingPickerModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule
+        BlankPageModule,
+        LegacyApiClientModule,
+        AlfrescoJsClientsModule,
+        RichTextEditorModule
     ],
     exports: [
         AboutModule,
@@ -129,7 +136,8 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
         IconModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule
+        BlankPageModule,
+        RichTextEditorModule
     ]
 })
 export class CoreModule {

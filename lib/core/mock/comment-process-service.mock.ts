@@ -34,9 +34,11 @@ export const fakeTasksComment = {
     ]
 };
 
-export const fakeProcessComment = new CommentModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
-    id: 13,
-    firstName: 'Wilbur',
-    lastName: 'Adams',
-    email: 'wilbur@app.com'
-})});
+export const fakeProcessComment = new CommentModel({
+    id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
+        id: 13,
+        firstName: 'Wilbur',
+        lastName: 'Adams',
+        email: 'wilbur@app.com'
+    })
+});

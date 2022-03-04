@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
+import program from 'commander';
 import * as kube from './kube-utils';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

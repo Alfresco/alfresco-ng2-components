@@ -257,7 +257,7 @@ You can add [Data column component](data-column.component.md) instances to defin
         <!--Add your custom empty template here-->
         <ng-template>
             <div></div>
-            <span> My custom value </spam>
+            <span> My custom value </span>
         </ng-template>
     </data-column>
 </adf-datatable>
@@ -312,6 +312,27 @@ while the data for the table is loading:
     }
 ```
 
+You can also show main menu for datatable using `<adf-main-menu-datatable-template>`
+
+```html
+<adf-datatable ...>
+   <adf-main-menu-datatable-template>
+        <ng-template let-mainMenuTrigger>
+            <!--Add your custom main menu template here-->
+            <adf-datatable-column-selector
+                [columns]="data.getColumns()"
+                [mainMenuTrigger]="mainMenuTrigger"
+                (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+            </adf-datatable-column-selector>
+        </ng-template>
+    </adf-main-menu-datatable-template>
+</adf-datatable>
+```
+
+Provided template receives `let-mainMenuTrigger`, so you can programaticaly work with the menu (please see [MatMenuTrigger](https://material.angular.io/components/menu/overview#toggling-the-menu-programmatically)).
+
+For convenience, you can use `<adf-datatable-column-selector>` which will allow you to change column visibility.
+
 \###Styling transcluded content
 
 When adding your custom templates you can style them as you like. However, for an out of the box experience, if you want to apply datatable styles to your column you will need to follow this structure:
@@ -354,6 +375,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
+| mainTableAction | `boolean` | true | Toggles main data table action column. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
 | resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
@@ -363,6 +385,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `ShowHeaderMode` |  | Toggles the header. |
+| showMainDatatableActions | `boolean` | false | Toggles the main datatable action. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
@@ -370,6 +393,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)`<>[]>` | Emitted after dragging and dropping column header. |
 | executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
 | rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
@@ -440,7 +464,7 @@ Given that DataTable raises bubbling DOM events, you can handle drop behavior fr
     (header-drop)="onDrop($event)"
     (cell-dragover)="onDragOver($event)"
     (cell-drop)="onDrop($event)">
-    
+
     <adf-datatable [data]="data">
     </adf-datatable>
 </div>
@@ -822,6 +846,16 @@ here is the sample resolver which merge the users property and status and it wil
 ```
 
 ![](../../docassets/images/custom-data-table-resolver.png)
+
+# Tooltip
+
+You can define the tooltip format for cells of type date using a configuration in `app.config.json`:
+
+```json
+ "dateValues": {
+    "defaultTooltipDateFormat": "medium"
+ }
+```
 
 ## See also
 

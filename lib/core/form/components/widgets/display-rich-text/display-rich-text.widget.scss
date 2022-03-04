@@ -1,0 +1,22 @@
+.adf-display-rich-text-widget {
+    padding: 10px;
+
+    pre {
+        min-height: 100px;
+        font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+        color: #41314e;
+        line-height: 1.6em;
+        font-size: 12px;
+        background: #f8f7fa;
+        border: 1px solid #f1f1f4;
+        box-shadow: none;
+        white-space: pre;
+        word-wrap: normal;
+        overflow-x: auto;
+        resize: vertical;
+        border-radius: 3px;
+        padding: 10px 12px;
+        outline: none;
+        width: 100%;
+    }
+}

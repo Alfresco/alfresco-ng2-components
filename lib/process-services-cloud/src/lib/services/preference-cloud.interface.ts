@@ -18,11 +18,9 @@
 import { Observable } from 'rxjs';
 
 export interface PreferenceCloudServiceInterface {
-
     getPreferences(appName: string, key?: string): Observable<any>;
     getPreferenceByKey(appName: string, key: string): Observable<any>;
     createPreference(appName: string, key: string, newPreference: any): Observable<any>;
     updatePreference(appName: string, key: string, updatedPreference: any): Observable<any>;
-    deletePreference(appName: string, key: any): Observable<any>;
-
+    deletePreference(appName: string, key: string): Observable<any>;
 }

@@ -35,3 +35,6 @@ export * from './identity-role.model';
 export * from './identity-group.model';
 export * from './search-text-input.model';
 export * from './node-metadata.model';
+export * from './application-access.model';
+export * from './user-access.model';
+export * from './general-user.model';

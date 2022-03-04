@@ -27,6 +27,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             processparent: 'processparent'
         },
         security: [
+            { role: 'APPLICATION_MANAGER', groups: [], users: ['manageruser'] },
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser'] }
         ]
@@ -66,6 +67,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             outputform: 'outputform'
         },
         security: [
+            { role: 'APPLICATION_MANAGER', groups: [], users: ['manageruser'] },
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser', 'salesuser'] }
         ],
@@ -197,6 +199,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             uploadSingleMultipleFiles: 'UploadSingleMultipleFiles'
         },
         security: [
+            { role: 'APPLICATION_MANAGER', groups: [], users: ['manageruser'] },
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],

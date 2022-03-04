@@ -50,7 +50,8 @@ import { FileModel } from '../../models';
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: { class: 'adf-viewer' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [ViewUtilService]
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -321,8 +322,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.apiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId &&
-                    (node.name !== this.fileName ||
-                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
+                (node.name !== this.fileName ||
+                    this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
 
@@ -549,7 +550,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return 'unknown';
     }
 
-    getViewerTypeByExtension(extension: string) {
+    getViewerTypeByExtension(extension: string): string {
         if (extension) {
             extension = extension.toLowerCase();
         }

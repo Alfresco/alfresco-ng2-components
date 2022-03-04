@@ -1,6 +1,7 @@
 <adf-datatable #dataTable
         [rows]="rows"
         [columns]="columns"
+        [data]="dataAdapter"
         [stickyHeader]="stickyHeader"
         [loading]="isLoading"
         [sorting]="formattedSorting"
@@ -9,6 +10,7 @@
         [actions]="showActions"
         [actionsPosition]="actionsPosition"
         [contextMenu]="showContextMenu"
+        [showMainDatatableActions]="showMainDatatableActions"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (showRowContextMenu)="onShowRowContextMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)"
@@ -16,7 +18,8 @@
         (row-select)="onRowSelect($any($event))"
         (row-unselect)="onRowUnselect($any($event))"
         (row-keyup)="onRowKeyUp($any($event))"
-        (sorting-changed)="onSortingChanged($any($event))">
+        (sorting-changed)="onSortingChanged($any($event))"
+        (columnOrderChanged)="onColumnOrderChanged($event)">
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner
@@ -38,4 +41,14 @@
                 <ng-content select="adf-custom-empty-content-template"></ng-content>
             </ng-template>
         </adf-no-content-template>
+
+        <adf-main-menu-datatable-template>
+            <ng-template let-mainMenuTrigger>
+                <adf-datatable-column-selector
+                    [columns]="columns"
+                    [mainMenuTrigger]="mainMenuTrigger"
+                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+                </adf-datatable-column-selector>
+            </ng-template>
+        </adf-main-menu-datatable-template>
 </adf-datatable>

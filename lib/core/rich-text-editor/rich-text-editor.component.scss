@@ -1,0 +1,10 @@
+/* stylelint-disable selector-class-pattern */
+.adf-rich-text-editor-container {
+    .editorjs {
+        &.readonly {
+            .codex-editor__redactor {
+                padding-bottom: 0 !important;
+            }
+        }
+    }
+}

@@ -330,6 +330,8 @@
       "CREATED": "Erstellt",
       "END_DATE": "Enddatum",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "Prozessinstanz-ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Keine Prozessinstanz-ID",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
       "FORM_NAME": "Formularname",

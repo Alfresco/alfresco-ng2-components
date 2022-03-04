@@ -18,23 +18,25 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
+import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
-import { skip } from 'rxjs/operators';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
+import { shareReplay, skip } from 'rxjs/operators';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
 
 @Component({
     template: `
     <adf-cloud-task-list #taskListCloud>
         <data-columns>
-            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
-            <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
-            <data-column key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
+            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column id="startedBy" key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{getFullName(entry.row?.obj?.startedBy)}}</div>
                 </ng-template>
@@ -79,7 +81,7 @@ describe('TaskListCloudComponent', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
-    let taskListCloudService: TaskListCloudService;
+    let taskListCloudService: TaskListCloudServiceInterface;
 
     setupTestBed({
         imports: [
@@ -88,14 +90,20 @@ describe('TaskListCloudComponent', () => {
         ],
         declarations: [
             EmptyTemplateComponent
+        ],
+        providers: [
+            {
+                provide: TASK_LIST_CLOUD_TOKEN,
+                useClass: TaskListCloudService
+            }
         ]
     });
 
     beforeEach(() => {
         appConfig = TestBed.inject(AppConfigService);
-        taskListCloudService = TestBed.inject(TaskListCloudService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
+        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-task-list': {
                 presets: {
@@ -116,10 +124,18 @@ describe('TaskListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
         fixture.destroy();
+    });
+
+    it('should be able to inject TaskListCloudService instance', () => {
+        fixture.detectChanges();
+
+        expect(component.taskListCloudService instanceof TaskListCloudService).toBeTruthy();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -149,7 +165,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should load spinner and show the content', () => {
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
@@ -177,6 +193,38 @@ describe('TaskListCloudComponent', () => {
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
+    it('should hide columns on applying new columns visibility through columns selector', () => {
+        component.showMainDatatableActions = true;
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        component.ngAfterContentInit();
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        mainMenuButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
+        expect(columnSelectorMenu).toBeTruthy();
+
+        const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
+        expect(columnsSelectorInstance.columns).toBe(component.columns, 'should pass columns as input');
+
+        const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
+            ...column,
+            isHidden: index !== 0 // only first one is shown
+        }));
+
+        columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
+        fixture.detectChanges();
+
+        const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+        expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
+    });
+
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
         component.presetColumn = 'fakeCustomSchema';
         fixture.detectChanges();
@@ -191,33 +239,22 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should return the results if an application name is given', (done) => {
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        component.ngAfterContentInit();
+
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(1);
-            expect(component.rows[0]['appName']).toBe('test-ciprian2');
-            expect(component.rows[0]['appVersion']).toBe('');
-            expect(component.rows[0]['id']).toBe('11fe013d-c263-11e8-b75b-0a5864600540');
-            expect(component.rows[0]['assignee']).toBeNull();
-            expect(component.rows[0]['name']).toEqual('standalone-subtask');
-            expect(component.rows[0]['description']).toBeNull();
-            expect(component.rows[0]['createdDate']).toBe(1538059139420);
-            expect(component.rows[0]['dueDate']).toBeNull();
-            expect(component.rows[0]['claimedDate']).toBeNull();
-            expect(component.rows[0]['priority']).toBe(0);
-            expect(component.rows[0]['category']).toBeNull();
-            expect(component.rows[0]['processDefinitionId']).toBeNull();
-            expect(component.rows[0]['processInstanceId']).toBeNull();
-            expect(component.rows[0]['status']).toBe('CREATED');
-            expect(component.rows[0]['owner']).toBe('devopsuser');
-            expect(component.rows[0]['parentTaskId']).toBe('71fda20b-c25b-11e8-b75b-0a5864600540');
-            expect(component.rows[0]['lastModified']).toBe(1538059139420);
-            expect(component.rows[0]['lastModifiedTo']).toBeNull();
-            expect(component.rows[0]['lastModifiedFrom']).toBeNull();
-            expect(component.rows[0]['standalone']).toBeTruthy();
+
+            const expectedTask = {
+                ...fakeGlobalTask,
+                variables: fakeGlobalTask.processVariables
+            };
+
+            expect(component.rows[0]).toEqual(expectedTask);
             done();
         });
         component.appName = appName.currentValue;
@@ -227,7 +264,7 @@ describe('TaskListCloudComponent', () => {
 
     it('should reload tasks when reload() is called', (done) => {
         component.appName = 'fake';
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -252,7 +289,7 @@ describe('TaskListCloudComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            component.rows = fakeGlobalTask.list.entries;
+            component.rows = fakeGlobalTasks.list.entries;
             fixture.detectChanges();
         });
 
@@ -264,7 +301,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reload the task list when input parameters changed', () => {
-            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             component.appName = 'mock-app-name';
             component.priority = 1;
             component.status = 'mock-status';
@@ -286,7 +323,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should set formattedSorting if sorting input changes', () => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'formatSorting').and.callThrough();
 
             component.appName = 'mock-app-name';
@@ -306,7 +343,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reload task list when sorting on a column changes', () => {
-            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             component.onSortingChanged(new CustomEvent('sorting-changed', {
                 detail: {
                     key: 'fakeName',
@@ -327,7 +364,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reset pagination when resetPaginationValues is called', async (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -355,7 +392,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'reload').and.stub();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -398,13 +435,15 @@ describe('TaskListCloudComponent', () => {
         });
 
         beforeEach(() => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
             copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
             element = copyFixture.debugElement.nativeElement;
+
+            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
@@ -495,7 +534,7 @@ describe('TaskListCloudComponent', () => {
 
         beforeEach(() => {
             appConfig = TestBed.inject(AppConfigService);
-            taskListCloudService = TestBed.inject(TaskListCloudService);
+            taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-task-list': {
                     presets: {
@@ -526,9 +565,11 @@ describe('TaskListCloudComponent', () => {
             fixture = TestBed.createComponent(TaskListCloudComponent);
             component = fixture.componentInstance;
             element = fixture.debugElement.nativeElement;
-            taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
+            component.isColumnSchemaCreated$ = of(true);
         });
+
         afterEach(() => {
             fixture.destroy();
         });
@@ -536,7 +577,7 @@ describe('TaskListCloudComponent', () => {
         // TODO: highly unstable test
         // eslint-disable-next-line
         xit('should show tooltip if config copyContent flag is true', fakeAsync(() => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
             component.success.subscribe(() => {
@@ -558,7 +599,7 @@ describe('TaskListCloudComponent', () => {
         // TODO: highly unstable test
         // eslint-disable-next-line
         xit('should replace priority values', (done) => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             component.presetColumn = 'fakeCustomSchema';
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -596,7 +637,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('replacePriorityValues should return replaced value when rows are defined', () => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             fixture.detectChanges();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);

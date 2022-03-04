@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
@@ -24,6 +24,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -104,6 +105,38 @@ describe('DateTimeWidgetComponent', () => {
 
         widget.onDateChanged(moment('1982-03-13T10:00:000Z'));
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATETIME,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const dateTimeInput = fixture.nativeElement.querySelector('input');
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+            dateTimeInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
     });
 
     describe('template check', () => {
@@ -216,5 +249,77 @@ describe('DateTimeWidgetComponent', () => {
                         expect(dateElement.value).toContain('03-02-2020 12:00 AM');
                     });
             });
+    });
+
+    describe('when form model has left labels', () => {
+
+        it('should have left labels classes on leftLabels true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                value: '',
+                type: FormFieldTypes.DATETIME,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).not.toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).not.toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).not.toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels false', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                value: '',
+                type: FormFieldTypes.DATETIME,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels not present', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                value: '',
+                type: FormFieldTypes.DATETIME,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
     });
 });

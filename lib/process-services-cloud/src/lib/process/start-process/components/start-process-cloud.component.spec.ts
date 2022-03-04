@@ -44,7 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { ProcessDefinitionCloud } from 'process-services-cloud';
+import { ProcessDefinitionCloud, TaskVariableCloud } from 'process-services-cloud';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -56,6 +56,7 @@ describe('StartProcessCloudComponent', () => {
     let startProcessSpy: jasmine.Spy;
     let createProcessSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
+    let getStartEventFormStaticValuesMappingSpy: jasmine.Spy;
 
     const firstChange = new SimpleChange(undefined, 'myApp', true);
 
@@ -106,6 +107,7 @@ describe('StartProcessCloudComponent', () => {
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
         createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
+        getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
     });
 
     afterEach(() => {
@@ -165,7 +167,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'OLE');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'OLE');
             typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
             tick(550);
@@ -202,6 +204,34 @@ describe('StartProcessCloudComponent', () => {
             expect(startBtn.disabled).toBe(true);
             expect(component.isProcessFormValid()).toBe(false);
         });
+
+        it('should include the static input mappings in the resolved values', fakeAsync(() => {
+            const values: TaskVariableCloud[] = [
+                new TaskVariableCloud({name: 'value1', value: 'value'}),
+                new TaskVariableCloud({name: 'value2', value: 1}),
+                new TaskVariableCloud({name: 'value3', value: false})
+            ];
+            const staticInputs: TaskVariableCloud[] = [
+                new TaskVariableCloud({name: 'static1', value: 'static value'}),
+                new TaskVariableCloud({name: 'static2', value: 0}),
+                new TaskVariableCloud({name: 'static3', value: true})
+            ];
+            component.name = 'My new process';
+            component.processDefinitionName = 'processwithoutform2';
+            component.values = values;
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+            getStartEventFormStaticValuesMappingSpy.and.returnValue(of(staticInputs));
+            fixture.detectChanges();
+
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            tick(550);
+
+            fixture.whenStable().then(() => {
+                expect(component.resolvedValues).toEqual(staticInputs.concat(values));
+            });
+        }));
     });
 
     describe('start a process with start form', () => {
@@ -242,7 +272,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -269,7 +299,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -297,7 +327,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(550);
@@ -327,7 +357,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
 
             tick();
-            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
             tick(4500);
@@ -580,18 +610,6 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.appName = 'myApp';
             fixture.detectChanges();
-        });
-
-        it('should have labels for process name and type', async () => {
-            component.appName = 'myApp';
-            component.processDefinitionName = 'NewProcess 2';
-            component.ngOnChanges({ appName: firstChange });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
-            expect(inputLabelsNodes.length).toBe(2);
         });
 
         it('should have floating labels for process name and type', async () => {
@@ -861,6 +879,40 @@ describe('StartProcessCloudComponent', () => {
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
 
             expect(escapeKeyboardEvent.cancelBubble).toBe(true);
+        });
+
+        it('should hide title', () => {
+            component.showTitle = false;
+            fixture.detectChanges();
+
+            const title = fixture.debugElement.query(By.css('.adf-title'));
+
+            expect(title).toBeFalsy();
+        });
+
+        it('should show title', () => {
+            const title = fixture.debugElement.query(By.css('.adf-title'));
+
+            expect(title).toBeTruthy();
+        });
+
+        it('should show process definition dropdown', () => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            fixture.detectChanges();
+
+            const processDropdown = fixture.debugElement.query(By.css('[data-automation-id="adf-select-cloud-process-dropdown"]'));
+
+            expect(processDropdown).toBeTruthy();
+        });
+
+        it('should hide process definition dropdown', () => {
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.showSelectProcessDropdown = false;
+            fixture.detectChanges();
+
+            const processDropdown = fixture.debugElement.query(By.css('#processDefinitionName'));
+
+            expect(processDropdown).toBeFalsy();
         });
     });
 });

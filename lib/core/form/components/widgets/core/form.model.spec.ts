@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, fakeViewerForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
+import { cloudFormMock, fakeMetadataForm, fakeViewerForm } from '../../mock/form.mock';
 import { Node } from '@alfresco/js-api';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { AlfrescoApiService } from '../../../../services';
@@ -319,7 +319,7 @@ describe('FormModel', () => {
     });
 
     it('should validate fields when form validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel(fakeMetadataForm, null, false, formService);
 
         let validated = false;
 
@@ -328,7 +328,7 @@ describe('FormModel', () => {
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        spyOn(form, 'getFormFields').and.returnValue([field]);
+        form.fieldsCache = [field];
 
         form.validateForm();
 
@@ -391,12 +391,10 @@ describe('FormModel', () => {
     });
 
     it('should get field by id', () => {
-        const form = new FormModel({}, null, false, formService);
-        const field: any = { id: 'field1' };
-        spyOn(form, 'getFormFields').and.returnValue([field]);
+        const form = new FormModel(fakeMetadataForm, null, false, formService);
 
-        const result = form.getFieldById('field1');
-        expect(result).toBe(field);
+        const result = form.getFieldById('pfx_property_three');
+        expect(result.id).toBe('pfx_property_three');
     });
 
     it('should use custom field validator', () => {
@@ -405,7 +403,7 @@ describe('FormModel', () => {
             id: 'test-field-1'
         });
 
-        spyOn(form, 'getFormFields').and.returnValue([testField]);
+        form.fieldsCache = [testField];
 
         const validator = {
             isSupported: (): boolean => true,
@@ -607,8 +605,8 @@ describe('FormModel', () => {
 
             expect(form.values['pfx_property_one']).toBe('testValue');
             expect(form.values['pfx_property_two']).toBe(true);
-            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
-            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
+            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
             expect(form.values['pfx_property_five']).toEqual('green');
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
@@ -647,6 +645,55 @@ describe('FormModel', () => {
             form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
 
             expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBeNull();
+        });
+    });
+
+    describe('Form actions', () => {
+
+        let form: FormModel;
+        let fieldId: string;
+        let field: FormFieldModel;
+
+        beforeEach(() => {
+            form = new FormModel(cloudFormMock);
+            fieldId = 'text1';
+            field = form.getFieldById(fieldId);
+        });
+
+        it('should change field visibility', () => {
+            const originalValue = field.isVisible;
+
+            form.changeFieldVisibility(fieldId, !originalValue);
+
+            expect(field.isVisible).toEqual(!originalValue);
+        });
+
+        it('should change field disabled', () => {
+            const originalValue = field.readOnly;
+
+            form.changeFieldDisabled(fieldId, !originalValue);
+
+            expect(field.readOnly).toEqual(!originalValue);
+        });
+
+        it('should change field required', () => {
+            const originalValue = field.required;
+
+            form.changeFieldRequired(fieldId, !originalValue);
+
+            expect(field.required).toEqual(!originalValue);
+        });
+
+        it('should change field value', () => {
+            form.changeFieldValue(fieldId, 'newValue');
+
+            expect(field.value).toEqual('newValue');
+        });
+
+        it('should change variable value', () => {
+            form.changeVariableValue('FormVarStrId', 'newValue');
+
+            expect(form.getFormVariable('FormVarStrId').value).toEqual('newValue');
         });
     });
 });

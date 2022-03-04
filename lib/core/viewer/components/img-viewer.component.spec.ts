@@ -43,6 +43,46 @@ describe('Test Img viewer component ', () => {
         ]
     });
 
+    describe('Zoom customization', () => {
+
+        beforeEach(() => {
+            service = TestBed.inject(ContentService);
+            fixture = TestBed.createComponent(ImgViewerComponent);
+
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+            component.urlFile = 'fake-url-file.png';
+            fixture.detectChanges();
+        });
+
+        describe('default value', () => {
+
+            it('should use default zoom if is not present a custom zoom in the app.config', () => {
+                fixture.detectChanges();
+                expect(component.scale).toBe(1.0);
+            });
+
+        });
+
+        describe('custom value', () => {
+
+            beforeEach(() => {
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
+                appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
+                component.initializeScaling();
+            });
+
+            it('should use the custom zoom if it is present in the app.config', (done) => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.scale).toBe(0.70);
+                    done();
+                });
+            });
+        });
+    });
+
     describe('Url', () => {
 
         beforeEach(() => {
@@ -114,46 +154,6 @@ describe('Test Img viewer component ', () => {
             expect(component.urlFile).toEqual('fake-blob-url');
         });
     });
-
-    describe('Zoom customization', () => {
-
-        beforeEach(() => {
-            service = TestBed.inject(ContentService);
-            fixture = TestBed.createComponent(ImgViewerComponent);
-
-            element = fixture.nativeElement;
-            component = fixture.componentInstance;
-            component.urlFile = 'fake-url-file.png';
-            fixture.detectChanges();
-        });
-
-        describe('default value', () => {
-
-            it('should use default zoom if is not present a custom zoom in the app.config', () => {
-                fixture.detectChanges();
-                expect(component.scale).toBe(1.0);
-            });
-
-        });
-
-        describe('custom value', () => {
-
-            beforeEach(() => {
-                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-                appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
-                component.initializeScaling();
-            });
-
-            it('should use the custom zoom if it is present in the app.config', (done) => {
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    expect(component.scale).toBe(0.70);
-                    done();
-                });
-            });
-        });
-   });
 
     describe('toolbar actions', () => {
 

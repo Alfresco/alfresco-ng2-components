@@ -21,7 +21,7 @@ import * as shell from 'shelljs';
 import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as program from 'commander';
+import program from 'commander';
 
 export default function main(_args: string[], workingDir: string) {
     program

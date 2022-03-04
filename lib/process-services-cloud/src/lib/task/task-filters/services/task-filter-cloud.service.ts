@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
@@ -23,9 +23,10 @@ import { switchMap, map } from 'rxjs/operators';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { TaskCloudNodePaging } from '../../task-list/models/task-cloud.model';
+import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -259,9 +260,25 @@ export class TaskFilterCloudService extends BaseCloudService {
         if (taskFilter.appName || taskFilter.appName === '') {
             const queryUrl = `${this.getBasePath(taskFilter.appName)}/query/v1/tasks`;
             const queryParams = {
+                processInstanceId: taskFilter.processInstanceId,
+                processDefinitionId: taskFilter.processDefinitionId,
+                processDefinitionName: taskFilter.processDefinitionName,
                 assignee: taskFilter.assignee,
                 status: taskFilter.status,
+                taskName: taskFilter.taskName,
                 appName: taskFilter.appName,
+                assignmentType: taskFilter.assignmentType,
+                owner: taskFilter.owner,
+                taskId: taskFilter.taskId,
+                parentTaskId: taskFilter.parentTaskId,
+                priority: taskFilter.priority,
+                lastModifiedFrom: taskFilter.lastModifiedFrom,
+                lastModifiedTo: taskFilter.lastModifiedTo,
+                standalone: taskFilter.standalone,
+                createdDate: taskFilter.createdDate,
+                completedDate: taskFilter.completedDate,
+                completedBy: taskFilter.completedBy,
+                dueDate: taskFilter.dueDate,
                 maxItems: 1
             };
             return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(

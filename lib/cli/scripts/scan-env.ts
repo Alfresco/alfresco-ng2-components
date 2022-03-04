@@ -1,5 +1,5 @@
-import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } from '@alfresco/js-api';
-import * as program from 'commander';
+import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import program from 'commander';
 import { logger } from './logger';
 
 interface PeopleTally { enabled: number; disabled: number }
@@ -84,7 +84,7 @@ async function attemptLogin() {
                 redirectUri: '/',
                 implicitFlow: false
             }
-        });
+        } as unknown as AlfrescoApiConfig);
         await jsApiConnection.login(program.username, program.password);
         logger.info(`    ${green}Login SSO successful${reset}`);
     } catch (err) {

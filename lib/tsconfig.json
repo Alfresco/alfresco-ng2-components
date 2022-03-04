@@ -27,6 +27,7 @@
       "@alfresco/adf-content-services": ["./content-services/"],
       "@alfresco/adf-extensions": ["./extensions/"],
       "@alfresco/adf-core": ["./core/"],
+      "@alfresco/adf-core/*": ["./core/*/public-api.ts"],
       "@alfresco/adf-insights": ["./analytics"]
     },
     "lib": ["es2018", "esnext.array", "esnext.asynciterable", "dom"],

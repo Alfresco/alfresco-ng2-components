@@ -19,7 +19,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { AlfrescoApiService, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -34,13 +34,14 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -537,7 +538,10 @@ describe('EditTaskFilterCloudComponent', () => {
 
             const mockUser: IdentityUserModel[] = [{
                 id: 'id',
-                username: 'test'
+                username: 'test',
+                firstName: 'first-name',
+                lastName: 'last-name',
+                email: 'email@fake.com'
             }];
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedBy');
