@@ -38,7 +38,7 @@ import {
     LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
-    AspectListService, DialogAspectListService
+    DialogAspectListService
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
@@ -233,7 +233,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 public alfrescoApiService: AlfrescoApiService,
                 private contentMetadataService: ContentMetadataService,
                 private sharedLinksApiService: SharedLinksApiService,
-                private aspectListService: AspectListService,
                 private dialogAspectListService: DialogAspectListService,
                 private nodeService: NodesApiService) {
     }
