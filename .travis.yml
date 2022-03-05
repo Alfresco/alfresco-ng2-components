@@ -176,8 +176,7 @@ jobs:
 
         - stage: "Storybook Playwright Tests"
           name: "Process Cloud"
-          before_script:
-            - ./scripts/ci/jobs/dbpci-before-playwright
+          before_script: ./scripts/ci/jobs/dbpci-before-playwright
           script: ./scripts/travis/storybook-testing/storybook-test.sh
           workspaces:
             use:
