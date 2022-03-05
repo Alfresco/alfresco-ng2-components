@@ -65,6 +65,8 @@ stages:
     if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
     if: type = pull_request || (type = cron || type = api)
+  - name: "Storybook Playwright Tests"
+    if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch = master
   - name: "Deprecate develop builds"
@@ -175,8 +177,6 @@ jobs:
         - stage: "Storybook Playwright Tests"
           name: "Process Cloud"
           before_script:
-            - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-            - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
             - ./scripts/ci/jobs/dbpci-before-playwright
           script: ./scripts/travis/storybook-testing/storybook-test.sh
           workspaces:
