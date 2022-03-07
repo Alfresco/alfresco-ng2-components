@@ -69,4 +69,16 @@ describe('InplaceFormInputComponent', () => {
 
         expect(error).toBeTruthy();
     });
+
+    it('should show label', () => {
+        formControl.setValue('');
+
+        fixture.detectChanges();
+
+        const error = fixture.nativeElement.querySelector(
+            '[data-automation-id="adf-inplace-input-label"]'
+        );
+
+        expect(error).toBeTruthy();
+    });
 });
