@@ -133,7 +133,7 @@ describe('TaskListCloudComponent', () => {
     it('should be able to inject TaskListCloudService instance', () => {
         fixture.detectChanges();
 
-        expect(component.taskListCloudService instanceof TaskListCloudService).toBeFalsy();
+        expect(component.taskListCloudService instanceof TaskListCloudService).toBeTruthy();
     });
 
     it('should use the default schemaColumn as default', () => {
