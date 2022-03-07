@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskListCloudSortingModel } from './task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
 export interface ServiceTaskQueryCloudRequestModel {
     appName: string;

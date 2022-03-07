@@ -21,6 +21,8 @@ import { MaterialModule } from '../../material.module';
 import { TaskListCloudComponent } from './components/task-list-cloud.component';
 import { ServiceTaskListCloudComponent } from './components/service-task-list-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
+import { TASK_LIST_CLOUD_TOKEN } from '../../services/cloud-token.service';
+import { TaskListCloudService } from './public-api';
 
 @NgModule({
     imports: [
@@ -35,6 +37,12 @@ import { CoreModule } from '@alfresco/adf-core';
     exports: [
         TaskListCloudComponent,
         ServiceTaskListCloudComponent
+    ],
+    providers: [
+        {
+            provide: TASK_LIST_CLOUD_TOKEN,
+            useClass: TaskListCloudService
+        }
     ]
 })
 export class TaskListCloudModule { }

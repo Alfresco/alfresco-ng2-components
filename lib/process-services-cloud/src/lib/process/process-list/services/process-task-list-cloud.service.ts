@@ -17,18 +17,20 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
-import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
 @Injectable({ providedIn: 'root' })
-export class ServiceTaskListCloudService extends BaseCloudService {
+export class ProcessTaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
-                private logService: LogService) {
+                protected logService: LogService) {
         super(apiService, appConfigService);
     }
 
@@ -36,35 +38,25 @@ export class ServiceTaskListCloudService extends BaseCloudService {
      * Finds a task using an object with optional query properties.
      *
      * @param requestNode Query object
+     * @param queryUrl Query url
      * @returns Task information
      */
-    getServiceTaskByRequest(requestNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
+    getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/admin/v1/service-tasks`;
+            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances/${requestNode.processInstanceId}/tasks`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
-            return this.get(queryUrl, queryParams);
-        } else {
-            this.logService.error('Appname is mandatory for querying task');
-            return throwError('Appname not configured');
-        }
-    }
-
-    /**
-     * Finds a service task integration context using an object with optional query properties.
-     *
-     * @param appName string
-     * @param serviceTaskId string
-     * @returns Service Task Integration Context information
-     */
-    getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
-        if (appName) {
-            const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
-            return this.get(queryUrl).pipe(
-                map((response: any) => response.entry)
+            return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
+                map((response: any) => {
+                    const entries = response.list && response.list.entries;
+                    if (entries) {
+                        response.list.entries = entries.map((entryData: any) => entryData.entry);
+                    }
+                    return response;
+                })
             );
         } else {
             this.logService.error('Appname is mandatory for querying task');
@@ -72,7 +64,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         }
     }
 
-    protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
+    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&

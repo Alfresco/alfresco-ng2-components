@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Inject } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { TaskListCloudService } from '../services/task-list-cloud.service';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -131,7 +132,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     candidateGroupId: string = '';
 
-    constructor(private taskListCloudService: TaskListCloudService,
+    constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {

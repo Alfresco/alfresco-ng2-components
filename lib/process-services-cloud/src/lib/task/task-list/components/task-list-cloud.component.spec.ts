@@ -25,8 +25,10 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.moc
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { skip } from 'rxjs/operators';
+import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
 
 @Component({
     template: `
@@ -79,7 +81,7 @@ describe('TaskListCloudComponent', () => {
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
-    let taskListCloudService: TaskListCloudService;
+    let taskListCloudService: TaskListCloudServiceInterface;
 
     setupTestBed({
         imports: [
@@ -88,14 +90,20 @@ describe('TaskListCloudComponent', () => {
         ],
         declarations: [
             EmptyTemplateComponent
+        ],
+        providers: [
+            {
+                provide: TASK_LIST_CLOUD_TOKEN,
+                useClass: TaskListCloudService
+            }
         ]
     });
 
     beforeEach(() => {
         appConfig = TestBed.inject(AppConfigService);
-        taskListCloudService = TestBed.inject(TaskListCloudService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
+        taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-task-list': {
                 presets: {
@@ -120,6 +128,12 @@ describe('TaskListCloudComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
+    });
+
+    it('should be able to inject TaskListCloudService instance', () => {
+        fixture.detectChanges();
+
+        expect(component.taskListCloudService instanceof TaskListCloudService).toBeTruthy();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -495,7 +509,7 @@ describe('TaskListCloudComponent', () => {
 
         beforeEach(() => {
             appConfig = TestBed.inject(AppConfigService);
-            taskListCloudService = TestBed.inject(TaskListCloudService);
+            taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-task-list': {
                     presets: {

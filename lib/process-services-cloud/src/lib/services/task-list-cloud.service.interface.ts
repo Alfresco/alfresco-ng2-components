@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-import { InjectionToken } from '@angular/core';
-import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
-import { TaskListCloudServiceInterface } from './task-list-cloud.service.interface';
+import { Observable } from 'rxjs';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 
-export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('proccess-filters-cloud');
-
-export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('task-filters-cloud');
-
-export const TASK_LIST_CLOUD_TOKEN = new InjectionToken<TaskListCloudServiceInterface>('task-list-cloud');
+export interface TaskListCloudServiceInterface {
+    getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any>;
+}

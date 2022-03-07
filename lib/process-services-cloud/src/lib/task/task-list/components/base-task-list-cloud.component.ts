@@ -23,9 +23,9 @@ import {
     DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
