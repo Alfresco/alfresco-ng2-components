@@ -430,7 +430,10 @@
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "codeCoverage": true,
-            "sourceMap": true
+            "sourceMap": true,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css"
+            ]
           }
         },
         "lint": {
