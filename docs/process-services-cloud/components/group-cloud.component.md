@@ -42,6 +42,7 @@ Searches Groups.
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | Group selection mode (single/multiple). |
 | preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
 | readOnly | `boolean` | false | Show the info in readonly mode |
+| required | `boolean` | false | Mark this field as required |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | searchGroupsControl | `FormControl` |  | FormControl to search the group |
 | title | `string` |  | Title of the field |

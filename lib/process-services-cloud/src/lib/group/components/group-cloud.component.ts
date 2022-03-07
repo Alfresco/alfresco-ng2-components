@@ -83,6 +83,11 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     readOnly = false;
 
+    /** Mark this field as required
+     */
+    @Input()
+    required = false;
+
     /** FormControl to list of group */
     @Input()
     groupChipsCtrl = new FormControl({ value: '', disabled: false });
@@ -121,9 +126,10 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     invalidGroups: IdentityGroupModel[] = [];
 
     searchGroups$ = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
-    _subscriptAnimationState = 'enter';
+    subscriptAnimationState: string = 'enter';
     clientId: string;
     isFocused: boolean;
+    touched: boolean = false;
 
     validateGroupsMessage: string;
     searchedValue = '';
@@ -470,6 +476,22 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     isValidationLoading(): boolean {
         return this.isValidationEnabled() && this.validationLoading;
+    }
+
+    markAsTouched(): void {
+        this.touched = true;
+    }
+
+    isTouched(): boolean {
+        return this.touched;
+    }
+
+    isSelected(): boolean {
+        return this.selectedGroups && !!this.selectedGroups.length;
+    }
+
+    isDirty(): boolean {
+        return this.isTouched() && !this.isSelected();
     }
 
     setFocus(isFocused: boolean) {

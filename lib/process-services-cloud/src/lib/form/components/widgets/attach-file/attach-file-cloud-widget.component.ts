@@ -255,6 +255,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return alias && VALID_ALIAS.includes(alias);
     }
 
+    isSelected(): boolean {
+        return this.hasFile;
+    }
+
     ngOnDestroy() {
         this.contentNodeSelectorPanelService.customModels = [];
     }

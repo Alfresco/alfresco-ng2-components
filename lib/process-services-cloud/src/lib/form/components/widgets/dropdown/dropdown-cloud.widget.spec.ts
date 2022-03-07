@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -160,6 +160,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should show error message if the restUrl failed to fetch options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+            const errorIcon: string = 'error_outline';
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.restIdProperty = 'name';
@@ -173,11 +174,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-
             expect(jsonDataSpy).toHaveBeenCalled();
             expect(widget.isRestApiFailed).toBe(true);
             expect(widget.field.options.length).toEqual(0);
-            expect(failedErrorMsgElement.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed',  async () => {
@@ -231,6 +231,41 @@ describe('DropdownCloudWidgetComponent', () => {
             const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(options[0].nativeElement.innerText).toBe('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
+        });
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DROPDOWN,
+                required: true
+            });
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+
+        it('should be invalid if no default option after interaction', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
 
@@ -391,6 +426,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const errorIcon: string = 'error_outline';
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 
@@ -415,7 +451,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 expect(widget.isRestApiFailed).toBe(true);
                 expect(widget.field.options.length).toBe(0);
-                expect(failedErrorMsgElement2.nativeElement.innerText.trim()).toBe('FORM.FIELD.REST_API_FAILED');
+                expect(failedErrorMsgElement2.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
 
                 jsonDataSpy.and.returnValue(of(mockSecondRestDropdownOptions));
                 selectParentOption('IT');

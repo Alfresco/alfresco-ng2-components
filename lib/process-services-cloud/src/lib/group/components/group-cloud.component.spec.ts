@@ -219,6 +219,26 @@ describe('GroupCloudComponent', () => {
                 done();
             });
         });
+
+        it('should display proper error icon', (done) => {
+            findGroupsByNameSpy.and.returnValue(of([]));
+            fixture.detectChanges();
+
+            const input = getElement<HTMLInputElement>('input');
+            input.focus();
+            input.value = 'ZZZ';
+            input.dispatchEvent(new Event('keyup'));
+            input.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                input.blur();
+                fixture.detectChanges();
+                const errorIcon = element.querySelector('.adf-error-icon').textContent;
+                expect(errorIcon).toEqual('error_outline');
+                done();
+            });
+        });
     });
 
     describe('when application name defined', () => {

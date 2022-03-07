@@ -20,14 +20,16 @@ import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../../form-base.module';
-import { FormModel } from '../core';
+import { FormFieldTypes } from '../core/form-field-types';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormModel } from '../core/form.model';
 
 describe('AmountWidgetComponent', () => {
 
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
+    let element: HTMLElement;
 
     setupTestBed({
         imports: [
@@ -39,8 +41,8 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AmountWidgetComponent);
-
         widget = fixture.componentInstance;
+        element = fixture.nativeElement;
     });
 
     it('should setup currency from field', () => {
@@ -77,6 +79,38 @@ describe('AmountWidgetComponent', () => {
 
         widget.ngOnInit();
         expect(widget.placeholder).toBe('1234');
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.AMOUNT,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const amount = fixture.nativeElement.querySelector('input');
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            amount.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
     });
 });
 

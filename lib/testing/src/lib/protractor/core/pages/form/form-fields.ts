@@ -36,7 +36,7 @@ export class FormFields {
     completeButton = $('#adf-form-complete');
     completeNoFormButton = $('#adf-no-form-complete-button');
     cancelButton = $('#adf-no-form-cancel-button');
-    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
+    errorMessage: Locator = by.css('.adf-error-container .adf-error-text');
 
     getWidget = (fieldId: string): ElementFinder => $(`adf-form-field div[id='field-${fieldId}-container']`);
 

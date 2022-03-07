@@ -24,6 +24,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -104,6 +105,38 @@ describe('DateTimeWidgetComponent', () => {
 
         widget.onDateChanged(moment('1982-03-13T10:00:000Z'));
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATETIME,
+                required: true
+            });
+        });
+
+        it('should be marked as invalid after interaction', async () => {
+            const dateTimeInput = fixture.nativeElement.querySelector('input');
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
+
+            dateTimeInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
     });
 
     describe('template check', () => {
