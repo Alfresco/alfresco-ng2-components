@@ -25,7 +25,7 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.moc
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { skip } from 'rxjs/operators';
 
 @Component({
