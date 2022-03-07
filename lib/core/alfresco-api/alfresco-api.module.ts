@@ -19,10 +19,9 @@
 
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AngularAlfrescoApi } from './services/angular-alfresco-api';
+import { AlfrescoApiV2Service } from './services/alfresco-api-v2.service';
 import { AlfrescoApiClientFactory } from './services/alfresco-api-client.factory';
-import { AngularAlfrescoApiLoaderService } from './services/angular-alfresco-api-loader.service';
-import { createAngularAlfrescoApiService } from './services/angular-alfresco-service.factory';
+import { AlfrescoApiV2LoaderService, createAlfrescoApiV2Service } from './services/alfresco-api-v2-loader.service';
 import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 
 @NgModule({
@@ -34,14 +33,14 @@ import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
         })
     ],
     providers: [
-        AngularAlfrescoApi,
-        AngularAlfrescoApiLoaderService,
+        AlfrescoApiV2Service,
+        AlfrescoApiV2LoaderService,
         AlfrescoApiClientFactory,
         {
             provide: APP_INITIALIZER,
-            useFactory: createAngularAlfrescoApiService,
+            useFactory: createAlfrescoApiV2Service,
             deps: [
-                AngularAlfrescoApiLoaderService
+                AlfrescoApiV2LoaderService
             ],
             multi: true
         },

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
+
 import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { JsApiHttpClient } from '../js-api/js-api-http-client';
@@ -22,7 +24,7 @@ import { JsApiAngularHttpClient } from './js-api-angular-http-client';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class AngularAlfrescoApi {
+export class AlfrescoApiV2Service {
     public contentPrivateClient: JsApiHttpClient;
     public contentClient: JsApiHttpClient;
     public authClient: JsApiHttpClient;

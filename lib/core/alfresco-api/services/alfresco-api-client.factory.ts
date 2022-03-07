@@ -19,7 +19,7 @@
 
 import { Injectable } from '@angular/core';
 import {  DiscoveryApi, NodesApi } from '@alfresco/js-api';
-import { AngularAlfrescoApi } from './angular-alfresco-api';
+import { AlfrescoApiV2Service } from './alfresco-api-v2.service';
 
 @Injectable()
 export class AlfrescoApiClientFactory {
@@ -28,7 +28,7 @@ export class AlfrescoApiClientFactory {
     private nodesApi: NodesApi = null;
 
     constructor(
-        private angularAlfrescoApi?: AngularAlfrescoApi) {
+        private angularAlfrescoApi?: AlfrescoApiV2Service) {
     }
 
     getDiscoveryApi() {

@@ -15,26 +15,32 @@
  * limitations under the License.
  */
 
+/*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
+
 import { Injectable } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { StorageService } from '../../services/storage.service';
-import { AngularAlfrescoApi } from './angular-alfresco-api';
+import { AlfrescoApiV2Service } from './alfresco-api-v2.service';
+
+export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiV2LoaderService) {
+    return () => angularAlfrescoApiService.load();
+}
 
 @Injectable()
-export class AngularAlfrescoApiLoaderService {
+export class AlfrescoApiV2LoaderService {
 
     protected alfrescoApi: AlfrescoApi;
 
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService,
-        private angularAlfrescoApi?: AngularAlfrescoApi) {
+        private alfrescoApiV2Service?: AlfrescoApiV2Service) {
     }
 
-    async load() {
-        await this.appConfig.load().then(() => {
+    load(): Promise<any> {
+        return this.appConfig.load().then(() => {
             this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
             this.initAngularAlfrescoApi();
         });
@@ -60,6 +66,6 @@ export class AngularAlfrescoApiLoaderService {
             oauth2: oauth
         });
 
-        this.angularAlfrescoApi.init(config);
+        this.alfrescoApiV2Service.init(config);
     }
 }

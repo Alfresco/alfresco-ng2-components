@@ -16,5 +16,5 @@
  */
 
 export * from './alfresco-api.module';
-export * from './services/angular-alfresco-api';
+export * from './services/alfresco-api-v2.service';
 export * from './services/alfresco-api-client.factory';
