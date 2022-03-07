@@ -142,7 +142,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     invalidUsers: IdentityUserModel[] = [];
 
     searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
-    _subscriptAnimationState: string = 'enter';
+    subscriptAnimationState: string = 'enter';
     clientId: string;
     isFocused: boolean;
     touched: boolean = false;

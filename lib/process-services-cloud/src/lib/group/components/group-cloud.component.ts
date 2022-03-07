@@ -126,7 +126,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     invalidGroups: IdentityGroupModel[] = [];
 
     searchGroups$ = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
-    _subscriptAnimationState: string = 'enter';
+    subscriptAnimationState: string = 'enter';
     clientId: string;
     isFocused: boolean;
     touched: boolean = false;

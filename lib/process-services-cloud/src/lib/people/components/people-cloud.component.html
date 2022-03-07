@@ -55,29 +55,29 @@
     </mat-progress-bar>
 
     <div class="adf-error-container">
-        <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="_subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('pattern')" [@transitionMessages]="_subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUserCtrl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate: { pattern: getValidationPattern() } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('maxlength')" [@transitionMessages]="_subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUserCtrl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate: { requiredLength: getValidationMaxLength() } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('minlength')" [@transitionMessages]="_subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUserCtrl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</div>
         </mat-error>
         <mat-error *ngIf="(searchUserCtrl.hasError('required') || userChipsCtrl.hasError('required')) && isDirty()"
-            [@transitionMessages]="_subscriptAnimationState" class="adf-error">
+            [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }}</div>
         </mat-error>
         <mat-error *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused"
-            [@transitionMessages]="_subscriptAnimationState" data-automation-id="invalid-users-typing-error" class="adf-error">
+            [@transitionMessages]="subscriptAnimationState" data-automation-id="invalid-users-typing-error" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</div>
         </mat-error>
