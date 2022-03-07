@@ -40,11 +40,12 @@ test.describe('Groups component stories tests', () => {
     });
 
     test('Invalid Preselected Groups', async ({ processServicesCloud, groupComponent }) => {
-        const expectedWarningMessage = 'warning No group found with the name invalid groups';
+        const expectedWarningMessage = 'No group found with the name invalid groups';
+        const expectedWarningIcon = 'error_outline';
 
         await processServicesCloud.navigateTo({ componentName: 'group', story: 'invalid-preselected-groups' });
 
-        await expect(groupComponent.error.content).toContainText(expectedWarningMessage);
+        await expect(groupComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
     });
 
 });

@@ -39,11 +39,12 @@ test.describe('People component stories tests', () => {
     });
 
     test('Invalid Preselected Users', async ({ processServicesCloud, peopleComponent }) => {
-        const expectedWarningMessage = 'warning No user found with the username invalid user';
+        const expectedWarningMessage = 'No user found with the username invalid user';
+        const expectedWarningIcon = 'error_outline';
 
         await processServicesCloud.navigateTo({ componentName: 'people', story: 'invalid-preselected-users' });
 
-        await expect(peopleComponent.error.content).toContainText(expectedWarningMessage);
+        await expect(peopleComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
     });
 
     test('Excluded Users', async ({ processServicesCloud, peopleComponent }) => {
