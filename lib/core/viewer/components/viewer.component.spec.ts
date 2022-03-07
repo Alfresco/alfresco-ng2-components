@@ -34,6 +34,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -144,7 +146,9 @@ describe('ViewerComponent', () => {
         imports: [
             NoopAnimationsModule,
             TranslateModule.forRoot(),
-            CoreTestingModule
+            CoreTestingModule,
+            MatButtonModule,
+            MatIconModule
         ],
         declarations: [
             ViewerWithCustomToolbarComponent,
@@ -697,6 +701,103 @@ describe('ViewerComponent', () => {
         });
 
         describe('Toolbar', () => {
+
+            it('should show only next file button', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = false;
+                component.canNavigateNext = true;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton).not.toBeNull();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton).toBeNull();
+            });
+
+            it('should provide tooltip for next file button', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = false;
+                component.canNavigateNext = true;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton.title).toBe('ADF_VIEWER.ACTIONS.NEXT_FILE');
+            });
+
+            it('should show only previous file button', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = true;
+                component.canNavigateNext = false;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton).toBeNull();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton).not.toBeNull();
+            });
+
+            it('should provide tooltip for the previous file button', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = true;
+                component.canNavigateNext = false;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton.title).toBe('ADF_VIEWER.ACTIONS.PREV_FILE');
+            });
+
+            it('should show both file navigation buttons', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = true;
+                component.canNavigateNext = true;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton).not.toBeNull();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton).not.toBeNull();
+            });
+
+            it('should not show navigation buttons', async () => {
+                component.allowNavigate = false;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton).toBeNull();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton).toBeNull();
+            });
+
+            it('should now show navigation buttons even if navigation enabled', async () => {
+                component.allowNavigate = true;
+                component.canNavigateBefore = false;
+                component.canNavigateNext = false;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+                expect(nextButton).toBeNull();
+
+                const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+                expect(prevButton).toBeNull();
+            });
 
             it('should render fullscreen button', () => {
                 expect(element.querySelector('[data-automation-id="adf-toolbar-fullscreen"]')).toBeDefined();
