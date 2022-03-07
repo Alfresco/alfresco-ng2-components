@@ -58,7 +58,7 @@ describe('ErrorWidgetComponent', () => {
     it('should set subscriptAnimationState value', () => {
         widget.ngOnChanges(errorChanges);
 
-        expect(widget._subscriptAnimationState).toEqual('enter');
+        expect(widget.subscriptAnimationState).toEqual('enter');
     });
 
     it('should check proper error message', async () => {
