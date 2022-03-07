@@ -37,6 +37,10 @@ env:
         - IDENTITY_ADMIN_EMAIL=$E2E_ADMIN_EMAIL_IDENTITY
         - IDENTITY_ADMIN_PASSWORD=$E2E_ADMIN_PASSWORD_IDENTITY
         - URL_HOST_ADF="http://localhost:4200"
+        #PLAYWRIGHT VARIABLES
+        - PLAYWRIGHT_WORKERS=2
+        - PLAYWRIGHT_STORYBOOK_E2E_HOST=http://localhost
+        - PLAYWRIGHT_STORYBOOK_E2E_PORT=4400
 
 branches:
   only:
@@ -60,6 +64,8 @@ stages:
   - name: "Unit test Lib"
     if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
+    if: type = pull_request || (type = cron || type = api)
+  - name: "Storybook Playwright Tests"
     if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch = master
@@ -167,6 +173,15 @@ jobs:
           script:
               - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
               - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
+
+        - stage: "Storybook Playwright Tests"
+          name: "Process Cloud"
+          before_script: ./scripts/ci/jobs/dbpci-before-playwright
+          script: ./scripts/travis/storybook-testing/storybook-test.sh
+          workspaces:
+            use:
+              - built_libs_cache
+              - built_demo_shell_cache
 
         - stage: "e2e Test"
           name: "Core"
