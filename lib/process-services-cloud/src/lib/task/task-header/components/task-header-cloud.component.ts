@@ -34,7 +34,6 @@ import {
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -87,9 +86,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService,
-        private route: ActivatedRoute,
-        private router: Router
+        private cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
@@ -241,10 +238,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     value: this.processInstanceId,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
                     key: 'processInstanceId',
-                    clickable: true,
-                    clickCallBack: () => {
-                        this.redirectToProcessDetails();
-                    }
+                    clickable: true
                 }
             ),
             new CardViewTextItemModel(
@@ -351,14 +345,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    private redirectToProcessDetails() {
-        if (this.processInstanceId) {
-            this.router.navigate([`../../process-details-cloud`],
-                { queryParams: { processInstanceId: this.processInstanceId }, relativeTo: this.route }
-            );
-        }
     }
 
     ngOnDestroy() {
