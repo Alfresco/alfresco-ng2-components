@@ -54,7 +54,7 @@ export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     priority: 1,
     category: null,
     processDefinitionId: null,
-    processInstanceId: null,
+    processInstanceId: '67c4z2a8f-01f3-11e9-8e36-0a58646002ad',
     status: 'ASSIGNED',
     owner: 'ownerUser',
     parentTaskId: null,
