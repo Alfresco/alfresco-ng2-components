@@ -78,6 +78,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     dateLocale: string;
     displayDateClearAction = false;
     isLoading = true;
+    processInstanceId: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -129,6 +130,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 this.taskDetails = taskDetails;
                 this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
                 this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
+                this.processInstanceId = taskDetails.processInstanceId;
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
                 } else {
@@ -228,6 +230,15 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ID',
                     value: this.taskDetails.id,
                     key: 'id'
+                }
+            ),
+            new CardViewTextItemModel(
+                {
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID',
+                    value: this.processInstanceId,
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
+                    key: 'processInstanceId',
+                    clickable: true
                 }
             ),
             new CardViewTextItemModel(

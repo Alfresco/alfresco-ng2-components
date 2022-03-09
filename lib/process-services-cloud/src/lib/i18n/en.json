@@ -330,6 +330,8 @@
       "CREATED": "Created",
       "END_DATE": "End date",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "Process instance id",
+      "PROCESS_INSTANCE_ID_DEFAULT": "No process instance id",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
       "FORM_NAME": "Form Name",
