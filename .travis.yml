@@ -65,8 +65,6 @@ stages:
     if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
     if: type = pull_request || (type = cron || type = api)
-  - name: "Storybook Playwright Tests"
-    if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch = master
   - name: "Deprecate develop builds"
@@ -160,6 +158,15 @@ jobs:
           workspaces:
             use: built_libs_cache
 
+        - stage: "Unit test Lib"
+          name: "Process Cloud"
+          before_script: ./scripts/ci/jobs/dbpci-before-playwright
+          script: ./scripts/travis/storybook-testing/storybook-test.sh
+          workspaces:
+            use:
+              - built_libs_cache
+              - built_demo_shell_cache
+
         - stage: "Trigger Alpha ADF child build"
           name: "Trigger Alpha ADF child build"
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
@@ -173,15 +180,6 @@ jobs:
           script:
               - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
               - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
-
-        - stage: "Storybook Playwright Tests"
-          name: "Process Cloud"
-          before_script: ./scripts/ci/jobs/dbpci-before-playwright
-          script: ./scripts/travis/storybook-testing/storybook-test.sh
-          workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
 
         - stage: "e2e Test"
           name: "Core"
