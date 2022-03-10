@@ -60,6 +60,14 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
+
+interface MonolithCoreModuleConfig {
+    legacyAlfrescoApiService: boolean;
+}
+
+const defaultConfig: MonolithCoreModuleConfig = {
+    legacyAlfrescoApiService: true
+};
 @NgModule({
     imports: [
         TranslateModule,
@@ -133,21 +141,20 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot(config: MonolithCoreModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
                 TranslateStore,
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: startupServiceFactory,
-                    deps: [
-                        AlfrescoApiService
-                    ],
-                    multi: true
-                },
+                ...(config.legacyAlfrescoApiService ?
+                    [{
+                        provide: APP_INITIALIZER,
+                        useFactory: startupServiceFactory,
+                        deps: [ AlfrescoApiService ], multi: true }
+                    ] : []
+                ),
                 {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,

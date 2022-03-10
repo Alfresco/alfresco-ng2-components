@@ -28,7 +28,8 @@ import {
     TRANSLATION_PROVIDER,
     DebugAppConfigService,
     CoreModule,
-    CoreAutomationService
+    CoreAutomationService,
+    AppConfigModule
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
@@ -115,6 +116,7 @@ import { setupAppNotifications } from './services/app-notifications-factory';
 import { AppNotificationsService } from './services/app-notifications.service';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { AlfrescoApiModule } from '@alfresco/adf-core/alfresco-api';
+import { OIDCAuthModule } from '@alfresco/adf-core/authentication';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -138,13 +140,15 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
+        // initialNavigation: false needs because of the OIDC package!!!
+        // https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/routing-with-the-hashstrategy.html
+        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy', initialNavigation: false }),
         FormsModule,
         HttpClientModule,
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreModule.forRoot({ legacyAlfrescoApiService: false }),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
@@ -154,6 +158,8 @@ registerLocaleData(localeSv);
         ChartsModule,
         AppCloudSharedModule,
         AlfrescoApiModule,
+        AppConfigModule.forRoot(),
+        OIDCAuthModule,
         MonacoEditorModule.forRoot()
     ],
     declarations: [

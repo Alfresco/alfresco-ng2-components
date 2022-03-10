@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-export interface OauthConfigModel {
-    handler?: 'legacy' | 'oidc';
-    host: string;
-    clientId: string;
-    scope: string;
-    implicitFlow: boolean;
-    codeFlow?: boolean;
-    redirectUri: string;
-    silentLogin?: boolean;
-    secret?: string;
-    redirectUriLogout?: string;
-    redirectSilentIframeUri?: string;
-    refreshTokenTimeout?: number;
-    publicUrls: string[];
+import { StorageService } from '../services/storage.service';
+import { AppConfigService, AppConfigValues } from './app-config.service';
+
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+    return () => appConfigService.load().then(() => {
+        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+    });
 }

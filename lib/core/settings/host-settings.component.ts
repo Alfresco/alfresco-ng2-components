@@ -149,6 +149,8 @@ export class HostSettingsComponent implements OnInit {
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
             implicitFlow: oauth.implicitFlow,
+            codeFlow: oauth.codeFlow,
+            handler: oauth.handler,
             publicUrls: [oauth.publicUrls]
         });
     }
@@ -263,8 +265,16 @@ export class HostSettingsComponent implements OnInit {
         return this.oauthConfig.get('secretId') as FormControl;
     }
 
+    get handler(): FormControl {
+        return this.oauthConfig.get('handler') as FormControl;
+    }
+
     get implicitFlow(): FormControl {
         return this.oauthConfig.get('implicitFlow') as FormControl;
+    }
+
+    get codeFlow(): FormControl {
+        return this.oauthConfig.get('codeFlow') as FormControl;
     }
 
     get silentLogin(): FormControl {

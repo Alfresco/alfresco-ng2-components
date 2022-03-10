@@ -17,12 +17,12 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
-    AuthenticationService,
-    AlfrescoApiService,
+    // AuthenticationService,
+    // AlfrescoApiService,
     PageTitleService
 } from '@alfresco/adf-core';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+// import { Router } from '@angular/router';
+// import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-root',
@@ -33,30 +33,31 @@ import { MatDialog } from '@angular/material/dialog';
 export class AppComponent implements OnInit {
 
     constructor(private pageTitleService: PageTitleService,
-                private alfrescoApiService: AlfrescoApiService,
-                private authenticationService: AuthenticationService,
-                private router: Router,
-                private dialogRef: MatDialog) {
+                // private alfrescoApiService: AlfrescoApiService,
+                // private authenticationService: AuthenticationService,
+                // private router: Router,
+                // private dialogRef: MatDialog
+    ) {
 
     }
 
     ngOnInit() {
         this.pageTitleService.setTitle('title');
 
-        this.alfrescoApiService.getInstance().on('error', (error) => {
-            if (error.status === 401) {
-                if (!this.authenticationService.isLoggedIn()) {
-                    this.dialogRef.closeAll();
-                    this.router.navigate(['/login']);
-                }
-            }
+        // this.alfrescoApiService.getInstance().on('error', (error) => {
+        //     if (error.status === 401) {
+        //         if (!this.authenticationService.isLoggedIn()) {
+        //             this.dialogRef.closeAll();
+        //             this.router.navigate(['/login']);
+        //         }
+        //     }
 
-            if (error.status === 507) {
-                if (!this.authenticationService.isLoggedIn()) {
-                    this.dialogRef.closeAll();
-                    this.router.navigate(['error/507']);
-                }
-            }
-        });
+        //     if (error.status === 507) {
+        //         if (!this.authenticationService.isLoggedIn()) {
+        //             this.dialogRef.closeAll();
+        //             this.router.navigate(['error/507']);
+        //         }
+        //     }
+        // });
     }
 }

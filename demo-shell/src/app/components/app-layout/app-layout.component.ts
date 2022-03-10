@@ -16,7 +16,12 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
+import {
+    UserPreferencesService,
+    AppConfigService,
+    // AlfrescoApiService,
+    UserPreferenceValues
+} from '@alfresco/adf-core';
 import { HeaderDataService } from '../header-data/header-data.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -169,11 +174,11 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     constructor(
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
-        private alfrescoApiService: AlfrescoApiService,
+        // private alfrescoApiService: AlfrescoApiService,
         private headerService: HeaderDataService) {
-        if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
-            this.enableRedirect = false;
-        }
+        // if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
+        //     this.enableRedirect = false;
+        // }
     }
 
     setState(state) {

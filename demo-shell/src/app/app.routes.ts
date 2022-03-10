@@ -56,6 +56,7 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { OIDCAuthGuard } from '@alfresco/adf-core/authentication';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -106,7 +107,7 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OIDCAuthGuard],
         children: [
             {
                 path: '',

@@ -21,8 +21,9 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
-import { StorageService } from '../../services/storage.service';
-import { AlfrescoApiV2Service } from './alfresco-api-v2.service';
+import { AlfrescoApiV2 } from './alfresco-api-v2';
+import { LegacyAlfrescoApiServiceFacade } from './legacy-alfresco-api-service.facade';
+import { take } from 'rxjs/operators';
 
 export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiV2LoaderService) {
     return () => angularAlfrescoApiService.load();
@@ -35,13 +36,12 @@ export class AlfrescoApiV2LoaderService {
 
     constructor(
         protected appConfig: AppConfigService,
-        protected storageService: StorageService,
-        private alfrescoApiV2Service?: AlfrescoApiV2Service) {
+        private legacyAlfrescoApiServiceFacade: LegacyAlfrescoApiServiceFacade,
+        private alfrescoApiV2Service?: AlfrescoApiV2) {
     }
 
     load(): Promise<any> {
-        return this.appConfig.load().then(() => {
-            this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+        return this.appConfig.onLoad.pipe(take(1)).toPromise().then(() => {
             this.initAngularAlfrescoApi();
         });
     }
@@ -67,5 +67,6 @@ export class AlfrescoApiV2LoaderService {
         });
 
         this.alfrescoApiV2Service.init(config);
+        this.legacyAlfrescoApiServiceFacade.init();
     }
 }

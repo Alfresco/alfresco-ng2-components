@@ -18,29 +18,43 @@
 /*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
 
 import { Injectable } from '@angular/core';
-import {  DiscoveryApi, NodesApi } from '@alfresco/js-api';
-import { AlfrescoApiV2Service } from './alfresco-api-v2.service';
+import {  DiscoveryApi, NodesApi, PeopleApi, UserProfileApi } from '@alfresco/js-api';
+import { AlfrescoApiV2 } from './alfresco-api-v2';
 
 @Injectable()
 export class AlfrescoApiClientFactory {
-    // Here we should all the APIs from js-api
+    // Here we should have all the APIs from js-api
     private discoveryApi: DiscoveryApi = null;
     private nodesApi: NodesApi = null;
+    private peopleApi: PeopleApi = null;
+    private profileApi: UserProfileApi = null;
 
     constructor(
-        private angularAlfrescoApi?: AlfrescoApiV2Service) {
+        private angularAlfrescoApi?: AlfrescoApiV2) {
     }
 
-    getDiscoveryApi() {
+    getDiscoveryApi(): DiscoveryApi {
         // DiscoveryApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
         this.discoveryApi = this.discoveryApi ?? new DiscoveryApi(this.angularAlfrescoApi as any);
         return this.discoveryApi;
     }
 
-    getNodesApi () {
+    getNodesApi(): NodesApi {
         // NodesApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
         this.nodesApi = this.nodesApi ?? new NodesApi(this.angularAlfrescoApi as any);
         return this.nodesApi;
+    }
+
+    getPeopleApi(): PeopleApi {
+        // PeopleApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
+        this.peopleApi = this.peopleApi ?? new PeopleApi(this.angularAlfrescoApi as any);
+        return this.peopleApi;
+    }
+
+    getProfileApi(): UserProfileApi {
+        // PeopleApi needs to rely on a lot thinner interface: JsApiHttpClient; For now: "as any"
+        this.profileApi = this.profileApi ?? new UserProfileApi(this.angularAlfrescoApi as any);
+        return this.profileApi;
     }
 
     getSearchApi() {

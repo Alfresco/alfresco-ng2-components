@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-export interface OauthConfigModel {
-    handler?: 'legacy' | 'oidc';
-    host: string;
-    clientId: string;
-    scope: string;
-    implicitFlow: boolean;
-    codeFlow?: boolean;
-    redirectUri: string;
-    silentLogin?: boolean;
-    secret?: string;
-    redirectUriLogout?: string;
-    redirectSilentIframeUri?: string;
-    refreshTokenTimeout?: number;
-    publicUrls: string[];
-}
+export { OIDCAuthModule } from './oidc/oidc.module';
+export { OIDCAuthGuard } from './oidc/oidc-auth.guard';
+export { BaseAuthenticationService } from './base-authentication.service';
+export { ADFAuthenticationService } from './authentication.interface';

@@ -103,6 +103,15 @@
                         </mat-error>
                     </mat-form-field>
 
+                    <mat-form-field class="adf-full-width">
+                        <mat-label>OAUTH2 Handler (legacy | oidc)</mat-label>
+                        <input matInput name="handler" id="handler" formControlName="handler"
+                               placeholder="legacy">
+                        <mat-error *ngIf="handler.hasError('required')">
+                            Error...
+                        </mat-error>
+                    </mat-form-field>
+
                     <label for="silentLogin">{{ 'CORE.HOST_SETTINGS.SILENT'| translate }}</label>
                     <mat-slide-toggle class="adf-full-width" name="silentLogin" [color]="'primary'"
                                       formControlName="silentLogin">
@@ -111,6 +120,11 @@
                     <label for="implicitFlow">{{ 'CORE.HOST_SETTINGS.IMPLICIT-FLOW'| translate }}</label>
                     <mat-slide-toggle class="adf-full-width" name="implicitFlow" [color]="'primary'"
                                       formControlName="implicitFlow">
+                    </mat-slide-toggle>
+
+                    <label for="implicitFlow">Auth code flow</label>
+                    <mat-slide-toggle class="adf-full-width" name="codeFlow" [color]="'primary'"
+                                      formControlName="codeFlow">
                     </mat-slide-toggle>
 
 

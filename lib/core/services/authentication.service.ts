@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, Observer, ReplaySubject, forkJoin } from 'rxjs';
+import { Observable, from, throwError, ReplaySubject, forkJoin } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -24,9 +24,11 @@ import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
+import { BaseAuthenticationService } from '../authentication/base-authentication.service';
+import { ADFAuthenticationService } from '../authentication/authentication.interface';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -34,10 +36,9 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService extends BaseAuthenticationService implements ADFAuthenticationService {
     private redirectUrl: RedirectionModel = null;
 
-    private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
     /**
      * Emits login event
      */
@@ -66,15 +67,16 @@ export class AuthenticationService {
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
         private logService: LogService) {
-        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.onLogin.next();
-            });
+            super();
+            this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
+                this.alfrescoApi.getInstance().reply('logged-in', () => {
+                    this.onLogin.next();
+                });
 
-            if (this.isKerberosEnabled()) {
-                this.loadUserDetails();
-            }
-        });
+                if (this.isKerberosEnabled()) {
+                    this.loadUserDetails();
+                }
+            });
     }
 
     private loadUserDetails() {
@@ -127,7 +129,20 @@ export class AuthenticationService {
      * @returns True if supported, false otherwise
      */
     isOauth(): boolean {
-        return this.alfrescoApi.getInstance().isOauthConfiguration();
+        return this?.alfrescoApi?.getInstance()?.isOauthConfiguration() || this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
+    }
+
+    oidcHandlerEnabled(): boolean {
+        return false;
+    }
+
+    isImplicitFlow(): boolean {
+        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        return !!oauth2?.implicitFlow;
+    }
+
+    isAuthCodeFlow(): boolean {
+        return false;
     }
 
     isPublicUrl(): boolean {
@@ -140,7 +155,8 @@ export class AuthenticationService {
      * @returns True if supported, false otherwise
      */
     isECMProvider(): boolean {
-        return this.alfrescoApi.getInstance().isEcmConfiguration();
+        return this?.alfrescoApi?.getInstance()?.isEcmConfiguration() ||
+            this.appConfig.get<string>(AppConfigValues.PROVIDERS).toUpperCase() === 'ECM';
     }
 
     /**
@@ -149,7 +165,8 @@ export class AuthenticationService {
      * @returns True if supported, false otherwise
      */
     isBPMProvider(): boolean {
-        return this.alfrescoApi.getInstance().isBpmConfiguration();
+        return this?.alfrescoApi?.getInstance()?.isBpmConfiguration() ||
+        this.appConfig.get<string>(AppConfigValues.PROVIDERS).toUpperCase() === 'BPM';
     }
 
     /**
@@ -158,7 +175,8 @@ export class AuthenticationService {
      * @returns True if both are supported, false otherwise
      */
     isALLProvider(): boolean {
-        return this.alfrescoApi.getInstance().isEcmBpmConfiguration();
+        return this?.alfrescoApi?.getInstance()?.isEcmBpmConfiguration() ||
+        this.appConfig.get<string>(AppConfigValues.PROVIDERS).toUpperCase() === 'ALL';
     }
 
     /**
@@ -365,43 +383,11 @@ export class AuthenticationService {
     }
 
     /**
-     * Gets the set of URLs that the token bearer is excluded from.
-     *
-     * @returns Array of URL strings
-     */
-    getBearerExcludedUrls(): string[] {
-        return this.bearerExcludedUrls;
-    }
-
-    /**
      * Gets the auth token.
      *
      * @returns Auth token string
      */
     getToken(): string {
         return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
-    }
-
-    /**
-     * Adds the auth token to an HTTP header using the 'bearer' scheme.
-     *
-     * @param headersArg Header that will receive the token
-     * @returns The new header with the token added
-     */
-    addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
-        return new Observable((observer: Observer<any>) => {
-            let headers = headersArg;
-            if (!headers) {
-                headers = new HttpHeaders();
-            }
-            try {
-                const token: string = this.getToken();
-                headers = headers.set('Authorization', 'bearer ' + token);
-                observer.next(headers);
-                observer.complete();
-            } catch (error) {
-                observer.error(error);
-            }
-        });
     }
 }

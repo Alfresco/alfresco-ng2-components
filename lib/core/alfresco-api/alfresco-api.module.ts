@@ -19,10 +19,12 @@
 
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AlfrescoApiV2Service } from './services/alfresco-api-v2.service';
+import { AlfrescoApiV2 } from './services/alfresco-api-v2';
 import { AlfrescoApiClientFactory } from './services/alfresco-api-client.factory';
 import { AlfrescoApiV2LoaderService, createAlfrescoApiV2Service } from './services/alfresco-api-v2-loader.service';
 import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
+import { LegacyAlfrescoApiServiceFacade } from './services/legacy-alfresco-api-service.facade';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @NgModule({
     imports: [
@@ -33,8 +35,9 @@ import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
         })
     ],
     providers: [
-        AlfrescoApiV2Service,
+        AlfrescoApiV2,
         AlfrescoApiV2LoaderService,
+        LegacyAlfrescoApiServiceFacade,
         AlfrescoApiClientFactory,
         {
             provide: APP_INITIALIZER,
@@ -47,6 +50,11 @@ import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
         {
             provide: HTTP_INTERCEPTORS, useClass:
             AuthBearerInterceptor, multi: true
+        },
+        // Reproviding legacy like service for older code
+        {
+            provide: AlfrescoApiService,
+            useExisting: LegacyAlfrescoApiServiceFacade
         }
     ]
 })
