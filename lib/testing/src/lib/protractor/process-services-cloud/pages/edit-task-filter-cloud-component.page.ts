@@ -36,7 +36,6 @@ export class EditTaskFilterCloudComponentPage {
     taskName = $('input[data-automation-id="adf-cloud-edit-task-property-taskName"]');
     id = $('input[data-automation-id="adf-cloud-edit-task-property-taskId"]');
     processDefinitionId = $('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]');
-    processDefinitionName = $('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]');
     processInstanceId = $('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]');
     lastModifiedFrom = $('input[data-placeholder="LastModifiedFrom"]');
     lastModifiedTo = $('input[data-placeholder="LastModifiedTo"]');
@@ -54,7 +53,7 @@ export class EditTaskFilterCloudComponentPage {
     orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
     completedDateDropdown = new DropdownPage($(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
     assignmentDropdown = new DropdownPage($(`.adf-task-assignment-filter`));
-    processDefinitionNameDropdown = new DropdownPage(this.processDefinitionName);
+    processDefinitionNameDropdown = new DropdownPage($('mat-select[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]'));
     createdDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`));
     createdDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`));
     dueDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
