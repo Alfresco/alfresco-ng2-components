@@ -8,7 +8,7 @@ These release notes provide information about the **4.9.0 release** of the Alfre
 
 This is the latest **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
 
-The release can be found on GitHub at [this location](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/4.8.0).
+The release can be found on GitHub at [this location](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/4.9.0).
 
 ## Contents
 
