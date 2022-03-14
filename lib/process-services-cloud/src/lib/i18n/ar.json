@@ -330,6 +330,8 @@
       "CREATED": "تم الإنشاء",
       "END_DATE": "تاريخ الانتهاء",
       "ID": "المعرف",
+      "PROCESS_INSTANCE_ID": "معرّف مثيل العملية",
+      "PROCESS_INSTANCE_ID_DEFAULT": "لا يوجد معرّف لمثيل العملية",
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "FORM_NAME": "اسم النموذج",

@@ -330,6 +330,8 @@
       "CREATED": "Utworzono",
       "END_DATE": "Data zakończenia",
       "ID": "Identyfikator",
+      "PROCESS_INSTANCE_ID": "Identyfikator instancji procesu",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Brak identyfikatora instancji procesu",
       "DESCRIPTION": "Opis",
       "DESCRIPTION_DEFAULT": "Brak opisu",
       "FORM_NAME": "Nazwa formularza",

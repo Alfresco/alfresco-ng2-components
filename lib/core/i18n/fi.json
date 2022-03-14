@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Lataa",
       "REMOVE_FILE": "Poista",
       "UPLOAD": "Lataa",
-      "REQUIRED": "*Pakollinen",
+      "REQUIRED": "Pakollinen kenttä",
+      "REST_API_FAILED": "Palvelin '{{ hostname }}' ei ole tavoitettavissa",
       "FILE_NAME": "Tiedostonimi",
       "NO_FILE_ATTACHED": "Ei liitettyä tiedostoa",
       "VALIDATOR": {

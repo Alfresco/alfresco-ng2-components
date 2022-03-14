@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Скачать",
       "REMOVE_FILE": "Удалить",
       "UPLOAD": "Загрузить",
-      "REQUIRED": "*Обязательное поле",
+      "REQUIRED": "Обязательное поле",
+      "REST_API_FAILED": "Сервер '{{ hostname }}' недоступен",
       "FILE_NAME": "Имя файла",
       "NO_FILE_ATTACHED": "Вложенные файлы отсутствуют",
       "VALIDATOR": {

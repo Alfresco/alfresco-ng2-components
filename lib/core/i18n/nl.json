@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Downloaden",
       "REMOVE_FILE": "Verwijderen",
       "UPLOAD": "Uploaden",
-      "REQUIRED": "*Vereist",
+      "REQUIRED": "Veld vereist",
+      "REST_API_FAILED": "De server '{{ hostname }}' is niet bereikbaar",
       "FILE_NAME": "Bestandsnaam",
       "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
