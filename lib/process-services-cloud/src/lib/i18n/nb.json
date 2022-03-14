@@ -330,6 +330,8 @@
       "CREATED": "Opprettet",
       "END_DATE": "Sluttdato",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "Prosesstilfelle-ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Ikke Prosesstilfelle-ID",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "FORM_NAME": "Skjemaets navn",

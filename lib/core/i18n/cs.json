@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Stáhnout",
       "REMOVE_FILE": "Odstranit",
       "UPLOAD": "Odeslat",
-      "REQUIRED": "*Požadováno",
+      "REQUIRED": "Povinné pole",
+      "REST_API_FAILED": "Server {{ hostname }} není dosažitelný",
       "FILE_NAME": "Název souboru",
       "NO_FILE_ATTACHED": "Není připojen žádný soubor",
       "VALIDATOR": {

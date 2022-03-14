@@ -302,7 +302,7 @@
       "INVALID_PATTERN": "パターン {{pattern}} に従う必要があります",
       "INVALID_MIN_LENGTH": "{{requiredLength}} 文字以上で入力する必要があります",
       "INVALID_MAX_LENGTH": "文字数の上限を超えています。{{requiredLength}} 文字以内で入力してください",
-      "REQUIRED": "必須フィールドです"
+      "REQUIRED": "これは必須フィールドです"
     }
   },
   "ADF_CLOUD_TASK_HEADER": {
@@ -330,6 +330,8 @@
       "CREATED": "作成日",
       "END_DATE": "終了日",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "プロセスインスタンス IDなし",
       "DESCRIPTION": "説明",
       "DESCRIPTION_DEFAULT": "説明なし",
       "FORM_NAME": "フォームの名前",

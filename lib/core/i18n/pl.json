@@ -41,7 +41,8 @@
       "DOWNLOAD_FILE": "Pobierz",
       "REMOVE_FILE": "Usuń",
       "UPLOAD": "Prześlij",
-      "REQUIRED": "*Wymagane",
+      "REQUIRED": "Pole wymagane",
+      "REST_API_FAILED": "Serwer '{{ hostname }}' jest nieosiągalny",
       "FILE_NAME": "Nazwa pliku",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {

@@ -330,6 +330,8 @@
       "CREATED": "Skapad",
       "END_DATE": "Slutdatum",
       "ID": "ID",
+      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Ingen processinstans-ID",
       "DESCRIPTION": "Beskrivning",
       "DESCRIPTION_DEFAULT": "Ingen beskrivning",
       "FORM_NAME": "Formulärnamn",
