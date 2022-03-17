@@ -9,8 +9,8 @@ const HOST = process.env.URL_HOST_ADF;
 
 const LOG = process.env.LOG;
 
-const HOST_ECM = process.env.PROXY_HOST_ADF || HOST || 'ecm';
-const HOST_BPM = process.env.PROXY_HOST_ADF || HOST || 'bpm';
+const HOST_ECM = process.env.PROXY_HOST_ECM || HOST || 'ecm';
+const HOST_BPM = process.env.PROXY_HOST_BPM || HOST || 'bpm';
 
 const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'ALL';
 const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'BASIC';
