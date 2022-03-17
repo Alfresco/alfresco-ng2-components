@@ -211,6 +211,14 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     ngAfterContentInit() {
         this.createDatatableSchema();
+
+        this.columnList?.columns.changes.subscribe(() => {
+            debugger;
+            // this.createDatatableSchema();
+            this.columns = this.mergeJsonAndHtmlSchema();
+            // this.dataTable.setTableSchema();
+            // this.createDatatableSchema();
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

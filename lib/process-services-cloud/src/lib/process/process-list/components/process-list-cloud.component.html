@@ -17,6 +17,7 @@
         (row-unselect)="onRowUnselect($any($event))"
         (row-keyup)="onRowKeyUp($any($event))"
         (sorting-changed)="onSortingChanged($any($event))">
+
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner
@@ -28,6 +29,7 @@
                 <ng-content select="adf-custom-loading-content-template"></ng-content>
             </ng-template>
         </adf-loading-content-template>
+
         <adf-no-content-template>
             <ng-template>
                 <adf-empty-content *ngIf="!emptyCustomContent"

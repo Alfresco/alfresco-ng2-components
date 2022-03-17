@@ -12,6 +12,7 @@
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (rowClick)="onRowClick($event)"
     (row-keyup)="onRowKeyUp($any($event))">
+
     <adf-loading-content-template>
         <ng-template>
             <mat-progress-spinner
@@ -20,7 +21,9 @@
                 color="primary"
                 mode="indeterminate">
             </mat-progress-spinner>
+
             <ng-content select="adf-custom-loading-content-template"></ng-content>
+
         </ng-template>
     </adf-loading-content-template>
     <adf-no-content-template>
@@ -30,7 +33,9 @@
                     [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
                     [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
                 </adf-empty-content>
+
             <ng-content select="adf-custom-empty-content-template"></ng-content>
+
         </ng-template>
     </adf-no-content-template>
 </adf-datatable>

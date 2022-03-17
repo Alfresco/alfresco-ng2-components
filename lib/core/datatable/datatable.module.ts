@@ -46,6 +46,7 @@ import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DataColumnModule } from '../data-column/data-column.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { DataColumnModule } from '../data-column/data-column.module';
         ContextMenuModule,
         PipeModule,
         DirectiveModule,
-        ClipboardModule
+        ClipboardModule,
+        DragDropModule
     ],
     declarations: [
         DataTableComponent,

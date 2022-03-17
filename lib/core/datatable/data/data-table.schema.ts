@@ -36,9 +36,12 @@ export abstract class DataTableSchema {
 
     private layoutPresets = {};
 
-    constructor(private appConfigService: AppConfigService,
-                protected presetKey: string,
-                protected presetsModel: any) { }
+    constructor(
+        private appConfigService: AppConfigService,
+        protected presetKey: string,
+        protected presetsModel: any
+    ) {
+    }
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
@@ -57,10 +60,20 @@ export abstract class DataTableSchema {
     }
 
     public mergeJsonAndHtmlSchema(): any {
-        let customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml(this.columnList));
+        debugger;
+
+        const configSchemaColumns = this.getSchemaFromConfig(this.presetColumn);
+        const htmlSchemaColumns = this.getSchemaFromHtml(this.columnList);
+
+        let customSchemaColumns = [
+            ...configSchemaColumns,
+            ...htmlSchemaColumns
+        ];
+
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
+
         return customSchemaColumns;
     }
 
