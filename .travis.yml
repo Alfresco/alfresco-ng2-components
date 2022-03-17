@@ -30,7 +30,8 @@ env:
         - REDIRECT_URI=/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
-        - PROXY_HOST_ADF=$E2E_HOST
+        - PROXY_HOST_ECM=$E2E_HOST
+        - PROXY_HOST_BPM=$E2E_HOST
         - HOST_SSO=$HOST_SSO
         - USERNAME_ADF=$E2E_USERNAME
         - PASSWORD_ADF=$E2E_PASSWORD
@@ -378,7 +379,7 @@ jobs:
               - FOLDER="process-services-cloud/form-field"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - PROXY_HOST_ADF=$E2E_HOST_APA
+              - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
           name: "Process Cloud : People"
@@ -396,7 +397,7 @@ jobs:
               - FOLDER="process-services-cloud/people"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - PROXY_HOST_ADF=$E2E_HOST_APA
+              - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
           name: "Process Cloud : Process"
@@ -414,7 +415,7 @@ jobs:
               - FOLDER="process-services-cloud/process"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - PROXY_HOST_ADF=$E2E_HOST_APA
+              - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
           name: "Process Cloud : Start Task"
@@ -432,7 +433,7 @@ jobs:
               - FOLDER="process-services-cloud/start-task"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - PROXY_HOST_ADF=$E2E_HOST_APA
+              - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
           name: "Process Cloud : Tasks List"
@@ -450,7 +451,7 @@ jobs:
              - FOLDER="process-services-cloud/task-list"
              - PROVIDER="ALL"
              - AUTH_TYPE="OAUTH"
-             - PROXY_HOST_ADF=$E2E_HOST_APA
+             - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: Check bundle
           script:
