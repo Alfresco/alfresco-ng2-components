@@ -41,6 +41,7 @@
                 cdkDrag
                 (cdkDragMoved)="dragColumnMoved($event)"
                 (cdkDragStarted)="dragColumnStarted(i)"
+                (cdkDragEnded)="dragColumnEnded()"
                 cdkDragBoundary="adf-datatable-row"
                 cdkDragLockAxis="x"
 
@@ -65,14 +66,16 @@
 
                 <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
 
-                <div class="example-handle" cdkDragHandle>
+                <!-- <div class="example-handle" cdkDragHandle>
                     <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
                     <path d="M0 0h24v24H0z" fill="none"></path>
                     </svg>
-                </div>
+                </div> -->
 
-                <!-- <ng-container *cdkDragPreview>
+                <!-- <div class="adf-drag-drop-placeholder" *cdkDragPlaceholder></div> -->
+
+                <!-- <div *cdkDragPreview>
                     <div>My column</div>
 
                     <div class="adf-drag-placeholder">
@@ -86,7 +89,7 @@
                             class="adf-drag-placeholder-row-3"
                         >row data</div>
                     </div>
-                </ng-container> -->
+                </div> -->
             </div>
 
             <!-- Actions (right) -->
@@ -166,9 +169,7 @@
 
                 <div *ngFor="let col of data.getColumns(); let i = index"
 
-                    cdkDrag
-                    [cdkDragFreeDragPosition]="getDragPosition(i)"
-                    [class.adf-dragged-cell]="i === dragedIndex"
+                    [style.filter]="i !== dragedIndex && dragedIndex !== -1 ? 'blur(3px)' : 'blur(0)'"
 
                     role="gridcell"
                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"

@@ -236,8 +236,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return index === this.dragedIndex ? this.dragPosition : { x: 0, y: 0 };
     }
 
-    dragColumnStarted(columnIndex: number) {
+    dragColumnStarted(columnIndex: number): void {
         this.dragedIndex = columnIndex;
+    }
+
+    dragColumnEnded(): void {
+        this.dragedIndex = -1;
     }
 
     dragColumnMoved($event: CdkDragMove<any>) {

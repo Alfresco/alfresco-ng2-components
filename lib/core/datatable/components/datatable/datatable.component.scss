@@ -14,6 +14,35 @@ $data-table-cell-min-width: 50px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
+.adf-dragged-cell {
+    border-left: 2px solid grey;
+    border-right: 2px solid grey;
+    z-index: 999;
+    background-color: grey;
+}
+
+.adf-drag-placeholder {
+    position: relative;
+
+    &-row {
+        border: 1px solid grey;
+        min-width: 60px;
+        position: absolute;
+
+        &-1 {
+            top: 20;
+        }
+
+        &-2 {
+            top: 30;
+        }
+
+        &-3 {
+            top: 40;
+        }
+    }
+}
+
 .adf-datatable {
     overflow-y: scroll;
     height: 100%;
@@ -22,33 +51,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         width: 100%;
     }
 
-    .adf-dragged-cell {
-        border-left: 2px solid grey;
-        border-right: 2px solid grey;
-        z-index: 999;
+    .adf-drag-drop-placeholder {
+        box-sizing: border-box;
+        border-radius: 1px;
         background-color: grey;
-    }
-
-    .adf-drag-placeholder {
-        position: relative;
-
-        &-row {
-            border: 1px solid grey;
-            min-width: 60px;
-            position: absolute;
-
-            &-1 {
-                top: 20;
-            }
-
-            &-2 {
-                top: 30;
-            }
-
-            &-3 {
-                top: 40;
-            }
-        }
     }
 }
 
