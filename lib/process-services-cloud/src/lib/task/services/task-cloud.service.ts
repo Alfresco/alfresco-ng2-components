@@ -23,7 +23,14 @@ import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-tas
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task.model';
+import {
+    DEFAULT_TASK_PRIORITIES,
+    TaskPriorityOption,
+    TASK_ASSIGNED_STATE,
+    TASK_CLAIM_PERMISSION,
+    TASK_CREATED_STATE,
+    TASK_RELEASE_PERMISSION
+} from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 
 @Injectable({
@@ -98,7 +105,9 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === TASK_CREATED_STATE;
+        return taskDetails &&
+               taskDetails.status === TASK_CREATED_STATE &&
+               taskDetails.permissions.includes(TASK_CLAIM_PERMISSION);
     }
 
     /**
@@ -109,7 +118,10 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
+        return taskDetails &&
+               taskDetails.status === TASK_ASSIGNED_STATE &&
+               taskDetails.assignee === currentUser &&
+               taskDetails.permissions.includes(TASK_RELEASE_PERMISSION);
     }
 
     /**

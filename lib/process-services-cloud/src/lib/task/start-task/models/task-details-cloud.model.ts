@@ -33,6 +33,7 @@ export interface TaskDetailsCloudModel {
     lastModifiedFrom?: Date;
     owner?: any;
     parentTaskId?: string;
+    permissions?: TaskPermissions[];
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
@@ -56,3 +57,9 @@ export type TaskStatus = |
     'ASSIGNED' |
     'SUSPENDED' |
     'CANCELLED';
+
+export type TaskPermissions = |
+    'VIEW' |
+    'CLAIM' |
+    'RELEASE' |
+    'UPDATE';

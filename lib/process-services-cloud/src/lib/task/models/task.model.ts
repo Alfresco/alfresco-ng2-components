@@ -36,3 +36,7 @@ export const DEFAULT_TASK_PRIORITIES: TaskPriorityOption[] = [
 export const TASK_ASSIGNED_STATE = 'ASSIGNED';
 
 export const TASK_CREATED_STATE = 'CREATED';
+
+export const TASK_CLAIM_PERMISSION = 'CLAIM';
+export const TASK_RELEASE_PERMISSION = 'RELEASE';
+export const TASK_VIEW_PERMISSION = 'VIEW';
