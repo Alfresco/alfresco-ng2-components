@@ -49,6 +49,7 @@
                 (cdkDragStarted)="dragColumnStarted(i)"
                 (cdkDragEnded)="dragColumnEnded()"
                 (cdkDragDropped)="dropColumn($event)"
+                [cdkDragDisabled]="disableDragAndDrop"
 
                 [style.border]="dragedIndex === i ? '1px solid black' : ''"
                 (mouseenter)="onMoseOver(i)"
@@ -60,55 +61,47 @@
                 [attr.data-automation-id]="'auto_id_' + col.key"
                 [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                 [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
+
                 (click)="onColumnHeaderClick(col)"
                 (keyup.enter)="onColumnHeaderClick(col)"
+
                 role="columnheader"
                 [attr.tabindex]="isHeaderVisible() ? 0 : null"
                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                 adf-drop-zone dropTarget="header"
                 [dropColumn]="col"
             >
-                 <ng-container *ngIf="!col.header">
-                    <!-- <span
-                        *ngIf="i === hoveredColumnIndex"
-                        style="margin-left: 25px;"></span> -->
-
+                 <div
+                    *ngIf="!col.header"
+                    class="adf-dragged-header-cell"
+                >
                     <span
                         *ngIf="col.title"
                         class="adf-datatable-cell-value">
-                            {{ col.title | translate}}
-                        </span>
+                        {{ col.title | translate}}
+                    </span>
                     <span
                         *ngIf="col.title && col.sortable && dragedIndex !== -1"
                         class="adf-sr-only"
                         aria-live="polite">
                             {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
-                        </span>
+                    </span>
                     <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
-                </ng-container>
+                </div>
 
                 <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
 
-                <div class="example-handle" cdkDragHandle>
-                    <ng-container *ngIf="hoveredColumnIndex === i">
-                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                    </ng-container>
+                <div
+                    *ngIf="!disableDragAndDrop"
+                    cdkDragHandle
+                    class="adf-dragged-header-handle"
+                >
+                    <adf-icon
+                        *ngIf="hoveredColumnIndex === i" value="adf:drag_indicator">
+                    </adf-icon>
                 </div>
 
                 <div class="adf-drag-drop-placeholder" *cdkDragPlaceholder></div>
-
-                <!-- <div *cdkDragPreview class="adf-drag-drop-preview">
-                    <div>{{draggedColumn?.title | translate}}</div>
-                    <div>
-                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                    </div>
-                </div> -->
             </div>
 
             <!-- Actions (right) -->
@@ -186,10 +179,8 @@
                     [style.filter]="i === dragedIndex ? 'blur(3px)' : 'blur(0)'"
                 -->
 
+                <!-- [style.filter]="i !== dragedIndex && dragedIndex !== -1 ? 'blur(3px)' : 'blur(0)'" -->
                 <div *ngFor="let col of data.getColumns(); let i = index"
-
-                    [style.filter]="i !== dragedIndex && dragedIndex !== -1 ? 'blur(3px)' : 'blur(0)'"
-
                     role="gridcell"
                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                     [attr.title]="col.title | translate"

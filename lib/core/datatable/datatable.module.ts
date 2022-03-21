@@ -47,6 +47,7 @@ import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DataColumnModule } from '../data-column/data-column.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { IconModule } from '../../core/icon/icon.module';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         PipeModule,
         DirectiveModule,
         ClipboardModule,
-        DragDropModule
+        DragDropModule,
+        IconModule
     ],
     declarations: [
         DataTableComponent,

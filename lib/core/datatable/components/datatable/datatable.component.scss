@@ -14,24 +14,38 @@ $data-table-cell-min-width: 50px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
-.adf-dragging-header-column {
-    display: flex;
-    align-items: center;
-    background-color: rgb(92, 6, 6);
-    border: 1px solid black;
+// .cdk-drop-list-dragging .cdk-drag {
+//     display: flex;
+//     align-items: center;
+//     background-color: red;
+// }
+
+.cdk-drag-preview {
+    .adf-dragged-header-cell {
+        border-radius: 3px;
+        padding-left: 4px;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        background-color: var(--theme-background-color);
+        font-size: var(--theme-caption-font-size);
+        color: var(--theme-text-fg-color);
+
+        @include mat-elevation-transition;
+        @include mat-overridable-elevation(2);
+    }
 }
 
-.adf-dragged-cell {
-    border-left: 2px solid grey;
-    border-right: 2px solid grey;
-    z-index: 999;
-    background-color: grey;
+.adf-dragged-header-cell {
+    overflow: hidden;
 }
 
-.example-handle {
+.adf-dragged-header-handle {
     position: absolute;
-    top: 20px;
+    top: 0;
+    bottom: 0;
     right: 10px;
+    margin: auto;
     color: #ccc;
     cursor: move;
     width: 24px;
@@ -85,8 +99,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         display: flex;
         flex: 1;
         flex-grow: 1;
-        background: #f0eded;
-        border: dotted 3px #999;
+        background: var(--theme-bg-hover-color);
+        border: dotted 1px #999;
         min-height: 55px;
         transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     }
@@ -399,7 +413,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         color: var(--theme-text-fg-color);
         padding-bottom: 8px;
         box-sizing: border-box;
-        padding-top: 12px !important;
 
         &.adf-sortable {
             @include adf-no-select;
@@ -554,7 +567,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-is-selected {
-        background: var(--adf-datatable-selected-color);
+        background: var(--adf-datatable-drag-placeholde-color);
     }
 
     .adf-datatable-link {

@@ -20,6 +20,7 @@ export * from './components/process-list-cloud.component';
 export * from './models/process-cloud-query-request.model';
 export * from './models/process-cloud-preset.model';
 export * from './models/process-list-sorting.model';
+export * from './models/process-cloud-preferences';
 
 export * from './services/process-list-cloud.service';
 export * from './services/process-task-list-cloud.service';

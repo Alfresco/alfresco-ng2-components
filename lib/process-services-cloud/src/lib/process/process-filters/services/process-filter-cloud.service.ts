@@ -96,6 +96,7 @@ export class ProcessFilterCloudService {
      */
     private createDefaultFilters(appName: string) {
         const key: string = this.prepareKey(appName);
+
         this.preferenceService.getPreferences(appName, key).pipe(
             switchMap((response: any) => {
                 const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];

@@ -2,7 +2,7 @@
         [rows]="rows"
         [columns]="columns"
         [stickyHeader]="stickyHeader"
-        [loading]="isLoading"
+        [loading]="areProcessDefinitionsLoading || showLoadingSpinner"
         [sorting]="formattedSorting"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
@@ -16,7 +16,8 @@
         (row-select)="onRowSelect($any($event))"
         (row-unselect)="onRowUnselect($any($event))"
         (row-keyup)="onRowKeyUp($any($event))"
-        (sorting-changed)="onSortingChanged($any($event))">
+        (sorting-changed)="onSortingChanged($any($event))"
+        (columnOrderChanged)="onColumnOrderChanged($event)">
 
         <adf-loading-content-template>
             <ng-template>

@@ -46,6 +46,10 @@
         --adf-node-selector-base-bold-color: mat-color($foreground, base, 0.65),
         --adf-datatable-cell-link-hover-color: mat-color($accent, 500),
         --adf-datatable-selected-color: mat-color($primary, 100),
+
+        --adf-datatable-drag-placeholde-color: mat-color($primary, 300),
+
+
         --adf-user-info-color: mat-color($primary, 300),
         --adf-comment-list-primary-color: mat-color($primary, 100),
         --adf-comment-list-ripple-color: mat-color($primary, 300),

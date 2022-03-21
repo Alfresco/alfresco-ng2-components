@@ -60,8 +60,6 @@ export abstract class DataTableSchema {
     }
 
     public mergeJsonAndHtmlSchema(): any {
-        debugger;
-
         const configSchemaColumns = this.getSchemaFromConfig(this.presetColumn);
         const htmlSchemaColumns = this.getSchemaFromHtml(this.columnList);
 
