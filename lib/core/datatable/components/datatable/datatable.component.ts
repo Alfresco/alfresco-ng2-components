@@ -40,7 +40,7 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
-import { CdkDragMove } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragMove, moveItemInArray } from '@angular/cdk/drag-drop';
 
 // eslint-disable-next-line no-shadow
 export enum DisplayMode {
@@ -229,14 +229,30 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             .pipe(share());
     }
 
+    // -----------
     dragPosition = { x: 0, y: 0};
     dragedIndex = -1;
+    draggedColumn: DataColumn | undefined;
+
+    hoveredColumnIndex = -1;
+
+    onMoseOver(index: number) {
+        console.log('onMoseOver');
+        this.hoveredColumnIndex = index;
+    }
+
+    onMoseOut() {
+        this.hoveredColumnIndex = -1;
+    }
 
     getDragPosition(index: number) {
         return index === this.dragedIndex ? this.dragPosition : { x: 0, y: 0 };
     }
 
     dragColumnStarted(columnIndex: number): void {
+        const columns = this.data.getColumns();
+        this.draggedColumn = columns[columnIndex];
+
         this.dragedIndex = columnIndex;
     }
 
@@ -244,23 +260,19 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.dragedIndex = -1;
     }
 
+    dropColumn(event: CdkDragDrop<any[]>) {
+        const columns = this.data.getColumns();
+        moveItemInArray(columns, event.previousIndex, event.currentIndex);
+    }
+
     dragColumnMoved($event: CdkDragMove<any>) {
         this.dragPosition = {
             x: $event.source.element.nativeElement.offsetLeft + $event.distance.x,
             y: this.dragPosition.y
         };
-
-        // const { offsetLeft } = $event.source.element.nativeElement;
-        // const { x } = $event.distance;
-        // this.dragPosition = {x: this.dragPosition.x + 5, y: this.dragPosition.y};
-
-        // debugger
-        // console.log($event.source.getFreeDragPosition());
-        // this.dragPosition = $event.source.getFreeDragPosition();
-
-        // this.dragPosition.y = event.pointerPosition.y;
-        // this.dragPosition.x = event.pointerPosition.x;
     }
+
+    // -----------
 
     ngAfterContentInit() {
         if (this.columnList) {

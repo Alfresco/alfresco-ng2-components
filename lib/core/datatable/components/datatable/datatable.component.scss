@@ -14,11 +14,41 @@ $data-table-cell-min-width: 50px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
+.adf-dragging-header-column {
+    display: flex;
+    align-items: center;
+    background-color: rgb(92, 6, 6);
+    border: 1px solid black;
+}
+
 .adf-dragged-cell {
     border-left: 2px solid grey;
     border-right: 2px solid grey;
     z-index: 999;
     background-color: grey;
+}
+
+.example-handle {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    color: #ccc;
+    cursor: move;
+    width: 24px;
+    height: 24px;
+}
+
+.adf-drag-drop-preview {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 50px;
+}
+
+.adf-dragged-column-cell {
+    border: 1px solid black;
+    background-color: red;
 }
 
 .adf-drag-placeholder {
@@ -52,9 +82,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-drag-drop-placeholder {
-        box-sizing: border-box;
-        border-radius: 1px;
-        background-color: grey;
+        display: flex;
+        flex: 1;
+        flex-grow: 1;
+        background: #f0eded;
+        border: dotted 3px #999;
+        min-height: 55px;
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     }
 }
 
