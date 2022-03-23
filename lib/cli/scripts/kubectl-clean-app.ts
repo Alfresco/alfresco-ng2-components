@@ -19,7 +19,7 @@
 
 import * as program from 'commander';
 import moment from 'moment-es6';
-import { AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { logger } from './logger';
 import * as kube from './kube-utils';
 export interface ConfigArgs {
@@ -55,7 +55,7 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
             redirectUri: '/'
         }
     };
-    return new AlfrescoApi(config);
+    return new AlfrescoApi(config as unknown as AlfrescoApiConfig);
 }
 
 async function login(username: string, password: string, alfrescoJsApi: any) {
