@@ -19,7 +19,11 @@
             (row-unselect)="onRowUnselect($any($event))"
             (rowClick)="onRowClick($any($event))"
             (row-keyup)="onRowKeyUp($any($event))"
-            (sorting-changed)="onSortingChanged($any($event))">
+            (sorting-changed)="onSortingChanged($any($event))"
+            (columnOrderChanged)="onColumnOrderChanged($event)">
+
+            <ng-content></ng-content>
+
             <adf-loading-content-template>
                 <ng-template>
                     <!-- Add your custom loading template here -->

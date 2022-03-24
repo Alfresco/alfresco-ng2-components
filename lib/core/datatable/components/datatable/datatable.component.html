@@ -17,7 +17,6 @@
         <adf-datatable-row
             cdkDropList
             cdkDropListOrientation="horizontal"
-
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
@@ -35,36 +34,23 @@
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
             </div>
 
-            <!-- cdkDragBoundary="adf-datatable-row" -->
-            <!-- [class.adf-dragged-column-cell]="dragedIndex === i" -->
-            <!-- [style.background-color]="i === dragedIndex ? 'red' : 'white'" -->
-            <!-- (onmouseleave)="onMoseOut()" -->
             <div
                 *ngFor="let col of data.getColumns(); let i = index"
-
                 cdkDrag
                 cdkDragBoundary="adf-datatable-row"
                 cdkDragLockAxis="x"
-                (cdkDragMoved)="dragColumnMoved($event)"
-                (cdkDragStarted)="dragColumnStarted(i)"
-                (cdkDragEnded)="dragColumnEnded()"
-                (cdkDragDropped)="dropColumn($event)"
+                (cdkDragStarted)="dragHeaderColumnStarted(i)"
+                (cdkDragDropped)="dropHeaderColumn($event)"
                 [cdkDragDisabled]="disableDragAndDrop"
-
-                [style.border]="dragedIndex === i ? '1px solid black' : ''"
-                (mouseenter)="onMoseOver(i)"
-                (mouseleave)="onMoseOut()"
-
-
+                (mouseenter)="hoveredColumnIndex = i"
+                (mouseleave)="hoveredColumnIndex = -1"
                 class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
                 [class.adf-sortable]="col.sortable"
                 [attr.data-automation-id]="'auto_id_' + col.key"
                 [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                 [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
-
                 (click)="onColumnHeaderClick(col)"
                 (keyup.enter)="onColumnHeaderClick(col)"
-
                 role="columnheader"
                 [attr.tabindex]="isHeaderVisible() ? 0 : null"
                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
@@ -81,7 +67,7 @@
                         {{ col.title | translate}}
                     </span>
                     <span
-                        *ngIf="col.title && col.sortable && dragedIndex !== -1"
+                        *ngIf="col.title && col.sortable && !!draggedHeaderColumn"
                         class="adf-sr-only"
                         aria-live="polite">
                             {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}

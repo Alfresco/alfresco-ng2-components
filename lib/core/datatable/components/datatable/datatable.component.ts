@@ -209,6 +209,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
 
+    draggedHeaderColumn: DataColumn | undefined;
+    hoveredColumnIndex = -1;
+
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
 
@@ -247,51 +250,18 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.registerDragHandleIcon();
     }
 
-    // -----------
-    dragPosition = { x: 0, y: 0};
-    dragedIndex = -1;
-    draggedColumn: DataColumn | undefined;
-
-    hoveredColumnIndex = -1;
-
-    onMoseOver(index: number): void {
-        this.hoveredColumnIndex = index;
-    }
-
-    onMoseOut(): void {
-        this.hoveredColumnIndex = -1;
-    }
-
-    getDragPosition(index: number) {
-        return index === this.dragedIndex ? this.dragPosition : { x: 0, y: 0 };
-    }
-
-    dragColumnStarted(columnIndex: number): void {
+    dragHeaderColumnStarted(columnIndex: number): void {
         const columns = this.data.getColumns();
-        this.draggedColumn = columns[columnIndex];
-
-        this.dragedIndex = columnIndex;
+        this.draggedHeaderColumn = columns[columnIndex];
     }
 
-    dragColumnEnded(): void {
-        this.dragedIndex = -1;
-    }
-
-    dropColumn(event: CdkDragDrop<any[]>) {
+    dropHeaderColumn(event: CdkDragDrop<unknown>) {
         const columns = this.data.getColumns();
         moveItemInArray(columns, event.previousIndex, event.currentIndex);
 
         this.columnOrderChanged.emit(columns);
+        this.draggedHeaderColumn = undefined;
     }
-
-    dragColumnMoved($event: CdkDragMove<any>) {
-        this.dragPosition = {
-            x: $event.source.element.nativeElement.offsetLeft + $event.distance.x,
-            y: this.dragPosition.y
-        };
-    }
-
-    // -----------
 
     ngAfterContentInit() {
         if (this.columnList) {

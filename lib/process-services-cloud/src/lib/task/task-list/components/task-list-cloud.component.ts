@@ -20,8 +20,9 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -133,10 +134,11 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     candidateGroupId: string = '';
 
     constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
+                @Inject(PROCESS_FILTERS_SERVICE_TOKEN) preferenceService: PreferenceCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, preferenceService);
     }
 
     load(requestNode: TaskQueryCloudRequestModel) {

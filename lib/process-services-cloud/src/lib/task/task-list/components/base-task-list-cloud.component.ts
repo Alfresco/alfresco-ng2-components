@@ -28,6 +28,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -109,7 +111,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = true;
+    isLoading = false;
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };
@@ -120,7 +122,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     constructor(appConfigService: AppConfigService,
                 private taskCloudService: TaskCloudService,
                 private userPreferences: UserPreferencesService,
-                presetKey: string) {
+                presetKey: string,
+                private preferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
@@ -154,6 +157,13 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     ngAfterContentInit() {
         this.createDatatableSchema();
+
+        // debugger
+        console.log(this.columnList);
+
+        this.columnList?.columns.changes.subscribe(() => {
+            this.columns = this.mergeJsonAndHtmlSchema();
+        });
     }
 
     reload() {
@@ -233,6 +243,16 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     onExecuteRowAction(row: DataRowActionEvent) {
         this.executeRowAction.emit(row);
+    }
+
+    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        if (this.appName) {
+            this.preferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnOrder,
+                columnsWithNewOrder.map(column => column.key)
+            );
+        }
     }
 
     setSorting(sortDetail) {
