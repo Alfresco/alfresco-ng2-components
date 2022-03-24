@@ -40,7 +40,7 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
-import { CdkDragDrop, CdkDragMove, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -209,8 +209,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
 
-    draggedHeaderColumn: DataColumn | undefined;
-    hoveredColumnIndex = -1;
+    isDraggingHeaderColumn = false;
+    hoveredHeaderColumnIndex = -1;
 
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
@@ -232,12 +232,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.keyManager.onKeydown(event);
     }
 
-    constructor(
-        private elementRef: ElementRef,
-        differs: IterableDiffers,
-        private matIconRegistry: MatIconRegistry,
-        private sanitizer: DomSanitizer
-    ) {
+    constructor(private elementRef: ElementRef,
+                differs: IterableDiffers,
+                private matIconRegistry: MatIconRegistry,
+                private sanitizer: DomSanitizer) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -248,19 +246,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     ngOnInit(): void {
         this.registerDragHandleIcon();
-    }
-
-    dragHeaderColumnStarted(columnIndex: number): void {
-        const columns = this.data.getColumns();
-        this.draggedHeaderColumn = columns[columnIndex];
-    }
-
-    dropHeaderColumn(event: CdkDragDrop<unknown>) {
-        const columns = this.data.getColumns();
-        moveItemInArray(columns, event.previousIndex, event.currentIndex);
-
-        this.columnOrderChanged.emit(columns);
-        this.draggedHeaderColumn = undefined;
     }
 
     ngAfterContentInit() {
@@ -324,6 +309,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             return false;
         }
         return column.key === this.data.getSorting().key;
+    }
+
+    onDropHeaderColumn(event: CdkDragDrop<unknown>) {
+        const columns = this.data.getColumns();
+        moveItemInArray(columns, event.previousIndex, event.currentIndex);
+
+        this.columnOrderChanged.emit(columns);
+        this.isDraggingHeaderColumn = false;
     }
 
     ngDoCheck() {
@@ -451,7 +444,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         ];
     }
 
-    setTableSchema() {
+    private setTableSchema() {
         const columns = this.getRuntimeColumns();
 
         if (this.data && columns.length > 0) {

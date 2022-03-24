@@ -36,12 +36,9 @@ export abstract class DataTableSchema {
 
     private layoutPresets = {};
 
-    constructor(
-        private appConfigService: AppConfigService,
-        protected presetKey: string,
-        protected presetsModel: any
-    ) {
-    }
+    constructor(private appConfigService: AppConfigService,
+                protected presetKey: string,
+                protected presetsModel: any) { }
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();

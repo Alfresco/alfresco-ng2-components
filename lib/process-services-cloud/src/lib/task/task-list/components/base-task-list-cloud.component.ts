@@ -76,6 +76,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles loading spinner. */
+    @Input()
+    showLoadingSpinner: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -157,9 +161,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     ngAfterContentInit() {
         this.createDatatableSchema();
-
-        // debugger
-        console.log(this.columnList);
 
         this.columnList?.columns.changes.subscribe(() => {
             this.columns = this.mergeJsonAndHtmlSchema();

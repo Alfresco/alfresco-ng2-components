@@ -5,15 +5,8 @@
     [class.adf-datatable-list]="display === 'list'"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
-    [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()"
->
-
-    <div
-        *ngIf="isHeaderVisible()"
-        class="adf-datatable-header"
-        role="rowgroup"
-        [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }"
-    >
+    [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
             cdkDropList
             cdkDropListOrientation="horizontal"
@@ -21,8 +14,7 @@
             [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
             *ngIf="display === 'list'"
-            role="row"
-        >
+            role="row">
 
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
@@ -34,43 +26,30 @@
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
             </div>
 
-            <div
-                *ngFor="let col of data.getColumns(); let i = index"
-                cdkDrag
-                cdkDragBoundary="adf-datatable-row"
-                cdkDragLockAxis="x"
-                (cdkDragStarted)="dragHeaderColumnStarted(i)"
-                (cdkDragDropped)="dropHeaderColumn($event)"
-                [cdkDragDisabled]="disableDragAndDrop"
-                (mouseenter)="hoveredColumnIndex = i"
-                (mouseleave)="hoveredColumnIndex = -1"
-                class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
-                [class.adf-sortable]="col.sortable"
-                [attr.data-automation-id]="'auto_id_' + col.key"
-                [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
-                (click)="onColumnHeaderClick(col)"
-                (keyup.enter)="onColumnHeaderClick(col)"
-                role="columnheader"
-                [attr.tabindex]="isHeaderVisible() ? 0 : null"
-                [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
-                adf-drop-zone dropTarget="header"
-                [dropColumn]="col"
-            >
-                 <div
-                    *ngIf="!col.header"
-                    class="adf-dragged-header-cell"
-                >
-                    <span
-                        *ngIf="col.title"
-                        class="adf-datatable-cell-value">
-                        {{ col.title | translate}}
-                    </span>
-                    <span
-                        *ngIf="col.title && col.sortable && !!draggedHeaderColumn"
-                        class="adf-sr-only"
-                        aria-live="polite">
-                            {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
+            <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
+                 *ngFor="let col of data.getColumns(); let columnIndex = index"
+                 [class.adf-sortable]="col.sortable"
+                 [attr.data-automation-id]="'auto_id_' + col.key"
+                 [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
+                 [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
+                 (click)="onColumnHeaderClick(col)"
+                 (keyup.enter)="onColumnHeaderClick(col)"
+                 role="columnheader"
+                 [attr.tabindex]="isHeaderVisible() ? 0 : null"
+                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
+                 cdkDrag
+                 cdkDragBoundary="adf-datatable-row"
+                 cdkDragLockAxis="x"
+                 (cdkDragStarted)="isDraggingHeaderColumn = true"
+                 (cdkDragDropped)="onDropHeaderColumn($event)"
+                 [cdkDragDisabled]="disableDragAndDrop"
+                 (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
+                 (mouseleave)="hoveredHeaderColumnIndex = -1"
+                 adf-drop-zone dropTarget="header">
+                <div *ngIf="!col.header" class="adf-dragged-header-cell">
+                    <span *ngIf="col.title" class="adf-datatable-cell-value"> {{ col.title | translate}}</span>
+                    <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
+                        {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
                     <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
                 </div>
@@ -80,14 +59,14 @@
                 <div
                     *ngIf="!disableDragAndDrop"
                     cdkDragHandle
-                    class="adf-dragged-header-handle"
+                    class="adf-dragged-header-cell-handle"
                 >
                     <adf-icon
-                        *ngIf="hoveredColumnIndex === i" value="adf:drag_indicator">
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex" value="adf:drag_indicator">
                     </adf-icon>
                 </div>
 
-                <div class="adf-drag-drop-placeholder" *cdkDragPlaceholder></div>
+                <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
             </div>
 
             <!-- Actions (right) -->
@@ -110,11 +89,7 @@
 
     <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
-            <!-- cdkDropList
-            cdkDropListOrientation="horizontal" -->
-
-            <adf-datatable-row
-                *ngFor="let row of data.getRows(); let idx = index"
+            <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
                 [row]="row"
                 (select)="onEnterKeyPressed(row, $event)"
                 (keyup)="onRowKeyUp(row, $event)"
@@ -155,29 +130,18 @@
                     </mat-checkbox>
                 </div>
 
-                <!--
-                [style.position]="i === dragedIndex ? 'absolute' : 'inherit'"
-                [style.top]="i === dragedIndex ? '0' : '1'"
-                cdkDrag
-                [cdkDragFreeDragPosition]="getDragPosition(i)"
-                [style.background-color]="i === dragedIndex ? 'red' : 'white'"
-                [style.z-index]="i === dragedIndex ? '999' : '100'"
-                    [style.filter]="i === dragedIndex ? 'blur(3px)' : 'blur(0)'"
-                -->
-
-                <!-- [style.filter]="i !== dragedIndex && dragedIndex !== -1 ? 'blur(3px)' : 'blur(0)'" -->
-                <div *ngFor="let col of data.getColumns(); let i = index"
-                    role="gridcell"
-                    class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
-                    [attr.title]="col.title | translate"
-                    [attr.data-automation-id]="getAutomationValue(row)"
-                    [attr.aria-selected]="row.isSelected ? true : false"
-                    [attr.aria-label]="col.title ? (col.title | translate) : null"
-                    (click)="onRowClick(row, $event)"
-                    (keydown.enter)="onEnterKeyPressed(row, $any($event))"
-                    [adf-context-menu]="getContextMenuActions(row, col)"
-                    [adf-context-menu-enabled]="contextMenu"
-                    adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
+                <div *ngFor="let col of data.getColumns()"
+                     role="gridcell"
+                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                     [attr.title]="col.title | translate"
+                     [attr.data-automation-id]="getAutomationValue(row)"
+                     [attr.aria-selected]="row.isSelected ? true : false"
+                     [attr.aria-label]="col.title ? (col.title | translate) : null"
+                     (click)="onRowClick(row, $event)"
+                     (keydown.enter)="onEnterKeyPressed(row, $any($event))"
+                     [adf-context-menu]="getContextMenuActions(row, col)"
+                     [adf-context-menu-enabled]="contextMenu"
+                     adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
@@ -237,12 +201,8 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div
-                                *ngSwitchCase="'text'"
-                                [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
-                                class="adf-cell-value"
-                                [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
-
+                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
+                                 [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
                                     [data]="data"
