@@ -195,7 +195,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    areProcessDefinitionsLoading = true;
+    isLoading = true;
     rows: any[] = [];
     formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
@@ -248,17 +248,17 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     private load(requestNode: ProcessQueryCloudRequestModel) {
-        this.areProcessDefinitionsLoading = true;
+        this.isLoading = true;
 
         this.processListCloudService.getProcessByRequest(requestNode).subscribe(
             (processes) => {
                 this.rows = processes.list.entries;
                 this.success.emit(processes);
-                this.areProcessDefinitionsLoading = false;
+                this.isLoading = false;
                 this.pagination.next(processes.list.pagination);
             }, (error) => {
                 this.error.emit(error);
-                this.areProcessDefinitionsLoading = false;
+                this.isLoading = false;
             });
     }
 

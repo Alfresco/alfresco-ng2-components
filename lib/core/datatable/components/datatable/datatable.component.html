@@ -46,6 +46,7 @@
                  (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
                  (mouseleave)="hoveredHeaderColumnIndex = -1"
                  adf-drop-zone dropTarget="header">
+
                 <div *ngIf="!col.header" class="adf-dragged-header-cell">
                     <span *ngIf="col.title" class="adf-datatable-cell-value"> {{ col.title | translate}}</span>
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">

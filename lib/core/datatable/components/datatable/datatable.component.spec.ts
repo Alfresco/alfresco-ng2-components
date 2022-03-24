@@ -29,6 +29,8 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { domSanitizerMock } from 'content-services/src/lib/testing/dom-sanitizer-mock';
+import { matIconRegistryMock } from 'content-services/src/lib/testing/mat-icon-registry-mock';
 
 @Component({selector: 'adf-custom-column-template-component', template: `
     <ng-template #tmplRef></ng-template>
@@ -722,7 +724,7 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        const table = new DataTableComponent(null, null);
+        const table = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));

@@ -61,6 +61,7 @@ export class FilteredDataAdapter extends ObjectDataTableAdapter {
 export class DataTableComponent {
 
     multiselect = false;
+    enableDragAndDrop = true;
     data: FilteredDataAdapter;
     stickyHeader = false;
 
