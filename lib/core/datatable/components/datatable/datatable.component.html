@@ -51,7 +51,7 @@
                 <div
                     *ngIf="!col.header"
                     class="adf-dragged-header-cell"
-                    [class.adf-dragged-header-cell-hovered]="hoveredHeaderColumnIndex === columnIndex"
+                    [class.adf-dragged-header-cell-hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
                 >
                     <span
                         *ngIf="hoveredHeaderColumnIndex === columnIndex"
