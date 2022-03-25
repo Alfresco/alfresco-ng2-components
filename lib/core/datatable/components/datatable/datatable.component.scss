@@ -27,6 +27,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
         @include mat-elevation-transition;
         @include mat-overridable-elevation(2);
+
+        .adf-dragged-header-cell-handle-placeholder {
+            width: 24px;
+        }
     }
 }
 
