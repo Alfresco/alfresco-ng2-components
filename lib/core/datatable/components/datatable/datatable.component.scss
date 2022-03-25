@@ -53,6 +53,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     // change class name
     .adf-dragged-header-cell {
         display: flex;
+        flex-grow: 1;
         align-items: center;
         white-space: nowrap;
 
@@ -411,8 +412,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             align-items: center;
         }
 
-        &.adf-datatable__header--sorted-asc,
-        &.adf-datatable__header--sorted-desc {
+        .adf-datatable__header--sorted-asc,
+        .adf-datatable__header--sorted-desc {
             color: var(--theme-text-fg-color);
 
             &::after {
@@ -427,12 +428,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             }
         }
 
-        &.adf-datatable__header--sorted-desc::after {
+        .adf-datatable__header--sorted-desc::after {
             content: '\e5db';
         }
 
-        &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
-        &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
+        .adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
+        .adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
             left: -3px;
             right: -3px;
         }
