@@ -34,7 +34,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 10px;
+    left: 3px;
     margin: auto;
     color: #ccc;
     cursor: move;
@@ -48,6 +48,29 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     .adf-full-width {
         width: 100%;
+    }
+
+    // change class name
+    .adf-dragged-header-cell {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+
+        // text-overflow: ellipsis;
+        // overflow: hidden;
+        // white-space: nowrap;
+
+        // justify-content: space-between;
+        // flex-grow: 1;
+
+        .adf-dragged-header-cell-handle-placeholder {
+            width: 24px;
+        }
+    }
+
+    .adf-dragged-header-cell-hovered {
+        background-color: var(--theme-bg-hover-color);
+        border-radius: 5px;
     }
 
     .adf-drop-header-cell-placeholder {
@@ -159,6 +182,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
                 display: block;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
 
@@ -246,6 +270,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         width: fit-content;
         min-width: 100%;
         box-sizing: border-box;
+
+        .adf-datatable-row {
+            &:hover,
+            &:focus {
+                background-color: inherit;
+            }
+        }
     }
 
     .adf-datatable-cell {
@@ -384,7 +415,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         &.adf-datatable__header--sorted-desc {
             color: var(--theme-text-fg-color);
 
-            &::before {
+            &::after {
                 @include typo-icon;
 
                 font-size: $data-table-header-sort-icon-size;
@@ -396,7 +427,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             }
         }
 
-        &.adf-datatable__header--sorted-desc::before {
+        &.adf-datatable__header--sorted-desc::after {
             content: '\e5db';
         }
 

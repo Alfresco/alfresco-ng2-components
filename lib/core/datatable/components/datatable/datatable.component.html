@@ -8,6 +8,7 @@
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
+            style="margin-right: 15px;"
             cdkDropList
             cdkDropListOrientation="horizontal"
             data-automation-id="datatable-row-header"
@@ -47,11 +48,22 @@
                  (mouseleave)="hoveredHeaderColumnIndex = -1"
                  adf-drop-zone dropTarget="header">
 
-                <div *ngIf="!col.header" class="adf-dragged-header-cell">
+                <div
+                    *ngIf="!col.header"
+                    class="adf-dragged-header-cell"
+                    [class.adf-dragged-header-cell-hovered]="hoveredHeaderColumnIndex === columnIndex"
+                >
+                    <span
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex"
+                        class="adf-dragged-header-cell-handle-placeholder"
+                    ></span>
+
                     <span *ngIf="col.title" class="adf-datatable-cell-value"> {{ col.title | translate}}</span>
+
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
                         {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
+
                     <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
                 </div>
 
