@@ -50,12 +50,12 @@
 
                 <div
                     *ngIf="!col.header"
-                    class="adf-dragged-header-cell"
-                    [class.adf-dragged-header-cell-hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
+                    class="adf-datatable-cell-header-content"
+                    [class.adf-datatable-cell-header-content--hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
                 >
                     <span
                         *ngIf="hoveredHeaderColumnIndex === columnIndex"
-                        class="adf-dragged-header-cell-handle-placeholder"
+                        class="adf-datatable-cell-header-drag-icon-placeholder"
                     ></span>
 
                     <span *ngIf="col.title" class="adf-datatable-cell-value"> {{ col.title | translate}}</span>
@@ -77,7 +77,7 @@
                 <div
                     *ngIf="!disableDragAndDrop"
                     cdkDragHandle
-                    class="adf-dragged-header-cell-handle"
+                    class="adf-datatable-cell-header-drag-icon"
                 >
                     <adf-icon
                         *ngIf="hoveredHeaderColumnIndex === columnIndex" value="adf:drag_indicator">
