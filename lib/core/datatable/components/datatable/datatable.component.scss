@@ -14,37 +14,78 @@ $data-table-cell-min-width: 65px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
-.adf-datatable-cell-header-content {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-
-    .adf-datatable-cell-header-drag-icon-placeholder {
-        width: 16px;
-    }
-}
-
-.adf-datatable-cell-header-content--hovered {
-    background-color: var(--theme-bg-hover-color);
-    border-radius: 6px;
-}
-
-.adf-ellipsis-cell {
+@mixin datatable-header-cell {
     .adf-datatable-cell-header-content {
-        white-space: nowrap;
-        overflow: hidden;
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+
+        .adf-datatable-cell-header-drag-icon-placeholder {
+            width: 16px;
+        }
     }
 
     .adf-datatable-cell-header-content--hovered {
-        .adf-datatable-cell-value {
+        background-color: var(--theme-bg-hover-color);
+        border-radius: 6px;
+    }
+
+    .adf-datatable-cell-header-drag-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 3px;
+        margin: auto;
+        color: #ccc;
+        cursor: move;
+        width: 24px;
+        height: 24px;
+    }
+
+    .adf-drop-header-cell-placeholder {
+        display: flex;
+        flex: 1;
+        flex-grow: 1;
+        background: var(--theme-bg-hover-color);
+        border: dotted 1px rgba(0, 0, 0, 0.25);
+        min-height: 55px;
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .adf-ellipsis-cell {
+        .adf-datatable-cell-header-content {
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        .adf-datatable-cell-header-content--hovered {
+            .adf-datatable-cell-value {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     }
 }
 
 .cdk-drag-preview {
+    @include datatable-header-cell;
+
+    &.adf-ellipsis-cell {
+        .adf-datatable-cell-header-content {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .adf-datatable-cell-header-content--hovered {
+            .adf-datatable-cell-value {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
     &.adf-datatable-cell-header {
         display: flex;
         flex-grow: 1;
@@ -79,28 +120,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 }
 
-.adf-datatable-cell-header-drag-icon {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 3px;
-    margin: auto;
-    color: #ccc;
-    cursor: move;
-    width: 24px;
-    height: 24px;
-}
-
-.adf-drop-header-cell-placeholder {
-    display: flex;
-    flex: 1;
-    flex-grow: 1;
-    background: var(--theme-bg-hover-color);
-    border: dotted 1px rgba(0, 0, 0, 0.25);
-    min-height: 55px;
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
 .adf-datatable {
     overflow-y: scroll;
     height: 100%;
@@ -110,6 +129,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-datatable-header-row {
+        @include datatable-header-cell;
+
         margin-right: 15px;
     }
 }
