@@ -91,6 +91,16 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     height: 24px;
 }
 
+.adf-drop-header-cell-placeholder {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    background: var(--theme-bg-hover-color);
+    border: dotted 1px rgba(0, 0, 0, 0.25);
+    min-height: 55px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 .adf-datatable {
     overflow-y: scroll;
     height: 100%;
@@ -99,14 +109,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         width: 100%;
     }
 
-    .adf-drop-header-cell-placeholder {
-        display: flex;
-        flex: 1;
-        flex-grow: 1;
-        background: var(--theme-bg-hover-color);
-        border: dotted 1px rgba(0, 0, 0, 0.25);
-        min-height: 55px;
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    .adf-datatable-header-row {
+        margin-right: 15px;
     }
 }
 
@@ -329,6 +333,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 
+    .adf-blur-datatable-body {
+        filter: blur(3px);
+    }
+
     .adf-datatable-body {
         display: flex;
         flex-direction: column;
@@ -531,11 +539,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             padding: 0 10px 0 0;
         }
     }
-
-    /* stylelint-disable-next-line no-duplicate-selectors */
-    // .adf-datatable-cell-header {
-    //     padding: 3px;
-    // }
 
     .adf-cell-value {
         display: flex;

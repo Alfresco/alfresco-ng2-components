@@ -13,7 +13,7 @@
             cdkDropListOrientation="horizontal"
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
-            class="adf-datatable-row"
+            class="adf-datatable-row adf-datatable-header-row"
             *ngIf="display === 'list'"
             role="row">
 
@@ -105,7 +105,10 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body" role="rowgroup">
+    <div
+        class="adf-datatable-body"
+        [class.adf-blur-datatable-body]="isDraggingHeaderColumn"
+        role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
                 [row]="row"
