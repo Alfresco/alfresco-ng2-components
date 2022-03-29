@@ -46,7 +46,7 @@
                  [cdkDragDisabled]="disableDragAndDrop"
                  (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
                  (mouseleave)="hoveredHeaderColumnIndex = -1"
-                 adf-drop-zone dropTarget="header">
+                 adf-drop-zone dropTarget="header" [dropColumn]="col">
 
                 <div
                     *ngIf="!col.header"

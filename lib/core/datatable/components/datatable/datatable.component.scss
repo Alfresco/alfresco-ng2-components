@@ -14,112 +14,6 @@ $data-table-cell-min-width: 65px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
-@mixin datatable-header-cell {
-    .adf-datatable-cell-header-content {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-
-        .adf-datatable-cell-header-drag-icon-placeholder {
-            width: 16px;
-        }
-    }
-
-    .adf-datatable-cell-header-content--hovered {
-        background-color: var(--theme-bg-hover-color);
-        border-radius: 6px;
-    }
-
-    .adf-datatable-cell-header-drag-icon {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 3px;
-        margin: auto;
-        color: #ccc;
-        cursor: move;
-        width: 24px;
-        height: 24px;
-    }
-
-    .adf-drop-header-cell-placeholder {
-        display: flex;
-        flex: 1;
-        flex-grow: 1;
-        background: var(--theme-bg-hover-color);
-        border: dotted 1px rgba(0, 0, 0, 0.25);
-        min-height: 55px;
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    }
-
-    .adf-ellipsis-cell {
-        .adf-datatable-cell-header-content {
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .adf-datatable-cell-header-content--hovered {
-            .adf-datatable-cell-value {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
-    }
-}
-
-.cdk-drag-preview {
-    @include datatable-header-cell;
-
-    &.adf-ellipsis-cell {
-        .adf-datatable-cell-header-content {
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .adf-datatable-cell-header-content--hovered {
-            .adf-datatable-cell-value {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
-    }
-
-    &.adf-datatable-cell-header {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-        font-size: var(--theme-caption-font-size);
-        background-color: var(--theme-background-color);
-        border-radius: 6px;
-        padding: 0 3px !important;
-        overflow: hidden;
-
-        @include mat-elevation-transition;
-        @include mat-overridable-elevation(4);
-
-        .adf-datatable-cell-header-content {
-            border-radius: 6px;
-            background-color: var(--theme-bg-hover-color);
-        }
-    }
-
-    .adf-ellipsis-cell {
-        .adf-datatable-cell-value {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
-
-    .adf-datatable-cell-value {
-        padding: 10px;
-        line-height: 24px;
-        word-break: break-word;
-    }
-}
-
 .adf-datatable {
     overflow-y: scroll;
     height: 100%;
@@ -129,8 +23,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-datatable-header-row {
-        @include datatable-header-cell;
-
         margin-right: 15px;
     }
 }
@@ -439,65 +331,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 
-    .adf-datatable-cell-header {
-        @include adf-no-select;
-
-        cursor: pointer;
-        position: relative;
-        vertical-align: bottom;
-        text-overflow: ellipsis;
-        font-weight: bold;
-        line-height: 24px;
-        letter-spacing: 0;
-        min-height: $data-table-row-height !important;
-        font-size: $data-table-header-font-size;
-        color: var(--theme-text-fg-color);
-        padding-bottom: 8px;
-        box-sizing: border-box;
-
-        &.adf-sortable {
-            @include adf-no-select;
-
-            &:hover {
-                cursor: pointer;
-            }
-
-            display: flex;
-            align-items: center;
-        }
-
-        .adf-datatable__header--sorted-asc,
-        .adf-datatable__header--sorted-desc {
-            color: var(--theme-text-fg-color);
-
-            &::after {
-                @include typo-icon;
-
-                font-size: $data-table-header-sort-icon-size;
-                content: '\e5d8';
-                left: 5px;
-                right: 5px;
-                position: relative;
-                vertical-align: sub;
-            }
-        }
-
-        .adf-datatable__header--sorted-desc::after {
-            content: '\e5db';
-        }
-
-        .adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
-        .adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
-            left: -3px;
-            right: -3px;
-        }
-
-        &.adf-datatable-checkbox {
-            display: flex;
-            align-items: center;
-        }
-    }
-
     .adf-datatable-cell-header.adf-expand-cell-1,
     .adf-datatable-cell.adf-expand-cell-1 {
         flex-grow: 1;
@@ -726,6 +559,134 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         .adf-desktop-only {
             display: none !important;
         }
+    }
+}
+
+.adf-datatable-cell-header {
+    @include adf-no-select;
+
+    cursor: pointer;
+    position: relative;
+    vertical-align: bottom;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    line-height: 24px;
+    letter-spacing: 0;
+    min-height: $data-table-row-height !important;
+    font-size: $data-table-header-font-size;
+    color: var(--theme-text-fg-color);
+    padding-bottom: 8px;
+    box-sizing: border-box;
+
+    &.adf-sortable {
+        @include adf-no-select;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        display: flex;
+        align-items: center;
+    }
+
+    .adf-datatable__header--sorted-asc,
+    .adf-datatable__header--sorted-desc {
+        color: var(--theme-text-fg-color);
+
+        &::after {
+            @include typo-icon;
+
+            font-size: $data-table-header-sort-icon-size;
+            content: '\e5d8';
+            left: 5px;
+            right: 5px;
+            position: relative;
+            vertical-align: sub;
+        }
+    }
+
+    .adf-datatable__header--sorted-desc::after {
+        content: '\e5db';
+    }
+
+    .adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
+    .adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
+        left: -3px;
+        right: -3px;
+    }
+
+    &.adf-datatable-checkbox {
+        display: flex;
+        align-items: center;
+    }
+
+    .adf-datatable-cell-header-content {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+
+        .adf-datatable-cell-header-drag-icon-placeholder {
+            width: 16px;
+        }
+
+        &--hovered {
+            background-color: var(--theme-bg-hover-color);
+            border-radius: 6px;
+        }
+    }
+
+    .adf-datatable-cell-header-drag-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 3px;
+        margin: auto;
+        color: #ccc;
+        cursor: move;
+        width: 24px;
+        height: 24px;
+    }
+
+    .adf-datatable-cell-value {
+        padding: 10px;
+        line-height: 24px;
+        word-break: break-word;
+    }
+}
+
+.adf-drop-header-cell-placeholder {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    background: var(--theme-bg-hover-color);
+    border: dotted 1px rgba(0, 0, 0, 0.25);
+    min-height: 55px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.adf-datatable-cell-header.adf-ellipsis-cell {
+    .adf-datatable-cell-header-content {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .adf-datatable-cell-header-content--hovered {
+        .adf-datatable-cell-value {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.cdk-drag-preview {
+    &.adf-datatable-cell-header {
+        padding: 0 3px !important;
+        border-radius: 6px;
+        background-color: var(--theme-background-color);
+
+        @include mat-elevation-transition;
+        @include mat-overridable-elevation(4);
     }
 }
 
