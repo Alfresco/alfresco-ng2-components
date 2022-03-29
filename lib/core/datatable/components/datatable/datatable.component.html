@@ -12,7 +12,8 @@
             cdkDropListOrientation="horizontal"
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
-            class="adf-datatable-row adf-datatable-header-row"
+            class="adf-datatable-row"
+            [class.adf-datatable-header-sticky-row]="stickyHeader"
             *ngIf="display === 'list'"
             role="row">
 
@@ -32,7 +33,7 @@
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                  [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
-                 [class.adf-datatable-header-cell--no-draggable]="!enableDragAndDrop"
+                 [class.adf-datatable__header--no-draggable-cell]="!enableDragAndDrop"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"

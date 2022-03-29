@@ -22,7 +22,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         width: 100%;
     }
 
-    .adf-datatable-header-row {
+    .adf-datatable-header-sticky-row {
         margin-right: 15px;
     }
 }
@@ -561,7 +561,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 }
 
-.adf-datatable-cell-header.adf-datatable-header-cell--no-draggable {
+.adf-datatable-cell-header.adf-datatable__header--no-draggable-cell {
     .adf-datatable-cell-header-content {
         padding-left: 3px;
     }
