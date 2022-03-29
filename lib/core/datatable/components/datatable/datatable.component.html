@@ -8,7 +8,6 @@
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
-            style="margin-right: 15px;"
             cdkDropList
             cdkDropListOrientation="horizontal"
             data-automation-id="datatable-row-header"
@@ -58,7 +57,7 @@
                         class="adf-datatable-cell-header-drag-icon-placeholder"
                     ></span>
 
-                    <span *ngIf="col.title" class="adf-datatable-cell-value"> {{ col.title | translate}}</span>
+                    <span *ngIf="col.title" class="adf-datatable-cell-value"> {{col.title | translate}}</span>
 
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
                         {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
@@ -150,7 +149,6 @@
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </div>
-
                 <div *ngFor="let col of data.getColumns()"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
@@ -281,7 +279,6 @@
                     </mat-menu>
                 </div>
             </adf-datatable-row>
-
             <div *ngIf="isEmpty()"
                  role="row"
                  [class.adf-datatable-row]="display === 'list'"

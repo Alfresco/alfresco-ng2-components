@@ -125,7 +125,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
                 display: block;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
             }
         }
 
@@ -567,7 +566,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     cursor: pointer;
     position: relative;
-    vertical-align: bottom;
+    display: flex;
+    align-items: center;
     text-overflow: ellipsis;
     font-weight: bold;
     line-height: 24px;

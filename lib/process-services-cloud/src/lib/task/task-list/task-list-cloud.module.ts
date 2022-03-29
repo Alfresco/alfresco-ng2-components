@@ -22,7 +22,7 @@ import { TaskListCloudComponent } from './components/task-list-cloud.component';
 import { ServiceTaskListCloudComponent } from './components/service-task-list-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { TASK_LIST_CLOUD_TOKEN } from '../../services/cloud-token.service';
-import { TaskListCloudService } from './public-api';
+import { TaskListCloudService } from './services/task-list-cloud.service';
 
 @NgModule({
     imports: [
