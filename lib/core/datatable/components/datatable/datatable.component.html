@@ -32,6 +32,7 @@
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                  [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
+                 [class.adf-datatable-header-cell--no-draggable]="!enableDragAndDrop"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
@@ -42,7 +43,7 @@
                  cdkDragLockAxis="x"
                  (cdkDragStarted)="isDraggingHeaderColumn = true"
                  (cdkDragDropped)="onDropHeaderColumn($event)"
-                 [cdkDragDisabled]="disableDragAndDrop"
+                 [cdkDragDisabled]="!enableDragAndDrop"
                  (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
                  (mouseleave)="hoveredHeaderColumnIndex = -1"
                  adf-drop-zone dropTarget="header" [dropColumn]="col">
@@ -53,8 +54,9 @@
                     [class.adf-datatable-cell-header-content--hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
                 >
                     <span
-                        *ngIf="hoveredHeaderColumnIndex === columnIndex"
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex && enableDragAndDrop"
                         class="adf-datatable-cell-header-drag-icon-placeholder"
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-placeholder-'+col.key"
                     ></span>
 
                     <span *ngIf="col.title" class="adf-datatable-cell-value"> {{col.title | translate}}</span>
@@ -74,12 +76,14 @@
                 <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
 
                 <div
-                    *ngIf="!disableDragAndDrop"
+                    *ngIf="enableDragAndDrop"
                     cdkDragHandle
                     class="adf-datatable-cell-header-drag-icon"
                 >
                     <adf-icon
-                        *ngIf="hoveredHeaderColumnIndex === columnIndex" value="adf:drag_indicator">
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex"
+                        value="adf:drag_indicator"
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key">
                     </adf-icon>
                 </div>
 

@@ -145,7 +145,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     /** Toggles drag&drop for table header. */
     @Input()
-    disableDragAndDrop: boolean = false;
+    enableDragAndDrop: boolean = false;
 
     /** Emitted when the user clicks a row. */
     @Output()

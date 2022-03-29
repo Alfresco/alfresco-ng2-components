@@ -561,6 +561,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 }
 
+.adf-datatable-cell-header.adf-datatable-header-cell--no-draggable {
+    .adf-datatable-cell-header-content {
+        padding-left: 3px;
+    }
+}
+
 .adf-datatable-cell-header {
     @include adf-no-select;
 
