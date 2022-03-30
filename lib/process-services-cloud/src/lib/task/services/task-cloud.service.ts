@@ -19,17 +19,20 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
+import {
+    TaskDetailsCloudModel,
+    StartTaskCloudResponseModel,
+    TASK_ASSIGNED_STATE,
+    TASK_CLAIM_PERMISSION,
+    TASK_CREATED_STATE,
+    TASK_RELEASE_PERMISSION
+} from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import {
     DEFAULT_TASK_PRIORITIES,
-    TaskPriorityOption,
-    TASK_ASSIGNED_STATE,
-    TASK_CLAIM_PERMISSION,
-    TASK_CREATED_STATE,
-    TASK_RELEASE_PERMISSION
+    TaskPriorityOption
 } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 
@@ -105,9 +108,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails &&
-               taskDetails.status === TASK_CREATED_STATE &&
-               taskDetails.permissions.includes(TASK_CLAIM_PERMISSION);
+        return taskDetails?.status === TASK_CREATED_STATE &&
+               taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION);
     }
 
     /**
@@ -118,10 +120,10 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails &&
-               taskDetails.status === TASK_ASSIGNED_STATE &&
-               taskDetails.assignee === currentUser &&
-               taskDetails.permissions.includes(TASK_RELEASE_PERMISSION);
+        return taskDetails?.status === TASK_ASSIGNED_STATE &&
+               taskDetails?.assignee === currentUser &&
+               taskDetails?.permissions.includes(TASK_RELEASE_PERMISSION) &&
+               !taskDetails?.standalone;
     }
 
     /**

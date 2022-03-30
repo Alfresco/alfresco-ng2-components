@@ -32,11 +32,3 @@ export const DEFAULT_TASK_PRIORITIES: TaskPriorityOption[] = [
     { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL', value: '2', key: '2' },
     { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH', value: '3', key: '3' }
 ];
-
-export const TASK_ASSIGNED_STATE = 'ASSIGNED';
-
-export const TASK_CREATED_STATE = 'CREATED';
-
-export const TASK_CLAIM_PERMISSION = 'CLAIM';
-export const TASK_RELEASE_PERMISSION = 'RELEASE';
-export const TASK_VIEW_PERMISSION = 'VIEW';

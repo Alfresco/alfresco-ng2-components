@@ -133,7 +133,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    loadTask() {
+    private loadTask() {
         this.loading = true;
 
         this.taskCloudService
@@ -161,7 +161,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     }
 
     canClaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails);
+        return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     hasCandidateUsers(): boolean {
@@ -173,16 +173,11 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     }
 
     hasCandidateUsersOrGroups(): boolean {
-        let hasCandidateUsersOrGroups = false;
-
-        if (this.taskDetails?.status === 'ASSIGNED') {
-            hasCandidateUsersOrGroups = this.hasCandidateUsers() || this.hasCandidateGroups();
-        }
-        return hasCandidateUsersOrGroups;
+        return this.hasCandidateUsers() || this.hasCandidateGroups();
     }
 
     canUnclaimTask(): boolean {
-        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails);
+        return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
     isReadOnly(): boolean {
