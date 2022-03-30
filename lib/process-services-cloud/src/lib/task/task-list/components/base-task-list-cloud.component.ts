@@ -115,7 +115,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = false;
+    isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };

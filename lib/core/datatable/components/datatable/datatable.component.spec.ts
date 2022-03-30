@@ -1645,7 +1645,7 @@ describe('Drag&Drop column header', () => {
         dataTable.enableDragAndDrop = true;
     });
 
-    it('should show/hide drag&drop icon', () => {
+    it('should show/hide drag indicator icon', () => {
         fixture.detectChanges();
 
         const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
@@ -1666,7 +1666,7 @@ describe('Drag&Drop column header', () => {
         expect(dragIconPlaceholder).toBeFalsy();
     });
 
-    it('should not show drag&drop icon, when drag and drop is disabled', () => {
+    it('should not show drag indicator icon, when drag and drop is disabled', () => {
         dataTable.enableDragAndDrop = false;
         fixture.detectChanges();
 

@@ -253,7 +253,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     private load(requestNode: ProcessQueryCloudRequestModel) {
         this.isLoading = true;
-
         this.processListCloudService.getProcessByRequest(requestNode).subscribe(
             (processes) => {
                 this.rows = processes.list.entries;
