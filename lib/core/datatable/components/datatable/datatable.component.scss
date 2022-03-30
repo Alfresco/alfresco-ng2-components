@@ -474,7 +474,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        padding: 0 4px;
 
         &.adf-datatable-cell-header,
         .adf-datatable-content-cell {
@@ -575,7 +574,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     min-height: $data-table-row-height !important;
     font-size: $data-table-header-font-size;
     color: var(--theme-text-fg-color);
-    padding-bottom: 8px;
     box-sizing: border-box;
 
     &.adf-sortable {
@@ -624,6 +622,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         display: flex;
         flex-grow: 1;
         align-items: center;
+        margin: 0 2px;
 
         .adf-datatable-cell-header-drag-icon-placeholder {
             width: 16px;
@@ -681,7 +680,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
 .cdk-drag-preview {
     &.adf-datatable-cell-header {
-        padding: 0 3px !important;
         border-radius: 6px;
         background-color: var(--theme-background-color);
 

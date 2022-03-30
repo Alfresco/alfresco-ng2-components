@@ -80,6 +80,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showLoadingSpinner: boolean = false;
 
+    /** Toggles drag and drop header colum. */
+    @Input()
+    enableDragAndDrop: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
