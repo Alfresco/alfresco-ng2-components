@@ -208,7 +208,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService,
-                @Inject(PROCESS_FILTERS_SERVICE_TOKEN) private preferenceService: PreferenceCloudServiceInterface) {
+                @Inject(PROCESS_FILTERS_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
@@ -315,7 +315,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
         if (this.appName) {
-            this.preferenceService.updatePreference(
+            this.cloudPreferenceService.updatePreference(
                 this.appName,
                 ProcessListCloudPreferences.columnOrder,
                 columnsWithNewOrder.map(column => column.key)

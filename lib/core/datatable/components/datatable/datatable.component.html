@@ -33,7 +33,6 @@
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                  [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
-                 [class.adf-datatable__header--no-draggable-cell]="!enableDragAndDrop"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
