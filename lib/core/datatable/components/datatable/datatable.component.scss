@@ -576,6 +576,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     color: var(--theme-text-fg-color);
     box-sizing: border-box;
 
+    .adf-datatable-cell-value {
+        padding: 10px 0 !important;
+    }
+
     &.adf-sortable {
         @include adf-no-select;
 
@@ -623,9 +627,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         flex-grow: 1;
         align-items: center;
         margin: 0 2px;
+        padding: 0 10px;
 
         .adf-datatable-cell-header-drag-icon-placeholder {
-            width: 16px;
+            min-width: 15px;
         }
 
         &--hovered {
