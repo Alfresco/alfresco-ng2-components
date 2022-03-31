@@ -80,10 +80,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showLoadingSpinner: boolean = false;
 
-    /** Toggles drag and drop header colum. */
-    @Input()
-    enableDragAndDrop: boolean = false;
-
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -255,7 +251,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             this.preferenceService.updatePreference(
                 this.appName,
                 TasksListCloudPreferences.columnOrder,
-                columnsWithNewOrder.map(column => column.key)
+                columnsWithNewOrder.map(column => column.id)
             );
         }
     }

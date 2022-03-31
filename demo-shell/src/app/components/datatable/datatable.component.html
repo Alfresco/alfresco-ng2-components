@@ -17,7 +17,6 @@
         [stickyHeader]="stickyHeader"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
-        [enableDragAndDrop]="enableDragAndDrop"
         [actions]="true"
         [resolverFn]="resolver"
         rowStyleClass="custom-row-style"
@@ -46,6 +45,7 @@
 <div>
     Selected items: {{ dataTable.selection?.length }}
 </div>
+
 <div data-automation-id="multiselect">
     <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
 </div>
@@ -59,12 +59,6 @@
         </mat-select>
     </mat-form-field>
 </div>
-
-<div>
-    <mat-checkbox [(ngModel)]="enableDragAndDrop">{{ 'DATATABLE.DRAG_AND_DROP'| translate }}</mat-checkbox>
-</div>
-<p>{{ 'DATATABLE.DRAG_AND_DROP_DESCRIPTION'| translate }}</p>
-
 <div>
     <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
     <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>

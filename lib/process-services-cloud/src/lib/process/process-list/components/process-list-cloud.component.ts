@@ -162,10 +162,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     showLoadingSpinner: boolean = false;
 
-    /** Toggles loading spinner. */
-    @Input()
-    enableDragAndDrop: boolean = false;
-
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -318,7 +314,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             this.cloudPreferenceService.updatePreference(
                 this.appName,
                 ProcessListCloudPreferences.columnOrder,
-                columnsWithNewOrder.map(column => column.key)
+                columnsWithNewOrder.map(column => column.id)
             );
         }
     }

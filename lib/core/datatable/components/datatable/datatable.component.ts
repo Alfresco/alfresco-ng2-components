@@ -143,10 +143,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     stickyHeader: boolean = false;
 
-    /** Toggles drag&drop for table header. */
-    @Input()
-    enableDragAndDrop: boolean = false;
-
     /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();

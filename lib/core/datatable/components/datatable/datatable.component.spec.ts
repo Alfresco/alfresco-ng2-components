@@ -1633,16 +1633,14 @@ describe('Drag&Drop column header', () => {
         ];
 
         dataTableSchema = [
-            new ObjectDataColumn({ key: 'id', title: 'ID' }),
-            new ObjectDataColumn({ key: 'name', title: 'Name' })
+            new ObjectDataColumn({ key: 'id', title: 'ID', draggable: true }),
+            new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
         ];
 
         dataTable.data = new ObjectDataTableAdapter(
             [...data],
             [...dataTableSchema]
         );
-
-        dataTable.enableDragAndDrop = true;
     });
 
     it('should show/hide drag indicator icon', () => {
@@ -1667,7 +1665,6 @@ describe('Drag&Drop column header', () => {
     });
 
     it('should not show drag indicator icon, when drag and drop is disabled', () => {
-        dataTable.enableDragAndDrop = false;
         fixture.detectChanges();
 
         const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
