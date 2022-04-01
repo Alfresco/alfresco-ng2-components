@@ -376,11 +376,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             align-items: center;
             display: flex;
             width: 100%;
+            padding: 0 10px;
         }
 
         .adf-datatable-cell-value {
             word-break: break-word;
-            padding: 10px;
+            padding-right: 10px;
             display: block;
 
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
@@ -627,7 +628,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         flex-grow: 1;
         align-items: center;
         margin: 0 2px;
-        padding: 0 10px;
+        padding: 0 8px;
+        column-gap: 5px;
 
         .adf-datatable-cell-header-drag-icon-placeholder {
             min-width: 15px;
