@@ -141,18 +141,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, preferenceService);
     }
 
-    load(requestNode: TaskQueryCloudRequestModel) {
-        this.isLoading = true;
-        this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
-            (tasks) => {
-                this.rows = tasks.list.entries;
-                this.success.emit(tasks);
-                this.isLoading = false;
-                this.pagination.next(tasks.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
+    getTasks(requestNode: TaskQueryCloudRequestModel) {
+        return this.taskListCloudService.getTaskByRequest(requestNode);
     }
 
     createRequestNode(): TaskQueryCloudRequestModel {

@@ -115,12 +115,13 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns.length).toEqual(10);
     });
 
-    it('should display empty content when process list is empty', () => {
+    fit('should display empty content when process list is empty', () => {
+        debugger;
         const emptyList = {list: {entries: []}};
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
+        expect(component.isLoadingProcesses).toBe(true);
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
@@ -140,14 +141,14 @@ describe('ProcessListCloudComponent', () => {
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
+        expect(component.isLoadingProcesses).toBe(true);
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        expect(component.isLoading).toBe(false);
+        expect(component.isLoadingProcesses).toBe(false);
         loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 

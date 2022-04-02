@@ -24,5 +24,5 @@ export interface PreferenceCloudServiceInterface {
     createPreference(appName: string, key: string, newPreference: any): Observable<any>;
     updatePreference(appName: string, key: string, updatedPreference: any): Observable<any>;
     deletePreference(appName: string, key: any): Observable<any>;
-
+    searchPreferenceByKey<T>(appName: string, key: string): Observable<T>;
 }

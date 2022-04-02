@@ -24,9 +24,9 @@ import {
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
@@ -76,10 +76,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showContextMenu: boolean = false;
 
-    /** Toggles loading spinner. */
-    @Input()
-    showLoadingSpinner: boolean = false;
-
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -115,13 +111,19 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = true;
+    isLoadingTasks = true;
+    isLoadingColumnsOrder = true;
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
+    private columnOrderPreferencesKey = TasksListCloudPreferences.columnOrder;
     private onDestroy$ = new Subject<boolean>();
+
+    get isLoading(): boolean {
+        return this.isLoadingTasks || this.isLoadingColumnsOrder;
+    }
 
     constructor(appConfigService: AppConfigService,
                 private taskCloudService: TaskCloudService,
@@ -160,10 +162,15 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     ngAfterContentInit() {
-        this.createDatatableSchema();
+        this.isLoadingColumnsOrder = true;
+        this.loadColumnsOrderPreferences().pipe(take(1)).subscribe(columnsOrder => {
+            this.isLoadingColumnsOrder = false;
+            this.columnsOrder = columnsOrder;
+            this.createDatatableSchema();
+        });
 
         this.columnList?.columns.changes.subscribe(() => {
-            this.columns = this.mergeJsonAndHtmlSchema();
+            this.createColumns();
         });
     }
 
@@ -247,11 +254,13 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+
         if (this.appName) {
             this.preferenceService.updatePreference(
                 this.appName,
-                TasksListCloudPreferences.columnOrder,
-                columnsWithNewOrder.map(column => column.id)
+                this.columnOrderPreferencesKey,
+                this.columnsOrder
             );
         }
     }
@@ -284,6 +293,29 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         }, row.obj);
     }
 
-    abstract load(requestNode);
-    abstract createRequestNode();
+    load(requestNode: TaskQueryCloudRequestModel): void {
+        this.getTasks(requestNode).pipe(take(1)).subscribe((tasks) => {
+            this.rows = tasks.list.entries;
+            this.success.emit(tasks);
+            this.pagination.next(tasks.list.pagination);
+            this.isLoadingTasks = false;
+        }, (error) => {
+            this.error.emit(error);
+            this.isLoadingTasks = false;
+        });
+    }
+
+    private loadColumnsOrderPreferences(): Observable<string[]> {
+        if (this.columnsOrder) {
+            return of(this.columnsOrder);
+        }
+
+        return this.preferenceService.searchPreferenceByKey<string[]>(
+            this.appName,
+            this.columnOrderPreferencesKey
+        );
+    }
+
+    abstract getTasks(requestedNode: TaskQueryCloudRequestModel): Observable<any>;
+    abstract createRequestNode(): TaskQueryCloudRequestModel;
 }

@@ -20,6 +20,7 @@ import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { throwError, Observable } from 'rxjs';
 import { BaseCloudService } from './base-cloud.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
@@ -62,6 +63,24 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
       this.logService.error('Appname and key are mandatory for querying preference');
       return throwError('Appname not configured');
     }
+  }
+
+  /**
+   * Search preference in all preferences.
+   *
+   * @param appName Name of the target app
+   * @param key Key of the target preference
+   * @returns Observable of user preference
+   */
+  searchPreferenceByKey<T>(appName: string, key: string): Observable<T | null> {
+    return this.getPreferences(appName)
+      .pipe(
+        map((preferences) => {
+          const preferencesList = preferences?.list?.entries ?? [];
+          const columnOrderPreference = preferencesList.find(preference => preference.entry.key === key);
+
+          return columnOrderPreference ? JSON.parse(columnOrderPreference.entry.value) : null;
+      }));
   }
 
   /**

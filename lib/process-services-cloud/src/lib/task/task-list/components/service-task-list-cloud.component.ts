@@ -25,6 +25,7 @@ import { ServiceTaskListCloudService } from '../services/service-task-list-cloud
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { Observable } from 'rxjs';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -46,18 +47,8 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, preferenceService);
     }
 
-    load(requestNode: ServiceTaskQueryCloudRequestModel) {
-        this.isLoading = true;
-        this.serviceTaskListCloudService.getServiceTaskByRequest(requestNode).subscribe(
-            (tasks) => {
-                this.rows = tasks.list.entries;
-                this.success.emit(tasks);
-                this.isLoading = false;
-                this.pagination.next(tasks.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
+    getTasks(requestedNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
+        return this.serviceTaskListCloudService.getServiceTaskByRequest(requestedNode);
     }
 
     createRequestNode(): ServiceTaskQueryCloudRequestModel {

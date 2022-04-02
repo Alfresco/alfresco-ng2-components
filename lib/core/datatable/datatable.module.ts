@@ -105,6 +105,5 @@ import { IconModule } from '../../core/icon/icon.module';
         CustomNoPermissionTemplateDirective,
         DropZoneDirective
     ]
-
 })
 export class DataTableModule {}

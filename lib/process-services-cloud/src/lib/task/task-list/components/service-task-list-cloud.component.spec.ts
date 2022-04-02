@@ -128,7 +128,7 @@ describe('ServiceTaskListCloudComponent', () => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
+        expect(component.isLoadingTasks).toBe(true);
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
@@ -148,14 +148,14 @@ describe('ServiceTaskListCloudComponent', () => {
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
+        expect(component.isLoadingTasks).toBe(true);
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        expect(component.isLoading).toBe(false);
+        expect(component.isLoadingTasks).toBe(false);
         loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
