@@ -115,8 +115,7 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns.length).toEqual(10);
     });
 
-    fit('should display empty content when process list is empty', () => {
-        debugger;
+    it('should display empty content when process list is empty', () => {
         const emptyList = {list: {entries: []}};
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 

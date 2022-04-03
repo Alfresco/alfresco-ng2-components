@@ -192,9 +192,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-
-    isLoadingProcesses = false;
-    isLoadingColumnsOrder = false;
+    isLoadingProcesses = true;
+    isLoadingColumnsOrder = true;
 
     get isLoading(): boolean {
         return this.isLoadingProcesses || this.isLoadingColumnsOrder;
@@ -266,15 +265,16 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     private load(requestNode: ProcessQueryCloudRequestModel) {
         this.isLoadingProcesses = true;
 
-        this.processListCloudService.getProcessByRequest(requestNode).subscribe((processes) => {
-            this.rows = processes.list.entries;
-            this.success.emit(processes);
-            this.pagination.next(processes.list.pagination);
-            this.isLoadingProcesses = false;
-        }, (error) => {
-            this.error.emit(error);
-            this.isLoadingProcesses = false;
-        });
+        this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1)).subscribe(
+            (processes) => {
+                this.rows = processes.list.entries;
+                this.success.emit(processes);
+                this.pagination.next(processes.list.pagination);
+                this.isLoadingProcesses = false;
+            }, (error) => {
+                this.error.emit(error);
+                this.isLoadingProcesses = false;
+            });
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
