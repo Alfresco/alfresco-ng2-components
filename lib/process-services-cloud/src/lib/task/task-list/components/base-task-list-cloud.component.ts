@@ -294,6 +294,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     load(requestNode: TaskQueryCloudRequestModel): void {
+        this.isLoadingTasks = true;
         this.getTasks(requestNode).pipe(take(1)).subscribe((tasks) => {
             this.rows = tasks.list.entries;
             this.success.emit(tasks);

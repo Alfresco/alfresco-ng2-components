@@ -312,7 +312,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return column.key === this.data.getSorting().key;
     }
 
-    onDropHeaderColumn(event: CdkDragDrop<unknown>) {
+    onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
         const columns = this.data.getColumns();
         moveItemInArray(columns, event.previousIndex, event.currentIndex);
 

@@ -87,9 +87,12 @@ export class ProcessServicesCloudModule {
         };
     }
 
-    static forChild(): ModuleWithProviders<ProcessServicesCloudModule> {
+    static forChild(preferenceServiceInstance?: PreferenceCloudServiceInterface): ModuleWithProviders<ProcessServicesCloudModule> {
         return {
-            ngModule: ProcessServicesCloudModule
+            ngModule: ProcessServicesCloudModule,
+            providers: [
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService }
+            ]
         };
     }
 }
