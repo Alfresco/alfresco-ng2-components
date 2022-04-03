@@ -43,6 +43,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| id | `string` | '' | Column identifier. |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | editable | `boolean` | false | Toggles the editing support of the column data. |

@@ -21,7 +21,7 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent, DataColumn } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -269,8 +269,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             (processes) => {
                 this.rows = processes.list.entries;
                 this.success.emit(processes);
-                this.pagination.next(processes.list.pagination);
                 this.isLoadingProcesses = false;
+                this.pagination.next(processes.list.pagination);
             }, (error) => {
                 this.error.emit(error);
                 this.isLoadingProcesses = false;
@@ -423,11 +423,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 
-    loadColumnsOrderPreferences(): Observable<string[]> {
-        if (this.columnsOrder) {
-            return of(this.columnsOrder);
-        }
-
+    private loadColumnsOrderPreferences(): Observable<string[]> {
         return this.cloudPreferenceService.searchPreferenceByKey<string[]>(
             this.appName,
             ProcessListCloudPreferences.columnOrder
