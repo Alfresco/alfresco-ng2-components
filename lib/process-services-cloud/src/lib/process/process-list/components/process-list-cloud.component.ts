@@ -419,7 +419,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     private loadColumnsOrderPreferences(): Observable<string[]> {
-        return this.cloudPreferenceService.searchPreferenceByKey<string[]>(
+        return this.cloudPreferenceService.getPreferences(
             this.appName,
             ProcessListCloudPreferences.columnOrder
         );

@@ -38,10 +38,19 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
    * @param appName Name of the target app
    * @returns List of user preferences
    */
-  getPreferences(appName: string): Observable<any> {
+  getPreferences(appName: string, key?: string): Observable<any> {
     if (appName) {
       const url = `${this.getBasePath(appName)}/preference/v1/preferences`;
-      return this.get(url);
+
+      return this.get(url).pipe(map((preferences: any) => {
+        if (key) {
+          const preferencesList = preferences?.list?.entries ?? [];
+          const searchedPreferences = preferencesList.find(preference => preference.entry.key === key);
+          return searchedPreferences ? JSON.parse(searchedPreferences.entry.value) : null;
+        }
+
+        return preferences;
+      }));
     } else {
       this.logService.error('Appname is mandatory for querying preferences');
       return throwError('Appname not configured');
@@ -63,24 +72,6 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
       this.logService.error('Appname and key are mandatory for querying preference');
       return throwError('Appname not configured');
     }
-  }
-
-  /**
-   * Search preference in all preferences.
-   *
-   * @param appName Name of the target app
-   * @param key Key of the target preference
-   * @returns Observable of user preference
-   */
-  searchPreferenceByKey<T>(appName: string, key: string): Observable<T | null> {
-    return this.getPreferences(appName)
-      .pipe(
-        map((preferences) => {
-          const preferencesList = preferences?.list?.entries ?? [];
-          const columnOrderPreference = preferencesList.find(preference => preference.entry.key === key);
-
-          return columnOrderPreference ? JSON.parse(columnOrderPreference.entry.value) : null;
-      }));
   }
 
   /**

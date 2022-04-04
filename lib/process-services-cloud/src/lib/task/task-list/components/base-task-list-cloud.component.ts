@@ -307,7 +307,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             return of(this.columnsOrder);
         }
 
-        return this.preferenceService.searchPreferenceByKey<string[]>(
+        return this.preferenceService.getPreferences(
             this.appName,
             this.columnOrderPreferencesKey
         );

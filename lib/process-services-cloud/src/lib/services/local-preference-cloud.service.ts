@@ -56,10 +56,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
         return of(JSON.parse(this.storage.getItem(key)) || []);
     }
 
-    searchPreferenceByKey(appName: string, key: string): Observable<any> {
-        return this.getPreferenceByKey(appName, key);
-    }
-
     /**
      * Creates local preference.
      *
