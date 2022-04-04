@@ -168,10 +168,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             this.columnsOrder = columnsOrder;
             this.createDatatableSchema();
         });
-
-        this.columnList?.columns.changes.subscribe(() => {
-            this.createColumns();
-        });
     }
 
     reload() {

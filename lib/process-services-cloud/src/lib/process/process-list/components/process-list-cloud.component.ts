@@ -233,11 +233,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             }, () => {
                 this.isLoadingColumnsOrder = false;
             });
-
-        this.columnList?.columns.changes
-            .subscribe(() => {
-                this.createColumns();
-            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
