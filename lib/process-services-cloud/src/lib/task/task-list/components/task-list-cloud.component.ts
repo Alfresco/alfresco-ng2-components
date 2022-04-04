@@ -20,8 +20,11 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_TOKEN } from '../../../services/cloud-token.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
+import { combineLatest } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -135,14 +138,21 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
+                userPreferences: UserPreferencesService,
+                @Inject(TASK_LIST_PREFERENCES_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
     load(requestNode: TaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
-            (tasks) => {
+
+        combineLatest([
+            this.taskListCloudService.getTaskByRequest(requestNode),
+            this.isColumnSchemaCreated$
+        ]).pipe(
+            take(1)
+        ).subscribe(
+            ([tasks]) => {
                 this.rows = tasks.list.entries;
                 this.success.emit(tasks);
                 this.isLoading = false;
