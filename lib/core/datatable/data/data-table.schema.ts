@@ -34,6 +34,9 @@ export abstract class DataTableSchema {
 
     columns: any;
 
+    protected columnsOrder: string[] | undefined;
+    protected columnsOrderedByKey: string = 'id';
+
     private layoutPresets = {};
 
     constructor(private appConfigService: AppConfigService,
@@ -43,8 +46,13 @@ export abstract class DataTableSchema {
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
         if (!this.columns || this.columns.length === 0) {
-            this.columns = this.mergeJsonAndHtmlSchema();
+            this.createColumns();
         }
+    }
+
+    public createColumns(): void {
+        const columns = this.mergeJsonAndHtmlSchema();
+        this.columns = this.sortColumnsByKey(columns);
     }
 
     public loadLayoutPresets(): void {
@@ -57,10 +65,18 @@ export abstract class DataTableSchema {
     }
 
     public mergeJsonAndHtmlSchema(): any {
-        let customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml(this.columnList));
+        const configSchemaColumns = this.getSchemaFromConfig(this.presetColumn);
+        const htmlSchemaColumns = this.getSchemaFromHtml(this.columnList);
+
+        let customSchemaColumns = [
+            ...configSchemaColumns,
+            ...htmlSchemaColumns
+        ];
+
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
+
         return customSchemaColumns;
     }
 
@@ -86,5 +102,21 @@ export abstract class DataTableSchema {
 
     public setPresetsModel(presetsModel: any) {
         this.presetsModel = presetsModel;
+    }
+
+    private sortColumnsByKey(columns: any[]): any[]  {
+        const defaultColumns = [...columns];
+        const columnsWithProperOrder = [];
+
+        (this.columnsOrder ?? []).forEach(columnKey => {
+            const originalColumnIndex = defaultColumns.findIndex(defaultColumn => defaultColumn[this.columnsOrderedByKey] === columnKey);
+
+            if (originalColumnIndex > -1) {
+                columnsWithProperOrder.push(defaultColumns[originalColumnIndex]);
+                defaultColumns.splice(originalColumnIndex, 1);
+            }
+        });
+
+        return [...columnsWithProperOrder, ...defaultColumns];
     }
 }
