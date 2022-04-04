@@ -9,8 +9,8 @@ $data-table-column-spacing: 36px !default;
 $data-table-column-padding: 18px !default;
 $data-table-card-padding: var(--theme-headline-line-height) !default;
 $data-table-cell-top: calc($data-table-card-padding / 2);
-$data-table-thumbnail-width: 50px !default;
-$data-table-cell-min-width: 50px !default;
+$data-table-thumbnail-width: 65px !default;
+$data-table-cell-min-width: 65px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
 $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
@@ -20,6 +20,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     .adf-full-width {
         width: 100%;
+    }
+
+    .adf-datatable-header-sticky-row {
+        margin-right: 15px;
     }
 }
 
@@ -208,6 +212,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         width: fit-content;
         min-width: 100%;
         box-sizing: border-box;
+
+        .adf-datatable-row {
+            &:hover,
+            &:focus {
+                background-color: inherit;
+            }
+        }
     }
 
     .adf-datatable-cell {
@@ -232,6 +243,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
                 outline: 1px solid var(--theme-accent-color-a200);
             }
         }
+    }
+
+    .adf-blur-datatable-body {
+        filter: blur(3px);
     }
 
     .adf-datatable-body {
@@ -315,66 +330,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 
-    .adf-datatable-cell-header {
-        @include adf-no-select;
-
-        cursor: pointer;
-        position: relative;
-        vertical-align: bottom;
-        text-overflow: ellipsis;
-        font-weight: bold;
-        line-height: 24px;
-        letter-spacing: 0;
-        min-height: $data-table-row-height !important;
-        font-size: $data-table-header-font-size;
-        color: var(--theme-text-fg-color);
-        padding-bottom: 8px;
-        box-sizing: border-box;
-        padding-top: 12px !important;
-
-        &.adf-sortable {
-            @include adf-no-select;
-
-            &:hover {
-                cursor: pointer;
-            }
-
-            display: flex;
-            align-items: center;
-        }
-
-        &.adf-datatable__header--sorted-asc,
-        &.adf-datatable__header--sorted-desc {
-            color: var(--theme-text-fg-color);
-
-            &::before {
-                @include typo-icon;
-
-                font-size: $data-table-header-sort-icon-size;
-                content: '\e5d8';
-                left: 5px;
-                right: 5px;
-                position: relative;
-                vertical-align: sub;
-            }
-        }
-
-        &.adf-datatable__header--sorted-desc::before {
-            content: '\e5db';
-        }
-
-        &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
-        &.adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
-            left: -3px;
-            right: -3px;
-        }
-
-        &.adf-datatable-checkbox {
-            display: flex;
-            align-items: center;
-        }
-    }
-
     .adf-datatable-cell-header.adf-expand-cell-1,
     .adf-datatable-cell.adf-expand-cell-1 {
         flex-grow: 1;
@@ -421,11 +376,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             align-items: center;
             display: flex;
             width: 100%;
+            padding: 0 10px;
         }
 
         .adf-datatable-cell-value {
             word-break: break-word;
-            padding: 10px;
+            padding-right: 10px;
             display: block;
 
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
@@ -519,7 +475,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        padding: 0 4px;
 
         &.adf-datatable-cell-header,
         .adf-datatable-content-cell {
@@ -603,6 +558,140 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         .adf-desktop-only {
             display: none !important;
         }
+    }
+}
+
+.adf-datatable-cell-header {
+    @include adf-no-select;
+
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    line-height: 24px;
+    letter-spacing: 0;
+    min-height: $data-table-row-height !important;
+    font-size: $data-table-header-font-size;
+    color: var(--theme-text-fg-color);
+    box-sizing: border-box;
+
+    .adf-datatable-cell-value {
+        padding: 10px 0 !important;
+    }
+
+    &.adf-sortable {
+        @include adf-no-select;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        display: flex;
+        align-items: center;
+    }
+
+    .adf-datatable__header--sorted-asc,
+    .adf-datatable__header--sorted-desc {
+        color: var(--theme-text-fg-color);
+
+        &::after {
+            @include typo-icon;
+
+            font-size: $data-table-header-sort-icon-size;
+            content: '\e5d8';
+            left: 5px;
+            right: 5px;
+            position: relative;
+            vertical-align: sub;
+        }
+    }
+
+    .adf-datatable__header--sorted-desc::after {
+        content: '\e5db';
+    }
+
+    .adf-datatable-cell--fileSize.adf-datatable__header--sorted-asc::before,
+    .adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
+        left: -3px;
+        right: -3px;
+    }
+
+    &.adf-datatable-checkbox {
+        display: flex;
+        align-items: center;
+    }
+
+    .adf-datatable-cell-header-content {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        margin: 0 2px;
+        padding: 0 8px;
+        column-gap: 5px;
+
+        .adf-datatable-cell-header-drag-icon-placeholder {
+            min-width: 15px;
+        }
+
+        &--hovered {
+            background-color: var(--theme-bg-hover-color);
+            border-radius: 6px;
+        }
+    }
+
+    .adf-datatable-cell-header-drag-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 3px;
+        margin: auto;
+        color: #ccc;
+        cursor: move;
+        width: 24px;
+        height: 24px;
+    }
+
+    .adf-datatable-cell-value {
+        padding: 10px;
+        line-height: 24px;
+        word-break: break-word;
+    }
+}
+
+.adf-drop-header-cell-placeholder {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    background: var(--theme-bg-hover-color);
+    border: dotted 1px rgba(0, 0, 0, 0.25);
+    min-height: 55px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.adf-datatable-cell-header.adf-ellipsis-cell {
+    .adf-datatable-cell-header-content {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .adf-datatable-cell-header-content--hovered {
+        .adf-datatable-cell-value {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.cdk-drag-preview {
+    &.adf-datatable-cell-header {
+        border-radius: 6px;
+        background-color: var(--theme-background-color);
+
+        @include mat-elevation-transition;
+        @include mat-overridable-elevation(4);
     }
 }
 

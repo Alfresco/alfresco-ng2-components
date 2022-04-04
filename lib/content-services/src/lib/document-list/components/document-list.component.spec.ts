@@ -59,6 +59,8 @@ import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
+import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
+import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 
 describe('DocumentList', () => {
 
@@ -1139,7 +1141,7 @@ describe('DocumentList', () => {
 
     it('should display [empty folder] template ', () => {
         fixture.detectChanges();
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
     });
@@ -1157,7 +1159,7 @@ describe('DocumentList', () => {
     });
 
     it('should empty folder NOT show the pagination', () => {
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);

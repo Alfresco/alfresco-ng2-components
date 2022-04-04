@@ -43,6 +43,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| id | `string` | '' | Column identifier. |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
@@ -51,6 +52,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
+| draggable | `boolean` | false | Toggles drag and drop for header column. |
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |

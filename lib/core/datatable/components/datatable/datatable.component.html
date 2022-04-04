@@ -8,21 +8,27 @@
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
+            cdkDropList
+            cdkDropListOrientation="horizontal"
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
+            [class.adf-datatable-header-sticky-row]="stickyHeader"
             *ngIf="display === 'list'"
             role="row">
+
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
+
             <!-- Columns -->
             <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
             </div>
+
             <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
-                 *ngFor="let col of data.getColumns()"
+                 *ngFor="let col of data.getColumns(); let columnIndex = index"
                  [class.adf-sortable]="col.sortable"
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
@@ -32,14 +38,58 @@
                  role="columnheader"
                  [attr.tabindex]="isHeaderVisible() ? 0 : null"
                  [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
+                 cdkDrag
+                 cdkDragBoundary="adf-datatable-row"
+                 cdkDragLockAxis="x"
+                 (cdkDragStarted)="isDraggingHeaderColumn = true"
+                 (cdkDragDropped)="onDropHeaderColumn($event)"
+                 [cdkDragDisabled]="!col.draggable"
+                 (mouseenter)="hoveredHeaderColumnIndex = columnIndex"
+                 (mouseleave)="hoveredHeaderColumnIndex = -1"
                  adf-drop-zone dropTarget="header" [dropColumn]="col">
-                <ng-container *ngIf="!col.header">
-                    <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
-                    <span *ngIf="col.title && col.sortable" class="adf-sr-only" aria-live="polite">{{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}</span>
+
+                <div
+                    *ngIf="!col.header"
+                    class="adf-datatable-cell-header-content"
+                    [class.adf-datatable-cell-header-content--hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
+                >
+                    <span
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex && col.draggable"
+                        class="adf-datatable-cell-header-drag-icon-placeholder"
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-placeholder-'+col.key"
+                    ></span>
+
+                    <span *ngIf="col.title" class="adf-datatable-cell-value"> {{col.title | translate}}</span>
+
+                    <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
+                        {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
+                    </span>
+
                     <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
-                </ng-container>
+
+                    <span
+                        [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
+                        [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
+                    </span>
+                </div>
+
                 <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+
+                <div
+                    *ngIf="col.draggable"
+                    cdkDragHandle
+                    class="adf-datatable-cell-header-drag-icon"
+                >
+                    <adf-icon
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex"
+                        value="adf:drag_indicator"
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key">
+                    </adf-icon>
+                </div>
+
+                <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
             </div>
+
             <!-- Actions (right) -->
             <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
@@ -58,7 +108,10 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body" role="rowgroup">
+    <div
+        class="adf-datatable-body"
+        [class.adf-blur-datatable-body]="isDraggingHeaderColumn"
+        role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
                 [row]="row"
@@ -171,7 +224,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"
+                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
