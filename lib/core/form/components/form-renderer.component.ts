@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnInit, Inject, Optional, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { FormService } from '../public-api';
+import { FORM_RULES_MANAGER, FormRulesManager } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 
 @Component({
@@ -24,7 +28,7 @@ import { FormModel } from './widgets/core/form.model';
     styleUrls: ['./form-renderer.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent {
+export class FormRendererComponent implements OnInit, OnDestroy {
 
     /** Toggle debug options. */
     @Input()
@@ -34,5 +38,30 @@ export class FormRendererComponent {
     formDefinition: FormModel;
 
     debugMode: boolean;
+    private onDestroy$ = new Subject<boolean>();
+
+    constructor(private formService: FormService, @Optional() @Inject(FORM_RULES_MANAGER) private formRulesManager: FormRulesManager) { }
+
+    ngOnInit(): void {
+        if (!!this.formRulesManager) {
+            const rules = this.formDefinition?.rules;
+
+            if (!!rules) {
+                this.formService.formRulesEvent
+                    .pipe(
+                        filter(event => !!event.form.id && event.form.id === this.formDefinition?.id),
+                        takeUntil(this.onDestroy$)
+                    ).subscribe(event => {
+                        this.formRulesManager.handleRuleEvent(event, rules);
+                    });
+
+            }
+        }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
 
 }

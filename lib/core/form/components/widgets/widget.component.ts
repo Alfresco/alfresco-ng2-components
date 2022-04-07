@@ -108,7 +108,7 @@ export class WidgetComponent implements AfterViewInit {
 
     event(event: Event): void {
         this.formService.formEvents.next(event);
-        this.formService.formRulesEvent.next(new FormRulesEvent(event.type, new FormFieldEvent(this.field.form, this.field), event));
+        this.formService.formRulesEvent.next(new FormRulesEvent(event?.type, new FormFieldEvent(this.field?.form, this.field), event));
     }
 
     markAsTouched() {

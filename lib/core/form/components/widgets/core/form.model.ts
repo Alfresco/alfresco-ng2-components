@@ -78,6 +78,7 @@ export class FormModel implements ProcessFormModel {
     outcomes: FormOutcomeModel[] = [];
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     customFieldTemplates: FormFieldTemplates = {};
+    rules: any;
 
     className: string;
     readOnly = false;
@@ -101,6 +102,7 @@ export class FormModel implements ProcessFormModel {
             this.variables = json.variables || [];
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace ? true : false;
+            this.rules = json.formDefinition?.rules || json.rules;
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 

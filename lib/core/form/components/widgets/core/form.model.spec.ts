@@ -607,8 +607,8 @@ describe('FormModel', () => {
 
             expect(form.values['pfx_property_one']).toBe('testValue');
             expect(form.values['pfx_property_two']).toBe(true);
-            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
-            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
+            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
             expect(form.values['pfx_property_five']).toEqual('green');
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
@@ -647,6 +647,19 @@ describe('FormModel', () => {
             form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
 
             expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBeNull();
+        });
+    });
+
+    describe('Form rules', () => {
+        it('should retrieve rules form the JSON', () => {
+            let form = new FormModel({ id: 'mock', rules: 'rules' });
+            expect(form.rules).toEqual('rules');
+
+            form = new FormModel({ id: 'mock', formDefinition: { rules: 'rules' } });
+            expect(form.rules).toEqual('rules');
+
+            form = new FormModel({ id: 'mock' });
+            expect(form.rules).toBeFalsy();
         });
     });
 });
