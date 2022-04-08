@@ -16,6 +16,8 @@
  */
 
 import { ContentChild, Input, Directive } from '@angular/core';
+import { Subject } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from './data-column.model';
@@ -39,14 +41,23 @@ export abstract class DataTableSchema {
 
     private layoutPresets = {};
 
+    private columnsSchemaSubject$ = new Subject<boolean>();
+    protected isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable().pipe(
+        shareReplay(1)
+    );
+
     constructor(private appConfigService: AppConfigService,
                 protected presetKey: string,
                 protected presetsModel: any) { }
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
+
         if (!this.columns || this.columns.length === 0) {
             this.createColumns();
+            this.columnsSchemaSubject$.next(true);
+        } else {
+            this.columnsSchemaSubject$.next(false);
         }
     }
 

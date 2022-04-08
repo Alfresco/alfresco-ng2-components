@@ -21,14 +21,14 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent, DataColumn } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
+import { map, take } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { take } from 'rxjs/operators';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -192,12 +192,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    isLoadingProcesses = true;
-    isLoadingColumnsOrder = true;
-
-    get isLoading(): boolean {
-        return this.isLoadingProcesses || this.isLoadingColumnsOrder;
-    }
+    isLoading = false;
 
     rows: any[] = [];
     formattedSorting: any[];
@@ -208,7 +203,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService,
-                @Inject(PROCESS_FILTERS_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface) {
+                @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
@@ -222,16 +217,22 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     ngAfterContentInit() {
-        this.isLoadingColumnsOrder = true;
-        this.loadColumnsOrderPreferences()
-            .pipe(take(1))
-            .subscribe((columnsOrder) => {
-                this.isLoadingColumnsOrder = false;
+        this.cloudPreferenceService.getPreferences(this.appName)
+            .pipe(
+                take(1),
+                map((preferences => {
+                    const preferencesList = preferences?.list?.entries ?? [];
+                    const columnsOrder = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnOrder);
+
+                    return {
+                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined
+                    };
+                }))
+            )
+            .subscribe(({ columnsOrder }) => {
                 this.columnsOrder = columnsOrder;
 
                 this.createDatatableSchema();
-            }, () => {
-                this.isLoadingColumnsOrder = false;
             });
     }
 
@@ -258,18 +259,22 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     private load(requestNode: ProcessQueryCloudRequestModel) {
-        this.isLoadingProcesses = true;
+        this.isLoading = true;
 
-        this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1)).subscribe(
-            (processes) => {
-                this.rows = processes.list.entries;
-                this.success.emit(processes);
-                this.isLoadingProcesses = false;
-                this.pagination.next(processes.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoadingProcesses = false;
-            });
+        combineLatest([
+            this.processListCloudService.getProcessByRequest(requestNode),
+            this.isColumnSchemaCreated$
+        ]).pipe(
+            take(1)
+        ).subscribe(([processes]) => {
+            this.rows = processes.list.entries;
+            this.success.emit(processes);
+            this.isLoading = false;
+            this.pagination.next(processes.list.pagination);
+        }, (error) => {
+            this.error.emit(error);
+            this.isLoading = false;
+        });
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
@@ -321,13 +326,12 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
-        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
-
         if (this.appName) {
+            const newColumnsOrder = columnsWithNewOrder.map(column => column.id);
             this.cloudPreferenceService.updatePreference(
                 this.appName,
                 ProcessListCloudPreferences.columnOrder,
-                this.columnsOrder
+                newColumnsOrder
             );
         }
     }
@@ -416,12 +420,5 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     isValidSorting(sorting: ProcessListCloudSortingModel[]) {
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
-    }
-
-    private loadColumnsOrderPreferences(): Observable<string[]> {
-        return this.cloudPreferenceService.getPreferences(
-            this.appName,
-            ProcessListCloudPreferences.columnOrder
-        );
     }
 }
