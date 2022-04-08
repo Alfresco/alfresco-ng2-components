@@ -21,10 +21,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-full-width {
         width: 100%;
     }
-
-    .adf-datatable-header-sticky-row {
-        margin-right: 15px;
-    }
 }
 
 .adf-datatable-card {
@@ -577,10 +573,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     color: var(--theme-text-fg-color);
     box-sizing: border-box;
 
-    .adf-datatable-cell-value {
-        padding: 10px 0 !important;
-    }
-
     &.adf-sortable {
         @include adf-no-select;
 
@@ -654,7 +646,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-datatable-cell-value {
-        padding: 10px;
+        padding: 10px 0 !important;
         line-height: 24px;
         word-break: break-word;
     }
