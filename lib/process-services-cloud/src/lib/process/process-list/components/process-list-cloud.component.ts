@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild, Output, EventEmitter, SimpleChanges, Input, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild, Output, EventEmitter, SimpleChanges, Input, ViewChild, Inject } from '@angular/core';
 import { DataTableSchema, PaginatedComponent,
          CustomEmptyContentTemplateDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
-         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent } from '@alfresco/adf-core';
+         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent, DataColumn } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { map, take } from 'rxjs/operators';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -188,15 +192,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    isLoading = true;
+    isLoading = false;
+
     rows: any[] = [];
     formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
+
     private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
-                private userPreferences: UserPreferencesService) {
+                private userPreferences: UserPreferencesService,
+                @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
@@ -210,7 +217,23 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     ngAfterContentInit() {
-        this.createDatatableSchema();
+        this.cloudPreferenceService.getPreferences(this.appName)
+            .pipe(
+                take(1),
+                map((preferences => {
+                    const preferencesList = preferences?.list?.entries ?? [];
+                    const columnsOrder = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnOrder);
+
+                    return {
+                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined
+                    };
+                }))
+            )
+            .subscribe(({ columnsOrder }) => {
+                this.columnsOrder = columnsOrder;
+
+                this.createDatatableSchema();
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -237,16 +260,21 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     private load(requestNode: ProcessQueryCloudRequestModel) {
         this.isLoading = true;
-        this.processListCloudService.getProcessByRequest(requestNode).subscribe(
-            (processes) => {
-                this.rows = processes.list.entries;
-                this.success.emit(processes);
-                this.isLoading = false;
-                this.pagination.next(processes.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
+
+        combineLatest([
+            this.processListCloudService.getProcessByRequest(requestNode),
+            this.isColumnSchemaCreated$
+        ]).pipe(
+            take(1)
+        ).subscribe(([processes]) => {
+            this.rows = processes.list.entries;
+            this.success.emit(processes);
+            this.isLoading = false;
+            this.pagination.next(processes.list.pagination);
+        }, (error) => {
+            this.error.emit(error);
+            this.isLoading = false;
+        });
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
@@ -295,6 +323,17 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.setSorting(event.detail);
         this.formatSorting(this.sorting);
         this.reload();
+    }
+
+    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        if (this.appName) {
+            const newColumnsOrder = columnsWithNewOrder.map(column => column.id);
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                ProcessListCloudPreferences.columnOrder,
+                newColumnsOrder
+            );
+        }
     }
 
     onRowClick(item: DataRowEvent) {

@@ -27,7 +27,9 @@ import {
     LocalPreferenceCloudService,
     PreferenceCloudServiceInterface,
     PROCESS_FILTERS_SERVICE_TOKEN,
-    TASK_FILTERS_SERVICE_TOKEN
+    TASK_FILTERS_SERVICE_TOKEN,
+    PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+    TASK_LIST_PREFERENCES_TOKEN
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
@@ -67,7 +69,10 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
     ]
 })
 export class ProcessServicesCloudModule {
-    static forRoot(preferenceServiceInstance?: PreferenceCloudServiceInterface): ModuleWithProviders<ProcessServicesCloudModule> {
+    static forRoot(
+        filterPreferenceServiceInstance?: PreferenceCloudServiceInterface,
+        listPreferenceServiceInstance?: PreferenceCloudServiceInterface
+    ): ModuleWithProviders<ProcessServicesCloudModule> {
         return {
             ngModule: ProcessServicesCloudModule,
             providers: [
@@ -79,8 +84,10 @@ export class ProcessServicesCloudModule {
                         source: 'assets/adf-process-services-cloud'
                     }
                 },
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: TASK_LIST_PREFERENCES_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
