@@ -15,11 +15,59 @@
  * limitations under the License.
  */
 
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Injector } from '@angular/core';
 import { FormRulesEvent } from 'core/form/events/form-rules.event';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { FormModel, FormService } from '../public-api';
 
-export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager>('form.rule.manager');
+export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('form.rule.manager');
 
-export interface FormRulesManager {
-    handleRuleEvent(event: FormRulesEvent, rules: any): void;
+export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager<T> {
+    try {
+        return injector.get(FORM_RULES_MANAGER);
+    } catch {
+        return new ByPassFormRuleManager<T>(null);
+    }
+}
+
+export abstract class FormRulesManager<T> {
+    constructor(private formService: FormService) { }
+
+    protected formModel: FormModel;
+    private onDestroy$ = new Subject<boolean>();
+
+    initialize(formModel: FormModel) {
+        this.formModel = formModel;
+        const rules = this.getRules();
+
+        if (!!rules) {
+            this.formService.formRulesEvent
+                .pipe(
+                    filter(event => !!event.form.id && event.form.id === formModel?.id),
+                    takeUntil(this.onDestroy$)
+                ).subscribe(event => {
+                    this.handleRuleEvent(event, rules);
+                });
+        }
+    }
+
+    protected abstract getRules(): T;
+    protected abstract handleRuleEvent(event: FormRulesEvent, rules: T): void;
+
+    destroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+}
+
+export class ByPassFormRuleManager<T> extends FormRulesManager<T> {
+
+    protected getRules(): any {
+        return null;
+    }
+
+    protected handleRuleEvent(): void {
+        return;
+    }
 }

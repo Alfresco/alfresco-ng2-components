@@ -43,9 +43,7 @@ import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { FormRulesManager, FORM_RULES_MANAGER } from '../models/form-rules.model';
-import { FormEvent } from '../events/form.event';
-import { FormRulesEvent } from '../events/form-rules.event';
+import { FormRulesManager } from '../models/form-rules.model';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
@@ -73,37 +71,29 @@ const expectInputElementValueIs = (targetElement: HTMLInputElement, value: strin
     expect(targetElement.value).toBe(value, `invalid value for ${targetElement.name}`);
 };
 
-const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
+const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent<any>>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).toBeTruthy();
 };
 
-const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
+const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent<any>>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).toBeFalsy();
 };
 
 describe('Form Renderer Component', () => {
 
-    let formRendererComponent: FormRendererComponent;
-    let fixture: ComponentFixture<FormRendererComponent>;
+    let formRendererComponent: FormRendererComponent<any>;
+    let fixture: ComponentFixture<FormRendererComponent<any>>;
     let formService: FormService;
     let formRenderingService: FormRenderingService;
-    let rulesManager: FormRulesManager;
+    let rulesManager: FormRulesManager<any>;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            {
-                provide: FORM_RULES_MANAGER,
-                useValue: {
-                    handleRuleEvent: () => { }
-                }
-            }
         ]
     });
 
@@ -112,7 +102,7 @@ describe('Form Renderer Component', () => {
         formRendererComponent = fixture.componentInstance;
         formService = TestBed.inject(FormService);
         formRenderingService = TestBed.inject(FormRenderingService);
-        rulesManager = TestBed.inject(FORM_RULES_MANAGER);
+        rulesManager = fixture.debugElement.injector.get(FormRulesManager);
     });
 
     afterEach(() => {
@@ -674,48 +664,22 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Form rules', () => {
-        it('Should not subscribe to form rule events if no rules are provided', async () => {
-            spyOn(rulesManager, 'handleRuleEvent');
-            const formModel = formService.parseForm({ id: 'mock' });
-            const event = new FormEvent(formModel);
+        it('should call the Form Rules Manager init on component initialization', () => {
+            spyOn(rulesManager, 'initialize');
+            const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
             formRendererComponent.ngOnInit();
 
-            formService.formLoaded.next(event);
-            await fixture.whenStable();
-
-            expect(rulesManager.handleRuleEvent).not.toHaveBeenCalled();
+            expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
         });
 
-        it('Should subscribe to form rule events and call the rule manager when rules exist in form definition', async () => {
-            spyOn(rulesManager, 'handleRuleEvent');
-            const formModel = formService.parseForm({ id: 'mock', formDefinition: { rules: 'rules' } });
-            const event = new FormEvent(formModel);
-            const formRuleEvent = new FormRulesEvent('formLoaded', event);
+        it('should call the Form Rules Manager destroy on component destruction', () => {
+            spyOn(rulesManager, 'destroy');
 
-            formRendererComponent.formDefinition = formModel;
-            formRendererComponent.ngOnInit();
+            formRendererComponent.ngOnDestroy();
 
-            formService.formLoaded.next(event);
-            await fixture.whenStable();
-
-            expect(rulesManager.handleRuleEvent).toHaveBeenCalledWith(formRuleEvent, 'rules');
-        });
-
-        it('Should subscribe to form rule events and call the rule manager when rules exist in root', async () => {
-            spyOn(rulesManager, 'handleRuleEvent');
-            const formModel = formService.parseForm({ id: 'mock', rules: 'rules' });
-            const event = new FormEvent(formModel);
-            const formRuleEvent = new FormRulesEvent('formLoaded', event);
-
-            formRendererComponent.formDefinition = formModel;
-            formRendererComponent.ngOnInit();
-
-            formService.formLoaded.next(event);
-            await fixture.whenStable();
-
-            expect(rulesManager.handleRuleEvent).toHaveBeenCalledWith(formRuleEvent, 'rules');
+            expect(rulesManager.destroy).toHaveBeenCalled();
         });
     });
 });
