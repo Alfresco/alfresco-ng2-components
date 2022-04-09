@@ -20,7 +20,7 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { combineLatest } from 'rxjs';
@@ -139,7 +139,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
+                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 

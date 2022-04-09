@@ -546,7 +546,9 @@ describe('TaskListCloudComponent', () => {
             element = fixture.debugElement.nativeElement;
             taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
 
+            component.isColumnSchemaCreated$ = of(true);
         });
+
         afterEach(() => {
             fixture.destroy();
         });

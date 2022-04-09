@@ -24,7 +24,7 @@ import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { combineLatest } from 'rxjs';
-import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_TOKEN } from '../../../services/public-api';
+import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
 import { take } from 'rxjs/operators';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
@@ -43,7 +43,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
+                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 

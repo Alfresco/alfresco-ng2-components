@@ -29,7 +29,7 @@ import {
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN,
     PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-    TASK_LIST_PREFERENCES_TOKEN
+    TASK_LIST_PREFERENCES_SERVICE_TOKEN
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
@@ -87,7 +87,7 @@ export class ProcessServicesCloudModule {
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_LIST_PREFERENCES_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
