@@ -1633,7 +1633,7 @@ describe('Drag&Drop column header', () => {
         ];
 
         dataTableSchema = [
-            new ObjectDataColumn({ key: 'id', title: 'ID', draggable: true }),
+            new ObjectDataColumn({ key: 'id', title: 'ID', draggable: false }),
             new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
         ];
 
@@ -1667,12 +1667,12 @@ describe('Drag&Drop column header', () => {
     it('should not show drag indicator icon, when drag and drop is disabled', () => {
         fixture.detectChanges();
 
-        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
+        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
         hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
         fixture.detectChanges();
 
-        const dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
-        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]');
+        const dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
+        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-id"]');
 
         expect(dragIcon).toBeFalsy();
         expect(dragIconPlaceholder).toBeFalsy();

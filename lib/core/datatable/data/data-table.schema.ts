@@ -42,7 +42,7 @@ export abstract class DataTableSchema {
     private layoutPresets = {};
 
     private columnsSchemaSubject$ = new Subject<boolean>();
-    protected isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable().pipe(
+    isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable().pipe(
         shareReplay(1)
     );
 

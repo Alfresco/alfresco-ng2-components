@@ -192,7 +192,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     skipCount: number = 0;
     currentInstanceId: string;
     selectedInstances: any[];
-    isLoading = false;
+    isLoading = true;
 
     rows: any[] = [];
     formattedSorting: any[];
