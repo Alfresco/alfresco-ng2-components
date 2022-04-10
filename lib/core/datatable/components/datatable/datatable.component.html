@@ -49,6 +49,7 @@
 
                 <div
                     *ngIf="!col.header"
+                    [attr.data-automation-id]="'auto_header_content_id_' + col.key"
                     class="adf-datatable-cell-header-content"
                     [class.adf-datatable-cell-header-content--hovered]="hoveredHeaderColumnIndex === columnIndex && !isDraggingHeaderColumn"
                 >
