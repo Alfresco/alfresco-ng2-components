@@ -16,8 +16,7 @@
  */
 
 import { ContentChild, Input, Directive } from '@angular/core';
-import { Subject } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from './data-column.model';
@@ -41,10 +40,8 @@ export abstract class DataTableSchema {
 
     private layoutPresets = {};
 
-    private columnsSchemaSubject$ = new Subject<boolean>();
-    isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable().pipe(
-        shareReplay(1)
-    );
+    private columnsSchemaSubject$ = new ReplaySubject<boolean>();
+    isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
     constructor(private appConfigService: AppConfigService,
                 protected presetKey: string,
