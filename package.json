@@ -136,7 +136,7 @@
     "@typescript-eslint/parser": "4.3.0",
     "ajv-cli": "^4.2.0",
     "codelyzer": "^6.0.1",
-    "commander": "6.2.1",
+    "commander": "9.1.0",
     "concurrently": "^7.0.0",
     "cspell": "^5.5.1",
     "css-loader": "^5.2.6",
