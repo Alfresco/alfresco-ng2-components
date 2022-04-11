@@ -16,9 +16,9 @@
  */
 
 import { InjectionToken, Injector } from '@angular/core';
-import { FormRulesEvent } from 'core/form/events/form-rules.event';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
 
 export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('form.rule.manager');
