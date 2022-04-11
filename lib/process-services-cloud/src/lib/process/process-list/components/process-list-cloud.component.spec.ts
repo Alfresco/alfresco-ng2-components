@@ -27,7 +27,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -102,6 +102,8 @@ describe('ProcessListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => fixture.destroy());

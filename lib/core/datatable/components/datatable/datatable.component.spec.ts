@@ -29,6 +29,9 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { domSanitizerMock } from 'content-services/src/lib/testing/dom-sanitizer-mock';
+import { matIconRegistryMock } from 'content-services/src/lib/testing/mat-icon-registry-mock';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({selector: 'adf-custom-column-template-component', template: `
     <ng-template #tmplRef></ng-template>
@@ -722,7 +725,7 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        const table = new DataTableComponent(null, null);
+        const table = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
@@ -1603,5 +1606,117 @@ describe('Accesibility', () => {
 
         const cell = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
         expect(cell.getAttribute('tabindex')).toBe('0');
+    });
+});
+
+describe('Drag&Drop column header', () => {
+    let fixture: ComponentFixture<DataTableComponent>;
+    let dataTable: DataTableComponent;
+    let data: { id: number; name: string }[] = [];
+    let dataTableSchema: DataColumn[] = [];
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
+        declarations: [CustomColumnTemplateComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        data = [
+            { id: 1, name: 'name1' },
+            { id: 2, name: 'name2' }
+        ];
+
+        dataTableSchema = [
+            new ObjectDataColumn({ key: 'id', title: 'ID', draggable: false }),
+            new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
+        ];
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [...data],
+            [...dataTableSchema]
+        );
+    });
+
+    it('should show/hide drag indicator icon', () => {
+        fixture.detectChanges();
+
+        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
+        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        fixture.detectChanges();
+
+        let dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
+        let dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]');
+        expect(dragIcon).toBeTruthy();
+        expect(dragIconPlaceholder).toBeTruthy();
+
+        hedaderColumn.dispatchEvent(new MouseEvent('mouseleave'));
+        fixture.detectChanges();
+
+        dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
+        dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]');
+        expect(dragIcon).toBeFalsy();
+        expect(dragIconPlaceholder).toBeFalsy();
+    });
+
+    it('should not show drag indicator icon, when drag and drop is disabled', () => {
+        fixture.detectChanges();
+
+        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
+        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        fixture.detectChanges();
+
+        const dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
+        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-id"]');
+
+        expect(dragIcon).toBeFalsy();
+        expect(dragIconPlaceholder).toBeFalsy();
+    });
+
+    it('should emit on change column order', () => {
+        const columnOrderChangedSpy = spyOn(dataTable.columnOrderChanged, 'emit');
+        const dropEvent: CdkDragDrop<unknown> = {
+            previousIndex: 0,
+            currentIndex: 1,
+            item: undefined,
+            container: undefined,
+            previousContainer: undefined,
+            isPointerOverContainer: true,
+            distance: { x: 0, y: 0 }
+        };
+
+        dataTable.onDropHeaderColumn(dropEvent);
+
+        expect(columnOrderChangedSpy).toHaveBeenCalledWith(dataTableSchema.reverse());
+    });
+
+    it('should change columns order', () => {
+        const dropEvent: CdkDragDrop<unknown> = {
+            previousIndex: 0,
+            currentIndex: 1,
+            item: undefined,
+            container: undefined,
+            previousContainer: undefined,
+            isPointerOverContainer: true,
+            distance: { x: 0, y: 0 }
+        };
+
+        dataTable.onDropHeaderColumn(dropEvent);
+
+        fixture.detectChanges();
+
+        const columns = dataTable.data.getColumns();
+        const headerCells = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell--text.adf-datatable-cell-header');
+
+        expect(columns[0].key).toEqual(dataTableSchema[1].key);
+        expect(columns[1].key).toEqual(dataTableSchema[0].key);
+
+        expect(headerCells[0].innerText).toBe(dataTableSchema[1].title);
+        expect(headerCells[1].innerText).toBe(dataTableSchema[0].title);
     });
 });

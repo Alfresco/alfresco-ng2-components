@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Inject } from '@angular/core';
 import {
     AppConfigService, UserPreferencesService
 } from '@alfresco/adf-core';
@@ -23,6 +23,9 @@ import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { combineLatest } from 'rxjs';
+import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
+import { take } from 'rxjs/operators';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -39,14 +42,21 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService) {
-        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY);
+                userPreferences: UserPreferencesService,
+                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
+        super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.serviceTaskListCloudService.getServiceTaskByRequest(requestNode).subscribe(
-            (tasks) => {
+
+        combineLatest([
+            this.serviceTaskListCloudService.getServiceTaskByRequest(requestNode),
+            this.isColumnSchemaCreated$
+        ]).pipe(
+            take(1)
+        ).subscribe(
+            ([tasks]) => {
                 this.rows = tasks.list.entries;
                 this.success.emit(tasks);
                 this.isLoading = false;

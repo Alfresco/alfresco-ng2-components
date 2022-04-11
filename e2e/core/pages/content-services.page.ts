@@ -63,10 +63,10 @@ export class ContentServicesPage {
     errorSnackBar = $('simple-snack-bar[class*="mat-simple-snackbar"]');
     emptyPagination = $('adf-pagination[class*="adf-pagination__empty"]');
     dragAndDrop = $$('adf-upload-drag-area div').first();
-    nameHeader = $$('div[data-automation-id="auto_id_name"] > span').first();
-    sizeHeader = $$('div[data-automation-id="auto_id_content.sizeInBytes"] > span').first();
-    createdByHeader = $$('div[data-automation-id="auto_id_createdByUser.displayName"] > span').first();
-    createdHeader = $$('div[data-automation-id="auto_id_createdAt"] > span').first();
+    nameHeader = $$('div[data-automation-id="auto_header_content_id_name"] > span').first();
+    sizeHeader = $$('div[data-automation-id="auto_header_content_id_content.sizeInBytes"] > span').first();
+    createdByHeader = $$('div[data-automation-id="auto_header_content_id_createdByUser.displayName"] > span').first();
+    createdHeader = $$('div[data-automation-id="auto_header_content_id_createdAt"] > span').first();
     recentFiles = $('.app-container-recent');
     recentFilesExpanded = $('.app-container-recent mat-expansion-panel-header.mat-expanded');
     recentFilesClosed = $('.app-container-recent mat-expansion-panel-header');

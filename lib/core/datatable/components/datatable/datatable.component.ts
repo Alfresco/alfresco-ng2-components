@@ -20,7 +20,7 @@
 import {
     ViewChildren, QueryList, HostListener,
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy, AfterViewInit
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy, AfterViewInit, OnInit
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -40,6 +40,9 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // eslint-disable-next-line no-shadow
 export enum DisplayMode {
@@ -61,7 +64,7 @@ export enum ShowHeaderMode {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable' }
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
+export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -160,6 +163,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Output()
     executeRowAction = new EventEmitter<DataRowActionEvent>();
 
+    @Output()
+    columnOrderChanged = new EventEmitter<DataColumn[]>();
+
     /** Flag that indicates if the datatable is in loading state and needs to show the
      * loading template (see the docs to learn how to configure a loading template).
      */
@@ -199,6 +205,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
 
+    isDraggingHeaderColumn = false;
+    hoveredHeaderColumnIndex = -1;
+
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
 
@@ -220,12 +229,19 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     constructor(private elementRef: ElementRef,
-                differs: IterableDiffers) {
+                differs: IterableDiffers,
+                private matIconRegistry: MatIconRegistry,
+                private sanitizer: DomSanitizer) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
+
         this.click$ = new Observable<DataRowEvent>((observer) => this.clickObserver = observer)
             .pipe(share());
+    }
+
+    ngOnInit(): void {
+        this.registerDragHandleIcon();
     }
 
     ngAfterContentInit() {
@@ -260,13 +276,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 if (dataChanges) {
                     this.data = changes['data'].currentValue;
                     this.resetSelection();
-                } else if (rowChanges) {
+                }
+
+                if (rowChanges) {
                     this.setTableRows(changes['rows'].currentValue);
                     this.setTableSorting(this.sorting);
-                } else {
+                }
+
+                if (columnChanges) {
                     this.setTableColumns(changes['columns'].currentValue);
                 }
             }
+
             return;
         }
 
@@ -289,6 +310,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             return false;
         }
         return column.key === this.data.getSorting().key;
+    }
+
+    onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
+        const columns = this.data.getColumns();
+        moveItemInArray(columns, event.previousIndex, event.currentIndex);
+
+        this.columnOrderChanged.emit(columns);
+        this.isDraggingHeaderColumn = false;
     }
 
     ngDoCheck() {
@@ -848,6 +877,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return this.isColumnSorted(column, 'asc') ?
             'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY' :
             'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
+    }
+
+    private registerDragHandleIcon(): void {
+        const iconUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            './assets/images/drag_indicator_24px.svg'
+        );
+
+        this.matIconRegistry.addSvgIconInNamespace(
+            'adf',
+            'drag_indicator',
+            iconUrl
+        );
     }
 }
 

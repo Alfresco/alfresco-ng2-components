@@ -26,7 +26,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { skip } from 'rxjs/operators';
+import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
 
@@ -124,6 +124,8 @@ describe('TaskListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -419,6 +421,8 @@ describe('TaskListCloudComponent', () => {
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
             element = copyFixture.debugElement.nativeElement;
+
+            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
@@ -542,7 +546,9 @@ describe('TaskListCloudComponent', () => {
             element = fixture.debugElement.nativeElement;
             taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
 
+            component.isColumnSchemaCreated$ = of(true);
         });
+
         afterEach(() => {
             fixture.destroy();
         });

@@ -26,8 +26,10 @@ import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model'
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -120,7 +122,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     constructor(appConfigService: AppConfigService,
                 private taskCloudService: TaskCloudService,
                 private userPreferences: UserPreferencesService,
-                presetKey: string) {
+                presetKey: string,
+                private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
@@ -153,7 +156,18 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     ngAfterContentInit() {
-        this.createDatatableSchema();
+        this.cloudPreferenceService.getPreferences(this.appName).pipe(
+            take(1),
+            map((preferences => {
+                const preferencesList = preferences?.list?.entries ?? [];
+                const searchedPreferences = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                return searchedPreferences ? JSON.parse(searchedPreferences.entry.value) : null;
+            }))
+        ).subscribe(columnsOrder => {
+                this.columnsOrder = columnsOrder;
+                this.createDatatableSchema();
+            }
+        );
     }
 
     reload() {
@@ -233,6 +247,18 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     onExecuteRowAction(row: DataRowActionEvent) {
         this.executeRowAction.emit(row);
+    }
+
+    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+
+        if (this.appName) {
+                this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnOrder,
+                this.columnsOrder
+            );
+        }
     }
 
     setSorting(sortDetail) {
