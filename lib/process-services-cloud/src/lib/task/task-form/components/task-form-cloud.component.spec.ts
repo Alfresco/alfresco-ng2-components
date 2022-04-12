@@ -22,7 +22,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
-import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CLAIM_PERMISSION, TASK_CREATED_STATE, TASK_RELEASE_PERMISSION, TASK_VIEW_PERMISSION } from '../../start-task/models/task-details-cloud.model';
+import {
+    TaskDetailsCloudModel,
+    TASK_ASSIGNED_STATE,
+    TASK_CLAIM_PERMISSION,
+    TASK_CREATED_STATE,
+    TASK_RELEASE_PERMISSION,
+    TASK_VIEW_PERMISSION
+} from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -41,7 +48,7 @@ const taskDetails: TaskDetailsCloudModel = {
     permissions: [TASK_VIEW_PERMISSION]
 };
 
-fdescribe('TaskFormCloudComponent', () => {
+describe('TaskFormCloudComponent', () => {
 
     let taskCloudService: TaskCloudService;
     let identityUserService: IdentityUserService;
