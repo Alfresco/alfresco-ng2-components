@@ -649,6 +649,7 @@ export const cloudFormMock = {
     metadata: {},
     variables: [
         {
+            id: 'FormVarStrId',
             name: 'FormVarStr',
             type: 'string',
             value: ''

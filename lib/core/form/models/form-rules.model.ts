@@ -63,7 +63,7 @@ export abstract class FormRulesManager<T> {
 
 export class ByPassFormRuleManager<T> extends FormRulesManager<T> {
 
-    protected getRules(): any {
+    protected getRules(): T {
         return null;
     }
 

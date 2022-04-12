@@ -419,4 +419,51 @@ export class FormModel implements ProcessFormModel {
             viewer.value = viewer.parseValue(viewer.json);
         });
     }
+
+    changeFieldVisibility(fieldId: string, visibility: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.isVisible = visibility;
+        }
+    }
+
+    changeFieldDisabled(fieldId: string, disabled: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.readOnly = this.readOnly || disabled;
+        }
+    }
+
+    changeFieldValidity(fieldId: string, validity: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            if (validity) {
+                field.validate();
+            } else {
+                field.markAsInvalid();
+            }
+
+        }
+    }
+
+    changeFieldRequired(fieldId: string, required: boolean): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.required = required;
+        }
+    }
+
+    changeFieldValue(fieldId: string, value: any): void {
+        const field = this.getFieldById(fieldId);
+        if (!!field) {
+            field.value = value;
+        }
+    }
+
+    changeVariableValue(variableId: string, value: any): void {
+        const variable = this.getFormVariable(variableId);
+        if (!!variable) {
+            variable.value = value;
+        }
+    }
 }

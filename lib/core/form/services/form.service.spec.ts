@@ -21,7 +21,7 @@ import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormEvent, ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent } from '../events';
+import { FormEvent, FormFieldEvent, ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent } from '../events';
 import { take } from 'rxjs/operators';
 import { FormModel } from '../components/widgets/core/form.model';
 
@@ -474,6 +474,18 @@ describe('Form service', () => {
             });
 
             service.validateDynamicTableRow.next(new ValidateDynamicTableRowEvent('mock' as unknown as FormModel, null, null, null));
+        });
+
+        it('should emit the formFieldValueChanged in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('fieldValueChanged');
+                done();
+            });
+
+            service.formFieldValueChanged.next(new FormFieldEvent('mock' as unknown as FormModel, null));
         });
     });
 });

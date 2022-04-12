@@ -21,3 +21,4 @@ export * from './form-field.event';
 export * from './validate-form-field.event';
 export * from './validate-form.event';
 export * from './validate-dynamic-table-row.event';
+export * from './form-rules.event';

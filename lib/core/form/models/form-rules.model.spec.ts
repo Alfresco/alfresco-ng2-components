@@ -33,10 +33,10 @@ class CustomRuleManager extends FormRulesManager<any> {
 
 }
 
-fdescribe('Form Rules', () => {
+describe('Form Rules', () => {
 
     let injector: Injector;
-    let customRuleManager = new CustomRuleManager(null);
+    const customRuleManager = new CustomRuleManager(null);
 
     describe('Injection token provided', () => {
         setupTestBed({
