@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit, OnDestroy, Injector } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges } from '@angular/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 
@@ -32,7 +32,7 @@ import { FormModel } from './widgets/core/form.model';
         }
     ]
 })
-export class FormRendererComponent<T> implements OnInit, OnDestroy {
+export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     /** Toggle debug options. */
     @Input()
@@ -45,7 +45,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     constructor(private formRulesManager: FormRulesManager<T>) { }
 
-    ngOnInit(): void {
+    ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
     }
 

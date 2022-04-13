@@ -36,8 +36,14 @@ export abstract class FormRulesManager<T> {
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();
+    private initialized = false;
 
     initialize(formModel: FormModel) {
+        if (this.initialized) {
+            this.destroy();
+            this.onDestroy$ = new Subject<boolean>();
+        }
+
         this.formModel = formModel;
         const rules = this.getRules();
 
@@ -50,6 +56,8 @@ export abstract class FormRulesManager<T> {
                     this.handleRuleEvent(event, rules);
                 });
         }
+
+        this.initialized = true;
     }
 
     protected abstract getRules(): T;
