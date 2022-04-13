@@ -158,12 +158,12 @@ describe('FormComponent UI and visibility', () => {
                 fixture.detectChanges();
 
                 const firstEl = fixture.debugElement.query(By.css('#field-country-container'));
-                expect(firstEl.nativeElement.hidden).toBeTruthy();
+                expect(firstEl.nativeElement.style.visibility).toBe('hidden');
 
                 const secondEl = fixture.debugElement.query(By.css('#name'));
                 expect(secondEl).not.toBeNull();
                 expect(secondEl).toBeDefined();
-                expect(fixture.nativeElement.querySelector('#field-name-container').hidden).toBeFalsy();
+                expect(fixture.nativeElement.querySelector('#field-name-container').style.visibility).not.toBe('hidden');
             });
 
             it('should hide the field based on the previous one', () => {
@@ -177,10 +177,10 @@ describe('FormComponent UI and visibility', () => {
                 const firstEl = fixture.debugElement.query(By.css('#name'));
                 expect(firstEl).not.toBeNull();
                 expect(firstEl).toBeDefined();
-                expect(fixture.nativeElement.querySelector('#field-name-container').hidden).toBeFalsy();
+                expect(fixture.nativeElement.querySelector('#field-name-container').style.visibility).not.toBe('hidden');
 
                 const secondEl = fixture.debugElement.query(By.css('#field-country-container'));
-                expect(secondEl.nativeElement.hidden).toBeTruthy();
+                expect(secondEl.nativeElement.style.visibility).toBe('hidden');
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
@@ -192,10 +192,10 @@ describe('FormComponent UI and visibility', () => {
                 fixture.detectChanges();
 
                 let firstEl = fixture.debugElement.query(By.css('#field-country-container'));
-                expect(firstEl.nativeElement.hidden).toBeTruthy();
+                expect(firstEl.nativeElement.style.visibility).toBe('hidden');
 
                 const secondEl = fixture.debugElement.query(By.css('#field-name-container'));
-                expect(secondEl.nativeElement.hidden).toBeFalsy();
+                expect(secondEl.nativeElement.style.visibility).not.toBe('hidden');
 
                 const inputElement = fixture.nativeElement.querySelector('#name');
                 inputElement.value = 'italy';
@@ -203,7 +203,7 @@ describe('FormComponent UI and visibility', () => {
                 fixture.detectChanges();
 
                 firstEl = fixture.debugElement.query(By.css('#field-country-container'));
-                expect(firstEl.nativeElement.hidden).toBeFalsy();
+                expect(firstEl.nativeElement.style.visibility).not.toBe('hidden');
             });
         });
 

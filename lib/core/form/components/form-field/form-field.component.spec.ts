@@ -129,7 +129,7 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeFalsy();
+            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
             done();
         });
     });
@@ -142,10 +142,10 @@ describe('FormFieldComponent', () => {
 
         component.field = field;
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeFalsy();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
         component.field.isVisible = false;
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('hidden');
     });
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {

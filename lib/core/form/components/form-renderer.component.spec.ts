@@ -58,12 +58,12 @@ const typeIntoDate = (targetInput: DebugElement, date: { srcElement: { value: st
 
 const expectElementToBeHidden = (targetElement: HTMLElement): void => {
     expect(targetElement).toBeTruthy();
-    expect(targetElement.hidden).toBe(true, `${targetElement.id} should be hidden but it is not`);
+    expect(targetElement.style.visibility).toBe('hidden', `${targetElement.id} should be hidden but it is not`);
 };
 
 const expectElementToBeVisible = (targetElement: HTMLElement): void => {
     expect(targetElement).toBeTruthy();
-    expect(targetElement.hidden).toBe(false, `${targetElement.id} should be visibile but it is not`);
+    expect(targetElement.style.visibility).not.toBe('hidden', `${targetElement.id} should be visibile but it is not`);
 };
 
 const expectInputElementValueIs = (targetElement: HTMLInputElement, value: string): void => {
