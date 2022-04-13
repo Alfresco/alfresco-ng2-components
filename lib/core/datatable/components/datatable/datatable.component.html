@@ -59,7 +59,7 @@
                         [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-placeholder-'+col.key"
                     ></span>
 
-                    <span *ngIf="col.title" class="adf-datatable-cell-value"> {{col.title | translate}}</span>
+                    <span *ngIf="col.title" class="adf-datatable-cell-value">{{col.title | translate}}</span>
 
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
                         {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}

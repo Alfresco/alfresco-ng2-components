@@ -21,8 +21,9 @@ import { MaterialModule } from '../../material.module';
 import { TaskListCloudComponent } from './components/task-list-cloud.component';
 import { ServiceTaskListCloudComponent } from './components/service-task-list-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
-import { TASK_LIST_CLOUD_TOKEN } from '../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../services/cloud-token.service';
 import { TaskListCloudService } from './services/task-list-cloud.service';
+import { LocalPreferenceCloudService } from '../../services/local-preference-cloud.service';
 
 @NgModule({
     imports: [
@@ -42,6 +43,10 @@ import { TaskListCloudService } from './services/task-list-cloud.service';
         {
             provide: TASK_LIST_CLOUD_TOKEN,
             useClass: TaskListCloudService
+        },
+        {
+            provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+            useClass: LocalPreferenceCloudService
         }
     ]
 })
