@@ -33,6 +33,7 @@ import { FormFieldTemplates } from './form-field-templates';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { FormValidationService } from '../../../services/form-validation-service.interface';
 import { ProcessFormModel } from './process-form-model.interface';
+import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -421,9 +422,14 @@ export class FormModel implements ProcessFormModel {
     }
 
     changeFieldVisibility(fieldId: string, visibility: boolean): void {
+        const visibilityRule: WidgetVisibilityModel = new WidgetVisibilityModel();
+
         const field = this.getFieldById(fieldId);
         if (!!field) {
-            field.isVisible = visibility;
+            visibilityRule.operator = visibility ? 'empty' : '!empty';
+            visibilityRule.leftType = WidgetTypeEnum.field;
+            field.visibilityCondition = visibilityRule;
+            field.isVisible = false;
         }
     }
 
@@ -431,18 +437,6 @@ export class FormModel implements ProcessFormModel {
         const field = this.getFieldById(fieldId);
         if (!!field) {
             field.readOnly = this.readOnly || disabled;
-        }
-    }
-
-    changeFieldValidity(fieldId: string, validity: boolean): void {
-        const field = this.getFieldById(fieldId);
-        if (!!field) {
-            if (validity) {
-                field.validate();
-            } else {
-                field.markAsInvalid();
-            }
-
         }
     }
 

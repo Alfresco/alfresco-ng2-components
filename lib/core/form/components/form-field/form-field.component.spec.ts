@@ -113,7 +113,8 @@ describe('FormFieldComponent', () => {
         component.field.isVisible = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
+            const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility;
+            expect(debugElement).toEqual('hidden');
             done();
         });
     });

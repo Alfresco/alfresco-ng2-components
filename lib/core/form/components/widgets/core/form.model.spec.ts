@@ -678,14 +678,6 @@ describe('FormModel', () => {
             expect(field.readOnly).toEqual(!originalValue);
         });
 
-        it('should change field validity', () => {
-            const originalValue = field.isValid;
-
-            form.changeFieldValidity(fieldId, !originalValue);
-
-            expect(field.isValid).toEqual(!originalValue);
-        });
-
         it('should change field required', () => {
             const originalValue = field.required;
 

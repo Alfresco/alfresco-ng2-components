@@ -40,7 +40,7 @@ declare const adf: any;
     selector: 'adf-form-field',
     template: `
         <div [id]="'field-'+field?.id+'-container'"
-            [hidden]="!field?.isVisible"
+            [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
             [class.adf-focus]="focus"
             (focusin)="focusToggle()"
             (focusout)="focusToggle()">
