@@ -25,7 +25,7 @@
 
     <ng-container *ngFor="let column of columnItems">
         <div
-            *ngIf="(column.title | translate | filter:searchQuery) as translatedTitle"
+            *ngIf="(column.title | translate | filterString:searchQuery) as translatedTitle"
             class="adf-columns-selector-list-item-container">
             <mat-checkbox
                 color="primary"
@@ -35,6 +35,7 @@
                 (change)="changeColumnVisibility(column)">
                 <div class="adf-columns-selector-list-content">{{translatedTitle}}</div>
             </mat-checkbox>
+            <!-- 'adf-columns-selector-column-checkbox-' + column.title" ??L32 -->
         </div>
     </ng-container>
 

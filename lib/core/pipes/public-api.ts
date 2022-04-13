@@ -32,4 +32,4 @@ export * from './pipe.module';
 export * from './moment-date.pipe';
 export * from './moment-datetime.pipe';
 export * from './filter-string.pipe';
-export * from './filter-array.pipe';
+export * from './filter-out-every-object-by-prop.pipe';

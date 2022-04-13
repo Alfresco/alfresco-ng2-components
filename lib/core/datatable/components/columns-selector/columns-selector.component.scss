@@ -4,8 +4,13 @@ $adf-columns-selector-space: 12px;
     padding: 0 $adf-columns-selector-space;
 }
 
-.adf-columns-selector {
+@mixin adf-columns-selector-top-bottom-padding {
     padding: $adf-columns-selector-space 0;
+}
+
+.adf-columns-selector {
+    @include adf-columns-selector-top-bottom-padding;
+
     min-width: 277px;
 
     &-header {

@@ -35,7 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
-import { FilterArrayPipe } from './filter-array.pipe';
+import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
 
 @NgModule({
     imports: [
@@ -59,7 +59,7 @@ import { FilterArrayPipe } from './filter-array.pipe';
         MomentDatePipe,
         MomentDateTimePipe,
         FilterStringPipe,
-        FilterArrayPipe
+        FilterOutArrayObjectsByPropPipe
     ],
     providers: [
         FileSizePipe,
@@ -77,7 +77,7 @@ import { FilterArrayPipe } from './filter-array.pipe';
         MomentDatePipe,
         MomentDateTimePipe,
         FilterStringPipe,
-        FilterArrayPipe
+        FilterOutArrayObjectsByPropPipe
     ],
     exports: [
         FileSizePipe,
@@ -96,7 +96,7 @@ import { FilterArrayPipe } from './filter-array.pipe';
         MomentDatePipe,
         MomentDateTimePipe,
         FilterStringPipe,
-        FilterArrayPipe
+        FilterOutArrayObjectsByPropPipe
     ]
 })
 export class PipeModule {

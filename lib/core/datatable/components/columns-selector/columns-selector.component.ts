@@ -35,7 +35,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     mainMenuTrigger: MatMenuTrigger;
 
     @Output()
-    applyColumnsVisibilty = new EventEmitter<DataColumn[]>();
+    submitColumnsVisibilty = new EventEmitter<DataColumn[]>();
 
     onDestroy$ = new Subject();
     columnItems: DataColumn[] = [];
@@ -43,11 +43,15 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     searchQuery = '';
 
     ngOnInit(): void {
-        this.mainMenuTrigger.menuOpened.subscribe(() => {
+        this.mainMenuTrigger.menuOpened.pipe(
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => {
             this.columnItems = this.columns.map(column => ({...column}));
         });
 
-        this.mainMenuTrigger.menuClosed.subscribe(() => {
+        this.mainMenuTrigger.menuClosed.pipe(
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => {
             this.searchInputCotrol.setValue('');
         });
 
@@ -73,7 +77,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     }
 
     apply(): void {
-        this.applyColumnsVisibilty.emit(this.columnItems);
+        this.submitColumnsVisibilty.emit(this.columnItems);
         this.closeMenu();
     }
 }

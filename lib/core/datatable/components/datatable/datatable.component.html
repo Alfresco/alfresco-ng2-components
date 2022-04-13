@@ -28,7 +28,7 @@
 
             <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
                  *ngFor="
-                    let col of (data.getColumns() | filterArray: 'isHidden': true);
+                    let col of (data.getColumns() | filterOutEvery:'isHidden':true);
                     let columnIndex = index"
                  [class.adf-sortable]="col.sortable"
                  [attr.data-automation-id]="'auto_id_' + col.key"
@@ -42,6 +42,7 @@
                  cdkDrag
                  cdkDragBoundary="adf-datatable-row"
                  cdkDragLockAxis="x"
+                 [cdkDragData]="col"
                  (cdkDragStarted)="isDraggingHeaderColumn = true"
                  (cdkDragDropped)="onDropHeaderColumn($event)"
                  [cdkDragDisabled]="!col.draggable"
@@ -100,22 +101,24 @@
                 *ngIf="actions && actionsPosition === 'right' || mainActionTemplate"
                 class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell"
             >
-                <button
-                    mat-icon-button
-                    #mainMenuTrigger="matMenuTrigger"
-                    [matMenuTriggerFor]="mainMenu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
+                <ng-container *ngIf="mainActionTemplate">
+                    <button
+                        mat-icon-button
+                        #mainMenuTrigger="matMenuTrigger"
+                        [matMenuTriggerFor]="mainMenu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
 
-                <mat-menu #mainMenu>
-                    <ng-container
-                        [ngTemplateOutlet]="mainActionTemplate"
-                        [ngTemplateOutletContext]="{
-                            $implicit: mainMenuTrigger
-                        }">
-                    </ng-container>
-                </mat-menu>
-                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
+                    <mat-menu #mainMenu>
+                        <ng-container
+                            [ngTemplateOutlet]="mainActionTemplate"
+                            [ngTemplateOutletContext]="{
+                                $implicit: mainMenuTrigger
+                            }">
+                        </ng-container>
+                    </mat-menu>
+                    <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
+                </ng-container>
             </div>
 
         </adf-datatable-row>
@@ -177,7 +180,7 @@
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </div>
-                <div *ngFor="let col of (data.getColumns() | filterArray: 'isHidden':true);"
+                <div *ngFor="let col of (data.getColumns() | filterOutEvery:'isHidden':true);"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
@@ -309,8 +312,6 @@
                         </mat-menu>
                     </ng-container>
                 </div>
-
-                <!-- <div *ngIf="mainActionTemplate" style="width: 35px;"></div> -->
             </adf-datatable-row>
             <div *ngIf="isEmpty()"
                  role="row"

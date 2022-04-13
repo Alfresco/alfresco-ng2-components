@@ -34,12 +34,6 @@ export abstract class DataTableSchema {
     presetColumn: string;
 
     columns: any;
-    displayedColumns: any = [];
-
-    // get displayedColumns() {
-    //     debugger
-    //     return (this.columns ?? []).filter(column => !column.isHidden);
-    // }
 
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
@@ -95,8 +89,6 @@ export abstract class DataTableSchema {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
 
-        // TEMP REMOVE ME
-        // return customSchemaColumns = this.getDefaultLayoutPreset();
         return customSchemaColumns;
     }
 
@@ -140,10 +132,11 @@ export abstract class DataTableSchema {
         return [...columnsWithProperOrder, ...defaultColumns];
     }
 
-    private setHiddenColumns(columns: any[]): any[] {
+    private setHiddenColumns(columns: DataColumn[]): DataColumn[] {
         if (this.hiddenColumns) {
             return columns.map(column => {
                 const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenKolumnsKey]);
+
                 return {
                     ...column,
                     isHidden: columnShouldBeHidden

@@ -17,7 +17,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filter' })
+@Pipe({ name: 'filterString' })
 export class FilterStringPipe implements PipeTransform {
 
     transform(value: string, filterBy: string = ''): string {

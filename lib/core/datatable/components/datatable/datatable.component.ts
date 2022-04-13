@@ -317,13 +317,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return column.key === this.data.getSorting().key;
     }
 
-    onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
-        const columns = this.data.getColumns().filter(column => !column.isHidden);
-        const hiddenColumns = this.data.getColumns().filter(column => column.isHidden);
+    onDropHeaderColumn(event: CdkDragDrop<DataColumn>): void {
+        const allColumns = this.data.getColumns();
+        const shownColumns = allColumns.filter(column => !column.isHidden);
+        const hiddenColumns = allColumns.filter(column => column.isHidden);
 
-        moveItemInArray(columns, event.previousIndex, event.currentIndex);
+        moveItemInArray(shownColumns, event.previousIndex, event.currentIndex);
 
-        this.columnOrderChanged.emit([...columns, ...hiddenColumns]);
+        this.columnOrderChanged.emit([...shownColumns, ...hiddenColumns]);
         this.isDraggingHeaderColumn = false;
     }
 

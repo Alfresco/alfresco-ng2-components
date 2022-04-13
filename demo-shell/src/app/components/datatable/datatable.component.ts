@@ -330,12 +330,8 @@ export class DataTableComponent {
         this.data.setColumns(columns);
     }
 
-    columnOrderChanged(columns: DataColumn[]): void {
+    onColumnOrderChanged(columns: DataColumn[]): void {
         this.data.setColumns(columns);
-    }
-
-    getSelectorColumns(): DataColumn[] {
-        return this.data.getColumns().filter(column => !!column.title);
     }
 
     onExecuteRowAction(event: DataRowActionEvent) {
