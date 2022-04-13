@@ -326,6 +326,18 @@ export class DataTableComponent {
         ];
     }
 
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.data.setColumns(columns);
+    }
+
+    columnOrderChanged(columns: DataColumn[]): void {
+        this.data.setColumns(columns);
+    }
+
+    getSelectorColumns(): DataColumn[] {
+        return this.data.getColumns().filter(column => !!column.title);
+    }
+
     onExecuteRowAction(event: DataRowActionEvent) {
         const args = event.value;
         window.alert(`My custom action: ${args.action.title}`);

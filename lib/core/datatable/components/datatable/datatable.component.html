@@ -27,7 +27,9 @@
             </div>
 
             <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
-                 *ngFor="let col of data.getColumns(); let columnIndex = index"
+                 *ngFor="
+                    let col of (data.getColumns() | filterArray: 'isHidden': true);
+                    let columnIndex = index"
                  [class.adf-sortable]="col.sortable"
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
@@ -93,10 +95,29 @@
                 <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
             </div>
 
-            <!-- Actions (right) -->
-            <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
+            <!-- Header actions (right) -->
+            <div
+                *ngIf="actions && actionsPosition === 'right' || mainActionTemplate"
+                class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell"
+            >
+                <button
+                    mat-icon-button
+                    #mainMenuTrigger="matMenuTrigger"
+                    [matMenuTriggerFor]="mainMenu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #mainMenu>
+                    <ng-container
+                        [ngTemplateOutlet]="mainActionTemplate"
+                        [ngTemplateOutletContext]="{
+                            $implicit: mainMenuTrigger
+                        }">
+                    </ng-container>
+                </mat-menu>
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
+
         </adf-datatable-row>
         <mat-form-field *ngIf="display === 'gallery' && isHeaderVisible()">
             <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
@@ -156,7 +177,7 @@
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </div>
-                <div *ngFor="let col of data.getColumns()"
+                <div *ngFor="let col of (data.getColumns() | filterArray: 'isHidden':true);"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
@@ -262,29 +283,34 @@
                     </div>
                 </div>
 
-                <!-- Actions (right) -->
-                <div *ngIf="actions && actionsPosition === 'right'"
+                <!-- Row actions (right) -->
+                <div *ngIf="(actions && actionsPosition === 'right') || mainActionTemplate"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
-                            [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
-                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
-                            [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
-                            [attr.id]="'action_menu_right_' + idx"
-                            [attr.data-automation-id]="'action_menu_' + idx">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item *ngFor="let action of getRowActions(row)"
-                                [attr.data-automation-id]="action.title"
-                                [attr.aria-label]="action.title | translate"
-                                [disabled]="action.disabled"
-                                (click)="onExecuteRowAction(row, action)">
-                            <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
-                            <span>{{ action.title | translate }}</span>
+
+                    <ng-container *ngIf="(actions && actionsPosition === 'right')">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
+                                [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
+                                [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
+                                [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
+                                [attr.id]="'action_menu_right_' + idx"
+                                [attr.data-automation-id]="'action_menu_' + idx">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item *ngFor="let action of getRowActions(row)"
+                                    [attr.data-automation-id]="action.title"
+                                    [attr.aria-label]="action.title | translate"
+                                    [disabled]="action.disabled"
+                                    (click)="onExecuteRowAction(row, action)">
+                                <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+                                <span>{{ action.title | translate }}</span>
+                            </button>
+                        </mat-menu>
+                    </ng-container>
                 </div>
+
+                <!-- <div *ngIf="mainActionTemplate" style="width: 35px;"></div> -->
             </adf-datatable-row>
             <div *ngIf="isEmpty()"
                  role="row"

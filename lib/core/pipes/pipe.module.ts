@@ -34,6 +34,8 @@ import { LocalizedRolePipe } from './localized-role.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
+import { FilterStringPipe } from './filter-string.pipe';
+import { FilterArrayPipe } from './filter-array.pipe';
 
 @NgModule({
     imports: [
@@ -55,7 +57,9 @@ import { MomentDateTimePipe } from './moment-datetime.pipe';
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,
-        MomentDateTimePipe
+        MomentDateTimePipe,
+        FilterStringPipe,
+        FilterArrayPipe
     ],
     providers: [
         FileSizePipe,
@@ -71,7 +75,9 @@ import { MomentDateTimePipe } from './moment-datetime.pipe';
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,
-        MomentDateTimePipe
+        MomentDateTimePipe,
+        FilterStringPipe,
+        FilterArrayPipe
     ],
     exports: [
         FileSizePipe,
@@ -88,7 +94,9 @@ import { MomentDateTimePipe } from './moment-datetime.pipe';
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,
-        MomentDateTimePipe
+        MomentDateTimePipe,
+        FilterStringPipe,
+        FilterArrayPipe
     ]
 })
 export class PipeModule {

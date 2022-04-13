@@ -29,6 +29,7 @@ import { DataTableCellComponent } from './components/datatable-cell/datatable-ce
 import { DataTableRowComponent } from './components/datatable-row/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/date-cell/date-cell.component';
+import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
 import { EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
@@ -42,12 +43,14 @@ import { HeaderFilterTemplateDirective } from './directives/header-filter-templa
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
+import { MainMenuDataTableTemplateDirective } from './directives/main-data-table-action-template.directive';
 import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DataColumnModule } from '../data-column/data-column.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IconModule } from '../icon/icon.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -61,7 +64,9 @@ import { IconModule } from '../icon/icon.module';
         DirectiveModule,
         ClipboardModule,
         DragDropModule,
-        IconModule
+        IconModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         DataTableComponent,
@@ -75,6 +80,7 @@ import { IconModule } from '../icon/icon.module';
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
+        ColumnsSelectorComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
@@ -82,6 +88,7 @@ import { IconModule } from '../icon/icon.module';
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
+        MainMenuDataTableTemplateDirective,
         DropZoneDirective
     ],
     exports: [
@@ -93,6 +100,7 @@ import { IconModule } from '../icon/icon.module';
         DataTableCellComponent,
         DataTableRowComponent,
         DateCellComponent,
+        ColumnsSelectorComponent,
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
@@ -103,6 +111,7 @@ import { IconModule } from '../icon/icon.module';
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
+        MainMenuDataTableTemplateDirective,
         DropZoneDirective
     ]
 })

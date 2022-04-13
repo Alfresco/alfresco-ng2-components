@@ -34,9 +34,18 @@ export abstract class DataTableSchema {
     presetColumn: string;
 
     columns: any;
+    displayedColumns: any = [];
+
+    // get displayedColumns() {
+    //     debugger
+    //     return (this.columns ?? []).filter(column => !column.isHidden);
+    // }
 
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
+
+    protected hiddenColumns: string[] | undefined;
+    protected hiddenKolumnsKey: string = 'id';
 
     private layoutPresets = {};
 
@@ -59,7 +68,8 @@ export abstract class DataTableSchema {
     }
 
     public createColumns(): void {
-        const columns = this.mergeJsonAndHtmlSchema();
+        const allColumns = this.mergeJsonAndHtmlSchema();
+        const columns = this.setHiddenColumns(allColumns);
         this.columns = this.sortColumnsByKey(columns);
     }
 
@@ -85,6 +95,8 @@ export abstract class DataTableSchema {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }
 
+        // TEMP REMOVE ME
+        // return customSchemaColumns = this.getDefaultLayoutPreset();
         return customSchemaColumns;
     }
 
@@ -126,5 +138,19 @@ export abstract class DataTableSchema {
         });
 
         return [...columnsWithProperOrder, ...defaultColumns];
+    }
+
+    private setHiddenColumns(columns: any[]): any[] {
+        if (this.hiddenColumns) {
+            return columns.map(column => {
+                const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenKolumnsKey]);
+                return {
+                    ...column,
+                    isHidden: columnShouldBeHidden
+                };
+            });
+        }
+
+        return columns;
     }
 }

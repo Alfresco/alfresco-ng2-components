@@ -46,4 +46,5 @@ export interface DataColumn {
     sortingKey?: string;
     header?: TemplateRef<any>;
     draggable?: boolean;
+    isHidden?: boolean;
 }

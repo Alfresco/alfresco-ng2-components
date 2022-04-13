@@ -20,6 +20,7 @@
         [actions]="true"
         [resolverFn]="resolver"
         rowStyleClass="custom-row-style"
+        (columnOrderChanged)="columnOrderChanged($event)"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)">
         <!-- HTML column definition demo -->
@@ -39,6 +40,17 @@
             </data-column>
         </data-columns>
         -->
+
+        <adf-main-menu-datatable-template>
+            <ng-template let-mainMenuTrigger>
+                <adf-datatable-column-selector
+                    [columns]="data.getColumns()"
+                    [mainMenuTrigger]="mainMenuTrigger"
+                    (submitColumnsVisibilty)="onColumnsVisibilityChange($event)">
+                </adf-datatable-column-selector>
+            </ng-template>
+        </adf-main-menu-datatable-template>
+
     </adf-datatable>
 
     <ng-template #customColumnHeaderTemplate>
