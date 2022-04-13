@@ -135,6 +135,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     candidateGroupId: string = '';
 
+    showMainDatatableActions: boolean = true;
+
     constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,

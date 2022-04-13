@@ -114,6 +114,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
+    showMainDatatableActions: boolean;
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
@@ -160,11 +161,17 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             take(1),
             map((preferences => {
                 const preferencesList = preferences?.list?.entries ?? [];
-                const searchedPreferences = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
-                return searchedPreferences ? JSON.parse(searchedPreferences.entry.value) : null;
+                const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
+
+                return {
+                    columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                };
             }))
-        ).subscribe(columnsOrder => {
+        ).subscribe(({ columnsOrder, columnsVisibility }) => {
                 this.columnsOrder = columnsOrder;
+                this.columnsVisibility = columnsVisibility;
                 this.createDatatableSchema();
             }
         );
@@ -257,6 +264,24 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
                 this.appName,
                 TasksListCloudPreferences.columnOrder,
                 this.columnsOrder
+            );
+        }
+    }
+
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.columnsVisibility = columns.reduce(
+            (hiddenColumnsMap, column) => {
+                hiddenColumnsMap[column.id] = !!column.isHidden;
+                return hiddenColumnsMap;
+            }, {});
+
+        this.createColumns();
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnsVisibility,
+                this.columnsVisibility
             );
         }
     }

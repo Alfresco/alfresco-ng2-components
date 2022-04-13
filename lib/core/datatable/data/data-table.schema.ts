@@ -38,8 +38,7 @@ export abstract class DataTableSchema {
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
 
-    protected hiddenColumns: string[] | undefined;
-    protected hiddenColumnsKey: string = 'id';
+    protected columnsVisibility: { [columnId: string]: boolean } = {};
 
     private layoutPresets = {};
 
@@ -133,14 +132,13 @@ export abstract class DataTableSchema {
     }
 
     private setHiddenColumns(columns: DataColumn[]): DataColumn[] {
-        if (this.hiddenColumns) {
+        if (this.columnsVisibility) {
             return columns.map(column => {
-                const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenColumnsKey]);
+                const isColumnVisible = this.columnsVisibility[column.id];
 
-                return {
-                    ...column,
-                    isHidden: columnShouldBeHidden
-                };
+                return isColumnVisible === undefined ?
+                    column :
+                    { ...column, isHidden: isColumnVisible };
             });
         }
 

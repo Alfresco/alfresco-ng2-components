@@ -39,6 +39,8 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     queryParams: { [key: string]: any } = {};
 
+    showMainDatatableActions: boolean = false;
+
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
