@@ -42,7 +42,6 @@
                  cdkDrag
                  cdkDragBoundary="adf-datatable-row"
                  cdkDragLockAxis="x"
-                 [cdkDragData]="col"
                  (cdkDragStarted)="isDraggingHeaderColumn = true"
                  (cdkDragDropped)="onDropHeaderColumn($event)"
                  [cdkDragDisabled]="!col.draggable"
