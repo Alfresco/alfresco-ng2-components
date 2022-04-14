@@ -17,9 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
-import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { MainMenuDataTableTemplateDirective } from './main-data-table-action-template.directive';
 
 describe('MainMenuDataTableTemplateDirective', () => {
@@ -27,13 +24,6 @@ describe('MainMenuDataTableTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: MainMenuDataTableTemplateDirective;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DataTableComponent);

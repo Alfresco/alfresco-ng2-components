@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ColumnsSelectorComponent } from './columns-selector.component';
 import { DataColumn } from '../../data/data-column.model';
 import { Observable, Subject } from 'rxjs';
@@ -121,7 +121,7 @@ describe('ColumnsSelectorComponent', () => {
         expect(await checkboxes[3].getLabelText()).toBe(inputColumns[4].title);
     });
 
-    it('should filter columns by search text', fakeAsync(() => {
+    it('should filter columns by search text', fakeAsync(async () => {
         fixture.detectChanges();
         menuOpenedTrigger.next();
 
@@ -131,13 +131,11 @@ describe('ColumnsSelectorComponent', () => {
 
         tick(400);
         fixture.detectChanges();
-        flush();
-        fixture.detectChanges();
 
-        const columnElements = fixture.debugElement.queryAll(By.css('.adf-columns-selector-list-item-container'));
+        const columnCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-        expect(columnElements.length).toBe(1);
-        expect(columnElements[0].nativeElement.innerText).toBe(inputColumns[0].title);
+        expect(columnCheckboxes.length).toBe(1);
+        expect(await columnCheckboxes[0].getLabelText()).toBe(inputColumns[0].title);
     }));
 
     it('should change column visibility', async () => {
