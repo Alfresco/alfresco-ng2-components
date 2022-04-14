@@ -323,8 +323,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         const hiddenColumns = allColumns.filter(column => column.isHidden);
 
         moveItemInArray(shownColumns, event.previousIndex, event.currentIndex);
+        const allColumnsWithNewOrder = [...shownColumns, ...hiddenColumns];
 
-        this.columnOrderChanged.emit([...shownColumns, ...hiddenColumns]);
+        this.setTableColumns(allColumnsWithNewOrder);
+        this.columnOrderChanged.emit(allColumnsWithNewOrder);
+
         this.isDraggingHeaderColumn = false;
     }
 

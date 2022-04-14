@@ -330,10 +330,6 @@ export class DataTableComponent {
         this.data.setColumns(columns);
     }
 
-    onColumnOrderChanged(columns: DataColumn[]): void {
-        this.data.setColumns(columns);
-    }
-
     onExecuteRowAction(event: DataRowActionEvent) {
         const args = event.value;
         window.alert(`My custom action: ${args.action.title}`);
