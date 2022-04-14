@@ -257,7 +257,7 @@ You can add [Data column component](data-column.component.md) instances to defin
         <!--Add your custom empty template here-->
         <ng-template>
             <div></div>
-            <span> My custom value </spam>
+            <span> My custom value </span>
         </ng-template>
     </data-column>
 </adf-datatable>
@@ -311,6 +311,27 @@ while the data for the table is loading:
         //your custom logic to identify if you are in a loading state
     }
 ```
+
+You can also show main menu for datatable using `<adf-main-menu-datatable-template>`
+
+```html
+<adf-datatable ...>
+   <adf-main-menu-datatable-template>
+        <ng-template let-mainMenuTrigger>
+            <!--Add your custom main menu template here-->
+            <adf-datatable-column-selector
+                [columns]="data.getColumns()"
+                [mainMenuTrigger]="mainMenuTrigger"
+                (submitColumnsVisibilty)="onColumnsVisibilityChange($event)">
+            </adf-datatable-column-selector>
+        </ng-template>
+    </adf-main-menu-datatable-template>
+</adf-datatable>
+```
+
+Provided template receives `let-mainMenuTrigger`, so you can programaticaly work with the menu (please see [MatMenuTrigger](https://material.angular.io/components/menu/overview#toggling-the-menu-programmatically)).
+
+For convenience, you can use `<adf-datatable-column-selector>` which will allow you to change column visibility.
 
 \###Styling transcluded content
 
@@ -375,6 +396,8 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
 | showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted after dragging and dropping column header. |
+
 
 ## Details
 
@@ -440,7 +463,7 @@ Given that DataTable raises bubbling DOM events, you can handle drop behavior fr
     (header-drop)="onDrop($event)"
     (cell-dragover)="onDragOver($event)"
     (cell-drop)="onDrop($event)">
-    
+
     <adf-datatable [data]="data">
     </adf-datatable>
 </div>
