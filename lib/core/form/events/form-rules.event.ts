@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
-export * from './validate-form-field.event';
-export * from './validate-form.event';
-export * from './validate-dynamic-table-row.event';
-export * from './form-rules.event';
+import { FormFieldEvent } from './form-field.event';
+import { FormEvent } from './form.event';
+
+export class FormRulesEvent extends FormFieldEvent {
+
+    readonly type: string;
+    readonly event: Event;
+
+    constructor(type: string, formEvent: FormEvent, event?: Event) {
+        super(formEvent.form, formEvent['field']);
+        this.type = type;
+        this.event = event;
+    }
+
+}

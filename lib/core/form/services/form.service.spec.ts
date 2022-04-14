@@ -21,6 +21,9 @@ import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormEvent, ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent } from '../events';
+import { take } from 'rxjs/operators';
+import { FormModel } from '../components/widgets/core/form.model';
 
 declare let jasmine: any;
 
@@ -88,7 +91,7 @@ describe('Form service', () => {
         it('should fetch and parse process definitions', (done) => {
             service.getProcessDefinitions().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
-                expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+                expect([{ id: '1' }, { id: '2' }]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
             });
 
@@ -102,7 +105,7 @@ describe('Form service', () => {
         it('should fetch and parse tasks', (done) => {
             service.getTasks().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
-                expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+                expect([{ id: '1' }, { id: '2' }]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
             });
 
@@ -408,5 +411,69 @@ describe('Form service', () => {
                 done();
             });
         });
-   });
+    });
+
+    describe('Form rules', () => {
+        const event = new FormEvent('mock');
+
+        it('should emit the formLoaded in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('formLoaded');
+                done();
+            });
+
+            service.formLoaded.next(event);
+        });
+
+        it('should emit the formDataRefreshed in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('formDataRefreshed');
+                done();
+            });
+
+            service.formDataRefreshed.next(event);
+        });
+
+        it('should emit the formValidated in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('formValidated');
+                done();
+            });
+
+            service.validateForm.next(new ValidateFormEvent('mock'));
+        });
+
+        it('should emit the fieldValidated in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('fieldValidated');
+                done();
+            });
+
+            service.validateFormField.next(new ValidateFormFieldEvent('mock', null));
+        });
+
+        it('should emit the fieldDynamicTableRowValidated in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('fieldDynamicTableRowValidated');
+                done();
+            });
+
+            service.validateDynamicTableRow.next(new ValidateDynamicTableRowEvent('mock' as unknown as FormModel, null, null, null));
+        });
+    });
 });

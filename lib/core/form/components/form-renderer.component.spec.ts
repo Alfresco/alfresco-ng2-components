@@ -43,6 +43,7 @@ import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { FormRulesManager } from '../models/form-rules.model';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
@@ -57,12 +58,12 @@ const typeIntoDate = (targetInput: DebugElement, date: { srcElement: { value: st
 
 const expectElementToBeHidden = (targetElement: HTMLElement): void => {
     expect(targetElement).toBeTruthy();
-    expect(targetElement.hidden).toBe(true, `${targetElement.id} should be hidden but it is not`);
+    expect(targetElement.style.visibility).toBe('hidden', `${targetElement.id} should be hidden but it is not`);
 };
 
 const expectElementToBeVisible = (targetElement: HTMLElement): void => {
     expect(targetElement).toBeTruthy();
-    expect(targetElement.hidden).toBe(false, `${targetElement.id} should be visibile but it is not`);
+    expect(targetElement.style.visibility).not.toBe('hidden', `${targetElement.id} should be visibile but it is not`);
 };
 
 const expectInputElementValueIs = (targetElement: HTMLInputElement, value: string): void => {
@@ -70,22 +71,23 @@ const expectInputElementValueIs = (targetElement: HTMLInputElement, value: strin
     expect(targetElement.value).toBe(value, `invalid value for ${targetElement.name}`);
 };
 
-const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
+const expectElementToBeInvalid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent<any>>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).toBeTruthy();
 };
 
-const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent>): void => {
+const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormRendererComponent<any>>): void => {
     const invalidElementContainer = fixture.nativeElement.querySelector(`#field-${fieldId}-container .adf-invalid`);
     expect(invalidElementContainer).toBeFalsy();
 };
 
 describe('Form Renderer Component', () => {
 
-    let formRendererComponent: FormRendererComponent;
-    let fixture: ComponentFixture<FormRendererComponent>;
+    let formRendererComponent: FormRendererComponent<any>;
+    let fixture: ComponentFixture<FormRendererComponent<any>>;
     let formService: FormService;
     let formRenderingService: FormRenderingService;
+    let rulesManager: FormRulesManager<any>;
 
     setupTestBed({
         imports: [
@@ -100,6 +102,7 @@ describe('Form Renderer Component', () => {
         formRendererComponent = fixture.componentInstance;
         formService = TestBed.inject(FormService);
         formRenderingService = TestBed.inject(FormRenderingService);
+        rulesManager = fixture.debugElement.injector.get(FormRulesManager);
     });
 
     afterEach(() => {
@@ -658,5 +661,25 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(customWidgetElementContainer);
         });
 
+    });
+
+    describe('Form rules', () => {
+        it('should call the Form Rules Manager init on component changes', () => {
+            spyOn(rulesManager, 'initialize');
+            const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
+
+            formRendererComponent.formDefinition = formModel;
+            formRendererComponent.ngOnChanges();
+
+            expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
+        });
+
+        it('should call the Form Rules Manager destroy on component destruction', () => {
+            spyOn(rulesManager, 'destroy');
+
+            formRendererComponent.ngOnDestroy();
+
+            expect(rulesManager.destroy).toHaveBeenCalled();
+        });
     });
 });

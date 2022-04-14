@@ -18,6 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { FormFieldEvent } from '../../events/form-field.event';
+import { FormRulesEvent } from '../../events/form-rules.event';
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
 
@@ -106,6 +108,7 @@ export class WidgetComponent implements AfterViewInit {
 
     event(event: Event): void {
         this.formService.formEvents.next(event);
+        this.formService.formRulesEvent.next(new FormRulesEvent(event?.type, new FormFieldEvent(this.field?.form, this.field), event));
     }
 
     markAsTouched() {

@@ -15,16 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges } from '@angular/core';
+import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 
 @Component({
     selector: 'adf-form-renderer',
     templateUrl: './form-renderer.component.html',
     styleUrls: ['./form-renderer.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        {
+            provide: FormRulesManager,
+            useFactory: formRulesManagerFactory,
+            deps: [Injector]
+        }
+    ]
 })
-export class FormRendererComponent {
+export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     /** Toggle debug options. */
     @Input()
@@ -34,5 +42,15 @@ export class FormRendererComponent {
     formDefinition: FormModel;
 
     debugMode: boolean;
+
+    constructor(private formRulesManager: FormRulesManager<T>) { }
+
+    ngOnChanges(): void {
+        this.formRulesManager.initialize(this.formDefinition);
+    }
+
+    ngOnDestroy() {
+        this.formRulesManager.destroy();
+    }
 
 }

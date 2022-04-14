@@ -37,3 +37,5 @@ export * from './services/widget-visibility.service';
 export * from './events/index';
 
 export * from './form-base.module';
+
+export * from './models/form-rules.model';
