@@ -48,7 +48,6 @@ describe('ColumnsSelectorComponent', () => {
             declarations: [ColumnsSelectorComponent]
         }).compileComponents();
 
-
         fixture = TestBed.createComponent(ColumnsSelectorComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
 
@@ -109,12 +108,13 @@ describe('ColumnsSelectorComponent', () => {
         expect(searchInput.value).toBe('');
     }));
 
-    it('should list columns', async () => {
+    it('should list only columns with title', async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
         const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
+        expect(checkboxes.length).toBe(4);
         expect(await checkboxes[0].getLabelText()).toBe(inputColumns[0].title);
         expect(await checkboxes[1].getLabelText()).toBe(inputColumns[1].title);
         expect(await checkboxes[2].getLabelText()).toBe(inputColumns[2].title);
@@ -148,7 +148,7 @@ describe('ColumnsSelectorComponent', () => {
         expect(component.columnItems[0].isHidden).toBe(true);
     });
 
-    it('should set default proper default state for checkboxes', async () => {
+    it('should set proper default state for checkboxes', async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
