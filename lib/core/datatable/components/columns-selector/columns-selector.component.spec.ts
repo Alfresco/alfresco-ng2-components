@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { ColumnsSelectorComponent } from './columns-selector.component';
 import { DataColumn } from '../../data/data-column.model';
@@ -6,9 +23,14 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { CoreTestingModule } from 'core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 describe('ColumnsSelectorComponent', () => {
     let fixture: ComponentFixture<ColumnsSelectorComponent>;
+    let loader: HarnessLoader;
+
     let component: ColumnsSelectorComponent;
     let inputColumns: DataColumn[] = [];
 
@@ -28,26 +50,34 @@ describe('ColumnsSelectorComponent', () => {
 
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
+
         component = fixture.componentInstance;
         inputColumns = [{
+            id: 'id0',
+            key: 'key0',
+            title: 'title0',
+            type: 'text'
+        }, {
             id: 'id1',
             key: 'key1',
             title: 'title1',
             type: 'text'
         }, {
-            id: 'id1',
+            id: 'id2',
             key: 'key2',
             title: 'title2',
             type: 'text'
         }, {
             id: 'id3',
-            key: 'key3',
-            title: 'title3',
-            type: 'text'
-        }, {
-            id: 'id3',
             key: 'NoTitle',
             type: 'text'
+        }, {
+            id: 'id4',
+            key: 'IsHidden',
+            type: 'text',
+            title: 'title4',
+            isHidden: true
         }];
 
         mainMenuTrigger = {
@@ -79,17 +109,16 @@ describe('ColumnsSelectorComponent', () => {
         expect(searchInput.value).toBe('');
     }));
 
-    it('should list columns', () => {
+    it('should list columns', async () => {
         menuOpenedTrigger.next();
         fixture.detectChanges();
 
-        const columnElements = fixture.debugElement.queryAll(By.css('.adf-columns-selector-list-item-container'));
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-        expect(columnElements.length).toBe(inputColumns.length - 1, 'should not display columns without title');
-
-        expect(columnElements[0].nativeElement.innerText).toBe(inputColumns[0].title);
-        expect(columnElements[1].nativeElement.innerText).toBe(inputColumns[1].title);
-        expect(columnElements[2].nativeElement.innerText).toBe(inputColumns[2].title);
+        expect(await checkboxes[0].getLabelText()).toBe(inputColumns[0].title);
+        expect(await checkboxes[1].getLabelText()).toBe(inputColumns[1].title);
+        expect(await checkboxes[2].getLabelText()).toBe(inputColumns[2].title);
+        expect(await checkboxes[3].getLabelText()).toBe(inputColumns[4].title);
     });
 
     it('should filter columns by search text', fakeAsync(() => {
@@ -110,4 +139,26 @@ describe('ColumnsSelectorComponent', () => {
         expect(columnElements.length).toBe(1);
         expect(columnElements[0].nativeElement.innerText).toBe(inputColumns[0].title);
     }));
+
+    it('should change column visibility', async () => {
+        menuOpenedTrigger.next();
+        fixture.detectChanges();
+
+        const firstColumnCheckbox = await loader.getHarness(MatCheckboxHarness);
+        await firstColumnCheckbox.toggle();
+
+        expect(component.columnItems[0].isHidden).toBe(true);
+    });
+
+    it('should set default proper default state for checkboxes', async () => {
+        menuOpenedTrigger.next();
+        fixture.detectChanges();
+
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
+        expect(await checkboxes[0].isChecked()).toBe(true);
+        expect(await checkboxes[1].isChecked()).toBe(true);
+        expect(await checkboxes[2].isChecked()).toBe(true);
+        expect(await checkboxes[3].isChecked()).toBe(false);
+    });
 });

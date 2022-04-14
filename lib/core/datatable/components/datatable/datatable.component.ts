@@ -317,7 +317,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return column.key === this.data.getSorting().key;
     }
 
-    onDropHeaderColumn(event: CdkDragDrop<DataColumn>): void {
+    onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
         const allColumns = this.data.getColumns();
         const shownColumns = allColumns.filter(column => !column.isHidden);
         const hiddenColumns = allColumns.filter(column => column.isHidden);
