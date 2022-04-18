@@ -138,10 +138,6 @@ export class FormService implements FormValidationService {
                 protected logService: LogService) {
 
         this.formLoaded.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('formLoaded', event)));
-        this.formDataRefreshed.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('formDataRefreshed', event)));
-        this.validateForm.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('formValidated', event)));
-        this.validateFormField.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('fieldValidated', event)));
-        this.validateDynamicTableRow.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('fieldDynamicTableRowValidated', event)));
     }
 
     /**

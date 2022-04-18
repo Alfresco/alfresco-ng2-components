@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ByPassFormRuleManager, FormRulesManager, formRulesManagerFactory, FORM_RULES_MANAGER } from '../models/form-rules.model';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { FormModel } from '../components/widgets/core/form.model';
 
 class CustomRuleManager extends FormRulesManager<any> {
     protected getRules() {
@@ -72,6 +73,10 @@ describe('Form Rules', () => {
     });
 
     describe('Injection token not provided', () => {
+        let formModel: FormModel;
+        let rulesManager: FormRulesManager<any>;
+        let getRulesSpy: jasmine.Spy;
+
         setupTestBed({
             imports: [
                 TranslateModule.forRoot(),
@@ -82,12 +87,28 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             injector = TestBed.inject(Injector);
+            rulesManager = formRulesManagerFactory<any>(injector);
+            getRulesSpy = spyOn<any>(rulesManager, 'getRules');
         });
 
         it('factory function should return bypass service', () => {
-            const rulesManager = formRulesManagerFactory<any>(injector);
-
             expect(rulesManager instanceof ByPassFormRuleManager).toBeTruthy();
+        });
+
+        it('should get rules when form is not readonly', () => {
+            formModel = new FormModel({}, {}, false);
+
+            rulesManager.initialize(formModel);
+
+            expect(getRulesSpy).toHaveBeenCalled();
+        });
+
+        it('should not get rules when form is readonly', () => {
+            formModel = new FormModel({}, {}, true);
+
+            rulesManager.initialize(formModel);
+
+            expect(getRulesSpy).not.toHaveBeenCalled();
         });
     });
 });
