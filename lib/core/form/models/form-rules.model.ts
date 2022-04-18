@@ -18,6 +18,7 @@
 import { InjectionToken, Injector } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { FormEvent } from '../events';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
 
@@ -45,16 +46,21 @@ export abstract class FormRulesManager<T> {
         }
 
         this.formModel = formModel;
-        const rules = this.getRules();
 
-        if (!!rules) {
-            this.formService.formRulesEvent
-                .pipe(
-                    filter(event => !!event.form.id && event.form.id === formModel?.id),
-                    takeUntil(this.onDestroy$)
-                ).subscribe(event => {
-                    this.handleRuleEvent(event, rules);
-                });
+        if (!this.formModel.readOnly) {
+            const rules = this.getRules();
+
+            if (!!rules) {
+                this.formService.formRulesEvent
+                    .pipe(
+                        filter(event => !!event.form.id && event.form.id === formModel?.id),
+                        takeUntil(this.onDestroy$)
+                    ).subscribe(event => {
+                        this.handleRuleEvent(event, rules);
+                    });
+
+                this.formService.formRulesEvent.next(new FormRulesEvent('formLoaded', new FormEvent(formModel)));
+            }
         }
 
         this.initialized = true;
