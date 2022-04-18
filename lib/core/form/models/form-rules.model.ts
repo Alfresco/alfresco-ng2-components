@@ -18,6 +18,7 @@
 import { InjectionToken, Injector } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { FormEvent } from '../events';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormModel, FormService } from '../public-api';
 
@@ -57,6 +58,8 @@ export abstract class FormRulesManager<T> {
                     ).subscribe(event => {
                         this.handleRuleEvent(event, rules);
                     });
+
+                this.formService.formRulesEvent.next(new FormRulesEvent('formLoaded', new FormEvent(formModel)));
             }
         }
 
