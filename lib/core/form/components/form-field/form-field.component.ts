@@ -41,6 +41,7 @@ declare const adf: any;
     template: `
         <div [id]="'field-'+field?.id+'-container'"
             [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
+            [style.display]="!field?.isVisible ? 'none' : 'block'"
             [class.adf-focus]="focus"
             (focusin)="focusToggle()"
             (focusout)="focusToggle()">

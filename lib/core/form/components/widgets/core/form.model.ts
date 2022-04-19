@@ -429,7 +429,7 @@ export class FormModel implements ProcessFormModel {
             visibilityRule.operator = visibility ? 'empty' : '!empty';
             visibilityRule.leftType = WidgetTypeEnum.field;
             field.visibilityCondition = visibilityRule;
-            field.isVisible = false;
+            field.isVisible = visibility;
         }
     }
 

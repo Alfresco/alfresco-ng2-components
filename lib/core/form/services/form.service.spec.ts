@@ -21,6 +21,8 @@ import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
+import { FormFieldEvent } from '../events/form-field.event';
 
 declare let jasmine: any;
 
@@ -407,6 +409,22 @@ describe('Form service', () => {
                 expect(result.id).toEqual(formId);
                 done();
             });
+        });
+    });
+
+    describe('Form rules', () => {
+        const event = new FormFieldEvent('mock', null);
+
+        it('should emit the fieldValueChanged in the formRulesEvent observable', async(done) => {
+            service.formRulesEvent.pipe(take(1)).subscribe(formRuleEvent => {
+                expect(formRuleEvent.event).toBeFalsy();
+                expect(formRuleEvent.field).toBeFalsy();
+                expect(formRuleEvent.form).toEqual('mock');
+                expect(formRuleEvent.type).toEqual('fieldValueChanged');
+                done();
+            });
+
+            service.formFieldValueChanged.next(event);
         });
     });
 });

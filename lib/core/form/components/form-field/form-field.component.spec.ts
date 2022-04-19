@@ -113,8 +113,9 @@ describe('FormFieldComponent', () => {
         component.field.isVisible = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility;
-            expect(debugElement).toEqual('hidden');
+            const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style;
+            expect(debugElement.visibility).toEqual('hidden');
+            expect(debugElement.display).toEqual('none');
             done();
         });
     });
@@ -130,6 +131,7 @@ describe('FormFieldComponent', () => {
 
         fixture.whenStable().then(() => {
             expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
+            expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
             done();
         });
     });
@@ -143,9 +145,11 @@ describe('FormFieldComponent', () => {
         component.field = field;
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
         component.field.isVisible = false;
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('hidden');
+        expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('none');
     });
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
