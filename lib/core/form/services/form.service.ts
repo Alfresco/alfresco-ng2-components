@@ -136,8 +136,6 @@ export class FormService implements FormValidationService {
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 protected logService: LogService) {
-
-        this.formFieldValueChanged.subscribe(event => this.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', event)));
     }
 
     /**
