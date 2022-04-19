@@ -22,8 +22,9 @@ import { WidgetComponent } from './widget.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { filter } from 'rxjs/operators';
 
-describe('WidgetComponent', () => {
+fdescribe('WidgetComponent', () => {
 
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
@@ -56,8 +57,7 @@ describe('WidgetComponent', () => {
         });
 
         it('should click event be redirect on the form rules event service', (done) => {
-            widget.formService.formRulesEvent.subscribe((event) => {
-                expect(event.type).toEqual('click');
+            widget.formService.formRulesEvent.pipe(filter(event => event.type === 'click')).subscribe(() => {
                 done();
             });
 
@@ -93,6 +93,17 @@ describe('WidgetComponent', () => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');
+            done();
+        });
+
+        widget.onFieldChanged(fakeField);
+    });
+
+    it('should send a rule event when a field is changed', (done) => {
+        const fakeForm = new FormModel();
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        widget.formService.formRulesEvent.subscribe((event) => {
+            expect(event.type).toEqual('fieldValueChanged');
             done();
         });
 

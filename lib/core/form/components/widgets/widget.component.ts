@@ -104,6 +104,7 @@ export class WidgetComponent implements AfterViewInit {
 
     onFieldChanged(field: FormFieldModel) {
         this.fieldChanged.emit(field);
+        this.formService.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormFieldEvent(this.field?.form, this.field), null));
     }
 
     event(event: Event): void {
