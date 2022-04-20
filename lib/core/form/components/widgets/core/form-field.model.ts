@@ -75,6 +75,7 @@ export class FormFieldModel extends FormWidgetModel {
     selectionType: 'single' | 'multiple' = null;
     rule?: FormFieldRule;
     selectLoggedUser: boolean;
+    groupsRestriction: string[];
 
     // container model members
     numberOfColumns: number = 1;
@@ -183,6 +184,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.selectionType = json.selectionType;
             this.rule = json.rule;
             this.selectLoggedUser = json.selectLoggedUser;
+            this.groupsRestriction = json.groupsRestriction?.groups;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

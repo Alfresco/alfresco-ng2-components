@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { IdentityGroupModel } from '@alfresco/adf-core';
+
 export const mockUsers = [
     { id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' },
     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'},
@@ -31,4 +33,22 @@ export const mockRoles = [
     { id: 'id-3', name: 'MOCK_MODELER-ROLE' },
     { id: 'id-4', name: 'MOCK-ROLE-1' },
     { id: 'id-5', name: 'MOCK-ROLE-2'}
+];
+
+export const mockOAuth2: any = {
+    oauth2Auth: {
+        callCustomApi: () => Promise.resolve(mockUsers)
+    },
+    isEcmLoggedIn: () => false,
+    reply: jasmine.createSpy('reply')
+};
+
+export const mockPreselectedUsers = [
+    { id: mockUsers[1].id, username: mockUsers[1].username, readonly: false },
+    { id: mockUsers[2].id, username: mockUsers[2].username, readonly: false }
+];
+
+export const mockInvolvedGroups = [
+    { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] } as IdentityGroupModel,
+    { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] } as IdentityGroupModel
 ];

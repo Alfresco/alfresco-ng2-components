@@ -33,6 +33,7 @@ import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
 import {
     FullNamePipe,
+    IdentityGroupModel,
     IdentityUserModel,
     IdentityUserService,
     LogService
@@ -102,6 +103,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
      */
     @Input()
     excludedUsers: IdentityUserModel[] = [];
+
+    /** Array of groups to restrict user searches.
+     * Mandatory property is group id
+     */
+    @Input()
+    groupsRestriction: string[] = [];
 
     /** FormControl to list of users */
     @Input()
@@ -216,13 +223,15 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.resetSearchUsers();
             }),
             switchMap((search) =>
-                this.identityUserService.findUsersByName(search.trim())),
+                this.findUsers(search)
+            ),
             mergeMap((users) => {
                 this.resetSearchUsers();
                 this.searchLoading = false;
                 return users;
             }),
             filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
+            mergeMap(user => this.filterUsersByGroupsRestriction(user)),
             mergeMap(user => {
                 if (this.appName) {
                     return this.checkUserHasAccess(user.id).pipe(
@@ -275,6 +284,19 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             map((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.user));
     }
 
+    private filterUsersByGroupsRestriction(user: IdentityUserModel): Observable<IdentityUserModel> {
+        if (this.groupsRestriction?.length) {
+            return this.isUserBelongToRestrictedGroups(user).pipe(
+                mergeMap(belong => belong ? of(user) : of())
+            );
+        }
+        return of(user);
+    }
+
+    private findUsers(search: string): Observable<IdentityUserModel[]> {
+        return this.identityUserService.findUsersByName(search.trim());
+    }
+
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => this.compare(selectedUser, searchUser));
@@ -325,7 +347,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
                 if (this.compare(user, validationResult)) {
                     validationResult.readonly = user.readonly;
-                    validUsers.push(validationResult);
+                    if (this.groupsRestriction?.length) {
+                        await this.isUserBelongToRestrictedGroups(validationResult)
+                            .toPromise() ? validUsers.push(user) : this.invalidUsers.push(user);
+                    } else {
+                        validUsers.push(validationResult);
+                    }
                 } else {
                     this.invalidUsers.push(user);
                 }
@@ -527,6 +554,22 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private resetSearchUsers(): void {
         this._searchUsers = [];
         this.searchUsers$.next(this._searchUsers);
+    }
+
+    private isUserBelongToRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
+        return this.getUserGroups(user.id).pipe(
+            map(userGroups => userGroups.filter(
+                group => this.groupsRestriction.filter(
+                    restrictedGroup => group.name === restrictedGroup
+                )
+            ).length >= this.groupsRestriction.length)
+        );
+    }
+
+    private getUserGroups(userId: string): Observable<IdentityGroupModel[]> {
+        return this.identityUserService.getInvolvedGroups(userId).pipe(
+            map(groups => groups.map(({id, name}) => ({id, name})))
+        );
     }
 
     getSelectedUsers(): IdentityUserModel[] {
