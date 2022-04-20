@@ -1,0 +1,13 @@
+.adf-datatable-demo-app {
+    height: 310px;
+    overflow-y: auto;
+
+    &-actions {
+        display: flex;
+        column-gap: 4px;
+    }
+
+    &-custom-user-header {
+        color: red;
+    }
+}

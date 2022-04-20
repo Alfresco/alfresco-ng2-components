@@ -196,7 +196,9 @@
     "REPLACE_COLUMNS": "Replace columns",
     "LOAD_NODE": "Load Node",
     "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items"
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
+    "USE_CUSTOM_COLUMN_HEADER": "Use custom template for 'User' header",
+    "CUSTOM_COLUMN_HEADER": "Custom User Header Template"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
