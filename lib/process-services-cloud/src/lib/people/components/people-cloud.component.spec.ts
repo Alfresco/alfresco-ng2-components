@@ -26,7 +26,7 @@ import {
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
-import { mockUsers } from '../mock/user-cloud.mock';
+import { mockInvolvedGroups, mockOAuth2, mockPreselectedUsers, mockUsers } from '../mock/user-cloud.mock';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -39,24 +39,20 @@ describe('PeopleCloudComponent', () => {
     let identityService: IdentityUserService;
     let alfrescoApiService: AlfrescoApiService;
     let findUsersByNameSpy: jasmine.Spy;
-
-    const mock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve(mockUsers)
-        },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
-    };
-
-    const mockPreselectedUsers = [
-        { id: mockUsers[1].id, username: mockUsers[1].username },
-        { id: mockUsers[2].id, username: mockUsers[2].username }
-    ];
+    let getInvolvedGroupsSpy: jasmine.Spy;
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     function getElement<T = HTMLElement>(selector: string): T {
         return fixture.nativeElement.querySelector(selector);
     }
+
+    const typeInputValue = (value: string) => {
+        const input = getElement<HTMLInputElement>('input');
+        input.focus();
+        input.value = value;
+        input.dispatchEvent(new Event('keyup'));
+        input.dispatchEvent(new Event('input'));
+    };
 
     setupTestBed({
         imports: [
@@ -74,7 +70,7 @@ describe('PeopleCloudComponent', () => {
         identityService = TestBed.inject(IdentityUserService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mockOAuth2);
     });
 
     it('should populate placeholder when title is present', async () => {
@@ -760,7 +756,8 @@ describe('PeopleCloudComponent', () => {
                 message: 'INVALID_PRESELECTED_USERS',
                 users: [{
                     id: mockPreselectedUsers[0].id,
-                    username: mockPreselectedUsers[0].username
+                    username: mockPreselectedUsers[0].username,
+                    readonly: mockPreselectedUsers[0].readonly
                 }]
             };
             component.warning.subscribe(warning => {
@@ -801,11 +798,13 @@ describe('PeopleCloudComponent', () => {
                 users: [
                     {
                         id: mockPreselectedUsers[0].id,
-                        username: mockPreselectedUsers[0].username
+                        username: mockPreselectedUsers[0].username,
+                        readonly: mockPreselectedUsers[0].readonly
                     },
                     {
                         id: mockPreselectedUsers[1].id,
-                        username: mockPreselectedUsers[1].username
+                        username: mockPreselectedUsers[1].username,
+                        readonly: mockPreselectedUsers[1].readonly
                     }
                 ]
             };
@@ -820,6 +819,75 @@ describe('PeopleCloudComponent', () => {
             component.preSelectUsers = [mockPreselectedUsers[0], mockPreselectedUsers[1]];
             component.ngOnChanges({
                 preSelectUsers: new SimpleChange(null, [mockPreselectedUsers[0], mockPreselectedUsers[1]], false)
+            });
+        });
+    });
+
+    describe('Groups restriction', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
+        });
+
+        it('Shoud display all users if groups restriction is empty', async () => {
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of(mockInvolvedGroups));
+            component.groupsRestriction = [];
+            typeInputValue('M');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(getInvolvedGroupsSpy).toHaveBeenCalledTimes(0);
+            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(mockUsers.length);
+        });
+
+        it('Should display users that belongs to restricted groups', async () => {
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of(mockInvolvedGroups));
+            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+            typeInputValue('M');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(getInvolvedGroupsSpy).toHaveBeenCalledTimes(3);
+            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(mockUsers.length);
+        });
+
+        it('Should not display users that not belongs to restricted groups', async () => {
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([mockInvolvedGroups[0]]));
+            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+            typeInputValue('M');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(getInvolvedGroupsSpy).toHaveBeenCalledTimes(3);
+            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(0);
+        });
+
+        it('Should mark as invalid preselected user if is not belongs to restricted groups', (done) => {
+            spyOn(identityService, 'findUserById').and.returnValue(of(mockPreselectedUsers[0]));
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([mockInvolvedGroups[0]]));
+
+            const expectedWarning = {
+                message: 'INVALID_PRESELECTED_USERS',
+                users: [{
+                    id: mockPreselectedUsers[0].id,
+                    username: mockPreselectedUsers[0].username,
+                    readonly: mockPreselectedUsers[0].readonly
+                }]
+            };
+            component.warning.subscribe(warning => {
+                expect(warning).toEqual(expectedWarning);
+                done();
+            });
+
+            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+            component.mode = 'single';
+            component.validate = true;
+            component.preSelectUsers = [mockPreselectedUsers[0]];
+            component.ngOnChanges({
+                preSelectUsers: new SimpleChange(null, [mockPreselectedUsers[0]], false)
             });
         });
     });
