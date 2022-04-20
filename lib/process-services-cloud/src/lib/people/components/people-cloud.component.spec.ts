@@ -46,13 +46,13 @@ describe('PeopleCloudComponent', () => {
         return fixture.nativeElement.querySelector(selector);
     }
 
-    function typeInputValue(value: string) {
+    const typeInputValue = (value: string) => {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
         input.value = value;
         input.dispatchEvent(new Event('keyup'));
         input.dispatchEvent(new Event('input'));
-    }
+    };
 
     setupTestBed({
         imports: [

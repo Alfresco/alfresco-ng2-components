@@ -286,8 +286,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private filterUsersByGroupsRestriction(user: IdentityUserModel): Observable<IdentityUserModel> {
         if (this.groupsRestriction?.length) {
-            return this.isUserBelongToRestrictedGroups(user).pipe(
-                mergeMap(belong => belong ? of(user) : of())
+            return this.isUserPartOfAllRestrictedGroups(user).pipe(
+                mergeMap(isPartOfAllGroups => isPartOfAllGroups ? of(user) : of())
             );
         }
         return of(user);
@@ -348,8 +348,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 if (this.compare(user, validationResult)) {
                     validationResult.readonly = user.readonly;
                     if (this.groupsRestriction?.length) {
-                        await this.isUserBelongToRestrictedGroups(validationResult)
-                            .toPromise() ? validUsers.push(user) : this.invalidUsers.push(user);
+                        const isUserPartOfAllRestrictedGroups = await this.isUserPartOfAllRestrictedGroups(validationResult).toPromise();
+
+                        if (isUserPartOfAllRestrictedGroups) {
+                            validUsers.push(user);
+                        } else {
+                            this.invalidUsers.push(user);
+                        }
                     } else {
                         validUsers.push(validationResult);
                     }
@@ -556,12 +561,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchUsers$.next(this._searchUsers);
     }
 
-    private isUserBelongToRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
+    private isUserPartOfAllRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
         return this.getUserGroups(user.id).pipe(
             map(userGroups => userGroups.filter(
-                group => this.groupsRestriction.filter(
-                    restrictedGroup => group.name === restrictedGroup
-                )
+                restrictedGroup => userGroups.includes(restrictedGroup)
             ).length >= this.groupsRestriction.length)
         );
     }
