@@ -89,7 +89,14 @@
         "rxjs/no-subject-unsubscribe": "error",
         "rxjs/no-subject-value": "error",
         "rxjs/no-unsafe-takeuntil": "error",
-        "unicorn/filename-case": "error"
+        "unicorn/filename-case": "error",
+        "@typescript-eslint/no-unused-expressions": [
+          "error",
+          {
+            "allowShortCircuit": true,
+            "allowTernary": true
+          }
+        ]
       }
     },
     {

@@ -592,13 +592,15 @@ describe('DropdownCloudWidgetComponent', () => {
                         entries: mockConditionalEntries
                     }
                 });
-                const updateFormSpy = spyOn(widget.field, 'updateForm');
-                const mockParentDropdown = { id: 'parentDropdown', value: 'IT' };
+                const updateFormSpy = spyOn(widget.field, 'updateForm').and.callThrough();
+                const mockParentDropdown = { id: 'parentDropdown', value: 'IT', validate: (): boolean => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                widget.field.value = 'MI';
                 fixture.detectChanges();
 
                 expect(updateFormSpy).toHaveBeenCalled();
                 expect(widget.field.options).toEqual(mockConditionalEntries[1].options);
+                expect(widget.field.form.values).toEqual({ 'child-dropdown-id': { id: 'MI', name: 'MILAN' }});
             });
 
             it('should load the selection of a rest type linked dropdown', () => {
