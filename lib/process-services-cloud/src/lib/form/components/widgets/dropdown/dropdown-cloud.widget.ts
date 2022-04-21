@@ -135,11 +135,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private parentValueChanged(value: string) {
         if (value && !this.isDefaultValue(value)) {
-            if (this.isValidRestType()) {
-                this.persistFieldOptionsFromRestApi();
-            } else {
-                this.persistFieldOptionsFromManualList(value);
-            }
+            this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isDefaultValue(value)) {
             this.resetRestApiErrorMessage();
             this.addDefaultOption();
@@ -165,6 +161,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 if (ruleEntry.key === value) {
                     this.field.options = ruleEntry.options;
                     this.resetInvalidValue();
+                    this.field.updateForm();
                 }
             });
         }
