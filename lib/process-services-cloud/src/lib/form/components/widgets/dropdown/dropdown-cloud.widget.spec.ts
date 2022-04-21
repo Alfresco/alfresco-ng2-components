@@ -593,7 +593,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     }
                 });
                 const updateFormSpy = spyOn(widget.field, 'updateForm').and.callThrough();
-                const mockParentDropdown = { id: 'parentDropdown', value: 'IT', validate: (): boolean => { return true; } };
+                const mockParentDropdown = { id: 'parentDropdown', value: 'IT', validate: (): boolean => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 widget.field.value = 'MI';
                 fixture.detectChanges();
