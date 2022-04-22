@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
@@ -132,6 +132,23 @@ class ViewerWithCustomOpenWithComponent {
 })
 class ViewerWithCustomMoreActionsComponent {
 }
+
+@Component({
+    selector: 'adf-double-viewer',
+    template: `
+        <adf-viewer #viewer1></adf-viewer>
+        <adf-viewer #viewer2></adf-viewer>
+    `
+})
+class DoubleViewerComponent {
+    @ViewChild('viewer1')
+    viewer1: ViewerComponent;
+
+    @ViewChild('viewer2')
+    viewer2: ViewerComponent;
+
+}
+
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
@@ -151,6 +168,7 @@ describe('ViewerComponent', () => {
             MatIconModule
         ],
         declarations: [
+            DoubleViewerComponent,
             ViewerWithCustomToolbarComponent,
             ViewerWithCustomSidebarComponent,
             ViewerWithCustomOpenWithComponent,
@@ -182,6 +200,36 @@ describe('ViewerComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
+    });
+
+    describe('Double viewer Test', () => {
+
+        it('should not reload the content of all the viewer after type change', async () => {
+            const fixtureDouble = TestBed.createComponent(DoubleViewerComponent);
+
+            await fixtureDouble.detectChanges();
+            await fixtureDouble.whenStable();
+
+            fixtureDouble.componentInstance.viewer1.urlFile = 'fake-test-file.pdf';
+            fixtureDouble.componentInstance.viewer2.urlFile = 'fake-test-file-two.xls';
+
+            fixtureDouble.componentInstance.viewer1.ngOnChanges();
+            fixtureDouble.componentInstance.viewer2.ngOnChanges();
+
+            await fixtureDouble.detectChanges();
+            await fixtureDouble.whenStable();
+
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('unknown');
+
+            fixtureDouble.componentInstance.viewer1.urlFile = 'fake-test-file.pdf';
+            fixtureDouble.componentInstance.viewer2.urlFile = 'fake-test-file-two.png';
+
+            (fixtureDouble.componentInstance.viewer2 as any).viewUtilService.viewerTypeChange.next('png');
+
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('png');
+        });
     });
 
     describe('Extension Type Test', () => {
@@ -1273,7 +1321,13 @@ describe('ViewerComponent', () => {
         describe('display name property override by nodeId', () => {
 
             const contentUrl = '/content/url/path';
-            const nodeDetails = new NodeEntry({ entry: { name: 'node-id-name', id: '12', content: { mimeType: 'txt' } } });
+            const nodeDetails = new NodeEntry({
+                entry: {
+                    name: 'node-id-name',
+                    id: '12',
+                    content: { mimeType: 'txt' }
+                }
+            });
 
             it('should use the node name if displayName is NOT set and nodeId is set', (done) => {
                 spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(nodeDetails));
