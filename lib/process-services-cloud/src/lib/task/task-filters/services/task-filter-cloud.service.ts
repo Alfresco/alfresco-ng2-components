@@ -259,9 +259,25 @@ export class TaskFilterCloudService extends BaseCloudService {
         if (taskFilter.appName || taskFilter.appName === '') {
             const queryUrl = `${this.getBasePath(taskFilter.appName)}/query/v1/tasks`;
             const queryParams = {
+                processInstanceId: taskFilter.processInstanceId,
+                processDefinitionId: taskFilter.processDefinitionId,
+                processDefinitionName: taskFilter.processDefinitionName,
                 assignee: taskFilter.assignee,
                 status: taskFilter.status,
+                taskName: taskFilter.taskName,
                 appName: taskFilter.appName,
+                assignmentType: taskFilter.assignmentType,
+                owner: taskFilter.owner,
+                taskId: taskFilter.taskId,
+                parentTaskId: taskFilter.parentTaskId,
+                priority: taskFilter.priority,
+                lastModifiedFrom: taskFilter.lastModifiedFrom,
+                lastModifiedTo: taskFilter.lastModifiedTo,
+                standalone: taskFilter.standalone,
+                createdDate: taskFilter.createdDate,
+                completedDate: taskFilter.completedDate,
+                completedBy: taskFilter.completedBy,
+                dueDate: taskFilter.dueDate,
                 maxItems: 1
             };
             return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
