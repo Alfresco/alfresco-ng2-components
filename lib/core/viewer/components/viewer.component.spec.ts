@@ -136,8 +136,8 @@ class ViewerWithCustomMoreActionsComponent {
 @Component({
     selector: 'adf-double-viewer',
     template: `
-        <adf-viewer #viewer1 ></adf-viewer>
-        <adf-viewer #viewer2 ></adf-viewer>
+        <adf-viewer #viewer1></adf-viewer>
+        <adf-viewer #viewer2></adf-viewer>
     `
 })
 class DoubleViewerComponent {
@@ -201,7 +201,7 @@ describe('ViewerComponent', () => {
     afterEach(() => {
         fixture.destroy();
     });
-    
+
     describe('Double viewer Test', () => {
 
         it('should not reload the content of all the viewer after type change', async () => {
@@ -231,7 +231,7 @@ describe('ViewerComponent', () => {
             expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('png');
         });
     });
-    
+
     describe('Extension Type Test', () => {
         it('should display pdf external viewer via wildcard notation', async () => {
             const extension: ViewerExtensionRef = {
@@ -1321,7 +1321,13 @@ describe('ViewerComponent', () => {
         describe('display name property override by nodeId', () => {
 
             const contentUrl = '/content/url/path';
-            const nodeDetails = new NodeEntry({ entry: { name: 'node-id-name', id: '12', content: { mimeType: 'txt' } } });
+            const nodeDetails = new NodeEntry({
+                entry: {
+                    name: 'node-id-name',
+                    id: '12',
+                    content: { mimeType: 'txt' }
+                }
+            });
 
             it('should use the node name if displayName is NOT set and nodeId is set', (done) => {
                 spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(nodeDetails));
