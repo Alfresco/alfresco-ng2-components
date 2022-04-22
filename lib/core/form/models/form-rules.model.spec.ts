@@ -26,6 +26,7 @@ import { FormModel } from '../components/widgets/core/form.model';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormEvent } from '../events/form.event';
 import { FormService } from '../services/form.service';
+import { getTestScheduler } from 'jasmine-marbles';
 
 class CustomRuleManager extends FormRulesManager<any> {
     protected getRules() {
@@ -76,20 +77,36 @@ describe('Form Rules', () => {
             expect(customRuleManager.initialize).toHaveBeenCalled();
         });
 
-        it('should send the form loaded event when initialized', async (done) => {
+        it('should send the form loaded event when initialized', () => {
             const rulesManager = new CustomRuleManager(formService);
             const getRulesSpy = spyOn<any>(rulesManager, 'getRules').and.returnValue({});
+            const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
             const formModel = new FormModel({ id: 'mock' }, {}, false);
             const formEvent = new FormEvent(formModel);
             const event = new FormRulesEvent('formLoaded', formEvent);
 
-            formService.formRulesEvent.subscribe(formRulesEvent => {
-                expect(formRulesEvent).toEqual(event);
-                done();
-            });
+            rulesManager.initialize(formModel);
+            getTestScheduler().flush();
+
+            expect(getRulesSpy).toHaveBeenCalled();
+            expect(handleRuleEventSpy).toHaveBeenCalledWith(event, {});
+        });
+
+        it('should not receive the form event when event has no form', () => {
+            const rulesManager = new CustomRuleManager(formService);
+            spyOn<any>(rulesManager, 'getRules').and.returnValue({});
+            const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
+            const formModel = new FormModel({ id: 'mock' }, {}, false);
+            const formEvent = new FormEvent(new FormModel(null));
+            const event = new FormRulesEvent('formLoaded', formEvent);
 
             rulesManager.initialize(formModel);
-            expect(getRulesSpy).toHaveBeenCalled();
+
+            formService.formRulesEvent.next(event);
+
+            getTestScheduler().flush();
+
+            expect(handleRuleEventSpy).not.toHaveBeenCalledWith(event, jasmine.anything());
         });
     });
 

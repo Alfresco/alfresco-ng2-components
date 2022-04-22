@@ -53,7 +53,7 @@ export abstract class FormRulesManager<T> {
             if (!!rules) {
                 this.formService.formRulesEvent
                     .pipe(
-                        filter(event => !!event.form.id && event.form.id === formModel?.id),
+                        filter(event => !!event?.form?.id && event.form.id === formModel?.id),
                         takeUntil(this.onDestroy$)
                     ).subscribe(event => {
                         this.handleRuleEvent(event, rules);
