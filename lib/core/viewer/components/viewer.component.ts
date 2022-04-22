@@ -50,7 +50,8 @@ import { FileModel } from '../../models';
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: { class: 'adf-viewer' },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [ViewUtilService]
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
