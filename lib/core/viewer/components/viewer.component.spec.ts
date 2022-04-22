@@ -219,16 +219,16 @@ describe('ViewerComponent', () => {
             await fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
-            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe("pdf")
-            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe("unknown")
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf')
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('unknown')
 
             fixtureDouble.componentInstance.viewer1.urlFile = 'fake-test-file.pdf';
             fixtureDouble.componentInstance.viewer2.urlFile = 'fake-test-file-two.png';
 
             (fixtureDouble.componentInstance.viewer2 as any).viewUtilService.viewerTypeChange.next('png');
 
-            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe("pdf")
-            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe("png")
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf')
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('png')
         });
     });
     
