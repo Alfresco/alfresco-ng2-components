@@ -22,7 +22,7 @@ import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
 
 export class PeopleCloudComponentPage {
-    readonly removeMeIdontWannaSleep = 200;
+    readonly removeMeIdontWannaSleep = 300;
 
     peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
     assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
@@ -76,6 +76,7 @@ export class PeopleCloudComponentPage {
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {
         try {
+            await browser.sleep(this.removeMeIdontWannaSleep);
             const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
             await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
             return true;
@@ -85,6 +86,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkUserIsNotDisplayed(name: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectionReady);
         const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
@@ -101,6 +103,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkOptionIsNotDisplayed(): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }

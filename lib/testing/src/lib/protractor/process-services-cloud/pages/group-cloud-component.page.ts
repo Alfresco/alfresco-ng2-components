@@ -21,7 +21,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class GroupCloudComponentPage {
-    readonly removeMeIdontWannaSleep = 200;
+    readonly removeMeIdontWannaSleep = 300;
     groupCloudSearch = $('input[data-automation-id="adf-cloud-group-search-input"]');
     groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
@@ -54,6 +54,7 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupIsNotDisplayed(name: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
@@ -64,6 +65,7 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupNotSelected(group: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
