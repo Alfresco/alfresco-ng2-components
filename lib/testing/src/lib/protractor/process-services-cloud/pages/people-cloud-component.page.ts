@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, protractor, $, $$, ElementFinder } from 'protractor';
+import { Locator, by, element, protractor, $, $$, ElementFinder, browser } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
 
 export class PeopleCloudComponentPage {
+    readonly removeMeIdontWannaSleep = 200;
 
     peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
     assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
@@ -94,6 +95,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkOptionIsDisplayed(): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsVisible(optionList);
     }
@@ -104,6 +106,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkSelectedPeople(person: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
     }
 

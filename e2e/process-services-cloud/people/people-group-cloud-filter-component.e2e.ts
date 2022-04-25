@@ -49,6 +49,7 @@ describe('People Groups Cloud Component', () => {
 
             testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+
             await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
             await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
             noRoleUser = await identityService.createIdentityUser();
@@ -88,7 +89,6 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
 
-            await browser.sleep(100);
             await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
         });
 

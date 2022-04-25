@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { by, element, $, ElementFinder, $$ } from 'protractor';
+import { by, element, $, ElementFinder, $$, browser } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class GroupCloudComponentPage {
-
+    readonly removeMeIdontWannaSleep = 200;
     groupCloudSearch = $('input[data-automation-id="adf-cloud-group-search-input"]');
     groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
@@ -48,6 +48,7 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupIsDisplayed(name: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
@@ -58,6 +59,7 @@ export class GroupCloudComponentPage {
     }
 
     async checkSelectedGroup(group: string): Promise<void> {
+        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
