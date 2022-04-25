@@ -562,7 +562,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private isUserPartOfAllRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
         return this.getUserGroups(user.id).pipe(
-            map(userGroups => this.groupsRestriction.some(restricted => userGroups.includes(restricted)))
+            map(userGroups => this.groupsRestriction.every(restricted => userGroups.includes(restricted)))
         );
     }
 
