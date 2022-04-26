@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { by, element, $, ElementFinder, $$, browser } from 'protractor';
+import { by, element, $, ElementFinder, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
+import { TestElement } from '../../core/test-element';
 
 export class GroupCloudComponentPage {
-    readonly removeMeIdontWannaSleep = 300;
     groupCloudSearch = $('input[data-automation-id="adf-cloud-group-search-input"]');
     groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
@@ -29,11 +29,11 @@ export class GroupCloudComponentPage {
     getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> => $$(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
 
     async searchGroups(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.groupCloudSearch, name, 100);
     }
 
     async searchGroupsToExisting(name: string) {
-        await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.groupCloudSearch, name, 100);
     }
 
     async getGroupsFieldContent(): Promise<string> {
@@ -48,24 +48,25 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupIsDisplayed(name: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
 
     async checkGroupIsNotDisplayed(name: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
-    async checkSelectedGroup(group: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+    async checkSelectedGroup(group: string): Promise<boolean> {
+        try {
+            await TestElement.byText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group).waitVisible();
+            return true;
+        } catch (e) {
+            return false;
+        };
     }
 
     async checkGroupNotSelected(group: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 

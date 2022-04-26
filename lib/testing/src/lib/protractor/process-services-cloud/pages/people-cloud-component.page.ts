@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, protractor, $, $$, ElementFinder, browser } from 'protractor';
+import { Locator, by, element, protractor, $, $$, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
 
 export class PeopleCloudComponentPage {
-    readonly removeMeIdontWannaSleep = 300;
-
     peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
     assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
     selectionReady = $('div[data-automation-id="adf-people-cloud-row"]');
@@ -51,7 +49,7 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name, 100);
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
@@ -76,7 +74,6 @@ export class PeopleCloudComponentPage {
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {
         try {
-            await browser.sleep(this.removeMeIdontWannaSleep);
             const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
             await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
             return true;
@@ -86,7 +83,6 @@ export class PeopleCloudComponentPage {
     }
 
     async checkUserIsNotDisplayed(name: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         await BrowserVisibility.waitUntilElementIsVisible(this.selectionReady);
         const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
@@ -97,20 +93,22 @@ export class PeopleCloudComponentPage {
     }
 
     async checkOptionIsDisplayed(): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsVisible(optionList);
     }
 
     async checkOptionIsNotDisplayed(): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
         const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }
 
-    async checkSelectedPeople(person: string): Promise<void> {
-        await browser.sleep(this.removeMeIdontWannaSleep);
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+    async checkSelectedPeople(person: string): Promise<boolean> {
+        try {
+            await TestElement.byText('mat-chip-list mat-chip', person).waitVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     async getAssigneeFieldContent(): Promise<string> {
@@ -169,9 +167,13 @@ export class PeopleCloudComponentPage {
         }
     }
 
-    async checkNoResultsFoundError(): Promise<void> {
-        const errorLocator = $('[data-automation-id="adf-people-cloud-no-results"]');
-        await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
+    async checkNoResultsFoundError(): Promise<boolean> {
+        try {
+            await TestElement.byCss('[data-automation-id="adf-people-cloud-no-results"]').waitVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
 }

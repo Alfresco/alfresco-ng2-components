@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, $, $$ } from 'protractor';
+import { by, element, $, $$, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
@@ -39,6 +39,11 @@ export class PeopleGroupCloudComponentPage {
     preselectValidationStatus = $$('mat-checkbox.app-preselect-value label input').first();
     peopleFilterByAppName = $('.app-people-control-options mat-radio-button[value="appName"]');
     groupFilterByAppName = $('.app-groups-control-options mat-radio-button[value="appName"]');
+
+    async navigateTo() {
+        await browser.get('#/cloud/people-group-cloud');
+        await browser.waitForAngular();
+    }
 
     async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
