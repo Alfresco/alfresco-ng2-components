@@ -2,13 +2,14 @@
 Title: Release notes
 ---
 
-# Release notes
+# Release Notes
 
 Below are links to the release notes for all released versions of ADF back to v1.6.1.
-The first **General available** release was v2.0.0.
+The first **General Availability** release was v2.0.0.
 
-## General available
+## General Availability
 
+- [4.10.0](RelNote4100.md)
 - [4.9.0](RelNote490.md)
 - [4.8.0](RelNote480.md)
 - [4.7.0](RelNote470.md)
@@ -38,7 +39,7 @@ The first **General available** release was v2.0.0.
 - [2.1.0](RelNote210.md)
 - [2.0.0](RelNote200.md)
 
-## Limited available
+## Limited Availability
 
 - [1.9.0](RelNote190.md)
 - [1.8.0](RelNote180.md)
