@@ -18,14 +18,12 @@
 import { createApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from './../pages/people-group-cloud-component.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
 
         const loginSSOPage = new LoginPage();
-        const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
@@ -46,13 +44,13 @@ describe('People Groups Cloud Component', () => {
 
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
             testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
-
             testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+
             await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
             await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
-            noRoleUser = await identityService.createIdentityUser();
 
+            noRoleUser = await identityService.createIdentityUser();
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
@@ -62,21 +60,15 @@ describe('People Groups Cloud Component', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
-            for (let i = 0; i < users.length; i++) {
-                await identityService.deleteIdentityUser(users[i]);
+            for (const user of users) {
+                await identityService.deleteIdentityUser(user);
             }
 
             await groupIdentityService.deleteIdentityGroup(groupNoRole.id);
         });
 
         beforeEach(async () => {
-            await navigationBarPage.navigateToPeopleGroupCloudPage();
-            await peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
-            await peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
-        });
-
-        afterEach(async () => {
-            await browser.refresh();
+            await peopleGroupCloudComponentPage.navigateTo();
         });
 
         it('[C305041] Should filter the People Single Selection with the Application name filter', async () => {
@@ -88,8 +80,7 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
 
-            await browser.sleep(100);
-            await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`)).toBeTruthy(`${testUser.firstName} ${testUser.lastName} is not visible here!`);
         });
 
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
@@ -99,15 +90,14 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
-            await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`);
 
             await peopleCloudComponent.searchAssignee(apsUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
-            await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
+            await expect(await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`)).toBeTruthy(`${apsUser.firstName} ${apsUser.lastName} is not visible here!`);
 
             await peopleCloudComponent.searchAssignee(noRoleUser.firstName);
-            await peopleCloudComponent.checkNoResultsFoundError();
+            await expect(await peopleCloudComponent.checkNoResultsFoundError()).toBeTruthy('There is something in the list!');
         });
 
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
@@ -117,7 +107,7 @@ describe('People Groups Cloud Component', () => {
             await groupCloudComponentPage.searchGroups(hrGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
             await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
-            await expect(await groupCloudComponentPage.checkSelectedGroup(hrGroup.name));
+            await expect(await groupCloudComponentPage.checkSelectedGroup(hrGroup.name)).toBeTruthy(`${hrGroup.name} is not visible here!`);
         });
 
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
@@ -128,11 +118,13 @@ describe('People Groups Cloud Component', () => {
             await groupCloudComponentPage.checkGroupIsDisplayed(testGroup.name);
             await groupCloudComponentPage.selectGroupFromList(testGroup.name);
             await groupCloudComponentPage.checkSelectedGroup(testGroup.name);
+            await expect(await groupCloudComponentPage.checkSelectedGroup(testGroup.name)).toBeTruthy(`${testGroup.name} is not visible here!`);
 
             await groupCloudComponentPage.searchGroupsToExisting(hrGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
             await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
             await groupCloudComponentPage.checkSelectedGroup(hrGroup.name);
+            await expect(await groupCloudComponentPage.checkSelectedGroup(hrGroup.name)).toBeTruthy(`${hrGroup.name} is not visible here!`);
 
             await groupCloudComponentPage.searchGroupsToExisting(groupNoRole.name);
             await groupCloudComponentPage.checkGroupIsNotDisplayed(groupNoRole.name);

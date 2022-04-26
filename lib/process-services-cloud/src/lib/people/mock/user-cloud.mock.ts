@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { IdentityGroupModel } from '@alfresco/adf-core';
-
 export const mockUsers = [
     { id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' },
     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'},
@@ -49,6 +47,6 @@ export const mockPreselectedUsers = [
 ];
 
 export const mockInvolvedGroups = [
-    { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] } as IdentityGroupModel,
-    { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] } as IdentityGroupModel
+    { id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [] },
+    { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] }
 ];

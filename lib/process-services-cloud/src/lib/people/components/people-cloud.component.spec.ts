@@ -824,6 +824,8 @@ describe('PeopleCloudComponent', () => {
     });
 
     describe('Groups restriction', () => {
+        const GROUP_1 = 0;
+        const GROUP_2 = 1;
 
         beforeEach(() => {
             fixture.detectChanges();
@@ -831,8 +833,8 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('Shoud display all users if groups restriction is empty', async () => {
-            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of(mockInvolvedGroups));
             component.groupsRestriction = [];
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of({name: 'fire'}));
             typeInputValue('M');
 
             await fixture.whenStable();
@@ -842,21 +844,41 @@ describe('PeopleCloudComponent', () => {
             expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(mockUsers.length);
         });
 
-        it('Should display users that belongs to restricted groups', async () => {
-            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of(mockInvolvedGroups));
-            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+        it('Should display users that belongs to every restricted groups', async () => {
+            component.groupsRestriction = ['water', 'fire', 'air'];
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([{name: 'fire'}, {name: 'air'}, {name: 'water'}]));
             typeInputValue('M');
 
             await fixture.whenStable();
             fixture.detectChanges();
-
-            expect(getInvolvedGroupsSpy).toHaveBeenCalledTimes(3);
-            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(mockUsers.length);
+            const userList = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]'));
+            expect(userList.length).toEqual(3);
         });
 
-        it('Should not display users that not belongs to restricted groups', async () => {
-            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([mockInvolvedGroups[0]]));
-            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+        it('Should not display user if belong to partial restricted groups', async () => {
+            component.groupsRestriction = ['water', 'fire', 'air'];
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([{name: 'fire'}, {name: 'water'}]));
+            typeInputValue('M');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const userList = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]'));
+            expect(userList.length).toEqual(0);
+        });
+
+        it('Should not display user if belong to none of the restricted groups', async () => {
+            component.groupsRestriction = ['water', 'fire', 'air'];
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([]));
+            typeInputValue('M');
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(0);
+        });
+
+        it('Should not be able to see a user that does not belong to the restricted group', async () => {
+            component.groupsRestriction = ['water'];
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([{name: 'fire'}]));
             typeInputValue('M');
 
             await fixture.whenStable();
@@ -867,7 +889,7 @@ describe('PeopleCloudComponent', () => {
 
         it('Should mark as invalid preselected user if is not belongs to restricted groups', (done) => {
             spyOn(identityService, 'findUserById').and.returnValue(of(mockPreselectedUsers[0]));
-            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([mockInvolvedGroups[0]]));
+            getInvolvedGroupsSpy = spyOn(identityService, 'getInvolvedGroups').and.returnValue(of([mockInvolvedGroups[GROUP_1]]));
 
             const expectedWarning = {
                 message: 'INVALID_PRESELECTED_USERS',
@@ -882,7 +904,7 @@ describe('PeopleCloudComponent', () => {
                 done();
             });
 
-            component.groupsRestriction = [mockInvolvedGroups[0].name, mockInvolvedGroups[1].name];
+            component.groupsRestriction = [mockInvolvedGroups[GROUP_1].name, mockInvolvedGroups[GROUP_2].name];
             component.mode = 'single';
             component.validate = true;
             component.preSelectUsers = [mockPreselectedUsers[0]];

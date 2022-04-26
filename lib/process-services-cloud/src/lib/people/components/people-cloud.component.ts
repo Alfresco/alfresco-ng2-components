@@ -33,7 +33,6 @@ import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
 import {
     FullNamePipe,
-    IdentityGroupModel,
     IdentityUserModel,
     IdentityUserService,
     LogService
@@ -563,15 +562,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private isUserPartOfAllRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
         return this.getUserGroups(user.id).pipe(
-            map(userGroups => userGroups.filter(
-                restrictedGroup => userGroups.includes(restrictedGroup)
-            ).length >= this.groupsRestriction.length)
+            map(userGroups => this.groupsRestriction.every(restricted => userGroups.includes(restricted)))
         );
     }
 
-    private getUserGroups(userId: string): Observable<IdentityGroupModel[]> {
+    private getUserGroups(userId: string): Observable<string[]> {
         return this.identityUserService.getInvolvedGroups(userId).pipe(
-            map(groups => groups.map(({id, name}) => ({id, name})))
+            map(groups => groups.map((group) => group.name))
         );
     }
 
