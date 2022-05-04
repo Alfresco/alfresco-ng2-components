@@ -8,7 +8,6 @@
     "**/coverage": true,
     "**/.happypack": true
   },
-  "editor.renderIndentGuides": true,
   "markdownlint.config": {
     "MD032": false,
     "MD004": false,
@@ -31,5 +30,6 @@
     "less",
     "postcss",
     "scss"
-  ]
+  ],
+  "editor.guides.indentation": true
 }
