@@ -373,4 +373,22 @@ describe('PaginationComponent', () => {
             expect(component.pages).toEqual([1]);
         });
     });
+
+    describe('many pages', () => {
+        it('should all the pages be available if equal or less than 50', () => {
+            component.pagination = new FakePaginationInput(50, 15, 5);
+
+            expect(component.limitedPages.length).toBe(50);
+            expect(component.pages).toEqual(component.limitedPages);
+        });
+
+        it('should only some pages be available if over 50', () => {
+            component.pagination = new FakePaginationInput(51, 15, 5);
+
+            const expectedPages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51];
+            console.log(component.pagination.totalItems, component.pagination.skipCount);
+            expect(component.limitedPages).toEqual(expectedPages);
+            expect(component.limitedPages).not.toEqual(component.pages);
+        });
+    });
 });
