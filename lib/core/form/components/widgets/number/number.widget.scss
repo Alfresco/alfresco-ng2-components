@@ -1,6 +1,12 @@
 .adf {
     &-number-widget {
-        width: 100%;
+
+        display: flex;
+
+        div {
+            width: 100%;
+            padding-right: 1%;
+        }
 
         .mat-form-field-label-wrapper {
             top: 20px;

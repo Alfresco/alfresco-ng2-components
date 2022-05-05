@@ -1772,81 +1772,377 @@ export class DemoForm {
     };
 
     cloudFormDefinition: any = {
-        formRepresentation: {
-            id: 'text-form',
-            name: 'test-start-form',
-            version: 0,
-            description: '',
-            formDefinition: {
-                tabs: [],
-                fields: [
+        "formRepresentation": {
+            "id": "form-bd97eb82-493a-4f6d-926a-55fa95c19c51",
+            "name": "f1",
+            "description": "",
+            "version": 0,
+            "standAlone": true,
+            "leftLabel": true,
+            "formDefinition": {
+                "tabs": [
                     {
-                        id: '1511517333638',
-                        type: 'container',
-                        fieldType: 'ContainerRepresentation',
-                        name: 'Label',
-                        tab: null,
-                        numberOfColumns: 2,
-                        fields: {
-                            1: [
+                        "id": "b7aaa257-e202-4ce4-87d0-0f87ed50a413",
+                        "title": "New Tab",
+                        "visibilityCondition": null
+                    },
+                    {
+                        "id": "7a5cc1aa-b62b-4b49-aaf8-57f725d9e6ea",
+                        "title": "New Tab",
+                        "visibilityCondition": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "id": "1e653ba3-f7bc-473d-91f1-6713022bd24d",
+                        "name": "Label",
+                        "type": "container",
+                        "tab": "b7aaa257-e202-4ce4-87d0-0f87ed50a413",
+                        "numberOfColumns": 2,
+                        "fields": {
+                            "1": [
                                 {
-                                    fieldType: 'FormFieldRepresentation',
-                                    id: 'texttest',
-                                    name: 'texttest',
-                                    type: 'text',
-                                    value: null,
-                                    required: false,
-                                    placeholder: 'text',
-                                    params: {
-                                        existingColspan: 2,
-                                        maxColspan: 6,
-                                        inputMaskReversed: true,
-                                        inputMask: '0#',
-                                        inputMaskPlaceholder: '(0-9)'
+                                    "id": "Text0vrwjf",
+                                    "name": "Text",
+                                    "type": "text",
+                                    "readOnly": false,
+                                    "required": true,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minLength": 0,
+                                    "maxLength": 0,
+                                    "regexPattern": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Number0au8cm",
+                                    "name": "Number",
+                                    "type": "integer",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "required": true,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Date06j610",
+                                    "name": "Date",
+                                    "type": "date",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    },
+                                    "dateDisplayFormat": "YYYY-MM-DD"
+                                },
+                                {
+                                    "id": "Dropdown0rk1ud",
+                                    "name": "Dropdown",
+                                    "type": "dropdown",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "optionType": "manual",
+                                    "options": [],
+                                    "authName": null,
+                                    "restUrl": null,
+                                    "restResponsePath": null,
+                                    "restIdProperty": null,
+                                    "restLabelProperty": null,
+                                    "selectionType": "single",
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    },
+                                    "rule": null
+                                },
+                                {
+                                    "id": "Radiobuttons0ixsge",
+                                    "name": "Radio buttons",
+                                    "type": "radio-buttons",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "optionType": "manual",
+                                    "options": [
+                                        {
+                                            "id": "Id_1",
+                                            "name": "Label 1"
+                                        },
+                                        {
+                                            "id": "Id_2",
+                                            "name": "Label 2"
+                                        }
+                                    ],
+                                    "authName": null,
+                                    "restUrl": null,
+                                    "restResponsePath": null,
+                                    "restIdProperty": null,
+                                    "restLabelProperty": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Attachfile0le6s4",
+                                    "name": "Attach file",
+                                    "type": "upload",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2,
+                                        "fileSource": {
+                                            "name": "Alfresco Content",
+                                            "serviceId": "alfresco-content"
+                                        },
+                                        "multiple": false,
+                                        "link": false,
+                                        "menuOptions": {
+                                            "show": true,
+                                            "download": true,
+                                            "retrieveMetadata": false,
+                                            "remove": true
+                                        },
+                                        "displayableCMProperties": []
+                                    }
+                                },
+                                {
+                                    "id": "Hyperlink081lmk",
+                                    "name": "Hyperlink",
+                                    "type": "hyperlink",
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "hyperlinkUrl": null,
+                                    "displayText": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Fileviewer08bizj",
+                                    "name": "File viewer",
+                                    "type": "file-viewer",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
                                     }
                                 }
                             ],
-                            2: [{
-                                fieldType: 'AttachFileFieldRepresentation',
-                                id: 'attachfiletest',
-                                name: 'attachfiletest',
-                                type: 'upload',
-                                required: true,
-                                colspan: 2,
-                                placeholder: 'attachfile',
-                                params: {
-                                    existingColspan: 2,
-                                    maxColspan: 2,
-                                    fileSource: {
-                                        serviceId: 'local-file',
-                                        name: 'Local File'
+                            "2": [
+                                {
+                                    "id": "People027fto",
+                                    "name": "People",
+                                    "type": "people",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "optionType": "single",
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
                                     },
-                                    multiple: true,
-                                    link: false
+                                    "selectLoggedUser": false
                                 },
-                                visibilityCondition: {
+                                {
+                                    "id": "Amount0bflna",
+                                    "name": "Amount",
+                                    "type": "amount",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": "123",
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    },
+                                    "enableFractions": false,
+                                    "currency": "$"
+                                },
+                                {
+                                    "id": "Multilinetext0bwk6t",
+                                    "name": "Multiline text",
+                                    "type": "multi-line-text",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minLength": 0,
+                                    "maxLength": 0,
+                                    "regexPattern": null,
+                                    "required": false,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Checkbox04obiv",
+                                    "name": "Checkbox",
+                                    "type": "boolean",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Groupofpeople00lqxw",
+                                    "name": "Group of people",
+                                    "type": "functional-group",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "optionType": "single",
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Dateandtime0pqokp",
+                                    "name": "Date and time",
+                                    "type": "datetime",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    },
+                                    "dateDisplayFormat": "YYYY-MM-DD HH:mm"
+                                },
+                                {
+                                    "id": "Displaytext0o147e",
+                                    "name": "Display text",
+                                    "type": "readonly-text",
+                                    "readOnly": false,
+                                    "value": "Display text as part of the form",
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Metadataviewer0rqi1s",
+                                    "name": "Metadata viewer",
+                                    "type": "properties-viewer",
+                                    "readOnly": false,
+                                    "required": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2,
+                                        "propertiesViewerOptions": {
+                                            "displayDefaultProperties": true,
+                                            "expanded": true,
+                                            "preset": "default",
+                                            "displayEmpty": false,
+                                            "editable": false,
+                                            "multi": false,
+                                            "displayAspect": null,
+                                            "copyToClipboardAction": true,
+                                            "useChipsForMultiValueProperty": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "Displayvalue01ly0f",
+                                    "name": "Display value",
+                                    "type": "readonly",
+                                    "value": "No field selected",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2,
+                                        "field": {
+                                            "id": "Displayvalue01ly0f",
+                                            "name": "Display value",
+                                            "type": "text"
+                                        },
+                                        "responseVariable": true
+                                    }
                                 }
-                            }]
+                            ]
                         }
                     }
                 ],
-                outcomes: [],
-                metadata: {
-                    property1: 'value1',
-                    property2: 'value2'
-                },
-                variables: [
+                "outcomes": [
                     {
-                        name: 'variable1',
-                        type: 'string',
-                        value: 'value1'
+                        "id": "1cfe6797-7c70-4113-b16d-94a776f03451",
+                        "name": "New Outcome"
                     },
                     {
-                        name: 'variable2',
-                        type: 'string',
-                        value: 'value2'
+                        "id": "a53a0d3a-09c5-495c-919c-4fd1bf942130",
+                        "name": "New Outcome"
+                    },
+                    {
+                        "id": "e5eecf9b-e54c-42fe-89bc-dd80593fc369",
+                        "name": "New Outcome"
                     }
-                ]
+                ],
+                "metadata": {},
+                "variables": []
             }
         }
     };

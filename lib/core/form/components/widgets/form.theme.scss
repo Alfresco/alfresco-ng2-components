@@ -32,6 +32,10 @@ ul > li > form-field > .adf-focus {
         color: var(--theme-secondary-text-color);
     }
 
+    &-left-label {
+        color: var(--theme-secondary-text-color);
+    }
+
     &-asterisk {
         padding-left: 2px;
         color: var(--theme-warn-color);
