@@ -22,9 +22,20 @@
       ],
       "plugins": [
         "eslint-plugin-unicorn",
-        "eslint-plugin-rxjs"
+        "eslint-plugin-rxjs",
+        "ban"
       ],
       "rules": {
+        "ban/ban": [
+          "error",
+          { "name": "eval", "message": "Calls to eval is not allowed." },
+          { "name": "fdescribe", "message": "Calls to fdescribe is not allowed" },
+          { "name": "fit", "message": "Calls to fit is not allowed" },
+          { "name": "xit", "message": "Calls to xit is not allowed" },
+          { "name": "xdescribe", "message": "Calls to xdescribe is not allowed" },
+          { "name": ["test", "only"], "message": "Calls to test.only is not allowed" },
+          { "name": ["describe", "only"], "message": "Calls to describe.only is not allowed" }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {

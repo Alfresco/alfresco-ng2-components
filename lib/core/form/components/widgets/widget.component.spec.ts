@@ -24,7 +24,7 @@ import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
-fdescribe('WidgetComponent', () => {
+describe('WidgetComponent', () => {
 
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
