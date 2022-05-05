@@ -30,10 +30,5 @@ module.exports = {
             "^/activiti-app/activiti-app": ""
         },
         "changeOrigin": true
-    },
-    "/idp": {
-        "target": process.env.PROXY_IDP,
-        "secure": false,
-        "changeOrigin": true
     }
 };

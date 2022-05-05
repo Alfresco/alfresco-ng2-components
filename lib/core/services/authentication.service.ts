@@ -127,11 +127,11 @@ export class AuthenticationService {
      * @returns True if supported, false otherwise
      */
     isOauth(): boolean {
-        return this.alfrescoApi.getInstance().isOauthConfiguration();
+        return this.alfrescoApi?.getInstance().isOauthConfiguration();
     }
 
     isPublicUrl(): boolean {
-        return this.alfrescoApi.getInstance().isPublicUrl();
+        return this.alfrescoApi?.getInstance().isPublicUrl();
     }
 
     /**

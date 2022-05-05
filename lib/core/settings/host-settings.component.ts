@@ -43,7 +43,6 @@ export class HostSettingsComponent implements OnInit {
     providers: string[] = ['BPM', 'ECM', 'ALL'];
 
     showSelectProviders = true;
-    showTokenUrl = false;
 
     form: FormGroup;
 
@@ -86,13 +85,8 @@ export class HostSettingsComponent implements OnInit {
         const oauth = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, {} as any);
 
         if (authType === 'OAUTH') {
-            this.showTokenUrl = !oauth.implicitFlow;
-
             this.addOAuthFormGroup(oauth);
             this.addIdentityHostFormControl();
-            this.implicitFlow?.valueChanges.subscribe( (res) => {
-                    this.showTokenUrl = !res;
-            });
         }
 
         this.form.get('authType').valueChanges.subscribe((value) => {
@@ -153,7 +147,6 @@ export class HostSettingsComponent implements OnInit {
             redirectUri: [oauth.redirectUri, Validators.required],
             redirectUriLogout: [oauth.redirectUriLogout],
             scope: [oauth.scope, Validators.required],
-            tokenUrl: oauth.tokenUrl,
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
             implicitFlow: oauth.implicitFlow,
@@ -265,10 +258,6 @@ export class HostSettingsComponent implements OnInit {
 
     get scope(): FormControl {
         return this.oauthConfig.get('scope') as FormControl;
-    }
-
-    get tokenUrl(): FormControl {
-        return this.oauthConfig.get('tokenUrl') as FormControl;
     }
 
     get secretId(): FormControl {
