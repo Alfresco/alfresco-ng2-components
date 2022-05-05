@@ -17,7 +17,6 @@
 
 export interface OauthConfigModel {
     host: string;
-    tokenUrl: string;
     clientId: string;
     scope: string;
     implicitFlow: boolean;
