@@ -35,11 +35,11 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     mainMenuTrigger: MatMenuTrigger;
 
     @Output()
-    submitColumnsVisibilty = new EventEmitter<DataColumn[]>();
+    submitColumnsVisibility = new EventEmitter<DataColumn[]>();
 
     onDestroy$ = new Subject();
     columnItems: DataColumn[] = [];
-    searchInputCotrol = new FormControl('');
+    searchInputControl = new FormControl('');
     searchQuery = '';
 
     ngOnInit(): void {
@@ -52,10 +52,10 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         this.mainMenuTrigger.menuClosed.pipe(
             takeUntil(this.onDestroy$)
         ).subscribe(() => {
-            this.searchInputCotrol.setValue('');
+            this.searchInputControl.setValue('');
         });
 
-        this.searchInputCotrol.valueChanges.pipe(
+        this.searchInputControl.valueChanges.pipe(
             debounceTime(300),
             takeUntil(this.onDestroy$)
         ).subscribe((searchQuery) => {
@@ -77,7 +77,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     }
 
     apply(): void {
-        this.submitColumnsVisibilty.emit(this.columnItems);
+        this.submitColumnsVisibility.emit(this.columnItems);
         this.closeMenu();
     }
 }

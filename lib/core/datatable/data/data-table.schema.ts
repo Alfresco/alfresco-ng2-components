@@ -39,7 +39,7 @@ export abstract class DataTableSchema {
     protected columnsOrderedByKey: string = 'id';
 
     protected hiddenColumns: string[] | undefined;
-    protected hiddenKolumnsKey: string = 'id';
+    protected hiddenColumnsKey: string = 'id';
 
     private layoutPresets = {};
 
@@ -135,7 +135,7 @@ export abstract class DataTableSchema {
     private setHiddenColumns(columns: DataColumn[]): DataColumn[] {
         if (this.hiddenColumns) {
             return columns.map(column => {
-                const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenKolumnsKey]);
+                const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenColumnsKey]);
 
                 return {
                     ...column,
