@@ -54,7 +54,7 @@ describe('ClipboardService', () => {
     });
 
     it('should copy text to clipboard', () => {
-        spyOn(document, 'execCommand');
+        spyOn(navigator.clipboard, 'writeText');
         spyOn(inputElement, 'select');
         spyOn(inputElement, 'setSelectionRange');
 
@@ -65,7 +65,7 @@ describe('ClipboardService', () => {
         expect(inputElement.select).toHaveBeenCalledWith();
         expect(inputElement.setSelectionRange)
             .toHaveBeenCalledWith(0, inputElement.value.length);
-        expect(document.execCommand).toHaveBeenCalledWith('copy');
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('some text');
     });
 
     it('should notify copy to clipboard with message', () => {
@@ -75,5 +75,15 @@ describe('ClipboardService', () => {
         clipboardService.copyToClipboard(inputElement, 'success');
 
         expect(notificationService.openSnackMessage).toHaveBeenCalledWith('success');
+    });
+
+    it('should copy content to clipboard', () => {
+        spyOn(navigator.clipboard, 'writeText');
+        spyOn(notificationService, 'openSnackMessage');
+
+        clipboardService.copyContentToClipboard('some text', 'some message');
+
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('some text');
+        expect(notificationService.openSnackMessage).toHaveBeenCalledWith('some message');
     });
 });

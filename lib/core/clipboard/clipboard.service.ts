@@ -26,7 +26,7 @@ export class ClipboardService {
     constructor(
         @Inject(DOCUMENT) private document: any,
         private logService: LogService,
-        private notificationService: NotificationService) {}
+        private notificationService: NotificationService) { }
 
     /**
      * Checks if the target element can have its text copied.
@@ -52,7 +52,11 @@ export class ClipboardService {
             try {
                 target.select();
                 target.setSelectionRange(0, target.value.length);
-                this.document.execCommand('copy');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(target.value);
+                } else {
+                    this.document.execCommand('copy');
+                }
                 this.notify(message);
             } catch (error) {
                 this.logService.error(error);
@@ -68,12 +72,16 @@ export class ClipboardService {
      */
     copyContentToClipboard(content: string, message: string) {
         try {
-            document.addEventListener('copy', (e: ClipboardEvent) => {
-                e.clipboardData.setData('text/plain', (content));
-                e.preventDefault();
-                document.removeEventListener('copy', null);
-              });
-            document.execCommand('copy');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(content);
+            } else {
+                document.addEventListener('copy', (e: ClipboardEvent) => {
+                    e.clipboardData.setData('text/plain', (content));
+                    e.preventDefault();
+                    document.removeEventListener('copy', null);
+                });
+                document.execCommand('copy');
+            }
             this.notify(message);
         } catch (error) {
             this.logService.error(error);
