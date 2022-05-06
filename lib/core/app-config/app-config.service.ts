@@ -21,7 +21,6 @@ import { ObjectUtils } from '../utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
-import { OpenidConfiguration } from '../models/openid-configuration.model';
 
 /* spellchecker: disable */
 // eslint-disable-next-line no-shadow
@@ -176,26 +175,6 @@ export class AppConfigService {
                 this.config = mergeObjects(this.config, customConfig);
             }
         }
-    }
-
-    /**
-     * Call the discovery API to fetch configuration
-     *
-     * @returns Discovery configuration
-     */
-     loadWellKnow(hostIdp: string): Promise<OpenidConfiguration> {
-        return new Promise(async (resolve, reject) => {
-            this.http
-                .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
-                .subscribe({
-                    next: (res: OpenidConfiguration) => {
-                        resolve(res);
-                    },
-                    error: (err: any) => {
-                        reject(err);
-                    }
-                });
-        });
     }
 
     /**

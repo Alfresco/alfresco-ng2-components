@@ -21,7 +21,6 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
-import { OpenidConfiguration } from '../models/openid-configuration.model';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +37,6 @@ export class AlfrescoApiService {
 
     lastConfig: AlfrescoApiConfig;
 
-    idpConfig: OpenidConfiguration;
     currentAppConfig: AlfrescoApiConfig;
 
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
@@ -53,39 +51,24 @@ export class AlfrescoApiService {
     }
 
     async load() {
-        await this.appConfig.load()
-        .then( async (config) => {
-            await this.appConfig.loadWellKnow(config.oauth2.host)
-            .then((configIdp: OpenidConfiguration) => {
-                this.idpConfig = configIdp;
-                this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-                this.initAlfrescoApi();
-                this.alfrescoApiInitialized.next(true);
-            }).catch( () => {
-                console.error('Something wrong happened when calling the discovery');
-            });
-        });
+        try {
+            await this.appConfig.load();
+        } catch {
+            throw new Error('Something wrong happened when calling the app.config.json');
+        }
+
+        this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+        await this.initAlfrescoApi();
+        this.alfrescoApiInitialized.next(true);
     }
 
     async reset() {
-        const oauth = this.getAuthWithFixedOriginLocation();
-        await this.appConfig.loadWellKnow(oauth.host)
-        .then((configIdp) => {
-            this.idpConfig = configIdp;
-            this.initAlfrescoApi();
-        });
+       await this.initAlfrescoApi();
     }
 
     protected initAlfrescoApi() {
         this.createAlfrescoApiConfigModel();
-        this.mapAlfrescoApiOpenIdConfig();
-        this.initAlfrescoApiWithLastConfig();
-    }
-
-    private mapAlfrescoApiOpenIdConfig() {
-        this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
-        this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
-        this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
+        return this.initAlfrescoApiWithLastConfig();
     }
 
     private getAuthWithFixedOriginLocation(): OauthConfigModel {
@@ -114,13 +97,14 @@ export class AlfrescoApiService {
         });
     }
 
-    private initAlfrescoApiWithLastConfig() {
+    private async initAlfrescoApiWithLastConfig() {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
             this.lastConfig = this.currentAppConfig;
-            this.alfrescoApi.setConfig(this.currentAppConfig);
+            await this.alfrescoApi.setConfig(this.currentAppConfig, true);
         } else {
             this.lastConfig = this.currentAppConfig;
-            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
+            this.alfrescoApi = new AlfrescoApi();
+            await this.alfrescoApi.setConfig(this.lastConfig, true);
         }
     }
 
