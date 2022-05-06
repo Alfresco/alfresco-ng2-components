@@ -94,6 +94,18 @@
         margin-right: 15px;
     }
 
+    &-compact-field {
+        font-size: 12px;
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+        }
+        &.mat-form-field-invalid {
+            .mat-form-field-wrapper {
+                padding-bottom: 18px;
+            }
+        }
+    }
+
     &-form-mat-card-actions {
         float: right;
         padding-bottom: 25px !important;

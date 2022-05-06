@@ -1778,7 +1778,7 @@ export class DemoForm {
             "description": "",
             "version": 0,
             "standAlone": true,
-            "leftLabel": true,
+            "compactFields": true,
             "formDefinition": {
                 "tabs": [
                     {
@@ -1820,8 +1820,59 @@ export class DemoForm {
                                     }
                                 },
                                 {
-                                    "id": "Number0au8cm",
-                                    "name": "Number",
+                                    "id": "Number0au8cm4",
+                                    "name": "Number4",
+                                    "type": "integer",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "required": true,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Number0au8cm3",
+                                    "name": "Number3",
+                                    "type": "integer",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "required": true,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Number0au8cm2",
+                                    "name": "Number2",
+                                    "type": "integer",
+                                    "readOnly": false,
+                                    "colspan": 1,
+                                    "rowspan": 1,
+                                    "placeholder": null,
+                                    "minValue": null,
+                                    "maxValue": null,
+                                    "required": true,
+                                    "visibilityCondition": null,
+                                    "params": {
+                                        "existingColspan": 1,
+                                        "maxColspan": 2
+                                    }
+                                },
+                                {
+                                    "id": "Number0au8cm1",
+                                    "name": "Number1",
                                     "type": "integer",
                                     "readOnly": false,
                                     "colspan": 1,
