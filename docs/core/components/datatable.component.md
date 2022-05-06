@@ -322,7 +322,7 @@ You can also show main menu for datatable using `<adf-main-menu-datatable-templa
             <adf-datatable-column-selector
                 [columns]="data.getColumns()"
                 [mainMenuTrigger]="mainMenuTrigger"
-                (submitColumnsVisibilty)="onColumnsVisibilityChange($event)">
+                (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
             </adf-datatable-column-selector>
         </ng-template>
     </adf-main-menu-datatable-template>
