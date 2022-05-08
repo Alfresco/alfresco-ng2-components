@@ -100,12 +100,12 @@ export class AlfrescoApiService {
     private async initAlfrescoApiWithLastConfig() {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
             this.lastConfig = this.currentAppConfig;
-            await this.alfrescoApi.setConfig(this.currentAppConfig, true);
+            await this.alfrescoApi.setConfig(this.currentAppConfig);
         } else {
             this.lastConfig = this.currentAppConfig;
-            this.alfrescoApi = new AlfrescoApi();
-            await this.alfrescoApi.setConfig(this.lastConfig, true);
+            this.alfrescoApi = new AlfrescoApi(this.lastConfig);
         }
+        await this.alfrescoApi.setup();
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
