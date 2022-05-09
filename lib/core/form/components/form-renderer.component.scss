@@ -97,12 +97,24 @@
     &-compact-field {
         font-size: 12px;
         .mat-form-field-wrapper {
-            padding-bottom: 0;
+            padding-bottom: 6px;
         }
         &.mat-form-field-invalid {
             .mat-form-field-wrapper {
                 padding-bottom: 18px;
             }
+        }
+        .mat-form-field-label {
+            top: 0;
+            margin-top: 0;
+        }
+    }
+
+    &-compact-dropdown {
+        font-size: 12px;
+
+        .mat-form-field-wrapper > div {
+            background-color: var(--theme-card-bg-color);
         }
     }
 

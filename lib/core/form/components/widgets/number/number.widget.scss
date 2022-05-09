@@ -1,15 +1,10 @@
 .adf {
-    // &-number-widget {
+    &-number-widget {
 
-    //     display: flex;
+        width: 100%;
 
-    //     div {
-    //         width: 100%;
-    //         padding-right: 1%;
-    //     }
-
-    //     .mat-form-field-label-wrapper {
-    //         top: 20px;
-    //     }
-    // }
+        .mat-form-field-label-wrapper label {
+            top: 20px;
+        }
+    }
 }

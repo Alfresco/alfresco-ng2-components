@@ -4,9 +4,7 @@
         <mat-label *ngIf="field.compactFields" [attr.for]="field.id">{{field.name | translate }}
             <span class="adf-asterisk" *ngIf="isRequired()">*</span>
         </mat-label>
-        <label *ngIf="!field.compactFields" class="adf-label" [attr.for]="field.id">{{field.name | translate }}
-            <span class="adf-asterisk" *ngIf="isRequired()">*</span>
-        </label>
+        <label class="adf-label"  *ngIf="!field.compactFields" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <input matInput
             class="adf-input"
             type="text"
@@ -23,6 +21,6 @@
             matTooltipPosition="above"
             matTooltipShowDelay="1000">
       </mat-form-field>
-      <error-widget [error]="field.validationSummary"></error-widget>
-      <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+      <error-widget *ngIf="isTouched() && !this.field.isValid" [error]="field.validationSummary" class="a"></error-widget>
+      <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" class="b"></error-widget>
 </div>

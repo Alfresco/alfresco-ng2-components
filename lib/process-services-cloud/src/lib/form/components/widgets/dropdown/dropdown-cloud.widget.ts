@@ -39,6 +39,12 @@ export const HIDE_FILTER_LIMIT = 5;
 
 /* eslint-disable @angular-eslint/component-selector */
 
+interface Food {
+    value: string;
+    viewValue: string;
+  }
+
+  
 @Component({
     selector: 'dropdown-cloud-widget',
     templateUrl: './dropdown-cloud.widget.html',
@@ -63,6 +69,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
+
+    foods: Food[] = [
+        {value: 'steak-0', viewValue: 'Steak'},
+        {value: 'pizza-1', viewValue: 'Pizza'},
+        {value: 'tacos-2', viewValue: 'Tacos'},
+      ];
 
     protected onDestroy$ = new Subject<boolean>();
 

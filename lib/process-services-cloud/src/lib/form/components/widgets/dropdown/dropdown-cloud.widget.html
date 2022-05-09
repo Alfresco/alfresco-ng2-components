@@ -1,11 +1,12 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="(!field.isValid && isTouched()) || isRestApiFailed" [class.adf-readonly]="field.readOnly">
-    <div class="adf-dropdown-widget-top-labels">
+    <div class="adf-dropdown-widget-top-labels" *ngIf="!field.compactFields">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
             *ngIf="isRequired()">*</span>
         </label>
     </div>
-    <mat-form-field>
+    <mat-form-field [appearance]="field.compactFields ? 'fill' : 'legacy'" [class.adf-compact-dropdown]="field.compactFields">
+        <mat-label *ngIf="field.compactFields" [attr.for]="field.id">{{field.name | translate }}</mat-label>
         <mat-select class="adf-select"
                     [id]="field.id"
                     [(ngModel)]="field.value"
