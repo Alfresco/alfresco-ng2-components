@@ -215,17 +215,16 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     }
 
     get limitedPages(): number[] {
-        if (this.lastPage <= 50) {
+        if (this.lastPage <= 100) {
             return this.pages;
         }
-        const tenItems = Array.from(Array(10));
-        const fiveItems = Array.from(Array(5));
+        const twentyItems = Array.from(Array(20));
         return [
-            ...tenItems.map((_, i) => i + 1),
-            ...fiveItems.map((_, i) => this.current - i - 1).reverse(),
+            1,
+            ...twentyItems.map((_, i) => this.current - i - 1).reverse(),
             this.current,
-            ...fiveItems.map((_, i) => this.current + i + 1),
-            ...tenItems.map((_, i) => this.lastPage - i).reverse()
+            ...twentyItems.map((_, i) => this.current + i + 1),
+            this.lastPage
         ].filter((value: number, index: number, array: number[]) => value > 0 && value <= this.lastPage && !array.slice(0, index).includes(value));
     }
 
