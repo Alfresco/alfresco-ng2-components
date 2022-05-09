@@ -39,6 +39,8 @@ export class AlfrescoApiService {
 
     currentAppConfig: AlfrescoApiConfig;
 
+    idpConfig: any;
+
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApi {
@@ -53,21 +55,37 @@ export class AlfrescoApiService {
     async load() {
         try {
             await this.appConfig.load();
+            this.getCurrentAppConfig();
+            if (this.currentAppConfig.authType === 'OAUTH') {
+                this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
+                this.mapAlfrescoApiOpenIdConfig();
+            }
         } catch {
             throw new Error('Something wrong happened when calling the app.config.json');
         }
 
         this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+        this.getCurrentAppConfig();
         await this.initAlfrescoApi();
         this.alfrescoApiInitialized.next(true);
     }
 
     async reset() {
-       await this.initAlfrescoApi();
+        this.getCurrentAppConfig();
+        if (this.currentAppConfig.authType === 'OAUTH') {
+            this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
+            this.mapAlfrescoApiOpenIdConfig();
+        }
+        await this.initAlfrescoApi();
+    }
+
+    private mapAlfrescoApiOpenIdConfig() {
+        this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
+        this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
+        this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
     }
 
     protected initAlfrescoApi() {
-        this.createAlfrescoApiConfigModel();
         return this.initAlfrescoApiWithLastConfig();
     }
 
@@ -80,7 +98,7 @@ export class AlfrescoApiService {
         return oauth;
     }
 
-    private createAlfrescoApiConfigModel() {
+    private getCurrentAppConfig() {
         const oauth = this.getAuthWithFixedOriginLocation();
 
         this.currentAppConfig = new AlfrescoApiConfig({
@@ -105,7 +123,6 @@ export class AlfrescoApiService {
             this.lastConfig = this.currentAppConfig;
             this.alfrescoApi = new AlfrescoApi(this.lastConfig);
         }
-        await this.alfrescoApi.setup();
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {

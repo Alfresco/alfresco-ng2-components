@@ -44,6 +44,15 @@ export enum AppConfigValues {
     STORAGE_PREFIX = 'application.storagePrefix',
     NOTIFY_DURATION = 'notificationDefaultDuration'
 }
+interface OpenidConfiguration {
+    authorization_endpoint: string;
+    token_endpoint: string;
+    userinfo_endpoint: string;
+    end_session_endpoint: string;
+    check_session_iframe: string;
+    revocation_endpoint: string;
+    introspection_endpoint: string;
+}
 
 // eslint-disable-next-line no-shadow
 export enum Status {
@@ -205,6 +214,26 @@ export class AppConfigService {
                     resolve(this.config);
                 });
             }
+        });
+    }
+
+    /**
+     * Call the discovery API to fetch configuration
+     *
+     * @returns Discovery configuration
+     */
+     loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
+        return new Promise(async (resolve, reject) => {
+            this.http
+                .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
+                .subscribe({
+                    next: (res: OpenidConfiguration) => {
+                        resolve(res);
+                    },
+                    error: (err: any) => {
+                        reject(err);
+                    }
+                });
         });
     }
 
