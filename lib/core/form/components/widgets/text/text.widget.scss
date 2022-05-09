@@ -1,7 +1,19 @@
 .adf {
     &-text-widget {
 
-        width: 100%;
+        display: flex;
+
+        min-height: 4.2em !important;
+        height: 4.2em;
+
+        div {
+            width: 100%;
+            padding-right: 1%;
+        }
+
+        label {
+            width: 240px;
+        }
 
         .mat-form-field-label-wrapper label {
             top: 20px;
