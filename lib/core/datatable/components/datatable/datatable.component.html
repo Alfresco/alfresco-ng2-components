@@ -194,7 +194,7 @@
                      [adf-context-menu-enabled]="contextMenu"
                      adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
-                        <ng-container [ngSwitch]="col.type">
+                        <ng-container [ngSwitch]="data.getColumnType(row, col)">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
                                 </mat-icon>
@@ -204,12 +204,12 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
-                                            [attr.aria-label]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                            [attr.aria-label]="(data.getValue(row, col) | fileType) === 'disable' ?
                                                 ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
                                                 'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
                                                     type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate
                                                 }"
-                                            [attr.alt]=" (data.getValue(row, col) | fileType) === 'disable' ?
+                                            [attr.alt]="(data.getValue(row, col) | fileType) === 'disable' ?
                                                 ('ADF-DATATABLE.ACCESSIBILITY.ICON_DISABLED' | translate) :
                                                 'ADF-DATATABLE.ACCESSIBILITY.ICON_TEXT' | translate:{
                                                         type: 'ADF-DATATABLE.FILE_TYPE.' + (data.getValue(row, col) | fileType | uppercase) | translate

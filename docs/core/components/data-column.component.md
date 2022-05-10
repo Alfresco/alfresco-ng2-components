@@ -21,6 +21,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
     -   [Using the copyContent option](#using-the-copycontent-option)
+    -   [Exapmple of column customData](#example-of-column-customData)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -52,6 +53,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
+| customData | `Generic` | any | Any feature specific data |
 | draggable | `boolean` | false | Toggles drag and drop for header column. |
 | isHidden | `boolean` | false | Hides columns |
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
@@ -349,6 +351,35 @@ HTML `<data-column>` element example:
         ...
     </data-columns>
 </adf-tasklist>
+```
+
+### Example of column customData
+
+If you would like to pass any custom data related to your specific feature, you can use customData
+
+HTML `<data-column>` element example:
+
+```html
+<data-column [customData]="MyCustomData" key="id" title="Id"></data-column>
+```
+
+You can use generic type for `DataColumn` in order to get intellisense working e.g.
+
+```ts
+const dataColumn: DataColumn<{ shouldPerformActionIfDisplayed: boolean }> = {
+    ...
+    customData: { shouldPerformActionIfDisplayed: true }
+}
+
+// We should get proper types
+consol.log(dataColumn.customData.shouldPerformActionIfDisplayed);
+
+// Now we can use this data in our feature e.g.
+const shouldPerformAction = this.columns
+    .filter(column => column.isHidden)
+    .some(column => column.customData?.shouldPerformActionIfDisplayed === true);
+
+if (shouldPerformAction) { /* action */}
 ```
 
 ## See also

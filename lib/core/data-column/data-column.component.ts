@@ -34,6 +34,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     key: string;
 
+    /** You can specify any custom data which can be used by any specific feature */
+    @Input()
+    customData: any;
+
     /** Value type for the column. Possible settings are 'text', 'image',
      * 'date', 'fileSize', 'location', and 'json'.
      */
@@ -51,6 +55,10 @@ export class DataColumnComponent implements OnInit {
     /* Enable drag and drop for header column */
     @Input()
     draggable: boolean = false;
+
+    /* Hide column */
+    @Input()
+    isHidden: boolean = false;
 
     /** Display title of the column, typically used for column headers. You can use the
      * i18n resource key to get it translated automatically.

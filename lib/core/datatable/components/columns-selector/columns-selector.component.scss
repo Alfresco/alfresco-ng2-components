@@ -25,7 +25,13 @@ $adf-columns-selector-space: 12px;
         font-size: var(--theme-body-1-font-size);
     }
 
-    &-list-item-container {
+    &-list-container {
+        max-height: 350px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &-list-item {
         margin-top: 10px;
 
         &:hover {

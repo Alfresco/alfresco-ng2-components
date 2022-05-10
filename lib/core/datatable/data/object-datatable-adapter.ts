@@ -77,6 +77,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
+    getColumnType(_row: DataRow, col: DataColumn): string {
+        return col.type;
+    }
+
     getRows(): Array<DataRow> {
         return this._rows;
     }

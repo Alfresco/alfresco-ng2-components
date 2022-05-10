@@ -21,14 +21,17 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent, DataColumn } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { map, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
+import { ColumnDataType } from '../../../models/column-data-type.model';
+import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
+import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -38,7 +41,7 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
+export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
@@ -201,6 +204,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     rows: any[] = [];
     formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
+    dataAdapter: ProcessListDatatableAdapter;
 
     private defaultSorting = { key: 'startDate', direction: 'desc' };
 
@@ -231,7 +235,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
                     return {
                         columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility
                     };
                 }))
             )
@@ -262,24 +266,29 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     reload() {
-        this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName || this.requestNode.appName === '') {
-            this.load(this.requestNode);
+        if (this.appName || this.appName === '') {
+            this.load();
         } else {
             this.rows = [];
         }
     }
 
-    private load(requestNode: ProcessQueryCloudRequestModel) {
+    private load() {
         this.isLoading = true;
 
-        combineLatest([
-            this.processListCloudService.getProcessByRequest(requestNode),
-            this.isColumnSchemaCreated$
-        ]).pipe(
-            take(1)
-        ).subscribe(([processes]) => {
-            this.rows = processes.list.entries;
+        this.isColumnSchemaCreated$.pipe(
+            take(1),
+            switchMap(() => of(this.createRequestNode())),
+            tap((requestNode) => this.requestNode = requestNode),
+            switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode))
+        ).subscribe((processes) => {
+            this.rows = this.processListCloudService.createRowsViewModel(
+                processes.list.entries,
+                this.columns
+            );
+
+            this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
+
             this.success.emit(processes);
             this.isLoading = false;
             this.pagination.next(processes.list.pagination);
@@ -359,6 +368,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         }, {});
 
         this.createColumns();
+        this.reload();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
@@ -427,8 +437,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
             completedDate: this.completedDate,
-            sorting: this.sorting
+            sorting: this.sorting,
+            variableDefinitions: this.getRequestNodeVariableIds()
         };
+
         return new ProcessQueryCloudRequestModel(requestNode);
     }
 
@@ -453,5 +465,17 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     isValidSorting(sorting: ProcessListCloudSortingModel[]) {
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
+    }
+
+    private getRequestNodeVariableIds(): string[] | undefined {
+        const displayedVariableColumns = this.columns
+            .filter(column =>
+                column.customData?.columnType === ColumnDataType.processVariableColumn &&
+                column.isHidden !== true
+            )
+            .map(column => column.customData.assignedVariableDefinitionIds)
+            .reduce((allIds, ids) => [...ids, ...allIds], []);
+
+        return displayedVariableColumns.length ? displayedVariableColumns : undefined;
     }
 }

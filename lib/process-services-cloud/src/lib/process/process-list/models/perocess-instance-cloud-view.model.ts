@@ -16,18 +16,10 @@
  */
 
 import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
-export interface ProcessInstanceCloud {
-    appName?: string;
-    id?: string;
-    name?: string;
-    startDate?: Date;
-    initiator?: string;
-    status?: string;
-    businessKey?: string;
-    lastModified?: Date;
-    parentId?: string;
-    processDefinitionId?: string;
-    processDefinitionKey?: string;
-    processDefinitionName?: string;
-    variables?: ProcessInstanceVariable[];
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
+
+export interface ProcessInstanceCloudListViewModel extends ProcessInstanceCloud {
+    variablesMap?: {
+        [variableDisplayName: string]: ProcessInstanceVariable;
+    };
 }
