@@ -17,27 +17,23 @@
 
 import { Injectable } from '@angular/core';
 
-const isRegisteredApi = (name: string, registry: ApiFactories.ApiNames): boolean => Object.keys(registry).some((key) => key === name);
 @Injectable({
     providedIn: 'root'
 })
 export class ApiFactoriesService {
-  private registry: ApiFactories.ApiNames = {} as  ApiFactories.ApiNames;
+    private registry: { [key: string]: new() => any } = {};
 
-  get<T extends keyof ApiFactories.ApiNames>(apiName: T): ApiFactories.ApiNames[T] {
+    get<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
+        if (this.registry[apiName] === undefined) {
+            throw new Error(`Api not registred: ${apiName}`);
+        }
 
-    if (!isRegisteredApi(apiName as string, this.registry)) {
-      throw Error('Api not registred');
+        /* tslint:disable-next-line:variable-name */
+        const ApiClass = this.registry[apiName];
+        return new ApiClass();
     }
 
-    return this.registry[apiName];
-  }
-
-  register<T extends keyof ApiFactories.ApiNames>(apiName: T, api: ApiFactories.ApiNames[T]): void {
-    this.registry = {
-      ...this.registry,
-      [apiName]: api
-    };
-  }
-
+    register<T extends keyof Api.ApiRegistry>(apiName: T, api: new() => Api.ApiRegistry[T]): void {
+        this.registry[apiName] = api;
+    }
 }
