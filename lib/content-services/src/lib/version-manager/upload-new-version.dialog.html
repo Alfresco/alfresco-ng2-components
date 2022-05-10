@@ -1,0 +1,33 @@
+<header mat-dialog-title>{{ (data?.title || 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE') | translate }}</header>
+<section mat-dialog-content *ngIf="!data.showVersionsOnly">
+  <adf-version-comparison id="adf-version-comparison" [newFileVersion]="data.file" [node]="data.node"></adf-version-comparison>
+  <adf-version-upload
+    id="adf-version-upload-button"
+    [node]="data.node"
+    [newFileVersion]="data.file"
+    [currentVersion]="data.currentVersion"
+    (success)="handleUpload($event)"
+    (cancel)="handleCancel()"
+    (error)="onUploadError($event)"
+  >
+  </adf-version-upload>
+</section>
+<ng-container *ngIf="data.showVersionsOnly">
+  <section mat-dialog-content>
+    <div class="adf-version-list-container">
+      <div class="adf-version-list-table">
+        <adf-version-list
+          [node]="data.node"
+          [showComments]="'adf-version-manager.allowComments' | adfAppConfig: true"
+          [allowDownload]="'adf-version-manager.allowDownload' | adfAppConfig: true"
+          (deleted)="refresh($event)"
+          (restored)="refresh($event)"
+          (viewVersion)="onViewingVersion($event)"
+        ></adf-version-list>
+      </div>
+    </div>
+  </section>
+  <footer mat-dialog-actions>
+    <button mat-button color="primary" [mat-dialog-close]="true">{{ 'VERSION.DIALOG_ADF.CLOSE' | translate }}</button>
+  </footer>
+</ng-container>
