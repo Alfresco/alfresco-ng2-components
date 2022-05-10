@@ -13,7 +13,14 @@ fdescribe('ApiFactoriesService', () => {
 
   it('should provide a get method', () => {
     const apiClient = service.get('about');
+
     expect(apiClient).toBeDefined();
     expect(apiClient instanceof AboutApi).toBe(true);
+  });
+
+  it('should provide a get method', () => {
+    const apiClient = service.get('about');
+    const apiClient2 = service.get('nodes');
+
   });
 });
