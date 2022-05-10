@@ -150,7 +150,7 @@
     "github-api": "^3.4.0",
     "graphql": "^15.8.0",
     "graphql-request": "^3.7.0",
-    "husky": "^7.0.4",
+    "husky": "^8.0.1",
     "jasmine-ajax": "4.0.0",
     "jasmine-core": "~2.8.0",
     "jasmine-reporters": "^2.4.0",
