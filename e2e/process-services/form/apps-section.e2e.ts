@@ -126,15 +126,18 @@ describe('Modify applications', () => {
         await expect(await processServicesPage.getDescription(appToBeDeleted.title)).toEqual(appToBeDeleted.description);
 
         const appDefinition = {
-            'appDefinition': {
-                'id': appVersionToBeDeleted.id, 'name': appToBeDeleted.title,
-                'description': newDescription, 'definition': {
-                    'models': [firstApp.definition.models[0]], 'theme': 'theme-4',
-                    'icon': 'glyphicon-user'
+            appDefinition: {
+                id: appVersionToBeDeleted.id,
+                name: appToBeDeleted.title,
+                description: newDescription,
+                definition: {
+                    models: [firstApp.definition.models[0]],
+                    theme: 'theme-4',
+                    icon: 'glyphicon-user'
                 }
             },
-            'publish': true,
-            'force': true
+            publish: true,
+            force: true
         };
 
         await appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
