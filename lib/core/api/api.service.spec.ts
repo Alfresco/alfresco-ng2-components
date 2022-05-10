@@ -15,35 +15,37 @@
  * limitations under the License.
  */
 
-import { NodesApi } from '@alfresco/js-api';
+import { AboutApi, NodesApi } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { ApiFactoriesService } from './api-factories.service';
+import { ApiService } from './api.service';
+import { ActivitiClient } from './clients/activiti/activiti-client';
+import { ContentClient } from './clients/content/content-client';
 
-fdescribe('ApiFactoriesService', () => {
-    let service: ApiFactoriesService;
+fdescribe('ApiService', () => {
+    let apiService: ApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(ApiFactoriesService);
+        apiService = TestBed.inject(ApiService);
     });
 
     it('should add api to registry', () => {
-        service.register('nodes', NodesApi);
+        apiService.register(ContentClient.nodes, NodesApi);
 
-        expect(service.get('nodes') instanceof NodesApi).toBeTruthy();
+        expect(apiService.get(ContentClient.nodes) instanceof NodesApi).toBeTruthy();
     });
 
     it('should throw error if we try to get unregisterd API', () => {
-        expect(() => service.get('nodes')).toThrowError('Api not registred: nodes');
+        expect(() => apiService.get(ContentClient.nodes)).toThrowError('Api not registred: nodes');
 
-        service.register('nodes', NodesApi);
+        apiService.register(ContentClient.nodes, NodesApi);
 
-        expect(() => service.get('nodes')).not.toThrowError('Api not registred');
+        expect(() => apiService.get(ContentClient.nodes)).not.toThrowError('Api not registred');
     });
 
     it('should work even with Api enum', () => {
-      service.register(Api.nodes, NodesApi);
+      apiService.register(ActivitiClient.about, AboutApi);
 
-      expect(service.get(Api.nodes) instanceof NodesApi).toBeTruthy();
+      expect(apiService.get(ActivitiClient.about) instanceof AboutApi).toBeTruthy();
   });
 });

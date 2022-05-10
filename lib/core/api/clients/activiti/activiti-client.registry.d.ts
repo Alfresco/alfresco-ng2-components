@@ -15,18 +15,14 @@
  * limitations under the License.
  */
 
-import { AboutApi, NodesApi } from '@alfresco/js-api';
+import { AboutApi } from '@alfresco/js-api';
+import { ActivitiClient } from './activiti-client';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
-
-        export const about = 'about';
-        export const nodes = 'nodes';
-
         interface ApiRegistry {
-            [about]: AboutApi;
-            [nodes]: NodesApi;
+            [ActivitiClient.about]: AboutApi;
         }
     }
 }

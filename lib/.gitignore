@@ -21,7 +21,7 @@ core/**/*.js
 !core/.storybook/*.js
 !core/karma.conf.js
 core/**/*.js.map
-core/**/*.d.ts
+
 !core/api-factories/api.d.ts
 
 insights/**/*.js

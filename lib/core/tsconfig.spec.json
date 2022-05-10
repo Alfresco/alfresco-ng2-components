@@ -2,12 +2,5 @@
   "extends": "../tsconfig.spec.json",
   "files": [
     "test.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts",
-    "**/test.ts",
-    "./api-factories/api.interface.ts",
-    "./api-factories/extended.interface.ts"
   ]
 }

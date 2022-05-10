@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class ApiFactoriesService {
+export class ApiService {
     private registry: { [key: string]: new() => any } = {};
 
     get<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {

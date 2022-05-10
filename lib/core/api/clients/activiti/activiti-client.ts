@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import { QueriesApi } from '@alfresco/js-api';
-
-declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace Api {
-        export const queries = 'queries';
-
-        interface ApiRegistry {
-            [queries]: QueriesApi;
-        }
-    }
+/* tslint:disable:adf-file-name */
+export enum ActivitiClient {
+  about = 'about'
 }
