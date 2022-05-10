@@ -20,6 +20,8 @@ const DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 /* spellchecker: disable */
 export class IconModel {
     private iconsMDL: Map<string, string>;
+    private supportedIconTypes = ['glyphicon', 'fa' /*Font awesome*/];
+
     private sharedIconsMap = [
         ['asterisk', 'ac_unit'],
         ['plus', 'add'],
@@ -147,7 +149,6 @@ export class IconModel {
         ['tree-deciduous', DEFAULT_TASKS_APP_MATERIAL_ICON],
         ['align-left', 'format_align_left']
     ];
-    private supportedIconTypes = ['glyphicon', 'fa' /* Font awesome*/];
 
     constructor() {
         this.initIconsMDL();
