@@ -20,9 +20,7 @@ export class UploadNewVersionDialogComponent implements OnInit {
   constructor(
       @Inject(MAT_DIALOG_DATA) public data: UploadNewVersionDialogData,
       private dialogRef: MatDialogRef<UploadNewVersionDialogComponent>
-   ) {
-       console.log(`%cdata => ${JSON.stringify(data)}`, 'color: orange');
-   }
+   ) {}
 
   ngOnInit(): void {
   }
