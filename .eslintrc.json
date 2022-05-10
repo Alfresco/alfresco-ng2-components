@@ -64,8 +64,8 @@
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
 
-        "@typescript-eslint/member-ordering": "warn",
-        "prefer-arrow/prefer-arrow-functions": "warn",
+        "@typescript-eslint/member-ordering": "off",
+        "prefer-arrow/prefer-arrow-functions": "off",
 
         "brace-style": [
           "error",
