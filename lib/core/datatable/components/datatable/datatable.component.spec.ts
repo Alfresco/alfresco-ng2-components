@@ -1720,3 +1720,70 @@ describe('Drag&Drop column header', () => {
         expect(headerCells[1].innerText).toBe(dataTableSchema[0].title);
     });
 });
+
+describe('Show/hide columns', () => {
+    let fixture: ComponentFixture<DataTableComponent>;
+    let dataTable: DataTableComponent;
+    let data: DataColumn[] = [];
+    let dataTableSchema: DataColumn[] = [];
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
+        declarations: [CustomColumnTemplateComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        data = [
+            { id: '1', title: 'name1', key: 'key', type: 'text' },
+            { id: '2', title: 'name1', key: 'key', type: 'text' },
+            { id: '3', title: 'name1', key: 'key', type: 'text' }
+        ];
+
+        dataTableSchema = [
+            new ObjectDataColumn({ key: 'id', title: 'ID' }),
+            new ObjectDataColumn({ key: 'name', title: 'Name'}),
+            new ObjectDataColumn({ key: 'status', title: 'status', isHidden: true })
+        ];
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [...data],
+            [...dataTableSchema]
+        );
+
+        fixture.detectChanges();
+    });
+
+    it('should hide columns with isHidden prop', () => {
+        const headerCells = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell--text.adf-datatable-cell-header');
+
+        expect(headerCells.length).toBe(2);
+    });
+
+    it('should reload columns after changing columns visibility', () => {
+        const columns = [
+            new ObjectDataColumn({ key: 'id', title: 'ID' }),
+            new ObjectDataColumn({ key: 'name', title: 'Name', isHidden: true }),
+            new ObjectDataColumn({ key: 'status', title: 'status', isHidden: true })
+        ];
+
+        dataTable.ngOnChanges({
+            columns: {
+                previousValue: undefined,
+                currentValue: columns,
+                firstChange: false,
+                isFirstChange: () => false
+            }
+        });
+
+        fixture.detectChanges();
+
+        const headerCells = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell--text.adf-datatable-cell-header');
+        expect(headerCells.length).toBe(1);
+    });
+});

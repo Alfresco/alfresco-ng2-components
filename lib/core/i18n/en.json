@@ -350,6 +350,11 @@
       "PRESENTATION": "Presentation",
       "SPREADSHEET": "Spreadsheet",
       "MISCELLANEOUS": "Miscellaneous"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Columns",
+      "SEARCH": "Search",
+      "APPLY": "Apply"
     }
   },
   "USER_PROFILE": {

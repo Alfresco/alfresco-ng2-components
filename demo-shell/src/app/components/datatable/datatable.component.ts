@@ -326,6 +326,10 @@ export class DataTableComponent {
         ];
     }
 
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.data.setColumns(columns);
+    }
+
     onExecuteRowAction(event: DataRowActionEvent) {
         const args = event.value;
         window.alert(`My custom action: ${args.action.title}`);

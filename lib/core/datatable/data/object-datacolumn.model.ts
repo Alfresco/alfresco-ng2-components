@@ -34,6 +34,7 @@ export class ObjectDataColumn implements DataColumn {
     sortingKey?: string;
     header?: TemplateRef<any>;
     draggable: boolean;
+    isHidden: boolean;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -50,5 +51,6 @@ export class ObjectDataColumn implements DataColumn {
         this.sortingKey = input.sortingKey;
         this.header = input.header;
         this.draggable = input.draggable ?? false;
+        this.isHidden = input.isHidden ?? false;
     }
 }

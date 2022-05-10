@@ -104,6 +104,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     multiselect: boolean = false;
 
+    /** Toggles main data table action column. */
+    @Input()
+    mainTableAction: boolean = true;
+
     /** Toggles the data actions column. */
     @Input()
     actions: boolean = false;
@@ -200,6 +204,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
+    mainActionTemplate: TemplateRef<any>;
 
     isSelectAllIndeterminate: boolean = false;
     isSelectAllChecked: boolean = false;
@@ -313,10 +318,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
-        const columns = this.data.getColumns();
-        moveItemInArray(columns, event.previousIndex, event.currentIndex);
+        const allColumns = this.data.getColumns();
+        const shownColumns = allColumns.filter(column => !column.isHidden);
+        const hiddenColumns = allColumns.filter(column => column.isHidden);
 
-        this.columnOrderChanged.emit(columns);
+        moveItemInArray(shownColumns, event.previousIndex, event.currentIndex);
+        const allColumnsWithNewOrder = [...shownColumns, ...hiddenColumns];
+
+        this.setTableColumns(allColumnsWithNewOrder);
+        this.columnOrderChanged.emit(allColumnsWithNewOrder);
+
         this.isDraggingHeaderColumn = false;
     }
 

@@ -39,6 +39,17 @@
             </data-column>
         </data-columns>
         -->
+
+        <adf-main-menu-datatable-template>
+            <ng-template let-mainMenuTrigger>
+                <adf-datatable-column-selector
+                    [columns]="data.getColumns()"
+                    [mainMenuTrigger]="mainMenuTrigger"
+                    (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+                </adf-datatable-column-selector>
+            </ng-template>
+        </adf-main-menu-datatable-template>
+
     </adf-datatable>
 
     <ng-template #customColumnHeaderTemplate>

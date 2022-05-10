@@ -38,6 +38,7 @@ export * from './components/empty-list/empty-list.component';
 export * from './components/filesize-cell/filesize-cell.component';
 export * from './components/json-cell/json-cell.component';
 export * from './components/location-cell/location-cell.component';
+export * from './components/columns-selector/columns-selector.component';
 export * from './data/data-table.schema';
 
 export * from './directives/loading-template.directive';

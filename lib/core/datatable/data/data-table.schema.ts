@@ -38,6 +38,9 @@ export abstract class DataTableSchema {
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
 
+    protected hiddenColumns: string[] | undefined;
+    protected hiddenColumnsKey: string = 'id';
+
     private layoutPresets = {};
 
     private columnsSchemaSubject$ = new ReplaySubject<boolean>();
@@ -59,7 +62,8 @@ export abstract class DataTableSchema {
     }
 
     public createColumns(): void {
-        const columns = this.mergeJsonAndHtmlSchema();
+        const allColumns = this.mergeJsonAndHtmlSchema();
+        const columns = this.setHiddenColumns(allColumns);
         this.columns = this.sortColumnsByKey(columns);
     }
 
@@ -126,5 +130,20 @@ export abstract class DataTableSchema {
         });
 
         return [...columnsWithProperOrder, ...defaultColumns];
+    }
+
+    private setHiddenColumns(columns: DataColumn[]): DataColumn[] {
+        if (this.hiddenColumns) {
+            return columns.map(column => {
+                const columnShouldBeHidden = this.hiddenColumns.includes(column[this.hiddenColumnsKey]);
+
+                return {
+                    ...column,
+                    isHidden: columnShouldBeHidden
+                };
+            });
+        }
+
+        return columns;
     }
 }
