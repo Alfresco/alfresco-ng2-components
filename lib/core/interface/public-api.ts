@@ -16,5 +16,6 @@
  */
 
 export * from './authentication.interface';
+export * from './common';
 export * from './injection.tokens';
 export * from './search-configuration.interface';
