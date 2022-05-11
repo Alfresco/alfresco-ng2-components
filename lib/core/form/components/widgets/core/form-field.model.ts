@@ -76,6 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
     rule?: FormFieldRule;
     selectLoggedUser: boolean;
     groupsRestriction: string[];
+    compactFields: boolean = false;
 
     // container model members
     numberOfColumns: number = 1;
@@ -219,6 +220,10 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
+        if (form.json) {
+            this.compactFields = form.json.compactFields || false;
+        }
+        
         const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;
         if (this.hasEmptyValue === undefined) {
             this.hasEmptyValue = json?.hasEmptyValue ?? !!emptyOption;
