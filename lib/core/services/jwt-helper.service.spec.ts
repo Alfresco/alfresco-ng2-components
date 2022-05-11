@@ -16,7 +16,6 @@
  */
 
 import { JwtHelperService } from './jwt-helper.service';
-import { mockToken } from './../mock/jwt-helper.service.spec';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 
@@ -30,19 +29,6 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         jwtHelperService = TestBed.inject(JwtHelperService);
-    });
-
-    it('should be able to create the service', () => {
-        expect(jwtHelperService).not.toBeNull();
-        expect(jwtHelperService).toBeDefined();
-    });
-
-    it('Should decode the Jwt token', () => {
-        const result = jwtHelperService.decodeToken(mockToken);
-        expect(result).toBeDefined();
-        expect(result).not.toBeNull('');
-        expect(result['name']).toBe('John Doe');
-        expect(result['email']).toBe('johnDoe@gmail.com');
     });
 
     describe('RealmRole ', () => {
