@@ -23,7 +23,7 @@ import { IdentityUserModel } from '../../models/identity-user.model';
 import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
-import { of, Observable, Subject } from 'rxjs';
+import { Observable, Subject, from } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 
 @Component({
@@ -133,7 +133,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     }
 
     private loadIdentityUserInfo() {
-        this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
+        this.identityUser$ = from(this.identityUserService.getUserInfo());
     }
 
     private isAllLoggedIn() {

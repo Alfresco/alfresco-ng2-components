@@ -22,17 +22,33 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from './identity-user.service.interface';
-import { JwtHelperService } from './jwt-helper.service';
+import {
+    IdentityJoinGroupRequestModel,
+    IdentityUserServiceInterface,
+    IdentityUserPasswordModel,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserQueryResponse
+} from './identity-user.service.interface';
 import { OAuth2Service } from './oauth2.service';
+
+interface UserInfoInterface {
+    name?: string;
+    email?: string;
+    family_name?: string;
+    given_name?: string;
+    middle_name?: string;
+    nickname?: string;
+    preferred_username?: string;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
 
+    currentUserInfo: IdentityUserModel;
+
     constructor(
-        private jwtHelperService: JwtHelperService,
         private oAuth2Service: OAuth2Service,
         private appConfigService: AppConfigService) { }
 
@@ -50,11 +66,18 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * @returns The user's details
      */
     getCurrentUserInfo(): IdentityUserModel {
-        const familyName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.FAMILY_NAME);
-        const givenName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.GIVEN_NAME);
-        const email = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_EMAIL);
-        const username = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
-        return { firstName: givenName, lastName: familyName, email, username };
+        return this.currentUserInfo;
+    }
+
+    async getUserInfo(): Promise<IdentityUserModel> {
+        const userInfo: UserInfoInterface = await this.oAuth2Service.apiClient.getProfile();
+        this.currentUserInfo = {
+            firstName: userInfo.given_name,
+            lastName: userInfo.family_name,
+            email: userInfo.email,
+            username: userInfo.preferred_username
+        };
+        return this.currentUserInfo;
     }
 
     /**
