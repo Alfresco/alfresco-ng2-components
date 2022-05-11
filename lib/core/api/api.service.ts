@@ -42,16 +42,17 @@ export class ApiService {
         return api;
     }
 
-    instantiateApi<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
+
+    register<T extends keyof Api.ApiRegistry>(apiName: T, api: Constructor<Api.ApiRegistry[T]>): void {
+        this.registry[apiName] = api;
+    }
+
+    private instantiateApi<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
       const ApiClass = this.registry[apiName];
       const instance = this.apiCreateFactory.create<Api.ApiRegistry[T]>(ApiClass);
       this.instances[apiName] = instance;
 
       return instance;
-    }
-
-    register<T extends keyof Api.ApiRegistry>(apiName: T, api: Constructor<Api.ApiRegistry[T]>): void {
-        this.registry[apiName] = api;
     }
 }
 

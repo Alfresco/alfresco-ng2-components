@@ -16,14 +16,13 @@
  */
 
 import { NodesApi, QueriesApi } from '@alfresco/js-api';
-import { ContentClient } from './content-client';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-          [ContentClient.nodes]: NodesApi;
-          [ContentClient.queries]: QueriesApi;
+          ['ContentClient.nodes']: NodesApi;
+          ['ContentClient.queries']: QueriesApi;
         }
     }
 }

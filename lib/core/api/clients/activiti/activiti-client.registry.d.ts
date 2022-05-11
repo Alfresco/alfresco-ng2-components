@@ -16,13 +16,12 @@
  */
 
 import { AboutApi } from '@alfresco/js-api';
-import { ActivitiClient } from './activiti-client';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-            [ActivitiClient.about]: AboutApi;
+            ['ActivitiClient.about']: AboutApi;
         }
     }
 }
