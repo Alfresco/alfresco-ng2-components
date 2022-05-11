@@ -121,6 +121,15 @@
         }
     }
 
+    &-compact-filter-select {
+        transform: none !important;
+        overflow-x: hidden !important;
+
+        mat-option:nth-child(2) {
+            margin-top: 15px;
+        }
+    }
+
     &-left-label {
         line-height: 48px;
         margin-right: 15px;
