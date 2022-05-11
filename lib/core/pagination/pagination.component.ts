@@ -214,6 +214,20 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             .map((_, index) => (index + 1));
     }
 
+    get limitedPages(): number[] {
+        if (this.lastPage <= 100) {
+            return this.pages;
+        }
+        const twentyItems = Array.from(Array(20));
+        return [
+            1,
+            ...twentyItems.map((_, i) => this.current - i - 1).reverse(),
+            this.current,
+            ...twentyItems.map((_, i) => this.current + i + 1),
+            this.lastPage
+        ].filter((value: number, index: number, array: number[]) => value > 0 && value <= this.lastPage && !array.slice(0, index).includes(value));
+    }
+
     get itemRangeText(): string {
         const rangeString = this.range.join('-');
 
