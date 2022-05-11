@@ -70,3 +70,5 @@ export * from './identity-group.interface';
 export * from './language-item.interface';
 export * from './sort-by-category.service';
 export * from './authentication/jwt-helper-service.token';
+export * from './authentication/base-jwt-helper.service';
+export * from './authentication/jwt-helper.interface';
