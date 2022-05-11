@@ -36,11 +36,11 @@ fdescribe('ApiService', () => {
     });
 
     it('should throw error if we try to get unregisterd API', () => {
-        expect(() => apiService.get(ContentClient.nodes)).toThrowError('Api not registred: nodes');
+        expect(() => apiService.get(ContentClient.nodes)).toThrowError();
 
         apiService.register(ContentClient.nodes, NodesApi);
 
-        expect(() => apiService.get(ContentClient.nodes)).not.toThrowError('Api not registred');
+        expect(() => apiService.get(ContentClient.nodes)).not.toThrowError();
     });
 
     it('should work even with Api enum', () => {
