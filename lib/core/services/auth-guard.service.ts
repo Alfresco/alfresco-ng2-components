@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -23,6 +23,8 @@ import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
+import { JwtHelper } from './authentication/jwt-helper.interface';
+import { JWT_HELPER_SERVICE_TOKEN } from './authentication/jwt-helper-service.token';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +33,7 @@ export class AuthGuard extends AuthGuardBase {
 
     ticketChangeBind: any;
 
-    constructor(private jwtHelperService: JwtHelperService,
+    constructor(@Inject(JWT_HELPER_SERVICE_TOKEN) public jwtHelperService: JwtHelper,
                 authenticationService: AuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService,

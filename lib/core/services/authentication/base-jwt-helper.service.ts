@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { StorageService } from '../storage.service';
 
-@Injectable({
-    providedIn: 'root'
-})
 export class BaseJwtHelperService {
     static USER_ACCESS_TOKEN = 'access_token';
     static USER_ID_TOKEN = 'id_token';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -25,6 +25,8 @@ import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from './identity-user.service.interface';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
+import { JWT_HELPER_SERVICE_TOKEN } from './authentication/jwt-helper-service.token';
+import { JwtHelper } from './authentication/jwt-helper.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +34,7 @@ import { OAuth2Service } from './oauth2.service';
 export class IdentityUserService implements IdentityUserServiceInterface {
 
     constructor(
-        private jwtHelperService: JwtHelperService,
+        @Inject(JWT_HELPER_SERVICE_TOKEN) public jwtHelperService: JwtHelper,
         private oAuth2Service: OAuth2Service,
         private appConfigService: AppConfigService) { }
 

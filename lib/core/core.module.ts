@@ -60,6 +60,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
+import { JWT_HELPER_SERVICE_TOKEN } from './services/authentication/jwt-helper-service.token';
+import { JwtHelperService } from './services/jwt-helper.service';
 @NgModule({
     imports: [
         TranslateModule,
@@ -159,6 +161,10 @@ export class CoreModule {
                     useFactory: versionCompatibilityFactory,
                     deps: [ VersionCompatibilityService ],
                     multi: true
+                },
+                {
+                    provide: JWT_HELPER_SERVICE_TOKEN,
+                    useExisting: JwtHelperService
                 }
             ]
         };

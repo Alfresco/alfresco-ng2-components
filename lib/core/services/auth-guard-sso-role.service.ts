@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from './jwt-helper.service';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentGroups, PeopleContentService } from './people-content.service';
+import { JWT_HELPER_SERVICE_TOKEN } from './authentication/jwt-helper-service.token';
+import { JwtHelper } from './authentication/jwt-helper.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
-    constructor(private jwtHelperService: JwtHelperService,
+    constructor(@Inject(JWT_HELPER_SERVICE_TOKEN) public jwtHelperService: JwtHelper,
                 private router: Router,
                 private dialog: MatDialog,
                 private peopleContentService: PeopleContentService) {
