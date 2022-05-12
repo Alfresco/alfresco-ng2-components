@@ -17,13 +17,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { AuthenticationService, ContentService } from '../../services';
+import { AlfrescoApiService, AuthenticationService, ContentService } from '../../services';
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
 import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
-import { IdentityUserService } from '../../services/identity-user.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { UserInfoComponent } from './user-info.component';
@@ -32,6 +31,11 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
+import {
+    getProfileMockApi,
+    getProfileWithoutFamilyNameMockApi,
+    getProfileWithoutGivenNameMockApi
+} from '../../mock/oauth2.service.mock';
 
 class FakeSanitizer extends DomSanitizer {
 
@@ -73,11 +77,7 @@ describe('User info component', () => {
     let contentService: ContentService;
     let ecmUserService: EcmUserService;
     let bpmUserService: BpmUserService;
-    let identityUserService: IdentityUserService;
-
-    const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-    const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-    const identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' };
+    let alfrescoApiService: AlfrescoApiService;
 
     const openUserInfo = () => {
         fixture.detectChanges();
@@ -109,7 +109,6 @@ describe('User info component', () => {
         ecmUserService = TestBed.inject(EcmUserService);
         bpmUserService = TestBed.inject(BpmUserService);
         contentService = TestBed.inject(ContentService);
-        identityUserService = TestBed.inject(IdentityUserService);
 
         spyOn(window, 'requestAnimationFrame').and.returnValue(1);
         spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('app/rest/admin/profile-picture');
@@ -479,36 +478,37 @@ describe('User info component', () => {
 
         describe('when identity user is logged in', () => {
 
-            let getCurrentUserInfoStub: jasmine.Spy;
-
             beforeEach(() => {
                 isOauthStub.and.returnValue(true);
                 isLoggedInStub.and.returnValue(true);
                 isEcmLoggedInStub.and.returnValue(false);
-                getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
+                alfrescoApiService = TestBed.inject(AlfrescoApiService);
             });
 
             it('should show the identity user initials if is not ecm user', async () => {
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileMockApi);
                 await whenFixtureReady();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
             });
 
             it('should able to fetch identity userInfo', (done) => {
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileMockApi);
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     component.identityUser$.subscribe(response => {
                         expect(response).toBeDefined();
-                        expect(response.firstName).toBe('fake-identity-first-name');
-                        expect(response.lastName).toBe('fake-identity-last-name');
-                        expect(response.email).toBe('fakeIdentity@email.com');
+                        expect(response.firstName).toBe('fake-given-name');
+                        expect(response.lastName).toBe('fake-family-name');
+                        expect(response.email).toBe('fake-email@example.com');
                         done();
                     });
                 });
             });
 
             it('should show full name next the user image', async () => {
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileMockApi);
                 await whenFixtureReady();
 
                 const imageButton = element.querySelector<HTMLButtonElement>('#identity-user-image');
@@ -518,46 +518,47 @@ describe('User info component', () => {
                 const bpmUserName = fixture.debugElement.query(By.css('#identity-username'));
                 expect(bpmUserName).toBeDefined();
                 expect(bpmUserName).not.toBeNull();
-                expect(bpmUserName.nativeElement.textContent).toContain('fake-identity-first-name fake-identity-last-name');
+                expect(bpmUserName.nativeElement.textContent).toContain('fake-given-name fake-family-name');
             });
 
             it('should show last name if first name is null', async () => {
-                getCurrentUserInfoStub.and.returnValue(identityUserWithOutFirstNameMock);
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileWithoutGivenNameMockApi);
                 await whenFixtureReady();
 
                 const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
+
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-identity-name-display')).not.toBeNull();
-                expect(fullNameElement.textContent).toContain('fake-identity-last-name');
+                expect(fullNameElement.textContent).toContain('fake-family-name');
                 expect(fullNameElement.textContent).not.toContain('fake-identity-first-name');
             });
 
             it('should not show first name if it is null string', async () => {
-                getCurrentUserInfoStub.and.returnValue(identityUserWithOutFirstNameMock);
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileWithoutGivenNameMockApi);
                 await whenFixtureReady();
 
                 const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
-                fixture.detectChanges();
+
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(fullNameElement).toBeDefined();
-                expect(fullNameElement.textContent).toContain('fake-identity-last-name');
+                expect(fullNameElement.textContent).toContain('fake-family-name');
                 expect(fullNameElement.textContent).not.toContain('null');
             });
 
             it('should not show last name if it is null string', async () => {
-                getCurrentUserInfoStub.and.returnValue(identityUserWithOutLastNameMock);
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileWithoutFamilyNameMockApi);
                 await whenFixtureReady();
 
                 const fullNameElement = element.querySelector('#adf-userinfo-identity-name-display');
-                fixture.detectChanges();
+
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(fullNameElement).toBeDefined();
-                expect(fullNameElement.textContent).toContain('fake-identity-first-name');
+                expect(fullNameElement.textContent).toContain('fake-given-name');
                 expect(fullNameElement.textContent).not.toContain('null');
             });
 
             it('should not show initials if the user have avatar', async () => {
-                getCurrentUserInfoStub.and.returnValue(identityUserWithOutLastNameMock);
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileWithoutFamilyNameMockApi);
                 getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
                 isEcmLoggedInStub.and.returnValue(true);
                 await whenFixtureReady();
