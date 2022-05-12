@@ -35,7 +35,7 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
-import { ContentNodeSelectorPanelService, UploadNewVersionDialogData, VersionManagerService } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorPanelService, VersionManagerData, UploadNewVersionDialogData, VersionManagerService } from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 export const ALIAS_ROOT_FOLDER = '-root-';
@@ -213,7 +213,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     onUploadNewFileVersion(node: UploadNewVersionDialogData): void {
-        this.versionManagerService.openUploadNewVersionDialog(node);
+        this.versionManagerService.openUploadNewVersionDialog(node).then((versionManagerData: VersionManagerData) => {
+            this.replaceOldFileVersionWithNew(versionManagerData);
+        });
     }
 
     onAttachFileClicked(nodeSelector: any) {
