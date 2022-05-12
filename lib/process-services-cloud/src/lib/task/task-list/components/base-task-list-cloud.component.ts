@@ -170,8 +170,14 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
                 };
             }))
         ).subscribe(({ columnsOrder, columnsVisibility }) => {
-                this.columnsOrder = columnsOrder;
-                this.columnsVisibility = columnsVisibility;
+                if (columnsOrder) {
+                    this.columnsOrder = columnsOrder;
+                }
+
+                if (columnsVisibility) {
+                    this.columnsVisibility = columnsVisibility;
+                }
+
                 this.createDatatableSchema();
             }
         );
@@ -269,11 +275,13 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     onColumnsVisibilityChange(columns: DataColumn[]): void {
-        this.columnsVisibility = columns.reduce(
-            (hiddenColumnsMap, column) => {
-                hiddenColumnsMap[column.id] = !!column.isHidden;
-                return hiddenColumnsMap;
-            }, {});
+        this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
 
         this.createColumns();
 

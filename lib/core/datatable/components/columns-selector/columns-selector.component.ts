@@ -46,7 +46,9 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         this.mainMenuTrigger.menuOpened.pipe(
             takeUntil(this.onDestroy$)
         ).subscribe(() => {
-            this.columnItems = this.columns.map(column => ({...column}));
+            this.columnItems = this.columns
+                .map(column => ({...column}))
+                .sort(column => column.isHidden ? 1 : -1);
         });
 
         this.mainMenuTrigger.menuClosed.pipe(

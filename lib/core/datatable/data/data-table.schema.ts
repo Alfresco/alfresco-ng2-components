@@ -38,7 +38,7 @@ export abstract class DataTableSchema {
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
 
-    protected columnsVisibility: { [columnId: string]: boolean } = {};
+    protected columnsVisibility: { [columnId: string]: boolean } | undefined;
 
     private layoutPresets = {};
 
@@ -138,7 +138,7 @@ export abstract class DataTableSchema {
 
                 return isColumnVisible === undefined ?
                     column :
-                    { ...column, isHidden: isColumnVisible };
+                    { ...column, isHidden: !isColumnVisible };
             });
         }
 

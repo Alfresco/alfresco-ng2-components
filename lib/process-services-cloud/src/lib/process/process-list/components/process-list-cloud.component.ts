@@ -232,8 +232,13 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
                 }))
             )
             .subscribe(({ columnsOrder, columnsVisibility }) => {
-                this.columnsOrder = columnsOrder;
-                this.columnsVisibility = columnsVisibility;
+                if (columnsVisibility) {
+                    this.columnsVisibility = columnsVisibility;
+                }
+
+                if (columnsOrder) {
+                    this.columnsOrder = columnsOrder;
+                }
 
                 this.createDatatableSchema();
             });
@@ -342,9 +347,12 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     onColumnsVisibilityChange(columns: DataColumn[]): void {
         this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
-                visibleColumnsMap[column.id] = !!column.isHidden;
-                return visibleColumnsMap;
-            }, {});
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
 
         this.createColumns();
 
