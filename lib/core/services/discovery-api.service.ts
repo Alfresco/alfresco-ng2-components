@@ -71,7 +71,6 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        // const aboutApi = new AboutApi(this.apiService.getInstance());
         const aboutApi = this.apiClientsService.get('ActivitiClient.about');
 
         return from(aboutApi.getAppVersion())

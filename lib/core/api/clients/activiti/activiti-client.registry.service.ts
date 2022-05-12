@@ -28,6 +28,12 @@ declare global {
     }
 }
 
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function startupActivitiClientRegistryService(activitiClientRegistryService: ActivitiClientRegistryService) {
+  return () => activitiClientRegistryService;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
