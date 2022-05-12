@@ -16,7 +16,9 @@
  */
 
 import { StorageService } from '../storage.service';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class BaseJwtHelperService {
     static USER_ACCESS_TOKEN = 'access_token';
     static USER_ID_TOKEN = 'id_token';
