@@ -628,5 +628,65 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
         });
+
+        describe('when form model has left labels', () => {
+
+            it('should have left labels classes on leftLabels true', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                    id: 'dropdown-id',
+                    name: 'option list',
+                    type: FormFieldTypes.DROPDOWN,
+                    readOnly: false,
+                    options: filterOptionList
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
+                expect(textWidgetContainer).not.toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label')
+                expect(adfLeftLabel).not.toBeNull(); 
+            });
+
+            it('should not have left labels classes on leftLabels false', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                    id: 'dropdown-id',
+                    name: 'option list',
+                    type: FormFieldTypes.DROPDOWN,
+                    readOnly: false,
+                    options: filterOptionList
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
+                expect(textWidgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label')
+                expect(adfLeftLabel).toBeNull(); 
+            });
+
+            it('should not have left labels classes on leftLabels not present', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id'}), {
+                    id: 'dropdown-id',
+                    name: 'option list',
+                    type: FormFieldTypes.DROPDOWN,
+                    readOnly: false,
+                    options: filterOptionList
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
+                expect(textWidgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label')
+                expect(adfLeftLabel).toBeNull(); 
+            });
+        });
     });
 });
