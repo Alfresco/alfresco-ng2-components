@@ -21,8 +21,7 @@ import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { AboutModule } from './about/about.module';
-import { ApiClientFactory, LegacyClientFactory } from './api';
-import { ActivitiClientRegistryService, startupActivitiClientRegistryService } from './api/clients/activiti/activiti-client.registry.service';
+import { AlfrescoJsClientsModule, ApiModule } from './api';
 import { AppConfigModule } from './app-config/app-config.module';
 import { BlankPageModule } from './blank-page/blank-page.module';
 import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
@@ -95,7 +94,9 @@ import { ViewerModule } from './viewer/viewer.module';
         SortingPickerModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule
+        BlankPageModule,
+        ApiModule,
+        AlfrescoJsClientsModule
     ],
     exports: [
         AboutModule,
@@ -141,13 +142,6 @@ export class CoreModule {
                 TranslateStore,
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
-                { provide: ApiClientFactory, useClass: LegacyClientFactory },
-                {
-                  provide: APP_INITIALIZER,
-                  useFactory: startupActivitiClientRegistryService,
-                  deps: [ ActivitiClientRegistryService ],
-                  multi: true
-                },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: startupServiceFactory,

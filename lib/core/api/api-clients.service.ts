@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Constructor, Dictionary } from '../interface';
-import { ApiClientFactory } from './api-client.factory';
+import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ApiClientsService {
 
-    constructor(private apiCreateFactory: ApiClientFactory) {}
+    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) {}
 
     private registry: Dictionary<Constructor<any>> = {};
     private instances: Partial<Api.ApiRegistry> = {};
@@ -53,14 +51,5 @@ export class ApiClientsService {
 
       return instance;
     }
-}
-
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Api {
-      // eslint-disable-next-line @typescript-eslint/no-empty-interface
-      interface ApiRegistry {}
-  }
 }
 
