@@ -31,7 +31,7 @@ import {
 } from './identity-user.service.interface';
 import { OAuth2Service } from './oauth2.service';
 
-interface UserInfoInterface {
+interface UserInfo {
     name?: string;
     email?: string;
     family_name?: string;
@@ -70,7 +70,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     async getUserInfo(): Promise<IdentityUserModel> {
-        const userInfo: UserInfoInterface = await this.oAuth2Service.apiClient.getProfile();
+        const userInfo: UserInfo = await this.oAuth2Service.apiClient.getProfile();
         this.currentUserInfo = {
             firstName: userInfo.given_name,
             lastName: userInfo.family_name,

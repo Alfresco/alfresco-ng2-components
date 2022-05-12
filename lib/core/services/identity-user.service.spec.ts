@@ -26,10 +26,8 @@ import {
 } from '../mock/identity-user.mock';
 import { mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from './identity-user.service';
-import { JwtHelperService } from './jwt-helper.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,6 +39,7 @@ import {
     getAvailableRolesMockApi,
     getEffectiveRolesMockApi,
     getInvolvedGroupsMockApi,
+    getProfileMockApi,
     joinGroupMockApi,
     leaveGroupMockApi,
     queryUsersMockApi,
@@ -51,11 +50,11 @@ import {
 describe('IdentityUserService', () => {
 
     const mockRoles = [
-        { id: 'id-1', name: 'MOCK-ADMIN-ROLE'},
-        { id: 'id-2', name: 'MOCK-USER-ROLE'},
+        { id: 'id-1', name: 'MOCK-ADMIN-ROLE' },
+        { id: 'id-2', name: 'MOCK-USER-ROLE' },
         { id: 'id-3', name: 'MOCK_MODELER-ROLE' },
         { id: 'id-4', name: 'MOCK-ROLE-1' },
-        { id: 'id-5', name: 'MOCK-ROLE-2'}
+        { id: 'id-5', name: 'MOCK-ROLE-2' }
     ];
 
     let service: IdentityUserService;
@@ -73,31 +72,16 @@ describe('IdentityUserService', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
     });
 
-    beforeEach(() => {
-        const store = {};
-
-        spyOn(localStorage, 'getItem').and.callFake( (key: string): string => store[key] || null);
-        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  store[key] = value);
-    });
-
-    it('should fetch identity user info from Jwt id token', () => {
-        localStorage.setItem(JwtHelperService.USER_ID_TOKEN, mockToken);
+    it('should fetch current user info from API call', async () => {
+        const alfrescoApiServiceSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(getProfileMockApi);
+        await service.getUserInfo();
         const user = service.getCurrentUserInfo();
-        expect(user).toBeDefined();
-        expect(user.firstName).toEqual('John');
-        expect(user.lastName).toEqual('Doe');
-        expect(user.email).toEqual('johnDoe@gmail.com');
-        expect(user.username).toEqual('johnDoe1');
-    });
 
-    it('should fallback on Jwt access token for identity user info', () => {
-        localStorage.setItem(JwtHelperService.USER_ACCESS_TOKEN, mockToken);
-        const user = service.getCurrentUserInfo();
-        expect(user).toBeDefined();
-        expect(user.firstName).toEqual('John');
-        expect(user.lastName).toEqual('Doe');
-        expect(user.email).toEqual('johnDoe@gmail.com');
-        expect(user.username).toEqual('johnDoe1');
+        expect(alfrescoApiServiceSpy).toHaveBeenCalled();
+        expect(user.firstName).toEqual('fake-given-name');
+        expect(user.lastName).toEqual('fake-family-name');
+        expect(user.email).toEqual('fake-email@example.com');
+        expect(user.username).toEqual('fake-preffered-username');
     });
 
     it('should fetch users ', (done) => {

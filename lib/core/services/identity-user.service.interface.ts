@@ -46,6 +46,7 @@ export interface IdentityJoinGroupRequestModel {
 
 export interface IdentityUserServiceInterface {
     getCurrentUserInfo(): IdentityUserModel;
+    getUserInfo(): Promise<IdentityUserModel>;
     findUserById(id: string): Observable<any>;
     findUsersByName(search: string): Observable<IdentityUserModel[]>;
     findUserByUsername(username: string): Observable<IdentityUserModel[]>;

@@ -24,6 +24,19 @@ export const queryUsersMockApi: any = {
     }
 };
 
+export const getProfileMockApi: any = {
+    oauth2Auth: {
+        getProfile: () => Promise.resolve({
+            name: 'fake-name',
+            given_name: 'fake-given-name',
+            family_name: 'fake-family-name',
+            preferred_username: 'fake-preffered-username',
+            email: 'fake-email@example.com'
+        })
+    },
+    reply: () => {}
+};
+
 export const createUserMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => Promise.resolve()

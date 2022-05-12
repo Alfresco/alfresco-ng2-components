@@ -40,6 +40,10 @@ export class IdentityUserServiceMock implements IdentityUserServiceInterface {
         return mockIdentityUser1;
     }
 
+    async getUserInfo(): Promise<IdentityUserModel> {
+        return of(mockIdentityUser1).toPromise();
+    }
+
     findUsersByName(search: string): Observable<IdentityUserModel[]> {
         if (search === '') {
             return of([]);
