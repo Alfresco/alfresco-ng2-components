@@ -114,11 +114,15 @@ describe('ColumnsSelectorComponent', () => {
 
         const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-        expect(checkboxes.length).toBe(4);
-        expect(await checkboxes[0].getLabelText()).toBe(inputColumns[0].title);
-        expect(await checkboxes[1].getLabelText()).toBe(inputColumns[1].title);
-        expect(await checkboxes[2].getLabelText()).toBe(inputColumns[2].title);
-        expect(await checkboxes[3].getLabelText()).toBe(inputColumns[4].title);
+        const inputColumnsWithTitle = inputColumns.filter(column => !!column.title);
+        expect(checkboxes.length).toBe(inputColumnsWithTitle.length);
+
+        for await (const checkbox of checkboxes) {
+            const checkboxLabel = await checkbox.getLabelText();
+
+            const inputColumn = inputColumnsWithTitle.find(inputColumnWithTitle => inputColumnWithTitle.title === checkboxLabel);
+            expect(inputColumn).toBeTruthy('Should have all columns with title');
+        }
     });
 
     it('should filter columns by search text', fakeAsync(async () => {
@@ -143,9 +147,13 @@ describe('ColumnsSelectorComponent', () => {
         fixture.detectChanges();
 
         const firstColumnCheckbox = await loader.getHarness(MatCheckboxHarness);
-        await firstColumnCheckbox.toggle();
+        const checkBoxName = await firstColumnCheckbox.getLabelText();
 
-        expect(component.columnItems[0].isHidden).toBe(true);
+        let toggledColumnItem = component.columnItems.find(item => item.title === checkBoxName);
+        expect(toggledColumnItem.isHidden).toBeFalsy();
+
+        await firstColumnCheckbox.toggle();
+        expect(toggledColumnItem.isHidden).toBe(true);
     });
 
     it('should set proper default state for checkboxes', async () => {
@@ -158,5 +166,30 @@ describe('ColumnsSelectorComponent', () => {
         expect(await checkboxes[1].isChecked()).toBe(true);
         expect(await checkboxes[2].isChecked()).toBe(true);
         expect(await checkboxes[3].isChecked()).toBe(false);
+    });
+
+    it('should show hidden columns at the end of the list', async () => {
+        const hiddenDataColumn: DataColumn = {
+            id: 'hiddenDataColumn',
+            title: 'hiddenDataColumn',
+            key: 'hiddenDataColumn',
+            type: 'text'
+        }
+
+        const shownDataColumn: DataColumn = {
+            id: 'shownDataColumn',
+            title: 'shownDataColumn',
+            key: 'shownDataColumn',
+            type: 'text'
+        }
+
+        component.columns = [hiddenDataColumn, shownDataColumn];
+        menuOpenedTrigger.next();
+        fixture.detectChanges();
+
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
+        expect(await checkboxes[0].getLabelText()).toBe(shownDataColumn.title);
+        expect(await checkboxes[1].getLabelText()).toBe(hiddenDataColumn.title);
     });
 });
