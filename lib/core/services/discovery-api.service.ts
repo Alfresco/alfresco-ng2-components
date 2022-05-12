@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
@@ -82,7 +82,7 @@ export class DiscoveryApiService {
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        const systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
+        const systemPropertiesApi = this.apiClientsService.get('ActivitiClient.system-properties');
 
         return from(systemPropertiesApi.getProperties())
             .pipe(
