@@ -19,7 +19,7 @@ import { AboutApi, NodesApi } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { Constructor } from '../interface';
 import { ApiClientFactory } from './api-client.factory';
-import { ApiService } from './api.service';
+import { ApiClientsService } from './api-clients.service';
 
 class MockApiClientFactory extends ApiClientFactory {
   create<T>(apiClass: Constructor<T>): T {
@@ -27,16 +27,16 @@ class MockApiClientFactory extends ApiClientFactory {
   }
 }
 
-fdescribe('ApiService', () => {
-    let apiService: ApiService;
+describe('ApiService', () => {
+    let apiService: ApiClientsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
           providers: [
-            {provide: ApiClientFactory, useClass: MockApiClientFactory }
+            { provide: ApiClientFactory, useClass: MockApiClientFactory }
           ]
         });
-        apiService = TestBed.inject(ApiService);
+        apiService = TestBed.inject(ApiClientsService);
     });
 
     it('should add api to registry', () => {

@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
+import { DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { from, Observable, throwError, Subject } from 'rxjs';
-import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
-
+import { from, Observable, Subject, throwError } from 'rxjs';
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
+import { ApiClientsService } from '../api';
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,8 @@ export class DiscoveryApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+        private apiClientsService: ApiClientsService) {
 
         this.authenticationService.onLogin
             .pipe(
@@ -46,6 +48,7 @@ export class DiscoveryApiService {
             )
             .subscribe((info) => this.ecmProductInfo$.next(info));
     }
+
 
     /**
      * Gets product information for Content Services.
@@ -68,7 +71,8 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        const aboutApi = new AboutApi(this.apiService.getInstance());
+        // const aboutApi = new AboutApi(this.apiService.getInstance());
+        const aboutApi = this.apiClientsService.get('ActivitiClient.about');
 
         return from(aboutApi.getAppVersion())
             .pipe(

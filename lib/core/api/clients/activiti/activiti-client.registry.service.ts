@@ -16,6 +16,8 @@
  */
 
 import { AboutApi } from '@alfresco/js-api';
+import { Injectable } from '@angular/core';
+import { ApiClientsService } from '../../api-clients.service';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -24,4 +26,17 @@ declare global {
             ['ActivitiClient.about']: AboutApi;
         }
     }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ActivitiClientRegistryService {
+  constructor(private apiClientsService: ApiClientsService) {
+    this.registerApis();
+  }
+
+  registerApis(){
+    this.apiClientsService.register('ActivitiClient.about', AboutApi);
+  }
 }

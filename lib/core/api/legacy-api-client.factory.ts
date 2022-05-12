@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Constructor } from 'core/interface';
+import { Constructor } from '../interface';
 import { AlfrescoApiService } from '../services';
 import { ApiClientFactory } from './api-client.factory';
 

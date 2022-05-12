@@ -19,11 +19,10 @@ import { Injectable } from '@angular/core';
 import { Constructor, Dictionary } from '../interface';
 import { ApiClientFactory } from './api-client.factory';
 
-
 @Injectable({
     providedIn: 'root'
 })
-export class ApiService {
+export class ApiClientsService {
 
     constructor(private apiCreateFactory: ApiClientFactory) {}
 
@@ -54,5 +53,14 @@ export class ApiService {
 
       return instance;
     }
+}
+
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Api {
+      // eslint-disable-next-line @typescript-eslint/no-empty-interface
+      interface ApiRegistry {}
+  }
 }
 
