@@ -26,7 +26,7 @@ import { VersionListComponent } from './version-list.component';
 import { UploadModule } from '../upload/upload.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { VersionComparisonComponent } from './version-comparison.component';
-import { UploadNewVersionDialogComponent } from './upload-new-version.dialog';
+import { VersionManagerDialogComponent } from './version-manager.dialog';
 
 @NgModule({
     imports: [
@@ -48,7 +48,7 @@ import { UploadNewVersionDialogComponent } from './upload-new-version.dialog';
         VersionManagerComponent,
         VersionListComponent,
         VersionComparisonComponent,
-        UploadNewVersionDialogComponent
+        VersionManagerDialogComponent
     ]
 })
 export class VersionManagerModule {}

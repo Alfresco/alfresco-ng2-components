@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlfrescoApiService, ContentService, NotificationService } from '@alfresco/adf-core';
 
-import { VersionManagerData, UploadNewVersionDialogComponent, UploadNewVersionDialogData } from './upload-new-version.dialog';
+import { VersionManagerData, VersionManagerDialogComponent, VersionManagerDialogData } from './version-manager.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class VersionManagerService {
         private dialog: MatDialog
     ) { }
 
-    openUploadNewVersionDialog(event: UploadNewVersionDialogData) {
+    openUploadNewVersionDialog(event: VersionManagerDialogData) {
         const { file, node } = event;
         const showComments = true;
         const allowDownload = true;
@@ -31,7 +31,7 @@ export class VersionManagerService {
         return new Promise((resolve)=> {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
-                    const dialogRef = this.dialog.open(UploadNewVersionDialogComponent, {
+                    const dialogRef = this.dialog.open(VersionManagerDialogComponent, {
                         data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload },
                         panelClass: 'adf-version-manager-dialog',
                         width: '630px'
