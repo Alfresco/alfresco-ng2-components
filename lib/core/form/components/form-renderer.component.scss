@@ -107,31 +107,21 @@
         }
     }
 
-    &-compact-field-container {
+    &-left-label-input-container {
         display: flex;
-        font-size: 12px;
-        padding-bottom: 0;
 
         div:nth-child(2) {
             flex: 1;
-
-            mat-form-field {
-                font-size: 12px;
-            }
         }
     }
 
-    &-compact-filter-select {
+    &-left-label-filter-select {
         transform: none !important;
         overflow-x: hidden !important;
-
-        mat-option:nth-child(2) {
-            margin-top: 15px;
-        }
     }
 
     &-left-label {
-        line-height: 48px;
+        line-height: calc(var(--theme-headline-line-height) * 2);
         margin-right: 15px;
     }
 }
