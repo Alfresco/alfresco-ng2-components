@@ -16,14 +16,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ApiClientsService } from '.';
 import { API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 import { LegacyClientFactory } from './legacy-api-client.factory';
 
 @NgModule({
     providers: [
-        ApiClientsService,
         { provide: API_CLIENT_FACTORY_TOKEN, useClass: LegacyClientFactory }
     ]
 })
-export class ApiModule {}
+export class ApiModule { }

@@ -17,10 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import { ActivitiClientModule } from './activiti/activiti-client.module';
+import { DiscoveryClientModule } from './discovery/discovery-client.module';
 
 @NgModule({
     imports: [
-        ActivitiClientModule
+        ActivitiClientModule,
+        DiscoveryClientModule
     ]
 })
-export class AlfrescoJsClientsModule {}
+export class AlfrescoJsClientsModule { }

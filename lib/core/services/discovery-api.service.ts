@@ -56,7 +56,8 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-        const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        // const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        const discoveryApi = this.apiClientsService.get('DiscoveryClient.discovery');
 
         return from(discoveryApi.getRepositoryInformation())
             .pipe(

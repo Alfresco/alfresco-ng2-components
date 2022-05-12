@@ -19,10 +19,12 @@ import { Inject, Injectable } from '@angular/core';
 import { Constructor, Dictionary } from '../interface';
 import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ApiClientsService {
 
-    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) {}
+    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) { }
 
     private registry: Dictionary<Constructor<any>> = {};
     private instances: Partial<Api.ApiRegistry> = {};
@@ -45,11 +47,11 @@ export class ApiClientsService {
     }
 
     private instantiateApi<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
-      const ApiClass = this.registry[apiName];
-      const instance = this.apiCreateFactory.create<Api.ApiRegistry[T]>(ApiClass);
-      this.instances[apiName] = instance;
+        const ApiClass = this.registry[apiName];
+        const instance = this.apiCreateFactory.create<Api.ApiRegistry[T]>(ApiClass);
+        this.instances[apiName] = instance;
 
-      return instance;
+        return instance;
     }
 }
 
