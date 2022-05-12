@@ -115,11 +115,6 @@
         }
     }
 
-    &-left-label-filter-select {
-        transform: none !important;
-        overflow-x: hidden !important;
-    }
-
     &-left-label {
         line-height: calc(var(--theme-headline-line-height) * 2);
         margin-right: 15px;
