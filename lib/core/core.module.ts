@@ -132,6 +132,12 @@ import { JwtHelperService } from './services/jwt-helper.service';
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule
+    ],
+    providers: [
+        {
+            provide: JWT_HELPER_SERVICE_TOKEN,
+            useExisting: JwtHelperService
+        }
     ]
 })
 export class CoreModule {
@@ -161,10 +167,6 @@ export class CoreModule {
                     useFactory: versionCompatibilityFactory,
                     deps: [ VersionCompatibilityService ],
                     multi: true
-                },
-                {
-                    provide: JWT_HELPER_SERVICE_TOKEN,
-                    useExisting: JwtHelperService
                 }
             ]
         };
