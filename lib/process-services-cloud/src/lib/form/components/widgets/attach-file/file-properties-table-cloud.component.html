@@ -64,7 +64,6 @@
                     </button>
                     <adf-upload-button *ngIf="displayMenuOption('newVersion') && !!element.content?.mimeType"
                         id="{{'file-'+ element?.id +'-upload-new-file'}}"
-                        rootFolderId="-my-"
                         (beginUpload)="onUploadNewFileVersion($event, element)">
                     </adf-upload-button>
                 </mat-menu>
