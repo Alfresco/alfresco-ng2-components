@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone, ViewChild, ElementRef
 } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -62,6 +62,10 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     /** Emitted when create permission is missing. */
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
+
+    /** Select #uploadSingleFile input */
+    @ViewChild('uploadSingleFile')
+    uploadSingleFileButton: ElementRef<HTMLInputElement>;
 
     private hasAllowableOperations: boolean = false;
 
