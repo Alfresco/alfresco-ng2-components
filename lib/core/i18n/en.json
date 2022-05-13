@@ -186,7 +186,8 @@
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "Client ID",
-      "PUBLIC_URLS": "Public urls silent Login"
+      "PUBLIC_URLS": "Public urls silent Login",
+      "SECRET": "Secret"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
