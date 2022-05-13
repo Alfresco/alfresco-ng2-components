@@ -215,6 +215,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     onUploadNewFileVersion(node: VersionManagerDialogData): void {
         this.versionManagerService.openUploadNewVersionDialog(node).then((versionManagerData: VersionManagerData) => {
             this.replaceOldFileVersionWithNew(versionManagerData);
+        }).catch(error => {
+            this.notificationService.showError(error.value);
         });
     }
 
