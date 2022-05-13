@@ -220,7 +220,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
-        if (form.json) {
+        if (form?.json) {
             this.leftLabels = form.json.leftLabels || false;
         }
 
