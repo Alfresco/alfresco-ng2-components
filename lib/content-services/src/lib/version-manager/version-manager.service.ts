@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlfrescoApiService, ContentService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 
 import { VersionManagerData, VersionManagerDialogComponent, VersionManagerDialogData } from './version-manager.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
@@ -18,7 +18,6 @@ export class VersionManagerService {
 
     constructor(
         private contentService: ContentService,
-        private notificationService: NotificationService,
         private apiService: AlfrescoApiService,
         private dialog: MatDialog
     ) { }
@@ -28,8 +27,8 @@ export class VersionManagerService {
         const showComments = true;
         const allowDownload = true;
 
-        return new Promise((resolve)=> {
-            if (this.contentService.hasAllowableOperations(node, 'update')) {
+        return new Promise((resolve, reject)=> {
+            if (this.contentService.hasAllowableOperations(node, 'updatee')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(VersionManagerDialogComponent, {
                         data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload },
@@ -39,9 +38,10 @@ export class VersionManagerService {
                     dialogRef.componentInstance.uploadedNewVersion.subscribe( (newVersionData: VersionManagerData) =>{
                         resolve(newVersionData);
                     });
+                    dialogRef.componentInstance.uploadError.subscribe(error => reject(error));
                 });
             } else {
-                this.notificationService.showError('OPERATION.ERROR.PERMISSION');
+                reject({value: 'OPERATION.ERROR.PERMISSION'});
             }
         });
 
