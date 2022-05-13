@@ -16,8 +16,8 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
-import { Constructor, Dictionary } from '../interface';
 import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
+import { Constructor, Dictionary } from './types';
 
 @Injectable()
 export class ApiClientsService {

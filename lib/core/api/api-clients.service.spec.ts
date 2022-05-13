@@ -17,9 +17,9 @@
 
 import { AboutApi } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { Constructor } from '../interface';
 import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 import { ApiClientsService } from './api-clients.service';
+import { Constructor } from './types';
 
 class MockApiClientFactory implements ApiClientFactory {
     create<T>(apiClass: Constructor<T>): T {

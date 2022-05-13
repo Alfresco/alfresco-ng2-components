@@ -53,4 +53,5 @@ export * from './mock/index';
 export * from './testing';
 
 export * from './material.module';
+export * from './api';
 export * from './core.module';

@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { from, Observable, Subject, throwError } from 'rxjs';
-import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
-import { ApiClientsService } from '../api';
+import { from, Observable, throwError, Subject } from 'rxjs';
+import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
+import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
+
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
+import { ApiClientsService } from '../api';
 
 
 @Injectable({
@@ -56,7 +57,6 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-        // const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
         const discoveryApi = this.apiClientsService.get('DiscoveryClient.discovery');
 
         return from(discoveryApi.getRepositoryInformation())

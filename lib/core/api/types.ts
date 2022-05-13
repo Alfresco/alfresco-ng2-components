@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from './alfresco-api.service';
+export interface Dictionary<T> {
+    [key: string]: T;
+};
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function startupServiceFactory(alfrescoApiService: AlfrescoApiService) {
-    return () => alfrescoApiService.load();
-}
+export type Constructor<T> = new (...args: any[]) => T;
