@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { AboutApi, NodesApi } from '@alfresco/js-api';
+import { AboutApi } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { Constructor } from '../interface';
-import { ApiClientFactory } from './api-client.factory';
+import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 import { ApiClientsService } from './api-clients.service';
 
-class MockApiClientFactory extends ApiClientFactory {
-  create<T>(apiClass: Constructor<T>): T {
-    return new apiClass();
-  }
+class MockApiClientFactory implements ApiClientFactory {
+    create<T>(apiClass: Constructor<T>): T {
+        return new apiClass();
+    }
 }
 
 describe('ApiService', () => {
@@ -32,40 +32,40 @@ describe('ApiService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          providers: [
-            { provide: ApiClientFactory, useClass: MockApiClientFactory }
-          ]
+            providers: [
+                { provide: API_CLIENT_FACTORY_TOKEN, useClass: MockApiClientFactory }
+            ]
         });
         apiService = TestBed.inject(ApiClientsService);
     });
 
     it('should add api to registry', () => {
-        apiService.register('ContentClient.nodes', NodesApi);
+        apiService.register('ActivitiClient.about', AboutApi);
 
-        expect(apiService.get('ContentClient.nodes') instanceof NodesApi).toBeTruthy();
+        expect(apiService.get('ActivitiClient.about') instanceof AboutApi).toBeTruthy();
     });
 
     it('should throw error if we try to get unregisterd API', () => {
-        expect(() => apiService.get('ContentClient.nodes')).toThrowError();
+        expect(() => apiService.get('ActivitiClient.about')).toThrowError();
 
-        apiService.register('ContentClient.nodes', NodesApi);
+        apiService.register('ActivitiClient.about', AboutApi);
 
-        expect(() => apiService.get('ContentClient.nodes')).not.toThrowError();
+        expect(() => apiService.get('ActivitiClient.about')).not.toThrowError();
     });
 
     it('should work even with Api enum', () => {
-      apiService.register('ActivitiClient.about', AboutApi);
+        apiService.register('ActivitiClient.about', AboutApi);
 
-      expect(apiService.get('ActivitiClient.about') instanceof AboutApi).toBeTruthy();
+        expect(apiService.get('ActivitiClient.about') instanceof AboutApi).toBeTruthy();
     });
 
     it('should create only single instance of API', () => {
-      apiService.register('ActivitiClient.about', AboutApi);
+        apiService.register('ActivitiClient.about', AboutApi);
 
-      const a = apiService.get('ActivitiClient.about');
-      const b = apiService.get('ActivitiClient.about');
+        const a = apiService.get('ActivitiClient.about');
+        const b = apiService.get('ActivitiClient.about');
 
-      expect(a).toBe(b);
+        expect(a).toBe(b);
     });
 
 });
