@@ -38,9 +38,13 @@ export class AuthGuardSsoRoleService implements CanActivate {
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
-                const excludedRoles = route.data['excludedRoles'] || [];
-                const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
-                hasRealmRole = excludedRoles.length ?  this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
+                if (rolesToCheck.length === 0) {
+                    hasRealmRole = true;
+                } else {
+                    const excludedRoles = route.data['excludedRoles'] || [];
+                    const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
+                    hasRealmRole = excludedRoles.length ?  this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
+                }
             }
 
             if (route.data['clientRoles']) {

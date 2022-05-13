@@ -59,6 +59,13 @@ describe('Auth Guard SSO role service', () => {
         expect(await authGuard.canActivate(router)).toBeTruthy();
     });
 
+    it('Should canActivate be true if case of empty roles to check', async () => {
+        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        router.data = { roles: [] };
+
+        expect(await authGuard.canActivate(router)).toBeTruthy();
+    });
+
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: ['role3'] } });
