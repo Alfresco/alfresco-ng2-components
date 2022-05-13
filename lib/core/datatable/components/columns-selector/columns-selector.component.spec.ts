@@ -173,15 +173,16 @@ describe('ColumnsSelectorComponent', () => {
             id: 'hiddenDataColumn',
             title: 'hiddenDataColumn',
             key: 'hiddenDataColumn',
-            type: 'text'
-        }
+            type: 'text',
+            isHidden: true
+        };
 
         const shownDataColumn: DataColumn = {
             id: 'shownDataColumn',
             title: 'shownDataColumn',
             key: 'shownDataColumn',
             type: 'text'
-        }
+        };
 
         component.columns = [hiddenDataColumn, shownDataColumn];
         menuOpenedTrigger.next();
