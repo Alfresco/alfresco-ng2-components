@@ -223,7 +223,7 @@ export class FormFieldModel extends FormWidgetModel {
         if (form.json) {
             this.leftLabels = form.json.leftLabels || false;
         }
-        
+
         const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;
         if (this.hasEmptyValue === undefined) {
             this.hasEmptyValue = json?.hasEmptyValue ?? !!emptyOption;

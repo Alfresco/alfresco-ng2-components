@@ -643,11 +643,11 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
-                expect(textWidgetContainer).not.toBeNull();
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).not.toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label')
-                expect(adfLeftLabel).not.toBeNull(); 
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).not.toBeNull();
             });
 
             it('should not have left labels classes on leftLabels false', async () => {
@@ -662,15 +662,15 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
-                expect(textWidgetContainer).toBeNull();
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label')
-                expect(adfLeftLabel).toBeNull(); 
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
             });
 
             it('should not have left labels classes on leftLabels not present', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id'}), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'option list',
                     type: FormFieldTypes.DROPDOWN,
@@ -681,11 +681,11 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const textWidgetContainer = element.querySelector('.adf-left-label-input-container')
-                expect(textWidgetContainer).toBeNull();
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
 
-                const adfLeftLabel = element.querySelector('.adf-left-label')
-                expect(adfLeftLabel).toBeNull(); 
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
             });
         });
     });
