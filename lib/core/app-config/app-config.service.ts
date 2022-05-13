@@ -21,6 +21,7 @@ import { ObjectUtils } from '../utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
+import { OpenidConfiguration } from '../services/openid-configuration.interface';
 
 /* spellchecker: disable */
 // eslint-disable-next-line no-shadow
@@ -53,16 +54,6 @@ export enum Status {
 }
 
 /* spellchecker: enable */
-
-interface OpenidConfiguration {
-    authorization_endpoint: string;
-    token_endpoint: string;
-    userinfo_endpoint: string;
-    end_session_endpoint: string;
-    check_session_iframe: string;
-    revocation_endpoint: string;
-    introspection_endpoint: string;
-}
 
 @Injectable({
     providedIn: 'root'

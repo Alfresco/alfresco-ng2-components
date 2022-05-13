@@ -21,6 +21,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
+import { OpenidConfiguration } from './openid-configuration.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,7 @@ export class AlfrescoApiService {
     lastConfig: AlfrescoApiConfig;
     currentAppConfig: AlfrescoApiConfig;
 
-    idpConfig: any;
+    idpConfig: OpenidConfiguration;
 
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
@@ -65,7 +66,7 @@ export class AlfrescoApiService {
             throw new Error('Something wrong happened when calling the app.config.json');
         }
 
-        this.initAlfrescoApiWithLastConfig();
+        this.initAlfrescoApiWithConfig();
         this.alfrescoApiInitialized.next(true);
     }
 
@@ -75,7 +76,7 @@ export class AlfrescoApiService {
             this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
             this.mapAlfrescoApiOpenIdConfig();
         }
-        this.initAlfrescoApiWithLastConfig();
+        this.initAlfrescoApiWithConfig();
     }
 
     private getAuthWithFixedOriginLocation(): OauthConfigModel {
@@ -113,17 +114,16 @@ export class AlfrescoApiService {
 
     protected initAlfrescoApi() {
         this.getCurrentAppConfig();
-        this.initAlfrescoApiWithLastConfig();
+        this.initAlfrescoApiWithConfig();
     }
 
-    private initAlfrescoApiWithLastConfig() {
+    private initAlfrescoApiWithConfig() {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
-            this.lastConfig = this.currentAppConfig;
             this.alfrescoApi.setConfig(this.currentAppConfig);
         } else {
-            this.lastConfig = this.currentAppConfig;
-            this.alfrescoApi = new AlfrescoApi(this.lastConfig);
+            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
         }
+        this.lastConfig = this.currentAppConfig;
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
