@@ -17,10 +17,10 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { UploadFilesEvent, VersionManagerDialogData } from '@alfresco/adf-content-services';
+import { UploadButtonComponent, UploadFilesEvent, VersionManagerDialogData } from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
@@ -66,6 +66,9 @@ export class FilePropertiesTableCloudComponent {
     @Output()
     removeAttachFile: EventEmitter<any> = new EventEmitter<any>();
 
+    @ViewChild('newVersion')
+    uploadButton: UploadButtonComponent;
+
     constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
 
     onRowClicked(file?: Node) {
@@ -78,6 +81,10 @@ export class FilePropertiesTableCloudComponent {
 
     downloadContent(file: Node) {
         this.downloadFile.emit(file);
+    }
+
+    onClickOnUploadNewVersion(){
+        this.uploadButton.uploadSingleFileButton.nativeElement.click();
     }
 
     onUploadNewFileVersion(file: UploadFilesEvent, node: Node){

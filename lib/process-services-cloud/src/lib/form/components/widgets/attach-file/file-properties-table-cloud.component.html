@@ -62,10 +62,20 @@
                         <mat-icon class="mat-24">highlight_off</mat-icon>
                         <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
                     </button>
-                    <adf-upload-button *ngIf="displayMenuOption('newVersion') && !!element.content?.mimeType"
-                        id="{{'file-'+ element?.id +'-upload-new-file'}}"
-                        (beginUpload)="onUploadNewFileVersion($event, element)">
-                    </adf-upload-button>
+                    <ng-container *ngIf="!field.readOnly && displayMenuOption('newVersion') && !!element.content?.mimeType">
+                        <button
+                            id="{{'file-'+ element?.id +'-upload-new-version'}}" mat-menu-item
+                            (click)="onClickOnUploadNewVersion();" (keyup.enter)="onClickOnUploadNewVersion();">
+                            <mat-icon class="mat-24">file_upload</mat-icon>
+                            <span>{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TITLE' | translate }}</span>
+                        </button>
+                        <adf-upload-button
+                            #newVersion
+                            rootFolderId="-my-"
+                            style="display: none;"
+                            (beginUpload)="onUploadNewFileVersion($event, element)">
+                        </adf-upload-button>
+                    </ng-container>
                 </mat-menu>
             </td>
         </ng-container>
