@@ -24,6 +24,9 @@ export class VersionManagerDialogComponent implements OnInit {
   @Output()
   uploadedNewVersion = new EventEmitter<VersionManagerData>();
 
+  @Output()
+  uploadError = new EventEmitter<any>();
+
   constructor(
       @Inject(MAT_DIALOG_DATA) public data: VersionManagerDialogData,
       private dialogRef: MatDialogRef<VersionManagerDialogComponent>
@@ -41,8 +44,9 @@ export class VersionManagerDialogComponent implements OnInit {
       this.dialogRef.close();
   }
 
-  onUploadError(event){
-      console.log(`%conUploadError => ${event}`);
+  onUploadError(error){
+      this.uploadError.emit(error);
+      this.dialogRef.close();
   }
 
   onViewingVersion(event){
