@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
+import { IdentityUserService, mockIdentityUser1, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -32,10 +32,10 @@ import {
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -45,9 +45,6 @@ describe('TaskFilterCloudService', () => {
     let getPreferenceByKeySpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
     let updatePreferenceSpy: jasmine.Spy;
-    let getCurrentUserInfoSpy: jasmine.Spy;
-
-    const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
         imports: [
@@ -68,15 +65,11 @@ describe('TaskFilterCloudService', () => {
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeTaskCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
-
-        const identityUserService = TestBed.inject(IdentityUserService);
-        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create task filter key by using appName and the username', (done) => {
+    it('should create task filter key by using appName', (done) => {
         service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(getCurrentUserInfoSpy).toHaveBeenCalled();
             done();
         });
     });
@@ -246,10 +239,11 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     let identityUserService: IdentityUserService;
     let getPreferencesSpy: jasmine.Spy;
 
-    const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
-
     setupTestBed({
-        imports: [ HttpClientTestingModule ],
+        imports: [
+            HttpClientTestingModule,
+            ProcessServiceCloudTestingModule
+        ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
@@ -260,11 +254,12 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.inject(IdentityUserService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create default task filters if there are no task filter preferences', (done) => {
+    it('should create default task filters if there are no task filter preferences', async (done) => {
         const appName = 'fakeAppName';
+        await identityUserService.getUserInfo();
+
         service.getTaskListFilters(appName).subscribe((res: TaskFilterCloudModel[]) => {
             expect(res.length).toEqual(3);
 
@@ -273,7 +268,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(res[0].appName).toEqual(appName);
             expect(res[0].icon).toEqual('inbox');
             expect(res[0].status).toEqual('ASSIGNED');
-            expect(res[0].assignee).toEqual(identityUserMock.username);
+            expect(res[0].assignee).toEqual(mockIdentityUser1.username);
 
             expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
             expect(res[1].key).toEqual('queued-tasks');
@@ -291,7 +286,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
 
-        const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${identityUserMock.username}`));
+        const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${mockIdentityUser1.username}`));
         expect(localData.length).toEqual(3);
 
         expect(localData[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
@@ -299,7 +294,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         expect(localData[0].appName).toEqual(appName);
         expect(localData[0].icon).toEqual('inbox');
         expect(localData[0].status).toEqual('ASSIGNED');
-        expect(localData[0].assignee).toEqual(identityUserMock.username);
+        expect(localData[0].assignee).toEqual(mockIdentityUser1.username);
 
         expect(localData[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
         expect(localData[1].key).toEqual('queued-tasks');

@@ -314,8 +314,7 @@ export class TaskFilterCloudService extends BaseCloudService {
     }
 
     async getCurrentUsername() {
-        const userInfo = await this.identityUserService.getUserInfo();
-        this.currentUsername = userInfo.username;
+        this.currentUsername = (await this.identityUserService.getUserInfo()).username;
     }
 
     /**
@@ -343,7 +342,7 @@ export class TaskFilterCloudService extends BaseCloudService {
                 icon: 'inbox',
                 appName,
                 status: 'ASSIGNED',
-                assignee: this.identityUserService.getCurrentUserInfo().username,
+                assignee: this.currentUsername,
                 sort: 'createdDate',
                 order: 'DESC',
                 showCounter: true

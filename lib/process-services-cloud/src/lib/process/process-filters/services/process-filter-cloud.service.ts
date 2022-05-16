@@ -312,8 +312,7 @@ export class ProcessFilterCloudService {
     }
 
     async getCurrentUsername() {
-        const userInfo = await this.identityUserService.getUserInfo();
-        this.currentUsername = userInfo.username;
+        this.currentUsername = (await this.identityUserService.getUserInfo()).username;
     }
 
     /**

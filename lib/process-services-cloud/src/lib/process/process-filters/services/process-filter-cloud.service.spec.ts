@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -31,14 +31,6 @@ describe('ProcessFilterCloudService', () => {
     let getPreferenceByKeySpy: jasmine.Spy;
     let updatePreferenceSpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
-    let getCurrentUserInfoSpy: jasmine.Spy;
-
-    const identityUserMock = {
-        username: 'mock-username',
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
-    };
 
     setupTestBed({
         imports: [
@@ -54,19 +46,16 @@ describe('ProcessFilterCloudService', () => {
         service = TestBed.inject(ProcessFilterCloudService);
 
         const preferenceCloudService = service.preferenceService;
-        const identityUserService = TestBed.inject(IdentityUserService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeProcessCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeProcessCloudFilterEntries));
-        getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create processfilter key by using appName and the username', (done) => {
+    it('should create processfilter key by using appName', (done) => {
         service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
-            expect(getCurrentUserInfoSpy).toHaveBeenCalled();
             done();
         });
     });

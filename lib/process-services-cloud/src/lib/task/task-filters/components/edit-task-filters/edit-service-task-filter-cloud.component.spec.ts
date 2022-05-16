@@ -88,7 +88,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             expect(getTaskFilterSpy).toHaveBeenCalled();
             expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
             expect(component.taskFilter.icon).toEqual('adjust');
-            expect(component.taskFilter.status).toEqual('CREATED');
+            expect(component.taskFilter.status).toEqual('COMPLETED');
             expect(component.taskFilter.order).toEqual('ASC');
             expect(component.taskFilter.sort).toEqual('id');
         });
