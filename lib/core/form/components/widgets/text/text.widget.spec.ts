@@ -442,5 +442,68 @@ describe('TextWidgetComponent', () => {
                 expect(label.innerText).toBe('Phone : (__) ___-___');
             });
         });
+
+        describe('when form model has left labels', () => {
+
+            it('should have left labels classes on leftLabels true', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).not.toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).not.toBeNull();
+            });
+
+            it('should not have left labels classes on leftLabels false', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
+            });
+
+            it('should not have left labels classes on leftLabels not present', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
+            });
+        });
     });
 });

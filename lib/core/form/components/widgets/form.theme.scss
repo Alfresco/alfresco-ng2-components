@@ -64,6 +64,10 @@ ul > li > form-field > .adf-focus {
             border-color: var(--theme-warn-color);
         }
     }
+
+    &-left-label {
+        color: var(--theme-secondary-text-color);
+    }
 }
 
 /* query for Microsoft IE 11 */

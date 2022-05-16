@@ -15,17 +15,101 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule, setupTestBed } from 'core/testing';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
 
 describe('NumberWidgetComponent', () => {
 
     let widget: NumberWidgetComponent;
+    let fixture: ComponentFixture<NumberWidgetComponent>;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule,
+            MatInputModule,
+            FormsModule,
+            MatIconModule
+        ]
+    });
 
     beforeEach(() => {
-        widget = new NumberWidgetComponent(null, null);
+        fixture = TestBed.createComponent(NumberWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
     });
 
     it('should exist', () => {
         expect(widget).toBeDefined();
+    });
+
+    describe('when form model has left labels', () => {
+
+        it('should have left labels classes on leftLabels true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'number-id',
+                name: 'number-name',
+                value: '',
+                type: FormFieldTypes.NUMBER,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).not.toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).not.toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels false', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                id: 'number-id',
+                name: 'number-name',
+                value: '',
+                type: FormFieldTypes.NUMBER,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels not present', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'number-id',
+                name: 'number-name',
+                value: '',
+                type: FormFieldTypes.NUMBER,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
     });
 });
