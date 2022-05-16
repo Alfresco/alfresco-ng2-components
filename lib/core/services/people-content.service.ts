@@ -22,6 +22,7 @@ import { catchError, map } from 'rxjs/operators';
 import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
+import { AuthenticationService } from './authentication.service';
 
 // eslint-disable-next-line no-shadow
 export enum ContentGroups {
@@ -57,7 +58,15 @@ export class PeopleContentService {
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(
+        private apiService: AlfrescoApiService,
+        authenticationService: AuthenticationService,
+        private logService: LogService
+    ) {
+        authenticationService.onLogout.subscribe(() => {
+            this.hasCheckedIsContentAdmin = false;
+            this.hasContentAdminRole = false;
+        });
     }
 
     /**
