@@ -60,7 +60,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
-import { AlfrescoJsClientsModule, ApiModule } from './api';
+import { ApiModule } from './api/api.module';
+import { AlfrescoJsClientsModule } from './api/clients/alfresco-js-clients.module';
 
 @NgModule({
     imports: [
