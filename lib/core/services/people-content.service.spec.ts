@@ -49,7 +49,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to fetch person details based on id', (done) => {
-        spyOn(peopleContentService['peopleApi'], 'getPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
+        spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
         peopleContentService.getPerson('fake-id').subscribe((person) => {
             expect(person.entry.id).toEqual('fake-id');
             expect(person.entry.email).toEqual('fakeEcm@ecmUser.com');
@@ -58,7 +58,7 @@ describe('PeopleContentService', () => {
     });
 
     it('calls getPerson api method by an id', (done) => {
-        const getPersonSpy = spyOn(peopleContentService['peopleApi'], 'getPerson').and.returnValue(Promise.resolve(null));
+        const getPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(null));
         peopleContentService.getPerson('fake-id').subscribe(() => {
             expect(getPersonSpy).toHaveBeenCalledWith('fake-id');
             done();
@@ -66,7 +66,7 @@ describe('PeopleContentService', () => {
     });
 
     it('calls getPerson api method with "-me-"', (done) => {
-        const getPersonSpy = spyOn(peopleContentService['peopleApi'], 'getPerson').and.returnValue(Promise.resolve(null));
+        const getPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(null));
         peopleContentService.getPerson('-me-').subscribe(() => {
             expect(getPersonSpy).toHaveBeenCalledWith('-me-');
             done();
@@ -74,7 +74,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to list people', (done) => {
-        spyOn(peopleContentService['peopleApi'], 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         peopleContentService.listPeople().subscribe((response: PeopleContentQueryResponse) => {
             const people = response.entries;
             const pagination = response.pagination;
@@ -91,7 +91,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should call listPeople api method', (done) => {
-        const listPeopleSpy = spyOn(peopleContentService['peopleApi'], 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        const listPeopleSpy = spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         peopleContentService.listPeople().subscribe(() => {
             expect(listPeopleSpy).toHaveBeenCalled();
             done();
@@ -99,7 +99,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should call listPeople api with requested sorting params', async () => {
-        const listPeopleSpy = spyOn(peopleContentService['peopleApi'], 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        const listPeopleSpy = spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: { orderBy: 'firstName', direction: 'asc' } };
         const expectedValue = { skipCount: 10, maxItems: 20, orderBy: ['firstName ASC'] };
 
@@ -109,7 +109,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should not call listPeople api with sorting params if sorting is not defined', async () => {
-        const listPeopleSpy = spyOn(peopleContentService['peopleApi'], 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        const listPeopleSpy = spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: undefined };
         const expectedValue = { skipCount: 10, maxItems: 20 };
 
@@ -119,7 +119,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to create new person', (done) => {
-        spyOn(peopleContentService['peopleApi'], 'createPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
+        spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
         peopleContentService.createPerson(createNewPersonMock).subscribe((person) => {
             expect(person.id).toEqual('fake-id');
             expect(person.email).toEqual('fakeEcm@ecmUser.com');
@@ -128,7 +128,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to call createPerson api with new person details', (done) => {
-        const createPersonSpy = spyOn(peopleContentService['peopleApi'], 'createPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
+        const createPersonSpy = spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
         peopleContentService.createPerson(createNewPersonMock).subscribe((person) => {
             expect(person.id).toEqual('fake-id');
             expect(person.email).toEqual('fakeEcm@ecmUser.com');
@@ -138,7 +138,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to throw an error if createPerson api failed', (done) => {
-        const createPersonSpy = spyOn(peopleContentService['peopleApi'], 'createPerson').and.returnValue(Promise.reject({ message: 'failed to create new person' }));
+        const createPersonSpy = spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.reject({ message: 'failed to create new person' }));
         const logErrorSpy = spyOn(logService, 'error');
         peopleContentService.createPerson(createNewPersonMock).subscribe(
         () => {},
@@ -151,7 +151,7 @@ describe('PeopleContentService', () => {
     });
 
     it('Should make the api call to check if the user is a content admin only once', async () => {
-        const getCurrentPersonSpy = spyOn(peopleContentService['peopleApi'], 'getPerson').and.returnValue(Promise.resolve(getFakeUserWithContentAdminCapability()));
+        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(getFakeUserWithContentAdminCapability()));
 
         expect(await peopleContentService.isContentAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
@@ -163,7 +163,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should reset the admin cache upon logout', async () => {
-        const getCurrentPersonSpy = spyOn(peopleContentService['peopleApi'], 'getPerson').and.returnValue(Promise.resolve(getFakeUserWithContentAdminCapability()));
+        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(getFakeUserWithContentAdminCapability()));
 
         expect(await peopleContentService.isContentAdmin()).toBeTruthy();
         expect(peopleContentService.hasCheckedIsContentAdmin).toBeTruthy();
