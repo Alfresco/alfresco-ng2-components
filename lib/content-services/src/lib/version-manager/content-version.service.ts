@@ -16,22 +16,15 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentApi } from '@alfresco/js-api';
+import { ApiClientsService } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContentVersionService {
-    private _contentApi: ContentApi;
 
-    get contentApi(): ContentApi {
-        if (!this._contentApi) {
-            this._contentApi = new ContentApi(this.alfrescoApi.getInstance());
-        }
-        return this._contentApi;
-    }
+    contentApi = this.apiClientsService.get('ContentCustom.content');
 
-    constructor(private alfrescoApi: AlfrescoApiService) {}
+    constructor(private apiClientsService: ApiClientsService) { }
 
     /**
      * Get content URL for the given nodeId and specific version.

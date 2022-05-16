@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { ApiClientsService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 
@@ -27,8 +27,8 @@ export class SearchQueryBuilderService extends BaseQueryBuilderService {
         return false;
     }
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
-        super(appConfig, alfrescoApiService);
+    constructor(appConfig: AppConfigService, apiClientsService: ApiClientsService) {
+        super(appConfig, apiClientsService);
     }
 
     public loadConfiguration(): SearchConfiguration {

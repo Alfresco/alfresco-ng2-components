@@ -16,7 +16,7 @@
  */
 
 import {
-    AlfrescoApiService,
+    ApiClientsService,
     NodesApiService,
     SearchService,
     TranslationService,
@@ -25,7 +25,7 @@ import {
 import {
     Group,
     GroupMemberEntry,
-    GroupMemberPaging, GroupsApi,
+    GroupMemberPaging,
     Node,
     PathElement,
     PermissionElement,
@@ -42,17 +42,14 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
-    _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
-    }
+    groupsApi = this.apiClientsService.get('Content.groups');
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchApiService: SearchService,
-                private nodeService: NodesApiService,
-                private translation: TranslationService) {
-    }
+    constructor(
+        private searchApiService: SearchService,
+        private nodeService: NodesApiService,
+        private translation: TranslationService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * Gets a list of roles for the current node.

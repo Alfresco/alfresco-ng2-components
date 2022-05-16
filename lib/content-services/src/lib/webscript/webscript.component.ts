@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { ObjectDataTableAdapter, AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { ObjectDataTableAdapter, ApiClientsService, LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { WebscriptApi } from '@alfresco/js-api';
 
 /**
  * <adf-webscript-get [scriptPath]="string"
@@ -45,11 +44,7 @@ import { WebscriptApi } from '@alfresco/js-api';
 })
 export class WebscriptComponent implements OnChanges {
 
-    _webscriptApi: WebscriptApi;
-    get webscriptApi(): WebscriptApi {
-        this._webscriptApi = this._webscriptApi ?? new WebscriptApi(this.apiService.getInstance());
-        return this._webscriptApi;
-    }
+    webscriptApi = this.apiClientsService.get('ContentCustom.webscript');
 
     /** (required) Path to the webscript (as defined by webscript). */
     @Input()
@@ -87,9 +82,10 @@ export class WebscriptComponent implements OnChanges {
     data: any = undefined;
     showError: boolean = false;
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private logService: LogService
+    ) {}
 
     ngOnChanges() {
         if (this.showData) {

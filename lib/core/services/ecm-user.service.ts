@@ -19,24 +19,20 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ContentService } from './content.service';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { PeopleApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EcmUserService {
 
-    _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
-    }
+    peopleApi = this.apiClientsService.get('Content.people');
 
-    constructor(private apiService: AlfrescoApiService,
-                private contentService: ContentService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private contentService: ContentService
+    ) {}
 
     /**
      * Gets information about a user identified by their username.

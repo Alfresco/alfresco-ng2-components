@@ -19,37 +19,27 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
-    AlfrescoApiService,
+    ApiClientsService,
     LogService,
     ContentService,
     DownloadService
 } from '@alfresco/adf-core';
-import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessCloudContentService {
 
-    private _uploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
-
-    private _authenticationApi;
-    get authenticationApi(): AuthenticationApi {
-        this._authenticationApi = this._authenticationApi ?? new AuthenticationApi(this.apiService.getInstance());
-        return this._authenticationApi;
-    }
+    authenticationApi = this.apiClientsService.get('Auth.authentication');
+    uploadApi = this.apiClientsService.get('ContentCustom.upload');
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private logService: LogService,
         public contentService: ContentService,
         private downloadService: DownloadService
-    ) {
-    }
+    ) {}
 
     createTemporaryRawRelatedContent(
         file: File,

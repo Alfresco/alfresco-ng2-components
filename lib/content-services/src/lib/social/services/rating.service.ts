@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { ApiClientsService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { RatingEntry, RatingBody, RatingsApi } from '@alfresco/js-api';
+import { RatingEntry, RatingBody } from '@alfresco/js-api';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RatingServiceInterface } from './rating.service.interface';
@@ -27,14 +27,10 @@ import { RatingServiceInterface } from './rating.service.interface';
 })
 export class RatingService implements RatingServiceInterface {
 
-    _ratingsApi: RatingsApi;
-    get ratingsApi(): RatingsApi {
-        this._ratingsApi = this._ratingsApi ?? new RatingsApi(this.apiService.getInstance());
-        return this._ratingsApi;
-    }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    ratingsApi = this.apiClientsService.get('Content.ratings');
+
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) { }
 
     /**
      * Gets the current user's rating for a node.

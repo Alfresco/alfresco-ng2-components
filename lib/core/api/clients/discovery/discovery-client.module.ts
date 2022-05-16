@@ -28,7 +28,7 @@ declare global {
     }
 }
 
-@NgModule({})
+@NgModule()
 export class DiscoveryClientModule {
     constructor(private apiClientsService: ApiClientsService) {
         this.apiClientsService.register('DiscoveryClient.discovery', DiscoveryApi);

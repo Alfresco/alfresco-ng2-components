@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AspectsApi, TypesApi } from '@alfresco/js-api';
+import { SearchApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../../api-clients.service';
 
@@ -23,16 +23,14 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-            ['ModelClient.aspects']: AspectsApi;
-            ['ModelClient.types']: TypesApi;
+            ['SearchClient.search']: SearchApi;
         }
     }
 }
 
 @NgModule()
-export class ModelClientModule {
+export class SearchClientModule {
     constructor(private apiClientsService: ApiClientsService) {
-        this.apiClientsService.register('ModelClient.aspects', AspectsApi);
-        this.apiClientsService.register('ModelClient.types', TypesApi);
+        this.apiClientsService.register('SearchClient.search', SearchApi);
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { ApiClientsService, LogService, PaginationModel } from '@alfresco/adf-core';
 import {
     NodePaging,
     DeletedNodesPaging,
@@ -23,14 +23,7 @@ import {
     SharedLinkPaging,
     FavoritePaging,
     SiteMemberPaging,
-    SiteRolePaging,
-    PeopleApi,
-    SitesApi,
-    SearchApi,
-    FavoritesApi,
-    SharedlinksApi,
-    TrashcanApi,
-    NodesApi
+    SiteRolePaging
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
@@ -41,50 +34,15 @@ const CREATE_PERMISSION: string = 'create';
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
-    private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
-    }
+    peopleApi = this.apiClientsService.get('Content.people');
+    sitesApi = this.apiClientsService.get('Content.sites');
+    trashcanApi = this.apiClientsService.get('Content.trashcan');
+    searchApi = this.apiClientsService.get('SearchClient.search');
+    sharedLinksApi = this.apiClientsService.get('Content.sharedlinks');
+    favoritesApi = this.apiClientsService.get('Content.favorites');
+    nodesApi = this.apiClientsService.get('Content.nodes');
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
-    }
-
-    private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
-
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
-
-    private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
-
-    private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
-        return this._favoritesApi;
-    }
-
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     /**
      * Gets files recently accessed by a user.

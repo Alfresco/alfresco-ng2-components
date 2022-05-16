@@ -37,7 +37,7 @@ import {
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService, ApiClientsService
+    ApiClientsService, UserPreferencesService, LogService, DataCellEvent, NotificationService
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -168,10 +168,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     ];
 
     private onDestroy$ = new Subject<boolean>();
-
     private scriptFileApi: ScriptFilesApi;
 
-    constructor(private elementRef: ElementRef,
+    constructor(
+        private elementRef: ElementRef,
         private route: ActivatedRoute,
         private router: Router,
         private logService: LogService,
@@ -182,7 +182,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         private location: Location,
         private notificationService: NotificationService,
         private preferenceService: UserPreferencesService,
-        private apiClientsService: ApiClientsService) {
+        private apiClientsService: ApiClientsService
+    ) {
 
         this.scriptFileApi = this.apiClientsService.get('ActivitiClient.script-files');
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
@@ -493,8 +494,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     loadStencilScriptsInPageFromProcessService() {
         this.scriptFileApi.getControllers().then((response) => {
-            // eslint-disable-next-line no-debugger
-            debugger;
             if (response) {
                 const stencilScript = document.createElement('script');
                 stencilScript.type = 'text/javascript';

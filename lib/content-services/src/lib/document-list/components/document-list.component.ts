@@ -43,13 +43,13 @@ import {
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
-    AlfrescoApiService,
+    ApiClientsService,
     UserPreferenceValues,
     LockService,
     DataRow
 } from '@alfresco/adf-core';
 
-import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -345,21 +345,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
+    nodesApi = this.apiClientsService.get('Content.nodes');
 
-    constructor(private documentListService: DocumentListService,
-                private ngZone: NgZone,
-                private elementRef: ElementRef,
-                private appConfig: AppConfigService,
-                private userPreferencesService: UserPreferencesService,
-                private contentService: ContentService,
-                private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService,
-                private lockService: LockService) {
+    constructor(
+        private documentListService: DocumentListService,
+        private ngZone: NgZone,
+        private elementRef: ElementRef,
+        private appConfig: AppConfigService,
+        private userPreferencesService: UserPreferencesService,
+        private contentService: ContentService,
+        private thumbnailService: ThumbnailService,
+        private apiClientsService: ApiClientsService,
+        private lockService: LockService
+    ) {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))

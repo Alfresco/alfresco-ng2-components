@@ -17,10 +17,10 @@
 
 import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ApiClientsService, TranslationService } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { AlfrescoEndpointRepresentation, Node, ContentApi } from '@alfresco/js-api';
+import { AlfrescoEndpointRepresentation, Node } from '@alfresco/js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 import { switchMap } from 'rxjs/operators';
 
@@ -35,9 +35,11 @@ export class AttachFileWidgetDialogService {
 
     private externalApis: { [key: string]: AlfrescoApiService } = {};
 
-    constructor(private dialog: MatDialog,
-                private translation: TranslationService) {
-    }
+    constructor(
+        private dialog: MatDialog,
+        private translation: TranslationService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * Opens a dialog to choose a file to upload.
@@ -65,20 +67,16 @@ export class AttachFileWidgetDialogService {
 
     downloadURL(repository: AlfrescoEndpointRepresentation, sourceId: string): Observable<string> {
         const { accountIdentifier } = this.constructPayload(repository);
+        const contentApi = this.apiClientsService.get('ContentCustom.content');
 
         if (this.externalApis[accountIdentifier]?.getInstance()) {
-            const contentApi = new ContentApi(this.externalApis[accountIdentifier].getInstance());
-
             if (this.externalApis[accountIdentifier].getInstance().isLoggedIn()) {
                 return of(contentApi.getContentUrl(sourceId));
             }
         }
 
         return this.showExternalHostLoginDialog(repository).pipe(
-            switchMap(() => {
-                const contentApi = new ContentApi(this.externalApis[accountIdentifier].getInstance());
-                return of(contentApi.getContentUrl(sourceId));
-            })
+            switchMap(() => of(contentApi.getContentUrl(sourceId)))
         );
     }
 

@@ -16,24 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { GroupEntry, GroupsApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { GroupEntry } from '@alfresco/js-api';
+import { ApiClientsService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupService {
 
-    _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
-        return this._groupsApi;
-    }
+    groupsApi = this.apiClientsService.get('Content.groups');
 
-    constructor(
-        private alfrescoApiService: AlfrescoApiService
-    ) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
         const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);

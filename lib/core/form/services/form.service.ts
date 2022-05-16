@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { ApiClientsService } from '../../api/api-clients.service';
 import { LogService } from '../../services/log.service';
 import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
@@ -27,16 +27,7 @@ import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
     CompleteFormRepresentation,
-    ModelsApi,
-    ProcessInstanceVariablesApi,
-    SaveFormRepresentation,
-    TasksApi,
-    TaskFormsApi,
-    ProcessInstancesApi,
-    FormModelsApi,
-    ProcessDefinitionsApi,
-    UsersApi,
-    ActivitiGroupsApi
+    SaveFormRepresentation
 } from '@alfresco/js-api';
 import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
 import { FormValues } from '../components/widgets/core/form-values';
@@ -59,59 +50,15 @@ export class FormService implements FormValidationService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _taskFormsApi: TaskFormsApi;
-    get taskFormsApi(): TaskFormsApi {
-        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
-        return this._taskFormsApi;
-    }
-
-    _taskApi: TasksApi;
-    get taskApi(): TasksApi {
-        this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
-        return this._taskApi;
-    }
-
-    _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
-        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
-        return this._modelsApi;
-    }
-
-    _editorApi: FormModelsApi;
-    get editorApi(): FormModelsApi {
-        this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
-        return this._editorApi;
-    }
-
-    _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
-        return this._processDefinitionsApi;
-    }
-
-    _processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.apiService.getInstance());
-        return this._processInstanceVariablesApi;
-    }
-
-    _processInstancesApi: ProcessInstancesApi;
-    get processInstancesApi(): ProcessInstancesApi {
-        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.apiService.getInstance());
-        return this._processInstancesApi;
-    }
-
-    _groupsApi: ActivitiGroupsApi;
-    get groupsApi(): ActivitiGroupsApi {
-        this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
-    }
-
-    _usersApi: UsersApi;
-    get usersApi(): UsersApi {
-        this._usersApi = this._usersApi ?? new UsersApi(this.apiService.getInstance());
-        return this._usersApi;
-    }
+    taskFormsApi = this.apiClientsService.get('ActivitiClient.task-forms');
+    taskApi = this.apiClientsService.get('ActivitiClient.tasks');
+    modelsApi = this.apiClientsService.get('ActivitiClient.models');
+    editorApi = this.apiClientsService.get('ActivitiClient.form-models');
+    processDefinitionsApi = this.apiClientsService.get('ActivitiClient.process-definitions');
+    processInstanceVariablesApi = this.apiClientsService.get('ActivitiClient.process-instance-variables');
+    processInstancesApi = this.apiClientsService.get('ActivitiClient.process-instances');
+    groupsApi = this.apiClientsService.get('ActivitiClient.activiti-groups');
+    usersApi = this.apiClientsService.get('ActivitiClient.users');
 
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
@@ -133,10 +80,11 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor(private ecmModelService: EcmModelService,
-                private apiService: AlfrescoApiService,
-                protected logService: LogService) {
-    }
+    constructor(
+        private ecmModelService: EcmModelService,
+        private apiClientsService: ApiClientsService,
+        protected logService: LogService
+    ) {}
 
     /**
      * Parses JSON data to create a corresponding Form model.

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, NodesApiService, DataSorting } from '@alfresco/adf-core';
+import { ApiClientsService, AppConfigService, NodesApiService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from '../models/search-category.interface';
@@ -35,10 +35,12 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService,
-                alfrescoApiService: AlfrescoApiService,
-                private nodeApiService: NodesApiService) {
-        super(appConfig, alfrescoApiService);
+    constructor(
+        appConfig: AppConfigService,
+        apiClientsService: ApiClientsService,
+        private nodeApiService: NodesApiService
+    ) {
+        super(appConfig, apiClientsService);
 
         this.updated.pipe(
             filter((query: QueryBody) => !!query)).subscribe(() => {

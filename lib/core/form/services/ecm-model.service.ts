@@ -16,12 +16,11 @@
  */
 
 import { LogService } from '../../services/log.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { ApiClientsService } from '../../api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { FormModel } from '../components/widgets/core/form.model';
 import { map, catchError } from 'rxjs/operators';
-import { CustomModelApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -32,15 +31,9 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
-    _customModelApi: CustomModelApi;
-    get customModelApi(): CustomModelApi {
-        this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
-        return this._customModelApi;
-    }
+    customModelApi = this.apiClientsService.get('ContentCustom.custom-model');
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {

@@ -16,15 +16,17 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ProcessInstance, ProcessService ,
-    ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService, DiscoveryApiService } from '@alfresco/adf-core';
+import {
+    ProcessInstance, ProcessService,
+    ProcessAttachmentListComponent, ProcessUploadService
+} from '@alfresco/adf-process-services';
+import { UploadService, AppConfigService, DiscoveryApiService, ApiClientsService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
-    return new ProcessUploadService(api, config, discoveryApiService);
+export function processUploadServiceFactory(apiClientsService: ApiClientsService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
+    return new ProcessUploadService(apiClientsService, config, discoveryApiService);
 }
 
 @Component({
@@ -35,7 +37,7 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
         {
             provide: UploadService,
             useFactory: (processUploadServiceFactory),
-            deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
+            deps: [ApiClientsService, AppConfigService, DiscoveryApiService]
         }
     ]
 })
@@ -68,8 +70,8 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
         if (this.processInstanceId) {
             this.processService.getProcess(this.processInstanceId)
                 .subscribe((processInstance: ProcessInstance) => {
-                this.processInstance = processInstance;
-            });
+                    this.processInstance = processInstance;
+                });
         }
     }
 

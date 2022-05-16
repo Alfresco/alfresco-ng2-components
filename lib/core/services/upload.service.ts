@@ -26,10 +26,9 @@ import {
     FileUploadEvent
 } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
-import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -61,28 +60,15 @@ export class UploadService {
     private abortedFile: string;
     private isThumbnailGenerationEnabled: boolean;
 
-    private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
-
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
+    uploadApi = this.apiClientsService.get('ContentCustom.upload');
+    nodesApi = this.apiClientsService.get('Content.nodes');
+    versionsApi = this.apiClientsService.get('Content.versions');
 
     constructor(
-        protected apiService: AlfrescoApiService,
+        protected apiClientsService: ApiClientsService,
         private appConfigService: AppConfigService,
-        private discoveryApiService: DiscoveryApiService) {
+        private discoveryApiService: DiscoveryApiService
+    ) {
 
         this.discoveryApiService.ecmProductInfo$.pipe(filter(info => !!info))
             .subscribe(({ status }) => {
@@ -237,7 +223,7 @@ export class UploadService {
         if (file.id) {
             return this.nodesApi.updateNodeContent(file.id, file.file as any, opts);
         } else {
-            const nodeBody = { ... file.options };
+            const nodeBody = { ...file.options };
             delete nodeBody['versioningEnabled'];
 
             return this.uploadApi.uploadFile(

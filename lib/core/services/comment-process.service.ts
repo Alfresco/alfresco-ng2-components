@@ -19,25 +19,18 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
-import { ActivitiCommentsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentProcessService {
 
-    _commentsApi: ActivitiCommentsApi;
-    get commentsApi(): ActivitiCommentsApi {
-        this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
-        return this._commentsApi;
-    }
+    commentsApi = this.apiClientsService.get('ActivitiClient.comments-api');
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     /**
      * Adds a comment to a task.

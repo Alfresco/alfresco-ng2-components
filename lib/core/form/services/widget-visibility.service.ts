@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { ApiClientsService } from '../../api/api-clients.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
@@ -30,25 +30,18 @@ import {
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
-import { TaskFormsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
 
-    _taskFormsApi: TaskFormsApi;
-    get taskFormsApi(): TaskFormsApi {
-        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
-        return this._taskFormsApi;
-    }
+    taskFormsApi = this.apiClientsService.get('ActivitiClient.task-forms');
 
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;

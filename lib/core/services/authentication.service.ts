@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, Observer, ReplaySubject, forkJoin } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
@@ -48,16 +49,12 @@ export class AuthenticationService {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-    _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
-        return this._peopleApi;
+        return this.apiClientsService.get('Content.people');
     }
 
-    _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
+        return this.apiClientsService.get('ActivitiClient.user-profile');
     }
 
     constructor(
@@ -65,7 +62,9 @@ export class AuthenticationService {
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
-        private logService: LogService) {
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) {
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();

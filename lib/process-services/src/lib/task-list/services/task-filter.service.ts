@@ -15,27 +15,20 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { ApiClientsService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
-import { UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskFilterService {
 
-    private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
-        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
-        return this._userFiltersApi;
-    }
+    userFiltersApi = this.apiClientsService.get('ActivitiClient.user-filters');
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     /**
      * Creates and returns the default filters for a process app.

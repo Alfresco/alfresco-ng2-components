@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RenditionEntry, RenditionPaging, RenditionsApi, ContentApi } from '@alfresco/js-api';
+import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
 import { Observable, from, interval, empty } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 
 @Injectable({
@@ -26,20 +26,10 @@ import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 })
 export class RenditionsService {
 
-    private _renditionsApi: RenditionsApi;
-    get renditionsApi(): RenditionsApi {
-        this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
-        return this._renditionsApi;
-    }
+    contentApi = this.apiClientsService.get('ContentCustom.content');
+    renditionsApi = this.apiClientsService.get('Content.renditions');
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     /**
      * Gets the first available rendition found for a node.

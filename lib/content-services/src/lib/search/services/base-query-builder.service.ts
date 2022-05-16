@@ -17,15 +17,14 @@
 
 import { Injectable } from '@angular/core';
 import { Subject, Observable, from, ReplaySubject } from 'rxjs';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { ApiClientsService, AppConfigService } from '@alfresco/adf-core';
 import {
     QueryBody,
     RequestFacetFields,
     RequestSortDefinitionInner,
     ResultSetPaging,
     RequestHighlight,
-    RequestScope,
-    SearchApi
+    RequestScope
 } from '@alfresco/js-api';
 import { SearchCategory } from '../models/search-category.interface';
 import { FilterQuery } from '../models/filter-query.interface';
@@ -42,11 +41,7 @@ import { SearchForm } from '../models/search-form.interface';
 })
 export abstract class BaseQueryBuilderService {
 
-    _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
-        return this._searchApi;
-    }
+    searchApi = this.apiClientsService.get('SearchClient.search');
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
@@ -91,7 +86,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+    constructor(protected appConfig: AppConfigService, private apiClientsService: ApiClientsService) {
         this.resetToDefaults();
     }
 

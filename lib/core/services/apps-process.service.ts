@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation } from '@alfresco/js-api';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
 
@@ -27,15 +27,10 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class AppsProcessService {
 
-    _appsApi: RuntimeAppDefinitionsApi;
-    get appsApi(): RuntimeAppDefinitionsApi {
-        this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
-        return this._appsApi;
-    }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    appsApi = this.apiClientsService.get('ActivitiClient.runtime-app-definitions');
+
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     /**
      * Gets a list of deployed apps for this user.

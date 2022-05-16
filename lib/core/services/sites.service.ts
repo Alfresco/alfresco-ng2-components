@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '../api/api-clients.service';
 import {
     MinimalNode,
     SiteBodyCreate,
@@ -29,8 +30,7 @@ import {
     SiteMembershipBodyCreate,
     SiteMembershipBodyUpdate,
     SiteMembershipRequestWithPersonPaging,
-    SitePaging,
-    SitesApi
+    SitePaging
 } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 import { LogService } from './log.service';
@@ -40,14 +40,13 @@ import { LogService } from './log.service';
 })
 export class SitesService {
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
-    }
+    private sitesApi = this.apiClientsService.get('Content.sites');
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * Create a site

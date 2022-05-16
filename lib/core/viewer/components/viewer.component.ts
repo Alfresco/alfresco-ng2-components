@@ -26,8 +26,7 @@ import {
     Version,
     RenditionEntry,
     NodeEntry,
-    VersionEntry,
-    SharedlinksApi, VersionsApi, NodesApi, ContentApi
+    VersionEntry
 } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -44,6 +43,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { ApiClientsService } from '../../api/api-clients.service';
 
 @Component({
     selector: 'adf-viewer',
@@ -279,39 +279,23 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
+    sharedLinksApi = this.apiClientsService.get('Content.sharedlinks');
+    versionsApi = this.apiClientsService.get('Content.versions');
+    nodesApi = this.apiClientsService.get('Content.nodes');
+    contentApi = this.apiClientsService.get('ContentCustom.content');
 
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService,
-                private viewUtilService: ViewUtilService,
-                private logService: LogService,
-                private extensionService: AppExtensionService,
-                private contentService: ContentService,
-                private uploadService: UploadService,
-                private el: ElementRef,
-                public dialog: MatDialog,
-                private cdr: ChangeDetectorRef) {
+    constructor(
+        private apiService: AlfrescoApiService,
+        private viewUtilService: ViewUtilService,
+        private logService: LogService,
+        private extensionService: AppExtensionService,
+        private contentService: ContentService,
+        private uploadService: UploadService,
+        private el: ElementRef,
+        public dialog: MatDialog,
+        private cdr: ChangeDetectorRef,
+        private apiClientsService: ApiClientsService
+    ) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -322,8 +306,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.apiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId &&
-                    (node.name !== this.fileName ||
-                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
+                (node.name !== this.fileName ||
+                    this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
 
