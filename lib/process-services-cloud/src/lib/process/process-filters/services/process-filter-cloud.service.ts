@@ -29,12 +29,14 @@ export class ProcessFilterCloudService {
 
     private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
+    currentUsername: string;
 
     constructor(
         @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
         private identityUserService: IdentityUserService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
+        this.getCurrentUsername();
     }
 
     readQueryParams(obj: any): ProcessFilterCloudModel {
@@ -306,8 +308,12 @@ export class ProcessFilterCloudService {
      * @returns String of process instance filters preference key
      */
     private prepareKey(appName: string): string {
-        const user = this.identityUserService.getCurrentUserInfo();
-        return `process-filters-${appName}-${user.username}`;
+        return `process-filters-${appName}-${this.currentUsername}`;
+    }
+
+    async getCurrentUsername() {
+        const userInfo = await this.identityUserService.getUserInfo();
+        this.currentUsername = userInfo.username;
     }
 
     /**

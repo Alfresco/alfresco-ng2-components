@@ -50,6 +50,8 @@ export class TaskFilterCloudService extends BaseCloudService {
     private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
     filters$: Observable<TaskFilterCloudModel[]>;
 
+    currentUsername: string;
+
     constructor(
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
@@ -60,6 +62,7 @@ export class TaskFilterCloudService extends BaseCloudService {
         super(apiService, appConfigService);
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
+        this.getCurrentUsername();
     }
 
     /**
@@ -307,7 +310,12 @@ export class TaskFilterCloudService extends BaseCloudService {
      * @returns String of task filters preference key
      */
     private prepareKey(appName: string): string {
-        return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
+        return `task-filters-${appName}-${this.currentUsername}`;
+    }
+
+    async getCurrentUsername() {
+        const userInfo = await this.identityUserService.getUserInfo();
+        this.currentUsername = userInfo.username;
     }
 
     /**

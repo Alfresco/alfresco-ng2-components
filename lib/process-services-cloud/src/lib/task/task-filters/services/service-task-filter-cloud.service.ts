@@ -30,6 +30,8 @@ export class ServiceTaskFilterCloudService {
     private filtersSubject: BehaviorSubject<ServiceTaskFilterCloudModel[]>;
     filters$: Observable<ServiceTaskFilterCloudModel[]>;
 
+    currentUsername: string;
+
     constructor(
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
@@ -37,6 +39,7 @@ export class ServiceTaskFilterCloudService {
     ) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
+        this.getCurrentUsername();
     }
 
     /**
@@ -245,7 +248,12 @@ export class ServiceTaskFilterCloudService {
      * @returns String of task filters preference key
      */
     private prepareKey(appName: string): string {
-        return `service-task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
+        return `service-task-filters-${appName}-${this.currentUsername}`;
+    }
+
+    async getCurrentUsername() {
+        const userInfo = await this.identityUserService.getUserInfo();
+        this.currentUsername = userInfo.username;
     }
 
     /**
