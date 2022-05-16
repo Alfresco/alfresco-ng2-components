@@ -28,7 +28,7 @@ export class VersionManagerService {
         const allowDownload = true;
 
         return new Promise((resolve, reject)=> {
-            if (this.contentService.hasAllowableOperations(node, 'updatee')) {
+            if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(VersionManagerDialogComponent, {
                         data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload },
