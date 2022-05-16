@@ -35,8 +35,7 @@ export class ApiClientsService {
             throw new Error(`Api not registred: ${apiName}`);
         }
 
-        const api = this.instances[apiName] as Api.ApiRegistry[T] ?? this.instantiateApi(apiName);
-        return api;
+        return this.instances[apiName] as Api.ApiRegistry[T] ?? this.instantiateApi(apiName);
     }
 
 
