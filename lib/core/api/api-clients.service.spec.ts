@@ -33,6 +33,7 @@ describe('ApiService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
+                ApiClientsService,
                 { provide: API_CLIENT_FACTORY_TOKEN, useClass: MockApiClientFactory }
             ]
         });
@@ -51,12 +52,6 @@ describe('ApiService', () => {
         apiService.register('ActivitiClient.about', AboutApi);
 
         expect(() => apiService.get('ActivitiClient.about')).not.toThrowError();
-    });
-
-    it('should work even with Api enum', () => {
-        apiService.register('ActivitiClient.about', AboutApi);
-
-        expect(apiService.get('ActivitiClient.about') instanceof AboutApi).toBeTruthy();
     });
 
     it('should create only single instance of API', () => {
