@@ -159,6 +159,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggle main datatable actions. */
+    @Input()
+    showMainDatatableActions: boolean = false;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();

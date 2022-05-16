@@ -76,6 +76,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles main datatable actions. */
+    @Input()
+    showMainDatatableActions: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -114,7 +118,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
-    showMainDatatableActions: boolean;
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 

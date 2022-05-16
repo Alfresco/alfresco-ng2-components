@@ -227,7 +227,35 @@ describe('ProcessListCloudComponent', () => {
         fixture.detectChanges();
     });
 
+    it('should not shown columns selector by default', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        expect(mainMenuButton).toBeFalsy();
+    });
+
+    it('should shown columns selector', () => {
+        component.showMainDatatableActions = true;
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        expect(mainMenuButton).toBeTruthy();
+    });
+
     it('should hide columns on applying new columns visibility through columns selector', () => {
+        component.showMainDatatableActions = true;
+        fixture.detectChanges();
+
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
