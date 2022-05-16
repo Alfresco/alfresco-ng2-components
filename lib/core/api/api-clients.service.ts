@@ -22,13 +22,14 @@ import { Constructor, Dictionary } from './types';
 @Injectable()
 export class ApiClientsService {
 
-    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) { }
+    constructor(
+        @Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory
+    ) { }
 
     private registry: Dictionary<Constructor<any>> = {};
     private instances: Partial<Api.ApiRegistry> = {};
 
     get<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
-
         const ApiClass = this.registry[apiName];
 
         if (!ApiClass) {

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { ApiClientsService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { from, Observable, of, Subject, zip } from 'rxjs';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
@@ -29,16 +29,15 @@ import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
 })
 export class AspectListService {
 
-    _aspectsApi: AspectsApi;
+    _aspectsApi: AspectsApi = this.apiClientsService.get('ModelClient.aspects');
     get aspectsApi(): AspectsApi {
-        this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
         return this._aspectsApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private dialog: MatDialog,
-                private logService: LogService) {
+    constructor(private appConfigService: AppConfigService,
+        private dialog: MatDialog,
+        private logService: LogService,
+        private apiClientsService: ApiClientsService) {
     }
 
     getAspects(): Observable<AspectEntry[]> {

@@ -37,7 +37,7 @@ import {
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
+    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService, ApiClientsService
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -168,22 +168,23 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     ];
 
     private onDestroy$ = new Subject<boolean>();
+
     private scriptFileApi: ScriptFilesApi;
 
     constructor(private elementRef: ElementRef,
-                private route: ActivatedRoute,
-                private router: Router,
-                private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private appConfig: AppConfigService,
-                private preview: PreviewService,
-                formRenderingService: FormRenderingService,
-                formService: FormService,
-                private location: Location,
-                private notificationService: NotificationService,
-                private preferenceService: UserPreferencesService) {
+        private route: ActivatedRoute,
+        private router: Router,
+        private logService: LogService,
+        private appConfig: AppConfigService,
+        private preview: PreviewService,
+        formRenderingService: FormRenderingService,
+        formService: FormService,
+        private location: Location,
+        private notificationService: NotificationService,
+        private preferenceService: UserPreferencesService,
+        private apiClientsService: ApiClientsService) {
 
-        this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
+        this.scriptFileApi = this.apiClientsService.get('ActivitiClient.script-files');
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
         this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
@@ -492,6 +493,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     loadStencilScriptsInPageFromProcessService() {
         this.scriptFileApi.getControllers().then((response) => {
+            // eslint-disable-next-line no-debugger
+            debugger;
             if (response) {
                 const stencilScript = document.createElement('script');
                 stencilScript.type = 'text/javascript';
