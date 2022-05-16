@@ -194,6 +194,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should hide columns on applying new columns visibility through columns selector', () => {
+        component.showMainDatatableActions = true;
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
