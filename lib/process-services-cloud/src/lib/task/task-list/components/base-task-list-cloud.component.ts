@@ -76,6 +76,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles main datatable actions. */
+    @Input()
+    showMainDatatableActions: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -160,11 +164,23 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             take(1),
             map((preferences => {
                 const preferencesList = preferences?.list?.entries ?? [];
-                const searchedPreferences = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
-                return searchedPreferences ? JSON.parse(searchedPreferences.entry.value) : null;
+                const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
+
+                return {
+                    columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                };
             }))
-        ).subscribe(columnsOrder => {
-                this.columnsOrder = columnsOrder;
+        ).subscribe(({ columnsOrder, columnsVisibility }) => {
+                if (columnsOrder) {
+                    this.columnsOrder = columnsOrder;
+                }
+
+                if (columnsVisibility) {
+                    this.columnsVisibility = columnsVisibility;
+                }
+
                 this.createDatatableSchema();
             }
         );
@@ -257,6 +273,26 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
                 this.appName,
                 TasksListCloudPreferences.columnOrder,
                 this.columnsOrder
+            );
+        }
+    }
+
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
+
+        this.createColumns();
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnsVisibility,
+                this.columnsVisibility
             );
         }
     }

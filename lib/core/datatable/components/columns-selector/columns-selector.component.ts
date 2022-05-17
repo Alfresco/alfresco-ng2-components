@@ -46,7 +46,8 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         this.mainMenuTrigger.menuOpened.pipe(
             takeUntil(this.onDestroy$)
         ).subscribe(() => {
-            this.columnItems = this.columns.map(column => ({...column}));
+            const columns = this.columns.map(column => ({...column}));
+            this.columnItems = this.sortColumns(columns);
         });
 
         this.mainMenuTrigger.menuClosed.pipe(
@@ -79,5 +80,12 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     apply(): void {
         this.submitColumnsVisibility.emit(this.columnItems);
         this.closeMenu();
+    }
+
+    private sortColumns(columns: DataColumn[]): DataColumn[] {
+        const shownColumns = columns.filter(column => !column.isHidden);
+        const hiddenColumns = columns.filter(column => column.isHidden);
+
+        return [...shownColumns, ...hiddenColumns];
     }
 }

@@ -159,6 +159,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggle main datatable actions. */
+    @Input()
+    showMainDatatableActions: boolean = false;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -223,14 +227,22 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
                 map((preferences => {
                     const preferencesList = preferences?.list?.entries ?? [];
                     const columnsOrder = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnOrder);
+                    const columnsVisibility = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnsVisibility);
 
                     return {
-                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined
+                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
                     };
                 }))
             )
-            .subscribe(({ columnsOrder }) => {
-                this.columnsOrder = columnsOrder;
+            .subscribe(({ columnsOrder, columnsVisibility }) => {
+                if (columnsVisibility) {
+                    this.columnsVisibility = columnsVisibility;
+                }
+
+                if (columnsOrder) {
+                    this.columnsOrder = columnsOrder;
+                }
 
                 this.createDatatableSchema();
             });
@@ -326,12 +338,33 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+
         if (this.appName) {
-            const newColumnsOrder = columnsWithNewOrder.map(column => column.id);
             this.cloudPreferenceService.updatePreference(
                 this.appName,
                 ProcessListCloudPreferences.columnOrder,
-                newColumnsOrder
+                this.columnsOrder
+            );
+        }
+    }
+
+    onColumnsVisibilityChange(columns: DataColumn[]): void {
+        this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
+
+        this.createColumns();
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                ProcessListCloudPreferences.columnsVisibility,
+                this.columnsVisibility
             );
         }
     }

@@ -19,6 +19,8 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
+    ColumnsSelectorComponent,
+    DataColumn,
     DataRowEvent,
     ObjectDataRow,
     setupTestBed
@@ -223,6 +225,64 @@ describe('ProcessListCloudComponent', () => {
         component.appName = appName.currentValue;
         component.ngOnChanges({ appName });
         fixture.detectChanges();
+    });
+
+    it('should not shown columns selector by default', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        expect(mainMenuButton).toBeFalsy();
+    });
+
+    it('should shown columns selector', () => {
+        component.showMainDatatableActions = true;
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        expect(mainMenuButton).toBeTruthy();
+    });
+
+    it('should hide columns on applying new columns visibility through columns selector', () => {
+        component.showMainDatatableActions = true;
+        fixture.detectChanges();
+
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        mainMenuButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
+        expect(columnSelectorMenu).toBeTruthy();
+
+        const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
+            ...column,
+            isHidden: index !== 0 // only first one is shown
+        }));
+
+        const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
+        expect(columnsSelectorInstance.columns).toBe(component.columns, 'should use columns as input');
+
+        columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
+        fixture.detectChanges();
+
+        const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+        expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
     });
 
     it('should reload tasks when reload() is called', (done) => {

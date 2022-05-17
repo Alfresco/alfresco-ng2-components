@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
@@ -34,9 +34,9 @@ import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
     template: `
     <adf-cloud-task-list #taskListCloud>
         <data-columns>
-            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
-            <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
-            <data-column key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
+            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column id="startedBy" key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{getFullName(entry.row?.obj?.startedBy)}}</div>
                 </ng-template>
@@ -191,6 +191,37 @@ describe('TaskListCloudComponent', () => {
         component.ngAfterContentInit();
         fixture.detectChanges();
         expect(component.columns).toEqual(fakeCustomSchema);
+    });
+
+    it('should hide columns on applying new columns visibility through columns selector', () => {
+        component.showMainDatatableActions = true;
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
+        fixture.detectChanges();
+
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        mainMenuButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
+        expect(columnSelectorMenu).toBeTruthy();
+
+        const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
+        expect(columnsSelectorInstance.columns).toBe(component.columns, 'should pass columns as input');
+
+        const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
+            ...column,
+            isHidden: index !== 0 // only first one is shown
+        }));
+
+        columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
+        fixture.detectChanges();
+
+        const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+        expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
