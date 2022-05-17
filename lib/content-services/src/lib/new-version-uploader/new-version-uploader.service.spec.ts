@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
-import { VersionManagerService } from './version-manager.service';
+import { NewVersionUploaderService } from './new-version-uploader.service';
 
-describe('VersionManagerService', () => {
-  let service: VersionManagerService;
+describe('NewVersionUploaderService', () => {
+  let service: NewVersionUploaderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,7 +12,7 @@ describe('VersionManagerService', () => {
             ContentTestingModule
         ]
     });
-    service = TestBed.inject(VersionManagerService);
+    service = TestBed.inject(NewVersionUploaderService);
   });
 
   it('should be created', () => {

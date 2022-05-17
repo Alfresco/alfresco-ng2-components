@@ -3,16 +3,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslationMock, TranslationService } from 'core';
 
-import { VersionManagerDialogComponent } from './version-manager.dialog';
+import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 
-describe('VersionManagerDialog', () => {
-    let component: VersionManagerDialogComponent;
-    let fixture: ComponentFixture<VersionManagerDialogComponent>;
+describe('NewVersionUploaderDialog', () => {
+    let component: NewVersionUploaderDialogComponent;
+    let fixture: ComponentFixture<NewVersionUploaderDialogComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot()],
-            declarations: [VersionManagerDialogComponent],
+            declarations: [NewVersionUploaderDialogComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: MatDialogRef, useValue: {} },
@@ -23,7 +23,7 @@ describe('VersionManagerDialog', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(VersionManagerDialogComponent);
+        fixture = TestBed.createComponent(NewVersionUploaderDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

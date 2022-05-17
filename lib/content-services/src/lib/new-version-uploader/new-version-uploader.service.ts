@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 
-import { VersionManagerData, VersionManagerDialogComponent, VersionManagerDialogData } from './version-manager.dialog';
+import { NewVersionUploaderData, NewVersionUploaderDialogComponent, NewVersionUploaderDialogData } from './new-version-uploader.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
-export class VersionManagerService {
+export class NewVersionUploaderService {
 
     _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
@@ -22,7 +22,7 @@ export class VersionManagerService {
         private dialog: MatDialog
     ) { }
 
-    openUploadNewVersionDialog(event: VersionManagerDialogData) {
+    openUploadNewVersionDialog(event: NewVersionUploaderDialogData) {
         const { file, node } = event;
         const showComments = true;
         const allowDownload = true;
@@ -30,13 +30,13 @@ export class VersionManagerService {
         return new Promise((resolve, reject)=> {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
-                    const dialogRef = this.dialog.open(VersionManagerDialogComponent, {
+                    const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
                         data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload },
-                        panelClass: 'adf-version-manager-dialog',
+                        panelClass: 'adf-new-version-uploader-dialog',
                         width: '630px'
                     });
-                    dialogRef.componentInstance.uploadedNewVersion.subscribe( (newVersionData: VersionManagerData) =>{
-                        resolve(newVersionData);
+                    dialogRef.componentInstance.uploadedNewVersion.subscribe( (newVersionUploaderData: NewVersionUploaderData) =>{
+                        resolve(newVersionUploaderData);
                     });
                     dialogRef.componentInstance.uploadError.subscribe(error => reject(error));
                 });

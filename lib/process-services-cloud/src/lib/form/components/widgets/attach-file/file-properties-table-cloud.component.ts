@@ -20,7 +20,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { UploadButtonComponent, UploadFilesEvent, VersionManagerDialogData } from '@alfresco/adf-content-services';
+import { UploadButtonComponent, UploadFilesEvent, NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
@@ -58,7 +58,7 @@ export class FilePropertiesTableCloudComponent {
     downloadFile: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
-    uploadNewFileVersion: EventEmitter<VersionManagerDialogData> = new EventEmitter<VersionManagerDialogData>();
+    uploadNewFileVersion: EventEmitter<NewVersionUploaderDialogData> = new EventEmitter<NewVersionUploaderDialogData>();
 
     @Output()
     contentModelFileHandler: EventEmitter<any> = new EventEmitter<Node>();
@@ -89,11 +89,11 @@ export class FilePropertiesTableCloudComponent {
 
     onUploadNewFileVersion(file: UploadFilesEvent, node: Node){
         file.preventDefault();
-        const uploadNewVersionDialogData: VersionManagerDialogData = {
+        const newVersionUploaderDialogData: NewVersionUploaderDialogData = {
             file: file.files[0].file,
             node
         };
-        this.uploadNewFileVersion.emit(uploadNewVersionDialogData);
+        this.uploadNewFileVersion.emit(newVersionUploaderDialogData);
     }
 
     contentModelFormFileHandler(file?: any) {

@@ -35,7 +35,7 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
-import { ContentNodeSelectorPanelService, VersionManagerData, VersionManagerDialogData, VersionManagerService } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorPanelService, NewVersionUploaderData, NewVersionUploaderDialogData, NewVersionUploaderService } from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 export const ALIAS_ROOT_FOLDER = '-root-';
@@ -82,7 +82,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private appConfigService: AppConfigService,
         private apiService: AlfrescoApiService,
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
-        private versionManagerService: VersionManagerService
+        private newVersionUploaderService: NewVersionUploaderService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -212,9 +212,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.processCloudContentService.downloadFile(file.id);
     }
 
-    onUploadNewFileVersion(node: VersionManagerDialogData): void {
-        this.versionManagerService.openUploadNewVersionDialog(node).then((versionManagerData: VersionManagerData) => {
-            this.replaceOldFileVersionWithNew(versionManagerData);
+    onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
+        this.newVersionUploaderService.openUploadNewVersionDialog(node).then((newVersionUploaderData: NewVersionUploaderData) => {
+            this.replaceOldFileVersionWithNew(newVersionUploaderData);
         }).catch(error => {
             this.notificationService.showError(error.value);
         });

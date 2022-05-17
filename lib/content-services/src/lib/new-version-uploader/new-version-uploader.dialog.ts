@@ -2,7 +2,7 @@ import { MinimalNodeEntryEntity, NodeChildAssociation, Version } from '@alfresco
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export interface VersionManagerDialogData {
+export interface NewVersionUploaderDialogData {
     title?: string;
     node: MinimalNodeEntryEntity;
     file?: File;
@@ -10,26 +10,26 @@ export interface VersionManagerDialogData {
     showVersionsOnly?: boolean;
 }
 
-export interface VersionManagerData {
+export interface NewVersionUploaderData {
     newVersion: Node;
     currentVersion: NodeChildAssociation;
 }
 @Component({
-    selector: 'adf-version-manager-dialog',
-    templateUrl: './version-manager.dialog.html',
-    styleUrls: ['./version-manager.dialog.scss']
+    selector: 'adf-new-version-uploader-dialog',
+    templateUrl: './new-version-uploader.dialog.html',
+    styleUrls: ['./new-version-uploader.dialog.scss']
 })
-export class VersionManagerDialogComponent implements OnInit {
+export class NewVersionUploaderDialogComponent implements OnInit {
 
     @Output()
-    uploadedNewVersion = new EventEmitter<VersionManagerData>();
+    uploadedNewVersion = new EventEmitter<NewVersionUploaderData>();
 
     @Output()
     uploadError = new EventEmitter<any>();
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: VersionManagerDialogData,
-        private dialogRef: MatDialogRef<VersionManagerDialogComponent>
+        @Inject(MAT_DIALOG_DATA) public data: NewVersionUploaderDialogData,
+        private dialogRef: MatDialogRef<NewVersionUploaderDialogComponent>
     ) { }
 
     ngOnInit(): void {
