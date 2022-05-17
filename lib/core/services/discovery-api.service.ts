@@ -18,11 +18,13 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
+import { ApiClientsService } from '../api';
+
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +38,8 @@ export class DiscoveryApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+        private apiClientsService: ApiClientsService) {
 
         this.authenticationService.onLogin
             .pipe(
@@ -47,13 +50,14 @@ export class DiscoveryApiService {
             .subscribe((info) => this.ecmProductInfo$.next(info));
     }
 
+
     /**
      * Gets product information for Content Services.
      *
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-        const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        const discoveryApi = this.apiClientsService.get('DiscoveryClient.discovery');
 
         return from(discoveryApi.getRepositoryInformation())
             .pipe(
@@ -68,7 +72,7 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        const aboutApi = new AboutApi(this.apiService.getInstance());
+        const aboutApi = this.apiClientsService.get('ActivitiClient.about');
 
         return from(aboutApi.getAppVersion())
             .pipe(
@@ -78,7 +82,7 @@ export class DiscoveryApiService {
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        const systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
+        const systemPropertiesApi = this.apiClientsService.get('ActivitiClient.system-properties');
 
         return from(systemPropertiesApi.getProperties())
             .pipe(
