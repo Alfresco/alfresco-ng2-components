@@ -18,7 +18,7 @@
   "oauth2": {
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
     "clientId": "alfresco",
-    "scope": "openid",
+    "scope": "openid profile email",
     "secret": "",
     "implicitFlow": true,
     "silentLogin": true,
