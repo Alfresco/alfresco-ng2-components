@@ -16,10 +16,13 @@
  */
 
 import { Pagination } from '@alfresco/js-api';
+import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
+
+export const IDENTITY_USER_TOKEN = new InjectionToken<IdentityUserServiceInterface>('identity-user-token');
 
 export interface IdentityUserQueryResponse {
 

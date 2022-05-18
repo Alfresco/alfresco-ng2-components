@@ -27,14 +27,15 @@ import {
     OnChanges,
     OnDestroy,
     ChangeDetectionStrategy,
-    ViewChild, ElementRef, SimpleChange
+    ViewChild, ElementRef, SimpleChange, Inject
 } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
 import {
     FullNamePipe,
     IdentityUserModel,
-    IdentityUserService,
+    IdentityUserServiceInterface,
+    IDENTITY_USER_TOKEN,
     LogService
 } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -160,7 +161,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        private identityUserService: IdentityUserService,
+        @Inject(IDENTITY_USER_TOKEN)
+        private identityUserService: IdentityUserServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
