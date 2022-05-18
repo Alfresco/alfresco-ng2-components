@@ -3,9 +3,18 @@
         .mat-form-field-suffix {
             top: 26px;
         }
-
         .mat-form-field-label-wrapper {
             top: 20px;
+        }
+    }
+
+    &-left-label-input-datepicker {
+        .mat-form-field-suffix {
+            top: 0;
+        }
+
+        .mat-form-field-infix {
+            width: 100%;
         }
     }
 }
