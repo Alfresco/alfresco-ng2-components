@@ -8,6 +8,16 @@
             top: 20px;
         }
     }
+
+    &-left-label-input-datepicker {
+        .mat-form-field-suffix {
+            top: 0;
+        }
+
+        .mat-form-field-infix {
+            width: 100%;
+        }
+    }
 }
 
 .mat-datetimepicker-toggle {

@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent, DATE_FORMAT_CLOUD } from './date-cloud.widget';
-import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
+import { setupTestBed, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -228,6 +228,78 @@ describe('DateWidgetComponent', () => {
                         expect(dateElement.value).toContain('03-02-2020');
                     });
             });
+    });
+
+    describe('when form model has left labels', () => {
+
+        it('should have left labels classes on leftLabels true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).not.toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).not.toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).not.toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels false', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels not present', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'date-id',
+                name: 'date-name',
+                value: '',
+                type: FormFieldTypes.DATE,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const leftDatePicker = element.querySelector('.adf-left-label-input-datepicker');
+            expect(leftDatePicker).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
     });
 
 });

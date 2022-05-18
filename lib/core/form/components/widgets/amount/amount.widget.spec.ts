@@ -118,6 +118,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
+    let element: HTMLElement;
 
     setupTestBed({
         imports: [
@@ -130,6 +131,7 @@ describe('AmountWidgetComponent - rendering', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
+        element = fixture.nativeElement;
     });
 
     it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
@@ -206,6 +208,69 @@ describe('AmountWidgetComponent - rendering', () => {
         const tooltip = ammountElement.getAttribute('ng-reflect-message');
 
         expect(tooltip).toEqual(widget.field.tooltip);
+    });
+
+    describe('when form model has left labels', () => {
+
+        it('should have left labels classes on leftLabels true', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                id: 'amount-id',
+                name: 'amount-name',
+                value: '',
+                type: FormFieldTypes.AMOUNT,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).not.toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).not.toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels false', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                id: 'amount-id',
+                name: 'amount-name',
+                value: '',
+                type: FormFieldTypes.AMOUNT,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
+
+        it('should not have left labels classes on leftLabels not present', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'amount-id',
+                name: 'amount-name',
+                value: '',
+                type: FormFieldTypes.AMOUNT,
+                readOnly: false,
+                required: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const widgetContainer = element.querySelector('.adf-left-label-input-container');
+            expect(widgetContainer).toBeNull();
+
+            const adfLeftLabel = element.querySelector('.adf-left-label');
+            expect(adfLeftLabel).toBeNull();
+        });
     });
 });
 
