@@ -15,16 +15,22 @@
  * limitations under the License.
  */
 
+import { SearchApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
-import { ActivitiClientModule } from './activiti/activiti-client.module';
-import { DiscoveryClientModule } from './discovery/discovery-client.module';
-import { SearchClientModule } from './search/search-client.module';
+import { ApiClientsService } from '../../api-clients.service';
 
-@NgModule({
-    imports: [
-        ActivitiClientModule,
-        DiscoveryClientModule,
-        SearchClientModule
-    ]
-})
-export class AlfrescoJsClientsModule { }
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Api {
+        interface ApiRegistry {
+            ['SearchClient.search']: SearchApi;
+        }
+    }
+}
+
+@NgModule()
+export class SearchClientModule {
+    constructor(private apiClientsService: ApiClientsService) {
+        this.apiClientsService.register('SearchClient.search', SearchApi);
+    }
+}
