@@ -35,7 +35,7 @@ import {
     FullNamePipe,
     IdentityUserModel,
     IdentityUserServiceInterface,
-    IDENTITY_USER_TOKEN,
+    IDENTITY_USER_SERVICE_TOKEN,
     LogService
 } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -161,7 +161,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        @Inject(IDENTITY_USER_TOKEN)
+        @Inject(IDENTITY_USER_SERVICE_TOKEN)
         private identityUserService: IdentityUserServiceInterface,
         private logService: LogService) {}
 
