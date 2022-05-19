@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, ApiClientsService, LogService, PaginationModel } from '@alfresco/adf-core';
 import {
     NodePaging,
     DeletedNodesPaging,
@@ -59,10 +59,8 @@ export class CustomResourcesService {
         return this._trashcanApi;
     }
 
-    private _searchApi: SearchApi;
     get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
+        return this.apiClientsService.get('SearchClient.search');
     }
 
     private _sharedLinksApi: SharedlinksApi;
@@ -83,8 +81,11 @@ export class CustomResourcesService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private apiService: AlfrescoApiService,
+        private logService: LogService
+    ) {}
 
     /**
      * Gets files recently accessed by a user.

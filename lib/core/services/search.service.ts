@@ -16,10 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, QueriesApi, QueryBody, ResultSetPaging, SearchApi } from '@alfresco/js-api';
+import { NodePaging, QueriesApi, QueryBody, ResultSetPaging } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
+import { ApiClientsService } from '../api/api-clients.service';
 
 @Injectable({
     providedIn: 'root'
@@ -34,14 +35,14 @@ export class SearchService {
         return this._queriesApi;
     }
 
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
+    get searchApi() {
+        return this.apiClientsService.get('SearchClient.search');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchConfigurationService: SearchConfigurationService) {
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private apiService: AlfrescoApiService,
+        private searchConfigurationService: SearchConfigurationService) {
     }
 
     /**
