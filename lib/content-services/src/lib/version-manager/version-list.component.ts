@@ -31,9 +31,9 @@ import { ContentVersionService } from './content-version.service';
 })
 export class VersionListComponent implements OnChanges {
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
-    versionsApi = this.apiClientsService.get('Content.versions');
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
+    versionsApi = this.apiClientsService.get('ContentClient.versions');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     versions: VersionEntry[] = [];
     isLoading = true;

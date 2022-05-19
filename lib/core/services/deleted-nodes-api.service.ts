@@ -28,8 +28,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class DeletedNodesApiService {
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
-    trashcanApi = this.apiClientsService.get('Content.trashcan');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
+    trashcanApi = this.apiClientsService.get('ContentClient.trashcan');
 
     constructor(
         private apiClientsService: ApiClientsService,

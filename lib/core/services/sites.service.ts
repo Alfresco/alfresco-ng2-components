@@ -40,7 +40,7 @@ import { LogService } from './log.service';
 })
 export class SitesService {
 
-    private sitesApi = this.apiClientsService.get('Content.sites');
+    private sitesApi = this.apiClientsService.get('ContentClient.sites');
 
     constructor(
         private apiService: AlfrescoApiService,

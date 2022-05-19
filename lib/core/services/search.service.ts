@@ -30,7 +30,7 @@ export class SearchService {
 
 
     searchApi = this.apiClientsService.get('SearchClient.search');
-    queriesApi = this.apiClientsService.get('Content.queries');
+    queriesApi = this.apiClientsService.get('ContentClient.queries');
 
     constructor(
         private apiClientsService: ApiClientsService,

@@ -26,8 +26,8 @@ import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 })
 export class RenditionsService {
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
-    renditionsApi = this.apiClientsService.get('Content.renditions');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
+    renditionsApi = this.apiClientsService.get('ContentClient.renditions');
 
     constructor(private apiClientsService: ApiClientsService) {}
 

@@ -47,7 +47,7 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    sitesApi = this.apiClientsService.get('Content.sites');
+    sitesApi = this.apiClientsService.get('ContentClient.sites');
 
     /** Site for which to toggle the membership request. */
     @Input('adf-library-membership')

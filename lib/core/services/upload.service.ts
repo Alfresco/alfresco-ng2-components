@@ -60,9 +60,9 @@ export class UploadService {
     private abortedFile: string;
     private isThumbnailGenerationEnabled: boolean;
 
-    uploadApi = this.apiClientsService.get('ContentCustom.upload');
-    nodesApi = this.apiClientsService.get('Content.nodes');
-    versionsApi = this.apiClientsService.get('Content.versions');
+    uploadApi = this.apiClientsService.get('ContentCustomClient.upload');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
+    versionsApi = this.apiClientsService.get('ContentClient.versions');
 
     constructor(
         protected apiClientsService: ApiClientsService,

@@ -39,21 +39,21 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-            ['Content.versions']: VersionsApi;
-            ['Content.audit']: AuditApi;
-            ['Content.comments']: CommentsApi;
-            ['Content.downloads']: DownloadsApi;
-            ['Content.favorites']: FavoritesApi;
-            ['Content.groups']: GroupsApi;
-            ['Content.nodes']: NodesApi;
-            ['Content.people']: PeopleApi;
-            ['Content.queries']: QueriesApi;
-            ['Content.ratings']: RatingsApi;
-            ['Content.renditions']: RenditionsApi;
-            ['Content.sites']: SitesApi;
-            ['Content.sharedlinks']: SharedlinksApi;
-            ['Content.tags']: TagsApi;
-            ['Content.trashcan']: TrashcanApi;
+            ['ContentClient.versions']: VersionsApi;
+            ['ContentClient.audit']: AuditApi;
+            ['ContentClient.comments']: CommentsApi;
+            ['ContentClient.downloads']: DownloadsApi;
+            ['ContentClient.favorites']: FavoritesApi;
+            ['ContentClient.groups']: GroupsApi;
+            ['ContentClient.nodes']: NodesApi;
+            ['ContentClient.people']: PeopleApi;
+            ['ContentClient.queries']: QueriesApi;
+            ['ContentClient.ratings']: RatingsApi;
+            ['ContentClient.renditions']: RenditionsApi;
+            ['ContentClient.sites']: SitesApi;
+            ['ContentClient.sharedlinks']: SharedlinksApi;
+            ['ContentClient.tags']: TagsApi;
+            ['ContentClient.trashcan']: TrashcanApi;
         }
     }
 }
@@ -61,20 +61,20 @@ declare global {
 @NgModule()
 export class ContentClientModule {
     constructor(private apiClientsService: ApiClientsService) {
-        this.apiClientsService.register('Content.versions', VersionsApi);
-        this.apiClientsService.register('Content.audit', AuditApi);
-        this.apiClientsService.register('Content.comments', CommentsApi);
-        this.apiClientsService.register('Content.downloads', DownloadsApi);
-        this.apiClientsService.register('Content.favorites', FavoritesApi);
-        this.apiClientsService.register('Content.groups', GroupsApi);
-        this.apiClientsService.register('Content.nodes', NodesApi);
-        this.apiClientsService.register('Content.people', PeopleApi);
-        this.apiClientsService.register('Content.queries', QueriesApi);
-        this.apiClientsService.register('Content.ratings', RatingsApi);
-        this.apiClientsService.register('Content.renditions', RenditionsApi);
-        this.apiClientsService.register('Content.sites', SitesApi);
-        this.apiClientsService.register('Content.sharedlinks', SharedlinksApi);
-        this.apiClientsService.register('Content.tags', TagsApi);
-        this.apiClientsService.register('Content.trashcan', TrashcanApi);
+        this.apiClientsService.register('ContentClient.versions', VersionsApi);
+        this.apiClientsService.register('ContentClient.audit', AuditApi);
+        this.apiClientsService.register('ContentClient.comments', CommentsApi);
+        this.apiClientsService.register('ContentClient.downloads', DownloadsApi);
+        this.apiClientsService.register('ContentClient.favorites', FavoritesApi);
+        this.apiClientsService.register('ContentClient.groups', GroupsApi);
+        this.apiClientsService.register('ContentClient.nodes', NodesApi);
+        this.apiClientsService.register('ContentClient.people', PeopleApi);
+        this.apiClientsService.register('ContentClient.queries', QueriesApi);
+        this.apiClientsService.register('ContentClient.ratings', RatingsApi);
+        this.apiClientsService.register('ContentClient.renditions', RenditionsApi);
+        this.apiClientsService.register('ContentClient.sites', SitesApi);
+        this.apiClientsService.register('ContentClient.sharedlinks', SharedlinksApi);
+        this.apiClientsService.register('ContentClient.tags', TagsApi);
+        this.apiClientsService.register('ContentClient.trashcan', TrashcanApi);
     }
 }

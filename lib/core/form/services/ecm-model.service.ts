@@ -31,7 +31,7 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
-    customModelApi = this.apiClientsService.get('ContentCustom.custom-model');
+    customModelApi = this.apiClientsService.get('ContentCustomClient.custom-model');
 
     constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 

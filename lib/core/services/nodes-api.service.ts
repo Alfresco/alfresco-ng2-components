@@ -28,8 +28,8 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    trashcanApi = this.apiClientsService.get('Content.trashcan');
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    trashcanApi = this.apiClientsService.get('ContentClient.trashcan');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         private apiClientsService: ApiClientsService,

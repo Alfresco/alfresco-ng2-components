@@ -72,13 +72,13 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     ];
     disableCreateButton = false;
 
-    queriesApi = this.apiClientsService.get('Content.queries');
+    queriesApi = this.apiClientsService.get('ContentClient.queries');
 
     constructor(
+        private apiClientsService: ApiClientsService,
         private sitesService: SitesService,
         private formBuilder: FormBuilder,
-        private dialog: MatDialogRef<LibraryDialogComponent>,
-        private apiClientsService: ApiClientsService
+        private dialog: MatDialogRef<LibraryDialogComponent>
     ) {}
 
     ngOnInit() {

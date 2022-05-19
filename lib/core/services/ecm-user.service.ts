@@ -27,7 +27,7 @@ import { EcmUserModel } from '../models/ecm-user.model';
 })
 export class EcmUserService {
 
-    peopleApi = this.apiClientsService.get('Content.people');
+    peopleApi = this.apiClientsService.get('ContentClient.people');
 
     constructor(
         private apiClientsService: ApiClientsService,

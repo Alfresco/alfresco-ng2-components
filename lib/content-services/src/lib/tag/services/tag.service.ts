@@ -27,7 +27,7 @@ import { TagBody, TagPaging, TagEntry } from '@alfresco/js-api';
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class TagService {
 
-    tagsApi = this.apiClientsService.get('Content.tags');
+    tagsApi = this.apiClientsService.get('ContentClient.tags');
 
     /** Emitted when tag information is updated. */
     @Output()

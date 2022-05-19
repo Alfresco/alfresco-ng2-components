@@ -23,11 +23,11 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-            ['ContentCustom.webscript']: WebscriptApi;
-            ['ContentCustom.upload']: UploadApi;
-            ['ContentCustom.classes']: ClassesApi;
-            ['ContentCustom.content']: ContentApi;
-            ['ContentCustom.custom-model']: CustomModelApi;
+            ['ContentCustomClient.webscript']: WebscriptApi;
+            ['ContentCustomClient.upload']: UploadApi;
+            ['ContentCustomClient.classes']: ClassesApi;
+            ['ContentCustomClient.content']: ContentApi;
+            ['ContentCustomClient.custom-model']: CustomModelApi;
         }
     }
 }
@@ -35,10 +35,10 @@ declare global {
 @NgModule()
 export class ContentCustomClientModule {
     constructor(private apiClientsService: ApiClientsService) {
-        this.apiClientsService.register('ContentCustom.webscript', WebscriptApi);
-        this.apiClientsService.register('ContentCustom.upload', UploadApi);
-        this.apiClientsService.register('ContentCustom.classes', ClassesApi);
-        this.apiClientsService.register('ContentCustom.content', ContentApi);
-        this.apiClientsService.register('ContentCustom.custom-model', CustomModelApi);
+        this.apiClientsService.register('ContentCustomClient.webscript', WebscriptApi);
+        this.apiClientsService.register('ContentCustomClient.upload', UploadApi);
+        this.apiClientsService.register('ContentCustomClient.classes', ClassesApi);
+        this.apiClientsService.register('ContentCustomClient.content', ContentApi);
+        this.apiClientsService.register('ContentCustomClient.custom-model', CustomModelApi);
     }
 }

@@ -44,7 +44,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 })
 export class WebscriptComponent implements OnChanges {
 
-    webscriptApi = this.apiClientsService.get('ContentCustom.webscript');
+    webscriptApi = this.apiClientsService.get('ContentCustomClient.webscript');
 
     /** (required) Path to the webscript (as defined by webscript). */
     @Input()

@@ -50,7 +50,7 @@ export class AuthenticationService {
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     get peopleApi(): PeopleApi {
-        return this.apiClientsService.get('Content.people');
+        return this.apiClientsService.get('ContentClient.people');
     }
 
     get profileApi(): UserProfileApi {

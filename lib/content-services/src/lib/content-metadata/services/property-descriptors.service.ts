@@ -26,7 +26,7 @@ import { map } from 'rxjs/operators';
 })
 export class PropertyDescriptorsService {
 
-    private classesApi = this.apiClientsService.get('ContentCustom.classes');
+    private classesApi = this.apiClientsService.get('ContentCustomClient.classes');
 
     constructor(private apiClientsService: ApiClientsService) {}
 

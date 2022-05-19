@@ -34,13 +34,13 @@ const CREATE_PERMISSION: string = 'create';
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
-    peopleApi = this.apiClientsService.get('Content.people');
-    sitesApi = this.apiClientsService.get('Content.sites');
-    trashcanApi = this.apiClientsService.get('Content.trashcan');
+    peopleApi = this.apiClientsService.get('ContentClient.people');
+    sitesApi = this.apiClientsService.get('ContentClient.sites');
+    trashcanApi = this.apiClientsService.get('ContentClient.trashcan');
     searchApi = this.apiClientsService.get('SearchClient.search');
-    sharedLinksApi = this.apiClientsService.get('Content.sharedlinks');
-    favoritesApi = this.apiClientsService.get('Content.favorites');
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    sharedLinksApi = this.apiClientsService.get('ContentClient.sharedlinks');
+    favoritesApi = this.apiClientsService.get('ContentClient.favorites');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 

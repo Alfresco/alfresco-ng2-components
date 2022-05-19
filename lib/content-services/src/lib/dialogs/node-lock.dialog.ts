@@ -35,7 +35,7 @@ export class NodeLockDialogComponent implements OnInit {
     node: Node = null;
     nodeName: string;
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         private formBuilder: FormBuilder,

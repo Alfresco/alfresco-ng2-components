@@ -39,8 +39,8 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         public authService: AuthenticationService,

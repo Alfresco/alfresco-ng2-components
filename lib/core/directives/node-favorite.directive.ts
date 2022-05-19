@@ -30,7 +30,7 @@ import { catchError, map } from 'rxjs/operators';
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
-    favoritesApi = this.apiClientsService.get('Content.favorites');
+    favoritesApi = this.apiClientsService.get('ContentClient.favorites');
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')

@@ -33,7 +33,7 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
 })
 export class ContentCloudNodeSelectorService {
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     sourceNodeNotFound = false;
 

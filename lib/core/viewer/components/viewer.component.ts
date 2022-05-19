@@ -279,10 +279,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    sharedLinksApi = this.apiClientsService.get('Content.sharedlinks');
-    versionsApi = this.apiClientsService.get('Content.versions');
-    nodesApi = this.apiClientsService.get('Content.nodes');
-    contentApi = this.apiClientsService.get('ContentCustom.content');
+    sharedLinksApi = this.apiClientsService.get('ContentClient.sharedlinks');
+    versionsApi = this.apiClientsService.get('ContentClient.versions');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
 
     constructor(
         private apiService: AlfrescoApiService,

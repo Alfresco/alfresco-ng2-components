@@ -34,7 +34,7 @@ const ROOT_ID = '-root-';
 })
 export class DocumentListService implements DocumentListLoader {
 
-    nodes = this.apiClientsService.get('Content.nodes');
+    nodes = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         private contentService: ContentService,

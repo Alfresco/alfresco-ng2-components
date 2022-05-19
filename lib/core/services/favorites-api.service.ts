@@ -27,7 +27,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
-    favoritesApi = this.apiClientsService.get('Content.favorites');
+    favoritesApi = this.apiClientsService.get('ContentClient.favorites');
 
     static remapEntry({ entry }: any): any {
         entry.properties = {

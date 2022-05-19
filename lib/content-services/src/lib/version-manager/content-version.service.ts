@@ -22,7 +22,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ContentVersionService {
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
 
     constructor(private apiClientsService: ApiClientsService) { }
 

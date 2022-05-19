@@ -65,7 +65,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     displayedColumns = ['icon', 'fileName', 'action'];
 

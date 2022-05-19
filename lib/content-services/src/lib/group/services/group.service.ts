@@ -24,7 +24,7 @@ import { ApiClientsService } from '@alfresco/adf-core';
 })
 export class GroupService {
 
-    groupsApi = this.apiClientsService.get('Content.groups');
+    groupsApi = this.apiClientsService.get('ContentClient.groups');
 
     constructor(private apiClientsService: ApiClientsService) {}
 

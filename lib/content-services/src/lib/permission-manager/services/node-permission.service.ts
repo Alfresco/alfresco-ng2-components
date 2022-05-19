@@ -42,7 +42,7 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
-    groupsApi = this.apiClientsService.get('Content.groups');
+    groupsApi = this.apiClientsService.get('ContentClient.groups');
 
     constructor(
         private searchApiService: SearchService,

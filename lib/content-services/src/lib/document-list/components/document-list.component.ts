@@ -345,7 +345,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         private documentListService: DocumentListService,

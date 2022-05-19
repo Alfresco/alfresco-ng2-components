@@ -31,8 +31,8 @@ import { Node } from '@alfresco/js-api';
 })
 export class ProcessCloudContentService {
 
-    authenticationApi = this.apiClientsService.get('Auth.authentication');
-    uploadApi = this.apiClientsService.get('ContentCustom.upload');
+    authenticationApi = this.apiClientsService.get('AuthClient.authentication');
+    uploadApi = this.apiClientsService.get('ContentCustomClient.upload');
 
     constructor(
         private apiClientsService: ApiClientsService,

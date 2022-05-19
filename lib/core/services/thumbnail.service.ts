@@ -164,7 +164,7 @@ export class ThumbnailService {
         task: './assets/images/task.svg'
     };
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
 
     constructor(
         protected apiService: AlfrescoApiService,

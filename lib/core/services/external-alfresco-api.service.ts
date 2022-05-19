@@ -46,7 +46,7 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().content;
     }
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(private apiClientsService: ApiClientsService) {}
 

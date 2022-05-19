@@ -23,7 +23,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Api {
         interface ApiRegistry {
-            ['Auth.authentication']: AuthenticationApi;
+            ['AuthClient.authentication']: AuthenticationApi;
         }
     }
 }
@@ -31,6 +31,6 @@ declare global {
 @NgModule()
 export class AuthClientModule {
     constructor(private apiClientsService: ApiClientsService) {
-        this.apiClientsService.register('Auth.authentication', AuthenticationApi);
+        this.apiClientsService.register('AuthClient.authentication', AuthenticationApi);
     }
 }

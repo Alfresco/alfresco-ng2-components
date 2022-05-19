@@ -74,9 +74,9 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
-    versionsApi = this.apiClientsService.get('Content.versions');
-    renditionsApi = this.apiClientsService.get('Content.renditions');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
+    versionsApi = this.apiClientsService.get('ContentClient.versions');
+    renditionsApi = this.apiClientsService.get('ContentClient.renditions');
 
     constructor(
         private apiClientsService: ApiClientsService,

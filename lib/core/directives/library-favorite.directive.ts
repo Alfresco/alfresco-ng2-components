@@ -39,7 +39,7 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     private targetLibrary = null;
 
-    favoritesApi = this.apiClientsService.get('Content.favorites');
+    favoritesApi = this.apiClientsService.get('ContentClient.favorites');
 
     @HostListener('click')
     onClick() {

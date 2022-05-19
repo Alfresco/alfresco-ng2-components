@@ -29,7 +29,7 @@ export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number; message: string }>();
 
-    sharedLinksApi = this.apiClientsService.get('Content.sharedlinks');
+    sharedLinksApi = this.apiClientsService.get('ContentClient.sharedlinks');
 
     constructor(
         private apiClientsService: ApiClientsService,

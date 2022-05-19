@@ -62,8 +62,8 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    trashcanApi = this.apiClientsService.get('Content.trashcan');
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    trashcanApi = this.apiClientsService.get('ContentClient.trashcan');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     @HostListener('click')
     onClick() {

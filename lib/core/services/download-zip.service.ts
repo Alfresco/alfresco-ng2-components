@@ -27,7 +27,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class DownloadZipService {
 
-    downloadsApi = this.apiClientsService.get('Content.downloads');
+    downloadsApi = this.apiClientsService.get('ContentClient.downloads');
 
     constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 

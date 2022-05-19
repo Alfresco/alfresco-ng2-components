@@ -31,7 +31,7 @@ import { DownloadService } from '../services/download.service';
 })
 export class NodeDownloadDirective {
 
-    contentApi = this.apiClientsService.get('ContentCustom.content');
+    contentApi = this.apiClientsService.get('ContentCustomClient.content');
 
     /** Nodes to download. */
     @Input('adfNodeDownload')

@@ -33,7 +33,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
-    auditApi = this.apiClientsService.get('Content.audit');
+    auditApi = this.apiClientsService.get('ContentClient.audit');
 
     constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 

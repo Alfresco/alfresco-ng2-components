@@ -52,7 +52,7 @@ export class PeopleContentService {
     private hasContentAdminRole: boolean = false;
     hasCheckedIsContentAdmin: boolean = false;
 
-    peopleApi = this.apiClientsService.get('Content.people');
+    peopleApi = this.apiClientsService.get('ContentClient.people');
 
     constructor(
         private apiClientsService: ApiClientsService,

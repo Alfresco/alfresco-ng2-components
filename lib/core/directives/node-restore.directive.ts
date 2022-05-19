@@ -36,7 +36,7 @@ export class RestoreMessageModel {
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
 
-    trashcanApi = this.apiClientsService.get('Content.trashcan');
+    trashcanApi = this.apiClientsService.get('ContentClient.trashcan');
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')

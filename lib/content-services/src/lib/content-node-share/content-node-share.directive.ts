@@ -44,7 +44,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    nodesApi = this.apiClientsService.get('Content.nodes');
+    nodesApi = this.apiClientsService.get('ContentClient.nodes');
 
     constructor(
         private dialog: MatDialog,
