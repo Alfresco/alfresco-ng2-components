@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from './jwt-helper.service';
+import { Injectable, Inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentGroups, PeopleContentService } from './people-content.service';
+import { UserAccessHelper } from './user-access-helper/user-access-helper.interface';
+import { USER_ACCESS_HELPER_SERVICE_TOKEN } from './user-access-helper/user-access-helper-service.token';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
-    constructor(private jwtHelperService: JwtHelperService,
+    constructor(@Inject(USER_ACCESS_HELPER_SERVICE_TOKEN) public userAccessHelperService: UserAccessHelper,
                 private router: Router,
                 private dialog: MatDialog,
                 private peopleContentService: PeopleContentService) {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+        await this.userAccessHelperService.initialise();
         let hasRealmRole = false;
         let hasClientRole = true;
 
@@ -50,7 +52,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
             if (route.data['clientRoles']) {
                 const clientRoleName = route.params[route.data['clientRoles']];
                 const rolesToCheck = route.data['roles'];
-                hasClientRole = this.jwtHelperService.hasRealmRolesForClientRole(clientRoleName, rolesToCheck);
+                hasClientRole = this.userAccessHelperService.hasApplicationRoles(clientRoleName, rolesToCheck);
             }
         }
 
@@ -72,6 +74,6 @@ export class AuthGuardSsoRoleService implements CanActivate {
     }
 
     private hasRoles(rolesToCheck: string[], isContentAdmin: boolean): boolean {
-        return rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? this.jwtHelperService.hasRealmRoles(rolesToCheck) || isContentAdmin : this.jwtHelperService.hasRealmRoles(rolesToCheck);
+        return rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? this.userAccessHelperService.hasGlobalRoles(rolesToCheck) || isContentAdmin : this.userAccessHelperService.hasGlobalRoles(rolesToCheck);
     }
 }

@@ -69,3 +69,5 @@ export * from './identity-user.service.interface';
 export * from './identity-group.interface';
 export * from './language-item.interface';
 export * from './sort-by-category.service';
+export * from './user-access-helper/user-access-helper.interface';
+export * from './user-access-helper/user-access-helper-service.token';

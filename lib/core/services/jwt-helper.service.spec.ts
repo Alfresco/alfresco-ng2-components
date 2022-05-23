@@ -16,9 +16,10 @@
  */
 
 import { JwtHelperService } from './jwt-helper.service';
-import { mockToken } from './../mock/jwt-helper.service.spec';
+import { mockToken } from './../mock/jwt-token.mock';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
+import { take } from 'rxjs/operators';
 
 describe('JwtHelperService', () => {
 
@@ -32,10 +33,11 @@ describe('JwtHelperService', () => {
         jwtHelperService = TestBed.inject(JwtHelperService);
     });
 
-    it('should be able to create the service', () => {
-        expect(jwtHelperService).not.toBeNull();
-        expect(jwtHelperService).toBeDefined();
-    });
+    async function spyRoles(realmRoles: string[], resourceAccess: any) {
+        spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ realm_access: { roles: realmRoles }, resource_access: resourceAccess });
+        await jwtHelperService.initialise();
+    }
 
     it('Should decode the Jwt token', () => {
         const result = jwtHelperService.decodeToken(mockToken);
@@ -45,97 +47,59 @@ describe('JwtHelperService', () => {
         expect(result['email']).toBe('johnDoe@gmail.com');
     });
 
-    describe('RealmRole ', () => {
+    describe('Global roles', () => {
 
-        it('Should be true if the realm_access contains the single role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+        it('Should be true when the user has at least one of the global roles', async () => {
+            await spyRoles(['role1'], {});
 
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    realm_access: { roles: ['role1'] }
-                });
-
-            const result = jwtHelperService.hasRealmRole('role1');
+            const result = jwtHelperService.hasGlobalRoles(['role1', 'role2']);
             expect(result).toBeTruthy();
         });
 
-        it('Should be true if the realm_access contains at least one of the roles', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    realm_access: { roles: ['role1'] }
-                });
-
-            const result = jwtHelperService.hasRealmRoles(['role1', 'role2']);
-            expect(result).toBeTruthy();
-        });
-
-        it('Should be false if the realm_access does not contain the role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    realm_access: { roles: ['role3'] }
-                });
-            const result = jwtHelperService.hasRealmRole('role1');
-            expect(result).toBeFalsy();
-        });
-
-        it('Should be false if the realm_access does not contain at least one of the roles', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    realm_access: { roles: ['role1'] }
-                });
-            const result = jwtHelperService.hasRealmRoles(['role3', 'role2']);
+        it('Should be false when the user does not have at least one of the global roles', async () => {
+            await spyRoles(['role1'], {});
+            const result = jwtHelperService.hasGlobalRoles(['role2', 'role3']);
             expect(result).toBeFalsy();
         });
    });
 
-    describe('ClientRole ', () => {
+    describe('Application roles', () => {
 
-        it('Should be true if the resource_access contains the single role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+        it('Should be true when the user has at least one of the requested roles for an application', async () => {
+            await spyRoles([], { fakeapp: { roles: ['role1'] } });
 
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    resource_access: { fakeapp: { roles: ['role1'] } }
-                });
-
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1']);
+            const result = jwtHelperService.hasApplicationRoles('fakeapp', ['role1', 'role2']);
             expect(result).toBeTruthy();
         });
 
-        it('Should be true if the resource_access contains at least one of the roles', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    resource_access: { fakeapp: { roles: ['role1'] } }
-                });
-
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
-            expect(result).toBeTruthy();
-        });
-
-        it('Should be false if the resource_access does not contain the role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    resource_access: { fakeapp: { roles: ['role3'] } }
-                });
+        it('Should be false when the user does not have the requested roles for an application', async () => {
+            await spyRoles(['role1'], { fakeapp: { roles: ['role3'] } });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
             expect(result).toBeFalsy();
         });
 
-        it('Should be false if the resource_access does not contain the client role related to the app', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-            spyOn(jwtHelperService, 'decodeToken').and.returnValue(
-                {
-                    resource_access: { anotherfakeapp: { roles: ['role1'] } }
-                });
+        it('Should be false when the app does not exist in the apps of a user', async () => {
+            await spyRoles([], { anotherfakeapp: { roles: ['role1'] } });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+
             expect(result).toBeFalsy();
         });
    });
+
+    describe('Roles streams', () => {
+
+        it('should emit the global roles when initialising', async () => {
+            await spyRoles(['role1', 'role2'], {});
+
+            const globalRoles = await jwtHelperService.globalRoles$.pipe(take(1)).toPromise();
+            expect(globalRoles).toEqual({ roles: ['role1', 'role2'] });
+        });
+
+        it('should emit the application roles when initialising', async () => {
+            await spyRoles([], { fakeapp: { roles: ['role1'] } });
+
+            const applicationRoles = await jwtHelperService.applicationRoles$.pipe(take(1)).toPromise();
+            expect(applicationRoles).toEqual({ fakeapp: { roles: ['role1'] } });
+        });
+    });
 });

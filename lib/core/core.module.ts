@@ -62,6 +62,8 @@ import { versionCompatibilityFactory } from './services/version-compatibility-fa
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { ApiModule } from './api/api.module';
 import { AlfrescoJsClientsModule } from './api/clients/alfresco-js-clients.module';
+import { USER_ACCESS_HELPER_SERVICE_TOKEN } from './services/user-access-helper/user-access-helper-service.token';
+import { JwtHelperService } from './services/jwt-helper.service';
 
 @NgModule({
     imports: [
@@ -135,6 +137,12 @@ import { AlfrescoJsClientsModule } from './api/clients/alfresco-js-clients.modul
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule
+    ],
+    providers: [
+        {
+            provide: USER_ACCESS_HELPER_SERVICE_TOKEN,
+            useExisting: JwtHelperService
+        }
     ]
 })
 export class CoreModule {

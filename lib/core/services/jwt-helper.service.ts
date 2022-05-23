@@ -17,11 +17,14 @@
 
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UserAccessHelper } from './user-access-helper/user-access-helper.interface';
+import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class JwtHelperService {
+export class JwtHelperService implements UserAccessHelper {
 
     static USER_NAME = 'name';
     static FAMILY_NAME = 'family_name';
@@ -34,6 +37,43 @@ export class JwtHelperService {
     static USER_PREFERRED_USERNAME = 'preferred_username';
 
     constructor(private storageService: StorageService) {
+    }
+
+    private globalRolesSubject = new BehaviorSubject([]);
+    private applicationRolesSubject = new BehaviorSubject([]);
+
+    globalRoles$: Observable<any> = this.globalRolesSubject.asObservable();
+    applicationRoles$: Observable<any> = this.applicationRolesSubject.asObservable();
+
+    /**
+     * Initialises the global and application roles Observables
+     */
+    async initialise() {
+        const globalRoles = this.getValueFromLocalAccessToken<any>(JwtHelperService.REALM_ACCESS);
+        this.globalRolesSubject.next(globalRoles);
+        const appsAccess = this.getValueFromLocalAccessToken<any>(JwtHelperService.RESOURCE_ACCESS);
+        this.applicationRolesSubject.next(appsAccess);
+    }
+
+    /**
+     * Checks for client roles.
+     *
+     * @param appName The name of the app
+     * @param roles List of roles to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
+    hasApplicationRoles(appName: string, roles: string[]): boolean {
+        return this.hasRealmRolesForClientRole(appName, roles);
+    }
+
+    /**
+     * Checks for global roles.
+     *
+     * @param roles List of roles to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
+    hasGlobalRoles(roles: string[]): boolean {
+        return this.hasRealmRoles(roles);
     }
 
     /**
@@ -148,8 +188,13 @@ export class JwtHelperService {
      * @returns Array of realm roles
      */
     getRealmRoles(): string[] {
-        const access = this.getValueFromLocalAccessToken<any>(JwtHelperService.REALM_ACCESS);
-        return access ? access['roles'] : [];
+        let realmRoles = [];
+        this.globalRoles$
+            .pipe(take(1))
+            .subscribe(globalRoles => {
+                realmRoles = globalRoles['roles'] || [];
+            });
+        return realmRoles;
     }
 
     /**
@@ -158,8 +203,14 @@ export class JwtHelperService {
      * @returns Array of client roles
      */
     getClientRoles(clientName: string): string[] {
-        const clientRole = this.getValueFromLocalAccessToken<any>(JwtHelperService.RESOURCE_ACCESS)[clientName];
-        return clientRole ? clientRole['roles'] : [];
+        let clientRoles = [];
+        this.applicationRoles$
+            .pipe(take(1))
+            .subscribe(applicationRoles => {
+                const appAccess = applicationRoles[clientName];
+                clientRoles = appAccess ? appAccess['roles'] : [];
+            });
+        return clientRoles;
     }
 
     /**
@@ -169,12 +220,8 @@ export class JwtHelperService {
      * @returns True if it contains given role, false otherwise
      */
     hasRealmRole(role: string): boolean {
-        let hasRole = false;
-        if (this.getAccessToken()) {
-            const realmRoles = this.getRealmRoles();
-            hasRole = realmRoles.some((currentRole) => currentRole === role);
-        }
-        return hasRole;
+        const realmRoles = this.getRealmRoles();
+        return realmRoles.some((currentRole) => currentRole === role);
     }
 
     /**
@@ -206,11 +253,7 @@ export class JwtHelperService {
      * @returns True if it contains given role, false otherwise
      */
     hasClientRole(clientName: string, role: string): boolean {
-        let hasRole = false;
-        if (this.getAccessToken()) {
-            const clientRoles = this.getClientRoles(clientName);
-            hasRole = clientRoles.some((currentRole) => currentRole === role);
-        }
-        return hasRole;
+        const clientRoles = this.getClientRoles(clientName);
+        return clientRoles.some((currentRole) => currentRole === role);
     }
 }
