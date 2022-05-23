@@ -27,12 +27,12 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    SimpleChange
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map, takeUntil, debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { IdentityGroupModel, IdentityGroupService, LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
 
@@ -125,7 +125,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     searchGroups$ = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
     subscriptAnimationState: string = 'enter';
-    clientId: string;
     isFocused: boolean;
     touched: boolean = false;
 
@@ -140,7 +139,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         private logService: LogService) {}
 
     ngOnInit(): void {
-        this.loadClientId();
         this.initSearch();
     }
 
@@ -156,25 +154,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             if (!this.isValidationEnabled()) {
                 this.invalidGroups = [];
             }
-        }
-
-        if (changes.appName && this.isAppNameChanged(changes.appName)) {
-            this.loadClientId();
-        }
-    }
-
-    private isAppNameChanged(change: SimpleChange): boolean {
-        return change
-            && change.previousValue !== change.currentValue
-            && this.appName
-            && this.appName.length > 0;
-    }
-
-    private async loadClientId(): Promise<void> {
-        this.clientId = await this.identityGroupService.getClientIdByApplicationName(this.appName).toPromise();
-
-        if (this.clientId) {
-            this.searchGroupsControl.enable();
         }
     }
 
@@ -230,14 +209,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    checkGroupHasAccess(groupId: string): Observable<boolean> {
-        if (this.hasRoles()) {
-            return this.identityGroupService.checkGroupHasAnyClientAppRole(groupId, this.clientId, this.roles);
-        } else {
-            return this.identityGroupService.checkGroupHasClientApp(groupId, this.clientId);
-        }
-    }
-
     private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
         if (this.selectedGroups && this.selectedGroups.length > 0) {
             const result = this.selectedGroups.find((selectedGroup: IdentityGroupModel) => selectedGroup.name === group.name);
@@ -248,7 +219,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     async searchGroup(name: string): Promise<IdentityGroupModel> {
-        return (await this.identityGroupService.findGroupsByName({ name }).toPromise())[0];
+        return (await this.identityGroupService.search(name).toPromise())[0];
     }
 
     private getPreselectedGroups(): IdentityGroupModel[] {
@@ -316,13 +287,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             await this.validatePreselectGroups();
             this.validationLoading = false;
         }
-    }
-
-    filterGroupsByRoles(group: IdentityGroupModel): Observable<IdentityGroupModel> {
-        return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole, group })),
-            filter((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.hasRole),
-            map((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.group));
     }
 
     onSelect(group: IdentityGroupModel): void {
@@ -456,10 +420,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return changes
             && changes.preSelectGroups
             && changes.preSelectGroups.currentValue.length === 0;
-    }
-
-    private hasRoles(): boolean {
-        return this.roles && this.roles.length > 0;
     }
 
     private setTypingError(): void {
