@@ -1,25 +1,40 @@
 import { ContentService } from '@alfresco/adf-core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { mockFile, mockNode } from '../mock';
+import { of } from 'rxjs';
+import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { NewVersionUploaderDialogComponent, NewVersionUploaderDialogData } from './new-version-uploader.dialog';
+import { NewVersionUploaderData, NewVersionUploaderDialogComponent, NewVersionUploaderDialogData } from './new-version-uploader.dialog';
 import { NewVersionUploaderService } from './new-version-uploader.service';
 
+@Component({
+    template: ''
+})
+class TestDialogComponent {
+    @Output()
+    uploadedNewVersion = new EventEmitter<NewVersionUploaderData>();
+
+    @Output()
+    uploadError = new EventEmitter<any>();
+}
+
 describe('NewVersionUploaderService', () => {
+    let fixture: ComponentFixture<TestDialogComponent>;
     let service: NewVersionUploaderService;
     let contentService: ContentService;
     let dialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
+    let dialogRefSpyObj;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
-            ]
+            ],
+            declarations: [TestDialogComponent]
         });
     });
 
@@ -27,14 +42,11 @@ describe('NewVersionUploaderService', () => {
         service = TestBed.inject(NewVersionUploaderService);
         contentService = TestBed.inject(ContentService);
         dialog = TestBed.inject(MatDialog);
+        fixture = TestBed.createComponent(TestDialogComponent);
 
-        spyOnDialogOpen = spyOn(dialog, 'open').and.returnValue({
-            componentInstance: {
-                uploadNewVersion: new Subject<any>(),
-                uploadError: new Subject<any>()
-            }
-        } as any);
-
+        dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+        dialogRefSpyObj.componentInstance = fixture.componentInstance;
+        spyOnDialogOpen = spyOn(dialog, 'open').and.returnValue(dialogRefSpyObj);
     });
 
     it('should be created', () => {
@@ -59,7 +71,7 @@ describe('NewVersionUploaderService', () => {
             });
         });
 
-         describe('Mat Dialog configuration', () => {
+        describe('Mat Dialog configuration', () => {
             let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
             beforeEach(() => {
                 spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
@@ -120,6 +132,37 @@ describe('NewVersionUploaderService', () => {
                     width: '630px'
                 });
             }));
+
+        });
+
+        describe('Subscribe events from Dialog', () => {
+            let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
+
+            beforeEach(() => {
+                spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
+                spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
+                    list: { entries: [{ entry: '2' }] }
+                }));
+                mockNewVersionUploaderDialogData = {
+                    node: mockNode,
+                    file: mockFile
+                };
+            });
+
+            it('Should resolve promise when new file version is uploaded', fakeAsync(() => {
+                const openDialogReturnedValue: Promise<any> = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
+                tick();
+                fixture.componentInstance.uploadedNewVersion.next(mockNewVersionUploaderData);
+                openDialogReturnedValue.then(res => expect(res).toEqual(mockNewVersionUploaderData));
+            }));
+
+            it('Should reject promise when an upload error is emitted', fakeAsync(() => {
+                const openDialogReturnedValue = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
+                tick();
+                fixture.componentInstance.uploadError.next({ value: 'Upload error' });
+                openDialogReturnedValue.catch(res => expect(res).toEqual({ value: 'Upload error' }));
+            }));
+
 
         });
 

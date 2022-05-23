@@ -45,3 +45,121 @@ export const mockNode: any = ({
 });
 
 export const mockFile = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+
+export const mockNewVersionUploaderData: any = {
+    newVersion: {
+        isFile: true,
+        createdByUser: {
+            id: 'hruser',
+            displayName: 'hruser'
+        },
+        modifiedAt: '2022-05-23T14:53:16.300Z',
+        nodeType: 'cm:content',
+        content: {
+            mimeType:
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            mimeTypeName: 'Microsoft Word 2007',
+            sizeInBytes: 11887,
+            encoding: 'UTF-8'
+        },
+        parentId: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
+        aspectNames: [
+            'rn:renditioned',
+            'cm:versionable',
+            'cm:titled',
+            'cm:auditable',
+            'cm:author',
+            'cm:thumbnailModification'
+        ],
+        createdAt: '2022-05-23T08:32:22.613Z',
+        isFolder: false,
+        modifiedByUser: {
+            id: 'hruser',
+            displayName: 'hruser'
+        },
+        name: 'Test3.docx',
+        id: 'bc96a05d-9575-415e-94b6-00bd9446deb0',
+        properties: {
+            'cm:versionType': 'MINOR',
+            'cm:versionLabel': '5.1',
+            'cm:author': 'Amedeo Lepore',
+            'cm:lastThumbnailModification': ['doclib:1653311050056']
+        },
+        allowableOperations: ['delete', 'update', 'updatePermissions']
+    },
+    currentVersion: {
+        isFile: true,
+        createdByUser: {
+            id: 'hruser',
+            displayName: 'hruser'
+        },
+        modifiedAt: '2022-05-23T13:04:10.060Z',
+        nodeType: 'cm:content',
+        content: {
+            mimeType:
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            mimeTypeName: 'Microsoft Word 2007',
+            sizeInBytes: 11919,
+            encoding: 'UTF-8'
+        },
+        parentId: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
+        aspectNames: [
+            'rn:renditioned',
+            'cm:versionable',
+            'cm:titled',
+            'cm:auditable',
+            'cm:author',
+            'cm:thumbnailModification'
+        ],
+        createdAt: '2022-05-23T08:32:22.613Z',
+        path: {
+            name: '/hruser',
+            isComplete: false,
+            elements: [
+                {
+                    id: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
+                    name: 'hruser',
+                    nodeType: 'cm:folder',
+                    aspectNames: ['cm:ownable', 'cm:auditable']
+                }
+            ]
+        },
+        isFolder: false,
+        permissions: {
+            inherited: [
+                {
+                    authorityId: 'hruser',
+                    name: 'All',
+                    accessStatus: 'ALLOWED'
+                },
+                {
+                    authorityId: 'ROLE_OWNER',
+                    name: 'All',
+                    accessStatus: 'ALLOWED'
+                }
+            ],
+            settable: [
+                'Contributor',
+                'Collaborator',
+                'Coordinator',
+                'Editor',
+                'Consumer'
+            ],
+            isInheritanceEnabled: true
+        },
+        modifiedByUser: {
+            id: 'hruser',
+            displayName: 'hruser'
+        },
+        name: 'Test4.docx',
+        id: 'bc96a05d-9575-415e-94b6-00bd9446deb0',
+        properties: {
+            'cm:versionType': 'MAJOR',
+            'cm:versionLabel': '5.0',
+            'cm:author': 'Amedeo Lepore',
+            'cm:lastThumbnailModification': ['doclib:1653311050056']
+        },
+        allowableOperations: ['delete', 'update', 'updatePermissions'],
+        isExternal: true
+    }
+};
