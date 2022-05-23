@@ -56,7 +56,7 @@ export class JwtHelperService implements UserAccessHelper {
     }
 
     /**
-     * Checks for client roles.
+     * Checks if the user has at least one role for a given app.
      *
      * @param appName The name of the app
      * @param roles List of roles to check
@@ -67,7 +67,7 @@ export class JwtHelperService implements UserAccessHelper {
     }
 
     /**
-     * Checks for global roles.
+     * Checks if the user has at least one of the global roles.
      *
      * @param roles List of roles to check
      * @returns True if it contains at least one of the given roles, false otherwise

@@ -11,8 +11,21 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
 
 ## Class members
 
-### Methods
+globalRoles$ | [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` | It emits the global roles of the user coming from the JWT token<br>
+applicationRoles$ | [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` | It emits the roles of the applications of the user coming from the JWT token 
 
+### Methods
+-   **initialise**()<br/>
+    Initialises the global and application roles Observables
+-   **hasApplicationRoles**(appName: `string`, roles: string[]): `boolean`<br/>
+    Checks if the user has at least one role for a given app.
+    - appName: `string`  - The name of the app
+    - roles: `string[]`  - The roles to check
+    - **Returns** `boolean` - True if it contains at least one of the given roles for the given app, false otherwise
+-   **hasGlobalRoles**(roles: string[]): `boolean`<br/>
+    Checks if the user has at least one of the global roles.
+    - roles: `string[]`  - The roles to check
+    - **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
 -   **decodeToken**(token: `any`): `Object`<br/>
     Decodes a JSON web token into a JS object.
     -   _token:_ `any`  - Token in encoded form
