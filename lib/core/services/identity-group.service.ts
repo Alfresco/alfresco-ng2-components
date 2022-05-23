@@ -27,11 +27,11 @@ import {
     IdentityGroupCountModel
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityGroupServiceInterface } from './identity-group.interface';
+// import { IdentityGroupServiceInterface } from './identity-group.interface';
 import { OAuth2Service } from './oauth2.service';
 
 @Injectable({ providedIn: 'root' })
-export class IdentityGroupService implements IdentityGroupServiceInterface {
+export class IdentityGroupService { // implements IdentityGroupServiceInterface {
 
     constructor(
         private oAuth2Service: OAuth2Service,
@@ -200,6 +200,59 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
         return this.oAuth2Service.get({ url, queryParams });
     }
+
+    search(name: string, filters?: { roles: string[], withinApplication?: string; }): Observable<IdentityGroupModel[]> {
+        if (name.trim() === '') {
+            return of([]);
+        } else if (filters) {
+            return this.searchGroupsWithinApp(name, filters.withinApplication, filters.roles);
+        } else {
+            return this.searchGroupsByName(name);
+        }
+    }
+
+    searchGroupsByName(name: string): Observable<IdentityGroupModel[]> {
+        console.log(name);
+        const fakeUserList: IdentityGroupModel[] = [];
+        fakeUserList.push({id: '1', name: 'Global user without role'});
+        fakeUserList.push({id: '2', name: 'Global user with role user'});
+        fakeUserList.push({id: '3', name: 'Global user with role admin'});
+        fakeUserList.push({id: '4', name: 'App user without role'});
+        fakeUserList.push({id: '5', name: 'App user with role user'});
+        fakeUserList.push({id: '6', name: 'App user with role admin'});
+        return of(fakeUserList);
+    }
+
+    searchGroupsWithinApp(name: string, appName: string, roles?: string []): Observable<IdentityGroupModel[]> {
+        console.log(name);
+        console.log(appName);
+        console.log(roles);
+        const fakeUserList: IdentityGroupModel[] = [];
+
+        if(appName) {
+            if (roles?.length === 0) {
+                fakeUserList.push({id: '4', name: 'App user without role'});
+                fakeUserList.push({id: '5', name: 'App user with role user'});
+                fakeUserList.push({id: '6', name: 'App user with role admin'});
+            } else if (roles.includes('USER')){
+                fakeUserList.push({id: '5', name: 'App user with role user'});
+            } else if (roles.includes('ADMIN')){
+                fakeUserList.push({id: '6', name: 'App user with role admin'});
+            }
+        } else {
+            if (roles?.length === 0) {
+                fakeUserList.push({id: '2', name: 'Global user with role user'});
+                fakeUserList.push({id: '3', name: 'Global user with role admin'});
+            } else if (roles.includes('USER')){
+                fakeUserList.push({id: '2', name: 'Global user with role user'});
+            } else if (roles.includes('ADMIN')){
+                fakeUserList.push({id: '3', name: 'Global user with role admin'});
+            }
+        }
+
+        return of(fakeUserList);
+    }
+
 
     /**
      * Gets details for a specified group.

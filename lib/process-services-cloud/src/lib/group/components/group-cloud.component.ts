@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map, takeUntil, debounceTime } from 'rxjs/operators';
 import { IdentityGroupModel, IdentityGroupService, LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
@@ -201,7 +201,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             tap(() => this.resetSearchGroups()),
             switchMap((name: string) =>
-                this.identityGroupService.findGroupsByName({ name: name.trim() })
+                // this.identityGroupService.findGroupsByName({ name: name.trim() })
+                this.identityGroupService.search(name.trim(), { roles: this.roles, withinApplication: this.appName })
             ),
             mergeMap((groups) => {
                 this.resetSearchGroups();
@@ -209,19 +210,19 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 return groups;
             }),
             filter(group => !this.isGroupAlreadySelected(group)),
-            mergeMap(group => {
-                if (this.appName) {
-                    return this.checkGroupHasAccess(group.id).pipe(
-                        mergeMap(
-                            hasRole => hasRole ? of(group) : of()
-                        )
-                    );
-                } else if (this.hasRoles()) {
-                    return this.filterGroupsByRoles(group);
-                } else {
-                    return of(group);
-                }
-            }),
+            // mergeMap(group => {
+            //     if (this.appName) {
+            //         return this.checkGroupHasAccess(group.id).pipe(
+            //             mergeMap(
+            //                 hasRole => hasRole ? of(group) : of()
+            //             )
+            //         );
+            //     } else if (this.hasRoles()) {
+            //         return this.filterGroupsByRoles(group);
+            //     } else {
+            //         return of(group);
+            //     }
+            // }),
             takeUntil(this.onDestroy$)
         ).subscribe(searchedGroup => {
             this.searchGroups.push(searchedGroup);
