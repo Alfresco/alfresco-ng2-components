@@ -25,7 +25,7 @@ export class NewVersionUploaderService {
     ) { }
 
     openUploadNewVersionDialog(event: NewVersionUploaderDialogData, config?: MatDialogConfig) {
-        const { file, node } = event;
+        const { file, node, showVersionsOnly } = event;
         const showComments = true;
         const allowDownload = true;
 
@@ -33,7 +33,7 @@ export class NewVersionUploaderService {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
-                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload },
+                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
                         panelClass: 'adf-new-version-uploader-dialog',
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)
