@@ -18,3 +18,4 @@
 export * from './new-version-uploader.dialog';
 export * from './new-version-uploader.module';
 export * from './new-version-uploader.service';
+export * from './models';
