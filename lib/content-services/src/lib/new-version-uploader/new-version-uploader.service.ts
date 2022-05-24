@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 
-import { NewVersionUploaderData, NewVersionUploaderDialogComponent, NewVersionUploaderDialogData } from './new-version-uploader.dialog';
+import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
+import { filter } from 'rxjs/operators';
+import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
 
 @Injectable({
     providedIn: 'root'
@@ -36,10 +38,12 @@ export class NewVersionUploaderService {
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)
                     });
-                    dialogRef.componentInstance.uploadedNewVersion?.asObservable().subscribe( (newVersionUploaderData: NewVersionUploaderData) => {
+                    dialogRef.afterClosed().pipe(
+                        filter(data => data)
+                    ).subscribe( (newVersionUploaderData: NewVersionUploaderData) => {
                         resolve(newVersionUploaderData);
                     });
-                    dialogRef.componentInstance.uploadError?.asObservable().subscribe(error => {
+                    dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
                         reject(error);
                     });
                 });
