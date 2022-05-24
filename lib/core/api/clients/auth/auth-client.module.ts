@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
+import { AuthenticationApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
-import { ActivitiClientModule } from './activiti/activiti-client.module';
-import { AuthClientModule } from './auth/auth-client.module';
-import { DiscoveryClientModule } from './discovery/discovery-client.module';
-import { SearchClientModule } from './search/search-client.module';
+import { ApiClientsService } from '../../api-clients.service';
 
-@NgModule({
-    imports: [
-        ActivitiClientModule,
-        DiscoveryClientModule,
-        SearchClientModule,
-        AuthClientModule
-    ]
-})
-export class AlfrescoJsClientsModule { }
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Api {
+        interface ApiRegistry {
+            ['AuthClient.authentication']: AuthenticationApi;
+        }
+    }
+}
+
+@NgModule()
+export class AuthClientModule {
+    constructor(private apiClientsService: ApiClientsService) {
+        this.apiClientsService.register('AuthClient.authentication', AuthenticationApi);
+    }
+}
