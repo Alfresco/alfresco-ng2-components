@@ -22,19 +22,18 @@ import {
     AlfrescoApiService,
     LogService,
     ContentService,
-    DownloadService
+    DownloadService,
+    ApiClientsService
 } from '@alfresco/adf-core';
-import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
+import { AuthenticationApi, Node } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessCloudContentService {
 
-    private _uploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
+    get uploadApi() {
+        return this.apiClientsService.get('ContentCustomClient.upload');
     }
 
     private _authenticationApi;
@@ -44,6 +43,7 @@ export class ProcessCloudContentService {
     }
 
     constructor(
+        private apiClientsService: ApiClientsService,
         private apiService: AlfrescoApiService,
         private logService: LogService,
         public contentService: ContentService,
