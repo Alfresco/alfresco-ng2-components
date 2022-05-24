@@ -213,13 +213,13 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
-        this.newVersionUploaderService.openUploadNewVersionDialog(node).then((newVersionUploaderData: NewVersionUploaderData) => {
+        this.newVersionUploaderService.openUploadNewVersionDialog(node).subscribe((newVersionUploaderData: NewVersionUploaderData) => {
             if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
                 this.replaceOldFileVersionWithNew(newVersionUploaderData as VersionManagerUploadData);
             }
-        }).catch(error => {
-            this.notificationService.showError(error.value);
-        });
+        },
+            error => this.notificationService.showError(error.value)
+        );
     }
 
     onAttachFileClicked(nodeSelector: any) {

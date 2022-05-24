@@ -81,7 +81,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     replaceOldFileVersionWithNew(versionManagerData: VersionManagerUploadData) {
         const currentUploadedFileIndex = this.uploadedFiles.findIndex(file => file.name === versionManagerData.currentVersion.name);
-        this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion};
+        this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion.value.entry};
         this.field.value = [...this.uploadedFiles];
         this.field.form.values[this.field.id] = [...this.uploadedFiles];
     }
