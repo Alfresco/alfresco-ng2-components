@@ -47,45 +47,50 @@ export const mockNode: any = ({
 export const mockFile = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
 
 export const mockNewVersionUploaderData: any = {
+    action: 'upload',
     newVersion: {
-        isFile: true,
-        createdByUser: {
-            id: 'hruser',
-            displayName: 'hruser'
-        },
-        modifiedAt: '2022-05-23T14:53:16.300Z',
-        nodeType: 'cm:content',
-        content: {
-            mimeType:
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            mimeTypeName: 'Microsoft Word 2007',
-            sizeInBytes: 11887,
-            encoding: 'UTF-8'
-        },
-        parentId: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
-        aspectNames: [
-            'rn:renditioned',
-            'cm:versionable',
-            'cm:titled',
-            'cm:auditable',
-            'cm:author',
-            'cm:thumbnailModification'
-        ],
-        createdAt: '2022-05-23T08:32:22.613Z',
-        isFolder: false,
-        modifiedByUser: {
-            id: 'hruser',
-            displayName: 'hruser'
-        },
-        name: 'Test3.docx',
-        id: 'bc96a05d-9575-415e-94b6-00bd9446deb0',
-        properties: {
-            'cm:versionType': 'MINOR',
-            'cm:versionLabel': '5.1',
-            'cm:author': 'Amedeo Lepore',
-            'cm:lastThumbnailModification': ['doclib:1653311050056']
-        },
-        allowableOperations: ['delete', 'update', 'updatePermissions']
+        value: {
+            entry: {
+                isFile: true,
+                createdByUser: {
+                    id: 'hruser',
+                    displayName: 'hruser'
+                },
+                modifiedAt: '2022-05-24T10:19:43.544Z',
+                nodeType: 'cm:content',
+                content: {
+                    mimeType:
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    mimeTypeName: 'Microsoft Word 2007',
+                    sizeInBytes: 11887,
+                    encoding: 'UTF-8'
+                },
+                parentId: '422538ca-ea4b-4086-83f9-b36e4521ec7f',
+                aspectNames: [
+                    'rn:renditioned',
+                    'cm:versionable',
+                    'cm:titled',
+                    'cm:auditable',
+                    'cm:author',
+                    'cm:thumbnailModification'
+                ],
+                createdAt: '2022-05-24T07:26:44.429Z',
+                isFolder: false,
+                modifiedByUser: {
+                    id: 'hruser',
+                    displayName: 'hruser'
+                },
+                name: 'Test3.docx',
+                id: '42ddb84d-fc96-4b45-aa3c-f24ca997d602',
+                properties: {
+                    'cm:versionType': 'MINOR',
+                    'cm:versionLabel': '1.1',
+                    'cm:author': 'Amedeo Lepore',
+                    'cm:lastThumbnailModification': ['doclib:1653377205499']
+                },
+                allowableOperations: ['delete', 'update', 'updatePermissions']
+            }
+        }
     },
     currentVersion: {
         isFile: true,
@@ -93,16 +98,16 @@ export const mockNewVersionUploaderData: any = {
             id: 'hruser',
             displayName: 'hruser'
         },
-        modifiedAt: '2022-05-23T13:04:10.060Z',
+        modifiedAt: '2022-05-24T07:26:45.337Z',
         nodeType: 'cm:content',
         content: {
             mimeType:
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             mimeTypeName: 'Microsoft Word 2007',
-            sizeInBytes: 11919,
+            sizeInBytes: 11949,
             encoding: 'UTF-8'
         },
-        parentId: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
+        parentId: '422538ca-ea4b-4086-83f9-b36e4521ec7f',
         aspectNames: [
             'rn:renditioned',
             'cm:versionable',
@@ -111,13 +116,25 @@ export const mockNewVersionUploaderData: any = {
             'cm:author',
             'cm:thumbnailModification'
         ],
-        createdAt: '2022-05-23T08:32:22.613Z',
+        createdAt: '2022-05-24T07:26:44.429Z',
         path: {
-            name: '/hruser',
-            isComplete: false,
+            name: '/Company Home/User Homes/hruser',
+            isComplete: true,
             elements: [
                 {
-                    id: '3ee9d581-6f4c-4e94-8766-4a06f6ad82cc',
+                    id: '4e2284fd-9457-4914-a612-ea844e87f53f',
+                    name: 'Company Home',
+                    nodeType: 'cm:folder',
+                    aspectNames: ['cm:titled', 'cm:auditable', 'app:uifacets']
+                },
+                {
+                    id: '75a5d2d2-6edb-40b6-822e-499f5e8beffb',
+                    name: 'User Homes',
+                    nodeType: 'cm:folder',
+                    aspectNames: ['cm:titled', 'cm:auditable', 'app:uifacets']
+                },
+                {
+                    id: '422538ca-ea4b-4086-83f9-b36e4521ec7f',
                     name: 'hruser',
                     nodeType: 'cm:folder',
                     aspectNames: ['cm:ownable', 'cm:auditable']
@@ -128,12 +145,12 @@ export const mockNewVersionUploaderData: any = {
         permissions: {
             inherited: [
                 {
-                    authorityId: 'hruser',
+                    authorityId: 'ROLE_OWNER',
                     name: 'All',
                     accessStatus: 'ALLOWED'
                 },
                 {
-                    authorityId: 'ROLE_OWNER',
+                    authorityId: 'hruser',
                     name: 'All',
                     accessStatus: 'ALLOWED'
                 }
@@ -151,13 +168,13 @@ export const mockNewVersionUploaderData: any = {
             id: 'hruser',
             displayName: 'hruser'
         },
-        name: 'Test4.docx',
-        id: 'bc96a05d-9575-415e-94b6-00bd9446deb0',
+        name: 'Test2.docx',
+        id: '42ddb84d-fc96-4b45-aa3c-f24ca997d602',
         properties: {
             'cm:versionType': 'MAJOR',
-            'cm:versionLabel': '5.0',
+            'cm:versionLabel': '1.0',
             'cm:author': 'Amedeo Lepore',
-            'cm:lastThumbnailModification': ['doclib:1653311050056']
+            'cm:lastThumbnailModification': ['doclib:1653377205499']
         },
         allowableOperations: ['delete', 'update', 'updatePermissions'],
         isExternal: true

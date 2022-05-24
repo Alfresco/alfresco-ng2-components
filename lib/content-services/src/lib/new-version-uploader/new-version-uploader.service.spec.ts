@@ -3,10 +3,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
-import { mockFile, mockNode } from '../mock';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { NewVersionUploaderDialogData } from './models';
+import { NewVersionUploaderData, NewVersionUploaderDataAction, NewVersionUploaderDialogData, RefreshData, VersionManagerUploadData, ViewVersion } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { NewVersionUploaderService } from './new-version-uploader.service';
 
@@ -15,9 +15,12 @@ import { NewVersionUploaderService } from './new-version-uploader.service';
 })
 class TestDialogComponent {
     @Output()
+    dialogAction = new EventEmitter<NewVersionUploaderData>();
+
+    @Output()
     uploadError = new EventEmitter<any>();
 
-    afterClosed = () => of({ action: 'refresh', node: mockNode});
+    afterClosed = () => of({ action: 'refresh', node: mockNode });
 
 }
 
@@ -45,7 +48,7 @@ describe('NewVersionUploaderService', () => {
         dialog = TestBed.inject(MatDialog);
         fixture = TestBed.createComponent(TestDialogComponent);
 
-        dialogRefSpyObj = jasmine.createSpyObj({afterClosed: null });
+        dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: null });
         dialogRefSpyObj.componentInstance = fixture.componentInstance;
         dialogRefSpyObj.afterClosed = fixture.componentInstance.afterClosed;
         spyOnDialogOpen = spyOn(dialog, 'open').and.returnValue(dialogRefSpyObj);
@@ -67,10 +70,12 @@ describe('NewVersionUploaderService', () => {
                 node: mockNode,
                 file: mockFile
             };
-
-            service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).catch(error => {
+            try {
+                await service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).toPromise();
+                fail('An error should have been thrown');
+            } catch (error) {
                 expect(error).toEqual({ value: 'OPERATION.ERROR.PERMISSION' });
-            });
+            }
         });
 
         describe('Mat Dialog configuration', () => {
@@ -87,10 +92,10 @@ describe('NewVersionUploaderService', () => {
             });
 
             it('Should open dialog with default configuration', fakeAsync(() => {
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).toPromise();
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
-                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true },
+                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: 'adf-new-version-uploader-dialog',
                     width: '630px'
                 });
@@ -101,10 +106,10 @@ describe('NewVersionUploaderService', () => {
                     panelClass: 'adf-custom-class',
                     width: '500px'
                 };
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
-                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true },
+                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: 'adf-custom-class',
                     width: '500px'
                 });
@@ -114,10 +119,10 @@ describe('NewVersionUploaderService', () => {
                 const mockDialogConfiguration: MatDialogConfig = {
                     height: '600px'
                 };
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
-                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true },
+                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
                     panelClass: 'adf-new-version-uploader-dialog',
                     width: '630px',
                     height: '600px'
@@ -126,10 +131,25 @@ describe('NewVersionUploaderService', () => {
 
             it('Should not override dialog configuration, if dialog configuration is empty', fakeAsync(() => {
                 const mockDialogConfiguration: MatDialogConfig = {};
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
-                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true },
+                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
+                    panelClass: 'adf-new-version-uploader-dialog',
+                    width: '630px'
+                });
+            }));
+
+            it('Should open dialog with default configuration', fakeAsync(() => {
+                const mockNewVersionUploaderDialogDataWithVersionsOnly = {
+                    node: mockNode,
+                    file: mockFile,
+                    showVersionsOnly: true
+                };
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogDataWithVersionsOnly).toPromise();
+                tick();
+                expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
+                    data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: true },
                     panelClass: 'adf-new-version-uploader-dialog',
                     width: '630px'
                 });
@@ -151,37 +171,55 @@ describe('NewVersionUploaderService', () => {
                 };
             });
 
-            it('Should resolve Refresh action', fakeAsync(() => {
-                const openDialogReturnedValue: Promise<any> = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
-                dialogRefSpyObj.afterClosed = () => of({ action: 'refresh', node: mockNode});
-                tick();
-                openDialogReturnedValue.then(res => expect(res).toEqual({ action: 'refresh', node: mockNode}));
-            }));
+            it('Should return Refresh action', (done) => {
+                dialogRefSpyObj.componentInstance = {
+                    dialogAction: new BehaviorSubject<RefreshData>({ action: NewVersionUploaderDataAction.refresh, node: mockNode }),
+                    uploadError: new Subject()
+                };
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe((res) => {
+                    expect(res).toEqual({ action: NewVersionUploaderDataAction.refresh, node: mockNode });
+                    done();
+                });
+            });
 
-            it('Should resolve Upload action', fakeAsync(() => {
-                const openDialogReturnedValue: Promise<any> = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
-                dialogRefSpyObj.afterClosed = () => of({ action: 'upload', node: mockNode});
-                tick();
-                openDialogReturnedValue.then(res => expect(res).toEqual({ action: 'upload', node: mockNode}));
-            }));
+            it('Should return Upload action', (done) => {
+                dialogRefSpyObj.componentInstance = {
+                    dialogAction: new BehaviorSubject<VersionManagerUploadData>(mockNewVersionUploaderData),
+                    uploadError: new Subject()
+                };
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe((res) => {
+                    expect(res).toEqual(mockNewVersionUploaderData);
+                    done();
+                });
+            });
 
-            it('Should resolve View Version action', fakeAsync(() => {
-                const openDialogReturnedValue: Promise<any> = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
-                dialogRefSpyObj.afterClosed = () => of({ action: 'view', node: mockNode});
-                tick();
-                openDialogReturnedValue.then(res => expect(res).toEqual({ action: 'view', node: mockNode}));
-            }));
+            it('Should return View Version action', (done) => {
+                dialogRefSpyObj.componentInstance = {
+                    dialogAction: new BehaviorSubject<ViewVersion>({ action: NewVersionUploaderDataAction.view, versionId: '2' }),
+                    uploadError: new Subject()
+                };
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe((res) => {
+                    expect(res).toEqual({ action: NewVersionUploaderDataAction.view, versionId: '2' });
+                    done();
+                });
+            });
 
-            it('Should reject promise when an upload error is emitted', fakeAsync(() => {
-                const openDialogReturnedValue = service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData);
-                tick();
-                fixture.componentInstance.uploadError.next({ value: 'Upload error' });
-                openDialogReturnedValue.catch(res => expect(res).toEqual({ value: 'Upload error' }));
-            }));
-
+            it('Should return upload error', (done) => {
+                dialogRefSpyObj.componentInstance = {
+                    dialogAction: new Subject(),
+                    uploadError: new BehaviorSubject<any>({ value: 'Upload error' })
+                };
+                spyOnDialogOpen.and.returnValue(dialogRefSpyObj);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe(() => {
+                    fail('An error should have been thrown');
+                },
+                    error => {
+                        expect(error).toEqual({ value: 'Upload error' });
+                        done();
+                    });
+            });
 
         });
-
 
     });
 });

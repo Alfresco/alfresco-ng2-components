@@ -4,8 +4,8 @@ import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
-import { filter } from 'rxjs/operators';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +29,7 @@ export class NewVersionUploaderService {
         const showComments = true;
         const allowDownload = true;
 
-        return new Promise((resolve, reject)=> {
+        return new Observable((observer) => {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
@@ -38,17 +38,16 @@ export class NewVersionUploaderService {
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)
                     });
-                    dialogRef.afterClosed().pipe(
-                        filter(data => data)
-                    ).subscribe( (newVersionUploaderData: NewVersionUploaderData) => {
-                        resolve(newVersionUploaderData);
-                    });
+                    dialogRef.componentInstance.dialogAction.asObservable()
+                        .subscribe((newVersionUploaderData: NewVersionUploaderData) => {
+                            observer.next(newVersionUploaderData);
+                        });
                     dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
-                        reject(error);
+                        observer.error(error);
                     });
                 });
             } else {
-                reject({value: 'OPERATION.ERROR.PERMISSION'});
+                observer.error({ value: 'OPERATION.ERROR.PERMISSION' });
             }
         });
 
