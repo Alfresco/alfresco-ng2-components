@@ -27,6 +27,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
+import { ApiClientsService } from '../api/api-clients.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -54,10 +55,8 @@ export class AuthenticationService {
         return this._peopleApi;
     }
 
-    _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
+    get profileApi() {
+        return this.apiClientsService.get('ActivitiClient.user-profile');
     }
 
     constructor(
@@ -65,7 +64,9 @@ export class AuthenticationService {
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
-        private logService: LogService) {
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) {
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();

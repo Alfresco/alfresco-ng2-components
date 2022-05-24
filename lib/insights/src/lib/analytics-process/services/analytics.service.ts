@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { ApiClientsService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
@@ -28,26 +28,22 @@ import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model'
 import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map, catchError } from 'rxjs/operators';
-import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
-    private _reportApi: ReportApi;
-    get reportApi(): ReportApi {
-        this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
-        return this._reportApi;
+    get reportApi() {
+        return this.apiClientsService.get('ActivitiClient.report');
     }
 
-    private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
-        return this._processDefinitionsApi;
+    get processDefinitionsApi() {
+        return this.apiClientsService.get('ActivitiClient.process-definitions');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) { }
 
     /**
      * Retrieve all the Deployed app
