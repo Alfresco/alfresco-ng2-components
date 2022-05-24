@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -28,6 +28,7 @@ import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 import { DownloadService } from './download.service';
 import { ThumbnailService } from './thumbnail.service';
+import { ApiClientsService } from '../api/api-clients.service';
 
 @Injectable({
     providedIn: 'root'
@@ -44,19 +45,19 @@ export class ContentService {
         return this._contentApi;
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
-    constructor(public authService: AuthenticationService,
-                public apiService: AlfrescoApiService,
-                private logService: LogService,
-                private sanitizer: DomSanitizer,
-                private downloadService: DownloadService,
-                private thumbnailService: ThumbnailService) {
-    }
+    constructor(
+        public authService: AuthenticationService,
+        public apiService: AlfrescoApiService,
+        private logService: LogService,
+        private sanitizer: DomSanitizer,
+        private downloadService: DownloadService,
+        private thumbnailService: ThumbnailService,
+        private apiClientsService: ApiClientsService
+    ) { }
 
     /**
      * @deprecated in 3.2.0, use DownloadService instead.

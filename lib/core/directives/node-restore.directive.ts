@@ -18,11 +18,11 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
+import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
+import { ApiClientsService } from '../api/api-clients.service';
 
 export class RestoreMessageModel {
     message: string;
@@ -36,10 +36,8 @@ export class RestoreMessageModel {
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
-        return this._trashcanApi;
+    get trashcanApi() {
+        return this.apiClientsService.get('ContentClient.trashcan');
     }
 
     /** Array of deleted nodes to restore. */
@@ -55,8 +53,10 @@ export class NodeRestoreDirective {
         this.recover(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private translation: TranslationService) {
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private translation: TranslationService
+    ) {
         this.restoreProcessStatus = this.processStatus();
     }
 
@@ -78,18 +78,18 @@ export class NodeRestoreDirective {
                 }),
                 mergeMap(() => this.getDeletedNodes())
             )
-            .subscribe((deletedNodesList) => {
-                const { entries: nodeList } = deletedNodesList.list;
-                const { fail: restoreErrorNodes } = this.restoreProcessStatus;
-                const selectedNodes = this.diff(restoreErrorNodes, selection, false);
-                const remainingNodes = this.diff(selectedNodes, nodeList);
+                .subscribe((deletedNodesList) => {
+                    const { entries: nodeList } = deletedNodesList.list;
+                    const { fail: restoreErrorNodes } = this.restoreProcessStatus;
+                    const selectedNodes = this.diff(restoreErrorNodes, selection, false);
+                    const remainingNodes = this.diff(selectedNodes, nodeList);
 
-                if (!remainingNodes.length) {
-                    this.notification();
-                } else {
-                    this.recover(remainingNodes);
-                }
-            });
+                    if (!remainingNodes.length) {
+                        this.notification();
+                    } else {
+                        this.recover(remainingNodes);
+                    }
+                });
         } else {
             this.restoreProcessStatus.fail.push(...selection);
             this.notification();

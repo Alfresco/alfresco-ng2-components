@@ -20,13 +20,12 @@ import {
     SiteEntry,
     SiteMembershipRequestBody,
     SiteMemberEntry,
-    SiteMembershipRequestEntry,
-    SitesApi
+    SiteMembershipRequestEntry
 } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { SitesService } from '../services/sites.service';
 import { VersionCompatibilityService } from '../services/version-compatibility.service';
+import { ApiClientsService } from '../api/api-clients.service';
 
 export interface LibraryMembershipToggleEvent {
     updatedEntry?: any;
@@ -48,10 +47,8 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
-        return this._sitesApi;
+    get sitesApi() {
+        return this.apiClientsService.get('ContentClient.sites');
     }
 
     /** Site for which to toggle the membership request. */
@@ -75,7 +72,7 @@ export class LibraryMembershipDirective implements OnChanges {
     }
 
     constructor(
-        private alfrescoApiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
     ) {

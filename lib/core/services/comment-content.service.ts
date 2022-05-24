@@ -18,25 +18,21 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
 import { map, catchError } from 'rxjs/operators';
-import { CommentEntry, CommentsApi } from '@alfresco/js-api';
+import { CommentEntry } from '@alfresco/js-api';
+import { ApiClientsService } from '../api/api-clients.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentContentService {
 
-    _commentsApi: CommentsApi;
-    get commentsApi(): CommentsApi {
-        this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
-        return this._commentsApi;
+    get commentsApi() {
+        return this.apiClientsService.get('ContentClient.comments');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) { }
 
     /**
      * Adds a comment to a node.

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ApiClientsService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { VersionsApi, Node, VersionEntry, VersionPaging, NodesApi, NodeEntry, ContentApi } from '@alfresco/js-api';
+import { Node, VersionEntry, VersionPaging, NodesApi, NodeEntry, ContentApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import { ContentVersionService } from './content-version.service';
@@ -37,16 +37,12 @@ export class VersionListComponent implements OnChanges {
         return this._contentApi;
     }
 
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.alfrescoApi.getInstance());
-        return this._versionsApi;
+    get versionsApi() {
+        return this.apiClientsService.get('ContentClient.versions');
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     versions: VersionEntry[] = [];
@@ -84,11 +80,13 @@ export class VersionListComponent implements OnChanges {
     @Output()
     viewVersion = new EventEmitter<string>();
 
-    constructor(private alfrescoApi: AlfrescoApiService,
-                private contentService: ContentService,
-                private contentVersionService: ContentVersionService,
-                private dialog: MatDialog) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private alfrescoApi: AlfrescoApiService,
+        private contentService: ContentService,
+        private contentVersionService: ContentVersionService,
+        private dialog: MatDialog
+    ) { }
 
     ngOnChanges() {
         this.loadVersionHistory();

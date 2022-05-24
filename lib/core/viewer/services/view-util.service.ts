@@ -16,12 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
+import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Subject } from 'rxjs';
 import { Track } from '../models/viewer.model';
 import { TranslationService } from '../../services/translation.service';
+import { ApiClientsService } from '../../api/api-clients.service';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +34,7 @@ export class ViewUtilService {
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerComponent
      */
-        // tslint:disable-next-line:variable-name
+    // tslint:disable-next-line:variable-name
     static ContentGroup = {
         IMAGE: 'image',
         MEDIA: 'media',
@@ -74,10 +75,8 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
-    _renditionsApi: RenditionsApi;
-    get renditionsApi(): RenditionsApi {
-        this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
-        return this._renditionsApi;
+    get renditionsApi() {
+        return this.apiClientsService.get('ContentClient.renditions');
     }
 
     _contentApi: ContentApi;
@@ -86,16 +85,16 @@ export class ViewUtilService {
         return this._contentApi;
     }
 
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
+    get versionsApi() {
+        return this.apiClientsService.get('ContentClient.versions');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private translateService: TranslationService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private translateService: TranslationService
+    ) { }
 
     /**
      * This method takes a url to trigger the print dialog against, and the type of artifact that it

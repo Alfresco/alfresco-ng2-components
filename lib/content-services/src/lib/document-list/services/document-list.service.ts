@@ -16,11 +16,11 @@
  */
 
 import {
-    AlfrescoApiService, ContentService, LogService, PaginationModel
+    ApiClientsService, ContentService, LogService, PaginationModel
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -34,17 +34,16 @@ const ROOT_ID = '-root-';
 })
 export class DocumentListService implements DocumentListLoader {
 
-    private _nodesApi: NodesApi;
-    get nodes(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
-    constructor(private contentService: ContentService,
-                private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private customResourcesService: CustomResourcesService) {
-    }
+    constructor(
+        private contentService: ContentService,
+        private apiClientsService: ApiClientsService,
+        private logService: LogService,
+        private customResourcesService: CustomResourcesService
+    ) { }
 
     /**
      * Deletes a node.

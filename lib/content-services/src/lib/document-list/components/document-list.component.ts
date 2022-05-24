@@ -43,13 +43,13 @@ import {
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
-    AlfrescoApiService,
     UserPreferenceValues,
     LockService,
-    DataRow
+    DataRow,
+    ApiClientsService
 } from '@alfresco/adf-core';
 
-import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -345,21 +345,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     constructor(private documentListService: DocumentListService,
-                private ngZone: NgZone,
-                private elementRef: ElementRef,
-                private appConfig: AppConfigService,
-                private userPreferencesService: UserPreferencesService,
-                private contentService: ContentService,
-                private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService,
-                private lockService: LockService) {
+        private ngZone: NgZone,
+        private elementRef: ElementRef,
+        private appConfig: AppConfigService,
+        private userPreferencesService: UserPreferencesService,
+        private contentService: ContentService,
+        private thumbnailService: ThumbnailService,
+        private apiClientsService: ApiClientsService,
+        private lockService: LockService) {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
