@@ -1,7 +1,7 @@
 import { Node } from '@alfresco/js-api';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NewVersionUploaderDialogData } from './models/new-version-uploader.model';
+import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
@@ -9,6 +9,9 @@ import { NewVersionUploaderDialogData } from './models/new-version-uploader.mode
     styleUrls: ['./new-version-uploader.dialog.scss']
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
+
+    @Output()
+    dialogAction = new EventEmitter<NewVersionUploaderData>();
 
     @Output()
     uploadError = new EventEmitter<any>();
@@ -22,7 +25,8 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     }
 
     handleUpload(newFileVersion) {
-        this.dialogRef.close({ action: 'upload', newVersion: newFileVersion.value.entry, currentVersion: this.data.node });
+        this.dialogAction.emit({ action: NewVersionUploaderDataAction.upload, newVersion: newFileVersion, currentVersion: this.data.node });
+        this.dialogRef.close();
     }
 
     handleCancel() {
@@ -31,15 +35,14 @@ export class NewVersionUploaderDialogComponent implements OnInit {
 
     onUploadError(error) {
         this.uploadError.emit(error);
-        this.dialogRef.close();
     }
 
     onViewingVersion(versionId: string) {
-        this.dialogRef.close({ action: 'view', versionId });
+        this.dialogAction.emit({ action: NewVersionUploaderDataAction.view, versionId });
     }
 
     refresh(node: Node) {
-        this.dialogRef.close({ action: 'refresh', node });
+        this.dialogAction.emit({ action: NewVersionUploaderDataAction.refresh, node });
     }
 
 }
