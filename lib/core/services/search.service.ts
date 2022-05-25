@@ -20,7 +20,8 @@ import { NodePaging, QueriesApi, QueryBody, ResultSetPaging } from '@alfresco/js
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
-import { ApiClientsService } from '../api/api-clients.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
+
 
 @Injectable({
     providedIn: 'root'
