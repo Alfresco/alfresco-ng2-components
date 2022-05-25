@@ -16,16 +16,19 @@
  */
 
 import { Node } from '@alfresco/js-api';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
     templateUrl: './new-version-uploader.dialog.html',
-    styleUrls: ['./new-version-uploader.dialog.scss']
+    styleUrls: ['./new-version-uploader.dialog.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
+
+    title: string;
 
     @Output()
     dialogAction = new EventEmitter<NewVersionUploaderData>();
@@ -39,6 +42,11 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        if(!this.data.title){
+            this.title = this.data.showVersionsOnly ? 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE' : 'ADF-NEW-VERSION-UPLOADER.DIALOG_UPLOAD.TITLE';
+        } else {
+            this.title = this.data.title;
+        }
     }
 
     handleUpload(newFileVersion) {
