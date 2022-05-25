@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from '@alfresco/adf-core/api';
 export * from './about/index';
 export * from './viewer/index';
 export * from './userinfo/index';
@@ -53,5 +54,4 @@ export * from './mock/index';
 export * from './testing';
 
 export * from './material.module';
-export * from './api';
 export * from './core.module';
