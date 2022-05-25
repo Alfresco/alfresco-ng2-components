@@ -50,8 +50,8 @@ export class NewVersionUploaderService {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
-                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
-                        panelClass: 'adf-new-version-uploader-dialog',
+                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly},
+                        panelClass: this.composePanelClass(showVersionsOnly),
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)
                     });
@@ -68,5 +68,10 @@ export class NewVersionUploaderService {
             }
         });
 
+    }
+
+    private composePanelClass(showVersionsOnly: boolean): string | string[] {
+        const dialogCssClass = 'adf-new-version-uploader-dialog';
+        return [dialogCssClass, `${dialogCssClass}-${showVersionsOnly ? 'list' : 'upload'}`];
     }
 }
