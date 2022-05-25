@@ -18,34 +18,115 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { TranslationMock, TranslationService } from 'core';
-
+import { setupTestBed } from 'core';
+import { mockFile, mockNode } from '../mock';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { UploadVersionButtonComponent } from '../upload';
+import { VersionComparisonComponent, VersionListComponent, VersionUploadComponent } from '../version-manager';
+import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
     let fixture: ComponentFixture<NewVersionUploaderDialogComponent>;
+    let nativeElement;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot()],
-            declarations: [NewVersionUploaderDialogComponent],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: {} },
-                { provide: MatDialogRef, useValue: {} },
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        })
-            .compileComponents();
+    const mockDialogRef = {
+        close: jasmine.createSpy('close'),
+        open: jasmine.createSpy('open')
+    };
+    const showVersionsOnly = true;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
+        declarations: [
+            NewVersionUploaderDialogComponent,
+            VersionListComponent,
+            VersionUploadComponent,
+            UploadVersionButtonComponent,
+            VersionComparisonComponent
+        ],
+        providers: [
+            { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
+            {
+                provide: MatDialogRef, useValue: mockDialogRef
+            }
+        ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NewVersionUploaderDialogComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+        nativeElement = fixture.debugElement.nativeElement;
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    describe('Upload New Version', () => {
+
+        const expectedUploadNewVersionTitle = 'ADF-NEW-VERSION-UPLOADER.DIALOG_UPLOAD.TITLE';
+
+        it('should display adf version upload button if showVersionsOnly is passed as false from parent component', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            const adfVersionComponent = nativeElement.querySelector('#adf-version-upload-button');
+            expect(adfVersionComponent).not.toEqual(null);
+        });
+
+        it('should display adf version comparison if showVersionsOnly is passed as false from parent component', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            const adfVersionComparisonComponent = nativeElement.querySelector('#adf-version-comparison');
+            expect(adfVersionComparisonComponent).not.toEqual(null);
+        });
+
+        it('should show default title if title is not provided from parent component', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector('.mat-dialog-title');
+            expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
+        });
+
+        it('should show default title if title is provided as empty from parent component', () => {
+            component.data.showVersionsOnly = false;
+            component.data.title = '';
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector('.mat-dialog-title');
+            expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
+        });
+
+        it('should emit dialog action when upload a new file', () => {
+            const spyOnDialogAction = spyOn(component.dialogAction, 'emit');
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            component.handleUpload(mockNode);
+            const expectedEmittedValue = {
+                action: NewVersionUploaderDataAction.upload,
+                currentVersion: component.data.node,
+                newVersion: mockNode
+            };
+            expect(spyOnDialogAction).toHaveBeenCalledWith(expectedEmittedValue);
+        });
+
+        it('should close dialog after file is uploaded', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            component.handleUpload(mockFile);
+            expect(mockDialogRef.close).toHaveBeenCalled();
+        });
+
+        it('should close dialog after click on dialog cancel', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            component.handleCancel();
+            expect(mockDialogRef.close).toHaveBeenCalled();
+        });
+
+    });
+
 });
