@@ -31,6 +31,13 @@ describe('NewVersionUploaderDialog', () => {
     let fixture: ComponentFixture<NewVersionUploaderDialogComponent>;
     let nativeElement;
 
+    const cssSelectors = {
+        adfVersionUploadButton: '#adf-version-upload-button',
+        adfVersionComparison: '#adf-version-comparison',
+        adfVersionList: '.adf-version-list',
+        matDialogTitle: '.mat-dialog-title'
+    };
+
     const mockDialogRef = {
         close: jasmine.createSpy('close'),
         open: jasmine.createSpy('open')
@@ -63,6 +70,10 @@ describe('NewVersionUploaderDialog', () => {
         nativeElement = fixture.debugElement.nativeElement;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should create', () => {
         expect(component).toBeTruthy();
     });
@@ -74,21 +85,28 @@ describe('NewVersionUploaderDialog', () => {
         it('should display adf version upload button if showVersionsOnly is passed as false from parent component', () => {
             component.data.showVersionsOnly = false;
             fixture.detectChanges();
-            const adfVersionComponent = nativeElement.querySelector('#adf-version-upload-button');
+            const adfVersionComponent = nativeElement.querySelector(cssSelectors.adfVersionUploadButton);
             expect(adfVersionComponent).not.toEqual(null);
         });
 
         it('should display adf version comparison if showVersionsOnly is passed as false from parent component', () => {
             component.data.showVersionsOnly = false;
             fixture.detectChanges();
-            const adfVersionComparisonComponent = nativeElement.querySelector('#adf-version-comparison');
+            const adfVersionComparisonComponent = nativeElement.querySelector(cssSelectors.adfVersionComparison);
             expect(adfVersionComparisonComponent).not.toEqual(null);
+        });
+
+        it('should not display adf version list if showVersionsOnly is passed as false from parent component', () => {
+            component.data.showVersionsOnly = false;
+            fixture.detectChanges();
+            const adfVersionComparisonComponent = nativeElement.querySelector(cssSelectors.adfVersionList);
+            expect(adfVersionComparisonComponent).toEqual(null);
         });
 
         it('should show default title if title is not provided from parent component', () => {
             component.data.showVersionsOnly = false;
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector('.mat-dialog-title');
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
             expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
         });
 
@@ -96,8 +114,16 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = false;
             component.data.title = '';
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector('.mat-dialog-title');
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
             expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
+        });
+
+        it('should not show Upload New Version default title if title is provided from parent component', () => {
+            component.data.showVersionsOnly = false;
+            component.data.title = 'TEST_TITLE';
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
         });
 
         it('should emit dialog action when upload a new file', () => {
@@ -125,6 +151,57 @@ describe('NewVersionUploaderDialog', () => {
             fixture.detectChanges();
             component.handleCancel();
             expect(mockDialogRef.close).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('Manage Versions', () => {
+
+        const expectedManageVersionsTitle = 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE';
+
+        it('should display adf version list if showVersionsOnly is passed as true from parent component', () => {
+            component.data.showVersionsOnly = true;
+            fixture.detectChanges();
+            const adfVersionListComponent = document.querySelector(cssSelectors.adfVersionList);
+            expect(adfVersionListComponent).not.toEqual(null);
+        });
+
+        it('should not display adf version upload button if showVersionsOnly is passed as true from parent component', () => {
+            component.data.showVersionsOnly = true;
+            fixture.detectChanges();
+            const adfVersionComponent = nativeElement.querySelector(cssSelectors.adfVersionUploadButton);
+            expect(adfVersionComponent).toEqual(null);
+        });
+
+        it('should not display adf version comparison if showVersionsOnly is passed as true from parent component', () => {
+            component.data.showVersionsOnly = true;
+            fixture.detectChanges();
+            const adfVersionComponent = nativeElement.querySelector(cssSelectors.adfVersionComparison);
+            expect(adfVersionComponent).toEqual(null);
+        });
+
+        it('should show Manage Versions default title if title is not provided from parent component', () => {
+            component.data.showVersionsOnly = true;
+            component.data.title = undefined;
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            expect(matDialogTitle.innerHTML).toEqual(expectedManageVersionsTitle);
+        });
+
+        it('should show Manage Versions default title if title is provided as empty from parent component', () => {
+            component.data.showVersionsOnly = true;
+            component.data.title = '';
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            expect(matDialogTitle.innerHTML).toEqual(expectedManageVersionsTitle);
+        });
+
+        it('should not show Manage Versions default title if title is provided from parent component', () => {
+            component.data.showVersionsOnly = true;
+            component.data.title = 'TEST_TITLE';
+            fixture.detectChanges();
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
         });
 
     });
