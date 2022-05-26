@@ -32,8 +32,9 @@ import {
     AbstractControl
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AlfrescoApiService, SitesService } from '@alfresco/adf-core';
+import { SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { SitesService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -72,14 +73,12 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     ];
     disableCreateButton = false;
 
-    _queriesApi: QueriesApi;
-    get queriesApi(): QueriesApi {
-        this._queriesApi = this._queriesApi ?? new QueriesApi(this.alfrescoApiService.getInstance());
-        return this._queriesApi;
+    get queriesApi() {
+        return this.apiClientsService.get('ContentClient.queries');
     }
 
     constructor(
-        private alfrescoApiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private sitesService: SitesService,
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>
@@ -230,9 +229,9 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
         return this.queriesApi.findSites(libraryTitle, {
-                maxItems: 1,
-                fields: ['title']
-            });
+            maxItems: 1,
+            fields: ['title']
+        });
     }
 
     private forbidSpecialCharacters({ value }: FormControl) {

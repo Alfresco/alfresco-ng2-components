@@ -19,9 +19,10 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApiCompatibility,
     ContentApi,
-    Node, NodesApi
+    Node
 } from '@alfresco/js-api';
 import { ReplaySubject, Subject } from 'rxjs';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,6 @@ export class ExternalAlfrescoApiService {
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApiCompatibility;
-    _nodesApi: NodesApi;
 
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
@@ -46,10 +46,11 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().content;
     }
 
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
+
+    constructor(private apiClientsService: ApiClientsService) {}
 
     init(ecmHost: string, contextRoot: string) {
 

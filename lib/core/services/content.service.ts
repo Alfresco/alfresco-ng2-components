@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -43,10 +43,8 @@ export class ContentService {
         return this.apiClientsService.get('ContentCustomClient.content');
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     constructor(

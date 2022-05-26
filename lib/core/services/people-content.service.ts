@@ -17,9 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
+import { PersonEntry, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 import { AuthenticationService } from './authentication.service';
@@ -52,14 +52,12 @@ export class PeopleContentService {
     private hasContentAdminRole: boolean = false;
     hasCheckedIsContentAdmin: boolean = false;
 
-    private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
+    get peopleApi() {
+        return this.apiClientsService.get('ContentClient.people');
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         authenticationService: AuthenticationService,
         private logService: LogService
     ) {

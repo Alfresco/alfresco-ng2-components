@@ -16,8 +16,8 @@
  */
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { SiteBody, FavoriteBody, FavoriteEntry, Site, FavoritesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { SiteBody, FavoriteBody, FavoriteEntry, Site } from '@alfresco/js-api';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 export interface LibraryEntity {
     entry: Site;
@@ -39,10 +39,8 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     private targetLibrary = null;
 
-    _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
-        return this._favoritesApi;
+    get favoritesApi() {
+        return this.apiClientsService.get('ContentClient.favorites');
     }
 
     @HostListener('click')
@@ -62,8 +60,7 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     ngOnChanges(changes) {
         if (!changes.library.currentValue) {

@@ -26,8 +26,7 @@ import {
     Version,
     RenditionEntry,
     NodeEntry,
-    VersionEntry,
-    SharedlinksApi, VersionsApi, NodesApi
+    VersionEntry
 } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -280,22 +279,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
+    get sharedLinksApi() {
+        return this.apiClientsService.get('ContentClient.sharedlinks');
     }
 
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
+    get versionsApi() {
+        return this.apiClientsService.get('ContentClient.versions');
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     get contentApi() {
@@ -303,6 +296,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     constructor(
+        private apiClientsService: ApiClientsService,
         private apiService: AlfrescoApiService,
         private viewUtilService: ViewUtilService,
         private logService: LogService,
@@ -311,8 +305,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         private uploadService: UploadService,
         private el: ElementRef,
         public dialog: MatDialog,
-        private cdr: ChangeDetectorRef,
-        private apiClientsService: ApiClientsService
+        private cdr: ChangeDetectorRef
     ) {
         viewUtilService.maxRetries = this.maxRetries;
     }

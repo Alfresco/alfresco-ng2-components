@@ -22,11 +22,12 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -48,10 +49,8 @@ export class AuthenticationService {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-    _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
-        return this._peopleApi;
+    get peopleApi() {
+        return this.apiClientsService.get('ContentClient.people');
     }
 
     _profileApi: UserProfileApi;
@@ -65,7 +64,9 @@ export class AuthenticationService {
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
-        private logService: LogService) {
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) {
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
