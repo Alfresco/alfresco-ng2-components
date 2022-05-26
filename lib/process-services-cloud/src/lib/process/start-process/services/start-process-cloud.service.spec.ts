@@ -156,4 +156,21 @@ describe('StartProcessCloudService', () => {
                 }
             );
     });
+
+    it('should transform the response into task variables', (done) => {
+        const appName = 'test-app';
+        const processDefinitionId = 'processDefinitionId';
+        const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
+        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
+
+        service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).subscribe((result) => {
+            expect(result.length).toEqual(3);
+            expect(result[0]).toEqual({ id: 'static1', name: 'static1', value: 'value' });
+            expect(result[0]).toEqual({ id: 'static2', name: 'static2', value: 0 });
+            expect(result[0]).toEqual({ id: 'static3', name: 'static3', value: true });
+            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`)).toBeTruthy();
+            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+            done();
+        });
+    });
 });
