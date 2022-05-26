@@ -169,6 +169,7 @@
     "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^1.6.0",
     "nconf": "^0.11.1",
+    "ng-mocks": "^10.5.4",
     "ng-packagr": "^10.1.2",
     "node-sass": "^4.14.1",
     "postcss": "^8.4.5",
