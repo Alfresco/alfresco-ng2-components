@@ -113,7 +113,7 @@ describe('NewVersionUploaderService', () => {
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
-                    panelClass: 'adf-new-version-uploader-dialog',
+                    panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
                 });
             }));
@@ -140,7 +140,7 @@ describe('NewVersionUploaderService', () => {
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
-                    panelClass: 'adf-new-version-uploader-dialog',
+                    panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px',
                     height: '600px'
                 });
@@ -152,12 +152,12 @@ describe('NewVersionUploaderService', () => {
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: undefined },
-                    panelClass: 'adf-new-version-uploader-dialog',
+                    panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
                 });
             }));
 
-            it('Should open dialog with default configuration', fakeAsync(() => {
+            it('Should dialog add list css class if showVersionsOnly is true', fakeAsync(() => {
                 const mockNewVersionUploaderDialogDataWithVersionsOnly = {
                     node: mockNode,
                     file: mockFile,
@@ -167,7 +167,7 @@ describe('NewVersionUploaderService', () => {
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
                     data: { file: mockFile, node: mockNode, currentVersion: '2', showComments: true, allowDownload: true, showVersionsOnly: true },
-                    panelClass: 'adf-new-version-uploader-dialog',
+                    panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-list'],
                     width: '630px'
                 });
             }));
