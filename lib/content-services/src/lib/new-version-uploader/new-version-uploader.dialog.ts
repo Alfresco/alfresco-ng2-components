@@ -42,7 +42,11 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        if(!this.data.title){
+        this.setDialogTitle();
+    }
+
+    private setDialogTitle() {
+        if (!this.data.title) {
             this.title = this.data.showVersionsOnly ? 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE' : 'ADF-NEW-VERSION-UPLOADER.DIALOG_UPLOAD.TITLE';
         } else {
             this.title = this.data.title;
