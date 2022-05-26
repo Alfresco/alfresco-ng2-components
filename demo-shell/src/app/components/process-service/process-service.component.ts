@@ -31,15 +31,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     Pagination,
-    UserProcessInstanceFilterRepresentation,
-    ScriptFilesApi
+    UserProcessInstanceFilterRepresentation
 } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
+    UserPreferencesService, LogService, DataCellEvent, NotificationService
 } from '@alfresco/adf-core';
-
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
 
 import {
@@ -168,22 +167,25 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     ];
 
     private onDestroy$ = new Subject<boolean>();
-    private scriptFileApi: ScriptFilesApi;
 
-    constructor(private elementRef: ElementRef,
-                private route: ActivatedRoute,
-                private router: Router,
-                private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private appConfig: AppConfigService,
-                private preview: PreviewService,
-                formRenderingService: FormRenderingService,
-                formService: FormService,
-                private location: Location,
-                private notificationService: NotificationService,
-                private preferenceService: UserPreferencesService) {
+    private get scriptFileApi() {
+        return this.apiClientsService.get('ActivitiClient.script-files');
+    }
 
-        this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
+    constructor(
+        private elementRef: ElementRef,
+        private route: ActivatedRoute,
+        private router: Router,
+        private apiClientsService: ApiClientsService,
+        private logService: LogService,
+        private appConfig: AppConfigService,
+        private preview: PreviewService,
+        formRenderingService: FormRenderingService,
+        formService: FormService,
+        private location: Location,
+        private notificationService: NotificationService,
+        private preferenceService: UserPreferencesService
+    ) {
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
         this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');

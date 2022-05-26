@@ -15,24 +15,20 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ModelJsonBpmnApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
 
-    _modelJsonBpmnApi: ModelJsonBpmnApi;
-    get modelJsonBpmnApi(): ModelJsonBpmnApi {
-        this._modelJsonBpmnApi = this._modelJsonBpmnApi ?? new ModelJsonBpmnApi(this.apiService.getInstance());
-        return this._modelJsonBpmnApi;
+    get modelJsonBpmnApi() {
+        return this.apiClientsService.get('ActivitiClient.model-json-bpmn');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
         return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId))

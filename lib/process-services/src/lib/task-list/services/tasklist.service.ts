@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError, of } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
@@ -25,41 +26,34 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
 import {
     TaskQueryRepresentation, AssigneeIdentifierRepresentation,
-    TaskUpdateRepresentation, ModelsApi, TaskActionsApi, TasksApi,
-    ChecklistsApi
+    TaskUpdateRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskListService {
-    private _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
-        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
-        return this._modelsApi;
+
+    get modelsApi() {
+        return this.apiClientsService.get('ActivitiClient.models');
     }
 
-    private _tasksApi: TasksApi;
-    get tasksApi(): TasksApi {
-        this._tasksApi = this._tasksApi ?? new TasksApi(this.apiService.getInstance());
-        return this._tasksApi;
+    get tasksApi() {
+        return this.apiClientsService.get('ActivitiClient.tasks');
     }
 
-    private _taskActionsApi: TaskActionsApi;
-    get taskActionsApi(): TaskActionsApi {
-        this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
-        return this._taskActionsApi;
+    get taskActionsApi() {
+        return this.apiClientsService.get('ActivitiClient.task-actions');
     }
 
-    private _checklistsApi: ChecklistsApi;
-    get checklistsApi(): ChecklistsApi {
-        this._checklistsApi = this._checklistsApi ?? new ChecklistsApi(this.apiService.getInstance());
-        return this._checklistsApi;
+    get checklistsApi() {
+        return this.apiClientsService.get('ActivitiClient.checklist');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private logService: LogService
+    ) {}
 
     /**
      * Gets all the filters in the list that belong to a task.

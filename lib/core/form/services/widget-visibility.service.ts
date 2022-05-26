@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
@@ -30,25 +30,20 @@ import {
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
-import { TaskFormsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
 
-    _taskFormsApi: TaskFormsApi;
-    get taskFormsApi(): TaskFormsApi {
-        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
-        return this._taskFormsApi;
+    get taskFormsApi() {
+        return this.apiClientsService.get('ActivitiClient.task-forms');
     }
 
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;
@@ -97,7 +92,7 @@ export class WidgetVisibilityService {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else if (accumulator[0] !== undefined) {
             result = Function('"use strict";return (' +
-                 accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
+                accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
                 ')')();
         } else {
             result = actualResult;
@@ -114,7 +109,7 @@ export class WidgetVisibilityService {
         switch (currentOperator) {
             case 'and':
                 return '&&';
-            case 'or' :
+            case 'or':
                 return '||';
             case 'and-not':
                 return '&& !';
@@ -180,7 +175,7 @@ export class WidgetVisibilityService {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {
                 if (Array.isArray(valueList[labelFilterByName])) {
-                    valueFound = valueList[labelFilterByName].map(({name}) => name);
+                    valueFound = valueList[labelFilterByName].map(({ name }) => name);
                 } else {
                     valueFound = valueList[labelFilterByName].name;
                 }
@@ -188,7 +183,7 @@ export class WidgetVisibilityService {
         } else if (valueList[fieldId] && valueList[fieldId].id) {
             valueFound = valueList[fieldId].id;
         } else if (valueList[fieldId] && Array.isArray(valueList[fieldId])) {
-            valueFound = valueList[fieldId].map(({id}) => id);
+            valueFound = valueList[fieldId].map(({ id }) => id);
         } else {
             valueFound = valueList[fieldId];
         }

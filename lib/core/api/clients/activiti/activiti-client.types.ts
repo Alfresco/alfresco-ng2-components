@@ -15,7 +15,30 @@
  * limitations under the License.
  */
 
-import { AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
+import {
+    AboutApi,
+    ActivitiCommentsApi,
+    ActivitiContentApi,
+    ActivitiGroupsApi,
+    ChecklistsApi,
+    FormModelsApi,
+    IntegrationAlfrescoOnPremiseApi,
+    ModelJsonBpmnApi,
+    ModelsApi,
+    ProcessDefinitionsApi,
+    ProcessInstancesApi,
+    ProcessInstanceVariablesApi,
+    ReportApi,
+    RuntimeAppDefinitionsApi,
+    ScriptFilesApi,
+    SystemPropertiesApi,
+    TaskActionsApi,
+    TaskFormsApi,
+    TasksApi,
+    UserFiltersApi,
+    UserProfileApi,
+    UsersApi
+} from '@alfresco/js-api';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -23,7 +46,26 @@ declare global {
         interface ApiRegistry {
             ['ActivitiClient.about']: AboutApi;
             ['ActivitiClient.system-properties']: SystemPropertiesApi;
+            ['ActivitiClient.script-files']: ScriptFilesApi;
+            ['ActivitiClient.process-definitions']: ProcessDefinitionsApi;
+            ['ActivitiClient.process-instance-variables']: ProcessInstanceVariablesApi;
+            ['ActivitiClient.process-instances']: ProcessInstancesApi;
+            ['ActivitiClient.users']: UsersApi;
+            ['ActivitiClient.user-profile']: UserProfileApi;
+            ['ActivitiClient.user-filters']: UserFiltersApi;
+            ['ActivitiClient.comments-api']: ActivitiCommentsApi;
+            ['ActivitiClient.activiti-content']: ActivitiContentApi;
+            ['ActivitiClient.activiti-groups']: ActivitiGroupsApi;
+            ['ActivitiClient.checklist']: ChecklistsApi;
+            ['ActivitiClient.form-models']: FormModelsApi;
+            ['ActivitiClient.integration-alfresco-on-premise']: IntegrationAlfrescoOnPremiseApi;
+            ['ActivitiClient.model-json-bpmn']: ModelJsonBpmnApi;
+            ['ActivitiClient.models']: ModelsApi;
+            ['ActivitiClient.report']: ReportApi;
+            ['ActivitiClient.task-actions']: TaskActionsApi;
+            ['ActivitiClient.task-forms']: TaskFormsApi;
+            ['ActivitiClient.tasks']: TasksApi;
+            ['ActivitiClient.runtime-app-definitions']: RuntimeAppDefinitionsApi;
         }
     }
 }
-

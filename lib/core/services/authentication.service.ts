@@ -22,7 +22,7 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
@@ -53,10 +53,8 @@ export class AuthenticationService {
         return this.apiClientsService.get('ContentClient.people');
     }
 
-    _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
+    get profileApi() {
+        return this.apiClientsService.get('ActivitiClient.user-profile');
     }
 
     constructor(
