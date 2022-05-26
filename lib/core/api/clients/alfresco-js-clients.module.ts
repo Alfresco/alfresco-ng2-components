@@ -18,6 +18,7 @@
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../api-clients.service';
 import { ActivitiClientModule } from './activiti/activiti-client.module';
+import { AuthClientModule } from './auth/auth-client.module';
 import { ContentCustomClientModule } from './content-custom/content-custom-client.module';
 import { ContentClientModule } from './content/content-client.module';
 import { DiscoveryClientModule } from './discovery/discovery-client.module';
@@ -31,7 +32,8 @@ import { SearchClientModule } from './search/search-client.module';
         SearchClientModule,
         ModelClientModule,
         ContentCustomClientModule,
-        ContentClientModule
+        ContentClientModule,
+        AuthClientModule
     ],
     providers: [
         ApiClientsService
