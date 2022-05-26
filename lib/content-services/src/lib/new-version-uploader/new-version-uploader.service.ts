@@ -41,8 +41,17 @@ export class NewVersionUploaderService {
         private dialog: MatDialog
     ) { }
 
-    openUploadNewVersionDialog(event: NewVersionUploaderDialogData, config?: MatDialogConfig) {
-        const { file, node, showVersionsOnly } = event;
+    /**
+     * Open a dialog NewVersionUploaderDialogComponent to display:
+     * - a side by side comparison between the current target node (type, name, icon) and the new file that should update it's version
+     * - the new version's minor/major changes and the optional comment of a node and the ability to upload a new file version
+     * - if data.showVersionsOnly is set to true, displays the version history of a node, with the ability to restore, delete and view version of the current node
+     * @param data data to pass to MatDialog
+     * @param config allow to override default MatDialogConfig
+     * @returns an Observable represents the triggered dialog action or an error in case of an error condition
+     */
+    openUploadNewVersionDialog(data: NewVersionUploaderDialogData, config?: MatDialogConfig) {
+        const { file, node, showVersionsOnly } = data;
         const showComments = true;
         const allowDownload = true;
 
@@ -50,7 +59,7 @@ export class NewVersionUploaderService {
             if (this.contentService.hasAllowableOperations(node, 'update')) {
                 this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
                     const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
-                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly},
+                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
                         panelClass: this.composePanelClass(showVersionsOnly),
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)
