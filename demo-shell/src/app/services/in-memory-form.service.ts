@@ -16,9 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, AlfrescoApiService, EcmModelService, LogService,
+import { AppConfigService, EcmModelService, LogService,
          FormFieldOption, FormService, FormValues, FormModel,
          FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Observable, Subject } from 'rxjs';
 
 interface ProcessServiceData {
@@ -42,11 +43,13 @@ export class InMemoryFormService extends FormService {
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
-    constructor(appConfig: AppConfigService,
-                ecmModelService: EcmModelService,
-                apiService: AlfrescoApiService,
-                protected logService: LogService) {
-        super(ecmModelService, apiService, logService);
+    constructor(
+        appConfig: AppConfigService,
+        ecmModelService: EcmModelService,
+        apiClientsService: ApiClientsService,
+        protected logService: LogService
+    ) {
+        super(ecmModelService, logService, apiClientsService);
         this.data = appConfig.get<ProcessServiceData>('activiti');
     }
 

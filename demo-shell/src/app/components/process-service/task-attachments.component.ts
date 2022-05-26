@@ -22,13 +22,14 @@ import {
     TaskUploadService,
     TaskDetailsModel
 } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService, DiscoveryApiService } from '@alfresco/adf-core';
+import { UploadService, AppConfigService, DiscoveryApiService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
-    return new TaskUploadService(api, config, discoveryApiService);
+export function taskUploadServiceFactory(apiClientsService: ApiClientsService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
+    return new TaskUploadService(apiClientsService, config, discoveryApiService);
 }
 
 @Component({
@@ -39,7 +40,7 @@ export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppCon
         {
             provide: UploadService,
             useFactory: (taskUploadServiceFactory),
-            deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
+            deps: [ApiClientsService, AppConfigService, DiscoveryApiService]
         }
     ]
 })

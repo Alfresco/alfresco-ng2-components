@@ -26,7 +26,6 @@ import {
     FileUploadEvent
 } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
 import { ApiClientsService } from '@alfresco/adf-core/api';
@@ -75,7 +74,6 @@ export class UploadService {
 
     constructor(
         protected apiClientsService: ApiClientsService,
-        protected apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
         private discoveryApiService: DiscoveryApiService) {
 
