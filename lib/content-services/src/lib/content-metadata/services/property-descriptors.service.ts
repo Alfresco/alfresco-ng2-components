@@ -16,25 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 import { map } from 'rxjs/operators';
-import { ClassesApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PropertyDescriptorsService {
 
-    private _classesApi;
-    get classesApi(): ClassesApi {
-        this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
-        return this._classesApi;
+    get classesApi() {
+        return this.apiClientsService.get('ContentCustomClient.classes');
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames

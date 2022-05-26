@@ -24,10 +24,11 @@ import {
     FormModel,
     FormFieldOption
 } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
+import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
@@ -38,15 +39,14 @@ import { FormCloudServiceInterface } from './form-cloud.service.interface';
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
 
-    private _uploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
+    get uploadApi() {
+        return this.apiClientsService.get('ContentCustomClient.upload');
     }
 
     constructor(
         apiService: AlfrescoApiService,
-        appConfigService: AppConfigService
+        appConfigService: AppConfigService,
+        private apiClientsService: ApiClientsService
     ) {
         super(apiService, appConfigService);
     }
