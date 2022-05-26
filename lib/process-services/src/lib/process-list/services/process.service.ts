@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
+import { FormValues } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 import {
-    TasksApi,
-    ProcessDefinitionsApi,
-    ProcessInstancesApi,
     RestVariable,
-    ProcessInstanceRepresentation,
-    ProcessInstanceVariablesApi
+    ProcessInstanceRepresentation
 } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
@@ -42,32 +39,23 @@ declare let moment: any;
 })
 export class ProcessService {
 
-    private _tasksApi: TasksApi;
-    get tasksApi(): TasksApi {
-        this._tasksApi = this._tasksApi ?? new TasksApi(this.alfrescoApiService.getInstance());
-        return this._tasksApi;
+    get tasksApi() {
+        return this.apiClientsService.get('ActivitiClient.tasks');
     }
 
-    private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
-        return this._processDefinitionsApi;
+    get processDefinitionsApi() {
+        return this.apiClientsService.get('ActivitiClient.process-definitions');
     }
 
-    private _processInstancesApi: ProcessInstancesApi;
-    get processInstancesApi(): ProcessInstancesApi {
-        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.alfrescoApiService.getInstance());
-        return this._processInstancesApi;
+    get processInstancesApi() {
+        return this.apiClientsService.get('ActivitiClient.process-instances');
     }
 
-    private _processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
-        return this._processInstanceVariablesApi;
+    get processInstanceVariablesApi() {
+        return this.apiClientsService.get('ActivitiClient.process-instance-variables');
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     /**
      * Gets process instances for a filter and optionally a process definition.
@@ -103,12 +91,12 @@ export class ProcessService {
         return this.getProcessInstances(requestNode, processDefinitionKey)
             .pipe(
                 map(response => ({
-                        ...response,
-                        data: (response.data || []).map(instance => {
-                            instance.name = this.getProcessNameOrDescription(instance, 'medium');
-                            return instance;
-                        })
-                    })),
+                    ...response,
+                    data: (response.data || []).map(instance => {
+                        instance.name = this.getProcessNameOrDescription(instance, 'medium');
+                        return instance;
+                    })
+                })),
                 catchError(() => of(new ProcessListModel({})))
             );
     }

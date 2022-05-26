@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -30,15 +30,11 @@ export class ProcessContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
-        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
-        return this._contentApi;
+    get contentApi() {
+        return this.apiClientsService.get('ActivitiClient.activiti-content');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiClientsService: ApiClientsService, private logService: LogService) {}
 
     /**
      * Create temporary related content from an uploaded file.

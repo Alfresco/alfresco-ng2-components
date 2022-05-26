@@ -18,12 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { LogService } from './log.service';
 import { catchError, map } from 'rxjs/operators';
 import {
-    TaskActionsApi,
-    UsersApi,
     ResultListDataRepresentationLightUserRepresentation
 } from '@alfresco/js-api';
 
@@ -32,21 +30,18 @@ import {
 })
 export class PeopleProcessService {
 
-    _taskActionsApi: TaskActionsApi;
-    get taskActionsApi(): TaskActionsApi {
-        this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
-        return this._taskActionsApi;
+    get taskActionsApi() {
+        return this.apiClientsService.get('ActivitiClient.task-actions');
     }
 
-    _userApi: UsersApi;
-    get userApi(): UsersApi {
-        this._userApi = this._userApi ?? new UsersApi(this.apiService.getInstance());
-        return this._userApi;
+    get userApi() {
+        return this.apiClientsService.get('ActivitiClient.users');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private logService: LogService
+    ) {}
 
     /**
      * Gets information about users across all tasks.

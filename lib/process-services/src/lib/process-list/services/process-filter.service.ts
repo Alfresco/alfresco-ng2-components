@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
 import {
-    ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
-    UserFiltersApi
+    ResultListDataRepresentationUserProcessInstanceFilterRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -30,14 +29,11 @@ import {
 })
 export class ProcessFilterService {
 
-    private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
-        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
-        return this._userFiltersApi;
+    get userFiltersApi() {
+        return this.apiClientsService.get('ActivitiClient.user-filters');
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     /**
      * Gets all filters defined for a Process App.
