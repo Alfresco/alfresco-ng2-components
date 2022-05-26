@@ -18,7 +18,8 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { AlfrescoApiService, ContentService, NodeDownloadDirective, DownloadService } from '@alfresco/adf-core';
+import { ContentService, NodeDownloadDirective, DownloadService } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DocumentListService } from './document-list.service';
@@ -34,16 +35,18 @@ export class NodeActionsService {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private contentDialogService: ContentNodeDialogService,
-                public dialogRef: MatDialog,
-                public content: ContentService,
-                private documentListService?: DocumentListService,
-                private apiService?: AlfrescoApiService,
-                private dialog?: MatDialog,
-                private downloadService?: DownloadService) {}
+    constructor(
+        private contentDialogService: ContentNodeDialogService,
+        private apiClientsService: ApiClientsService,
+        public dialogRef: MatDialog,
+        public content: ContentService,
+        private documentListService?: DocumentListService,
+        private dialog?: MatDialog,
+        private downloadService?: DownloadService
+    ) {}
 
     downloadNode(node: NodeEntry) {
-        new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog)
+        new NodeDownloadDirective(this.apiClientsService, this.downloadService, this.dialog)
             .downloadNode(node);
     }
 
