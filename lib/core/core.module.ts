@@ -17,11 +17,16 @@
 
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
+import { AlfrescoApiV2 } from './api/alfresco-api-v2';
+import { AlfrescoApiV2LoaderService, createAlfrescoApiV2Service } from './api/alfresco-api-v2-loader.service';
+import { AngularClientFactory } from './api-factories/angular-api-client.factory';
+import { LegacyAlfrescoApiServiceFacade } from './api/legacy-alfresco-api-service.facade';
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
@@ -63,6 +68,10 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 
+interface Config {
+    useLegacy: boolean;
+};
+
 @NgModule({
     imports: [
         TranslateModule,
@@ -98,6 +107,7 @@ import { LegacyApiClientModule } from './api-factories/legacy-api-client.module'
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
+        HttpClientModule,
         LegacyApiClientModule,
         AlfrescoJsClientsModule
     ],
@@ -138,7 +148,7 @@ import { LegacyApiClientModule } from './api-factories/legacy-api-client.module'
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot(config: Config = { useLegacy: true }): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -156,15 +166,30 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,
-                    deps: [ DirectionalityConfigService ],
+                    deps: [DirectionalityConfigService],
                     multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
-                    deps: [ VersionCompatibilityService ],
+                    deps: [VersionCompatibilityService],
                     multi: true
-                }
+                },
+                ApiClientsService,
+                ...(config.useLegacy ?
+                    [] : [
+                        AlfrescoApiV2,
+                        LegacyAlfrescoApiServiceFacade,
+                        {
+                            provide: APP_INITIALIZER,
+                            useFactory: createAlfrescoApiV2Service,
+                            deps: [
+                                AlfrescoApiV2LoaderService
+                            ],
+                            multi: true
+                        }
+                    ]
+                )
             ]
         };
     }
