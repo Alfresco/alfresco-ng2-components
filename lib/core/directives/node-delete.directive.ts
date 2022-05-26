@@ -18,11 +18,11 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntity, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { map, catchError, retry } from 'rxjs/operators';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 interface ProcessedNodeData {
     entry: Node | DeletedNode;
@@ -62,16 +62,12 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
-        return this._trashcanApi;
+    get trashcanApi() {
+        return this.apiClientsService.get('ContentClient.trashcan');
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     @HostListener('click')
@@ -79,10 +75,11 @@ export class NodeDeleteDirective implements OnChanges {
         this.process(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private translation: TranslationService,
-                private elementRef: ElementRef) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private translation: TranslationService,
+        private elementRef: ElementRef
+    ) {}
 
     ngOnChanges() {
         if (!this.selection || (this.selection && this.selection.length === 0)) {

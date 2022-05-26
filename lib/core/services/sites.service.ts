@@ -29,25 +29,26 @@ import {
     SiteMembershipBodyCreate,
     SiteMembershipBodyUpdate,
     SiteMembershipRequestWithPersonPaging,
-    SitePaging,
-    SitesApi
+    SitePaging
 } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 import { LogService } from './log.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SitesService {
 
-    private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
+    get sitesApi() {
+        return this.apiClientsService.get('ContentClient.sites');
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * Create a site

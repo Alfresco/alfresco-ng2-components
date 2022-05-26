@@ -16,13 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { LogService } from '../../services/log.service';
 import { Subject } from 'rxjs';
 import { Track } from '../models/viewer.model';
 import { TranslationService } from '../../services/translation.service';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -75,27 +74,22 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
-    _renditionsApi: RenditionsApi;
-    get renditionsApi(): RenditionsApi {
-        this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
-        return this._renditionsApi;
+    get renditionsApi() {
+        return this.apiClientsService.get('ContentClient.renditions');
     }
 
     get contentApi() {
         return this.apiClientsService.get('ContentCustomClient.content');
     }
 
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
+    get versionsApi() {
+        return this.apiClientsService.get('ContentClient.versions');
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private logService: LogService,
-        private translateService: TranslationService,
-        private apiClientsService: ApiClientsService
+        private translateService: TranslationService
     ) {}
 
     /**

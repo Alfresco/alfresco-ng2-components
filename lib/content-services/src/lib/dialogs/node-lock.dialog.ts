@@ -21,8 +21,8 @@ import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { NodeBodyLock, Node, NodeEntry } from '@alfresco/js-api';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Component({
     selector: 'adf-node-lock',
@@ -35,21 +35,18 @@ export class NodeLockDialogComponent implements OnInit {
     node: Node = null;
     nodeName: string;
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
-        private alfrescoApi: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         const { node } = this.data;

@@ -18,10 +18,10 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
+import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Directive({
     selector: '[adf-node-favorite]',
@@ -30,10 +30,8 @@ import { catchError, map } from 'rxjs/operators';
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
-    _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
-        return this._favoritesApi;
+    get favoritesApi() {
+        return this.apiClientsService.get('ContentClient.favorites');
     }
 
     /** Array of nodes to toggle as favorites. */
@@ -51,8 +49,7 @@ export class NodeFavoriteDirective implements OnChanges {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private apiClientsService: ApiClientsService) {}
 
     ngOnChanges(changes) {
         if (!changes.selection.currentValue.length) {

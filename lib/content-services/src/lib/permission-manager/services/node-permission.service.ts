@@ -16,16 +16,16 @@
  */
 
 import {
-    AlfrescoApiService,
     NodesApiService,
     SearchService,
     TranslationService,
     EcmUserModel
 } from '@alfresco/adf-core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import {
     Group,
     GroupMemberEntry,
-    GroupMemberPaging, GroupsApi,
+    GroupMemberPaging,
     Node,
     PathElement,
     PermissionElement,
@@ -42,17 +42,16 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
-    _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
+    get groupsApi() {
+        return this.apiClientsService.get('ContentClient.groups');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchApiService: SearchService,
-                private nodeService: NodesApiService,
-                private translation: TranslationService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private searchApiService: SearchService,
+        private nodeService: NodesApiService,
+        private translation: TranslationService
+    ) {}
 
     /**
      * Gets a list of roles for the current node.

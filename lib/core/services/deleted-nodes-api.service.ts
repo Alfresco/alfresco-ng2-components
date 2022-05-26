@@ -18,33 +18,28 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 
-import { NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { NodePaging } from '@alfresco/js-api';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DeletedNodesApiService {
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
+    get trashcanApi() {
+        return this.apiClientsService.get('ContentClient.trashcan');
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
-    ) {
-    }
+        private preferences: UserPreferencesService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * Gets a list of nodes in the trash.
@@ -54,7 +49,7 @@ export class DeletedNodesApiService {
      */
     getDeletedNodes(options?: any): Observable<NodePaging> {
         const defaultOptions = {
-            include: [ 'path', 'properties' ],
+            include: ['path', 'properties'],
             maxItems: this.preferences.paginationSize,
             skipCount: 0
         };

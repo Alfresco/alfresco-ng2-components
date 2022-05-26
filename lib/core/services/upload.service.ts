@@ -29,7 +29,6 @@ import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.
 import { AlfrescoApiService } from './alfresco-api.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
-import { NodesApi, VersionsApi } from '@alfresco/js-api';
 import { ApiClientsService } from '@alfresco/adf-core/api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
@@ -66,16 +65,12 @@ export class UploadService {
         return this.apiClientsService.get('ContentCustomClient.upload');
     }
 
-    private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
-    private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
+    get versionsApi() {
+        return this.apiClientsService.get('ContentClient.versions');
     }
 
     constructor(

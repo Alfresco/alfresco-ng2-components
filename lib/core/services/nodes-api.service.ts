@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
+import { MinimalNode, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
@@ -28,21 +28,18 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
+    get trashcanApi() {
+        return this.apiClientsService.get('ContentClient.trashcan');
     }
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
+    get nodesApi() {
+        return this.apiClientsService.get('ContentClient.nodes');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService) {
-    }
+    constructor(
+        private preferences: UserPreferencesService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     private getEntryFromEntity(entity: NodeEntry) {
         return entity.entry;
@@ -227,9 +224,9 @@ export class NodesApiService {
             for (const key in nodeEntry.entry.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {
-                        metadata [key.split(':')[1]] = nodeEntry.entry.properties[key];
+                        metadata[key.split(':')[1]] = nodeEntry.entry.properties[key];
                     } else {
-                        metadata [key] = nodeEntry.entry.properties[key];
+                        metadata[key] = nodeEntry.entry.properties[key];
                     }
                 }
             }

@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
+import { NodePaging, SharedLinkEntry } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
 
@@ -29,15 +29,14 @@ export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number; message: string }>();
 
-    private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
+    get sharedLinksApi() {
+        return this.apiClientsService.get('ContentClient.sharedlinks');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService) {
-    }
+    constructor(
+        private apiClientsService: ApiClientsService,
+        private preferences: UserPreferencesService
+    ) {}
 
     /**
      * Gets shared links available to the current user.

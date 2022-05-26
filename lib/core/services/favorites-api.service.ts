@@ -16,21 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FavoritesApi, NodePaging, FavoritePaging } from '@alfresco/js-api';
+import { NodePaging, FavoritePaging } from '@alfresco/js-api';
 import { Observable, from, of } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FavoritesApiService {
 
-    _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
-        return this._favoritesApi;
+    get favoritesApi() {
+        return this.apiClientsService.get('ContentClient.favorites');
     }
 
     static remapEntry({ entry }: any): any {
@@ -43,10 +41,9 @@ export class FavoritesApiService {
     }
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private preferences: UserPreferencesService
-    ) {
-    }
+    ) {}
 
     remapFavoritesData(data: FavoritePaging = {}): NodePaging {
         const pagination = (data?.list?.pagination || {});
