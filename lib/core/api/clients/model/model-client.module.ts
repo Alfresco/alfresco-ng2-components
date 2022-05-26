@@ -15,22 +15,14 @@
  * limitations under the License.
  */
 
+import { AspectsApi, TypesApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
-import { ApiClientsService } from '../api-clients.service';
-import { ActivitiClientModule } from './activiti/activiti-client.module';
-import { DiscoveryClientModule } from './discovery/discovery-client.module';
-import { ModelClientModule } from './model/model-client.module';
-import { SearchClientModule } from './search/search-client.module';
+import { ApiClientsService } from '../../api-clients.service';
 
-@NgModule({
-    imports: [
-        ActivitiClientModule,
-        DiscoveryClientModule,
-        SearchClientModule,
-        ModelClientModule
-    ],
-    providers: [
-        ApiClientsService
-    ]
-})
-export class AlfrescoJsClientsModule { }
+@NgModule()
+export class ModelClientModule {
+    constructor(private apiClientsService: ApiClientsService) {
+        this.apiClientsService.register('ModelClient.aspects', AspectsApi);
+        this.apiClientsService.register('ModelClient.types', TypesApi);
+    }
+}
