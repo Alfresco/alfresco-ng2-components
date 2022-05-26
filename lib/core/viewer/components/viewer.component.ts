@@ -27,7 +27,7 @@ import {
     RenditionEntry,
     NodeEntry,
     VersionEntry,
-    SharedlinksApi, VersionsApi, NodesApi, ContentApi
+    SharedlinksApi, VersionsApi, NodesApi
 } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -44,6 +44,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Component({
     selector: 'adf-viewer',
@@ -297,21 +298,22 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return this._nodesApi;
     }
 
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
+    get contentApi() {
+        return this.apiClientsService.get('ContentCustomClient.content');
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private viewUtilService: ViewUtilService,
-                private logService: LogService,
-                private extensionService: AppExtensionService,
-                private contentService: ContentService,
-                private uploadService: UploadService,
-                private el: ElementRef,
-                public dialog: MatDialog,
-                private cdr: ChangeDetectorRef) {
+    constructor(
+        private apiService: AlfrescoApiService,
+        private viewUtilService: ViewUtilService,
+        private logService: LogService,
+        private extensionService: AppExtensionService,
+        private contentService: ContentService,
+        private uploadService: UploadService,
+        private el: ElementRef,
+        public dialog: MatDialog,
+        private cdr: ChangeDetectorRef,
+        private apiClientsService: ApiClientsService
+    ) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -322,8 +324,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.apiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId &&
-                    (node.name !== this.fileName ||
-                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
+                (node.name !== this.fileName ||
+                    this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
 

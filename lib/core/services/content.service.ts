@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -28,6 +28,7 @@ import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 import { DownloadService } from './download.service';
 import { ThumbnailService } from './thumbnail.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -38,10 +39,8 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
+    get contentApi() {
+        return this.apiClientsService.get('ContentCustomClient.content');
     }
 
     _nodesApi: NodesApi;
@@ -50,13 +49,15 @@ export class ContentService {
         return this._nodesApi;
     }
 
-    constructor(public authService: AuthenticationService,
-                public apiService: AlfrescoApiService,
-                private logService: LogService,
-                private sanitizer: DomSanitizer,
-                private downloadService: DownloadService,
-                private thumbnailService: ThumbnailService) {
-    }
+    constructor(
+        public authService: AuthenticationService,
+        public apiService: AlfrescoApiService,
+        private logService: LogService,
+        private sanitizer: DomSanitizer,
+        private downloadService: DownloadService,
+        private thumbnailService: ThumbnailService,
+        private apiClientsService: ApiClientsService
+    ) {}
 
     /**
      * @deprecated in 3.2.0, use DownloadService instead.
