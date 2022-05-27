@@ -55,6 +55,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material/dialog';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -64,10 +65,11 @@ const mockOauth2Auth: any = {
     reply: jasmine.createSpy('reply')
 };
 
-describe('FormCloudComponent', () => {
+fdescribe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
+    let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
@@ -130,6 +132,7 @@ describe('FormCloudComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
 
         translateService = TestBed.inject(TranslateService);
+        matDialog = TestBed.inject(MatDialog);
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
@@ -710,8 +713,8 @@ describe('FormCloudComponent', () => {
 
         const outcome = 'complete';
         let completed = false;
-        formComponent.formCompleted.subscribe(() => completed = true);
 
+        formComponent.formCompleted.subscribe(() => completed = true);
         const taskId = '123-223';
         const appVersion = 1;
         const appName = 'test-app';
@@ -740,6 +743,61 @@ describe('FormCloudComponent', () => {
     it('should require json to parse form', () => {
         expect(formComponent.parseForm(null)).toBeNull();
     });
+
+    fit('should open confirmation dialog on complete task', () => {
+        spyOn(matDialog, 'open').and.returnValue({
+            afterClosed: () => of(false)
+        } as any);
+
+        formComponent.completeTaskForm();
+        expect(matDialog.open).toHaveBeenCalled();
+    });
+
+    // fit('should submit form when user confirms', () => {
+    //     fixture.detectChanges();
+    //     spyOn(matDialog, 'open').and.returnValue({
+    //         afterClosed: () => of(true)
+    //     } as any);
+
+    //     spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
+
+    //     const taskId = '123-223';
+    //     const appVersion = 1;
+    //     const appName = 'test-app';
+    //     const processInstanceId = '333-444';
+
+    //     const formModel = new FormModel({
+    //         id: '23',
+    //         taskId,
+    //         fields: [
+    //             { id: 'field1' },
+    //             { id: 'field2' }
+    //         ]
+    //     });
+
+    //     formComponent.appVersion = appVersion;
+    //     formComponent.form = formModel;
+    //     formComponent.taskId = taskId;
+    //     formComponent.appName = appName;
+    //     formComponent.processInstanceId = processInstanceId;
+    //     formComponent.completeTaskForm('outcome');
+    //     expect(matDialog.open).toHaveBeenCalled();
+    //     expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, 'outcome', appVersion);
+    // });
+
+    // fit('should not confirm form if user rejects', () => {
+    //     spyOn(matDialog, 'open').and.returnValue({
+    //         afterClosed: () => of(false)
+    //     } as any);
+
+    //     spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
+    //     formComponent.completeTaskForm();
+
+    //     expect(formCloudService.completeTaskForm).not.toHaveBeenCalled();
+
+        // formComponent.completeTaskForm('outcome');
+        // expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
+    // });
 
     it('should parse form from json', () => {
         const form = formComponent.parseForm({

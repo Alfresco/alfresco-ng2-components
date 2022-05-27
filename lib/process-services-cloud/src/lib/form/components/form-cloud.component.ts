@@ -38,6 +38,10 @@ import {
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { MatDialog } from '@angular/material/dialog';
+import {
+    ConfirmDialogComponent
+} from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -104,8 +108,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formCloudService: FormCloudService,
-                protected formService: FormService,
-                protected visibilityService: WidgetVisibilityService) {
+        protected formService: FormService,
+        private dialog: MatDialog,
+        protected visibilityService: WidgetVisibilityService) {
         super();
 
         this.formService.formContentClicked
@@ -201,27 +206,27 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.formCloudService.getTaskForm(appName, taskId, version),
                 this.formCloudService.getTaskVariables(appName, taskId)
             )
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-                (data) => {
-                    this.formCloudRepresentationJSON = data[0];
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(
+                    (data) => {
+                        this.formCloudRepresentationJSON = data[0];
 
-                    this.formCloudRepresentationJSON.processVariables = data[1];
-                    this.data = data[1];
+                        this.formCloudRepresentationJSON.processVariables = data[1];
+                        this.data = data[1];
 
-                    const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
-                    this.visibilityService.refreshVisibility(parsedForm, this.data);
-                    parsedForm.validateForm();
-                    this.form = parsedForm;
-                    this.form.nodeId = '-my-';
-                    this.onFormLoaded(this.form);
-                    resolve(this.form);
-                },
-                (error) => {
-                    this.handleError(error);
-                    resolve(null);
-                }
-            );
+                        const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
+                        this.visibilityService.refreshVisibility(parsedForm, this.data);
+                        parsedForm.validateForm();
+                        this.form = parsedForm;
+                        this.form.nodeId = '-my-';
+                        this.onFormLoaded(this.form);
+                        resolve(this.form);
+                    },
+                    (error) => {
+                        this.handleError(error);
+                        resolve(null);
+                    }
+                );
         });
     }
 
@@ -266,17 +271,31 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     completeTaskForm(outcome?: string) {
-        if (this.form && this.appName && this.taskId) {
-            this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(
-                    () => {
-                        this.onTaskCompleted(this.form);
-                    },
-                    (error) => this.onTaskCompletedError(error)
-                );
-        }
+        debugger;
+        // this.form.values.confirmMessage
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                title: 'Save the form',
+                message: 'Do you want to save the form?'
+            },
+            minWidth: '250px'
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === true) {
+                if (this.form && this.appName && this.taskId) {
+                    this.formCloudService
+                        .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                        .pipe(takeUntil(this.onDestroy$))
+                        .subscribe(
+                            () => {
+                                this.onTaskCompleted(this.form);
+                            },
+                            (error) => this.onTaskCompletedError(error)
+                        );
+                }
+            }
+        });
     }
 
     parseForm(formCloudRepresentationJSON: any): FormModel {
