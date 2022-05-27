@@ -29,7 +29,8 @@ import {
     DownloadService,
     AppConfigService,
     UploadWidgetContentLinkModel,
-    LocalizedDatePipe
+    LocalizedDatePipe,
+    NotificationService
 } from '@alfresco/adf-core';
 import {
     allSourceParams,
@@ -60,11 +61,12 @@ import {
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ContentModule, ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
+import { ContentModule, ContentNodeSelectorPanelService, NewVersionUploaderDataAction, NewVersionUploaderService } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockNode } from 'content-services/src/lib/mock';
 
 describe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
@@ -82,6 +84,8 @@ describe('AttachFileCloudWidgetComponent', () => {
     let contentClickedSpy: jasmine.Spy;
     let openUploadFileDialogSpy: jasmine.Spy;
     let localizedDataPipe: LocalizedDatePipe;
+    let newVersionUploaderService: NewVersionUploaderService;
+    let notificationService: NotificationService;
 
     const createUploadWidgetField = (form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) => {
         widget.field = new FormFieldModel(form, {
@@ -204,7 +208,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     describe('when is required', () => {
 
         it('should be able to display label with asterisk', async () => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.UPLOAD,
                 required: true
             });
@@ -298,7 +302,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('should be able to use mapped string variable value if the destinationFolderPath set to string type variable', async () => {
             const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
 
-            const form = new FormModel({ formVariables, processVariables});
+            const form = new FormModel({ formVariables, processVariables });
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithStringVariablePathType);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -383,9 +387,9 @@ describe('AttachFileCloudWidgetComponent', () => {
             appConfigService.config = Object.assign(appConfigService.config, {
                 'alfresco-deployed-apps': [
                     {
-                      name: 'fakeapp'
+                        name: 'fakeapp'
                     }
-                  ]
+                ]
             });
 
             expect(widget.replaceAppNameAliasWithValue('/myfiles/-appname-/folder')).toBe('/myfiles/fakeapp/folder');
@@ -504,7 +508,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({ entry: fakeNodeWithProperties })));
             spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
@@ -845,5 +849,49 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('value');
             expect(getProcessVariableValueSpy).not.toHaveBeenCalled();
         });
+    });
+
+    describe('onUploadNewFileVersion', () => {
+        let spyOnOpenUploadNewVersionDialog: jasmine.Spy;
+        let spyOnReplaceOldFileVersionWithNew: jasmine.Spy;
+        let spyOnShowError: jasmine.Spy;
+
+        beforeEach(() => {
+            notificationService = TestBed.inject(NotificationService);
+            newVersionUploaderService = TestBed.inject(NewVersionUploaderService);
+            spyOnOpenUploadNewVersionDialog = spyOn(newVersionUploaderService, 'openUploadNewVersionDialog')
+                .and.returnValue(of({ action: NewVersionUploaderDataAction.refresh }));
+            spyOnReplaceOldFileVersionWithNew = spyOn(widget, 'replaceOldFileVersionWithNew');
+            spyOnShowError = spyOn(notificationService, 'showError');
+        });
+
+        it('Should open new version uploader dialog', async () => {
+            await fixture.whenStable();
+            widget.onUploadNewFileVersion(mockNode);
+            expect(spyOnOpenUploadNewVersionDialog).toHaveBeenCalledWith(mockNode);
+        });
+
+        it('Should not replace old file version with the new one if dialog returned action is not upload', async () => {
+            await fixture.whenStable();
+            widget.onUploadNewFileVersion(mockNode);
+            expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
+        });
+
+        it('Should replace old file version with the new one if dialog returned action is upload', async () => {
+            spyOnOpenUploadNewVersionDialog.and.returnValue(of({ action: NewVersionUploaderDataAction.upload }));
+            await fixture.whenStable();
+            widget.onUploadNewFileVersion(mockNode);
+            expect(spyOnReplaceOldFileVersionWithNew).toHaveBeenCalledTimes(1);
+        });
+
+        it('Should show notification error if new version uploader dialog return error', async () => {
+            const mockError = {value: 'Upload error'};
+            spyOnOpenUploadNewVersionDialog.and.returnValue(throwError(mockError));
+            await fixture.whenStable();
+            widget.onUploadNewFileVersion(mockNode);
+            expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
+            expect(spyOnShowError).toHaveBeenCalledWith(mockError.value);
+        });
+
     });
 });

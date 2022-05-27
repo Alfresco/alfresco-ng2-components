@@ -15,11 +15,4 @@
  * limitations under the License.
  */
 
-export * from './document-library.model.mock';
-export * from './document-list.component.mock';
-export * from './search.component.mock';
-export * from './search.service.mock';
-export * from './search-filter-mock';
-export * from './sites-dropdown.component.mock';
-export * from './search-query.mock';
-export * from './new-version-uploader.service.mock';
+export * from './public-api';

@@ -35,7 +35,7 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
-import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorPanelService, NewVersionUploaderData, NewVersionUploaderDataAction, NewVersionUploaderDialogData, NewVersionUploaderService, VersionManagerUploadData } from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 export const ALIAS_ROOT_FOLDER = '-root-';
@@ -81,7 +81,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
         private apiService: AlfrescoApiService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
+        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
+        private newVersionUploaderService: NewVersionUploaderService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -209,6 +210,16 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     downloadContent(file: Node): void {
         this.processCloudContentService.downloadFile(file.id);
+    }
+
+    onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
+        this.newVersionUploaderService.openUploadNewVersionDialog(node).subscribe((newVersionUploaderData: NewVersionUploaderData) => {
+            if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
+                this.replaceOldFileVersionWithNew(newVersionUploaderData as VersionManagerUploadData);
+            }
+        },
+            error => this.notificationService.showError(error.value)
+        );
     }
 
     onAttachFileClicked(nodeSelector: any) {
