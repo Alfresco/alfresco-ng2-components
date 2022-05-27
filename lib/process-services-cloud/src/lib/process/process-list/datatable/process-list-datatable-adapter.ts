@@ -1,5 +1,5 @@
 import { DataColumn, DataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { ColumnDataType } from '../../../models/column-data-type.model';
 import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
 

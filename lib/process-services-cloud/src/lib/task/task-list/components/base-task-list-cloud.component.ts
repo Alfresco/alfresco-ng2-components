@@ -20,7 +20,7 @@ import {
     AppConfigService, UserPreferencesService,
     DataTableSchema, UserPreferenceValues,
     PaginatedComponent, PaginationModel,
-    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn
+    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn, ObjectDataTableAdapter
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
@@ -33,7 +33,7 @@ import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseTaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
+export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableSchema<T> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -118,6 +118,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
+    dataAdapter: ObjectDataTableAdapter | undefined;
+
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
@@ -151,7 +153,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         if (changes['sorting']) {
             this.formatSorting(changes['sorting'].currentValue);
         }
-        this.reload();
+        this.loadTasks();
     }
 
     ngOnDestroy() {
@@ -186,15 +188,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         );
     }
 
-    reload() {
-        this.requestNode = this.createRequestNode();
-        if (this.requestNode.appName || this.requestNode.appName === '') {
-            this.load(this.requestNode);
-        } else {
-            this.rows = [];
-        }
-    }
-
     isListEmpty(): boolean {
         return !this.rows || this.rows.length === 0;
     }
@@ -221,13 +214,13 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
-        this.reload();
+        this.loadTasks();
     }
 
     onSortingChanged(event: CustomEvent) {
         this.setSorting(event.detail);
         this.formatSorting(this.sorting);
-        this.reload();
+        this.loadTasks();
     }
 
     onRowClick(item: DataRowEvent) {
@@ -295,6 +288,8 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
                 this.columnsVisibility
             );
         }
+
+        this.loadTasks();
     }
 
     setSorting(sortDetail) {
@@ -325,6 +320,5 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
         }, row.obj);
     }
 
-    abstract load(requestNode);
-    abstract createRequestNode();
+    abstract loadTasks();
 }

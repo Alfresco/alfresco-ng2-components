@@ -17,17 +17,27 @@
 
 import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
 import { ColumnDataType } from '../../../models/column-data-type.model';
-import { getProcessInstanceVariableMock } from '../../../mock/process-instance-variable.mock';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
-import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
-import { ProcessListDatatableAdapter } from './process-list-datatable-adapter';
+import { TasksListDatatableAdapter } from './task-list-datatable-adapter';
+import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
+import { getTaskCloudModelMock } from '../../../mock/task-cloud-model.mock';
+import { getProcessInstanceVariableMock } from '../../../mock/process-instance-variable.mock';
 
-describe('ProcessListDatatableAdapter', () => {
+describe('TasksListDatatableAdapter', () => {
     it('should get proepr type for column', () => {
-        const viewModel: ProcessInstanceCloudListViewModel = {
-            id: '1',
+        const processVariable = getProcessInstanceVariableMock({
+            variableDefinitionId: 'variableDefinitionId',
+            type: 'number'
+        });
+
+        const cloudModel = getTaskCloudModelMock({
+            processVariables: [processVariable]
+        });
+
+        const viewModel: TaskInstanceCloudListViewModel = {
+            ...cloudModel,
             variablesMap: {
-                columnDisplayName1: getProcessInstanceVariableMock({ type: 'number' })
+                columnDisplayName1: processVariable
             }
         };
 
@@ -41,12 +51,12 @@ describe('ProcessListDatatableAdapter', () => {
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
             title: 'columnDisplayName1',
             customData: {
-                assignedVariableDefinitionIds: ['1'],
+                assignedVariableDefinitionIds: ['variableDefinitionId'],
                 columnType: ColumnDataType.processVariableColumn
             }
         });
 
-        const adapter = new ProcessListDatatableAdapter([], []);
+        const adapter = new TasksListDatatableAdapter([], []);
 
         expect(adapter.getColumnType(row, column)).toBe('number');
     });

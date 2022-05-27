@@ -66,11 +66,17 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
 
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
-        for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) &&
-                !this.isExcludedField(property) &&
-                this.isPropertyValueValid(requestNode, property)) {
-                queryParam[property] = requestNode[property];
+        for (const propertyKey in requestNode) {
+            if (
+                requestNode.hasOwnProperty(propertyKey) &&
+                !this.isExcludedField(propertyKey) &&
+                this.isPropertyValueValid(requestNode, propertyKey)
+            ) {
+                if (propertyKey === 'variableDefinitions' && requestNode[propertyKey]?.length > 0) {
+                    queryParam['variableDefinitions'] = requestNode[propertyKey].join(',');
+                } else {
+                    queryParam[propertyKey] = requestNode[propertyKey];
+                }
             }
         }
         return queryParam;
