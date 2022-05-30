@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from 'content-services/src/lib/testing/content.testing.module';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
 import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
+import { ApiClientsService } from '../../../api/api-clients.service';
 
 describe('InplaceFormInputComponent', () => {
     let component: InplaceFormInputComponent;
