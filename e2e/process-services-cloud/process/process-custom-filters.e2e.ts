@@ -120,7 +120,10 @@ describe('Process list cloud', () => {
 
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
-        await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
+
+        if (claimedTask) { // https://alfresco.atlassian.net/browse/AAE-8945
+            await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
+        }
 
         await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
