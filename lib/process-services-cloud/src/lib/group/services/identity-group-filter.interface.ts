@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './components/group-cloud.component';
-export * from './pipe/group-initial.pipe';
-export * from './models/identity-group.model';
-export * from './group-cloud.module';
+export interface IdentityGroupFilterInterface {
+    roles: string[];
+    withinApplication?: string;
+}

@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-export * from './components/group-cloud.component';
-export * from './pipe/group-initial.pipe';
-export * from './models/identity-group.model';
-export * from './group-cloud.module';
+import { Observable } from 'rxjs';
+import { IdentityGroupModel } from '../models/identity-group.model';
+import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
+
+export interface IdentityGroupServiceInterface {
+    search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]>;
+}

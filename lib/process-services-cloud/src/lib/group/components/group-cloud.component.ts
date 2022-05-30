@@ -33,8 +33,10 @@ import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
-import { IdentityGroupModel, IdentityGroupService, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
+import { IdentityGroupService } from '../services/identity-group.service';
+import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -157,53 +159,57 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    readonly typingValueFromControl$ = this.searchGroupsControl.valueChanges;
+
+    readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
+        filter((value) => {
+            this.searchLoading = true;
+            return typeof value === 'string';
+        })
+    );
+
+    readonly typingValueHandleErrorMessage$ = this.typingValueTypeSting$.pipe(
+        tap((value: string) => {
+            if (value) {
+                this.setTypingError();
+            }
+        })
+    );
+
+    readonly typingValueDebouncedUnique$ = this.typingValueHandleErrorMessage$.pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+    );
+
+    readonly typingValueHandleEmpty$ = this.typingValueDebouncedUnique$.pipe(
+        tap((value: string) => {
+            if (value.trim()) {
+                this.searchedValue = value;
+            } else {
+                this.searchGroupsControl.markAsPristine();
+                this.searchGroupsControl.markAsUntouched();
+            }
+        }),
+        tap(() => this.resetSearchGroups())
+    );
+
+    readonly typingUniqueValueNotEmpty$ = this.typingValueHandleEmpty$.pipe(
+        tap(value => value.trim())
+    );
+
     initSearch(): void {
-        this.searchGroupsControl.valueChanges.pipe(
-            filter((value) => {
-                this.searchLoading = true;
-                return typeof value === 'string';
-            }),
-            tap((value: string) => {
-                if (value) {
-                    this.setTypingError();
-                }
-            }),
-            debounceTime(500),
-            distinctUntilChanged(),
-            tap((value) => {
-                if (value.trim()) {
-                    this.searchedValue = value;
-                } else {
-                    this.searchGroupsControl.markAsPristine();
-                    this.searchGroupsControl.markAsUntouched();
-                }
-            }),
-            tap(() => this.resetSearchGroups()),
+        this.typingUniqueValueNotEmpty$.pipe(
             switchMap((name: string) =>
-                // this.identityGroupService.findGroupsByName({ name: name.trim() })
-                this.identityGroupService.search(name.trim(), { roles: this.roles, withinApplication: this.appName })
+                this.identityGroupService.search(name, { roles: this.roles, withinApplication: this.appName })
             ),
-            mergeMap((groups) => {
+            mergeMap((groups: IdentityGroupModel[]) => {
                 this.resetSearchGroups();
                 this.searchLoading = false;
                 return groups;
             }),
             filter(group => !this.isGroupAlreadySelected(group)),
-            // mergeMap(group => {
-            //     if (this.appName) {
-            //         return this.checkGroupHasAccess(group.id).pipe(
-            //             mergeMap(
-            //                 hasRole => hasRole ? of(group) : of()
-            //             )
-            //         );
-            //     } else if (this.hasRoles()) {
-            //         return this.filterGroupsByRoles(group);
-            //     } else {
-            //         return of(group);
-            //     }
-            // }),
             takeUntil(this.onDestroy$)
-        ).subscribe(searchedGroup => {
+        ).subscribe((searchedGroup: IdentityGroupModel) => {
             this.searchGroups.push(searchedGroup);
             this.searchGroups$.next(this.searchGroups);
         });

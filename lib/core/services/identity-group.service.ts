@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { EMPTY, forkJoin, Observable, of, zip } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../app-config/app-config.service';
 import {
@@ -191,7 +191,7 @@ export class IdentityGroupService { // implements IdentityGroupServiceInterface 
      * @param searchParams Object containing the name filter string
      * @returns List of group information
      */
-    private findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
+    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
         if (searchParams.name === '') {
             return of([]);
         }
@@ -199,91 +199,6 @@ export class IdentityGroupService { // implements IdentityGroupServiceInterface 
         const queryParams = { search: searchParams.name };
 
         return this.oAuth2Service.get({ url, queryParams });
-    }
-
-    search(name: string, filters?: { roles: string[]; withinApplication?: string }): Observable<IdentityGroupModel[]> {
-        if (name.trim() === '') {
-            return of([]);
-        } else if (filters?.withinApplication !== undefined && filters?.withinApplication !== '') {
-            return this.searchGroupsWithinApp(name, filters.withinApplication, filters.roles);
-        } else if (filters?.roles !== undefined && filters?.roles.length > 0) {
-            return this.searchGroupsWithGlobalRoles(name, filters.roles);
-        } else {
-            return this.searchGroupsByName(name);
-        }
-    }
-
-    private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<IdentityGroupModel[]> {
-         return this.findGroupsByName({name}).pipe(
-            switchMap(groups => {
-                if (groups?.length > 0) {
-                    return forkJoin(groups.map((group) => this.zipGroupWithHasRole(group, roles)));
-                } else {
-                    return of(EMPTY);
-                }
-            }),
-            map( groupsWithHasRoles => {
-                const groupsWithRoles: IdentityGroupModel[] = [];
-                groupsWithHasRoles.forEach(groupWithHasRole => {
-                    const hasRole = groupWithHasRole[1];
-                    const group = groupWithHasRole[0];
-                    if (hasRole) {
-                        groupsWithRoles.push(group);
-                    }
-                });
-                return groupsWithRoles;
-             })
-        );
-    }
-
-    private searchGroupsWithinApp(name: string, appName: string, roles: string []): Observable<IdentityGroupModel[]> {
-        return this.zipGroupsAppClientId(name, appName).pipe(
-            switchMap(zipGroupsAppClientId => {
-               const groups =  zipGroupsAppClientId[0];
-               const appNameClientId =  zipGroupsAppClientId[1];
-               if (groups?.length > 0) {
-                   return forkJoin(groups.map((group) => this.zipGroupWithinAppWithHasRole(group, appNameClientId, roles)));
-               } else {
-                   return of(EMPTY);
-               }
-           }),
-           map( groupsWithHasRoles => {
-               const groupsWithRoles: IdentityGroupModel[] = [];
-               groupsWithHasRoles.forEach(groupWithHasRole => {
-                   const hasRole = groupWithHasRole[1];
-                   const group = groupWithHasRole[0];
-                   if (hasRole) {
-                       groupsWithRoles.push(group);
-                   }
-               });
-               return groupsWithRoles;
-            })
-       );
-   }
-
-    private zipGroupWithHasRole(group, roles): any {
-        return zip(
-            of(group),
-            this.checkGroupHasRole(group.id, roles)
-        );
-    }
-
-    private zipGroupWithinAppWithHasRole(group, appName, roles): any {
-        return zip(
-            of(group),
-            this.checkGroupHasAnyClientAppRole(group.id, appName, roles)
-        );
-    }
-
-    private zipGroupsAppClientId(name, appName ) {
-        return zip(
-            this.findGroupsByName({name}),
-            this.getClientIdByApplicationName(appName)
-        );
-    }
-
-    private searchGroupsByName(name: string): Observable<IdentityGroupModel[]> {
-        return this.findGroupsByName({name});
     }
 
     /**
@@ -308,7 +223,6 @@ export class IdentityGroupService { // implements IdentityGroupServiceInterface 
         return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
             if (groupRoles?.length > 0) {
-                //  fix the bug to include all  const roleResult = groupRoles.map( (role) =>  role.name).map ( (role) => roleNames.every(roleName => role.includes(roleName))
                 roleNames.forEach((roleName: string) => {
                     const role = groupRoles.find(({ name }) => roleName === name);
                     if (role) {
@@ -349,6 +263,19 @@ export class IdentityGroupService { // implements IdentityGroupServiceInterface 
     }
 
     /**
+     * Checks if a group has a client app.
+     *
+     * @param groupId Id of the target group
+     * @param clientId Id of the client
+     * @returns True if the group has the client app, false otherwise
+     */
+    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
+            map((response) => response && response.length > 0)
+        );
+    }
+
+    /**
      * Check if a group has any of the client app roles in the supplied list.
      *
      * @param groupId Id of the target group
@@ -356,25 +283,21 @@ export class IdentityGroupService { // implements IdentityGroupServiceInterface 
      * @param roleNames Array of role names to check
      * @returns True if the group has one or more of the roles, false otherwise
      */
-    private checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
             map((clientRoles: any[]) => {
-                //  fix the bug to include all  const roleResult = groupRoles.map( (role) =>  role.name).map ( (role) => roleNames.every(roleName => role.includes(roleName))
-                if (roleNames?.length > 0) {
-                    let hasRole = false;
-                    if (clientRoles.length > 0) {
-                        roleNames.forEach((roleName) => {
-                            const role = clientRoles.find(({ name }) => name === roleName);
-                            if (role) {
-                                hasRole = true;
-                                return;
-                            }
-                        });
-                    }
-                    return hasRole;
-                } else {
-                    return clientRoles?.length > 0;
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find(({ name }) => name === roleName);
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
                 }
+                return hasRole;
             })
         );
     }

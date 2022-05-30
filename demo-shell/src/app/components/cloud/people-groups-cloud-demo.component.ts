@@ -16,10 +16,10 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ComponentSelectionMode } from '@alfresco/adf-process-services-cloud';
+import { IdentityGroupModel, ComponentSelectionMode } from '@alfresco/adf-process-services-cloud';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
-import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-people-groups-cloud',

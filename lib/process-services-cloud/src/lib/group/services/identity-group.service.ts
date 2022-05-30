@@ -17,18 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfigService, OAuth2Service } from '@alfresco/adf-core';
-import { Observable, of, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-export interface IdentityGroupModel {
-    id: string;
-    name: string;
-}
-// import { IdentityGroupServiceInterface } from './identity-group.interface';
+import { IdentityGroupServiceInterface } from './identity-group.service.interface';
+import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
+import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Injectable({ providedIn: 'root' })
-export class IdentityProviderGroupService { // implements IdentityGroupServiceInterface {
+export class IdentityGroupService implements IdentityGroupServiceInterface {
 
+    context: string = '';
     queryParams: { search: string; application?: string; roles?: string [] };
 
     constructor(
@@ -36,13 +34,9 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         private appConfigService: AppConfigService
     ) {}
 
-    private get identityHost(): string {
-        return `${this.appConfigService.get('identityHost')}`;
-    }
-
-    public search(name: string, filters?: { roles: string[]; withinApplication?: string }): Observable<IdentityGroupModel[]> {
+    public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
-            return of([]);
+            return EMPTY;
         } else if (filters?.withinApplication !== undefined && filters?.withinApplication !== '') {
             return this.searchGroupsWithinApp(name, filters.withinApplication, filters.roles);
         } else if (filters?.roles !== undefined && filters?.roles.length > 0) {
@@ -52,7 +46,7 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         }
     }
 
-    private searchGroupsByName(name: string): Observable<any> {
+    private searchGroupsByName(name: string): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name);
 
         return this.invokeIdentityGroupApi().pipe(
@@ -60,7 +54,7 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         );
     }
 
-    private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<any> {
+    private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles);
 
         return this.invokeIdentityGroupApi().pipe(
@@ -68,7 +62,7 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         );
     }
 
-    private searchGroupsWithinApp(name: string, applicationName: string, roles?: string []): Observable<any> {
+    private searchGroupsWithinApp(name: string, applicationName: string, roles?: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles, applicationName);
 
         return this.invokeIdentityGroupApi().pipe(
@@ -76,8 +70,8 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         );
     }
 
-    private invokeIdentityGroupApi(): Observable<any> {
-        const url = `${this.identityHost}/rb/v1/identity/groups`;
+    private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
+        const url = `${this.identityHost}${this.context}/v1/identity/groups`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
@@ -106,9 +100,11 @@ export class IdentityProviderGroupService { // implements IdentityGroupServiceIn
         return roles.filter( role => role.trim() ? true : false);
     }
 
-
     private handleError(error: any) {
         return throwError(error || 'Server error');
     }
 
+    private get identityHost(): string {
+        return `${this.appConfigService.get('identityHost')}`;
+    }
 }

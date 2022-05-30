@@ -16,11 +16,12 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
+import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 
 /* eslint-disable @angular-eslint/component-selector */
 
