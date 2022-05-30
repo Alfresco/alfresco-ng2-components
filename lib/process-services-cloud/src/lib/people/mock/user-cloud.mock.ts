@@ -15,10 +15,27 @@
  * limitations under the License.
  */
 
-export const mockUsers = [
+import { IdentityUserModel } from '../../models/identity-user.model';
+
+export const mockUsers: IdentityUserModel[] = [
     { id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' },
     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'},
     { id: 'fake-id-3', username: 'first-name-3 last-name-3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' }
+];
+
+export const mockUsersWithRoles: IdentityUserModel[] = [
+    { id: 'fake-role-user-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abcrole@xyz.com' },
+    { id: 'fake-role-user-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcdrole@xyz.com'}
+];
+
+export const mockUsersWithinApp: IdentityUserModel[] = [
+    { id: 'fake-app-user-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abcrole@xyz.com' },
+    { id: 'fake-app-user-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcdrole@xyz.com'}
+];
+
+export const mockUsersWithGroups: IdentityUserModel[] = [
+    { id: 'fake-group-user-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abcrole@xyz.com' },
+    { id: 'fake-group-user-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcdrole@xyz.com'}
 ];
 
 export const cloudMockUser = {

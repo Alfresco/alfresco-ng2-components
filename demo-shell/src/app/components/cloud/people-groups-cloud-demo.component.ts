@@ -37,6 +37,7 @@ export class PeopleGroupCloudDemoComponent {
     preSelectUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
     peopleRoles: string[] = [];
+    groupsRestriction: string[] = [];
     peopleAppName: string;
     peopleFilterMode: string = this.defaultFilterMode;
     peoplePreselectValidation = false;
@@ -73,6 +74,10 @@ export class PeopleGroupCloudDemoComponent {
 
     setGroupAppName(value: string): void {
         this.groupAppName = value;
+    }
+
+    setPeopleGroupsRestriction(value: string): void {
+        this.groupsRestriction = this.getArrayFromString(value);
     }
 
     onChangePeopleMode(event: MatRadioChange): void {

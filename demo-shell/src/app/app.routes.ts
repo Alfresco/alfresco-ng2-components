@@ -183,7 +183,7 @@ export const appRoutes: Routes = [
             {
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
-                data: { roles: ['ACTIVITI_ADMIN', 'ACTIVITI_USER'], redirectUrl: '/error/403' },
+                data: { roles: [], redirectUrl: '/error/403' },
                 children: [
                     {
                         path: '',
@@ -192,7 +192,7 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: 'people-group-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
+                        data: { roles: [], redirectUrl: '/error/403' },
                         component: PeopleGroupCloudDemoComponent
                     },
                     {

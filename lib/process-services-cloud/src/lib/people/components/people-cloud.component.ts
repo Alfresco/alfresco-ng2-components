@@ -27,18 +27,19 @@ import {
     OnChanges,
     OnDestroy,
     ChangeDetectionStrategy,
-    ViewChild, ElementRef, SimpleChange
+    ViewChild, ElementRef, SimpleChange, Inject
 } from '@angular/core';
-import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
 import {
     FullNamePipe,
-    IdentityUserModel,
-    IdentityUserService,
     LogService
 } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
+import { IdentityUserModel } from '../../models/identity-user.model';
+import { IDENTITY_USER_SERVICE_TOKEN } from '../../services/cloud-token.service';
+import { IdentityProviderUserServiceInterface } from '../services/identity-provider-user.service.interface';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -149,7 +150,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
     subscriptAnimationState: string = 'enter';
-    clientId: string;
     isFocused: boolean;
     touched: boolean = false;
 
@@ -160,11 +160,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        private identityUserService: IdentityUserService,
+        @Inject(IDENTITY_USER_SERVICE_TOKEN)
+        private identityUserService: IdentityProviderUserServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
-        this.loadClientId();
         this.initSearch();
     }
 
@@ -184,17 +184,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.invalidUsers = [];
             }
         }
-
-        if (changes.appName && this.isAppNameChanged(changes.appName)) {
-            this.loadClientId();
-        }
-    }
-
-    private async loadClientId(): Promise<void> {
-        this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
-        if (this.clientId) {
-            this.searchUserCtrl.enable();
-        }
     }
 
     private initSearch(): void {
@@ -210,19 +199,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }),
             debounceTime(500),
             distinctUntilChanged(),
-            tap((value: string) => {
-                if (value.trim()) {
-                    this.searchedValue = value;
-                } else {
-                    this.searchUserCtrl.markAsPristine();
-                    this.searchUserCtrl.markAsUntouched();
-                }
-            }),
-            tap(() => {
-                this.resetSearchUsers();
-            }),
+            tap((value: string) => this.setSearchedValue(value)),
             switchMap((search) =>
-                this.findUsers(search)
+                this.identityUserService.search(search.trim(), { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
             mergeMap((users) => {
                 this.resetSearchUsers();
@@ -230,22 +209,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 return users;
             }),
             filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
-            mergeMap(user => this.filterUsersByGroupsRestriction(user)),
-            mergeMap(user => {
-                if (this.appName) {
-                    return this.checkUserHasAccess(user.id).pipe(
-                        mergeMap(
-                            hasRole => hasRole ? of(user) : of()
-                        )
-                    );
-                } else if (this.hasRoles()) {
-                    return this.filterUsersByRoles(user);
-                } else {
-                    return of(user);
-                }
-            }),
             takeUntil(this.onDestroy$)
-        ).subscribe(user => {
+        ).subscribe((user: IdentityUserModel) => {
             this._searchUsers.push(user);
             this.searchUsers$.next(this._searchUsers);
         });
@@ -256,44 +221,19 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    private isAppNameChanged(change: SimpleChange): boolean {
-        return change && change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
-    }
-
-    isValidationEnabled(): boolean {
-        return this.validate === true;
-    }
-
-    private checkUserHasAccess(userId: string): Observable<boolean> {
-        if (this.hasRoles()) {
-            return this.identityUserService.checkUserHasAnyClientAppRole(userId, this.clientId, this.roles);
+    private setSearchedValue(value: string) {
+        if (value.trim()) {
+            this.searchedValue = value;
         } else {
-            return this.identityUserService.checkUserHasClientApp(userId, this.clientId);
+            this.searchUserCtrl.markAsPristine();
+            this.searchUserCtrl.markAsUntouched();
         }
+
+        this.resetSearchUsers();
     }
 
-    private hasRoles(): boolean {
-        return this.roles && this.roles.length > 0;
-    }
-
-    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
-        return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole, user })),
-            filter((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.hasRole),
-            map((filteredUser: { hasRole: boolean; user: IdentityUserModel }) => filteredUser.user));
-    }
-
-    private filterUsersByGroupsRestriction(user: IdentityUserModel): Observable<IdentityUserModel> {
-        if (this.groupsRestriction?.length) {
-            return this.isUserPartOfAllRestrictedGroups(user).pipe(
-                mergeMap(isPartOfAllGroups => isPartOfAllGroups ? of(user) : of())
-            );
-        }
-        return of(user);
-    }
-
-    private findUsers(search: string): Observable<IdentityUserModel[]> {
-        return this.identityUserService.findUsersByName(search.trim());
+    private isValidationEnabled(): boolean {
+        return this.validate === true;
     }
 
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
@@ -336,27 +276,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    async validatePreselectUsers(): Promise<any> {
+    private async validatePreselectUsers(): Promise<any> {
         this.invalidUsers = [];
         const validUsers: IdentityUserModel[] = [];
 
         for (const user of this.getPreselectedUsers()) {
             try {
-                const validationResult = await this.searchUser(user);
+                const validationResult = (await this.identityUserService.search(user.username, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction }).toPromise())[0];
 
                 if (this.compare(user, validationResult)) {
                     validationResult.readonly = user.readonly;
-                    if (this.groupsRestriction?.length) {
-                        const isUserPartOfAllRestrictedGroups = await this.isUserPartOfAllRestrictedGroups(validationResult).toPromise();
-
-                        if (isUserPartOfAllRestrictedGroups) {
-                            validUsers.push(user);
-                        } else {
-                            this.invalidUsers.push(user);
-                        }
-                    } else {
-                        validUsers.push(validationResult);
-                    }
+                    validUsers.push(validationResult);
                 } else {
                     this.invalidUsers.push(user);
                 }
@@ -382,33 +312,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    private getSearchKey(user: IdentityUserModel): string {
-        if (user.id) {
-            return 'id';
-        } else if (user.email) {
-            return 'email';
-        } else if (user.username) {
-            return 'username';
-        } else {
-            return null;
-        }
-    }
-
-    async searchUser(user: IdentityUserModel): Promise<IdentityUserModel> {
-        const key = this.getSearchKey(user);
-
-        switch (key) {
-            case 'id':
-                return this.identityUserService.findUserById(user[key]).toPromise();
-            case 'username':
-                return (await this.identityUserService.findUserByUsername(user[key]).toPromise())[0];
-            case 'email':
-                return (await this.identityUserService.findUserByEmail(user[key]).toPromise())[0];
-            default:
-                return null;
-        }
-    }
-
     removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter((user, index, self) =>
             index === self.findIndex(auxUser =>
@@ -416,7 +319,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             ));
     }
 
-    checkPreselectValidationErrors(): void {
+    private checkPreselectValidationErrors(): void {
         this.invalidUsers = this.removeDuplicatedUsers(this.invalidUsers);
 
         if (this.invalidUsers.length > 0) {
@@ -496,7 +399,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    generateInvalidUsersMessage(): void {
+    private generateInvalidUsersMessage(): void {
         this.validateUsersMessage = '';
 
         this.invalidUsers.forEach((invalidUser, index) => {
@@ -505,13 +408,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             } else {
                 this.validateUsersMessage += `${invalidUser.username}, `;
             }
-        });
-    }
-
-    setTypingError(): void {
-        this.searchUserCtrl.setErrors({
-            searchTypingError: true,
-            ...this.searchUserCtrl.errors
         });
     }
 
@@ -524,11 +420,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return FullNamePipe.prototype.transform(user);
     }
 
-    isMultipleMode(): boolean {
+    private isMultipleMode(): boolean {
         return this.mode === 'multiple';
     }
 
-    isSingleMode(): boolean {
+    private isSingleMode(): boolean {
         return this.mode === 'single';
     }
 
@@ -560,16 +456,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchUsers$.next(this._searchUsers);
     }
 
-    private isUserPartOfAllRestrictedGroups(user: IdentityUserModel): Observable<boolean> {
-        return this.getUserGroups(user.id).pipe(
-            map(userGroups => this.groupsRestriction.every(restricted => userGroups.includes(restricted)))
-        );
-    }
-
-    private getUserGroups(userId: string): Observable<string[]> {
-        return this.identityUserService.getInvolvedGroups(userId).pipe(
-            map(groups => groups.map((group) => group.name))
-        );
+    private setTypingError(): void {
+        this.searchUserCtrl.setErrors({
+            searchTypingError: true,
+            ...this.searchUserCtrl.errors
+        });
     }
 
     getSelectedUsers(): IdentityUserModel[] {
