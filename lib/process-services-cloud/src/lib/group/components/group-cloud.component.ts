@@ -27,7 +27,8 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Inject
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -35,8 +36,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
-import { IdentityGroupService } from '../services/identity-group.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
+import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
+import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -137,7 +139,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        private identityGroupService: IdentityGroupService,
+        @Inject(IDENTITY_GROUP_SERVICE_TOKEN) private identityGroupService: IdentityGroupServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
