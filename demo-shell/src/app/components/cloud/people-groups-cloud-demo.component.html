@@ -12,7 +12,7 @@
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
         </mat-radio-group>
         <div class="app-people-control-options">
-            <mat-radio-group (change)="onChangePeopleFilterMode($event)">
+            <!-- <mat-radio-group (change)="onChangePeopleFilterMode($event)">
                 <mat-radio-button [checked]="true" class="app-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
                 <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-people-filter-role" value="role">{{
@@ -21,10 +21,22 @@
             <mat-form-field *ngIf="!isPeopleAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
                 <input matInput (input)="setPeopleRoles($any($event).target?.value)" data-automation-id="app-people-roles-input" />
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
                 <input matInput (input)="setPeopleAppName($any($event).target?.value)" data-automation-id="app-people-app-input" />
+            </mat-form-field>
+            <mat-form-field class="app-preselect-value">
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
+                <input matInput
+                    (input)="setPeopleRoles($any($event).target?.value)"
+                    data-automation-id="app-people-roles-input"/>
+            </mat-form-field>
+            <mat-form-field class="app-preselect-value">
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.GROUPS_RESTRICTION' | translate }} ["hr", "sales"]</mat-label>
+                <input matInput
+                    (input)="setPeopleGroupsRestriction($any($event).target?.value)"
+                    data-automation-id="app-people-groups-restriction-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ defaultPeoplePlaceholder }}</mat-label>
@@ -42,6 +54,7 @@
                 [validate]="peoplePreselectValidation"
                 [appName]="peopleAppName"
                 [roles]="peopleRoles"
+                [groupsRestriction]="groupsRestriction"
                 [title]="'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
                 [mode]="peopleMode"
                 (warning)="onUsersWarning($event)"></adf-cloud-people>

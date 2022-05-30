@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, AlfrescoApiService, IdentityUserModel } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
@@ -26,13 +26,17 @@ import { FormDefinitionSelectorCloudService } from '../../../form/services/form-
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { IDENTITY_USER_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { IdentityProviderUserServiceMock } from '../../../people/mock/identity-provider-user.service.mock';
+import { IdentityProviderUserServiceInterface } from '../../../people/services/identity-provider-user.service.interface';
+import { IdentityUserModel } from '../../../models/identity-user.model';
 
 describe('StartTaskCloudComponent', () => {
 
     let component: StartTaskCloudComponent;
     let fixture: ComponentFixture<StartTaskCloudComponent>;
     let service: TaskCloudService;
-    let identityService: IdentityUserService;
+    let identityService: IdentityProviderUserServiceInterface;
     let formDefinitionSelectorCloudService: FormDefinitionSelectorCloudService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
@@ -53,7 +57,10 @@ describe('StartTaskCloudComponent', () => {
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+        providers: [
+            { provide: IDENTITY_USER_SERVICE_TOKEN, useClass: IdentityProviderUserServiceMock }
+        ]
     });
 
     beforeEach(() => {
@@ -62,7 +69,7 @@ describe('StartTaskCloudComponent', () => {
         element = fixture.nativeElement;
 
         service = TestBed.inject(TaskCloudService);
-        identityService = TestBed.inject(IdentityUserService);
+        identityService = TestBed.inject(IDENTITY_USER_SERVICE_TOKEN);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         formDefinitionSelectorCloudService = TestBed.inject(FormDefinitionSelectorCloudService);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);

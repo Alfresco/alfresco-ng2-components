@@ -332,7 +332,8 @@
     "ALL_PRESELECTED_GROUPS": "All Preselected Groups",
     "INVALID_USERS": "Invalid Users",
     "INVALID_GROUPS": "Invalid Groups",
-    "READONLY_MODE": "Read-only Mode"
+    "READONLY_MODE": "Read-only Mode",
+    "GROUPS_RESTRICTION": "Groups Restriction"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselection",
