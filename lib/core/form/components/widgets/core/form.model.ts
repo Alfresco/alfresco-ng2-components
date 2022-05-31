@@ -35,6 +35,10 @@ import { FormValidationService } from '../../../services/form-validation-service
 import { ProcessFormModel } from './process-form-model.interface';
 import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
+export interface ConfirmMessage {
+    show: boolean;
+    message: string;
+}
 export interface FormRepresentationModel {
     [key: string]: any;
 
@@ -55,7 +59,6 @@ export interface FormRepresentationModel {
         fields?: any[];
     };
 }
-
 export class FormModel implements ProcessFormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -66,6 +69,7 @@ export class FormModel implements ProcessFormModel {
     readonly id: string | number;
     readonly name: string;
     readonly taskId: string;
+    readonly confirmMessage: ConfirmMessage;
     readonly taskName = FormModel.UNSET_TASK_NAME;
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
@@ -102,6 +106,7 @@ export class FormModel implements ProcessFormModel {
             this.variables = json.variables || [];
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace ? true : false;
+            this.confirmMessage = json.confirmMessage || {};
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 

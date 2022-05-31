@@ -55,6 +55,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material/dialog';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -68,6 +69,7 @@ describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
+    let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
@@ -130,6 +132,7 @@ describe('FormCloudComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
 
         translateService = TestBed.inject(TranslateService);
+        matDialog = TestBed.inject(MatDialog);
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
@@ -735,6 +738,64 @@ describe('FormCloudComponent', () => {
 
         expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome, appVersion);
         expect(completed).toBeTruthy();
+    });
+
+    it('should open confirmation dialog on complete task', () => {
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
+        formComponent.form = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.completeTaskForm();
+        expect(matDialog.open).toHaveBeenCalled();
+    });
+
+    it('should submit form when user confirms', () => {
+        fixture.detectChanges();
+         const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.form = formModel;
+        spyOn(matDialog, 'open').and.returnValue({
+            afterClosed: () => of(true)
+        } as any);
+
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(true));
+
+        formComponent.completeTaskForm('complete');
+
+        expect(matDialog.open).toHaveBeenCalled();
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+
+    it('should not confirm form if user rejects', () => {
+        const outcome = 'complete';
+
+        spyOn(matDialog, 'open').and.returnValue({
+            afterClosed: () => of(false)
+        } as any);
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.form = formModel;
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(true));
+
+        formComponent.completeTaskForm(outcome);
+
+        expect(matDialog.open).toHaveBeenCalled();
+        expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should require json to parse form', () => {

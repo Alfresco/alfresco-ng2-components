@@ -38,6 +38,10 @@ import {
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { MatDialog } from '@angular/material/dialog';
+import {
+    ConfirmDialogComponent
+} from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -105,6 +109,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
+                private dialog: MatDialog,
                 protected visibilityService: WidgetVisibilityService) {
         super();
 
@@ -266,6 +271,26 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     completeTaskForm(outcome?: string) {
+        if (this.form?.confirmMessage?.show === true) {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Save the form',
+                    message: this.form.confirmMessage.message
+                },
+                minWidth: '450px'
+            });
+
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result === true) {
+                    this.completeTaskFormWithConfirmMessage(outcome);
+                }
+            });
+        } else {
+            this.completeTaskFormWithConfirmMessage(outcome);
+        }
+    }
+
+    completeTaskFormWithConfirmMessage(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
