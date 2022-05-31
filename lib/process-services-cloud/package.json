@@ -18,7 +18,7 @@
     "@angular/flex-layout": ">=10.0.0-beta.32",
     "@angular/forms": ">=10.0.2",
     "@angular/material": ">=10.0.1",
-    "@alfresco/js-api": "4.11.0-149",
+    "@alfresco/js-api": "4.11.0-150",
     "@alfresco/adf-core": "4.10.0",
     "@alfresco/adf-content-services": "4.10.0",
     "@apollo/client": "^3.3.7",
