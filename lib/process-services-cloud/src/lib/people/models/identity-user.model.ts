@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-export * from './components/people-cloud.component';
-
-export * from './people-cloud.module';
-export * from './models/identity-user.model';
+export interface IdentityUserModel {
+    id?: string;
+    username: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    readonly?: boolean;
+}

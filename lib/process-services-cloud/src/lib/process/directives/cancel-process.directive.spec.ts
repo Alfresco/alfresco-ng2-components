@@ -17,11 +17,12 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 
 const processDetailsMockRunning: ProcessInstanceCloud = { initiator: 'usermock', status: 'RUNNING' };
 const processDetailsMockCompleted: ProcessInstanceCloud = { initiator: 'usermock', status: 'COMPLETED' };

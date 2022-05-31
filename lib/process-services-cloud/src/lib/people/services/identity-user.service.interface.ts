@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-export * from './components/people-cloud.component';
+import { Observable } from 'rxjs';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 
-export * from './people-cloud.module';
-export * from './models/identity-user.model';
+export interface IdentityUserServiceInterface {
+    getCurrentUserInfo(): IdentityUserModel;
+    search(name: string, filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]>;
+}

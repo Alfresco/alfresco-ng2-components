@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-export interface IdentityUserModel {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    username?: string;
-    readonly?: boolean;
-}
+import { InjectionToken } from '@angular/core';
+import { IdentityUserServiceInterface } from './identity-user.service.interface';
+
+export const IDENTITY_USER_SERVICE_TOKEN = new InjectionToken<IdentityUserServiceInterface>('identity-user-service-token');

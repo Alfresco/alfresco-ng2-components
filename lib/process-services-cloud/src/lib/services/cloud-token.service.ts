@@ -16,7 +16,6 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { IdentityProviderUserServiceInterface } from '../people/services/identity-provider-user.service.interface';
 import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { TaskListCloudServiceInterface } from './task-list-cloud.service.interface';
 
@@ -29,5 +28,3 @@ export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudS
 export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('task-filters-cloud');
 
 export const TASK_LIST_CLOUD_TOKEN = new InjectionToken<TaskListCloudServiceInterface>('task-list-cloud');
-
-export const IDENTITY_USER_SERVICE_TOKEN = new InjectionToken<IdentityProviderUserServiceInterface>('identity-user-service-token');

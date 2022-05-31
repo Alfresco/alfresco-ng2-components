@@ -38,9 +38,9 @@ import {
 } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
-import { IdentityUserModel } from '../../models/identity-user.model';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../../services/cloud-token.service';
-import { IdentityProviderUserServiceInterface } from '../services/identity-provider-user.service.interface';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
+import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -142,13 +142,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private _searchUsers: IdentityUserModel[] = [];
+    private searchUsers: IdentityUserModel[] = [];
     private onDestroy$ = new Subject<boolean>();
 
     selectedUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
 
-    searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
+    searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
     subscriptAnimationState: string = 'enter';
     isFocused: boolean;
     touched: boolean = false;
@@ -163,7 +163,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
-        private identityUserService: IdentityProviderUserServiceInterface,
+        private identityUserService: IdentityUserServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
@@ -194,7 +194,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             switchMap((name: string) =>
                 this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
-            mergeMap((users) => {
+            mergeMap((users: IdentityUserModel[]) => {
                 this.resetSearchUsers();
                 this.searchLoading = false;
                 return users;
@@ -202,8 +202,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
             takeUntil(this.onDestroy$)
         ).subscribe((user: IdentityUserModel) => {
-            this._searchUsers.push(user);
-            this.searchUsers$.next(this._searchUsers);
+            this.searchUsers.push(user);
+            this.searchUsers$.next(this.searchUsers);
         });
     }
 
@@ -468,8 +468,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private resetSearchUsers(): void {
-        this._searchUsers = [];
-        this.searchUsers$.next(this._searchUsers);
+        this.searchUsers = [];
+        this.searchUsers$.next(this.searchUsers);
     }
 
     private setTypingError(): void {

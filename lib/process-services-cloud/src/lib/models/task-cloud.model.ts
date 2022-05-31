@@ -16,8 +16,8 @@
  */
 
 import { Pagination } from '@alfresco/js-api';
-import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
-import { ProcessInstanceVariable } from './process-instance-variable.model';
+import { IdentityGroupModel } from '@alfresco/adf-core';
+import { IdentityUserModel } from '../people/models/identity-user.model';
 
 export class TaskCloudNodePaging {
     list: TaskCloudPagingList;

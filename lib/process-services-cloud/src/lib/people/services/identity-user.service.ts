@@ -23,14 +23,16 @@ import {
 } from '@alfresco/adf-core';
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { IdentityProviderUserServiceInterface, SearchUsersFilters } from './identity-provider-user.service.interface';
-import { IdentityUserModel } from '../../models/identity-user.model';
+import { IdentityUserServiceInterface } from './identity-user.service.interface';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityProviderUserService implements IdentityProviderUserServiceInterface {
+export class IdentityUserService implements IdentityUserServiceInterface {
 
+    context: string = '';
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
     constructor(
@@ -47,7 +49,7 @@ export class IdentityProviderUserService implements IdentityProviderUserServiceI
      *
      * @returns The user's details
      */
-    getCurrentUserInfo(): IdentityUserModel {
+    public getCurrentUserInfo(): IdentityUserModel {
         const familyName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.FAMILY_NAME);
         const givenName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.GIVEN_NAME);
         const email = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_EMAIL);
@@ -55,7 +57,14 @@ export class IdentityProviderUserService implements IdentityProviderUserServiceI
         return { firstName: givenName, lastName: familyName, email, username };
     }
 
-    search(name: string, filters?: SearchUsersFilters): Observable<IdentityUserModel[]> {
+    /**
+     * Search users based on name input and filters.
+     *
+     * @param name Search query string
+     * @param [filters] Search query filters
+     * @returns List of users
+     */
+    public search(name: string, filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         } else if (filters?.groups?.length > 0) {
@@ -65,47 +74,35 @@ export class IdentityProviderUserService implements IdentityProviderUserServiceI
         } else if (filters?.roles?.length > 0) {
             return this.searchUsersWithGlobalRoles(name, filters.roles);
         } else {
-            return this.searchUsersByName(name, filters?.groups);
+            return this.searchUsersByName(name);
         }
     }
 
-    searchUsersByName(name: string, groups?: string[]): Observable<IdentityUserModel[]> {
-        if (groups && groups.length > 0) {
-            return this.searchUsersWithGroups(name, {groups});
-        } else {
-            this.buildQueryParam(name);
+    private searchUsersByName(name: string): Observable<IdentityUserModel[]> {
+        this.buildQueryParam(name);
 
-            return this.invokeIdentityUserApi().pipe(
-                catchError((err) => this.handleError(err))
-            );
-        }
+        return this.invokeIdentityUserApi().pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
-    searchUsersWithGlobalRoles(name: string, roles: string [], groups?: string[]): Observable<IdentityUserModel[]> {
-        if (groups && groups.length > 0) {
-            return this.searchUsersWithGroups(name, {roles, groups});
-        } else {
-            this.buildQueryParam(name, {roles});
+    private searchUsersWithGlobalRoles(name: string, roles: string []): Observable<IdentityUserModel[]> {
+        this.buildQueryParam(name, {roles});
 
-            return this.invokeIdentityUserApi().pipe(
-                catchError((err) => this.handleError(err))
-            );
-        }
+        return this.invokeIdentityUserApi().pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
-    searchUsersWithinApp(name: string, withinApplication: string, roles?: string [], groups?: string[]): Observable<IdentityUserModel[]> {
-        if (groups && groups.length > 0) {
-            return this.searchUsersWithGroups(name, {roles, withinApplication, groups});
-        } else {
-            this.buildQueryParam(name, {roles, withinApplication});
+    private searchUsersWithinApp(name: string, withinApplication: string, roles?: string []): Observable<IdentityUserModel[]> {
+        this.buildQueryParam(name, {roles, withinApplication});
 
-            return this.invokeIdentityUserApi().pipe(
-                catchError((err) => this.handleError(err))
-            );
-        }
+        return this.invokeIdentityUserApi().pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
-    searchUsersWithGroups(name: string, filters: SearchUsersFilters): Observable<IdentityUserModel[]> {
+    private searchUsersWithGroups(name: string, filters: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name, filters);
 
         return this.invokeIdentityUserApi().pipe(
@@ -114,11 +111,11 @@ export class IdentityProviderUserService implements IdentityProviderUserServiceI
     }
 
     private invokeIdentityUserApi(): Observable<any> {
-        const url = `${this.identityHost}/rb/v1/identity/users`;
+        const url = `${this.identityHost}${this.context}/rb/v1/identity/users`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
-    private buildQueryParam(name: string, filters?: SearchUsersFilters) {
+    private buildQueryParam(name: string, filters?: IdentityUserFilterInterface) {
         this.queryParams = { search: name };
         this.addOptionalValueToQueryParam('application', filters?.withinApplication);
         this.addOptionalCommaValueToQueryParam('role', filters?.roles);

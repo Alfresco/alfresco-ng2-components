@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -25,6 +25,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { TranslateModule } from '@ngx-translate/core';
 import { fakeEmptyProcessCloudFilterEntries, fakeProcessCloudFilterEntries, fakeProcessCloudFilters, fakeProcessCloudFilterWithDifferentEntries, fakeProcessFilter } from '../mock/process-filters-cloud.mock';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;

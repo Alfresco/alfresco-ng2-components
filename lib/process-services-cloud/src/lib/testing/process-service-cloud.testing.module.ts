@@ -26,8 +26,6 @@ import {
     TranslationService,
     TranslationMock,
     CoreModule,
-    IdentityUserService,
-    IdentityUserServiceMock,
     IdentityGroupService,
     IdentityGroupServiceMock
 } from '@alfresco/adf-core';
@@ -48,7 +46,6 @@ import { RouterTestingModule } from '@angular/router/testing';
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
-        { provide: IdentityUserService, useClass: IdentityUserServiceMock },
         { provide: IdentityGroupService, useClass: IdentityGroupServiceMock }
     ],
     exports: [

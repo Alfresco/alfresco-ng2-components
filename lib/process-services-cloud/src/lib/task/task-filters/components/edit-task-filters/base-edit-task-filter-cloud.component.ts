@@ -25,9 +25,10 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { IdentityGroupModel, IdentityUserModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { IdentityGroupModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
+import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
