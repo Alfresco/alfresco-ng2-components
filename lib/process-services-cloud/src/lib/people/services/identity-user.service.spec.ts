@@ -18,10 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, JwtHelperService, mockToken, setupTestBed } from '@alfresco/adf-core';
-import { IdentityProviderUserService } from './identity-provider-user.service';
+import { IdentityUserService } from './identity-user.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import {
     mockSearchUserByApp,
     mockSearchUserByAppAndGroups,
@@ -30,13 +28,14 @@ import {
     mockSearchUserByGroupsAndRolesAndApp,
     mockSearchUserByRoles,
     mockSearchUserByRolesAndApp,
-    oAuthUsersMockApiWithIdentityUsers
-} from '../mock/identity-provider-user.service.mock';
-import { mockUsers, mockUsersWithGroups, mockUsersWithinApp, mockUsersWithRoles } from '../mock/user-cloud.mock';
+    mockFoodUsers,
+    oAuthUsersMockApiWithError,
+    oAuthUsersMockApiWithIdentityUsers as oAuthMockApiWithIdentityUsers
+} from '../mock/identity-user.service.mock';
 
-describe('IdentityProviderUserService', () => {
+describe('IdentityUserService', () => {
 
-    let service: IdentityProviderUserService;
+    let service: IdentityUserService;
     let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
@@ -47,7 +46,7 @@ describe('IdentityProviderUserService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.inject(IdentityProviderUserService);
+        service = TestBed.inject(IdentityUserService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
     });
 
@@ -85,34 +84,33 @@ describe('IdentityProviderUserService', () => {
     describe('Search', () => {
 
         it('should fetch users', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsers));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
+
             service.search('fake').subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res[0].id).toEqual('fake-id-1');
-                    expect(res[0].username).toEqual('first-name-1 last-name-1');
-                    expect(res[1].id).toEqual('fake-id-2');
-                    expect(res[1].username).toEqual('first-name-2 last-name-2');
-                    expect(res[2].id).toEqual('fake-id-3');
-                    expect(res[2].username).toEqual('first-name-3 last-name-3');
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake'
+                    });
                     done();
                 }
             );
         });
 
-        it('Should not fetch users if error occurred', (done) => {
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
+        it('should not fetch users if error occurred', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithError);
 
-            spyOn(service, 'search').and.returnValue(throwError(errorResponse));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
+
             service.search('fake')
                 .subscribe(
                     () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
+                        expect(searchSpy).toHaveBeenCalled();
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');
@@ -122,17 +120,13 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users by roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithRoles));
-            const searchUsersWithGlobalRolesSpy = spyOn(service, 'searchUsersWithGlobalRoles').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByRoles).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res[0].id).toEqual('fake-role-user-id-1');
-                    expect(res[0].username).toEqual('first-name-1 last-name-1');
-                    expect(res[1].id).toEqual('fake-role-user-id-2');
-                    expect(res[1].username).toEqual('first-name-2 last-name-2');
-                    expect(searchUsersWithGlobalRolesSpy).toHaveBeenCalled();
+                    expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         role: 'fake-role-1,fake-role-2'
@@ -143,12 +137,8 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('Should not fetch users by roles if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithRoles));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithGlobalRolesSpy = spyOn(service, 'searchUsersWithGlobalRoles').and.returnValue(throwError(errorResponse));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithError);
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByRoles)
                 .subscribe(
@@ -156,7 +146,11 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithGlobalRolesSpy).toHaveBeenCalled();
+                        expect(searchSpy).toHaveBeenCalled();
+                        expect(service.queryParams).toEqual({
+                            search: 'fake',
+                            role: 'fake-role-1,fake-role-2'
+                        });
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');
@@ -166,17 +160,13 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users by groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithGroups));
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroups).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res[0].id).toEqual('fake-group-user-id-1');
-                    expect(res[0].username).toEqual('first-name-1 last-name-1');
-                    expect(res[1].id).toEqual('fake-group-user-id-2');
-                    expect(res[1].username).toEqual('first-name-2 last-name-2');
-                    expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
+                    expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         group: 'fake-group-1,fake-group-2'
@@ -187,15 +177,13 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users by roles with groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithGroups));
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.callThrough();
-            const searchUsersWithGlobalRolesSpy = spyOn(service, 'searchUsersWithGlobalRoles').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroupsAndRoles).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(searchUsersWithGlobalRolesSpy).toHaveBeenCalled();
-                    expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
+                    expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         role: 'fake-role-1,fake-role-2',
@@ -207,15 +195,13 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users by roles with groups and appName', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithGroups));
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.callThrough();
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroupsAndRolesAndApp).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(searchUsersWithinAppSpy).toHaveBeenCalled();
-                    expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
+                    expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         role: 'fake-role-1,fake-role-2',
@@ -228,12 +214,8 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('Should not fetch users by groups if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithGroups));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.returnValue(throwError(errorResponse));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithError);
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroups)
                 .subscribe(
@@ -241,7 +223,11 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
+                        expect(searchSpy).toHaveBeenCalled();
+                        expect(service.queryParams).toEqual({
+                            search: 'fake',
+                            group: 'fake-group-1,fake-group-2'
+                        });
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');
@@ -251,17 +237,11 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users within app', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithinApp));
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
 
             service.search('fake', mockSearchUserByApp).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res[0].id).toEqual('fake-app-user-id-1');
-                    expect(res[0].username).toEqual('first-name-1 last-name-1');
-                    expect(res[1].id).toEqual('fake-app-user-id-2');
-                    expect(res[1].username).toEqual('first-name-2 last-name-2');
-                    expect(searchUsersWithinAppSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         application: 'fake-app-name'
@@ -272,13 +252,11 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users within app with roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithinApp));
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
 
             service.search('fake', mockSearchUserByRolesAndApp).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(searchUsersWithinAppSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         application: 'fake-app-name',
@@ -290,15 +268,13 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('should fetch users within app with groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithinApp));
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.callThrough();
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.callThrough();
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByAppAndGroups).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(searchUsersWithinAppSpy).toHaveBeenCalled();
-                    expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
+                    expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
                         search: 'fake',
                         application: 'fake-app-name',
@@ -310,12 +286,8 @@ describe('IdentityProviderUserService', () => {
         });
 
         it('Should not fetch users within app if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithinApp));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.returnValue(throwError(errorResponse));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithError);
+            const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByApp)
                 .subscribe(
@@ -323,7 +295,11 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithinAppSpy).toHaveBeenCalled();
+                        expect(searchSpy).toHaveBeenCalled();
+                        expect(service.queryParams).toEqual({
+                            search: 'fake',
+                            application: 'fake-app-name'
+                        });
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');

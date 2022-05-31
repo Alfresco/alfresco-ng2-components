@@ -37,9 +37,9 @@ import {
 } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
-import { IdentityUserModel } from '../../models/identity-user.model';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../../services/cloud-token.service';
-import { IdentityProviderUserServiceInterface } from '../services/identity-provider-user.service.interface';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
+import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -112,11 +112,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to list of users */
     @Input()
-    userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+    userChipsControl: FormControl = new FormControl({ value: '', disabled: false });
 
     /** FormControl to search the user */
     @Input()
-    searchUserCtrl = new FormControl({ value: '', disabled: false });
+    searchUsersControl = new FormControl({ value: '', disabled: false });
 
     /** Placeholder translation key
      */
@@ -142,13 +142,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private _searchUsers: IdentityUserModel[] = [];
+    private searchUsers: IdentityUserModel[] = [];
     private onDestroy$ = new Subject<boolean>();
 
     selectedUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
 
-    searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
+    searchUsers$ = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
     subscriptAnimationState: string = 'enter';
     isFocused: boolean;
     touched: boolean = false;
@@ -159,9 +159,47 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
+    readonly typingValueFromControl$ = this.searchUsersControl.valueChanges;
+
+    readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
+        filter((value) => {
+            this.searchLoading = true;
+            return typeof value === 'string';
+        })
+    );
+
+    readonly typingValueHandleErrorMessage$ = this.typingValueTypeSting$.pipe(
+        tap((value: string) => {
+            if (value) {
+                this.setTypingError();
+            }
+        })
+    );
+
+    readonly typingValueDebouncedUnique$ = this.typingValueHandleErrorMessage$.pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+    );
+
+    readonly typingValueHandleEmpty$ = this.typingValueDebouncedUnique$.pipe(
+        tap((value: string) => {
+            if (value.trim()) {
+                this.searchedValue = value;
+            } else {
+                this.searchUsersControl.markAsPristine();
+                this.searchUsersControl.markAsUntouched();
+            }
+        }),
+        tap(() => this.resetSearchUsers())
+    );
+
+    readonly typingUniqueValueNotEmpty$ = this.typingValueHandleEmpty$.pipe(
+        tap(value => value.trim())
+    );
+
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
-        private identityUserService: IdentityProviderUserServiceInterface,
+        private identityUserService: IdentityUserServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
@@ -187,23 +225,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private initSearch(): void {
-        this.searchUserCtrl.valueChanges.pipe(
-            filter((value) => {
-                this.searchLoading = true;
-                return typeof value === 'string';
-            }),
-            tap((value: string) => {
-                if (value) {
-                    this.setTypingError();
-                }
-            }),
-            debounceTime(500),
-            distinctUntilChanged(),
-            tap((value: string) => this.setSearchedValue(value)),
-            switchMap((search) =>
-                this.identityUserService.search(search.trim(), { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
+        this.typingUniqueValueNotEmpty$.pipe(
+            switchMap((name: string) =>
+                this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
-            mergeMap((users) => {
+            mergeMap((users: IdentityUserModel[]) => {
                 this.resetSearchUsers();
                 this.searchLoading = false;
                 return users;
@@ -211,25 +237,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
             takeUntil(this.onDestroy$)
         ).subscribe((user: IdentityUserModel) => {
-            this._searchUsers.push(user);
-            this.searchUsers$.next(this._searchUsers);
+            this.searchUsers.push(user);
+            this.searchUsers$.next(this.searchUsers);
         });
     }
 
     ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
-    }
-
-    private setSearchedValue(value: string) {
-        if (value.trim()) {
-            this.searchedValue = value;
-        } else {
-            this.searchUserCtrl.markAsPristine();
-            this.searchUserCtrl.markAsUntouched();
-        }
-
-        this.resetSearchUsers();
     }
 
     private isValidationEnabled(): boolean {
@@ -260,7 +275,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.selectedUsers = this.removeDuplicatedUsers(this.preSelectUsers);
         }
-        this.userChipsCtrl.setValue(this.selectedUsers[0].username);
+        this.userChipsControl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
             this.validationLoading = true;
             await this.validatePreselectUsers();
@@ -346,8 +361,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.userInput.nativeElement.value = '';
-            this.searchUserCtrl.setValue('');
-            this.userChipsCtrlValue(this.selectedUsers[0].username);
+            this.searchUsersControl.setValue('');
+            this.userChipsControlValue(this.selectedUsers[0].username);
 
             this.changedUsers.emit(this.selectedUsers);
             this.resetSearchUsers();
@@ -359,13 +374,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.removeUserFromSelected(userToRemove);
         this.changedUsers.emit(this.selectedUsers);
         if (this.selectedUsers.length === 0) {
-            this.userChipsCtrlValue('');
+            this.userChipsControlValue('');
 
         } else {
-            this.userChipsCtrlValue(this.selectedUsers[0].username);
+            this.userChipsControlValue(this.selectedUsers[0].username);
         }
-        this.searchUserCtrl.markAsDirty();
-        this.searchUserCtrl.markAsTouched();
+        this.searchUsersControl.markAsDirty();
+        this.searchUsersControl.markAsTouched();
 
         if (this.isValidationEnabled()) {
             this.removeUserFromValidation(userToRemove);
@@ -373,10 +388,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private userChipsCtrlValue(value: string) {
-        this.userChipsCtrl.setValue(value);
-        this.userChipsCtrl.markAsDirty();
-        this.userChipsCtrl.markAsTouched();
+    private userChipsControlValue(value: string) {
+        this.userChipsControl.setValue(value);
+        this.userChipsControl.markAsDirty();
+        this.userChipsControl.markAsTouched();
     }
 
     private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
@@ -452,14 +467,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private resetSearchUsers(): void {
-        this._searchUsers = [];
-        this.searchUsers$.next(this._searchUsers);
+        this.searchUsers = [];
+        this.searchUsers$.next(this.searchUsers);
     }
 
     private setTypingError(): void {
-        this.searchUserCtrl.setErrors({
+        this.searchUsersControl.setErrors({
             searchTypingError: true,
-            ...this.searchUserCtrl.errors
+            ...this.searchUsersControl.errors
         });
     }
 
@@ -496,18 +511,18 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     hasError(): boolean {
-        return !!this.searchUserCtrl.errors;
+        return !!this.searchUsersControl.errors;
     }
 
     getValidationPattern(): string {
-        return this.searchUserCtrl.errors.pattern.requiredPattern;
+        return this.searchUsersControl.errors.pattern.requiredPattern;
     }
 
     getValidationMaxLength(): string {
-        return this.searchUserCtrl.errors.maxlength.requiredLength;
+        return this.searchUsersControl.errors.maxlength.requiredLength;
     }
 
     getValidationMinLength(): string {
-        return this.searchUserCtrl.errors.minlength.requiredLength;
+        return this.searchUsersControl.errors.minlength.requiredLength;
     }
 }

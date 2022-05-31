@@ -17,8 +17,10 @@
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IdentityGroupModel, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
+import { IdentityGroupModel } from '@alfresco/adf-core';
 import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
+import { IdentityUserModel } from '../../../../people/models/identity-user.model';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',

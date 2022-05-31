@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -24,7 +24,6 @@ import {
     MOMENT_DATE_FORMATS, MomentDateAdapter,
     LogService,
     UserPreferencesService,
-    IdentityUserModel,
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
@@ -33,8 +32,8 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
-import { IDENTITY_USER_SERVICE_TOKEN } from 'process-services-cloud/src/public-api';
-import { IdentityProviderUserServiceInterface } from 'process-services-cloud/src/lib/people/services/identity-provider-user.service.interface';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
 const MAX_NAME_LENGTH = 255;
 const DATE_FORMAT: string = 'DD/MM/YYYY';
@@ -109,8 +108,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
-                @Inject(IDENTITY_USER_SERVICE_TOKEN)
-                private identityUserService: IdentityProviderUserServiceInterface,
+                private identityUserService: IdentityUserService,
                 private logService: LogService) {
     }
 

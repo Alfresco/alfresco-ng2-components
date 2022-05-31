@@ -17,7 +17,7 @@
                 </mat-icon>
             </mat-chip>
             <input *ngIf="!isReadonly()" matInput
-                   [formControl]="searchUserCtrl"
+                   [formControl]="searchUsersControl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
                    [required]="required"
@@ -41,7 +41,7 @@
             </mat-option>
             </ng-container>
             <ng-template #noResults>
-                <mat-option *ngIf="searchUserCtrl.hasError('searchTypingError') && !searchLoading" disabled
+                <mat-option *ngIf="searchUsersControl.hasError('searchTypingError') && !searchLoading" disabled
                             class="adf-people-cloud-option-not-active"
                             data-automation-id="adf-people-cloud-no-results">
                     <span> {{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName: searchedValue } }}</span>
@@ -59,24 +59,24 @@
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUsersControl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_PATTERN' | translate: { pattern: getValidationPattern() } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUsersControl.hasError('maxlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MAX_LENGTH' | translate: { requiredLength: getValidationMaxLength() } }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
+        <mat-error *ngIf="searchUsersControl.hasError('minlength')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.INVALID_MIN_LENGTH' | translate: { requiredLength: getValidationMinLength() } }}</div>
         </mat-error>
-        <mat-error *ngIf="(searchUserCtrl.hasError('required') || userChipsCtrl.hasError('required')) && isDirty()"
+        <mat-error *ngIf="(searchUsersControl.hasError('required') || userChipsControl.hasError('required')) && isDirty()"
             [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_PEOPLE_GROUPS.ERROR.REQUIRED' | translate }}</div>
         </mat-error>
-        <mat-error *ngIf="searchUserCtrl.hasError('searchTypingError') && !this.isFocused"
+        <mat-error *ngIf="searchUsersControl.hasError('searchTypingError') && !this.isFocused"
             [@transitionMessages]="subscriptAnimationState" data-automation-id="invalid-users-typing-error" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : searchedValue } }}</div>

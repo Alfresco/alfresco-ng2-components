@@ -22,7 +22,8 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
-import { IdentityUserModel, IdentityGroupModel } from '@alfresco/adf-core';
+import { IdentityGroupModel } from '@alfresco/adf-core';
+import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
 export class TaskFilterCloudModel  {
     id: string;

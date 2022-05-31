@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 import { Directive, HostListener, Output, EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { IdentityUserService } from '@alfresco/adf-core';
 import { ProcessCloudService } from '../services/process-cloud.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector

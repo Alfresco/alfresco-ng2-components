@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, AppConfigService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -35,6 +35,7 @@ import {
     TaskPriorityOption
 } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 
 @Injectable({
     providedIn: 'root'

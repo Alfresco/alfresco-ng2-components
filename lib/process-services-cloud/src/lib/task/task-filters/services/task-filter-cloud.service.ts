@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
@@ -26,6 +26,7 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.servic
 import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {

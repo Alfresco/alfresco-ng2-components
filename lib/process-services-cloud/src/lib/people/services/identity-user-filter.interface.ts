@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export * from './components/people-cloud.component';
-
-export * from './people-cloud.module';
-export * from './models/identity-user.model';
+export interface IdentityUserFilterInterface {
+    roles?: string[];
+    withinApplication?: string;
+    groups?: string[];
+}

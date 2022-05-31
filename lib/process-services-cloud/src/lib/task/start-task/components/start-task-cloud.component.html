@@ -64,7 +64,7 @@
                 <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser"
                                   [appName]="appName"
                                   [preSelectUsers]="[currentUser]"
-                                  [searchUserCtrl]="assigneeFormControl"
+                                  [searchUsersControl]="assigneeFormControl"
                                   (selectUser)="onAssigneeSelect($event)"
                                   [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
                                   (removeUser)="onAssigneeRemove()"></adf-cloud-people>

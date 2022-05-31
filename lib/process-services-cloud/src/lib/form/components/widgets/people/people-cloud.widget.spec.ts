@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/identity-user.service.mock';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
     let widget: PeopleCloudWidgetComponent;
     let element: HTMLElement;
     let identityUserService: IdentityUserService;
-    const currentUser = { id: 'id', username: 'user' };
-    const fakeUser = { id: 'fake-id', username: 'fake' };
 
     setupTestBed({
         imports: [
@@ -48,20 +48,20 @@ describe('PeopleCloudWidgetComponent', () => {
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(fakeUser);
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockShepherdsPie);
     });
 
     it('should preselect the current user', () => {
         widget.field = new FormFieldModel(new FormModel(), { value: null, selectLoggedUser: true });
         fixture.detectChanges();
-        expect(widget.preSelectUsers).toEqual([fakeUser]);
+        expect(widget.preSelectUsers).toEqual([mockShepherdsPie]);
         expect(identityUserService.getCurrentUserInfo).toHaveBeenCalled();
     });
 
     it('should not preselect the current user if value exist', () => {
-        widget.field = new FormFieldModel(new FormModel(), { value: [currentUser], selectLoggedUser: true });
+        widget.field = new FormFieldModel(new FormModel(), { value: [mockYorkshirePudding], selectLoggedUser: true });
         fixture.detectChanges();
-        expect(widget.preSelectUsers).toEqual([currentUser]);
+        expect(widget.preSelectUsers).toEqual([mockYorkshirePudding]);
         expect(identityUserService.getCurrentUserInfo).not.toHaveBeenCalled();
     });
 
