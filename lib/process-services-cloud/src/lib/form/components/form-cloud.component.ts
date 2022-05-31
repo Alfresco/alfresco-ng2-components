@@ -272,30 +272,70 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     completeTaskForm(outcome?: string) {
         debugger;
-        // this.form.values.confirmMessage
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            data: {
-                title: 'Save the form',
-                message: 'Do you want to save the form?'
-            },
-            minWidth: '250px'
-        });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result === true) {
-                if (this.form && this.appName && this.taskId) {
-                    this.formCloudService
-                        .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-                        .pipe(takeUntil(this.onDestroy$))
-                        .subscribe(
-                            () => {
-                                this.onTaskCompleted(this.form);
-                            },
-                            (error) => this.onTaskCompletedError(error)
-                        );
+        // const confirmMessage = this.form.json.confirmMessage.message;
+
+        if (this.form?.confirmMessage?.show === true) {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Save the form',
+                    message: this.form.confirmMessage.message
+                },
+                minWidth: '450px'
+            });
+
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result === true) {
+                    if (this.form && this.appName && this.taskId) {
+                        this.formCloudService
+                            .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                            .pipe(takeUntil(this.onDestroy$))
+                            .subscribe(
+                                () => {
+                                    this.onTaskCompleted(this.form);
+                                },
+                                (error) => this.onTaskCompletedError(error)
+                            );
+                    }
                 }
+            });
+        } else {
+            if (this.form && this.appName && this.taskId) {
+                this.formCloudService
+                    .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe(
+                        () => {
+                            this.onTaskCompleted(this.form);
+                        },
+                        (error) => this.onTaskCompletedError(error)
+                    );
             }
-        });
+        }
+    
+        // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        //     data: {
+        //         title: 'Save the form',
+        //         message: this.form.confirmMessage.message
+        //     },
+        //     minWidth: '450px'
+        // });
+
+        // dialogRef.afterClosed().subscribe((result) => {
+        //     if (result === true) {
+        //         if (this.form && this.appName && this.taskId) {
+        //             this.formCloudService
+        //                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+        //                 .pipe(takeUntil(this.onDestroy$))
+        //                 .subscribe(
+        //                     () => {
+        //                         this.onTaskCompleted(this.form);
+        //                     },
+        //                     (error) => this.onTaskCompletedError(error)
+        //                 );
+        //         }
+        //     }
+        // });
     }
 
     parseForm(formCloudRepresentationJSON: any): FormModel {

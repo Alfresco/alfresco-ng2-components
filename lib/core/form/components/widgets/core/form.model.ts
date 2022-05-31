@@ -65,6 +65,7 @@ export class FormModel implements ProcessFormModel {
 
     readonly id: string | number;
     readonly name: string;
+    readonly confirmMessage: {show: boolean, message: string};
     readonly taskId: string;
     readonly taskName = FormModel.UNSET_TASK_NAME;
     readonly processDefinitionId: string;
@@ -93,6 +94,7 @@ export class FormModel implements ProcessFormModel {
         if (json) {
             this.id = json.id;
             this.name = json.name;
+            this.confirmMessage = json.confirmMessage || {};
             this.taskId = json.taskId;
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.processDefinitionId;

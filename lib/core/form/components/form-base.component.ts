@@ -161,6 +161,7 @@ export abstract class FormBaseComponent {
      * @param outcome Form outcome model
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
+        debugger
         if (!this.readOnly && outcome && this.form) {
 
             if (!this.onExecuteOutcome(outcome)) {

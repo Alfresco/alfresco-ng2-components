@@ -689,6 +689,7 @@ fdescribe('FormCloudComponent', () => {
     });
 
     it('should require form with appName and taskId to complete', () => {
+        debugger;
         spyOn(formCloudService, 'completeTaskForm').and.stub();
 
         formComponent.form = null;
@@ -744,60 +745,73 @@ fdescribe('FormCloudComponent', () => {
         expect(formComponent.parseForm(null)).toBeNull();
     });
 
-    fit('should open confirmation dialog on complete task', () => {
-        spyOn(matDialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
+    it('should open confirmation dialog on complete task', () => {
+        // spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of() } as any);
 
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
+        formComponent.form = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+        
         formComponent.completeTaskForm();
         expect(matDialog.open).toHaveBeenCalled();
     });
 
-    // fit('should submit form when user confirms', () => {
-    //     fixture.detectChanges();
-    //     spyOn(matDialog, 'open').and.returnValue({
-    //         afterClosed: () => of(true)
-    //     } as any);
+    it('should submit form when user confirms', () => {
+        fixture.detectChanges();
+        const afterClose = of(true);
 
-    //     spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
+        spyOn(matDialog, 'open').and.returnValue({
+            afterClosed: () => afterClose
+        } as any);
 
-    //     const taskId = '123-223';
-    //     const appVersion = 1;
-    //     const appName = 'test-app';
-    //     const processInstanceId = '333-444';
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
+        const outcome = 'complete';
 
-    //     const formModel = new FormModel({
-    //         id: '23',
-    //         taskId,
-    //         fields: [
-    //             { id: 'field1' },
-    //             { id: 'field2' }
-    //         ]
-    //     });
+        const taskId = '123-223';
+        const appVersion = 1;
+        const appName = 'test-app';
+        const processInstanceId = '333-444';
 
-    //     formComponent.appVersion = appVersion;
-    //     formComponent.form = formModel;
-    //     formComponent.taskId = taskId;
-    //     formComponent.appName = appName;
-    //     formComponent.processInstanceId = processInstanceId;
-    //     formComponent.completeTaskForm('outcome');
-    //     expect(matDialog.open).toHaveBeenCalled();
-    //     expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, 'outcome', appVersion);
-    // });
+        const formModel = new FormModel({
+            id: '23',
+            taskId,
+            fields: [
+                { id: 'field1' },
+                { id: 'field2' }
+            ],
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
 
-    // fit('should not confirm form if user rejects', () => {
-    //     spyOn(matDialog, 'open').and.returnValue({
-    //         afterClosed: () => of(false)
-    //     } as any);
+        formComponent.appVersion = appVersion;
+        formComponent.form = formModel;
+        formComponent.taskId = taskId;
+        formComponent.appName = appName;
+        formComponent.processInstanceId = processInstanceId;
+        formComponent.completeTaskForm(outcome);
+        expect(matDialog.open).toHaveBeenCalled();
 
-    //     spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
-    //     formComponent.completeTaskForm();
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome, appVersion);
+    });
 
-    //     expect(formCloudService.completeTaskForm).not.toHaveBeenCalled();
+    it('should not confirm form if user rejects', () => {
+        const outcome = 'complete';
 
-        // formComponent.completeTaskForm('outcome');
-        // expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
-    // });
+        spyOn(matDialog, 'open').and.returnValue({
+            afterClosed: () => of(false)
+        } as any);
+
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(false));
+        formComponent.completeTaskForm(outcome);
+
+        expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
+    });
 
     it('should parse form from json', () => {
         const form = formComponent.parseForm({
