@@ -271,10 +271,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     completeTaskForm(outcome?: string) {
-        debugger;
-
-        // const confirmMessage = this.form.json.confirmMessage.message;
-
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
@@ -286,56 +282,26 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
-                    if (this.form && this.appName && this.taskId) {
-                        this.formCloudService
-                            .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-                            .pipe(takeUntil(this.onDestroy$))
-                            .subscribe(
-                                () => {
-                                    this.onTaskCompleted(this.form);
-                                },
-                                (error) => this.onTaskCompletedError(error)
-                            );
-                    }
+                    this.completeTaskFormWithConfirmMessage(outcome);
                 }
             });
         } else {
-            if (this.form && this.appName && this.taskId) {
-                this.formCloudService
-                    .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-                    .pipe(takeUntil(this.onDestroy$))
-                    .subscribe(
-                        () => {
-                            this.onTaskCompleted(this.form);
-                        },
-                        (error) => this.onTaskCompletedError(error)
-                    );
-            }
+            this.completeTaskFormWithConfirmMessage(outcome);
         }
-    
-        // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        //     data: {
-        //         title: 'Save the form',
-        //         message: this.form.confirmMessage.message
-        //     },
-        //     minWidth: '450px'
-        // });
+    }
 
-        // dialogRef.afterClosed().subscribe((result) => {
-        //     if (result === true) {
-        //         if (this.form && this.appName && this.taskId) {
-        //             this.formCloudService
-        //                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-        //                 .pipe(takeUntil(this.onDestroy$))
-        //                 .subscribe(
-        //                     () => {
-        //                         this.onTaskCompleted(this.form);
-        //                     },
-        //                     (error) => this.onTaskCompletedError(error)
-        //                 );
-        //         }
-        //     }
-        // });
+    completeTaskFormWithConfirmMessage(outcome?: string) {
+        if (this.form && this.appName && this.taskId) {
+            this.formCloudService
+                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(
+                    () => {
+                        this.onTaskCompleted(this.form);
+                    },
+                    (error) => this.onTaskCompletedError(error)
+                );
+        }
     }
 
     parseForm(formCloudRepresentationJSON: any): FormModel {
