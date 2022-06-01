@@ -112,11 +112,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to list of users */
     @Input()
-    userChipsControl: FormControl = new FormControl({ value: '', disabled: false });
+    userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
 
     /** FormControl to search the user */
     @Input()
-    searchUsersControl = new FormControl({ value: '', disabled: false });
+    searchUserCtrl = new FormControl({ value: '', disabled: false });
 
     /** Placeholder translation key
      */
@@ -159,7 +159,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
-    readonly typingValueFromControl$ = this.searchUsersControl.valueChanges;
+    readonly typingValueFromControl$ = this.searchUserCtrl.valueChanges;
 
     readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
         filter((value) => {
@@ -186,8 +186,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             if (value.trim()) {
                 this.searchedValue = value;
             } else {
-                this.searchUsersControl.markAsPristine();
-                this.searchUsersControl.markAsUntouched();
+                this.searchUserCtrl.markAsPristine();
+                this.searchUserCtrl.markAsUntouched();
             }
         }),
         tap(() => this.resetSearchUsers())
@@ -275,7 +275,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.selectedUsers = this.removeDuplicatedUsers(this.preSelectUsers);
         }
-        this.userChipsControl.setValue(this.selectedUsers[0].username);
+        this.userChipsCtrl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
             this.validationLoading = true;
             await this.validatePreselectUsers();
@@ -361,7 +361,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.userInput.nativeElement.value = '';
-            this.searchUsersControl.setValue('');
+            this.searchUserCtrl.setValue('');
             this.userChipsControlValue(this.selectedUsers[0].username);
 
             this.changedUsers.emit(this.selectedUsers);
@@ -379,8 +379,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.userChipsControlValue(this.selectedUsers[0].username);
         }
-        this.searchUsersControl.markAsDirty();
-        this.searchUsersControl.markAsTouched();
+        this.searchUserCtrl.markAsDirty();
+        this.searchUserCtrl.markAsTouched();
 
         if (this.isValidationEnabled()) {
             this.removeUserFromValidation(userToRemove);
@@ -389,9 +389,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private userChipsControlValue(value: string) {
-        this.userChipsControl.setValue(value);
-        this.userChipsControl.markAsDirty();
-        this.userChipsControl.markAsTouched();
+        this.userChipsCtrl.setValue(value);
+        this.userChipsCtrl.markAsDirty();
+        this.userChipsCtrl.markAsTouched();
     }
 
     private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
@@ -472,9 +472,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private setTypingError(): void {
-        this.searchUsersControl.setErrors({
+        this.searchUserCtrl.setErrors({
             searchTypingError: true,
-            ...this.searchUsersControl.errors
+            ...this.searchUserCtrl.errors
         });
     }
 
@@ -511,18 +511,18 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     hasError(): boolean {
-        return !!this.searchUsersControl.errors;
+        return !!this.searchUserCtrl.errors;
     }
 
     getValidationPattern(): string {
-        return this.searchUsersControl.errors.pattern.requiredPattern;
+        return this.searchUserCtrl.errors.pattern.requiredPattern;
     }
 
     getValidationMaxLength(): string {
-        return this.searchUsersControl.errors.maxlength.requiredLength;
+        return this.searchUserCtrl.errors.maxlength.requiredLength;
     }
 
     getValidationMinLength(): string {
-        return this.searchUsersControl.errors.minlength.requiredLength;
+        return this.searchUserCtrl.errors.minlength.requiredLength;
     }
 }
