@@ -39,7 +39,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
             return EMPTY;
         } else if (filters?.withinApplication !== undefined && filters?.withinApplication !== '') {
             return this.searchGroupsWithinApp(name, filters.withinApplication, filters.roles);
-        } else if (filters?.roles !== undefined && filters?.roles.length > 0) {
+        } else if (filters?.roles?.length > 0) {
             return this.searchGroupsWithGlobalRoles(name, filters.roles);
         } else {
             return this.searchGroupsByName(name);
