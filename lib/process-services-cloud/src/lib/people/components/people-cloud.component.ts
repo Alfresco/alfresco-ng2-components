@@ -30,7 +30,7 @@ import {
     ElementRef,
     Inject
 } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
 import {
     FullNamePipe,
@@ -159,43 +159,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
-    readonly typingValueFromControl$ = this.searchUserCtrl.valueChanges;
-
-    readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
-        filter((value) => {
-            this.searchLoading = true;
-            return typeof value === 'string';
-        })
-    );
-
-    readonly typingValueHandleErrorMessage$ = this.typingValueTypeSting$.pipe(
-        tap((value: string) => {
-            if (value) {
-                this.setTypingError();
-            }
-        })
-    );
-
-    readonly typingValueDebouncedUnique$ = this.typingValueHandleErrorMessage$.pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-    );
-
-    readonly typingValueHandleEmpty$ = this.typingValueDebouncedUnique$.pipe(
-        tap((value: string) => {
-            if (value.trim()) {
-                this.searchedValue = value;
-            } else {
-                this.searchUserCtrl.markAsPristine();
-                this.searchUserCtrl.markAsUntouched();
-            }
-        }),
-        tap(() => this.resetSearchUsers())
-    );
-
-    readonly typingUniqueValueNotEmpty$ = this.typingValueHandleEmpty$.pipe(
-        tap(value => value.trim())
-    );
+    typingUniqueValueNotEmpty$: Observable<string>;
 
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
@@ -225,21 +189,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private initSearch(): void {
-        this.searchUserCtrl.valueChanges.pipe(
-            filter((value) => {
-                this.searchLoading = true;
-                return typeof value === 'string';
-            }),
-            tap((value: string) => {
-                if (value) {
-                    this.setTypingError();
-                }
-            }),
-            debounceTime(500),
-            distinctUntilChanged(),
-            tap((value: string) => this.setSearchedValue(value)),
-            switchMap((search) =>
-                this.identityUserService.search(search.trim(), { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
+        this.initializeStream();
+        this.typingUniqueValueNotEmpty$.pipe(
+            switchMap((name: string) =>
+                this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
             mergeMap((users) => {
                 this.resetSearchUsers();
@@ -259,15 +212,40 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    private setSearchedValue(value: string) {
-        if (value.trim()) {
-            this.searchedValue = value;
-        } else {
-            this.searchUserCtrl.markAsPristine();
-            this.searchUserCtrl.markAsUntouched();
-        }
+    private initializeStream() {
+        const typingValueFromControl$ = this.searchUserCtrl.valueChanges;
 
-        this.resetSearchUsers();
+        const typingValueTypeSting$ = typingValueFromControl$.pipe(
+            filter(value => {
+                this.searchLoading = true;
+                return typeof value === 'string';
+            })
+        );
+
+        const typingValueHandleErrorMessage$ = typingValueTypeSting$.pipe(
+            tap((value: string) => {
+                if (value) {
+                    this.setTypingError();
+                }
+            })
+        );
+
+        const typingValueDebouncedUnique$ = typingValueHandleErrorMessage$.pipe(
+            debounceTime(500),
+            distinctUntilChanged()
+        );
+
+        this.typingUniqueValueNotEmpty$ = typingValueDebouncedUnique$.pipe(
+            tap((value: string) => {
+                if (value.trim()) {
+                    this.searchedValue = value;
+                } else {
+                    this.searchUserCtrl.markAsPristine();
+                    this.searchUserCtrl.markAsUntouched();
+                }
+            }),
+            tap(() => this.resetSearchUsers())
+        );
     }
 
     private isValidationEnabled(): boolean {
