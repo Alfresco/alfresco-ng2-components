@@ -32,7 +32,6 @@ import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
 
-    context: string = '';
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
     constructor(
@@ -67,11 +66,11 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     public search(name: string, filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
-        } else if (filters?.groups && filters?.groups.length > 0) {
+        } else if (filters?.groups?.length > 0) {
             return this.searchUsersWithGroups(name, filters);
         } else if (filters?.withinApplication) {
             return this.searchUsersWithinApp(name, filters.withinApplication, filters?.roles);
-        } else if (filters?.roles && filters?.roles.length > 0) {
+        } else if (filters?.roles?.length > 0) {
             return this.searchUsersWithGlobalRoles(name, filters.roles);
         } else {
             return this.searchUsersByName(name);
@@ -111,7 +110,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private invokeIdentityUserApi(): Observable<any> {
-        const url = `${this.identityHost}${this.context}/rb/v1/identity/users`;
+        const url = `${this.identityHost}/rb/v1/identity/users`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 

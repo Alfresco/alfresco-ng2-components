@@ -79,7 +79,7 @@ export const mockSearchUserByAppAndGroups: IdentityUserFilterInterface = {
     withinApplication: 'fake-app-name'
 };
 
-export function oAuthUsersMockApiWithIdentityUsers(users: IdentityUserModel[]) {
+export function oAuthMockApiWithIdentityUsers(users: IdentityUserModel[]) {
     return {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(users)
@@ -93,7 +93,7 @@ const errorResponse = new HttpErrorResponse({
     status: 404, statusText: 'Not Found'
 });
 
-export const oAuthUsersMockApiWithError = {
+export const oAuthMockApiWithError = {
     oauth2Auth: {
         callCustomApi: () => throwError(errorResponse)
     },
