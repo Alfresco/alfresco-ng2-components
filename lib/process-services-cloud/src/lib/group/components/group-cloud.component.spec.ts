@@ -29,7 +29,7 @@ import {
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from '../services/identity-group.service';
-import { IdentityGroupModel } from '../public-api';
+import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/identity-group.service.mock';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
@@ -37,11 +37,6 @@ describe('GroupCloudComponent', () => {
     let element: HTMLElement;
     let identityGroupService: IdentityGroupService;
     let findGroupsByNameSpy: jasmine.Spy;
-
-    const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine'};
-    const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken'};
-
-    const mockFoodGroups = [ mockVegetableAubergine, mockMeatChicken ];
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     function getElement<T = HTMLElement>(selector: string): T {

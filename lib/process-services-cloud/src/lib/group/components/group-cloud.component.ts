@@ -57,6 +57,10 @@ import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service
 })
 export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
+    constructor(
+        @Inject(IDENTITY_GROUP_SERVICE_TOKEN) private identityGroupService: IdentityGroupServiceInterface,
+        private logService: LogService) {}
+
     /** Name of the application. If specified this shows the groups who have access to the app. */
     @Input()
     appName: string;
@@ -138,29 +142,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
-    constructor(
-        @Inject(IDENTITY_GROUP_SERVICE_TOKEN) private identityGroupService: IdentityGroupServiceInterface,
-        private logService: LogService) {}
-
-    ngOnInit(): void {
-        this.initSearch();
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
-            if (this.hasPreSelectGroups()) {
-                this.loadPreSelectGroups();
-            } else if (this.hasPreselectedGroupsCleared(changes)) {
-                this.selectedGroups = [];
-                this.invalidGroups = [];
-            }
-
-            if (!this.isValidationEnabled()) {
-                this.invalidGroups = [];
-            }
-        }
-    }
-
     readonly typingValueFromControl$ = this.searchGroupsControl.valueChanges;
 
     readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
@@ -198,6 +179,25 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     readonly typingUniqueValueNotEmpty$ = this.typingValueHandleEmpty$.pipe(
         tap(value => value.trim())
     );
+
+    ngOnInit(): void {
+        this.initSearch();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
+            if (this.hasPreSelectGroups()) {
+                this.loadPreSelectGroups();
+            } else if (this.hasPreselectedGroupsCleared(changes)) {
+                this.selectedGroups = [];
+                this.invalidGroups = [];
+            }
+
+            if (!this.isValidationEnabled()) {
+                this.invalidGroups = [];
+            }
+        }
+    }
 
     initSearch(): void {
         this.typingUniqueValueNotEmpty$.pipe(
