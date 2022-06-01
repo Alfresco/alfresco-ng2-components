@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
@@ -142,43 +142,43 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
-    readonly typingValueFromControl$ = this.searchGroupsControl.valueChanges;
+    typingUniqueValueNotEmpty$: Observable<any>;
 
-    readonly typingValueTypeSting$ = this.typingValueFromControl$.pipe(
-        filter((value) => {
-            this.searchLoading = true;
-            return typeof value === 'string';
-        })
-    );
+    private initializeStream() {
+        const typingValueFromControl$ = this.searchGroupsControl.valueChanges;
 
-    readonly typingValueHandleErrorMessage$ = this.typingValueTypeSting$.pipe(
-        tap((value: string) => {
-            if (value) {
-                this.setTypingError();
-            }
-        })
-    );
+        const typingValueTypeSting$ = typingValueFromControl$.pipe(
+            filter(value => {
+                this.searchLoading = true;
+                return typeof value === 'string';
+            })
+        );
 
-    readonly typingValueDebouncedUnique$ = this.typingValueHandleErrorMessage$.pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-    );
+        const typingValueHandleErrorMessage$ = typingValueTypeSting$.pipe(
+            tap((value: string) => {
+                if (value) {
+                    this.setTypingError();
+                }
+            })
+        );
 
-    readonly typingValueHandleEmpty$ = this.typingValueDebouncedUnique$.pipe(
-        tap((value: string) => {
-            if (value.trim()) {
-                this.searchedValue = value;
-            } else {
-                this.searchGroupsControl.markAsPristine();
-                this.searchGroupsControl.markAsUntouched();
-            }
-        }),
-        tap(() => this.resetSearchGroups())
-    );
+        const typingValueDebouncedUnique$ = typingValueHandleErrorMessage$.pipe(
+            debounceTime(500),
+            distinctUntilChanged()
+        );
 
-    readonly typingUniqueValueNotEmpty$ = this.typingValueHandleEmpty$.pipe(
-        tap(value => value.trim())
-    );
+        this.typingUniqueValueNotEmpty$ = typingValueDebouncedUnique$.pipe(
+            tap((value: string) => {
+                if (value.trim()) {
+                    this.searchedValue = value;
+                } else {
+                    this.searchGroupsControl.markAsPristine();
+                    this.searchGroupsControl.markAsUntouched();
+                }
+            }),
+            tap(() => this.resetSearchGroups())
+        );
+    }
 
     ngOnInit(): void {
         this.initSearch();
@@ -200,6 +200,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     initSearch(): void {
+        this.initializeStream();
         this.typingUniqueValueNotEmpty$.pipe(
             switchMap((name: string) =>
                 this.identityGroupService.search(name, { roles: this.roles, withinApplication: this.appName })
