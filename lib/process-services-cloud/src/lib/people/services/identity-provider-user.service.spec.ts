@@ -20,8 +20,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, JwtHelperService, mockToken, setupTestBed } from '@alfresco/adf-core';
 import { IdentityProviderUserService } from './identity-provider-user.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import {
     mockSearchUserByApp,
     mockSearchUserByAppAndGroups,
@@ -30,8 +28,9 @@ import {
     mockSearchUserByGroupsAndRolesAndApp,
     mockSearchUserByRoles,
     mockSearchUserByRolesAndApp,
-    oAuthUsersMockApiWithIdentityUsers
-} from '../mock/identity-provider-user.service.mock';
+    oAuthMockApiWithError
+} from '../mock/identity-user.service.mock';
+import { oAuthUsersMockApiWithIdentityUsers } from '../mock/identity-provider-user.service.mock';
 import { mockUsers, mockUsersWithGroups, mockUsersWithinApp, mockUsersWithRoles } from '../mock/user-cloud.mock';
 
 describe('IdentityProviderUserService', () => {
@@ -56,7 +55,7 @@ describe('IdentityProviderUserService', () => {
         beforeEach(() => {
             const store = {};
 
-            spyOn(localStorage, 'getItem').and.callFake( (key: string): string => store[key] || null);
+            spyOn(localStorage, 'getItem').and.callFake((key: string): string => store[key] || null);
             spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  store[key] = value);
         });
 
@@ -100,13 +99,9 @@ describe('IdentityProviderUserService', () => {
             );
         });
 
-        it('Should not fetch users if error occurred', (done) => {
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
+        it('should not fetch users if error occurred', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
 
-            spyOn(service, 'search').and.returnValue(throwError(errorResponse));
             service.search('fake')
                 .subscribe(
                     () => {
@@ -142,13 +137,8 @@ describe('IdentityProviderUserService', () => {
             );
         });
 
-        it('Should not fetch users by roles if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithRoles));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithGlobalRolesSpy = spyOn(service, 'searchUsersWithGlobalRoles').and.returnValue(throwError(errorResponse));
+        it('should not fetch users by roles if error occurred', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
 
             service.search('fake', mockSearchUserByRoles)
                 .subscribe(
@@ -156,7 +146,6 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithGlobalRolesSpy).toHaveBeenCalled();
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');
@@ -227,13 +216,8 @@ describe('IdentityProviderUserService', () => {
             );
         });
 
-        it('Should not fetch users by groups if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithGroups));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithGroupsSpy = spyOn(service, 'searchUsersWithGroups').and.returnValue(throwError(errorResponse));
+        it('should not fetch users by groups if error occurred', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
 
             service.search('fake', mockSearchUserByGroups)
                 .subscribe(
@@ -241,7 +225,6 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithGroupsSpy).toHaveBeenCalled();
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');
@@ -309,13 +292,8 @@ describe('IdentityProviderUserService', () => {
             );
         });
 
-        it('Should not fetch users within app if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthUsersMockApiWithIdentityUsers(mockUsersWithinApp));
-            const errorResponse = new HttpErrorResponse({
-                error: 'Mock Error',
-                status: 404, statusText: 'Not Found'
-            });
-            const searchUsersWithinAppSpy = spyOn(service, 'searchUsersWithinApp').and.returnValue(throwError(errorResponse));
+        it('should not fetch users within app if error occurred', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
 
             service.search('fake', mockSearchUserByApp)
                 .subscribe(
@@ -323,7 +301,6 @@ describe('IdentityProviderUserService', () => {
                         fail('expected an error, not users');
                     },
                     (error) => {
-                        expect(searchUsersWithinAppSpy).toHaveBeenCalled();
                         expect(error.status).toEqual(404);
                         expect(error.statusText).toEqual('Not Found');
                         expect(error.error).toEqual('Mock Error');

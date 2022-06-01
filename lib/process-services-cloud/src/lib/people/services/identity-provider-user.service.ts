@@ -21,7 +21,7 @@ import {
     JwtHelperService,
     OAuth2Service
 } from '@alfresco/adf-core';
-import { Observable, of, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IdentityProviderUserServiceInterface, SearchUsersFilters } from './identity-provider-user.service.interface';
 import { IdentityUserModel } from '../../models/identity-user.model';
@@ -57,11 +57,13 @@ export class IdentityProviderUserService implements IdentityProviderUserServiceI
 
     search(name: string, filters?: SearchUsersFilters): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
-            return of([]);
-        } else if (filters?.withinApplication && filters?.withinApplication !== '') {
-            return this.searchUsersWithinApp(name, filters.withinApplication, filters?.roles, filters?.groups);
-        } else if (filters?.roles && filters?.roles.length > 0) {
-            return this.searchUsersWithGlobalRoles(name, filters.roles, filters?.groups);
+            return EMPTY;
+        } else if (filters?.groups?.length > 0) {
+            return this.searchUsersWithGroups(name, filters);
+        } else if (filters?.withinApplication) {
+            return this.searchUsersWithinApp(name, filters.withinApplication, filters?.roles);
+        } else if (filters?.roles?.length > 0) {
+            return this.searchUsersWithGlobalRoles(name, filters.roles);
         } else {
             return this.searchUsersByName(name, filters?.groups);
         }
