@@ -25,9 +25,9 @@ export class ApiClientsService {
     constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) { }
 
     private registry: Dictionary<Constructor<any>> = {};
-    private instances: Partial<Api.ApiRegistry> = {};
+    private instances: Partial<AlfrescoCore.ApiRegistry> = {};
 
-    get<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
+    get<T extends keyof AlfrescoCore.ApiRegistry>(apiName: T): AlfrescoCore.ApiRegistry[T] {
 
         const ApiClass = this.registry[apiName];
 
@@ -35,17 +35,17 @@ export class ApiClientsService {
             throw new Error(`Api not registred: ${apiName}`);
         }
 
-        return this.instances[apiName] as Api.ApiRegistry[T] ?? this.instantiateApi(apiName);
+        return this.instances[apiName] as AlfrescoCore.ApiRegistry[T] ?? this.instantiateApi(apiName);
     }
 
 
-    register<T extends keyof Api.ApiRegistry>(apiName: T, api: Constructor<Api.ApiRegistry[T]>): void {
+    register<T extends keyof AlfrescoCore.ApiRegistry>(apiName: T, api: Constructor<AlfrescoCore.ApiRegistry[T]>): void {
         this.registry[apiName] = api;
     }
 
-    private instantiateApi<T extends keyof Api.ApiRegistry>(apiName: T): Api.ApiRegistry[T] {
+    private instantiateApi<T extends keyof AlfrescoCore.ApiRegistry>(apiName: T): AlfrescoCore.ApiRegistry[T] {
         const ApiClass = this.registry[apiName];
-        const instance = this.apiCreateFactory.create<Api.ApiRegistry[T]>(ApiClass);
+        const instance = this.apiCreateFactory.create<AlfrescoCore.ApiRegistry[T]>(ApiClass);
         this.instances[apiName] = instance;
 
         return instance;
