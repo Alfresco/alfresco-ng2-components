@@ -65,13 +65,13 @@ describe('GroupCloudWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should be invalid if no option is selected after interaction', async () => {
+        it('should be invalid after user interaction without typing', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const cloudGroupInput = element.querySelector('adf-cloud-group');
+            const cloudGroupInput = element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
             cloudGroupInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();

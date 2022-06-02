@@ -43,13 +43,28 @@ describe('GroupCloudComponent', () => {
         return fixture.nativeElement.querySelector(selector);
     }
 
-    function searchGroup(value: string) {
+    async function searchGroup(value: string) {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
         input.value = value;
         input.dispatchEvent(new Event('keyup'));
         input.dispatchEvent(new Event('input'));
 
+        await fixture.whenStable();
+        fixture.detectChanges();
+    }
+
+    async function searchGroupsAndBlur(value: string) {
+        const input = getElement<HTMLInputElement>('input');
+        input.focus();
+        input.value = value;
+        input.dispatchEvent(new Event('keyup'));
+        input.dispatchEvent(new Event('input'));
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        input.blur();
         fixture.detectChanges();
     }
 
@@ -74,11 +89,10 @@ describe('GroupCloudComponent', () => {
         identityGroupService = TestBed.inject(IdentityGroupService);
     });
 
-    it('should populate placeholder when title is present', async () => {
+    it('should populate placeholder when title is present', () => {
         component.title = 'TITLE_KEY';
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         const matLabel = element.querySelector<HTMLInputElement>('#adf-group-cloud-title-id');
         expect(matLabel.textContent).toEqual('TITLE_KEY');
@@ -92,10 +106,7 @@ describe('GroupCloudComponent', () => {
         });
 
         it('should list the groups as dropdown options if the search term has results', async () => {
-            searchGroup('All');
-
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await searchGroup('All');
 
             const groupList = getGroupListUI();
             expect(groupList.length).toEqual(2);
@@ -107,20 +118,14 @@ describe('GroupCloudComponent', () => {
             component.ngOnChanges({ preSelectGroups: changes });
             fixture.detectChanges();
 
-            searchGroup('Aubergine');
-
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await searchGroup('Aubergine');
 
             const groupList = getGroupListUI();
             expect(groupList.length).toEqual(1);
         });
 
         it('should hide result list if input is empty', async () => {
-            searchGroup('');
-
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await searchGroup('');
 
             expect(element.querySelector('[data-automation-id="adf-cloud-group-row"]')).toBeNull();
         });
@@ -172,10 +177,7 @@ describe('GroupCloudComponent', () => {
         it('should show an error message and icon if the search result empty', async () => {
             findGroupsByNameSpy.and.returnValue(of([]));
 
-            searchGroup('INCORRECTVALUE');
-
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await searchGroupsAndBlur('INCORRECTVALUE');
 
             const errorMessage = element.querySelector('[data-automation-id="invalid-groups-typing-error"]');
             expect(errorMessage).not.toBeNull();

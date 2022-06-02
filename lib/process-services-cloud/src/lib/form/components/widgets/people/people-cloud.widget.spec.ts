@@ -84,13 +84,13 @@ describe('PeopleCloudWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should be invalid if no option is selected after interaction', async () => {
+        it('should be invalid after user interaction without typing', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            const cloudPeopleInput = element.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
             cloudPeopleInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
