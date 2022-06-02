@@ -156,4 +156,30 @@ describe('StartProcessCloudService', () => {
                 }
             );
     });
+
+    it('should transform the response into task variables', (done) => {
+        const appName = 'test-app';
+        const processDefinitionId = 'processDefinitionId';
+        const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
+        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue({
+            oauth2Auth
+        });
+
+        service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).subscribe((result) => {
+            expect(result.length).toEqual(3);
+            expect(result[0].name).toEqual('static1');
+            expect(result[0].id).toEqual('static1');
+            expect(result[0].value).toEqual('value');
+            expect(result[1].name).toEqual('static2');
+            expect(result[1].id).toEqual('static2');
+            expect(result[1].value).toEqual(0);
+            expect(result[2].name).toEqual('static3');
+            expect(result[2].id).toEqual('static3');
+            expect(result[2].value).toEqual(true);
+            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`)).toBeTruthy();
+            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+            done();
+        });
+    });
 });

@@ -44,7 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { ProcessDefinitionCloud } from 'process-services-cloud';
+import { ProcessDefinitionCloud, TaskVariableCloud } from 'process-services-cloud';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -56,6 +56,7 @@ describe('StartProcessCloudComponent', () => {
     let startProcessSpy: jasmine.Spy;
     let createProcessSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
+    let getStartEventFormStaticValuesMappingSpy: jasmine.Spy;
 
     const firstChange = new SimpleChange(undefined, 'myApp', true);
 
@@ -106,6 +107,7 @@ describe('StartProcessCloudComponent', () => {
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
         createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
+        getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
     });
 
     afterEach(() => {
@@ -202,6 +204,34 @@ describe('StartProcessCloudComponent', () => {
             expect(startBtn.disabled).toBe(true);
             expect(component.isProcessFormValid()).toBe(false);
         });
+
+        it('should include the static input mappings in the resolved values', fakeAsync(() => {
+            const values: TaskVariableCloud[] = [
+                new TaskVariableCloud({name: 'value1', value: 'value'}),
+                new TaskVariableCloud({name: 'value2', value: 1}),
+                new TaskVariableCloud({name: 'value3', value: false})
+            ];
+            const staticInputs: TaskVariableCloud[] = [
+                new TaskVariableCloud({name: 'static1', value: 'static value'}),
+                new TaskVariableCloud({name: 'static2', value: 0}),
+                new TaskVariableCloud({name: 'static3', value: true})
+            ];
+            component.name = 'My new process';
+            component.processDefinitionName = 'processwithoutform2';
+            component.values = values;
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+            getStartEventFormStaticValuesMappingSpy.and.returnValue(of(staticInputs));
+            fixture.detectChanges();
+
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            tick(550);
+
+            fixture.whenStable().then(() => {
+                expect(component.resolvedValues).toEqual(staticInputs.concat(values));
+            });
+        }));
     });
 
     describe('start a process with start form', () => {

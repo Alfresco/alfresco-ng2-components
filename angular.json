@@ -843,5 +843,8 @@
       }
     }
   },
-  "defaultProject": "demoshell"
+  "defaultProject": "demoshell",
+  "cli": {
+    "analytics": false
+  }
 }

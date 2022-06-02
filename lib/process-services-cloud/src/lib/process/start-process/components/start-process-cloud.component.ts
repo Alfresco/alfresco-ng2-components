@@ -109,6 +109,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     formCloud: FormModel;
     currentCreatedProcess: ProcessInstanceCloud;
     disableStartButton: boolean = true;
+    staticMappings: TaskVariableCloud[] = [];
+    resolvedValues: TaskVariableCloud[];
 
     protected onDestroy$ = new Subject<boolean>();
     processDefinitionLoaded = false;
@@ -152,6 +154,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             if (this.appName || this.appName === '') {
                 this.loadProcessDefinitions();
             }
+        }
+
+        if (changes['values'] && changes['values'].currentValue !== changes['values'].previousValue) {
+            this.resolvedValues = this.staticMappings.concat(this.values || []);
         }
     }
 
@@ -202,6 +208,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
         this.processDefinitionCurrent = this.filteredProcesses.find((process: ProcessDefinitionCloud) =>
             process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName);
+
+        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, this.processDefinitionCurrent.id)
+            .subscribe(
+                staticMappings => {
+                    this.staticMappings = staticMappings;
+                    this.resolvedValues = this.staticMappings.concat(this.values || []);
+                },
+                () => this.resolvedValues = this.values
+            );
 
         this.isFormCloudLoaded = false;
         this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
