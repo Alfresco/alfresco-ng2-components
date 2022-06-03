@@ -104,7 +104,8 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private get identityHost(): string {
-        console.log(`${this.appConfigService.get('identityHost')}`);
+        // console.log(`${this.appConfigService.get('identityHost')}`);
+        this.appConfigService.get('identityHost');
         // return `${this.appConfigService.get('identityHost')}`;
         return 'https://adfdev-apa.envalfresco.com/modeling-service';
     }
