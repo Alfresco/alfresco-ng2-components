@@ -274,23 +274,24 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
                 data: {
-                    title: 'Save the form',
                     message: this.form.confirmMessage.message
                 },
                 minWidth: '450px'
             });
 
-            dialogRef.afterClosed().subscribe((result) => {
-                if (result === true) {
-                    this.completeTaskFormWithConfirmMessage(outcome);
-                }
-            });
+            dialogRef.afterClosed()
+                .subscribe(
+                    (result) => {
+                    if (result === true) {
+                        this.completeForm(outcome);
+                    }
+                });
         } else {
-            this.completeTaskFormWithConfirmMessage(outcome);
+            this.completeForm(outcome);
         }
     }
 
-    completeTaskFormWithConfirmMessage(outcome?: string) {
+    private completeForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)

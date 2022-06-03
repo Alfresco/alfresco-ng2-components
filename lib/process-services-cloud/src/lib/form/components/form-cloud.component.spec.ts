@@ -120,6 +120,12 @@ describe('FormCloudComponent', () => {
             {
                 provide: VersionCompatibilityService,
                 useValue: {}
+            },
+            {
+                provide: MatDialog,
+                useValue: {
+                    open: () => ({ afterClosed: () => of(true) })
+                }
             }
         ]
     });
@@ -753,25 +759,22 @@ describe('FormCloudComponent', () => {
         expect(matDialog.open).toHaveBeenCalled();
     });
 
-    it('should submit form when user confirms', () => {
+    it('should submit form when user confirms', async () => {
         fixture.detectChanges();
-         const formModel = new FormModel({
+
+        const formModel = new FormModel({
             confirmMessage: {
                 show: true,
                 message: 'Are you sure you want to submit the form?'
             }
         });
-
         formComponent.form = formModel;
-        spyOn(matDialog, 'open').and.returnValue({
-            afterClosed: () => of(true)
-        } as any);
+        formComponent.taskId = 'id';
+        formComponent.appName = 'appName';
 
-        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(true));
-
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel));
         formComponent.completeTaskForm('complete');
 
-        expect(matDialog.open).toHaveBeenCalled();
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
     });
 
