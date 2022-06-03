@@ -56,6 +56,9 @@ import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -73,6 +76,7 @@ describe('FormCloudComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
+    let documentRootLoader: HarnessLoader;
 
     @Component({
         selector: 'adf-cloud-custom-widget',
@@ -120,12 +124,6 @@ describe('FormCloudComponent', () => {
             {
                 provide: VersionCompatibilityService,
                 useValue: {}
-            },
-            {
-                provide: MatDialog,
-                useValue: {
-                    open: () => ({ afterClosed: () => of(true) })
-                }
             }
         ]
     });
@@ -145,6 +143,7 @@ describe('FormCloudComponent', () => {
 
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
+        documentRootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
     });
 
@@ -746,8 +745,7 @@ describe('FormCloudComponent', () => {
         expect(completed).toBeTruthy();
     });
 
-    it('should open confirmation dialog on complete task', () => {
-        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
+    it('should open confirmation dialog on complete task', async () => {
         formComponent.form = new FormModel({
             confirmMessage: {
                 show: true,
@@ -756,10 +754,16 @@ describe('FormCloudComponent', () => {
         });
 
         formComponent.completeTaskForm();
-        expect(matDialog.open).toHaveBeenCalled();
+        let dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(1);
+
+        await dialogs[0].close();
+        dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(0);
     });
 
     it('should submit form when user confirms', async () => {
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) });
         fixture.detectChanges();
 
         const formModel = new FormModel({
@@ -780,10 +784,7 @@ describe('FormCloudComponent', () => {
 
     it('should not confirm form if user rejects', () => {
         const outcome = 'complete';
-
-        spyOn(matDialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
-        } as any);
+        spyOn(matDialog, 'open').and.returnValue({  afterClosed: () => of(false) });
 
         const formModel = new FormModel({
             confirmMessage: {
