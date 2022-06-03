@@ -762,7 +762,7 @@ describe('FormCloudComponent', () => {
         expect(dialogs.length).toBe(0);
     });
 
-    it('should submit form when user confirms', async () => {
+    it('should submit form when user confirms', () => {
         spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) });
         fixture.detectChanges();
 
@@ -794,7 +794,7 @@ describe('FormCloudComponent', () => {
         });
 
         formComponent.form = formModel;
-        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(Promise.resolve(true));
+        spyOn(formComponent['formCloudService'], 'completeTaskForm');
 
         formComponent.completeTaskForm(outcome);
 
