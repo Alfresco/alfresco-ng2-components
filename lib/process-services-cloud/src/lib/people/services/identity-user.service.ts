@@ -40,10 +40,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         private appConfigService: AppConfigService) { }
 
         private get identityHost(): string {
-            // console.log(`${this.appConfigService.get('identityHost')}`);
-            this.appConfigService.get('identityHost');
-            // return `${this.appConfigService.get('identityHost')}`;
-            return 'https://adfdev-apa.envalfresco.com/modeling-service';
+            return `${this.appConfigService.get('identityHost')}`;
         }
 
     /**
@@ -113,7 +110,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private invokeIdentityUserApi(): Observable<any> {
-        const url = `${this.identityHost}/v1/identity/users`;
+        const url = `${this.identityHost}/rb/v1/identity/users`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 

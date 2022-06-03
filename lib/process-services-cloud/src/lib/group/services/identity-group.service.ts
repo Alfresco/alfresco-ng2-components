@@ -70,7 +70,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
-        const url = `${this.identityHost}/v1/identity/groups`;
+        const url = `${this.identityHost}/rb/v1/identity/groups`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
@@ -104,9 +104,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private get identityHost(): string {
-        // console.log(`${this.appConfigService.get('identityHost')}`);
-        this.appConfigService.get('identityHost');
-        // return `${this.appConfigService.get('identityHost')}`;
-        return 'https://adfdev-apa.envalfresco.com/modeling-service';
+        return `${this.appConfigService.get('identityHost')}`;
     }
 }
