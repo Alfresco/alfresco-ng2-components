@@ -106,8 +106,6 @@ describe('People Groups Cloud Component', () => {
             beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
                 await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
-                await peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
-                await peopleGroupCloudComponentPage.checkPeopleCloudFilterRole();
             });
 
             it('No role filtering', async () => {
@@ -143,7 +141,6 @@ describe('People Groups Cloud Component', () => {
         describe('[C309674] Should be able to add filtering to Group Cloud Component', () => {
             beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-                await peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             });
 
             it('No role filtering', async () => {

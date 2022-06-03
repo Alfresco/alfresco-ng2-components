@@ -16,6 +16,7 @@
  */
 
 export * from './components/people-cloud.component';
-
 export * from './people-cloud.module';
 export * from './models/identity-user.model';
+export * from './services/identity-user.service';
+export * from './services/identity-user-service.token';

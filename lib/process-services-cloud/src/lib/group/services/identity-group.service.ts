@@ -26,7 +26,6 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
 
-    context: string = '';
     queryParams: { search: string; application?: string; roles?: string [] };
 
     constructor(
@@ -37,8 +36,8 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
             return EMPTY;
-        } else if (filters?.withinApplication !== undefined && filters?.withinApplication !== '') {
-            return this.searchGroupsWithinApp(name, filters.withinApplication, filters.roles);
+        } else if (filters?.withinApplication) {
+            return this.searchGroupsWithinApp(name, filters.withinApplication, filters?.roles);
         } else if (filters?.roles?.length > 0) {
             return this.searchGroupsWithGlobalRoles(name, filters.roles);
         } else {
@@ -71,7 +70,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
-        const url = `${this.identityHost}${this.context}/v1/identity/groups`;
+        const url = `${this.identityHost}/v1/identity/groups`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
@@ -82,7 +81,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private addOptionalCommaValueToQueryParam(key: string, values: string []) {
-        if (values?.length>0) {
+        if (values?.length > 0) {
             const valuesNotEmpty = this.filterOutEmptyValue(values);
             if (valuesNotEmpty?.length > 0) {
                 this.queryParams[key] = valuesNotEmpty.join(',');
@@ -105,6 +104,8 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private get identityHost(): string {
-        return `${this.appConfigService.get('identityHost')}`;
+        console.log(`${this.appConfigService.get('identityHost')}`);
+        // return `${this.appConfigService.get('identityHost')}`;
+        return 'https://adfdev-apa.envalfresco.com/modeling-service';
     }
 }

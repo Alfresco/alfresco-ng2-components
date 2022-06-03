@@ -23,7 +23,7 @@ export class FullNamePipe implements PipeTransform {
         let fullName = '';
         if (user) {
             if (user.displayName) {
-                const firstAndLastName = user.displayName.split(' ');
+                const firstAndLastName = user.displayName.split('\ (.*)');
                 if (firstAndLastName[0]) {
                     fullName += firstAndLastName[0];
                 }
