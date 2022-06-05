@@ -45,7 +45,7 @@ export class UserAccessService {
         this.applicationAccess = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.RESOURCE_ACCESS);
     }
 
-    async fetchAccessFromApi() {
+    private async fetchAccessFromApi() {
         const url = `${ this.identityHost }/v1/identity/roles`;
         await this.oAuth2Service.get({ url })
             .toPromise()
@@ -67,15 +67,31 @@ export class UserAccessService {
         return `${this.appConfigService.get('identityHost')}`;
     }
 
+    /**
+     * Checks for global roles access.
+     *
+     * @param rolesToCheck List of the roles to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
     hasGlobalAccess(rolesToCheck: string[]): boolean {
         return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
     }
 
+    /**
+     * Checks for global roles access.
+     *
+     * @param appName The app name
+     * @param rolesToCheck List of the roles to check
+     * @returns True if it contains at least one of the given roles, false otherwise
+     */
     hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
         const appAccess = this.hasRolesInJwt() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
         return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
     }
 
+    /**
+     * Resets the cached user access
+     */
     resetAccess() {
         this.globalAccess = undefined;
         this.applicationAccess = undefined;
