@@ -57,7 +57,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
         const hasRole = hasRealmRole && hasClientRole;
 
-        if (!hasRole && route?.data['redirectUrl']) {
+        if (!hasRole && route?.data && route.data['redirectUrl']) {
             this.router.navigate(['/' + route.data['redirectUrl']]);
         }
 

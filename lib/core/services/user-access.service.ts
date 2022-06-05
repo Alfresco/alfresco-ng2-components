@@ -75,4 +75,9 @@ export class UserAccessService {
         const appAccess = this.hasRolesInJwt() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
         return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
     }
+
+    resetAccess() {
+        this.globalAccess = undefined;
+        this.applicationAccess = undefined;
+    }
 }
