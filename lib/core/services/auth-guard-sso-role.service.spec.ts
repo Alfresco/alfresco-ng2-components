@@ -28,7 +28,7 @@ import { of } from 'rxjs';
 import { getFakeUserWithContentAdminCapability, getFakeUserWithContentUserCapability } from '../mock/ecm-user.service.mock';
 import { UserAccessService } from './user-access.service';
 
-fdescribe('Auth Guard SSO role service', () => {
+describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
