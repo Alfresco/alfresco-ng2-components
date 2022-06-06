@@ -29,7 +29,7 @@ import {
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from '../services/identity-group.service';
-import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/identity-group.service.mock';
+import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;

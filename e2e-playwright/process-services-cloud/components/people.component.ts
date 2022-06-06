@@ -23,6 +23,6 @@ export class PeopleComponent extends BaseComponent {
         super(page, rootElement);
     }
 
-    public getUserLocator = (userName: 'userName1' | 'userName2') => this.getChild(`[data-automation-id="adf-people-cloud-chip-${userName}"]`);
+    public getUserLocator = (userName: string) => this.getChild(`[data-automation-id="adf-people-cloud-chip-${userName}"]`);
 
 }

@@ -20,16 +20,6 @@ import { throwError } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
 
-export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine'};
-export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken'};
-
-export const mockFoodGroups = [ mockVegetableAubergine, mockMeatChicken ];
-
-export const mockSearchGroupEmptyFilters: IdentityGroupFilterInterface = {
-    roles: [],
-    withinApplication: ''
-};
-
 export const mockSearchGroupByRoles: IdentityGroupFilterInterface = {
     roles: ['fake-role-1', 'fake-role-2'],
     withinApplication: ''

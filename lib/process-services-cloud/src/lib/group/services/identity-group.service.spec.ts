@@ -21,13 +21,13 @@ import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityGroupService } from './identity-group.service';
 import {
-    mockFoodGroups,
     mockSearchGroupByApp,
     mockSearchGroupByRoles,
     mockSearchGroupByRolesAndApp,
     oAuthMockApiWithError,
     oAuthMockApiWithIdentityGroups
 } from '../mock/identity-group.service.mock';
+import { mockFoodGroups } from '../mock/group-cloud.mock';
 
 describe('IdentityGroupService', () => {
 

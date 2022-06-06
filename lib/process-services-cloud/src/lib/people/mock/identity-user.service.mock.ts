@@ -20,17 +20,6 @@ import { throwError } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
 
-export const mockYorkshirePudding: IdentityUserModel = { id: 'yorkshire', username: 'Yorkshire Pudding', firstName: 'Yorkshire', lastName: 'Pudding', email: 'pudding@food.com' };
-export const mockShepherdsPie: IdentityUserModel = { id: 'shepherds', username: 'Shepherds Pie', firstName: 'Shepherds', lastName: 'Pie', email: 'shepherds@food.com'};
-export const mockKielbasaSausage: IdentityUserModel = { id: 'kielbasa', username: 'Kielbasa Sausage', firstName: 'Kielbasa', lastName: 'Sausage', email: 'sausage@food.com' };
-
-export const mockFoodUsers: IdentityUserModel[] = [mockYorkshirePudding, mockShepherdsPie, mockKielbasaSausage];
-
-export const mockPreselectedFoodUsers = [
-    { ...mockYorkshirePudding, readonly: false },
-    { ...mockKielbasaSausage, readonly: false }
-];
-
 export const mockSearchUserEmptyFilters: IdentityUserFilterInterface = {
     roles: [],
     groups: [],

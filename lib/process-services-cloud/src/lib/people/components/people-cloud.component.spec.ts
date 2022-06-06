@@ -24,15 +24,15 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
+import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import {
     mockFoodUsers,
     mockKielbasaSausage,
-    mockPreselectedFoodUsers,
     mockShepherdsPie,
-    mockYorkshirePudding
-} from '../mock/identity-user.service.mock';
-import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
-import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
+    mockYorkshirePudding,
+    mockPreselectedFoodUsers
+} from '../mock/people-cloud.mock';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;

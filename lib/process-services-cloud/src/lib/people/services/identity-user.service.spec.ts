@@ -28,10 +28,10 @@ import {
     mockSearchUserByGroupsAndRolesAndApp,
     mockSearchUserByRoles,
     mockSearchUserByRolesAndApp,
-    mockFoodUsers,
     oAuthMockApiWithError,
     oAuthMockApiWithIdentityUsers
 } from '../mock/identity-user.service.mock';
+import { mockFoodUsers } from '../mock/people-cloud.mock';
 
 describe('IdentityUserService', () => {
 

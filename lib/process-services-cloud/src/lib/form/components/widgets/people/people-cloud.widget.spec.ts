@@ -21,8 +21,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/identity-user.service.mock';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
+import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
