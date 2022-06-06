@@ -18,29 +18,27 @@
 export const userAccessMock = {
     globalAccess: {
         roles: [
-            'offline_access',
-            'ACTIVITI_USER',
-            'uma_authorization'
+            'MOCK_GLOBAL_USER_ROLE'
         ]
     },
     applicationAccess: [
         {
-            name: 'subprocessapp',
+            name: 'mockApp1',
             roles: [
-                'ACTIVITI_USER'
+                'MOCK_USER_ROLE_APP_1'
             ]
         },
         {
-            name: 'candidatebaseapp',
+            name: 'mockApp2',
             roles: [
-                'ACTIVITI_USER'
+                'MOCK_USER_ROLE_APP_2'
             ]
         },
         {
-            name: 'simpleapp',
+            name: 'mockApp3',
             roles: [
-                'ACTIVITI_USER',
-                'ACTIVITI_ADMIN'
+                'MOCK_USER_ROLE_APP_3',
+                'MOCK_ADMIN_ROLE_APP_3'
             ]
         }
     ]

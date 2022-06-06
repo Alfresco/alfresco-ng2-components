@@ -54,33 +54,33 @@ describe('UserAccessService', () => {
     describe('Access from JWT token', () => {
 
         it('should return true when the user has one of the global roles', async () => {
-            spyUserAccess(['role1', 'role2'], {});
+            spyUserAccess(['MOCK_USER_ROLE', 'MOCK_USER_ROLE_2'], {});
             await userAccessService.fetchUserAccess();
-            const hasGlobalAccess = userAccessService.hasGlobalAccess(['role1']);
+            const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE']);
 
             expect(hasGlobalAccess).toEqual(true);
         });
 
         it('should return true when the user has one of the roles for an application', async () => {
-            spyUserAccess([], { app1: { roles: ['app-role', 'app-role-2'] } });
+            spyUserAccess([], { mockApp: { roles: ['MOCK_APP_ROLE', 'MOCK_APP_ROLE_2'] } });
             await userAccessService.fetchUserAccess();
-            const hasApplicationAccess = userAccessService.hasApplicationAccess('app1', ['app-role']);
+            const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', ['MOCK_APP_ROLE']);
 
             expect(hasApplicationAccess).toEqual(true);
         });
 
         it('should return false when the user has none of the global roles', async () => {
-            spyUserAccess(['role1'], {});
+            spyUserAccess(['MOCK_USER_ROLE'], {});
             await userAccessService.fetchUserAccess();
-            const hasGlobalAccess = userAccessService.hasGlobalAccess(['role2']);
+            const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE_2']);
 
             expect(hasGlobalAccess).toEqual(false);
         });
 
         it('should return false when the user has none of the roles for an application', async () => {
-            spyUserAccess([], { app1: { roles: ['app-role'] } });
+            spyUserAccess([], { mockApp: { roles: ['MOCK_APP_ROLE'] } });
             await userAccessService.fetchUserAccess();
-            const hasApplicationAccess = userAccessService.hasApplicationAccess('app1', ['app-role-2']);
+            const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', ['MOCK_APP_ROLE_2']);
 
             expect(hasApplicationAccess).toEqual(false);
         });
@@ -96,28 +96,28 @@ describe('UserAccessService', () => {
 
         it('should return true when the user has one of the global roles', async () => {
             await userAccessService.fetchUserAccess();
-            const hasGlobalAccess = userAccessService.hasGlobalAccess(['ACTIVITI_USER']);
+            const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_GLOBAL_USER_ROLE']);
 
             expect(hasGlobalAccess).toEqual(true);
         });
 
         it('should return true when the user has one of the roles for an application', async () => {
             await userAccessService.fetchUserAccess();
-            const hasApplicationAccess = userAccessService.hasApplicationAccess('simpleapp', ['ACTIVITI_USER']);
+            const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp1', ['MOCK_USER_ROLE_APP_1']);
 
             expect(hasApplicationAccess).toEqual(true);
         });
 
         it('should return false when the user has none of the global roles', async () => {
             await userAccessService.fetchUserAccess();
-            const hasGlobalAccess = userAccessService.hasGlobalAccess(['FAKE_ROLE']);
+            const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE_NOT_EXISTING']);
 
             expect(hasGlobalAccess).toEqual(false);
         });
 
-        it('should return true when the user has one of the roles for an application', async () => {
+        it('should return false when the user has none of the roles for an application', async () => {
             await userAccessService.fetchUserAccess();
-            const hasApplicationAccess = userAccessService.hasApplicationAccess('fake-app', ['FAKE_ROLE']);
+            const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp1', ['MOCK_ROLE_NOT_EXISING_IN_APP']);
 
             expect(hasApplicationAccess).toEqual(false);
         });
