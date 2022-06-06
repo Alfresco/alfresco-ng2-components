@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, DataColumn, DataColumnType, LogService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
+import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
+import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
+import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
@@ -62,6 +65,51 @@ export class ProcessListCloudService extends BaseCloudService {
         }
     }
 
+    createRowsViewModel(
+        processes: ProcessInstanceCloud[] = [],
+        columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]
+    ): ProcessInstanceCloudListViewModel[] {
+        const columnsByVariableId = columnsSchema
+            .filter(column => !!column.customData)
+            .reduce<{ [variableId: string]: string }>((columnsByVariable, column) => {
+                const columnTitle = column.title;
+                const variableIds = column.customData.assignedVariableDefinitionIds;
+
+                variableIds.forEach((variableId) => {
+                    columnsByVariable[variableId] = columnTitle;
+                });
+                return columnsByVariable;
+
+            }, {});
+
+        const rowsViewModel = processes.map((process) => {
+            if (!process.variables?.length) {
+                return process;
+            }
+
+            const variablesMap = (process.variables ?? []).reduce((variableAccumulator, variable) => {
+                const processVariableDefinitionId = variable.variableDefinitionId;
+
+                const column = columnsByVariableId[processVariableDefinitionId];
+                if (column) {
+                    variableAccumulator[column] = {
+                        ...variable,
+                        type: this.mapProcessVariableTypes(variable.type)
+                    };
+                }
+
+                return variableAccumulator;
+            }, {});
+
+            return {
+                ...process,
+                variablesMap
+            };
+        });
+
+        return rowsViewModel;
+    }
+
     protected isPropertyValueValid(requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
@@ -73,7 +121,7 @@ export class ProcessListCloudService extends BaseCloudService {
             if (requestNode.hasOwnProperty(property) &&
                 !this.isExcludedField(property) &&
                 this.isPropertyValueValid(requestNode, property)) {
-                queryParam[property] = requestNode[property];
+                queryParam[property] = this.getQueryParamValueFromRequestNode(requestNode, property as keyof ProcessQueryCloudRequestModel);
             }
         }
 
@@ -82,6 +130,17 @@ export class ProcessListCloudService extends BaseCloudService {
         }
 
         return queryParam;
+    }
+
+    private getQueryParamValueFromRequestNode(
+        requestNode: ProcessQueryCloudRequestModel,
+        property: keyof ProcessQueryCloudRequestModel
+    ) {
+        if (property === 'variableDefinitions' && requestNode[property]?.length > 0) {
+            return `${requestNode[property].map(variableId => variableId).join(',')}`;
+        }
+
+        return requestNode[property];
     }
 
     protected buildFilterForAllStatus(): string[] {
@@ -104,5 +163,19 @@ export class ProcessListCloudService extends BaseCloudService {
             }
         }
         return encodeURI(finalSorting);
+    }
+
+    private mapProcessVariableTypes(variableType: string): DataColumnType {
+        switch (variableType) {
+            case 'boolean':
+            case 'integer':
+            case 'string':
+                return 'text';
+            case 'date':
+            case 'datetime':
+                return 'date';
+            default:
+                return 'text';
+        }
     }
 }

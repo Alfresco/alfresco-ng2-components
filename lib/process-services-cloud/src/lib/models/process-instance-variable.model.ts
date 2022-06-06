@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
-export interface ProcessInstanceCloud {
-    appName?: string;
-    id?: string;
-    name?: string;
-    startDate?: Date;
-    initiator?: string;
-    status?: string;
-    businessKey?: string;
-    lastModified?: Date;
-    parentId?: string;
-    processDefinitionId?: string;
-    processDefinitionKey?: string;
-    processDefinitionName?: string;
-    variables?: ProcessInstanceVariable[];
+export interface ProcessInstanceVariable  {
+    id: number;
+    variableDefinitionId: string;
+    value: string;
+    appName: string;
+    createTime: string;
+    lastUpdatedTime: string;
+    markedAsDeleted: boolean;
+    name: string;
+    processInstanceId: string;
+    serviceFullName: string;
+    serviceName: string;
+    serviceVersion: string;
+    taskVariable: boolean;
+    type: string;
 }

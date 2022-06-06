@@ -24,20 +24,22 @@
             [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
     </div>
 
-    <ng-container *ngFor="let column of columnItems">
-        <div
-            *ngIf="(column.title | translate | filterString:searchQuery) as translatedTitle"
-            class="adf-columns-selector-list-item-container">
-            <mat-checkbox
-                color="primary"
-                class="adf-columns-selector-column-checkbox"
-                [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
-                [checked]="!column.isHidden"
-                (change)="changeColumnVisibility(column)">
-                <div class="adf-columns-selector-list-content">{{translatedTitle}}</div>
-            </mat-checkbox>
-        </div>
-    </ng-container>
+    <div class="adf-columns-selector-list-container">
+        <ng-container *ngFor="let column of columnItems">
+            <div
+                *ngIf="(column.title | translate | filterString:searchQuery) as translatedTitle"
+                class="adf-columns-selector-list-item">
+                <mat-checkbox
+                    color="primary"
+                    class="adf-columns-selector-column-checkbox"
+                    [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
+                    [checked]="!column.isHidden"
+                    (change)="changeColumnVisibility(column)">
+                    <div class="adf-columns-selector-list-content">{{translatedTitle}}</div>
+                </mat-checkbox>
+            </div>
+        </ng-container>
+    </div>
 
     <mat-divider class="adf-columns-selector-divider"></mat-divider>
 

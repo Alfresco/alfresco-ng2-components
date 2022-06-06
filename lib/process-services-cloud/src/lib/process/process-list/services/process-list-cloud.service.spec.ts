@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService, getDataColumnMock } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
+import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
+import { ProcessInstanceCloud } from '../../public-api';
+import { getProcessInstanceVariableMock } from '../mock/process-instance-variable.mock';
+import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
+import { ColumnDataType } from '../../../models/column-data-type.model';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
@@ -97,5 +103,36 @@ describe('ProcessListCloudService', () => {
                 done();
             }
         );
+    });
+
+    it('should map to view model', () => {
+        const processInstanceVariable: ProcessInstanceVariable = getProcessInstanceVariableMock({
+            variableDefinitionId: '5c75b259-dc59-11ec-aa89-fed162b97957'
+        });
+
+        const columnTitle = 'columnTitle';
+        const column = getDataColumnMock<ProcessListDataColumnCustomData>({
+            title: columnTitle,
+            customData: {
+                assignedVariableDefinitionIds: ['5c75b259-dc59-11ec-aa89-fed162b97957'],
+                columnType: ColumnDataType.processVariableColumn
+            }
+        });
+
+        const processInstance: ProcessInstanceCloud = {
+            id: 'id',
+            variables: [processInstanceVariable]
+        };
+
+        const expectedViewModel: ProcessInstanceCloudListViewModel = {
+            ...processInstance,
+            variablesMap: {
+                [columnTitle]: processInstanceVariable
+            }
+        };
+
+        const viewModel = service.createRowsViewModel([processInstance], [column]);
+
+        expect(viewModel).toEqual([expectedViewModel]);
     });
 });

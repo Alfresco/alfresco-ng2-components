@@ -22,6 +22,7 @@ import {
     ColumnsSelectorComponent,
     DataColumn,
     DataRowEvent,
+    getDataColumnMock,
     ObjectDataRow,
     setupTestBed
 } from '@alfresco/adf-core';
@@ -33,6 +34,10 @@ import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
+import { ColumnDataType } from '../../../models/column-data-type.model';
 
 @Component({
     template: `
@@ -71,6 +76,9 @@ describe('ProcessListCloudComponent', () => {
     let fixture: ComponentFixture<ProcessListCloudComponent>;
     let appConfig: AppConfigService;
     let processListCloudService: ProcessListCloudService;
+    let preferencesService: LocalPreferenceCloudService;
+    const fakeCustomSchemaName = 'fakeCustomSchema';
+    const schemaWithVariable = 'schemaWithVariableId';
 
     setupTestBed({
         imports: [
@@ -82,12 +90,13 @@ describe('ProcessListCloudComponent', () => {
     beforeEach(() => {
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
+        preferencesService = TestBed.inject<LocalPreferenceCloudService>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
         fixture = TestBed.createComponent(ProcessListCloudComponent);
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-process-list': {
                 presets: {
-                    fakeCustomSchema: [
+                    [fakeCustomSchemaName]: [
                         {
                             key: 'fakeName',
                             type: 'text',
@@ -100,6 +109,16 @@ describe('ProcessListCloudComponent', () => {
                             title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                             sortable: true
                         }
+                    ],
+                    [schemaWithVariable]: [
+                        getDataColumnMock(),
+                        getDataColumnMock({
+                            id: 'variableColumnId',
+                            customData: {
+                                assignedVariableDefinitionIds: ['variableDefinitionId'],
+                                columnType: ColumnDataType.processVariableColumn
+                            }
+                        })
                     ]
                 }
             }
@@ -108,11 +127,12 @@ describe('ProcessListCloudComponent', () => {
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
-    afterEach(() => fixture.destroy());
+    afterEach(() => {
+        fixture.destroy();
+    });
 
     it('should use the default schemaColumn', () => {
         appConfig.config = Object.assign(appConfig.config, { 'adf-cloud-process-list': processListSchemaMock });
-        component.ngAfterContentInit();
         fixture.detectChanges();
 
         expect(component.columns).toBeDefined();
@@ -164,6 +184,7 @@ describe('ProcessListCloudComponent', () => {
     it('should the payload contain the appVersion if it is defined', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.appVersion = 1;
+        component.ngAfterContentInit();
         component.reload();
 
         expect(component.requestNode.appVersion).toEqual('1');
@@ -172,6 +193,7 @@ describe('ProcessListCloudComponent', () => {
     it('should the payload contain all the app versions joined by a comma separator', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.appVersion = [1, 2, 3];
+        component.ngAfterContentInit();
         component.reload();
 
         expect(component.requestNode.appVersion).toEqual('1,2,3');
@@ -180,20 +202,21 @@ describe('ProcessListCloudComponent', () => {
     it('should the payload NOT contain any app version when appVersion does not have a value', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.appVersion = undefined;
+        component.ngAfterContentInit();
         component.reload();
 
         expect(component.requestNode.appVersion).toEqual('');
     });
 
     it('should use the custom schemaColumn from app.config.json', () => {
-        component.presetColumn = 'fakeCustomSchema';
+        component.presetColumn = fakeCustomSchemaName;
         component.ngAfterContentInit();
         fixture.detectChanges();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCustomSchema';
+        component.presetColumn = fakeCustomSchemaName;
         fixture.detectChanges();
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(2);
@@ -223,6 +246,7 @@ describe('ProcessListCloudComponent', () => {
             done();
         });
         component.appName = appName.currentValue;
+        component.ngAfterContentInit();
         component.ngOnChanges({ appName });
         fixture.detectChanges();
     });
@@ -244,6 +268,7 @@ describe('ProcessListCloudComponent', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngAfterContentInit();
         component.ngOnChanges({ appName });
 
         fixture.detectChanges();
@@ -283,6 +308,41 @@ describe('ProcessListCloudComponent', () => {
 
         const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
         expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
+    });
+
+    it('should NOT request process variable if columns for process variables are not displayed', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        spyOn(preferencesService, 'getPreferences').and.returnValue(of({
+            list: {
+                entries: []
+            }
+        }));
+
+        component.ngAfterContentInit();
+        component.reload();
+
+        expect(component.requestNode.variableDefinitions).not.toBeDefined();
+    });
+
+    it('should request process variable if column for process variable is displayed', () => {
+        component.presetColumn = schemaWithVariable;
+
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        spyOn(preferencesService, 'getPreferences').and.returnValue(of({
+            list: {
+                entries: [{
+                    entry: {
+                        key: ProcessListCloudPreferences.columnsVisibility,
+                        value: '{"variableColumnId":true, "2":true}'
+                    }
+                }]
+            }
+        }));
+
+        component.ngAfterContentInit();
+        component.reload();
+
+        expect(component.requestNode.variableDefinitions).toEqual(['variableDefinitionId']);
     });
 
     it('should reload tasks when reload() is called', (done) => {

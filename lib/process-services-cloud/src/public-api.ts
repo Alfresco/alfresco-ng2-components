@@ -32,3 +32,5 @@ export * from './lib/models/application-version.model';
 export * from './lib/models/engine-event-cloud.model';
 export * from './lib/models/filter-cloud-model';
 export * from './lib/models/task-list-sorting.model';
+export * from './lib/models/column-data-type.model';
+export * from './lib/models/process-instance-variable.model';

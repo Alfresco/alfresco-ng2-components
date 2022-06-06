@@ -24,7 +24,7 @@ import { ObjectDataColumn } from './object-datacolumn.model';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class DataTableSchema {
+export abstract class DataTableSchema<T = unknown> {
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -33,7 +33,7 @@ export abstract class DataTableSchema {
     @Input()
     presetColumn: string;
 
-    columns: any;
+    columns: DataColumn<T>[];
 
     protected columnsOrder: string[] | undefined;
     protected columnsOrderedByKey: string = 'id';
@@ -91,7 +91,7 @@ export abstract class DataTableSchema {
         return customSchemaColumns;
     }
 
-    public getSchemaFromHtml(columnList: DataColumnListComponent): any {
+    public getSchemaFromHtml(columnList: DataColumnListComponent): DataColumn[] {
         let schema = [];
         if (columnList && columnList.columns && columnList.columns.length > 0) {
             schema = columnList.columns.map((c) => c as DataColumn);
