@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
+import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -165,7 +165,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should load spinner and show the content', () => {
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
@@ -195,7 +195,8 @@ describe('TaskListCloudComponent', () => {
 
     it('should hide columns on applying new columns visibility through columns selector', () => {
         component.showMainDatatableActions = true;
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        component.ngAfterContentInit();
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.ngOnChanges({ appName });
@@ -238,33 +239,22 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should return the results if an application name is given', (done) => {
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        component.ngAfterContentInit();
+
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(1);
-            expect(component.rows[0]['appName']).toBe('test-ciprian2');
-            expect(component.rows[0]['appVersion']).toBe('');
-            expect(component.rows[0]['id']).toBe('11fe013d-c263-11e8-b75b-0a5864600540');
-            expect(component.rows[0]['assignee']).toBeNull();
-            expect(component.rows[0]['name']).toEqual('standalone-subtask');
-            expect(component.rows[0]['description']).toBeNull();
-            expect(component.rows[0]['createdDate']).toBe(1538059139420);
-            expect(component.rows[0]['dueDate']).toBeNull();
-            expect(component.rows[0]['claimedDate']).toBeNull();
-            expect(component.rows[0]['priority']).toBe(0);
-            expect(component.rows[0]['category']).toBeNull();
-            expect(component.rows[0]['processDefinitionId']).toBeNull();
-            expect(component.rows[0]['processInstanceId']).toBeNull();
-            expect(component.rows[0]['status']).toBe('CREATED');
-            expect(component.rows[0]['owner']).toBe('devopsuser');
-            expect(component.rows[0]['parentTaskId']).toBe('71fda20b-c25b-11e8-b75b-0a5864600540');
-            expect(component.rows[0]['lastModified']).toBe(1538059139420);
-            expect(component.rows[0]['lastModifiedTo']).toBeNull();
-            expect(component.rows[0]['lastModifiedFrom']).toBeNull();
-            expect(component.rows[0]['standalone']).toBeTruthy();
+
+            const expectedTask = {
+                ...fakeGlobalTask,
+                variables: fakeGlobalTask.processVariables
+            };
+
+            expect(component.rows[0]).toEqual(expectedTask);
             done();
         });
         component.appName = appName.currentValue;
@@ -274,7 +264,7 @@ describe('TaskListCloudComponent', () => {
 
     it('should reload tasks when reload() is called', (done) => {
         component.appName = 'fake';
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -299,7 +289,7 @@ describe('TaskListCloudComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            component.rows = fakeGlobalTask.list.entries;
+            component.rows = fakeGlobalTasks.list.entries;
             fixture.detectChanges();
         });
 
@@ -311,7 +301,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reload the task list when input parameters changed', () => {
-            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             component.appName = 'mock-app-name';
             component.priority = 1;
             component.status = 'mock-status';
@@ -333,7 +323,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should set formattedSorting if sorting input changes', () => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'formatSorting').and.callThrough();
 
             component.appName = 'mock-app-name';
@@ -353,7 +343,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reload task list when sorting on a column changes', () => {
-            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             component.onSortingChanged(new CustomEvent('sorting-changed', {
                 detail: {
                     key: 'fakeName',
@@ -374,7 +364,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should reset pagination when resetPaginationValues is called', async (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -402,7 +392,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'reload').and.stub();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -445,7 +435,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         beforeEach(() => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
             copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
             fixtureCustom.detectChanges();
@@ -575,7 +565,7 @@ describe('TaskListCloudComponent', () => {
             fixture = TestBed.createComponent(TaskListCloudComponent);
             component = fixture.componentInstance;
             element = fixture.debugElement.nativeElement;
-            taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             component.isColumnSchemaCreated$ = of(true);
         });
@@ -587,7 +577,7 @@ describe('TaskListCloudComponent', () => {
         // TODO: highly unstable test
         // eslint-disable-next-line
         xit('should show tooltip if config copyContent flag is true', fakeAsync(() => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
             component.success.subscribe(() => {
@@ -609,7 +599,7 @@ describe('TaskListCloudComponent', () => {
         // TODO: highly unstable test
         // eslint-disable-next-line
         xit('should replace priority values', (done) => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             component.presetColumn = 'fakeCustomSchema';
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
@@ -647,7 +637,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('replacePriorityValues should return replaced value when rows are defined', () => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
+            taskSpy.and.returnValue(of(fakeGlobalTasks));
             fixture.detectChanges();
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);

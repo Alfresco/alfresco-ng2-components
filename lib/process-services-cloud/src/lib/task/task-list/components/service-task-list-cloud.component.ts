@@ -43,28 +43,35 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface) {
+                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
+            ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    load(requestNode: ServiceTaskQueryCloudRequestModel) {
-        this.isLoading = true;
+    reload() {
+        this.requestNode = this.createRequestNode();
 
-        combineLatest([
-            this.serviceTaskListCloudService.getServiceTaskByRequest(requestNode),
-            this.isColumnSchemaCreated$
-        ]).pipe(
-            take(1)
-        ).subscribe(
-            ([tasks]) => {
-                this.rows = tasks.list.entries;
-                this.success.emit(tasks);
-                this.isLoading = false;
-                this.pagination.next(tasks.list.pagination);
-            }, (error) => {
-                this.error.emit(error);
-                this.isLoading = false;
-            });
+        if (this.requestNode.appName || this.requestNode.appName === '') {
+            this.isLoading = true;
+
+            combineLatest([
+                this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
+                this.isColumnSchemaCreated$
+            ]).pipe(
+                take(1)
+            ).subscribe(
+                ([tasks]) => {
+                    this.rows = tasks.list.entries;
+                    this.success.emit(tasks);
+                    this.isLoading = false;
+                    this.pagination.next(tasks.list.pagination);
+                }, (error) => {
+                    this.error.emit(error);
+                    this.isLoading = false;
+                });
+        } else {
+            this.rows = [];
+        }
     }
 
     createRequestNode(): ServiceTaskQueryCloudRequestModel {

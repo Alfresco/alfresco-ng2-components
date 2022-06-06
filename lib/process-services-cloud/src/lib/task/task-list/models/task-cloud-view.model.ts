@@ -15,23 +15,13 @@
  * limitations under the License.
  */
 
-export type WithVariablesMap<T> = T & {
-    variablesMap?: { [key: string]: ProcessInstanceVariable };
-};
+import { TaskCloudModel } from '../../../models/task-cloud.model';
+import { WithVariablesMap } from '../../../models/process-instance-variable.model';
 
-export interface ProcessInstanceVariable  {
-    id: number;
-    variableDefinitionId: string;
-    value: string;
-    appName: string;
-    createTime: string;
-    lastUpdatedTime: string;
-    markedAsDeleted: boolean;
-    name: string;
-    processInstanceId: string;
-    serviceFullName: string;
-    serviceName: string;
-    serviceVersion: string;
-    taskVariable: boolean;
-    type: string;
+// Temporary solution due to incompatibility types for dates (TaskCloudModel is not exposed right now)
+interface TaskViewCloudModel extends TaskCloudModel {
+    createdDate: any;
+    lastModified: any;
 }
+
+export type TaskInstanceCloudListViewModel = WithVariablesMap<TaskViewCloudModel>;

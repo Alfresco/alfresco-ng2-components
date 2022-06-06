@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
+import { WithVariablesMap } from '../../../models/process-instance-variable.model';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 
-export interface ProcessInstanceCloudListViewModel extends ProcessInstanceCloud {
-    variablesMap?: {
-        [variableDisplayName: string]: ProcessInstanceVariable;
-    };
-}
+export type ProcessInstanceCloudListViewModel = WithVariablesMap<ProcessInstanceCloud>;

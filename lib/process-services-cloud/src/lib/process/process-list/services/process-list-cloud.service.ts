@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, DataColumn, DataColumnType, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
-import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
-import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
-import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
@@ -63,51 +60,6 @@ export class ProcessListCloudService extends BaseCloudService {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
-    }
-
-    createRowsViewModel(
-        processes: ProcessInstanceCloud[] = [],
-        columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]
-    ): ProcessInstanceCloudListViewModel[] {
-        const columnsByVariableId = columnsSchema
-            .filter(column => !!column.customData)
-            .reduce<{ [variableId: string]: string }>((columnsByVariable, column) => {
-                const columnTitle = column.title;
-                const variableIds = column.customData.assignedVariableDefinitionIds;
-
-                variableIds.forEach((variableId) => {
-                    columnsByVariable[variableId] = columnTitle;
-                });
-                return columnsByVariable;
-
-            }, {});
-
-        const rowsViewModel = processes.map((process) => {
-            if (!process.variables?.length) {
-                return process;
-            }
-
-            const variablesMap = (process.variables ?? []).reduce((variableAccumulator, variable) => {
-                const processVariableDefinitionId = variable.variableDefinitionId;
-
-                const column = columnsByVariableId[processVariableDefinitionId];
-                if (column) {
-                    variableAccumulator[column] = {
-                        ...variable,
-                        type: this.mapProcessVariableTypes(variable.type)
-                    };
-                }
-
-                return variableAccumulator;
-            }, {});
-
-            return {
-                ...process,
-                variablesMap
-            };
-        });
-
-        return rowsViewModel;
     }
 
     protected isPropertyValueValid(requestNode: any, property: string): boolean {
@@ -163,19 +115,5 @@ export class ProcessListCloudService extends BaseCloudService {
             }
         }
         return encodeURI(finalSorting);
-    }
-
-    private mapProcessVariableTypes(variableType: string): DataColumnType {
-        switch (variableType) {
-            case 'boolean':
-            case 'integer':
-            case 'string':
-                return 'text';
-            case 'date':
-            case 'datetime':
-                return 'date';
-            default:
-                return 'text';
-        }
     }
 }

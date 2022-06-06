@@ -31,7 +31,8 @@ import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ColumnDataType } from '../../../models/column-data-type.model';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
-import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -211,7 +212,9 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService,
-                @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface) {
+                @Inject(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN) private cloudPreferenceService: PreferenceCloudServiceInterface,
+                private variableMapperService: VariableMapperService
+            ) {
         super(appConfigService, PRESET_KEY, processCloudPresetsDefaultModel);
         this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
@@ -282,7 +285,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             tap((requestNode) => this.requestNode = requestNode),
             switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode))
         ).subscribe((processes) => {
-            this.rows = this.processListCloudService.createRowsViewModel(
+            this.rows = this.variableMapperService.mapVariablesByColumnTitle(
                 processes.list.entries,
                 this.columns
             );

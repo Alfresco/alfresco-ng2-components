@@ -16,7 +16,7 @@
  */
 
 import { ObjectDataColumn } from '@alfresco/adf-core';
-import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 
 export const fakeProcessCloudList = {
     list: {

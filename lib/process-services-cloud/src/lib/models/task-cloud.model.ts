@@ -17,6 +17,7 @@
 
 import { Pagination } from '@alfresco/js-api';
 import { IdentityGroupModel, IdentityUserModel } from '@alfresco/adf-core';
+import { ProcessInstanceVariable } from './process-instance-variable.model';
 
 export class TaskCloudNodePaging {
     list: TaskCloudPagingList;
@@ -54,4 +55,5 @@ export interface TaskCloudModel {
     standalone: boolean;
     status: string;
     taskDefinitionKey: string;
+    processVariables?: ProcessInstanceVariable[];
  }
