@@ -37,11 +37,9 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     constructor(
         private jwtHelperService: JwtHelperService,
         private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService) { }
+        private appConfigService: AppConfigService) {
 
-        private get identityHost(): string {
-            return `${this.appConfigService.get('identityHost')}`;
-        }
+    }
 
     /**
      * Gets the name and other basic details of the current user.
@@ -110,7 +108,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private invokeIdentityUserApi(): Observable<any> {
-        const url = `${this.identityHost}/rb/v1/identity/users`;
+        const url = `${this.identityHost}/v1/identity/users`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
@@ -138,6 +136,10 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     private filterOutEmptyValue(values: string []): string [] {
         return values.filter( value => value.trim() ? true : false);
+    }
+
+    private get identityHost(): string {
+        return `${this.appConfigService.get('identityHost')}`;
     }
 
     private handleError(error: any) {

@@ -70,7 +70,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
-        const url = `${this.identityHost}/rb/v1/identity/groups`;
+        const url = `${this.identityHost}/v1/identity/groups`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
