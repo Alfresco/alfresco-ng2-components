@@ -55,6 +55,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material/dialog';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -68,9 +72,11 @@ describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
+    let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
+    let documentRootLoader: HarnessLoader;
 
     @Component({
         selector: 'adf-cloud-custom-widget',
@@ -130,12 +136,14 @@ describe('FormCloudComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
 
         translateService = TestBed.inject(TranslateService);
+        matDialog = TestBed.inject(MatDialog);
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
 
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
+        documentRootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
     });
 
@@ -735,6 +743,63 @@ describe('FormCloudComponent', () => {
 
         expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome, appVersion);
         expect(completed).toBeTruthy();
+    });
+
+    it('should open confirmation dialog on complete task', async () => {
+        formComponent.form = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.completeTaskForm();
+        let dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(1);
+
+        await dialogs[0].close();
+        dialogs = await documentRootLoader.getAllHarnesses(MatDialogHarness);
+        expect(dialogs.length).toBe(0);
+    });
+
+    it('should submit form when user confirms', () => {
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) });
+        fixture.detectChanges();
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+        formComponent.form = formModel;
+        formComponent.taskId = 'id';
+        formComponent.appName = 'appName';
+
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel));
+        formComponent.completeTaskForm('complete');
+
+        expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
+    });
+
+    it('should not confirm form if user rejects', () => {
+        const outcome = 'complete';
+        spyOn(matDialog, 'open').and.returnValue({  afterClosed: () => of(false) });
+
+        const formModel = new FormModel({
+            confirmMessage: {
+                show: true,
+                message: 'Are you sure you want to submit the form?'
+            }
+        });
+
+        formComponent.form = formModel;
+        spyOn(formComponent['formCloudService'], 'completeTaskForm');
+
+        formComponent.completeTaskForm(outcome);
+
+        expect(matDialog.open).toHaveBeenCalled();
+        expect(formComponent['formCloudService'].completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should require json to parse form', () => {
