@@ -48,7 +48,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    loadTasks() {
+    reload() {
         this.requestNode = this.createRequestNode();
 
         if (this.requestNode.appName || this.requestNode.appName === '') {

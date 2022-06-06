@@ -215,7 +215,7 @@ describe('ServiceTaskListCloudComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should reload tasks when loadTasks() is called', (done) => {
+    it('should reload tasks when reload() is called', (done) => {
         component.appName = 'fake';
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
         component.success.subscribe((res) => {
@@ -225,7 +225,7 @@ describe('ServiceTaskListCloudComponent', () => {
             done();
         });
         fixture.detectChanges();
-        component.loadTasks();
+        component.reload();
     });
 
     it('should emit row click event', (done) => {
@@ -337,7 +337,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
         it('should set pagination and reload when updatePagination is called', (done) => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-            spyOn(component, 'loadTasks').and.stub();
+            spyOn(component, 'reload').and.stub();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
             fixture.detectChanges();

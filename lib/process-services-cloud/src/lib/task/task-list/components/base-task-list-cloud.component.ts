@@ -153,7 +153,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         if (changes['sorting']) {
             this.formatSorting(changes['sorting'].currentValue);
         }
-        this.loadTasks();
+        this.reload();
     }
 
     ngOnDestroy() {
@@ -214,13 +214,13 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
-        this.loadTasks();
+        this.reload();
     }
 
     onSortingChanged(event: CustomEvent) {
         this.setSorting(event.detail);
         this.formatSorting(this.sorting);
-        this.loadTasks();
+        this.reload();
     }
 
     onRowClick(item: DataRowEvent) {
@@ -289,7 +289,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             );
         }
 
-        this.loadTasks();
+        this.reload();
     }
 
     setSorting(sortDetail) {
@@ -320,5 +320,5 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         }, row.obj);
     }
 
-    abstract loadTasks();
+    abstract reload();
 }

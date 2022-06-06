@@ -154,7 +154,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    loadTasks() {
+    reload() {
         this.isLoading = true;
 
         this.isColumnSchemaCreated$.pipe(

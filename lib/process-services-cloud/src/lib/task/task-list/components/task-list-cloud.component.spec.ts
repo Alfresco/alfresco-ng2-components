@@ -272,7 +272,7 @@ describe('TaskListCloudComponent', () => {
             done();
         });
         fixture.detectChanges();
-        component.loadTasks();
+        component.reload();
     });
 
     it('should emit row click event', (done) => {
@@ -393,7 +393,7 @@ describe('TaskListCloudComponent', () => {
 
         it('should set pagination and reload when updatePagination is called', (done) => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-            spyOn(component, 'loadTasks').and.stub();
+            spyOn(component, 'reload').and.stub();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
             fixture.detectChanges();
@@ -611,7 +611,7 @@ describe('TaskListCloudComponent', () => {
             });
 
             fixture.detectChanges();
-            component.loadTasks();
+            component.reload();
         });
 
         it('replacePriorityValues should return undefined when no rows defined', () => {
