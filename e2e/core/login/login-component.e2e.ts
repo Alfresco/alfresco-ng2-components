@@ -76,7 +76,7 @@ describe('Login component', () => {
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+        await LocalStorageUtil.setStorageItem('authType', 'OAUTH');
         await loginPage.login(userA.username, userA.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await expect(await errorPage.getErrorCode()).toBe('403');
