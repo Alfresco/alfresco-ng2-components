@@ -22,6 +22,8 @@ import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -30,8 +32,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class UploadTestComponent extends UploadBase {
 
     constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService,
-                protected ngZone: NgZone) {
+        protected translationService: TranslationService,
+        protected ngZone: NgZone) {
         super(uploadService, translationService, ngZone);
     }
 }
@@ -49,6 +51,9 @@ describe('UploadBase', () => {
         ],
         declarations: [
             UploadTestComponent
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 
@@ -142,7 +147,7 @@ describe('UploadBase', () => {
                 done();
             });
         }));
-   });
+    });
 
     describe('fileSize', () => {
 

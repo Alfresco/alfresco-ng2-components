@@ -58,9 +58,9 @@ export class AboutComponent implements OnInit {
     extensions$: Observable<ExtensionRef[]>;
 
     constructor(private authService: AuthenticationService,
-                private discovery: DiscoveryApiService,
-                private appExtensions: AppExtensionService,
-                private appConfigService: AppConfigService) {
+        private discovery: DiscoveryApiService,
+        private appExtensions: AppExtensionService,
+        private appConfigService: AppConfigService) {
         this.extensions$ = this.appExtensions.references$;
         this.application = this.appConfigService.get<string>(
             'application.name'

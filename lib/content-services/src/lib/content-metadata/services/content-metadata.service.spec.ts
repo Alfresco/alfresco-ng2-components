@@ -25,6 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PropertyDescriptorsService } from './property-descriptors.service';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetaDataService', () => {
 
@@ -54,6 +56,9 @@ describe('ContentMetaDataService', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 
@@ -79,8 +84,8 @@ describe('ContentMetaDataService', () => {
             id: 'fake-id',
             isFile: true,
             aspectNames: ['exif:exif'],
-            createdByUser: {displayName: 'test-user'},
-            modifiedByUser: {displayName: 'test-user-modified'}
+            createdByUser: { displayName: 'test-user' },
+            modifiedByUser: { displayName: 'test-user-modified' }
         } as Node;
 
         service.getBasicProperties(fakeNode).subscribe(
@@ -100,11 +105,11 @@ describe('ContentMetaDataService', () => {
             isFile: true,
             aspectNames: ['exif:exif'],
             nodeType: 'fn:fakenode',
-            createdByUser: {displayName: 'test-user'},
-            modifiedByUser: {displayName: 'test-user-modified'},
+            createdByUser: { displayName: 'test-user' },
+            modifiedByUser: { displayName: 'test-user-modified' },
             properties: []
         } as Node;
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'} as any));
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type' } as any));
 
         service.getContentTypeProperty(fakeNode).subscribe(
             (res: any) => {
@@ -162,7 +167,7 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
-   });
+    });
 
     describe('LayoutOriented preset', () => {
 
@@ -276,7 +281,7 @@ describe('ContentMetaDataService', () => {
     });
 
     describe('Provided preset config', () => {
-       it('should create the metadata config on the fly when preset config is provided', async (done) => {
+        it('should create the metadata config on the fly when preset config is provided', async (done) => {
             const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [

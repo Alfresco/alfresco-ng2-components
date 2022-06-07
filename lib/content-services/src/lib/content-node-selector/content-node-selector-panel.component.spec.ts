@@ -34,6 +34,8 @@ import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -85,6 +87,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
+        providers: [
+            MockProvider(ApiClientsService)
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
@@ -105,7 +110,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             searchQueryBuilderService = component.queryBuilderService;
             component.queryBuilderService.resetToDefaults();
 
-            spyOn(nodeService,  'getNode').and.returnValue(of(new MinimalNode({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
+            spyOn(nodeService, 'getNode').and.returnValue(of(new MinimalNode({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] } })));
             searchSpy = spyOn(searchQueryBuilderService, 'execute');
             const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
@@ -142,7 +147,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should trigger the select event when selection has been made', (done) => {
-                const expectedNode = { id: 'fakeid'} as Node;
+                const expectedNode = { id: 'fakeid' } as Node;
                 component.select.subscribe((nodes) => {
                     expect(nodes.length).toBe(1);
                     expect(nodes[0]).toBe(expectedNode);
@@ -196,27 +201,27 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should render search input by default', () => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
-                .not.toBe(null);
+                    .not.toBe(null);
             });
 
             it('should not render search input if `showSearch` is false', () => {
                 component.showSearch = false;
                 fixture.detectChanges();
                 expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
-                .toBe(null);
+                    .toBe(null);
             });
 
             it('should render sites list dropdown by default', () => {
                 fixture.detectChanges();
                 expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
-                .not.toBe(null);
+                    .not.toBe(null);
             });
 
             it('should not render sites list dropdown if `showDropdownSiteList` is false', () => {
                 component.showDropdownSiteList = false;
                 fixture.detectChanges();
                 expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
-                .toBe(null);
+                    .toBe(null);
             });
         });
 
@@ -275,7 +280,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
-                component.onCurrentSelection([ { entry: chosenNode } ]);
+                component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
@@ -306,7 +311,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const chosenNode = { path: { elements: [] } } as Node;
-                component.onCurrentSelection([ { entry: chosenNode } ]);
+                component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
@@ -377,7 +382,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     });
 
                     const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
-                    sitesDropdown.componentInstance.selectedSite({value: fakeSiteEntry});
+                    sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
                 });
             });
         });
@@ -385,7 +390,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
             let customResourcesService: CustomResourcesService;
-            const entry: Node = { id: 'fakeid'} as Node;
+            const entry: Node = { id: 'fakeid' } as Node;
 
             beforeEach(() => {
                 const documentListService = TestBed.inject(DocumentListService);
@@ -453,7 +458,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.clearSearch).toHaveBeenCalled();
             });
 
-            it('should reset the search term when clicking the clear icon',  () => {
+            it('should reset the search term when clicking the clear icon', () => {
                 component.searchTerm = 'search-term';
                 searchQueryBuilderService.userQuery = 'search-term';
                 spyOn(component, 'clearSearch');
@@ -519,7 +524,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 const expectedQueryBody = mockQueryBody;
-                expectedQueryBody.filterQueries = [ { query: `ANCESTOR:'workspace://SpacesStore/namek'`} ];
+                expectedQueryBody.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/namek'` }];
 
                 expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
                 expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
@@ -659,7 +664,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 tick(debounceSearch);
 
                 const expectedQueryBody = mockQueryBody;
-                expectedQueryBody.filterQueries = [ { query: `ANCESTOR:'workspace://SpacesStore/my-root-id'`} ];
+                expectedQueryBody.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-root-id'` }];
 
                 expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
             }));
@@ -752,7 +757,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.breadcrumbRootId).toBeUndefined();
             });
 
-            it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync (() => {
+            it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
@@ -791,7 +796,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.clearSearch).toHaveBeenCalled();
             });
 
-            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync (() => {
+            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync(() => {
                 typeToSearchBox('piccolo');
                 tick(debounceSearch);
 
@@ -999,7 +1004,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(paginationLoading).not.toBeNull();
                 });
 
-                it('Should infinite pagination target be null when we use it for search ', fakeAsync (() => {
+                it('Should infinite pagination target be null when we use it for search ', fakeAsync(() => {
                     component.showingSearchResults = true;
                     typeToSearchBox('shenron');
                     tick(debounceSearch);
@@ -1033,7 +1038,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Chosen node', () => {
 
-            const entry: Node = { id: 'fakeid'} as Node;
+            const entry: Node = { id: 'fakeid' } as Node;
             const nodePage: NodePaging = { list: { pagination: {} } };
             let hasAllowableOperations;
             const fakeFolderNode = { id: 'fakeNodeId', isFolder: true } as Node;
@@ -1145,7 +1150,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                         expect(component.chosenNode[0]).toBe(entry);
                     });
 
-                    component.onCurrentSelection([ { entry } ]);
+                    component.onCurrentSelection([{ entry }]);
                 });
 
                 it('should remain empty when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async () => {
@@ -1157,7 +1162,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                         expect(component.chosenNode).toEqual([]);
                     });
 
-                    component.onCurrentSelection([ { entry } ]);
+                    component.onCurrentSelection([{ entry }]);
                 });
 
                 it('should become empty when clicking on a node (with the WRONG permissions) after previously selecting a right node', async () => {
@@ -1300,7 +1305,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
 
                     const fakeFileModels = [new FileModel({ name: 'fake-name', size: 100 } as File), new FileModel({ name: 'fake-name-2', size: 200 } as File)];
-                    const fileUploadCompleteEvent  = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
+                    const fileUploadCompleteEvent = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
                     uploadService.fileUploadComplete.next(fileUploadCompleteEvent);
 
                     tick(500);
@@ -1312,7 +1317,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     isUploadingSpy.and.returnValue(false);
 
-                    const secondFileUploadCompleteEvent  = new FileUploadCompleteEvent(fakeFileModels[1], 2, fakeFileModels[1], 0);
+                    const secondFileUploadCompleteEvent = new FileUploadCompleteEvent(fakeFileModels[1], 2, fakeFileModels[1], 0);
                     uploadService.fileUploadComplete.next(secondFileUploadCompleteEvent);
                     tick(500);
 
@@ -1371,7 +1376,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 contentNodeSelectorPanelService.customModels = undefined;
             });
 
-            it ('should search panel be collapsed by default and expand when clicking the filter button', async () => {
+            it('should search panel be collapsed by default and expand when clicking the filter button', async () => {
                 contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
@@ -1386,7 +1391,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.searchPanelExpanded).toEqual(true);
             });
 
-            it ('should search panel be present when the filter section is expanded',  () => {
+            it('should search panel be present when the filter section is expanded', () => {
                 component.searchPanelExpanded = true;
                 fixture.detectChanges();
 
@@ -1395,7 +1400,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(searchPanelContainer).not.toBe(null);
             });
 
-            it('should filter button be present only when there are custom models',  () => {
+            it('should filter button be present only when there are custom models', () => {
                 contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
@@ -1404,7 +1409,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(toggleFiltersPanelButton).not.toEqual(null);
             });
 
-            it('should filter button not be present when there are no custom models',  () => {
+            it('should filter button not be present when there are no custom models', () => {
                 fixture.detectChanges();
 
                 const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));

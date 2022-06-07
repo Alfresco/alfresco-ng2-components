@@ -26,6 +26,8 @@ import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -45,6 +47,9 @@ describe('VersionListComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -274,7 +279,7 @@ describe('VersionListComponent', () => {
 
             spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             component.restore(versionId);
             fixture.detectChanges();
@@ -291,7 +296,7 @@ describe('VersionListComponent', () => {
 
             spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             spyOn(component.restored, 'emit');
 

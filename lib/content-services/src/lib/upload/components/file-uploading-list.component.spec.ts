@@ -21,6 +21,8 @@ import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('FileUploadingListComponent', () => {
     let fixture: ComponentFixture<FileUploadingListComponent>;
@@ -38,6 +40,9 @@ describe('FileUploadingListComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 

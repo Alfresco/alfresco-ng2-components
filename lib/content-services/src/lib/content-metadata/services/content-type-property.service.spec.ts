@@ -23,6 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';
 import { of } from 'rxjs';
 import { Node, TypeEntry } from '@alfresco/js-api';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentTypePropertyService', () => {
 
@@ -117,6 +119,9 @@ describe('ContentTypePropertyService', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 
@@ -214,7 +219,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fn:fakenode',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: {'fk:brendonstare': 'i keep staring i do not know why'}
+            properties: { 'fk:brendonstare': 'i keep staring i do not know why' }
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));

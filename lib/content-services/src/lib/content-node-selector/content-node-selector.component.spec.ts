@@ -30,6 +30,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -67,7 +69,8 @@ describe('ContentNodeSelectorComponent', () => {
                         close: jasmine.createSpy('close'),
                         afterClosed: () => of(null)
                     }
-                }
+                },
+                MockProvider(ApiClientsService)
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
@@ -171,7 +174,7 @@ describe('ContentNodeSelectorComponent', () => {
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
         });
-   });
+    });
 
     describe('Cancel button', () => {
 
@@ -269,8 +272,8 @@ describe('ContentNodeSelectorComponent', () => {
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('NODE_SELECTOR.CHOOSE_ITEM');
-       });
-   });
+        });
+    });
 
     describe('Upload button', () => {
 
@@ -410,11 +413,11 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should tabs be headless when local upload is not enabled', () => {
-           component.data.showLocalUploadButton = false;
-           fixture.detectChanges();
-           const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
+            component.data.showLocalUploadButton = false;
+            fixture.detectChanges();
+            const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
 
-           expect(tabGroup).not.toBe(undefined);
+            expect(tabGroup).not.toBe(undefined);
         });
 
         it('should tabs show headers when local upload is enabled', () => {
@@ -432,7 +435,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should uploadStarted become true when the first upload gets started', () => {
-            const fileUploadEvent  = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
+            const fileUploadEvent = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
             uploadService.fileUploadStarting.next(fileUploadEvent);
 
             expect(component.uploadStarted).toBe(true);

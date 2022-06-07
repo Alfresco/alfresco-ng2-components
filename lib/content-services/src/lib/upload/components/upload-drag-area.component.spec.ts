@@ -21,6 +21,8 @@ import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 const getFakeShareDataRow = (allowableOperations = ['delete', 'update', 'create']) => ({
     obj: {
@@ -95,6 +97,9 @@ describe('UploadDragAreaComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 

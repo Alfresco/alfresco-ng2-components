@@ -24,6 +24,8 @@ import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
@@ -38,6 +40,9 @@ describe('FileUploadingDialogComponent', () => {
             TranslateModule.forRoot(),
             ContentTestingModule,
             UploadModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 
@@ -49,7 +54,7 @@ describe('FileUploadingDialogComponent', () => {
         userPreferenceService = TestBed.inject(UserPreferencesService);
         uploadService.clearQueue();
 
-        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => { });
 
         emitter = new EventEmitter();
         fileList = [

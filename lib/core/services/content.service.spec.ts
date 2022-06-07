@@ -24,6 +24,8 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockProvider } from 'ng-mocks';
+import { VersionCompatibilityService } from './version-compatibility.service';
 
 declare let jasmine: any;
 
@@ -40,6 +42,9 @@ describe('ContentService', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
+        ],
+        providers: [
+            MockProvider(VersionCompatibilityService)
         ]
     });
 
@@ -170,13 +175,13 @@ describe('ContentService', () => {
         });
 
         it('should havePermission be true if inherited permissions is present and you have the permission for the request operation', () => {
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
+            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' }] } });
             expect(contentService.hasPermissions(permissionNode, 'manager', 'user1')).toBeTruthy();
         });
 
         it('should take current logged user id if userId undefined ', () => {
             spyOn(authService, 'getEcmUsername').and.returnValue('user1');
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
+            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' }] } });
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
         });
     });

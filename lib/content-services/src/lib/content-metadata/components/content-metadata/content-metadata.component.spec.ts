@@ -29,6 +29,8 @@ import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -45,7 +47,10 @@ describe('ContentMetadataComponent', () => {
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
+        providers: [
+            { provide: LogService, useValue: { error: jasmine.createSpy('error') } },
+            MockProvider(ApiClientsService)
+        ]
     });
 
     beforeEach(() => {
@@ -126,7 +131,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('nodeAspectUpdate', fakeAsync(() => {
-            const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node'} as MinimalNode;
+            const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node' } as MinimalNode;
             spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
             spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
@@ -197,7 +202,7 @@ describe('ContentMetadataComponent', () => {
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
-            expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
+            expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({ nodeType: 'ft:poppoli' });
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 

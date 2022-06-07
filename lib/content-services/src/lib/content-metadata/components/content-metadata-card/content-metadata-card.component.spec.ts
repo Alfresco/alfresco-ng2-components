@@ -27,6 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NodeAspectService } from 'content-services/src/lib/aspect-list';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetadataCardComponent', () => {
 
@@ -41,6 +43,9 @@ describe('ContentMetadataCardComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
+        ],
+        providers: [
+            MockProvider(ApiClientsService)
         ]
     });
 
@@ -207,11 +212,11 @@ describe('ContentMetadataCardComponent', () => {
     it('should expand the card when custom display aspect is valid', () => {
         expect(component.expanded).toBeFalsy();
 
-        let displayAspect = new SimpleChange(null , 'EXIF', true);
+        let displayAspect = new SimpleChange(null, 'EXIF', true);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
 
-        displayAspect = new SimpleChange('EXIF' , null, false);
+        displayAspect = new SimpleChange('EXIF', null, false);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
     });
