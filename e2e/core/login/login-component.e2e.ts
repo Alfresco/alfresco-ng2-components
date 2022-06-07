@@ -17,7 +17,6 @@
 
 import { createApiService,
     BrowserActions,
-    ErrorPage,
     LocalStorageUtil,
     UserInfoPage,
     UserModel,
@@ -34,7 +33,6 @@ describe('Login component', () => {
     const userInfoPage = new UserInfoPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginShellPage();
-    const errorPage = new ErrorPage();
 
     const userA = new UserModel();
     const userB = new UserModel();
@@ -73,14 +71,6 @@ describe('Login component', () => {
         await loginPage.login(userB.username, userB.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(`${userB.firstName} ${userB.lastName}`);
-    });
-
-    it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await loginPage.login(userA.username, userA.password);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await expect(await errorPage.getErrorCode()).toBe('403');
-        await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
-        await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C260036] Should require username', async () => {
