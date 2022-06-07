@@ -29,9 +29,8 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
-import { ColumnDataType } from '../../../models/column-data-type.model';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
-import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
@@ -473,7 +472,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     private getRequestNodeVariableIds(): string[] | undefined {
         const displayedVariableColumns = this.columns
             .filter(column =>
-                column.customData?.columnType === ColumnDataType.processVariableColumn &&
+                column.customData?.columnType === PROCESS_LIST_CUSTOM_VARIABLE_COLUMN &&
                 column.isHidden !== true
             )
             .map(column => column.customData.assignedVariableDefinitionIds)

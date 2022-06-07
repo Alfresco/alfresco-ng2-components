@@ -16,9 +16,8 @@
  */
 
 import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
-import { ColumnDataType } from '../../../models/column-data-type.model';
 import { getProcessInstanceVariableMock } from '../../../mock/process-instance-variable.mock';
-import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
 import { ProcessListDatatableAdapter } from './process-list-datatable-adapter';
 
@@ -42,7 +41,7 @@ describe('ProcessListDatatableAdapter', () => {
             title: 'columnDisplayName1',
             customData: {
                 assignedVariableDefinitionIds: ['1'],
-                columnType: ColumnDataType.processVariableColumn
+                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });
 
