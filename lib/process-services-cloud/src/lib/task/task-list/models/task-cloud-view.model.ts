@@ -18,10 +18,4 @@
 import { TaskCloudModel } from '../../../models/task-cloud.model';
 import { WithVariablesMap } from '../../../models/process-instance-variable.model';
 
-// Temporary solution due to incompatibility types for dates (TaskCloudModel is not exposed right now)
-interface TaskViewCloudModel extends TaskCloudModel {
-    createdDate: any;
-    lastModified: any;
-}
-
-export type TaskInstanceCloudListViewModel = WithVariablesMap<TaskViewCloudModel>;
+export type TaskInstanceCloudListViewModel = WithVariablesMap<TaskCloudModel>;

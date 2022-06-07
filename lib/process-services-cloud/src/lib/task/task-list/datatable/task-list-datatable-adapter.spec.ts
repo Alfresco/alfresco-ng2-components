@@ -16,8 +16,7 @@
  */
 
 import { DataColumn, DataRow, getDataColumnMock } from '@alfresco/adf-core';
-import { ColumnDataType } from '../../../models/column-data-type.model';
-import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
+import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { TasksListDatatableAdapter } from './task-list-datatable-adapter';
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 import { getTaskCloudModelMock } from '../../../mock/task-cloud-model.mock';
@@ -52,7 +51,7 @@ describe('TasksListDatatableAdapter', () => {
             title: 'columnDisplayName1',
             customData: {
                 assignedVariableDefinitionIds: ['variableDefinitionId'],
-                columnType: ColumnDataType.processVariableColumn
+                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });
 

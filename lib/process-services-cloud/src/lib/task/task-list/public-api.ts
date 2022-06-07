@@ -19,8 +19,8 @@ export * from './components/task-list-cloud.component';
 export * from './components/service-task-list-cloud.component';
 
 export * from './models/service-task-cloud.model';
-export * from './models/task-preset-cloud.model';
 export * from './models/tasks-cloud-preferences';
+export * from './models/task-preset-cloud.model';
 
 export * from './services/task-list-cloud.service';
 export * from './services/service-task-list-cloud.service';

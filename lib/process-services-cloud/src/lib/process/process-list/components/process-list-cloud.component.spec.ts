@@ -37,7 +37,7 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
-import { ColumnDataType } from '../../../models/column-data-type.model';
+import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 
 @Component({
     template: `
@@ -116,7 +116,7 @@ describe('ProcessListCloudComponent', () => {
                             id: 'variableColumnId',
                             customData: {
                                 assignedVariableDefinitionIds: ['variableDefinitionId'],
-                                columnType: ColumnDataType.processVariableColumn
+                                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
                             }
                         })
                     ]
