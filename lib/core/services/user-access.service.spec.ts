@@ -131,7 +131,7 @@ describe('UserAccessService', () => {
             expect(getAccessFromApiSpy.calls.count()).toEqual(1);
         });
 
-        it('should the url be composed from identity host of app.config', async () => {
+        it('should the url be composed from bpm host of app.config', async () => {
             const fakeIdentityHost = 'https://fake-identity-host.fake.com';
             appConfigService.config.bpmHost = fakeIdentityHost;
             await userAccessService.fetchUserAccess();
