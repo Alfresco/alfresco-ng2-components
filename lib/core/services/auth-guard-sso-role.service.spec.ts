@@ -27,6 +27,7 @@ import { PeopleContentService } from './people-content.service';
 import { of } from 'rxjs';
 import { getFakeUserWithContentAdminCapability, getFakeUserWithContentUserCapability } from '../mock/ecm-user.service.mock';
 import { UserAccessService } from './user-access.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 describe('Auth Guard SSO role service', () => {
 
@@ -35,6 +36,7 @@ describe('Auth Guard SSO role service', () => {
     let routerService: Router;
     let peopleContentService: PeopleContentService;
     let userAccessService: UserAccessService;
+    let appConfig: AppConfigService;
 
     setupTestBed({
         imports: [
@@ -44,6 +46,8 @@ describe('Auth Guard SSO role service', () => {
     });
 
     beforeEach(() => {
+        appConfig = TestBed.inject(AppConfigService);
+        appConfig.config.provider = 'ECM';
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
@@ -183,7 +187,7 @@ describe('Auth Guard SSO role service', () => {
     describe('Content Admin', () => {
 
         afterEach(() => {
-           peopleContentService.hasCheckedIsContentAdmin = false;
+            peopleContentService.hasCheckedIsContentAdmin = false;
         });
 
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
@@ -213,6 +217,33 @@ describe('Auth Guard SSO role service', () => {
             await authGuard.canActivate(router);
 
             expect(getCurrentPersonSpy).not.toHaveBeenCalled();
+        });
+
+        it('Should not retrieve the user when the provider is BPM', async () => {
+            spyUserAccess([], {});
+            spyOn(peopleContentService, 'getCurrentPerson');
+            appConfig.config.provider = 'BPM';
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
+
+            const result = await authGuard.canActivate(router);
+
+            expect(result).toBeFalsy();
+            expect(peopleContentService.getCurrentPerson).not.toHaveBeenCalled();
+        });
+
+        it('Should not fail when the people service throws an error', async () => {
+            spyUserAccess([], {});
+            spyOn(peopleContentService, 'getCurrentPerson').and.throwError('404 Not found');
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
+
+            const result = await authGuard.canActivate(router);
+
+            expect(result).toBeFalsy();
+            expect(peopleContentService.getCurrentPerson).toHaveBeenCalled();
         });
     });
 
