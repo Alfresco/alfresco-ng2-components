@@ -27,7 +27,8 @@ import { IdentityUserServiceInterface } from './identity-user.service.interface'
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 
-const IDENTITY_MICROSERVICE_INGRESS = 'modeling-service';
+const IDENTITY_MICRO_SERVICE_INGRESS = 'modeling-service';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -109,7 +110,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private invokeIdentityUserApi(): Observable<any> {
-        const url = `${this.identityHost}/${IDENTITY_MICROSERVICE_INGRESS}/v1/identity/users`;
+        const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/identity/users`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
