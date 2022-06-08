@@ -69,7 +69,7 @@
                  (keyup.enter)="onAttachFileClicked(file)"
                  role="button"
                  tabindex="0"/>
-            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" (keyup.enter)="onAttachFileClicked(file)"
+            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
             <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
                 <mat-icon>more_vert</mat-icon>
