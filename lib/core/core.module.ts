@@ -97,8 +97,8 @@ import { LegacyClientFactory } from './api-factories/legacy-api-client.factory';
         SortingPickerModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule
-
+        BlankPageModule,
+        AlfrescoJsClientsModule
     ],
     exports: [
         AboutModule,
@@ -141,7 +141,6 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                AlfrescoJsClientsModule,
                 ApiClientsService,
                 { provide: API_CLIENT_FACTORY_TOKEN, useClass: LegacyClientFactory },
                 TranslateStore,
