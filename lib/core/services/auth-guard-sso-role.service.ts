@@ -20,6 +20,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentGroups, PeopleContentService } from './people-content.service';
 import { UserAccessService } from './user-access.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,8 @@ export class AuthGuardSsoRoleService implements CanActivate {
     constructor(private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog,
-                private peopleContentService: PeopleContentService) {
+                private peopleContentService: PeopleContentService,
+                private appConfig: AppConfigService) {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
@@ -43,8 +45,11 @@ export class AuthGuardSsoRoleService implements CanActivate {
                     hasRealmRole = true;
                 } else {
                     const excludedRoles = route.data['excludedRoles'] || [];
-                    const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
-                    hasRealmRole = excludedRoles.length ?  this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
+                    let isContentAdmin = false;
+                    if (this.checkContentAdministratorRole(rolesToCheck, excludedRoles)) {
+                        isContentAdmin = await this.peopleContentService.isContentAdmin().catch(() => false);
+                    }
+                    hasRealmRole = excludedRoles.length ? this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
                 }
             }
 
@@ -66,6 +71,12 @@ export class AuthGuardSsoRoleService implements CanActivate {
         }
 
         return hasRole;
+    }
+
+    private checkContentAdministratorRole(rolesToCheck: string[], excludedRoles: string[]): boolean {
+        const hasContentProvider = this.appConfig.config.provider === 'ECM' || this.appConfig.config.provider === 'ALL';
+        const checkAdminRole = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
+        return hasContentProvider && checkAdminRole;
     }
 
     private checkAccessWithExcludedRoles(rolesToCheck: string[], excludedRoles: string[], isContentAdmin: boolean): boolean {
