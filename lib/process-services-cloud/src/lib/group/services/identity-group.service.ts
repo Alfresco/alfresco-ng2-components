@@ -23,6 +23,7 @@ import { IdentityGroupServiceInterface } from './identity-group.service.interfac
 import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
 import { IdentityGroupModel } from '../models/identity-group.model';
 
+const IDENTITY_MICROSERVICE_INGRESS = 'modeling-service';
 @Injectable({ providedIn: 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
 
@@ -70,7 +71,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
-        const url = `${this.identityHost}/v1/identity/groups`;
+        const url = `${this.identityHost}/${IDENTITY_MICROSERVICE_INGRESS}/v1/identity/groups`;
         return this.oAuth2Service.get({ url, queryParams: this.queryParams });
     }
 
@@ -104,6 +105,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     }
 
     private get identityHost(): string {
-        return `${this.appConfigService.get('identityHost')}`;
+        return `${this.appConfigService.get('bpmHost')}`;
     }
 }
