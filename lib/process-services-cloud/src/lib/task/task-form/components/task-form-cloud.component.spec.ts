@@ -48,7 +48,7 @@ const taskDetails: TaskDetailsCloudModel = {
     permissions: [TASK_VIEW_PERMISSION]
 };
 
-describe('TaskFormCloudComponent', () => {
+fdescribe('TaskFormCloudComponent', () => {
 
     let taskCloudService: TaskCloudService;
     let identityUserService: IdentityUserService;
@@ -133,6 +133,17 @@ describe('TaskFormCloudComponent', () => {
 
             const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
             expect(unclaimBtn).toBeNull();
+        });
+
+        it('should not show claim button for standalone task', () => {
+            taskDetails.status = TASK_CREATED_STATE;
+            taskDetails.permissions = [TASK_CLAIM_PERMISSION];
+            taskDetails.standalone = true;
+            getTaskSpy.and.returnValue(of(taskDetails));
+            fixture.detectChanges();
+
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            expect(claimBtn).toBeNull();
         });
 
         it('should show release button when task is assigned to one of the candidate users', () => {
