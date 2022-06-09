@@ -48,7 +48,7 @@ const taskDetails: TaskDetailsCloudModel = {
     permissions: [TASK_VIEW_PERMISSION]
 };
 
-fdescribe('TaskFormCloudComponent', () => {
+describe('TaskFormCloudComponent', () => {
 
     let taskCloudService: TaskCloudService;
     let identityUserService: IdentityUserService;
