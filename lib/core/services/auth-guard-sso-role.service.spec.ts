@@ -47,7 +47,7 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         appConfig = TestBed.inject(AppConfigService);
-        appConfig.config.provider = 'ECM';
+        appConfig.config.providers = 'ECM';
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
@@ -222,7 +222,7 @@ describe('Auth Guard SSO role service', () => {
         it('Should not retrieve the user when the provider is BPM', async () => {
             spyUserAccess([], {});
             spyOn(peopleContentService, 'getCurrentPerson');
-            appConfig.config.provider = 'BPM';
+            appConfig.config.providers = 'BPM';
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };

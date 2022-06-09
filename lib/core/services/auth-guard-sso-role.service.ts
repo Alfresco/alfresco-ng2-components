@@ -74,7 +74,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
     }
 
     private checkContentAdministratorRole(rolesToCheck: string[], excludedRoles: string[]): boolean {
-        const hasContentProvider = this.appConfig.config.provider === 'ECM' || this.appConfig.config.provider === 'ALL';
+        const hasContentProvider = this.appConfig.config.providers === 'ECM' || this.appConfig.config.providers === 'ALL';
         const checkAdminRole = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
         return hasContentProvider && checkAdminRole;
     }
