@@ -18,15 +18,7 @@
 import { DiscoveryApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../../api-clients.service';
-
-declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace AlfrescoCore {
-        interface ApiRegistry {
-            ['DiscoveryClient.discovery']: DiscoveryApi;
-        }
-    }
-}
+import './discovery-client.types';
 
 @NgModule({})
 export class DiscoveryClientModule {

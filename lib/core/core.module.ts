@@ -60,8 +60,8 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
-import { API_CLIENT_FACTORY_TOKEN, ApiClientsService, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
-import { LegacyClientFactory } from './api-factories/legacy-api-client.factory';
+import { ApiClientsService, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 
 @NgModule({
     imports: [
@@ -98,6 +98,7 @@ import { LegacyClientFactory } from './api-factories/legacy-api-client.factory';
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
+        LegacyApiClientModule,
         AlfrescoJsClientsModule
     ],
     exports: [
@@ -142,7 +143,6 @@ export class CoreModule {
             ngModule: CoreModule,
             providers: [
                 ApiClientsService,
-                { provide: API_CLIENT_FACTORY_TOKEN, useClass: LegacyClientFactory },
                 TranslateStore,
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },

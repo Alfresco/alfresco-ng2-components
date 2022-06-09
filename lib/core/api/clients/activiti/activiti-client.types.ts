@@ -16,14 +16,14 @@
  */
 
 import { AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
-import { NgModule } from '@angular/core';
-import { ApiClientsService } from '../../api-clients.service';
-import './activiti-client.types';
 
-@NgModule()
-export class ActivitiClientModule {
-    constructor(private apiClientsService: ApiClientsService) {
-        this.apiClientsService.register('ActivitiClient.about', AboutApi);
-        this.apiClientsService.register('ActivitiClient.system-properties', SystemPropertiesApi);
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace AlfrescoCore {
+        interface ApiRegistry {
+            ['ActivitiClient.about']: AboutApi;
+            ['ActivitiClient.system-properties']: SystemPropertiesApi;
+        }
     }
 }
+
