@@ -109,7 +109,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails?.status === TASK_CREATED_STATE &&
-               taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION);
+               taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION) &&
+               !taskDetails?.standalone;
     }
 
     /**

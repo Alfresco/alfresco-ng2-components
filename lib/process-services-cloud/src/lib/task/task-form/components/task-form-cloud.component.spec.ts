@@ -135,6 +135,17 @@ describe('TaskFormCloudComponent', () => {
             expect(unclaimBtn).toBeNull();
         });
 
+        it('should not show claim button for standalone task', () => {
+            taskDetails.status = TASK_CREATED_STATE;
+            taskDetails.permissions = [TASK_CLAIM_PERMISSION];
+            taskDetails.standalone = true;
+            getTaskSpy.and.returnValue(of(taskDetails));
+            fixture.detectChanges();
+
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            expect(claimBtn).toBeNull();
+        });
+
         it('should show release button when task is assigned to one of the candidate users', () => {
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
             fixture.detectChanges();
