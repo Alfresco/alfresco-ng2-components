@@ -104,7 +104,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     excludedUsers: IdentityUserModel[] = [];
 
     /** Array of groups to restrict user searches.
-     * Mandatory property is group id
+     * Mandatory property is group name
      */
     @Input()
     groupsRestriction: string[] = [];

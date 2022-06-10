@@ -27,6 +27,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified, this shows the users who have access to the app. |
 | excludedUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be excluded. Mandatory properties are: id, email, username |
+| groupsRestriction | `string[]` | \[] | Array of groups to restrict user searches. Mandatory property is group name |
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | User selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | readOnly | `boolean` | false | Show the info in readonly mode |
