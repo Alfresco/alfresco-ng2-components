@@ -230,6 +230,41 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isTitleEnabled()).toBeFalsy();
     });
 
+    it('should show a valid validation icon in case showValidationIcon is true', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+
+        expect(formComponent.showValidationIcon).toBeTruthy();
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).not.toBeNull();
+        const validationIcon = fixture.debugElement.query(By.css('#adf-valid-form-icon'));
+        expect(validationIcon.nativeElement.innerText).toEqual('check_circle');
+    });
+
+    it('should show a error icon in case showValidationIcon is true and form invalid', () => {
+        const formModel = new FormModel();
+        formModel.isValid = false;
+        formComponent.form = formModel;
+
+        expect(formComponent.showValidationIcon).toBeTruthy();
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).not.toBeNull();
+        const validationIcon = fixture.debugElement.query(By.css('#adf-invalid-form-icon'));
+        expect(validationIcon.nativeElement.innerText).toEqual('error');
+    });
+
+    it('should not show any validation icon in case showValidationIcon is false', () => {
+        const formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.showValidationIcon = false;
+
+        fixture.detectChanges();
+        const validationSection = fixture.debugElement.query(By.css('.adf-form-validation-button'));
+        expect(validationSection).toBeNull();
+    });
+
     it('should return primary color for complete button', () => {
         expect(formComponent.getColorForOutcome('COMPLETE')).toBe('primary');
     });
