@@ -36,7 +36,11 @@ export class UserAccessService {
 
     async fetchUserAccess() {
         if (!this.hasFetchedAccess()) {
-            this.hasRolesInJwt() ? this.fetchAccessFromJwt() : await this.fetchAccessFromApi();
+            if (this.hasRolesInJwt()) {
+                this.fetchAccessFromJwt();
+            } else if (this.isOauth()) {
+                await this.fetchAccessFromApi();
+            }
         }
     }
 
@@ -65,6 +69,10 @@ export class UserAccessService {
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
+    }
+
+    private isOauth(): boolean {
+        return this.appConfigService.get('authType') === 'OAUTH';
     }
 
     /**

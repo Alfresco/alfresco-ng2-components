@@ -92,6 +92,7 @@ describe('UserAccessService', () => {
         beforeEach(() => {
             spyOn(jwtHelperService, 'getValueFromLocalToken').and.returnValue(undefined);
             getAccessFromApiSpy = spyOn(oauth2Service, 'get').and.returnValue(of(userAccessMock));
+            appConfigService.config.authType = 'OAUTH';
         });
 
         it('should return true when the user has one of the global roles', async () => {
@@ -136,6 +137,13 @@ describe('UserAccessService', () => {
             await userAccessService.fetchUserAccess();
 
             expect(getAccessFromApiSpy).toHaveBeenCalledWith({ url: `${ fakeIdentityHost }/v1/identity/roles` });
+        });
+
+        it('should not fetch the access from the API if is not configured with OAUTH', async () => {
+            appConfigService.config.authType = 'BASIC';
+            await userAccessService.fetchUserAccess();
+
+            expect(getAccessFromApiSpy).not.toHaveBeenCalled();
         });
     });
 });
