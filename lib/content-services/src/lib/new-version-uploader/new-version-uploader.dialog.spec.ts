@@ -19,14 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { setupTestBed } from 'core';
-import { MockProvider } from 'ng-mocks';
 import { mockFile, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { UploadVersionButtonComponent } from '../upload';
 import { VersionComparisonComponent, VersionListComponent, VersionUploadComponent } from '../version-manager';
 import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
@@ -62,8 +60,7 @@ describe('NewVersionUploaderDialog', () => {
             { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
             {
                 provide: MatDialogRef, useValue: mockDialogRef
-            },
-            MockProvider(ApiClientsService)
+            }
         ]
     });
 

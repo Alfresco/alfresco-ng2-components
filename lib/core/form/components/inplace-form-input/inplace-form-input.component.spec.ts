@@ -20,8 +20,6 @@ import { FormControl } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from 'content-services/src/lib/testing/content.testing.module';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('InplaceFormInputComponent', () => {
     let component: InplaceFormInputComponent;
@@ -33,9 +31,6 @@ describe('InplaceFormInputComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
-            ],
-            providers: [
-                MockProvider(ApiClientsService)
             ],
             declarations: [InplaceFormInputComponent]
         }).compileComponents();

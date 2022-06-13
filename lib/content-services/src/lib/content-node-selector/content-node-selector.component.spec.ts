@@ -30,8 +30,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -69,8 +67,7 @@ describe('ContentNodeSelectorComponent', () => {
                         close: jasmine.createSpy('close'),
                         afterClosed: () => of(null)
                     }
-                },
-                MockProvider(ApiClientsService)
+                }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

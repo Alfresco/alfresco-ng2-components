@@ -22,8 +22,6 @@ import { VersionUploadComponent } from './version-upload.component';
 import { ContentService, setupTestBed, UploadService } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('VersionUploadComponent', () => {
     let component: VersionUploadComponent;
@@ -54,8 +52,7 @@ describe('VersionUploadComponent', () => {
             ContentTestingModule
         ],
         providers: [
-            UploadService,
-            MockProvider(ApiClientsService)
+            UploadService
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

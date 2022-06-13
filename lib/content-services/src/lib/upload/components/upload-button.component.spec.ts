@@ -24,8 +24,6 @@ import { NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('UploadButtonComponent', () => {
 
@@ -59,9 +57,6 @@ describe('UploadButtonComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
-            ],
-            providers: [
-                MockProvider(ApiClientsService)
             ]
         });
         fixture = TestBed.createComponent(UploadButtonComponent);

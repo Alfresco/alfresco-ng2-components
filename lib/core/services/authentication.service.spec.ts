@@ -23,8 +23,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockProvider } from 'ng-mocks';
-import { VersionCompatibilityService } from './version-compatibility.service';
 
 declare let jasmine: any;
 
@@ -38,9 +36,6 @@ describe('AuthenticationService', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            MockProvider(VersionCompatibilityService)
         ]
     });
 

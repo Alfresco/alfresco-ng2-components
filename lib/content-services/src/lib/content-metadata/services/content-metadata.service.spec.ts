@@ -25,8 +25,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetaDataService', () => {
 
@@ -56,9 +54,6 @@ describe('ContentMetaDataService', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ]
     });
 

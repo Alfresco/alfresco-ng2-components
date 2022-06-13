@@ -34,8 +34,6 @@ import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -86,9 +84,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

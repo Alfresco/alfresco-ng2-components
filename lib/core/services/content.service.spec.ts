@@ -24,8 +24,6 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockProvider } from 'ng-mocks';
-import { VersionCompatibilityService } from './version-compatibility.service';
 
 declare let jasmine: any;
 
@@ -42,9 +40,6 @@ describe('ContentService', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            MockProvider(VersionCompatibilityService)
         ]
     });
 

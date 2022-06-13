@@ -23,8 +23,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';
 import { of } from 'rxjs';
 import { Node, TypeEntry } from '@alfresco/js-api';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentTypePropertyService', () => {
 
@@ -119,9 +117,6 @@ describe('ContentTypePropertyService', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ]
     });
 

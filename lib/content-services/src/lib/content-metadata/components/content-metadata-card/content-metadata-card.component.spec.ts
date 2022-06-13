@@ -27,8 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NodeAspectService } from 'content-services/src/lib/aspect-list';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { of } from 'rxjs';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetadataCardComponent', () => {
 
@@ -43,9 +41,6 @@ describe('ContentMetadataCardComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ]
     });
 

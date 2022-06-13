@@ -26,8 +26,6 @@ import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -47,9 +45,6 @@ describe('VersionListComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

@@ -24,8 +24,6 @@ import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
@@ -40,9 +38,6 @@ describe('FileUploadingDialogComponent', () => {
             TranslateModule.forRoot(),
             ContentTestingModule,
             UploadModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ]
     });
 

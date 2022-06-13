@@ -23,8 +23,6 @@ import { Node, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
@@ -50,9 +48,6 @@ describe('VersionManagerComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            MockProvider(ApiClientsService)
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

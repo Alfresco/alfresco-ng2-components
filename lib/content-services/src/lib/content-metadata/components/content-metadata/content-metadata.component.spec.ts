@@ -29,8 +29,6 @@ import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockProvider } from 'ng-mocks';
-import { ApiClientsService } from '@alfresco/adf-core/api';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -48,8 +46,7 @@ describe('ContentMetadataComponent', () => {
             ContentTestingModule
         ],
         providers: [
-            { provide: LogService, useValue: { error: jasmine.createSpy('error') } },
-            MockProvider(ApiClientsService)
+            { provide: LogService, useValue: { error: jasmine.createSpy('error') } }
         ]
     });
 
