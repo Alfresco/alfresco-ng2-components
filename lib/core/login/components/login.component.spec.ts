@@ -216,6 +216,62 @@ describe('LoginComponent', () => {
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
         });
+
+        it('Should enable login button after entering a valid username and a password', () => {
+            usernameInput.value = 'username';
+            component.form.controls.username.markAsDirty();
+            usernameInput.dispatchEvent(new Event('input'));
+
+            passwordInput.value = 'password';
+            component.form.controls.password.markAsDirty();
+            passwordInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const loginButton = getLoginButton();
+            expect(loginButton.disabled).toBe(false);
+        });
+
+        it('Should disable login button when username is not valid', () => {
+            usernameInput.value = 'u';
+            component.form.controls.username.markAsDirty();
+            usernameInput.dispatchEvent(new Event('input'));
+
+            passwordInput.value = 'password';
+            component.form.controls.password.markAsDirty();
+            passwordInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const loginButton = getLoginButton();
+            expect(loginButton.disabled).toBe(true);
+        });
+
+        it('Should disable login button when password is not valid', () => {
+            usernameInput.value = 'username';
+            component.form.controls.username.markAsDirty();
+            usernameInput.dispatchEvent(new Event('input'));
+
+            passwordInput.value = '';
+            component.form.controls.password.markAsDirty();
+            passwordInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const loginButton = getLoginButton();
+            expect(loginButton.disabled).toBe(true);
+        });
+
+        it('Should disable login button when username and password are empty', () => {
+            usernameInput.value = '';
+            component.form.controls.username.markAsDirty();
+            usernameInput.dispatchEvent(new Event('input'));
+
+            passwordInput.value = '';
+            component.form.controls.password.markAsDirty();
+            passwordInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            const loginButton = getLoginButton();
+            expect(loginButton.disabled).toBe(true);
+        });
     });
 
     describe('Remember me', () => {
@@ -313,6 +369,21 @@ describe('LoginComponent', () => {
             };
             component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
             component.ngOnInit();
+            fixture.detectChanges();
+
+            usernameInput.value = '1';
+            usernameInput.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+
+            expect(component.formError).toBeDefined();
+            expect(component.formError.username).toBeDefined();
+            expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+            expect(element.querySelector('#username-error')).toBeDefined();
+            expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        });
+
+        it('should throw a validation min-length error by default when the username is not at least 2 characters long', () => {
             fixture.detectChanges();
 
             usernameInput.value = '1';
@@ -574,7 +645,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username', 'fake-wrong-password');
     }));
 
-    it('should render the password in clear when the toggleShowPassword is call', () => {
+    it('should show password as text when show password is true', () => {
         component.isPasswordShow = false;
         component.toggleShowPassword(new MouseEvent('click'));
 
@@ -584,7 +655,7 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('text');
     });
 
-    it('should render the hide password when the password is in clear and the toggleShowPassword is call', () => {
+    it('should password be hidden when show password is false', () => {
         component.isPasswordShow = true;
         component.toggleShowPassword(new MouseEvent('click'));
 
