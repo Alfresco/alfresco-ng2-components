@@ -49,7 +49,7 @@ describe('FileUploadingDialogComponent', () => {
         userPreferenceService = TestBed.inject(UserPreferencesService);
         uploadService.clearQueue();
 
-        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => { });
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
 
         emitter = new EventEmitter();
         fileList = [

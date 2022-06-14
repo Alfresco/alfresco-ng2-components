@@ -274,7 +274,7 @@ describe('VersionListComponent', () => {
 
             spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             component.restore(versionId);
             fixture.detectChanges();
@@ -291,7 +291,7 @@ describe('VersionListComponent', () => {
 
             spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             spyOn(component.restored, 'emit');
 

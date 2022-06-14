@@ -30,8 +30,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class UploadTestComponent extends UploadBase {
 
     constructor(protected uploadService: UploadService,
-        protected translationService: TranslationService,
-        protected ngZone: NgZone) {
+                protected translationService: TranslationService,
+                protected ngZone: NgZone) {
         super(uploadService, translationService, ngZone);
     }
 }
@@ -142,7 +142,7 @@ describe('UploadBase', () => {
                 done();
             });
         }));
-    });
+   });
 
     describe('fileSize', () => {
 

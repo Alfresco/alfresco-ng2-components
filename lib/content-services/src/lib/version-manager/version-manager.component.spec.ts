@@ -31,17 +31,17 @@ describe('VersionManagerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     const expectedComment = 'test-version-comment';
-    const node: Node = new Node({
+    const  node: Node = new Node({
         id: '1234',
         name: 'TEST-NODE',
         isFile: true
     });
     const versionEntry = {
-        entry: {
-            id: '1.0',
-            name: node.name,
-            versionComment: expectedComment
-        }
+       entry: {
+           id: '1.0',
+           name: node.name,
+           versionComment: expectedComment
+       }
     };
 
     setupTestBed({
@@ -59,7 +59,7 @@ describe('VersionManagerComponent', () => {
 
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         spyOnListVersionHistory = spyOn(component.versionListComponent['versionsApi'], 'listVersionHistory').and
-            .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
+            .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [ versionEntry ] }})));
     });
 
     it('should load the versions for a given node', () => {
@@ -104,7 +104,7 @@ describe('VersionManagerComponent', () => {
     it('should emit success event upon successful upload of a new version', (done) => {
         fixture.detectChanges();
 
-        const emittedData = { value: { entry: node } };
+        const emittedData = { value: { entry: node }};
         component.uploadSuccess.subscribe((event) => {
             expect(event).toBe(node);
             done();
@@ -118,7 +118,7 @@ describe('VersionManagerComponent', () => {
             done();
         });
 
-        const emittedData = { value: { entry: node } };
+        const emittedData = { value: { entry: node }};
         component.onUploadSuccess(emittedData);
     });
 
@@ -139,5 +139,5 @@ describe('VersionManagerComponent', () => {
 
             expect(component.uploadState).toEqual('open');
         });
-    });
+   });
 });

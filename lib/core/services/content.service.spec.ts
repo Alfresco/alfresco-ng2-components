@@ -170,13 +170,13 @@ describe('ContentService', () => {
         });
 
         it('should havePermission be true if inherited permissions is present and you have the permission for the request operation', () => {
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' }] } });
+            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
             expect(contentService.hasPermissions(permissionNode, 'manager', 'user1')).toBeTruthy();
         });
 
         it('should take current logged user id if userId undefined ', () => {
             spyOn(authService, 'getEcmUsername').and.returnValue('user1');
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' }] } });
+            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
         });
     });

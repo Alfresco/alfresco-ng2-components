@@ -51,9 +51,7 @@ describe('VersionUploadComponent', () => {
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        providers: [
-            UploadService
-        ],
+        providers: [UploadService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
@@ -66,7 +64,7 @@ describe('VersionUploadComponent', () => {
         component.node = node;
     });
 
-    it('should disabled upload button on upload starts', fakeAsync(() => {
+    it('should disabled upload button on upload starts',  fakeAsync(() => {
         component.uploadStarted.subscribe(() => {
             expect(component.disabled).toEqual(true);
         });

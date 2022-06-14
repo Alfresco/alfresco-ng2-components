@@ -207,11 +207,11 @@ describe('ContentMetadataCardComponent', () => {
     it('should expand the card when custom display aspect is valid', () => {
         expect(component.expanded).toBeFalsy();
 
-        let displayAspect = new SimpleChange(null, 'EXIF', true);
+        let displayAspect = new SimpleChange(null , 'EXIF', true);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
 
-        displayAspect = new SimpleChange('EXIF', null, false);
+        displayAspect = new SimpleChange('EXIF' , null, false);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
     });

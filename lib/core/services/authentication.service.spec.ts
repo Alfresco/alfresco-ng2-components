@@ -364,7 +364,7 @@ describe('AuthenticationService', () => {
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => { },
+                () => {},
                 () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
@@ -420,7 +420,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => { },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
@@ -442,7 +442,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => { },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
@@ -465,7 +465,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => { },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);

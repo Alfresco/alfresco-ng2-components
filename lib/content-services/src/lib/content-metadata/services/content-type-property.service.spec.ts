@@ -214,7 +214,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fn:fakenode',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: { 'fk:brendonstare': 'i keep staring i do not know why' }
+            properties: {'fk:brendonstare': 'i keep staring i do not know why'}
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));
