@@ -16,8 +16,19 @@
  */
 
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { StorageService } from '../services/storage.service';
+import { loadAppConfig } from './app-config.loader';
 import { AppConfigPipe } from './app-config.pipe';
+import { AppConfigService } from './app-config.service';
+
+interface AppConfigModuleConfig {
+    loadConfig: boolean;
+}
+
+const defaultConfig: AppConfigModuleConfig = {
+    loadConfig: true
+};
 
 @NgModule({
     imports: [
@@ -31,4 +42,18 @@ import { AppConfigPipe } from './app-config.pipe';
     ]
 })
 export class AppConfigModule {
+    static forRoot(config: AppConfigModuleConfig = defaultConfig): ModuleWithProviders<AppConfigModule> {
+        return {
+            ngModule: AppConfigModule,
+            providers: [
+                ...(config.loadConfig ?
+                    [{
+                        provide: APP_INITIALIZER,
+                        useFactory: loadAppConfig,
+                        deps: [ AppConfigService, StorageService ], multi: true }
+                    ] : []
+                )
+            ]
+        };
+    }
 }

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './authentication';
 export * from './about/index';
 export * from './viewer/index';
 export * from './userinfo/index';
@@ -54,3 +55,4 @@ export * from './testing';
 
 export * from './material.module';
 export * from './core.module';
+export * from './api-factories/api-client.module';

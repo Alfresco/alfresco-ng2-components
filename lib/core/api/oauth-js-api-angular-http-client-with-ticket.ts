@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-import {
-    PageTitleService
-} from '@alfresco/adf-core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { HttpClientConfig } from '@alfresco/js-api';
+import { HttpClient } from '@angular/common/http';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { BaseJsApiAngularHttpClient } from './js-api-angular-http-client';
 
-@Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None
-})
-export class AppComponent implements OnInit {
+export class OauthJsApiAngularHttpClient extends BaseJsApiAngularHttpClient {
 
-    constructor(private pageTitleService: PageTitleService) {}
-
-    ngOnInit() {
-        this.pageTitleService.setTitle('title');
+    get token() {
+        return this.oidc.getAccessToken();
     }
+
+    constructor(config: HttpClientConfig, httpClient: HttpClient, private readonly oidc: OAuthService) {
+        super(config, httpClient);
+    }
+
 }

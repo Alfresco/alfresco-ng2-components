@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
-
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
@@ -25,7 +23,6 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiV2 } from './alfresco-api-v2';
 import { LegacyAlfrescoApiServiceFacade } from './legacy-alfresco-api-service.facade';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiV2LoaderService) {
     return () => angularAlfrescoApiService.load();
 }
@@ -51,6 +48,7 @@ export class AlfrescoApiV2LoaderService {
 
     protected initAngularAlfrescoApi() {
         const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+
         if (oauth) {
             oauth.redirectUri = window.location.origin + window.location.pathname;
             oauth.redirectUriLogout = window.location.origin + window.location.pathname;

@@ -15,22 +15,9 @@
  * limitations under the License.
  */
 
-import {
-    PageTitleService
-} from '@alfresco/adf-core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+export * from './auth-bearer.interceptor';
+export { ADFAuthenticationService } from './authentication.interface';
+export { BaseAuthenticationService } from './base-authentication.service';
+export { OIDCAuthGuard } from './oidc/oidc-auth.guard';
+export { OIDCAuthModule } from './oidc/oidc.module';
 
-@Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None
-})
-export class AppComponent implements OnInit {
-
-    constructor(private pageTitleService: PageTitleService) {}
-
-    ngOnInit() {
-        this.pageTitleService.setTitle('title');
-    }
-}

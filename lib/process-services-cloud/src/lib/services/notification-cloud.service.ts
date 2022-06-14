@@ -32,10 +32,12 @@ export class NotificationCloudService extends BaseCloudService {
 
     appsListening = [];
 
-    constructor(apiService: AlfrescoApiService,
-                appConfigService: AppConfigService,
-                public apollo: Apollo,
-                private http: HttpLink) {
+    constructor(
+        apiService: AlfrescoApiService,
+        appConfigService: AppConfigService,
+        public apollo: Apollo,
+        private http: HttpLink
+    ) {
         super(apiService, appConfigService);
     }
 
@@ -54,6 +56,8 @@ export class NotificationCloudService extends BaseCloudService {
                 uri: `${this.getBasePath(appName)}/notifications/graphql`
             });
 
+            const token = () => this.apiService.getInstance().oauth2Auth.token;
+
             const webSocketLink = new WebSocketLink({
                 uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
                 options: {
@@ -62,7 +66,7 @@ export class NotificationCloudService extends BaseCloudService {
                     connectionParams: {
                         kaInterval: 2000,
                         // eslint-disable-next-line @typescript-eslint/naming-convention
-                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
+                        'X-Authorization': 'Bearer ' + token()
                     }
                 }
             });
@@ -86,7 +90,7 @@ export class NotificationCloudService extends BaseCloudService {
                                     headers: {
                                         ...oldHeaders,
                                         // eslint-disable-next-line @typescript-eslint/naming-convention
-                                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
+                                        'X-Authorization': 'Bearer ' + token()
                                     }
                                 });
                                 forward(operation);
