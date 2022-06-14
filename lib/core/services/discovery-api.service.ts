@@ -38,8 +38,8 @@ export class DiscoveryApiService {
     constructor(
         private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService,
-        private apiClientsService: ApiClientsService) {
-
+        private apiClientsService: ApiClientsService
+    ) {
         this.authenticationService.onLogin
             .pipe(
                 filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
