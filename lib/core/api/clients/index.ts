@@ -1,4 +1,4 @@
-export * from './activiti/activiti-client.module';
+export * from './activiti/activiti-client.types';
 export * from './alfresco-js-clients.module';
-export * from './discovery/discovery-client.module';
+export * from './discovery/discovery-client.types';
 

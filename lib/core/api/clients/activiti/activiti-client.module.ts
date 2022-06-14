@@ -18,7 +18,6 @@
 import { AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../../api-clients.service';
-import './activiti-client.types';
 
 @NgModule()
 export class ActivitiClientModule {

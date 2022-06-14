@@ -18,9 +18,8 @@
 import { DiscoveryApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../../api-clients.service';
-import './discovery-client.types';
 
-@NgModule({})
+@NgModule()
 export class DiscoveryClientModule {
     constructor(private apiClientsService: ApiClientsService) {
         this.apiClientsService.register('DiscoveryClient.discovery', DiscoveryApi);
