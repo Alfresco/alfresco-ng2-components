@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { AlfrescoApi, AlfrescoApiConfig, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { ReplaySubject, Subject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { StorageService } from './storage.service';
 import { OpenidConfiguration } from './openid-configuration.interface';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'

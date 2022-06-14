@@ -24,6 +24,7 @@ import { AlfrescoApiV2 } from './alfresco-api-v2';
 
 @Injectable()
 export class LegacyAlfrescoApiServiceFacade {
+
     constructor(private alfrescoApiV2: AlfrescoApiV2) {}
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -35,4 +36,7 @@ export class LegacyAlfrescoApiServiceFacade {
     init() {
         this.alfrescoApiInitialized.next(true);
     }
+
+    async reset() {}
+
 }

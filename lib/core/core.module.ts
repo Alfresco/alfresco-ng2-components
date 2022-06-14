@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 
@@ -65,12 +65,15 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
-import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
+import { API_CLIENT_FACTORY_TOKEN, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { AuthBearerInterceptor } from './services';
 
-interface Config {
+interface ModuleConfig {
     useLegacy: boolean;
 };
+
+const defaultConfig: ModuleConfig = { useLegacy: true };
 
 @NgModule({
     imports: [
@@ -109,6 +112,10 @@ interface Config {
         BlankPageModule,
         HttpClientModule,
         LegacyApiClientModule,
+        HttpClientXsrfModule.withOptions({
+            cookieName: 'CSRF-TOKEN',
+            headerName: 'X-CSRF-TOKEN'
+        }),
         AlfrescoJsClientsModule
     ],
     exports: [
@@ -148,21 +155,13 @@ interface Config {
     ]
 })
 export class CoreModule {
-    static forRoot(config: Config = { useLegacy: true }): ModuleWithProviders<CoreModule> {
+    static forRoot(config: ModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
                 TranslateStore,
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: startupServiceFactory,
-                    deps: [
-                        AlfrescoApiService
-                    ],
-                    multi: true
-                },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,
@@ -175,11 +174,19 @@ export class CoreModule {
                     deps: [VersionCompatibilityService],
                     multi: true
                 },
-                ApiClientsService,
+                { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
                 ...(config.useLegacy ?
-                    [] : [
+                    [
+                        {
+                            provide: APP_INITIALIZER,
+                            useFactory: startupServiceFactory,
+                            deps: [ AlfrescoApiService ],
+                            multi: true
+                        }
+                    ] : [
                         AlfrescoApiV2,
                         LegacyAlfrescoApiServiceFacade,
+                        { provide: API_CLIENT_FACTORY_TOKEN, useClass: AngularClientFactory },
                         {
                             provide: APP_INITIALIZER,
                             useFactory: createAlfrescoApiV2Service,
@@ -187,6 +194,10 @@ export class CoreModule {
                                 AlfrescoApiV2LoaderService
                             ],
                             multi: true
+                        },
+                        {
+                            provide: AlfrescoApiService,
+                            useExisting: LegacyAlfrescoApiServiceFacade
                         }
                     ]
                 )

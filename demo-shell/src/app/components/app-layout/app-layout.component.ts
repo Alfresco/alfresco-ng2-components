@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
-import { HeaderDataService } from '../header-data/header-data.service';
+import { AppConfigService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ThemePalette } from '@angular/material/core';
+import { HeaderDataService } from '../header-data/header-data.service';
 
 @Component({
     templateUrl: './app-layout.component.html',
@@ -169,11 +169,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     constructor(
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
-        private alfrescoApiService: AlfrescoApiService,
-        private headerService: HeaderDataService) {
-        if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
-            this.enableRedirect = false;
-        }
+        private headerService: HeaderDataService
+    ) {
+        this.enableRedirect = false;
     }
 
     setState(state) {

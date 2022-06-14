@@ -34,7 +34,7 @@ export interface OAuth2RequestParams {
 export class OAuth2Service {
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    get apiClient(): Oauth2Auth {
+    private get apiClient(): Oauth2Auth {
         return this.alfrescoApiService.getInstance().oauth2Auth;
     }
 

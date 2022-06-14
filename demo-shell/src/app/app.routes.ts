@@ -16,7 +16,7 @@
  */
 
 import { Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService, OIDCAuthGuard } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -106,7 +106,7 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OIDCAuthGuard],
         children: [
             {
                 path: '',

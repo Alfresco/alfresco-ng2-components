@@ -88,6 +88,8 @@
     "@mat-datetimepicker/moment": "^5.1.1",
     "@ngx-translate/core": "^13.0.0",
     "adf-tslint-rules": "0.0.7",
+    "angular-oauth2-oidc": "^12.1.0",
+    "angular-oauth2-oidc-jwks": "^12.0.0",
     "apollo-angular": "^2.6.0",
     "chart.js": "2.9.4",
     "classlist.js": "1.1.20150312",
