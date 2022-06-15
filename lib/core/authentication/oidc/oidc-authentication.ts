@@ -62,19 +62,18 @@ export class OIDCAuthentication {
         }
     }
 
-    private getAuthConfig(codeFlow = false): AuthConfig {
+    private getAuthConfig(_codeFlow = false): AuthConfig {
         const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
         return {
             issuer: oauth2.host,
-            loginUrl: `${oauth2.host}/protocol/openid-connect/auth`,
             silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
             redirectUri: window.location.origin + oauth2.redirectUri,
             postLogoutRedirectUri: window.location.origin + oauth2.redirectUriLogout,
             clientId: oauth2.clientId,
             scope: oauth2.scope,
             dummyClientSecret: oauth2.secret,
-            ...(codeFlow ? { responseType: 'code' } : {})
+            responseType: 'code'
         };
     }
 }

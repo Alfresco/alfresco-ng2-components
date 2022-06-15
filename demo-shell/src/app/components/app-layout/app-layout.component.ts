@@ -171,7 +171,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         private config: AppConfigService,
         private headerService: HeaderDataService
     ) {
-        this.enableRedirect = false;
+        // this.enableRedirect = false;
     }
 
     setState(state) {

@@ -30,7 +30,8 @@ import {
     CoreModule,
     CoreAutomationService,
     AppConfigModule,
-    OIDCAuthModule
+    OIDCAuthModule,
+    ApiClientModule
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
@@ -141,7 +142,6 @@ registerLocaleData(localeSv);
         ReactiveFormsModule,
         // initialNavigation: false needs because of the OIDC package!!!
         // https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/routing-with-the-hashstrategy.html
-        OIDCAuthModule,
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy', initialNavigation: false }),
         FormsModule,
         HttpClientModule,
@@ -158,7 +158,9 @@ registerLocaleData(localeSv);
         ChartsModule,
         AppCloudSharedModule,
         AppConfigModule.forRoot(),
-        MonacoEditorModule.forRoot()
+        MonacoEditorModule.forRoot(),
+        ApiClientModule,
+        OIDCAuthModule
     ],
     declarations: [
         AppComponent,

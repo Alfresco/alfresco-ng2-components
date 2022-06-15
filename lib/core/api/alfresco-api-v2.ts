@@ -21,10 +21,8 @@
 import { AlfrescoApiConfig, AlfrescoApiType, HttpClient as JsApiHttpClient, LegacyAlfrescoApi, LegacyTicketApi } from "@alfresco/js-api";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { OAuthService } from 'angular-oauth2-oidc';
 import { BaseJsApiAngularHttpClient } from "./js-api-angular-http-client";
 import { JsApiAngularHttpClientLegacyTicketApi } from "./js-api-angular-http-client-with-ticket";
-import { OauthJsApiAngularHttpClient } from "./oauth-js-api-angular-http-client-with-ticket";
 
 @Injectable()
 export class AlfrescoApiV2 extends LegacyAlfrescoApi implements AlfrescoApiType {
@@ -37,9 +35,8 @@ export class AlfrescoApiV2 extends LegacyAlfrescoApi implements AlfrescoApiType 
     public gsClient: JsApiHttpClient;
     public processClient: JsApiHttpClient;
     public processAuth: JsApiHttpClient;
-    public oauth2Auth: OauthJsApiAngularHttpClient;
 
-    constructor(private httpClient: HttpClient, private readonly oidc: OAuthService) {
+    constructor(private httpClient: HttpClient) {
         super();
     }
 
@@ -113,16 +110,6 @@ export class AlfrescoApiV2 extends LegacyAlfrescoApi implements AlfrescoApiType 
             },
             this.httpClient
         );
-
-        this.oauth2Auth = new OauthJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: ``,
-            },
-            this.httpClient,
-            this.oidc,
-        )
     }
 
     setConfig(config: AlfrescoApiConfig) {
