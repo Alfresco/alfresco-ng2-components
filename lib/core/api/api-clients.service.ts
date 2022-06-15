@@ -29,9 +29,9 @@ export class ApiClientsService {
 
     get<T extends keyof AlfrescoCore.ApiRegistry>(apiName: T): AlfrescoCore.ApiRegistry[T] {
 
-        const ApiClass = this.registry[apiName];
+        const apiClass = this.registry[apiName];
 
-        if (!ApiClass) {
+        if (!apiClass) {
             throw new Error(`Api not registred: ${apiName}`);
         }
 
@@ -44,8 +44,8 @@ export class ApiClientsService {
     }
 
     private instantiateApi<T extends keyof AlfrescoCore.ApiRegistry>(apiName: T): AlfrescoCore.ApiRegistry[T] {
-        const ApiClass = this.registry[apiName];
-        const instance = this.apiCreateFactory.create<AlfrescoCore.ApiRegistry[T]>(ApiClass);
+        const apiClass = this.registry[apiName];
+        const instance = this.apiCreateFactory.create<AlfrescoCore.ApiRegistry[T]>(apiClass);
         this.instances[apiName] = instance;
 
         return instance;
