@@ -26,13 +26,11 @@ import { createApiService,
     UserModel,
     UsersActions,
     Widget,
-    SearchService,
-    Logger
+    SearchService
 } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import CONSTANTS = require('../../util/constants');
 
 describe('Attach File - Content service', () => {
 
