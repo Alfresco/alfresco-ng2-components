@@ -18,7 +18,6 @@
 import { createApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
-    ExternalNodeSelectorDialogPage,
     IntegrationService,
     LocalStorageUtil,
     LoginPage,
@@ -26,8 +25,7 @@ import { createApiService,
     UserModel,
     UsersActions,
     Widget,
-    SearchService,
-    Logger
+    SearchService
 } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { browser } from 'protractor';
@@ -43,7 +41,6 @@ describe('Attach File - Content service', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
     const apiServiceExternal = createApiService({
         provider: 'ECM',
