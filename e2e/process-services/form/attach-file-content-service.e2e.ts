@@ -18,7 +18,6 @@
 import { createApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
-    ExternalNodeSelectorDialogPage,
     IntegrationService,
     LocalStorageUtil,
     LoginPage,
@@ -42,7 +41,6 @@ describe('Attach File - Content service', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
     const apiServiceExternal = createApiService({
         provider: 'ECM',
