@@ -165,6 +165,7 @@ export class CoreModule {
                 },
                 ...(config.useLegacy ?
                     [
+                        AlfrescoApiService,
                         {
                             provide: APP_INITIALIZER,
                             useFactory: startupServiceFactory,
