@@ -17,13 +17,15 @@
 
 /*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
 
-import { AlfrescoApiType } from '@alfresco/js-api';
+import { AlfrescoApiType, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { AlfrescoApiV2 } from './alfresco-api-v2';
 
 @Injectable()
 export class LegacyAlfrescoApiServiceFacade {
+
+    nodeUpdated = new Subject<Node>();
 
     constructor(private alfrescoApiV2: AlfrescoApiV2) {}
 
