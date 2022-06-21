@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
@@ -49,8 +49,7 @@ export interface PeopleContentQueryRequestModel {
     providedIn: 'root'
 })
 export class PeopleContentService {
-    private hasContentAdminRole: boolean = false;
-    hasCheckedIsContentAdmin: boolean = false;
+    currentUser: EcmUserModel;
 
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
@@ -64,8 +63,7 @@ export class PeopleContentService {
         private logService: LogService
     ) {
         authenticationService.onLogout.subscribe(() => {
-            this.hasCheckedIsContentAdmin = false;
-            this.hasContentAdminRole = false;
+            this.currentUser = undefined;
         });
     }
 
@@ -75,21 +73,20 @@ export class PeopleContentService {
      * @param personId ID of the target user
      * @returns User information
      */
-    getPerson(personId: string): Observable<any> {
-        const promise = this.peopleApi.getPerson(personId);
-
-        return from(promise).pipe(
-            catchError((error) => this.handleError(error))
-        );
+    getPerson(personId: string): Observable<EcmUserModel> {
+        return from(this.peopleApi.getPerson(personId))
+        .pipe(
+            map((personEntry) => new EcmUserModel(personEntry.entry)),
+            tap( user => this.currentUser = user),
+            catchError((error) => this.handleError(error)));
     }
 
-    /**
-     * Gets information about the user who is currently logged in.
-     *
-     * @returns User information
-     */
-    getCurrentPerson(): Observable<any> {
+    getCurrentPerson():  Observable<EcmUserModel> {
         return this.getPerson('-me-');
+    }
+
+    getLocalCurrentUser(): EcmUserModel {
+        return this.currentUser;
     }
 
     /**
@@ -144,13 +141,8 @@ export class PeopleContentService {
         );
     }
 
-    async isContentAdmin(): Promise<boolean> {
-        if (!this.hasCheckedIsContentAdmin) {
-            const user: PersonEntry = await this.getCurrentPerson().toPromise();
-            this.hasContentAdminRole = user?.entry?.capabilities?.isAdmin;
-            this.hasCheckedIsContentAdmin = true;
-        }
-        return this.hasContentAdminRole;
+    getUserProfileImage(avatarId: string): string {
+        return avatarId + 'TO IMPLEMENT';
     }
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {

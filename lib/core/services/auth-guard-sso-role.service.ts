@@ -29,8 +29,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
     constructor(private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog,
-                private peopleContentService: PeopleContentService,
-                private appConfig: AppConfigService) {
+                private peopleContentService: PeopleContentService) {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
@@ -45,11 +44,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
                     hasRealmRole = true;
                 } else {
                     const excludedRoles = route.data['excludedRoles'] || [];
-                    let isContentAdmin = false;
-                    if (this.checkContentAdministratorRole(rolesToCheck, excludedRoles)) {
-                        isContentAdmin = await this.peopleContentService.isContentAdmin().catch(() => false);
-                    }
-                    hasRealmRole = excludedRoles.length ? this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
+                    hasRealmRole = this.validateRoles(rolesToCheck, excludedRoles);
                 }
             }
 
@@ -73,19 +68,26 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    private checkContentAdministratorRole(rolesToCheck: string[], excludedRoles: string[]): boolean {
-        const hasContentProvider = this.appConfig.config.providers === 'ECM' || this.appConfig.config.providers === 'ALL';
-        const checkAdminRole = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
-        return hasContentProvider && checkAdminRole;
+    private validateRoles(rolesToCheck: string[], excludedRoles?: string[]): boolean {
+        if (excludedRoles?.length > 0) {
+            return this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
+        }
+        return this.hasRoles(rolesToCheck);
     }
 
-    private checkAccessWithExcludedRoles(rolesToCheck: string[], excludedRoles: string[], isContentAdmin: boolean): boolean {
-        return this.hasRoles(rolesToCheck, isContentAdmin) && !this.hasRoles(excludedRoles, isContentAdmin);
+    private hasRoles(roles: string[] = []): boolean {
+        if (this.containsAlfrescoAdminRole(roles)) {
+            return this.hasUserAdminCapability() || this.userAccessService.hasGlobalAccess(roles);
+        }
+        return this.userAccessService.hasGlobalAccess(roles);
     }
 
-    private hasRoles(rolesToCheck: string[], isContentAdmin: boolean): boolean {
-        return rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS)
-            ? this.userAccessService.hasGlobalAccess(rolesToCheck) || isContentAdmin
-            : this.userAccessService.hasGlobalAccess(rolesToCheck);
+    private containsAlfrescoAdminRole(roles: string []): boolean {
+        return roles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
+    }
+
+    private hasUserAdminCapability(): boolean {
+        const currentUser = this.peopleContentService.getLocalCurrentUser();
+        return currentUser?.capabilities?.isAdmin;
     }
 }

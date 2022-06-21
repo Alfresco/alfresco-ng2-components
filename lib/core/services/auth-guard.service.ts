@@ -23,6 +23,7 @@ import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
+import { PeopleContentService } from './people-content.service';
 
 @Injectable({
     providedIn: 'root'
@@ -36,8 +37,9 @@ export class AuthGuard extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,
-                storageService: StorageService) {
-        super(authenticationService, router, appConfigService, dialog, storageService);
+                storageService: StorageService,
+                userService: PeopleContentService) {
+        super(authenticationService, router, appConfigService, dialog, storageService, userService);
         this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChangeBind);
@@ -69,6 +71,9 @@ export class AuthGuard extends AuthGuardBase {
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
+            if (!this.authenticationService.isBPMProvider() && this.userService.getLocalCurrentUser() === undefined ) {
+                await this.userService.getCurrentPerson().toPromise();
+            }
             return true;
         }
         return this.redirectToUrl(redirectUrl);
