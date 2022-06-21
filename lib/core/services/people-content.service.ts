@@ -19,10 +19,11 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
+import { PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 import { AuthenticationService } from './authentication.service';
+import { ContentService } from './content.service';
 
 // eslint-disable-next-line no-shadow
 export enum ContentGroups {
@@ -60,7 +61,8 @@ export class PeopleContentService {
     constructor(
         private apiService: AlfrescoApiService,
         authenticationService: AuthenticationService,
-        private logService: LogService
+        private logService: LogService,
+        private contentService: ContentService
     ) {
         authenticationService.onLogout.subscribe(() => {
             this.resetLocalCurrentUser();
@@ -81,7 +83,7 @@ export class PeopleContentService {
             catchError((error) => this.handleError(error)));
     }
 
-    getCurrentPerson():  Observable<EcmUserModel> {
+    getCurrentUserInfo():  Observable<EcmUserModel> {
         if (this.getLocalCurrentUser()) {
             return of(this.currentUser);
         }
@@ -146,6 +148,16 @@ export class PeopleContentService {
             map((res) => res?.entry as EcmUserModel),
             catchError((error) => this.handleError(error))
         );
+    }
+
+    /**
+     * Returns a profile image as a URL.
+     *
+     * @param avatarId Target avatar
+     * @returns Image URL
+     */
+     getUserProfileImage(avatarId: string): string {
+        return this.contentService.getContentUrl(avatarId);
     }
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {

@@ -21,10 +21,10 @@ import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { IdentityUserModel } from '../../models/identity-user.model';
 import { BpmUserService } from '../../services/bpm-user.service';
-import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { PeopleContentService } from '../../services/people-content.service';
 
 @Component({
     selector: 'adf-userinfo',
@@ -70,7 +70,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     selectedIndex: number;
     private destroy$ = new Subject();
 
-    constructor(private ecmUserService: EcmUserService,
+    constructor(private ecmUserService: PeopleContentService,
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
                 private authService: AuthenticationService) {

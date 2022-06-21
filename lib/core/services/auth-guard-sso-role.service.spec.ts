@@ -230,7 +230,7 @@ describe('Auth Guard SSO role service', () => {
             const result = await authGuard.canActivate(router);
 
             expect(result).toBeFalsy();
-            expect(peopleContentService.getCurrentPerson).not.toHaveBeenCalled();
+            expect(peopleContentService.getCurrentUserInfo).not.toHaveBeenCalled();
         });
 
         it('Should not fail when the people service throws an error', async () => {
@@ -243,7 +243,7 @@ describe('Auth Guard SSO role service', () => {
             const result = await authGuard.canActivate(router);
 
             expect(result).toBeFalsy();
-            expect(peopleContentService.getCurrentPerson).toHaveBeenCalled();
+            expect(peopleContentService.getCurrentUserInfo).toHaveBeenCalled();
         });
     });
 
