@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
@@ -63,7 +63,7 @@ export class PeopleContentService {
         private logService: LogService
     ) {
         authenticationService.onLogout.subscribe(() => {
-            this.currentUser = undefined;
+            this.resetLocalCurrentUser();
         });
     }
 
@@ -82,11 +82,18 @@ export class PeopleContentService {
     }
 
     getCurrentPerson():  Observable<EcmUserModel> {
+        if (this.getLocalCurrentUser()) {
+            return of(this.currentUser);
+        }
         return this.getPerson('-me-');
     }
 
     getLocalCurrentUser(): EcmUserModel {
         return this.currentUser;
+    }
+
+    resetLocalCurrentUser() {
+        this.currentUser = undefined;
     }
 
     /**

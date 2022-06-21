@@ -42,9 +42,7 @@ export class AuthGuardEcm extends AuthGuardBase {
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
-            if (this.userService.getLocalCurrentUser() === undefined ) {
-                await this.userService.getCurrentPerson().toPromise();
-            }
+            await this.userService.getCurrentPerson().toPromise();
             return true;
         }
 
