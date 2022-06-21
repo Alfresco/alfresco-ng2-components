@@ -141,10 +141,6 @@ export class PeopleContentService {
         );
     }
 
-    getUserProfileImage(avatarId: string): string {
-        return avatarId + 'TO IMPLEMENT';
-    }
-
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
         return sorting?.orderBy && sorting?.direction ? [`${sorting.orderBy} ${sorting.direction.toUpperCase()}`] : [];
     }
