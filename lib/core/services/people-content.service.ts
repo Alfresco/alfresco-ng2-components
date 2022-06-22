@@ -83,14 +83,14 @@ export class PeopleContentService {
             catchError((error) => this.handleError(error)));
     }
 
-    getCurrentUserInfo():  Observable<EcmUserModel> {
+    getCurrentUserInfo(): Observable<EcmUserModel> {
         if (this.currentUser) {
             return of(this.currentUser);
         }
         return this.getPerson('-me-');
     }
 
-    isCurrentUserAdmin() {
+    isCurrentUserAdmin(): boolean {
         return this.currentUser?.isAdmin();
     }
 
