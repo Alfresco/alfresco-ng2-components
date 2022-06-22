@@ -63,7 +63,7 @@ class FakeSanitizer extends DomSanitizer {
     }
 }
 
-fdescribe('User info component', () => {
+describe('User info component', () => {
 
     let component: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
