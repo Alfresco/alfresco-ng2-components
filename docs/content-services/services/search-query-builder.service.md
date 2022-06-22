@@ -25,7 +25,7 @@ Stores information from all the custom search and faceted search widgets, compil
     -   **Returns** `QueryBody` - The finished query
 -   **execute**(queryBody?: `QueryBody`)<br/>
     Builds and executes the current query.
-    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional) (Optional)
 -   **getDefaultConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined`<br/>
 
     -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined` - 
@@ -92,7 +92,7 @@ Stores information from all the custom search and faceted search widgets, compil
 
 -   **update**(queryBody?: `QueryBody`)<br/>
     Builds the current query and triggers the `updated` event.
-    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional) (Optional)
 -   **updateSelectedConfiguration**(index: `number`)<br/>
 
     -   _index:_ `number`  -
