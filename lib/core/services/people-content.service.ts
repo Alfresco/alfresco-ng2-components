@@ -24,7 +24,6 @@ import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 import { AuthenticationService } from './authentication.service';
 import { ContentService } from './content.service';
-import { UserInfoServiceInterface } from './user-info.service.interface';
 
 // eslint-disable-next-line no-shadow
 export enum ContentGroups {
@@ -50,8 +49,8 @@ export interface PeopleContentQueryRequestModel {
 @Injectable({
     providedIn: 'root'
 })
-export class PeopleContentService implements UserInfoServiceInterface {
-    currentUser: EcmUserModel;
+export class PeopleContentService {
+    private currentUser: EcmUserModel;
 
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
@@ -85,14 +84,14 @@ export class PeopleContentService implements UserInfoServiceInterface {
     }
 
     getCurrentUserInfo():  Observable<EcmUserModel> {
-        if (this.getLocalCurrentUser()) {
+        if (this.currentUser) {
             return of(this.currentUser);
         }
         return this.getPerson('-me-');
     }
 
-    getLocalCurrentUser(): EcmUserModel {
-        return this.currentUser;
+    isCurrentUserAdmin() {
+        return this.currentUser?.isAdmin();
     }
 
     resetLocalCurrentUser() {

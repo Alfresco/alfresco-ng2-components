@@ -24,7 +24,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
-import { PeopleContentService } from './people-content.service';
 
 @Injectable({
     providedIn: 'root'
@@ -35,14 +34,12 @@ export class AuthGuardEcm extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,
-                storageService: StorageService,
-                userService: PeopleContentService) {
-        super(authenticationService, router, appConfigService, dialog, storageService, userService);
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
-            await this.userService.getCurrentUserInfo().toPromise();
             return true;
         }
 

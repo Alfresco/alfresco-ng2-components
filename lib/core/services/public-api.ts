@@ -70,3 +70,4 @@ export * from './identity-group.interface';
 export * from './language-item.interface';
 export * from './sort-by-category.service';
 export * from './user-access.service';
+export * from './user-info-resolver.service';

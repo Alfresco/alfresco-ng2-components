@@ -76,7 +76,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
     private hasRoles(roles: string[] = []): boolean {
         if (this.containsAlfrescoAdminRole(roles)) {
-            return this.hasUserAdminCapability() || this.userAccessService.hasGlobalAccess(roles);
+            return this.peopleContentService.isCurrentUserAdmin() || this.userAccessService.hasGlobalAccess(roles);
         }
         return this.userAccessService.hasGlobalAccess(roles);
     }
@@ -85,8 +85,4 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return roles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
     }
 
-    private hasUserAdminCapability(): boolean {
-        const currentUser = this.peopleContentService.getLocalCurrentUser();
-        return currentUser?.capabilities?.isAdmin;
-    }
 }

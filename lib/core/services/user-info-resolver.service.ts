@@ -15,8 +15,27 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
+import {
+  Resolve,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+} from '@angular/router';
+import { EcmUserModel } from '../models/ecm-user.model';
 import { Observable } from 'rxjs';
+import { PeopleContentService } from './people-content.service';
 
-export interface UserInfoServiceInterface {
-    getCurrentUserInfo(): Observable<any>;
+@Injectable({
+  providedIn: 'root'
+})
+export class UserInfoResolverService implements Resolve<EcmUserModel> {
+  constructor(private userInfoService: PeopleContentService) {}
+
+  resolve(
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot
+  ): Observable<EcmUserModel> {
+    return this.userInfoService.getCurrentUserInfo();
+  }
+
 }
