@@ -31,7 +31,7 @@ Gets process definitions and starts processes.
 -   **getProcessDefinitions**(appName: `string`, queryParams?: `Function`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>`<br/>
     Gets the process definitions associated with an app.
     -   _appName:_ `string`  - Name of the target app
-    -   _queryParams:_ `Function`  - (Optional) (Optional) 
+    -   _queryParams:_ `Function`  - (Optional) 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>` - Array of process definitions
 -   **getStartEventFormStaticValuesMapping**(appName: `string`, processDefinitionId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]>`<br/>
     Gets the static values mapped to the start form of a process definition.
