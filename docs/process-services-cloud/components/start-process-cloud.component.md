@@ -37,12 +37,13 @@ Starts a process.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (required) Name of the app. |
-| maxNameLength | `number` |  | Maximum length of the process name. |
+| maxNameLength | `number` | MAX_NAME_LENGTH | Maximum length of the process name. |
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
+| showTitle | `boolean` | true | Show/hide title. |
 | values | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Parameter to pass form field values in the start form if one is associated. |
-| variables | `__type` |  | Variables to attach to the payload. |
+| variables | `any` |  | Variables to attach to the payload. |
 
 ### Events
 

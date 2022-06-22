@@ -18,14 +18,14 @@ Searches tasks.
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
 
--   **getTaskByRequest**(requestNode: [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts), queryUrl?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **getTaskByRequest**(requestNode: [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/models/filter-cloud-model.ts), queryUrl?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Finds a task using an object with optional query properties.
-    -   _requestNode:_ [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts)  - Query object
+    -   _requestNode:_ [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/models/filter-cloud-model.ts)  - Query object
     -   _queryUrl:_ `string`  - (Optional) Query url
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Task information
 
 ## Details
 
 Note that for a call to `getTaskByRequest`, the
-[`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts) object
+[`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/models/filter-cloud-model.ts) object
 must at minimum have the `appName` property correctly set.

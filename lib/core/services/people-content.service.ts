@@ -83,6 +83,11 @@ export class PeopleContentService {
             catchError((error) => this.handleError(error)));
     }
 
+    /**
+     * Gets information about the current user alias -me-
+     *
+     * @returns User information
+     */
     getCurrentUserInfo(): Observable<EcmUserModel> {
         if (this.currentUser) {
             return of(this.currentUser);
@@ -90,10 +95,18 @@ export class PeopleContentService {
         return this.getPerson('-me-');
     }
 
+     /**
+     * Used to know if the current user has the admin capability
+     *
+     * @returns true or false
+     */
     isCurrentUserAdmin(): boolean {
         return this.currentUser?.isAdmin();
     }
 
+    /**
+     * Reset the local current user object
+     */
     resetLocalCurrentUser() {
         this.currentUser = undefined;
     }

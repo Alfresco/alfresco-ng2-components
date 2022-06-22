@@ -13,20 +13,20 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<any>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
     Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want
-    -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
+    -   _defaultValue:_ `Type<any>`  - Default type returned for types that are not yet mapped
     -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **register**(components: `Function`, override: `boolean` = `false`)<br/>
     Register multiple components
     -   _components:_ `Function`  - 
     -   _override:_ `boolean`  - 
--   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<any>` = `this.defaultValue`): `Type<any>`<br/>
     Finds the component type that is needed to render a form field.
     -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
-    -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
-    -   **Returns** `Type<__type>` - Component type
+    -   _defaultValue:_ `Type<any>`  - Default type returned for field types that are not yet mapped.
+    -   **Returns** `Type<any>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
     Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set

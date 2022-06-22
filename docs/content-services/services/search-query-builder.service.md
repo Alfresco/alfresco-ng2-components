@@ -25,7 +25,7 @@ Stores information from all the custom search and faceted search widgets, compil
     -   **Returns** `QueryBody` - The finished query
 -   **execute**(queryBody?: `QueryBody`)<br/>
     Builds and executes the current query.
-    -   _queryBody:_ `QueryBody`  - (Optional)
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
 -   **getDefaultConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined`<br/>
 
     -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined` - 
@@ -45,9 +45,9 @@ Stores information from all the custom search and faceted search widgets, compil
     Gets the query group.
     -   _query:_ `any`  - Target query
     -   **Returns** `any` - Query group
--   **getScope**(): [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts)<br/>
+-   **getScope**(): `RequestScope`<br/>
 
-    -   **Returns** [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts) - 
+    -   **Returns** `RequestScope` - 
 
 -   **getSearchFormDetails**(): [`SearchForm`](../../../lib/content-services/src/lib/search/models/search-form.interface.ts)`[]`<br/>
 
@@ -86,13 +86,13 @@ Stores information from all the custom search and faceted search widgets, compil
     -   _queryBody:_ `QueryBody`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - 
 
--   **setScope**(scope: [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts))<br/>
+-   **setScope**(scope: `RequestScope`)<br/>
 
-    -   _scope:_ [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts)  - 
+    -   _scope:_ `RequestScope`  - 
 
 -   **update**(queryBody?: `QueryBody`)<br/>
     Builds the current query and triggers the `updated` event.
-    -   _queryBody:_ `QueryBody`  - (Optional)
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
 -   **updateSelectedConfiguration**(index: `number`)<br/>
 
     -   _index:_ `number`  -

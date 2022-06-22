@@ -20,11 +20,16 @@ Provides access to various APIs related to file upload features.
 -   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
     Cancels uploading of files. If the file is smaller than 1 MB the file will be uploaded and then the node deleted to prevent having files that were aborted but still uploaded.
     -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
+-   **clearCache**()<br/>
+
 -   **clearQueue**()<br/>
     Clears the upload queue
 -   **getQueue**(): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
     Gets the file Queue
     -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
+-   **getThreadsCount**(): `number`<br/>
+    Returns the number of concurrent threads for uploading.
+    -   **Returns** `number` - Number of concurrent threads (default 1)
 -   **getUploadPromise**(file: [`FileModel`](../../../lib/core/models/file.model.ts)): `any`<br/>
     Gets an upload promise for a file.
     -   _file:_ [`FileModel`](../../../lib/core/models/file.model.ts)  - The target file
@@ -122,7 +127,7 @@ It is also possible to provide the `versioningEnabled` value as part of the [`Fi
 
 ### Concurrent Uploads
 
-By default, the Upload Service processes one file at a time.
+By default, the [Upload Service](../../core/services/upload.service.md) processes one file at a time.
 You can increase the number of concurrent threads by changing the `upload.threads` configuration parameter:
 
 **app.config.json**

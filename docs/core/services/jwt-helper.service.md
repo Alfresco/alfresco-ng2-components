@@ -13,10 +13,10 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
 
 ### Methods
 
--   **decodeToken**(token: `any`): `Object`<br/>
+-   **decodeToken**(token: `any`): `any`<br/>
     Decodes a JSON web token into a JS object.
     -   _token:_ `any`  - Token in encoded form
-    -   **Returns** `Object` - Decoded token data object
+    -   **Returns** `any` - Decoded token data object
 -   **getAccessToken**(): `string`<br/>
     Gets access token
     -   **Returns** `string` - access token

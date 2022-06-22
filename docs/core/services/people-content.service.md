@@ -18,25 +18,32 @@ Gets information about a Content Services user.
     -   _newPerson:_ [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/model/personBodyCreate.ts)  - Object containing the new person details.
     -   _opts:_ `any`  - (Optional) Optional parameters
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Created new person
--   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
-    Gets information about the user who is currently logged in.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
--   **getPerson**(personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - 
+
+-   **getPerson**(personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about a user identified by their username.
     -   _personId:_ `string`  - ID of the target user
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
--   **isContentAdmin**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information
+-   **getUserProfileImage**(avatarId: `string`): `string`<br/>
+    Returns a profile image as a URL.
+    -   _avatarId:_ `string`  - Target avatar
+    -   **Returns** `string` - Image URL
+-   **isCurrentUserAdmin**(): `boolean`<br/>
 
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>` - 
+    -   **Returns** `boolean` - 
 
 -   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>`<br/>
     Gets a list of people.
     -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>` - Response containing pagination and list of entries
--   **updatePerson**(personId: `string`, details: [`PersonBodyUpdate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/personBodyUpdate.ts), opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+-   **resetLocalCurrentUser**()<br/>
+
+-   **updatePerson**(personId: `string`, details: `PersonBodyUpdate`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Updates the person details
     -   _personId:_ `string`  - The identifier of a person
-    -   _details:_ [`PersonBodyUpdate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/personBodyUpdate.ts)  - The person details
+    -   _details:_ `PersonBodyUpdate`  - The person details
     -   _opts:_ `any`  - (Optional) Optional parameters
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Updated person model
 

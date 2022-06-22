@@ -375,6 +375,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
+| mainTableAction | `boolean` | true | Toggles main data table action column. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
 | resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
@@ -384,6 +385,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `ShowHeaderMode` |  | Toggles the header. |
+| showMainDatatableActions | `boolean` | false | Toggles the main datatable action. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
@@ -391,13 +393,12 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)`<>[]>` | Emitted after dragging and dropping column header. |
 | executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
 | rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
 | showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
-| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted after dragging and dropping column header. |
-
 
 ## Details
 

@@ -21,7 +21,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
     -   [Column Template](#column-template)
     -   [Styling Techniques](#styling-techniques)
     -   [Using the copyContent option](#using-the-copycontent-option)
-    -   [Exapmple of column customData](#example-of-column-customData)
+    -   [Example of column customData](#example-of-column-customdata)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -44,18 +44,18 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` | '' | Column identifier. |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
+| customData | `any` |  | You can specify any custom data which can be used by any specific feature |
+| draggable | `boolean` | false | Toggles drag and drop for header column. |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
 | focus | `boolean` | true | Enable or disable cell focus |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |
 | formatTooltip | `Function` |  | Custom tooltip formatter function. |
+| id | `string` | "" | Column identifier. |
+| isHidden | `boolean` | false | Hides columns |
 | key | `string` |  | Data source key. Can be either a column/property key like `title`  or a property path like `createdBy.name`. |
 | sortable | `boolean` | true | Toggles ability to sort by this column, for example by clicking the column header. |
-| customData | `Generic` | any | Any feature specific data |
-| draggable | `boolean` | false | Toggles drag and drop for header column. |
-| isHidden | `boolean` | false | Hides columns |
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
@@ -363,7 +363,7 @@ HTML `<data-column>` element example:
 <data-column [customData]="MyCustomData" key="id" title="Id"></data-column>
 ```
 
-You can use generic type for `DataColumn` in order to get intellisense working e.g.
+You can use generic type for [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) in order to get intellisense working e.g.
 
 ```ts
 const dataColumn: DataColumn<{ shouldPerformActionIfDisplayed: boolean }> = {
