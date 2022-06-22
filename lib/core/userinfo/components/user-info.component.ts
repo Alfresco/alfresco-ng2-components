@@ -70,7 +70,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     selectedIndex: number;
     private destroy$ = new Subject();
 
-    constructor(private ecmUserService: PeopleContentService,
+    constructor(private peopleContentService: PeopleContentService,
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
                 private authService: AuthenticationService) {
@@ -125,7 +125,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     }
 
     private loadEcmUserInfo(): void {
-        this.ecmUser$ = this.ecmUserService.getCurrentUserInfo();
+        this.ecmUser$ = this.peopleContentService.getCurrentUserInfo();
     }
 
     private loadBpmUserInfo() {
@@ -153,7 +153,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     }
 
     getEcmAvatar(avatarId: any): string {
-        return this.ecmUserService.getUserProfileImage(avatarId);
+        return this.peopleContentService.getUserProfileImage(avatarId);
     }
 
     getBpmUserImage(): string {

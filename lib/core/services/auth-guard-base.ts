@@ -32,7 +32,7 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { PeopleContentService } from './people-content.service';
+import { UserInfoServiceInterface } from './user.service.interface';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
@@ -49,7 +49,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
         private storageService: StorageService,
-        protected userService: PeopleContentService
+        protected userService: UserInfoServiceInterface
     ) {
     }
 

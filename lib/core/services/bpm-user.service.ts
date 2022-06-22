@@ -22,6 +22,7 @@ import { LogService } from './log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
 import { UserProfileApi } from '@alfresco/js-api';
+import { UserInfoServiceInterface } from './user-info.service.interface';
 
 /**
  *
@@ -31,7 +32,7 @@ import { UserProfileApi } from '@alfresco/js-api';
 @Injectable({
     providedIn: 'root'
 })
-export class BpmUserService {
+export class BpmUserService implements UserInfoServiceInterface {
 
     private _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
