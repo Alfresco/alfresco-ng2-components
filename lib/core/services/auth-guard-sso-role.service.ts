@@ -20,7 +20,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentGroups, PeopleContentService } from './people-content.service';
 import { UserAccessService } from './user-access.service';
-import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
