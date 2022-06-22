@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building core for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build core --configuration production || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build core --configuration production || exit 1
 else
     echo "Building core for development"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build core || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build core || exit 1
 fi
 
 echo "====== Bundle styles ======"

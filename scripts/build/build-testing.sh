@@ -10,10 +10,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building testing for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build testing --configuration production || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build testing --configuration production || exit 1
 else
     echo "Building testing for development"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build testing || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build testing || exit 1
 fi
 
 echo "====== Move to node_modules ======"

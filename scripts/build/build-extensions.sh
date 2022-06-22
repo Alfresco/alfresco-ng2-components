@@ -7,8 +7,8 @@ cd $DIR/../..
 
 if [ "$CI" = "true" ]; then
     echo "Building extensions for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build extensions --configuration production || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build extensions --configuration production || exit 1
 else
     echo "Building extensions for development"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build extensions || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build extensions || exit 1
 fi
