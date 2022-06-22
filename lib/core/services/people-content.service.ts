@@ -22,7 +22,7 @@ import { catchError, map } from 'rxjs/operators';
 import { PersonEntry, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 // eslint-disable-next-line no-shadow
 export enum ContentGroups {
@@ -58,7 +58,7 @@ export class PeopleContentService {
 
     constructor(
         private apiClientsService: ApiClientsService,
-        authenticationService: AuthenticationService,
+        authenticationService: BaseAuthenticationService,
         private logService: LogService
     ) {
         authenticationService.onLogout.subscribe(() => {

@@ -17,7 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { AuthenticationService, ContentService } from '../../services';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
@@ -69,7 +70,7 @@ describe('User info component', () => {
     let component: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let contentService: ContentService;
     let ecmUserService: EcmUserService;
     let bpmUserService: BpmUserService;
@@ -105,7 +106,7 @@ describe('User info component', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         ecmUserService = TestBed.inject(EcmUserService);
         bpmUserService = TestBed.inject(BpmUserService);
         contentService = TestBed.inject(ContentService);

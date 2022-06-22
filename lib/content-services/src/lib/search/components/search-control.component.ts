@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService, SearchTextInputComponent } from '@alfresco/adf-core';
+import { ThumbnailService, SearchTextInputComponent } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { Component, EventEmitter, Input, OnDestroy, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef, ContentChild } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
@@ -96,7 +97,7 @@ export class SearchControlComponent implements OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        public authService: AuthenticationService,
+        public authService: BaseAuthenticationService,
         private thumbnailService: ThumbnailService
     ) {}
 

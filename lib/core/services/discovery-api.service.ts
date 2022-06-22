@@ -22,7 +22,7 @@ import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api
 
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
@@ -37,7 +37,7 @@ export class DiscoveryApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private authenticationService: AuthenticationService,
+        private authenticationService: BaseAuthenticationService,
         private apiClientsService: ApiClientsService
     ) {
         this.authenticationService.onLogin

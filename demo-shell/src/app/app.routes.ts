@@ -16,7 +16,7 @@
  */
 
 import { Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService, OIDCAuthGuard } from '@alfresco/adf-core';
+import { AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -56,6 +56,7 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { AuthGuard } from '@alfresco/adf-core/auth';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -106,7 +107,7 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [AuthGuard, OIDCAuthGuard],
+        canActivate: [AuthGuard],
         children: [
             {
                 path: '',

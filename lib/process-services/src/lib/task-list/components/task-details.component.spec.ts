@@ -26,11 +26,12 @@ import {
     FormService,
     setupTestBed,
     BpmUserService,
-    CommentProcessService, LogService, AuthenticationService,
+    CommentProcessService, LogService,
     UserProcessModel,
     PeopleProcessService,
     CommentModel
 } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
@@ -70,7 +71,7 @@ describe('TaskDetailsComponent', () => {
     let logService: LogService;
     let commentProcessService: CommentProcessService;
     let peopleProcessService: PeopleProcessService;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
 
     setupTestBed({
         imports: [
@@ -100,7 +101,7 @@ describe('TaskDetailsComponent', () => {
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         commentProcessService = TestBed.inject(CommentProcessService);
 
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([

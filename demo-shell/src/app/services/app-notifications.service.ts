@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 import {
-    AuthenticationService,
     AppConfigService,
     NotificationService,
     NotificationModel,
     AlfrescoApiService,
     IdentityUserService
 } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,7 +46,7 @@ export class AppNotificationsService {
 
     constructor(
         private appConfigService: AppConfigService,
-        private authenticationService: AuthenticationService,
+        private authenticationService: BaseAuthenticationService,
         private notificationCloudService: NotificationCloudService,
         private notificationService: NotificationService,
         private translateService: TranslateService,
