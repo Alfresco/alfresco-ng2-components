@@ -16,7 +16,8 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { IdentityUserModel } from '../../models/identity-user.model';
@@ -73,7 +74,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     constructor(private peopleContentService: PeopleContentService,
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
-                private authService: AuthenticationService) {
+                private authService: BaseAuthenticationService) {
     }
 
     ngOnInit() {

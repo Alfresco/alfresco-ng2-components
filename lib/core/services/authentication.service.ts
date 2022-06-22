@@ -27,9 +27,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
 import { ApiClientsService } from '@alfresco/adf-core/api';
-import { BaseAuthenticationService } from '../authentication/base-authentication.service';
-import { ADFAuthenticationService } from '../authentication/authentication.interface';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -37,7 +36,7 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService extends BaseAuthenticationService implements ADFAuthenticationService {
+export class AuthenticationService extends BaseAuthenticationService {
     private redirectUrl: RedirectionModel = null;
 
     /**

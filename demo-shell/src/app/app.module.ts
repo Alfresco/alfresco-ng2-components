@@ -30,9 +30,9 @@ import {
     CoreModule,
     CoreAutomationService,
     AppConfigModule,
-    OIDCAuthModule,
     ApiClientModule
 } from '@alfresco/adf-core';
+import { AuthGuard, AuthModule } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -140,15 +140,15 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        // initialNavigation: false needs because of the OIDC package!!!
-        // https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/routing-with-the-hashstrategy.html
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy', initialNavigation: false }),
+        ApiClientModule,
+        AuthModule.forRoot(),
+        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy'}),
         FormsModule,
         HttpClientModule,
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot({ useLegacy: false }),
+        CoreModule.forRoot({ useLegacy: true }),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
@@ -158,9 +158,7 @@ registerLocaleData(localeSv);
         ChartsModule,
         AppCloudSharedModule,
         AppConfigModule.forRoot(),
-        MonacoEditorModule.forRoot(),
-        ApiClientModule,
-        OIDCAuthModule
+        MonacoEditorModule.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -216,6 +214,7 @@ registerLocaleData(localeSv);
         SearchFilterChipsComponent
     ],
     providers: [
+        AuthGuard,
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,

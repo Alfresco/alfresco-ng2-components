@@ -19,13 +19,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFormComponent } from './task-form.component';
 import {
-    AuthenticationService,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
     FormService,
     setupTestBed
 } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { TaskListService } from '../../services/tasklist.service';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
@@ -61,7 +62,7 @@ describe('TaskFormComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
     let element: HTMLElement;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let getBpmLoggedUserSpy: jasmine.Spy;
 
     setupTestBed({
@@ -85,7 +86,7 @@ describe('TaskFormComponent', () => {
         spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of(fakeUser));
     });
 

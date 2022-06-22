@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
@@ -28,7 +28,7 @@ import { StorageService } from './storage.service';
 })
 export class AuthGuardBpm extends AuthGuardBase {
 
-    constructor(authenticationService: AuthenticationService,
+    constructor(authenticationService: BaseAuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,

@@ -21,7 +21,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
@@ -36,7 +36,7 @@ describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     let element: any;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let router: Router;
     let userPreferences: UserPreferencesService;
     let appConfigService: AppConfigService;
@@ -73,7 +73,7 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         router = TestBed.inject(Router);
         userPreferences = TestBed.inject(UserPreferencesService);
         appConfigService = TestBed.inject(AppConfigService);

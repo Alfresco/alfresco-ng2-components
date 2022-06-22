@@ -21,7 +21,9 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService }
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, NodesApiService } from '@alfresco/adf-core';
+import { setupTestBed, SitesService, AlfrescoApiService, NodesApiService } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -40,7 +42,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         ecmHost: 'http://fakeUrl.com'
     };
     let element: HTMLInputElement;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let siteService: SitesService;
     let nodeService: NodesApiService;
     let documentListService: DocumentListService;
@@ -67,7 +69,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        authService = fixture.debugElement.injector.get(AuthenticationService);
+        authService = fixture.debugElement.injector.get(BaseAuthenticationService);
         siteService = fixture.debugElement.injector.get(SitesService);
         nodeService = fixture.debugElement.injector.get(NodesApiService);
         documentListService = fixture.debugElement.injector.get(DocumentListService);

@@ -17,7 +17,8 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { CookieService } from './cookie.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -28,7 +29,7 @@ declare let jasmine: any;
 
 describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
 
@@ -43,7 +44,7 @@ describe('AuthenticationService', () => {
         sessionStorage.clear();
         localStorage.clear();
         apiService = TestBed.inject(AlfrescoApiService);
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
 
         cookie = TestBed.inject(CookieService);
         cookie.clear();

@@ -23,14 +23,14 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { LogService } from './log.service';
-import { AuthenticationService } from './authentication.service';
 import { of } from 'rxjs';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 describe('PeopleContentService', () => {
 
     let peopleContentService: PeopleContentService;
     let logService: LogService;
-    let authenticationService: AuthenticationService;
+    let authenticationService: BaseAuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -43,7 +43,7 @@ describe('PeopleContentService', () => {
             ]
         });
 
-        authenticationService = TestBed.inject(AuthenticationService);
+        authenticationService = TestBed.inject(BaseAuthenticationService);
         peopleContentService = TestBed.inject(PeopleContentService);
         logService = TestBed.inject(LogService);
     });

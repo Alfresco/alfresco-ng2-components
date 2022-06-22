@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from './jwt-helper.service';
@@ -32,7 +33,7 @@ export class AuthGuard extends AuthGuardBase {
     ticketChangeBind: any;
 
     constructor(private jwtHelperService: JwtHelperService,
-                authenticationService: AuthenticationService,
+                authenticationService: BaseAuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,

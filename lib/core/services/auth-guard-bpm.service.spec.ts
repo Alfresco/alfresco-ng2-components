@@ -18,7 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -28,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('AuthGuardService BPM', () => {
 
     let authGuard: AuthGuardBpm;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let router: Router;
     let appConfigService: AppConfigService;
 
@@ -41,7 +42,7 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         localStorage.clear();
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         authGuard = TestBed.inject(AuthGuardBpm);
         router = TestBed.inject(Router);
         appConfigService = TestBed.inject(AppConfigService);

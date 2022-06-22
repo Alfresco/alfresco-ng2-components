@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
-import { throwError as observableThrowError, Observable } from 'rxjs';
-import { Injectable, Injector } from '@angular/core';
 import {
-  HttpHandler, HttpInterceptor, HttpRequest,
-  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
+    HttpHandler, HttpHeaderResponse, HttpHeaders, HttpInterceptor, HttpProgressEvent, HttpRequest, HttpResponse, HttpSentEvent, HttpUserEvent
 } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { AuthenticationService } from '../services/authentication.service';
+import { BaseAuthenticationService } from '../base-authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
   private excludedUrlsRegex: RegExp[];
-  private authService: AuthenticationService;
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector, private authService: BaseAuthenticationService) { }
 
   private loadExcludedUrlsRegex() {
     const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
-    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'gi')) || [];
 
+    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
-    this.authService = this.injector.get(AuthenticationService);
+    this.authService = this.injector.get(BaseAuthenticationService);
 
     if (!this.authService || !this.authService.getBearerExcludedUrls()) {
       return next.handle(req);
@@ -51,7 +49,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     }
 
     const urlRequest = req.url;
-    const shallPass: boolean = !!this.excludedUrlsRegex.find((regex) => regex.test(urlRequest));
+    const shallPass: boolean = this.excludedUrlsRegex.some((regex) => regex.test(urlRequest));
     if (shallPass) {
       return next.handle(req)
         .pipe(

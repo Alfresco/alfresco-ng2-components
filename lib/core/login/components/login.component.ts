@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { AuthenticationService } from '../../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(
         private _fb: FormBuilder,
-        private authService: AuthenticationService,
+        private authService: BaseAuthenticationService,
         private translateService: TranslationService,
         private logService: LogService,
         private router: Router,

@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry, NodeEntry } from '@alfresco/js-api';
 import {
-    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, FolderCreatedEvent, LogService, NotificationService,
+    AlfrescoApiService, AppConfigService, AppConfigValues, ContentService, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent,
     SharedLinksApiService,
@@ -29,7 +29,7 @@ import {
     FileUploadEvent,
     NodesApiService
 } from '@alfresco/adf-core';
-
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import {
     DocumentListComponent,
     PermissionStyleModel,
@@ -229,7 +229,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
-                public authenticationService: AuthenticationService,
+                public authenticationService: BaseAuthenticationService,
                 public alfrescoApiService: AlfrescoApiService,
                 private contentMetadataService: ContentMetadataService,
                 private sharedLinksApiService: SharedLinksApiService,

@@ -19,12 +19,12 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
-    AuthenticationService,
     SearchService,
     setupTestBed,
     UserPreferencesService,
     SearchTextInputComponent
 } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { of } from 'rxjs';
@@ -57,7 +57,7 @@ describe('SearchControlComponent', () => {
     let element: HTMLElement;
     let debugElement: DebugElement;
     let searchService: SearchService;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let fixtureCustom: ComponentFixture<SimpleSearchTestCustomEmptyComponent>;
     let elementCustom: HTMLElement;
     let componentCustom: SimpleSearchTestCustomEmptyComponent;

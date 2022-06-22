@@ -49,6 +49,7 @@ import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { IconModule } from './icon/icon.module';
@@ -62,6 +63,7 @@ import { TranslationService } from './services/translation.service';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
+import { AuthenticationService } from './services';
 
 interface ModuleConfig {
     useLegacy: boolean;
@@ -165,6 +167,7 @@ export class CoreModule {
                 },
                 ...(config.useLegacy ?
                     [
+                        { provide: BaseAuthenticationService, useClass: AuthenticationService },
                         AlfrescoApiService,
                         {
                             provide: APP_INITIALIZER,

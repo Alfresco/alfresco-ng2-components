@@ -21,19 +21,17 @@ import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import minimatch from 'minimatch';
 import { EMPTY, from, Observable, ReplaySubject, throwError } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { OauthConfigModel } from '../../models/oauth-config.model';
-import { RedirectionModel } from '../../models/redirection.model';
-import { JwtHelperService } from '../../services/jwt-helper.service';
-import { LogService } from '../../services/log.service';
-import { StorageService } from '../../services/storage.service';
-import { ADFAuthenticationService } from '../authentication.interface';
+import { AppConfigService, AppConfigValues } from '../../../app-config';
+import { OauthConfigModel, RedirectionModel } from '../../../models';
+import { JwtHelperService } from '../../../services/jwt-helper.service';
+import { LogService } from '../../../services/log.service';
+import { StorageService } from '../../../services/storage.service';
 import { BaseAuthenticationService } from '../base-authentication.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class OIDCAuthenticationService extends BaseAuthenticationService implements ADFAuthenticationService {
+export class OIDCAuthenticationService extends BaseAuthenticationService  {
     onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
