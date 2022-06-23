@@ -105,7 +105,7 @@ export class PeopleContentService {
       * @returns true or false
       */
     isCurrentUserAdmin(): boolean {
-        return this.currentUser?.isAdmin();
+        return this.currentUser?.isAdmin() ?? false;
     }
 
     /**
