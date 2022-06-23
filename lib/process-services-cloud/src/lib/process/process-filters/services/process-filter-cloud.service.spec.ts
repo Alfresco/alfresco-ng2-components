@@ -24,6 +24,7 @@ import { LocalPreferenceCloudService } from '../../../services/local-preference-
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { fakeEmptyProcessCloudFilterEntries, fakeProcessCloudFilterEntries, fakeProcessCloudFilters, fakeProcessCloudFilterWithDifferentEntries, fakeProcessFilter } from '../mock/process-filters-cloud.mock';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -215,5 +216,15 @@ describe('ProcessFilterCloudService', () => {
 
         expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
         expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
+    });
+
+    it('should reset filters to default values', async () => {
+        const changedFilter = new ProcessFilterCloudModel(fakeProcessCloudFilters[0]);
+        changedFilter.processDefinitionKey = 'modifiedProcessDefinitionKey';
+        spyOn<any>(service, 'defaultProcessFilters').and.returnValue(fakeProcessCloudFilters);
+
+        await service.resetProcessFilterToDefaults('mock-appName', changedFilter).toPromise();
+
+        expect(updatePreferenceSpy).toHaveBeenCalledWith('mock-appName', 'process-filters-mock-appName-mock-username', fakeProcessCloudFilters);
     });
 });

@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -34,6 +34,8 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
 export const PROCESS_FILTER_ACTION_DELETE = 'delete';
+export const PROCESS_FILTER_ACTION_SAVE_DEFAULT = 'saveDefaultFilter';
+export const PROCESS_FILTER_ACTION_RESET = 'reset';
 const DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
 const DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
 const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
@@ -82,7 +84,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     showTitle = true;
 
-     /** Toggles the appearance of the process filter name . */
+    /** Toggles the appearance of the process filter name . */
     @Input()
     showProcessFilterName = true;
 
@@ -272,7 +274,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (this.filterProperties.includes('initiator')) {
             this.initiatorOptions = !!this.processFilter.initiator
-                ? this.processFilter.initiator.split(',').map( username => Object.assign({}, { username }))
+                ? this.processFilter.initiator.split(',').map(username => Object.assign({}, { username }))
                 : [];
         }
 
@@ -377,7 +379,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
-        this.getPropertyController(processProperty).setValue(users.map( user => user.username).join(','));
+        this.getPropertyController(processProperty).setValue(users.map(user => user.username).join(','));
     }
 
     hasError(property: ProcessFilterProperties): boolean {
@@ -416,14 +418,19 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         });
     }
 
-    executeFilterActions(action: ProcessFilterAction): void {
+    executeFilterActions(action: ProcessFilterAction): boolean {
         if (action.actionType === PROCESS_FILTER_ACTION_SAVE) {
             this.save(action);
         } else if (action.actionType === PROCESS_FILTER_ACTION_SAVE_AS) {
             this.saveAs(action);
         } else if (action.actionType === PROCESS_FILTER_ACTION_DELETE) {
             this.delete(action);
+        } else if (action.actionType === PROCESS_FILTER_ACTION_SAVE_DEFAULT) {
+            this.save(action);
+        } else if (action.actionType === PROCESS_FILTER_ACTION_RESET) {
+            this.reset(action);
         }
+        return true;
     }
 
     save(saveAction: ProcessFilterAction) {
@@ -449,7 +456,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     return filters.length === 0;
                 }),
                 switchMap(() => this.restoreDefaultProcessFilters()))
-            .subscribe(() => {});
+            .subscribe(() => { });
     }
 
     /**
@@ -483,6 +490,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     });
             }
         });
+    }
+
+    reset(resetAction: ProcessFilterAction) {
+        this.processFilterCloudService.resetProcessFilterToDefaults(this.appName, this.processFilter).pipe(
+            tap((filters: ProcessFilterCloudModel[]) => {
+                resetAction.filter = filters.find(defaultFilter => defaultFilter.name === this.processFilter.name) || this.processFilter;
+                this.action.emit(resetAction);
+            }),
+            switchMap(() => this.restoreDefaultProcessFilters()))
+            .subscribe(() => { });
     }
 
     /**
@@ -558,6 +575,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 actionType: PROCESS_FILTER_ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE'
+            },
+            {
+                actionType: PROCESS_FILTER_ACTION_SAVE_DEFAULT,
+                icon: 'adf:save',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
+            },
+            {
+                actionType: PROCESS_FILTER_ACTION_RESET,
+                icon: 'settings_backup_restore',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.RESTORE'
             }
         ];
     }
@@ -772,7 +799,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
-                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo' },
                 value: {
                     completedDateType: filterModel.completedDateType || null,
                     _completedFrom: filterModel.completedFrom || null,
@@ -783,7 +810,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_DATE',
                 type: 'date-range',
                 key: 'startedDateRange',
-                attributes: { dateType: 'startedDateType', from: '_startFrom', to: '_startTo'},
+                attributes: { dateType: 'startedDateType', from: '_startFrom', to: '_startTo' },
                 value: {
                     startedDateType: filterModel.startedDateType || null,
                     _startFrom: filterModel.startFrom || null,
@@ -794,7 +821,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SUSPENDED_DATE',
                 type: 'date-range',
                 key: 'suspendedDateRange',
-                attributes: { dateType: 'suspendedDateType', from: '_suspendedFrom', to: '_suspendedTo'},
+                attributes: { dateType: 'suspendedDateType', from: '_suspendedFrom', to: '_suspendedTo' },
                 value: {
                     suspendedDateType: filterModel.suspendedDateType || null,
                     _suspendedFrom: filterModel.suspendedFrom || null,
