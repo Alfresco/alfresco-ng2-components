@@ -149,7 +149,7 @@ describe('ColumnsSelectorComponent', () => {
         const firstColumnCheckbox = await loader.getHarness(MatCheckboxHarness);
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
-        let toggledColumnItem = component.columnItems.find(item => item.title === checkBoxName);
+        const toggledColumnItem = component.columnItems.find(item => item.title === checkBoxName);
         expect(toggledColumnItem.isHidden).toBeFalsy();
 
         await firstColumnCheckbox.toggle();

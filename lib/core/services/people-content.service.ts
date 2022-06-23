@@ -100,10 +100,10 @@ export class PeopleContentService {
     }
 
      /**
-     * Used to know if the current user has the admin capability
-     *
-     * @returns true or false
-     */
+      * Used to know if the current user has the admin capability
+      *
+      * @returns true or false
+      */
     isCurrentUserAdmin(): boolean {
         return this.currentUser?.isAdmin();
     }
