@@ -29,13 +29,13 @@ import { PeopleContentService } from './people-content.service';
   providedIn: 'root'
 })
 export class UserInfoResolverService implements Resolve<EcmUserModel> {
-  constructor(private userInfoService: PeopleContentService) {}
+  constructor(private peopleContentService: PeopleContentService) {}
 
   resolve(
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
   ): Observable<EcmUserModel> {
-    return this.userInfoService.getCurrentUserInfo();
+    return this.peopleContentService.getCurrentUserInfo();
   }
 
 }
