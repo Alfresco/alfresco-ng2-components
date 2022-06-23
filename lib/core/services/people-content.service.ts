@@ -83,6 +83,10 @@ export class PeopleContentService {
             catchError((error) => this.handleError(error)));
     }
 
+    getCurrentPerson(): Observable<EcmUserModel> {
+        return this.getCurrentUserInfo();
+    }
+
     /**
      * Gets information about the current user alias -me-
      *
