@@ -43,7 +43,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
                     hasRealmRole = true;
                 } else {
                     const excludedRoles = route.data['excludedRoles'] || [];
-                    hasRealmRole = this.validateRoles(rolesToCheck, excludedRoles);
+                    hasRealmRole = await this.validateRoles(rolesToCheck, excludedRoles);
                 }
             }
 
@@ -67,15 +67,16 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    private validateRoles(rolesToCheck: string[], excludedRoles?: string[]): boolean {
+    private async validateRoles(rolesToCheck: string[], excludedRoles?: string[]): Promise<boolean> {
         if (excludedRoles?.length > 0) {
-            return this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
+            return await this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
         }
         return this.hasRoles(rolesToCheck);
     }
 
-    private hasRoles(roles: string[] = []): boolean {
+    private async hasRoles(roles: string[] = []): Promise<boolean> {
         if (this.containsAlfrescoAdminRole(roles)) {
+            await this.peopleContentService.getCurrentUserInfo().toPromise();
             return this.peopleContentService.isCurrentUserAdmin() || this.userAccessService.hasGlobalAccess(roles);
         }
         return this.userAccessService.hasGlobalAccess(roles);
