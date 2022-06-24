@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { EditProcessFilterCloudComponent, PROCESS_FILTER_ACTION_RESET, PROCESS_FILTER_ACTION_SAVE_DEFAULT } from './edit-process-filter-cloud.component';
+import { EditProcessFilterCloudComponent, PROCESS_FILTER_ACTION_RESTORE, PROCESS_FILTER_ACTION_SAVE_DEFAULT } from './edit-process-filter-cloud.component';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
@@ -928,13 +928,13 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit reset filter to defaults event and save the default filters on click reset button', async () => {
             const expectedAction = {
-                actionType: PROCESS_FILTER_ACTION_RESET,
+                actionType: PROCESS_FILTER_ACTION_RESTORE,
                 icon: 'settings_backup_restore',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.RESTORE',
                 filter: jasmine.anything()
             };
 
-            component.actions = [PROCESS_FILTER_ACTION_RESET];
+            component.actions = [PROCESS_FILTER_ACTION_RESTORE];
             component.toggleFilterActions = true;
 
             fixture.detectChanges();
@@ -953,7 +953,7 @@ describe('EditProcessFilterCloudComponent', () => {
             expansionPanel.click();
             fixture.detectChanges();
 
-            const resetButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="adf-filter-action-${PROCESS_FILTER_ACTION_RESET}"]`);
+            const resetButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="adf-filter-action-${PROCESS_FILTER_ACTION_RESTORE}"]`);
             fixture.detectChanges();
             expect(resetButton.disabled).toBe(false);
             resetButton.click();

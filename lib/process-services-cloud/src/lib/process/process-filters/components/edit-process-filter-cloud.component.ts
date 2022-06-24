@@ -35,7 +35,7 @@ export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
 export const PROCESS_FILTER_ACTION_DELETE = 'delete';
 export const PROCESS_FILTER_ACTION_SAVE_DEFAULT = 'saveDefaultFilter';
-export const PROCESS_FILTER_ACTION_RESET = 'reset';
+export const PROCESS_FILTER_ACTION_RESTORE = 'restoreDefaultFilter';
 const DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
 const DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
 const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
@@ -418,7 +418,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         });
     }
 
-    executeFilterActions(action: ProcessFilterAction): boolean {
+    executeFilterActions(event: Event, action: ProcessFilterAction): void {
         if (action.actionType === PROCESS_FILTER_ACTION_SAVE) {
             this.save(action);
         } else if (action.actionType === PROCESS_FILTER_ACTION_SAVE_AS) {
@@ -427,10 +427,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.delete(action);
         } else if (action.actionType === PROCESS_FILTER_ACTION_SAVE_DEFAULT) {
             this.save(action);
-        } else if (action.actionType === PROCESS_FILTER_ACTION_RESET) {
+        } else if (action.actionType === PROCESS_FILTER_ACTION_RESTORE) {
             this.reset(action);
         }
-        return true;
+        event.stopPropagation();
     }
 
     save(saveAction: ProcessFilterAction) {
@@ -582,7 +582,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
             },
             {
-                actionType: PROCESS_FILTER_ACTION_RESET,
+                actionType: PROCESS_FILTER_ACTION_RESTORE,
                 icon: 'settings_backup_restore',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.RESTORE'
             }
