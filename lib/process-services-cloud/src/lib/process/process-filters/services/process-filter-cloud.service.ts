@@ -143,7 +143,7 @@ export class ProcessFilterCloudService {
             }),
             map((filters: ProcessFilterCloudModel[]) => filters.filter((filter: ProcessFilterCloudModel) => filter.id === id)[0]),
             catchError((err) => this.handleProcessError(err))
-            );
+        );
     }
 
     /**
@@ -239,6 +239,21 @@ export class ProcessFilterCloudService {
     isDefaultFilter(filterName: string): boolean {
         const defaultFilters = this.defaultProcessFilters();
         return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
+    }
+
+    /**
+     * Reset the process filters to the default configuration if it exists and stores it.
+     * If there is no default configuration for the process cloud filter with the provided filter name,
+     * then it changes nothing but stores the current values of the filter
+     *
+     * @param appName Name of the target app
+     * @param filter The process filter to be restored to defaults
+     * @returns Observable of process filters details
+     */
+    resetProcessFilterToDefaults(appName: string, filter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
+        const defaultFilter = this.defaultProcessFilters(appName).find(defaultFilterDefinition => defaultFilterDefinition.name === filter.name) || filter;
+        defaultFilter.id = filter.id;
+        return this.updateFilter(defaultFilter);
     }
 
     /**

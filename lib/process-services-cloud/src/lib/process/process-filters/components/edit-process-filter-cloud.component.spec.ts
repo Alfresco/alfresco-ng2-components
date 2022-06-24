@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
+import { EditProcessFilterCloudComponent, PROCESS_FILTER_ACTION_RESTORE, PROCESS_FILTER_ACTION_SAVE_DEFAULT } from './edit-process-filter-cloud.component';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
@@ -329,13 +329,13 @@ describe('EditProcessFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editProcessFilterForm.valueChanges
-                .pipe(debounceTime(500))
-                .subscribe(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                });
+                    .pipe(debounceTime(500))
+                    .subscribe(() => {
+                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                        fixture.detectChanges();
+                        expect(saveButton.disabled).toEqual(false);
+                        done();
+                    });
 
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
                 stateElement.click();
@@ -353,13 +353,13 @@ describe('EditProcessFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editProcessFilterForm.valueChanges
-                .pipe(debounceTime(500))
-                .subscribe(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                });
+                    .pipe(debounceTime(500))
+                    .subscribe(() => {
+                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                        fixture.detectChanges();
+                        expect(saveButton.disabled).toEqual(false);
+                        done();
+                    });
 
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
                 stateElement.click();
@@ -501,7 +501,7 @@ describe('EditProcessFilterCloudComponent', () => {
             suspendedDateType: DateCloudFilterType.RANGE
         });
         filter.suspendedFrom = new Date(2021, 1, 1).toString();
-        filter.suspendedTo =  new Date(2021, 1, 2).toString();
+        filter.suspendedTo = new Date(2021, 1, 2).toString();
         getProcessFilterByIdSpy.and.returnValue(of(filter));
 
         fixture.detectChanges();
@@ -888,6 +888,84 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(component.processFilterActions.length).toEqual(1);
         });
 
+        it('should emit save default filter event and save the filter on click save default filter button', async () => {
+            const expectedAction = {
+                actionType: PROCESS_FILTER_ACTION_SAVE_DEFAULT,
+                icon: 'adf:save',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE',
+                filter: jasmine.anything()
+            };
+
+            component.actions = [PROCESS_FILTER_ACTION_SAVE_DEFAULT];
+            component.toggleFilterActions = true;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+            component.ngOnChanges({ id: processFilterIdChange });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const saveDefaultFilterSpy = spyOn(service, 'updateFilter').and.returnValue(of([fakeFilter]));
+            const saveDefaultFilterEmitSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+
+            const saveDefaultFilterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="adf-filter-action-${PROCESS_FILTER_ACTION_SAVE_DEFAULT}"]`);
+            fixture.detectChanges();
+            expect(saveDefaultFilterButton.disabled).toBe(false);
+            saveDefaultFilterButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(saveDefaultFilterSpy).toHaveBeenCalled();
+            expect(saveDefaultFilterEmitSpy).toHaveBeenCalledWith(expectedAction);
+        });
+
+        it('should emit reset filter to defaults event and save the default filters on click reset button', async () => {
+            const expectedAction = {
+                actionType: PROCESS_FILTER_ACTION_RESTORE,
+                icon: 'settings_backup_restore',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.RESTORE',
+                filter: jasmine.anything()
+            };
+
+            component.actions = [PROCESS_FILTER_ACTION_RESTORE];
+            component.toggleFilterActions = true;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+            component.ngOnChanges({ id: processFilterIdChange });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const restoreDefaultProcessFiltersSpy = spyOn(service, 'getProcessFilters').and.returnValue(of([fakeFilter]));
+            const resetDefaultsFilterSpy = spyOn(service, 'resetProcessFilterToDefaults').and.returnValue(of([fakeFilter]));
+            const resetDefaultsEmitSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+
+            const resetButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="adf-filter-action-${PROCESS_FILTER_ACTION_RESTORE}"]`);
+            fixture.detectChanges();
+            expect(resetButton.disabled).toBe(false);
+            resetButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(resetDefaultsFilterSpy).toHaveBeenCalledWith(fakeFilter.appName, component.processFilter);
+            expect(restoreDefaultProcessFiltersSpy).toHaveBeenCalledWith(fakeFilter.appName);
+            expect(resetDefaultsEmitSpy).toHaveBeenCalledWith(expectedAction);
+        });
+
         it('should display default filter actions when input is empty', async () => {
             component.toggleFilterActions = true;
             component.actions = [];
@@ -1054,7 +1132,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should not call restore default filters service on deletion first filter', (done) => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([new ProcessFilterCloudModel({ name: 'mock-filter-name'})]));
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([new ProcessFilterCloudModel({ name: 'mock-filter-name' })]));
             const restoreFiltersSpy = spyOn(component, 'restoreDefaultProcessFilters').and.returnValue(of([]));
             const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -1087,7 +1165,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
-            expect(component.initiatorOptions).toEqual([ { username: 'user1' }, { username: 'user2'} ]);
+            expect(component.initiatorOptions).toEqual([{ username: 'user1' }, { username: 'user2' }]);
         });
     });
 });
