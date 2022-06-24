@@ -139,17 +139,18 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  private getAuthConfig(codeFlow = false): AuthConfig {
+  private getAuthConfig(): AuthConfig {
     const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
     return {
       issuer: oauth2.host,
-      silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
       redirectUri: window.location.origin + '/#/view/authentication-confirmation',
-      postLogoutRedirectUri: window.location.origin + oauth2.redirectUriLogout,
+      silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
+      postLogoutRedirectUri: oauth2.redirectUriLogout,
       clientId: oauth2.clientId,
       scope: oauth2.scope,
-      ...(codeFlow ? { responseType: 'code' } : {})
+      dummyClientSecret: oauth2.secret ?? '',
+        ...(oauth2.codeFlow ? { responseType: 'code' } : {})
     };
   }
 
