@@ -35,7 +35,6 @@ export class AuthGuardSsoRoleService implements CanActivate {
         await this.userAccessService.fetchUserAccess();
         let hasRealmRole = false;
         let hasClientRole = true;
-
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
@@ -53,7 +52,6 @@ export class AuthGuardSsoRoleService implements CanActivate {
                 hasClientRole = this.userAccessService.hasApplicationAccess(clientRoleName, rolesToCheck);
             }
         }
-
         const hasRole = hasRealmRole && hasClientRole;
 
         if (!hasRole && route?.data && route.data['redirectUrl']) {
@@ -69,7 +67,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
     private async validateRoles(rolesToCheck: string[], excludedRoles?: string[]): Promise<boolean> {
         if (excludedRoles?.length > 0) {
-            return await this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
+            return await this.hasRoles(rolesToCheck) && !await this.hasRoles(excludedRoles);
         }
         return this.hasRoles(rolesToCheck);
     }

@@ -233,19 +233,19 @@ describe('Auth Guard SSO role service', () => {
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
-
-            expect(await authGuard.canActivate(router)).toBeTruthy();
+            const result = await authGuard.canActivate(router);
+            expect(result).toBeTruthy();
         });
 
-        it('Should canActivate be false even if the user is a content admin but the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
-            const isCurrentAdminSpy = spyOn(peopleContentService, 'isCurrentUserAdmin').and.stub();
+        it('Should canActivate be true when the user has none of the excluded role and is not a content admin', async () => {
+            spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(false);
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_USER_ROLE'], excludedRoles: ['ALFRESCO_ADMINISTRATORS'] };
 
-            expect(await authGuard.canActivate(router)).toBe(false);
-            expect(isCurrentAdminSpy).not.toHaveBeenCalled();
+            expect(await authGuard.canActivate(router)).toBe(true);
         });
 
         it('Should canActivate be false if the user is a content admin but has one of the excluded roles', async () => {
