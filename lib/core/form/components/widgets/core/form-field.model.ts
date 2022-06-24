@@ -54,8 +54,8 @@ export class FormFieldModel extends FormWidgetModel {
     maxLength: number = 0;
     minValue: string;
     maxValue: string;
-    maxDateRangeValue: string;
-    minDateRangeValue: string;
+    maxDateRangeValue: number = 0;
+    minDateRangeValue: number = 0;
     dynamicDateRangeSelection: boolean;
     regexPattern: string;
     options: FormFieldOption[] = [];
