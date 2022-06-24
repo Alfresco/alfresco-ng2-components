@@ -223,7 +223,7 @@ describe('Auth Guard SSO role service', () => {
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'], excludedRoles: ['MOCK_USER_ROLE'] };
+            router.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
 
             expect(await authGuard.canActivate(router)).toBe(false);
         });
@@ -246,6 +246,18 @@ describe('Auth Guard SSO role service', () => {
 
             expect(await authGuard.canActivate(router)).toBe(false);
             expect(isCurrentAdminSpy).not.toHaveBeenCalled();
+        });
+
+        it('Should canActivate be false if the user is a content admin but has one of the excluded roles', async () => {
+            const isCurrentAdminSpy = spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
+            spyUserAccess(['MOCK_USER_ROLE'], {});
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { roles: ['ALFRESCO_ADMINISTRATORS'], excludedRoles: ['MOCK_USER_ROLE'] };
+
+            expect(await authGuard.canActivate(router)).toBe(false);
+            expect(isCurrentAdminSpy).toHaveBeenCalled();
         });
     });
 });
