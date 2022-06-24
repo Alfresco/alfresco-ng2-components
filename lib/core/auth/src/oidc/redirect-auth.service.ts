@@ -142,14 +142,16 @@ export class RedirectAuthService extends AuthService {
   private getAuthConfig(): AuthConfig {
     const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
+    const origin = window.location.origin;
+
     return {
       issuer: oauth2.host,
-      redirectUri: window.location.origin + '/#/view/authentication-confirmation',
-      silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-      postLogoutRedirectUri: oauth2.redirectUriLogout,
+      redirectUri: `${origin}/#/view/authentication-confirmation`,
+      silentRefreshRedirectUri:`${origin}/silent-refresh.html`,
+      postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
       clientId: oauth2.clientId,
       scope: oauth2.scope,
-      dummyClientSecret: oauth2.secret ?? '',
+      dummyClientSecret: oauth2.secret || '',
         ...(oauth2.codeFlow ? { responseType: 'code' } : {})
     };
   }
@@ -169,8 +171,6 @@ export class RedirectAuthService extends AuthService {
     }
 
     return this.ensureDiscoveryDocument().then(() =>
-      // this._router.navigate([redirect]);
-
       void this.oauthService.setupAutomaticSilentRefresh()
     );
   }
