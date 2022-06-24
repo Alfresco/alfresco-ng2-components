@@ -25,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { PeopleContentService } from './people-content.service';
 import { UserAccessService } from './user-access.service';
+import { of } from 'rxjs';
 
 describe('Auth Guard SSO role service', () => {
 
@@ -181,8 +182,11 @@ describe('Auth Guard SSO role service', () => {
     describe('Content Admin', () => {
 
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
             spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
+
             spyUserAccess([], {});
+
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
@@ -190,8 +194,11 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should not give access to a content section (ALFRESCO_ADMINISTRATORS) when the user does not have content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentUserInfo').and.returnValue(of({}));
             spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(false);
+
             spyUserAccess([], {});
+
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['ALFRESCO_ADMINISTRATORS'] };
 
@@ -201,6 +208,7 @@ describe('Auth Guard SSO role service', () => {
         it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
             const isCurrentAdminSpy = spyOn(peopleContentService, 'isCurrentUserAdmin').and.stub();
             spyUserAccess([], {});
+
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['fakeRole'] };
 
@@ -229,14 +237,15 @@ describe('Auth Guard SSO role service', () => {
             expect(await authGuard.canActivate(router)).toBeTruthy();
         });
 
-        it('Should canActivate be false when the user is a content admin and the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
-            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
+        it('Should canActivate be false even if the user is a content admin but the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
+            const isCurrentAdminSpy = spyOn(peopleContentService, 'isCurrentUserAdmin').and.stub();
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_USER_ROLE'], excludedRoles: ['ALFRESCO_ADMINISTRATORS'] };
 
-            expect(await authGuard.canActivate(router)).toBeFalsy();
+            expect(await authGuard.canActivate(router)).toBe(false);
+            expect(isCurrentAdminSpy).not.toHaveBeenCalled();
         });
     });
 });
