@@ -13,7 +13,6 @@ const ROUTE_DEFAULT = '/';
 })
 export class AuthenticationConfirmationComponent {
   constructor(private auth: AuthService, private _router: Router) {
-    console.log(`%c DEBUG:IM HERE -> elo`, 'color: orange');
     const routeStored$ = from(this.auth.loginCallback()).pipe(
       tap((val) => console.log(val)),
       map((route) => route || ROUTE_DEFAULT),
@@ -21,7 +20,6 @@ export class AuthenticationConfirmationComponent {
     );
 
     routeStored$.pipe(first()).subscribe((route) => {
-      console.log(`%c DEBUG:IM HERE -> rotue`, 'color: orange');
       this._router.navigateByUrl(route, { replaceUrl: true });
     });
   }
