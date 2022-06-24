@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { OAuthErrorEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthErrorEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
+import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
+import { OauthConfigModel } from '../../../models/oauth-config.model';
 import { StorageService } from '../../../services/storage.service';
-import { authConfig } from './auth.config';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -34,7 +35,12 @@ export class RedirectAuthService extends AuthService {
     return this.oauthService.getAccessToken();
   }
 
-  constructor(private oauthService: OAuthService, protected _oauthStorage: OAuthStorage, private storageService: StorageService) {
+  constructor(
+    private oauthService: OAuthService, 
+    protected _oauthStorage: OAuthStorage, 
+    private storageService: StorageService, 
+    private appConfigService: AppConfigService
+  ) {
     super();
   }
 
@@ -130,13 +136,30 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
+  private getAuthConfig(codeFlow = false): AuthConfig {
+    const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+
+    return {
+      issuer: oauth2.host,
+      loginUrl: `${oauth2.host}/protocol/openid-connect/auth`,
+      silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
+      redirectUri: window.location.origin + oauth2.redirectUri,
+      postLogoutRedirectUri: window.location.origin + oauth2.redirectUriLogout,
+      clientId: oauth2.clientId,
+      scope: oauth2.scope,
+      ...(codeFlow ? { responseType: 'code' } : {})
+    };
+  }
+
   private configureAuth() {
-    this.oauthService.configure(authConfig);
+    const config = this.getAuthConfig();
+
+    this.oauthService.configure(config);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.setStorage(this.storageService);
 
 
-    if (authConfig.sessionChecksEnabled) {
+    if (config.sessionChecksEnabled) {
       this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {
         this.oauthService.logOut();
       });
@@ -145,7 +168,7 @@ export class RedirectAuthService extends AuthService {
     return this.ensureDiscoveryDocument().then(() =>
       // this._router.navigate([redirect]);
 
-       void this.oauthService.setupAutomaticSilentRefresh()
+      void this.oauthService.setupAutomaticSilentRefresh()
     );
   }
 }
