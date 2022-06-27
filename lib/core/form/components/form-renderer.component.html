@@ -1,4 +1,8 @@
-<div class="{{formDefinition.className}}" [ngClass]="{'adf-readonly-form': formDefinition.readOnly }">
+<div
+    id="adf-form-renderer"
+    class="{{formDefinition.className}}"
+    [ngClass]="{'adf-readonly-form': formDefinition.readOnly}"
+>
     <div *ngIf="formDefinition.hasTabs()">
         <tabs-widget [tabs]="formDefinition.tabs"></tabs-widget>
     </div>
