@@ -21,6 +21,7 @@ import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import { By } from '@angular/platform-browser';
 
 describe('GroupCloudWidgetComponent', () => {
     let fixture: ComponentFixture<GroupCloudWidgetComponent>;
@@ -80,6 +81,28 @@ describe('GroupCloudWidgetComponent', () => {
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
+
+    // fdescribe('when is readOnly', () => {
+
+    //     it('should chip be disabled', async () => {
+    //         widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }, null, true), {
+    //             type: FormFieldTypes.GROUP,
+    //             value: {
+    //                 id: 'fake-group-id',
+    //                 name: 'fake-group'
+    //             },
+    //             readOnly: true
+    //         });
+
+    //         fixture.detectChanges();
+    //         await fixture.whenStable();
+
+    //         const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
+    //         const disabledChip = fixture.debugElement.query(By.css(`adf-cloud-group-chip-fake-group`));
+    //         expect(disabledFormField).toBeTruthy();
+    //         expect(disabledChip).toBeTruthy();
+    //     });
+    // });
 
     describe('when form model has left labels', () => {
 

@@ -26,7 +26,6 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    ChangeDetectionStrategy,
     ViewChild, ElementRef, SimpleChange
 } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
@@ -54,7 +53,6 @@ import { ComponentSelectionMode } from '../../types';
         ])
     ],
     providers: [FullNamePipe],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 

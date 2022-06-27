@@ -27,7 +27,6 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    ChangeDetectionStrategy,
     SimpleChange
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -50,7 +49,6 @@ import { ComponentSelectionMode } from '../../types';
             ])
         ])
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
