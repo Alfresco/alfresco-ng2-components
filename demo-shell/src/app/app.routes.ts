@@ -15,48 +15,48 @@
  * limitations under the License.
  */
 
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm, AuthGuardSsoRoleService, ErrorContentComponent } from '@alfresco/adf-core';
+import { OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { Routes } from '@angular/router';
-import { AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { HomeComponent } from './components/home/home.component';
-import { LogoutComponent } from './components/logout/logout.component';
-import { ProcessServiceComponent } from './components/process-service/process-service.component';
-import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
-import { FormViewerComponent } from './components/process-service/form-viewer.component';
-import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
-import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { SearchResultComponent } from './components/search/search-result.component';
-import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { FilesComponent } from './components/files/files.component';
-import { FormComponent } from './components/form/form.component';
-import { FormListComponent } from './components/form/form-list.component';
-import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
-import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
-import { FormLoadingComponent } from './components/form/form-loading.component';
-import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
-import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
-import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
-import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
-import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
-import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
-import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
+import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
+import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
+import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
+import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
+import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
+import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
+import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
+import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
+import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
+import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
+import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
+import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
+import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
+import { FilesComponent } from './components/files/files.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
-import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
-import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
+import { FormListComponent } from './components/form/form-list.component';
+import { FormLoadingComponent } from './components/form/form-loading.component';
+import { FormComponent } from './components/form/form.component';
+import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
+import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
+import { AppsViewComponent } from './components/process-service/apps-view.component';
+import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
+import { FormViewerComponent } from './components/process-service/form-viewer.component';
+import { ProcessServiceComponent } from './components/process-service/process-service.component';
+import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
+import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
-import { AuthGuard } from '@alfresco/adf-core/auth';
+import { SearchResultComponent } from './components/search/search-result.component';
+import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -107,7 +107,7 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OidcAuthGuard],
         children: [
             {
                 path: '',

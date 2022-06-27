@@ -73,7 +73,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     shouldBeBypassed() {
-        return this.authenticationService.oidcHandlerEnabled();
+        return this.authenticationService.authName !== 'Legacy';
     }
 
     canActivateChild(
