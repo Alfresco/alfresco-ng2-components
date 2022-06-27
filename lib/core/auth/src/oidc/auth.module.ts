@@ -1,7 +1,8 @@
-import { APP_INITIALIZER, InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { BaseAuthenticationService } from '../base-authentication.service';
 import { AuthRoutingModule } from './auth-routing.module';
+import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module.token';
 import { AuthService } from './auth.service';
 import { OIDCAuthenticationService } from './oidc-authentication.service';
 import { RedirectAuthService } from './redirect-auth.service';
@@ -9,15 +10,10 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
 
 export const loginFactory = (service: RedirectAuthService) => () => service.init();
 
-export interface AuthModuleConfig {
-    readonly useHash: boolean;
-};
 
 const defaultConfig: AuthModuleConfig = {
     useHash: false
 };
-
-export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');
 
 @NgModule({
   declarations: [AuthenticationConfirmationComponent],

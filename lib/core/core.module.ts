@@ -54,6 +54,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { IconModule } from './icon/icon.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
+import { AuthenticationService } from './services';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
@@ -63,13 +64,9 @@ import { TranslationService } from './services/translation.service';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
-import { AuthenticationService } from './services';
+import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
 
-interface ModuleConfig {
-    useLegacy: boolean;
-};
-
-const defaultConfig: ModuleConfig = { useLegacy: true };
+const defaultConfig: CoreModuleConfig = { useLegacy: true };
 
 @NgModule({
     imports: [
@@ -146,7 +143,7 @@ const defaultConfig: ModuleConfig = { useLegacy: true };
     ]
 })
 export class CoreModule {
-    static forRoot(config: ModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
+    static forRoot(config: CoreModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -164,6 +161,10 @@ export class CoreModule {
                     useFactory: versionCompatibilityFactory,
                     deps: [VersionCompatibilityService],
                     multi: true
+                },
+                {
+                    provide: CORE_MODULE_CONFIG,
+                    useValue: config
                 },
                 ...(config.useLegacy ?
                     [
