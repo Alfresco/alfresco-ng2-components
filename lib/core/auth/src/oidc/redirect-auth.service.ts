@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AuthConfig, OAuthErrorEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { Observable } from 'rxjs';
@@ -6,6 +6,7 @@ import { distinctUntilChanged, filter, map, shareReplay, startWith, take } from 
 import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
 import { OauthConfigModel } from '../../../models/oauth-config.model';
 import { StorageService } from '../../../services/storage.service';
+import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -39,7 +40,8 @@ export class RedirectAuthService extends AuthService {
     private oauthService: OAuthService,
     protected _oauthStorage: OAuthStorage,
     private storageService: StorageService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
   ) {
     super();
   }
@@ -135,14 +137,30 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  private getAuthConfig(): AuthConfig {
+  getRedirectUri(): string {
+
+    // required for this package as we handle the returned token on this view, with is provided by the AuthModule
+    const viewUrl = `view/authentication-confirmation`;
+
+    const redirectUri = this.authModuleConfig.useHash
+        ? `${window.location.origin}/#/${viewUrl}`
+        : `${window.location.origin}/${viewUrl}`;
+
     const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
+    // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to
+    // cannot match any routes error, and displaying the wildcard ** error page
+    return oauth2.implicitFlow && this.authModuleConfig.useHash ? `${redirectUri}/?` : redirectUri;
+  }
+
+  private getAuthConfig(): AuthConfig {
+    const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
     const origin = window.location.origin;
+    const redirectUri = this.getRedirectUri();
 
     return {
         issuer: oauth2.host,
-        redirectUri: `${origin}/#/view/authentication-confirmation`, // required for code flow as we handle the returned token on this view
+        redirectUri,
         silentRefreshRedirectUri:`${origin}/silent-refresh.html`,
         postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
         clientId: oauth2.clientId,
