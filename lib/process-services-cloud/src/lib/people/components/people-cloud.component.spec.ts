@@ -431,7 +431,7 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should skip warnings if validation disabled', async () => {
-            spyOn(component, 'compare').and.returnValue(false);
+            spyOn(component, 'equalsUsers').and.returnValue(false);
             component.mode = 'multiple';
             component.validate = false;
             component.ngOnChanges({
