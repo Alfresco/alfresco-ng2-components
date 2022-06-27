@@ -20,6 +20,7 @@
 import { AlfrescoApiType, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
+import { AuthService } from '@alfresco/adf-core/auth';
 import { AlfrescoApiV2 } from './alfresco-api-v2';
 
 @Injectable()
@@ -27,7 +28,7 @@ export class LegacyAlfrescoApiServiceFacade {
 
     nodeUpdated = new Subject<Node>();
 
-    constructor(private alfrescoApiV2: AlfrescoApiV2) {}
+    constructor(private alfrescoApiV2: AlfrescoApiV2, private authService: AuthService) { }
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -39,6 +40,8 @@ export class LegacyAlfrescoApiServiceFacade {
         this.alfrescoApiInitialized.next(true);
     }
 
-    async reset() {}
+    async reset() {
+        this.authService.login();
+    }
 
 }
