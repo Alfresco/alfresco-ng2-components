@@ -20,7 +20,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentGroups, PeopleContentService } from './people-content.service';
 import { UserAccessService } from './user-access.service';
-import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,15 +28,13 @@ export class AuthGuardSsoRoleService implements CanActivate {
     constructor(private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog,
-                private peopleContentService: PeopleContentService,
-                private appConfig: AppConfigService) {
+                private peopleContentService: PeopleContentService) {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         await this.userAccessService.fetchUserAccess();
         let hasRealmRole = false;
         let hasClientRole = true;
-
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
@@ -45,11 +42,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
                     hasRealmRole = true;
                 } else {
                     const excludedRoles = route.data['excludedRoles'] || [];
-                    let isContentAdmin = false;
-                    if (this.checkContentAdministratorRole(rolesToCheck, excludedRoles)) {
-                        isContentAdmin = await this.peopleContentService.isContentAdmin().catch(() => false);
-                    }
-                    hasRealmRole = excludedRoles.length ? this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
+                    hasRealmRole = await this.validateRoles(rolesToCheck, excludedRoles);
                 }
             }
 
@@ -59,7 +52,6 @@ export class AuthGuardSsoRoleService implements CanActivate {
                 hasClientRole = this.userAccessService.hasApplicationAccess(clientRoleName, rolesToCheck);
             }
         }
-
         const hasRole = hasRealmRole && hasClientRole;
 
         if (!hasRole && route?.data && route.data['redirectUrl']) {
@@ -73,19 +65,23 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    private checkContentAdministratorRole(rolesToCheck: string[], excludedRoles: string[]): boolean {
-        const hasContentProvider = this.appConfig.config.providers === 'ECM' || this.appConfig.config.providers === 'ALL';
-        const checkAdminRole = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
-        return hasContentProvider && checkAdminRole;
+    private async validateRoles(rolesToCheck: string[], excludedRoles?: string[]): Promise<boolean> {
+        if (excludedRoles?.length > 0) {
+            return await this.hasRoles(rolesToCheck) && !await this.hasRoles(excludedRoles);
+        }
+        return this.hasRoles(rolesToCheck);
     }
 
-    private checkAccessWithExcludedRoles(rolesToCheck: string[], excludedRoles: string[], isContentAdmin: boolean): boolean {
-        return this.hasRoles(rolesToCheck, isContentAdmin) && !this.hasRoles(excludedRoles, isContentAdmin);
+    private async hasRoles(roles: string[] = []): Promise<boolean> {
+        if (this.containsAlfrescoAdminRole(roles)) {
+            await this.peopleContentService.getCurrentUserInfo().toPromise();
+            return this.peopleContentService.isCurrentUserAdmin() || this.userAccessService.hasGlobalAccess(roles);
+        }
+        return this.userAccessService.hasGlobalAccess(roles);
     }
 
-    private hasRoles(rolesToCheck: string[], isContentAdmin: boolean): boolean {
-        return rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS)
-            ? this.userAccessService.hasGlobalAccess(rolesToCheck) || isContentAdmin
-            : this.userAccessService.hasGlobalAccess(rolesToCheck);
+    private containsAlfrescoAdminRole(roles: string []): boolean {
+        return roles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS);
     }
+
 }

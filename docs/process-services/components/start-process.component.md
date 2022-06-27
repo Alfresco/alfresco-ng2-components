@@ -42,7 +42,7 @@ Starts a process.
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (optional) Limit the list of processes that can be started to those contained in the specified app. |
 | name | `string` | "" | (optional) Name to assign to the current process. |
-| processDefinitionName | `string` |  | (optional) [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) name of the process to start. |
+| processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectApplicationDropdown | `boolean` | false | (optional) Hide or show application selection dropdown. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |

@@ -17,15 +17,15 @@ Supports localisation.
     Adds a new folder of translation source files.
     -   _name:_ `string`  - Name for the translation provider
     -   _path:_ `string`  - Path to the folder
--   **get**(key: `string|Array<string>`, interpolateParams?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>`<br/>
+-   **get**(key: `string|Array<string>`, interpolateParams?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>`<br/>
     Gets the translation for the supplied key.
     -   _key:_ `string|Array<string>`  - Key to translate
-    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   _interpolateParams:_ `any`  - (Optional) String(s) to be interpolated into the main message
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>` - Translated text
--   **instant**(key: `string|Array<string>`, interpolateParams?: `Object`): `string|any`<br/>
+-   **instant**(key: `string|Array<string>`, interpolateParams?: `any`): `string|any`<br/>
     Directly returns the translation for the supplied key.
     -   _key:_ `string|Array<string>`  - Key to translate
-    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
+    -   _interpolateParams:_ `any`  - (Optional) String(s) to be interpolated into the main message
     -   **Returns** `string|any` - Translated text
 -   **loadTranslation**(lang: `string`, fallback?: `string`)<br/>
     Loads a translation file.

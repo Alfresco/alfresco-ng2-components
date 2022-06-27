@@ -23,7 +23,7 @@ Shows a list of all available reports
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | appId ID of the target app. |
-| layoutType | `string` |  | layout Type LIST or GRID. |
+| layoutType | `string` | LAYOUT_LIST | layout Type LIST or GRID. |
 | selectFirst | `boolean` | false | selectFirst. |
 
 ### Events

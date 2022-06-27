@@ -30,6 +30,10 @@ Supports app configuration settings, stored server side.
 -   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
     Loads the config file.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - Notification when loading is complete
+-   **loadWellKnown**(hostIdp: `string`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`OpenidConfiguration`](../../../lib/core/services/openid-configuration.interface.ts)`>`<br/>
+    Call the discovery API to fetch configuration
+    -   _hostIdp:_ `string`  - 
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`OpenidConfiguration`](../../../lib/core/services/openid-configuration.interface.ts)`>` - Discovery configuration
 -   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Requests notification of a property value when it is loaded.
     -   _property:_ `string`  - The desired property value

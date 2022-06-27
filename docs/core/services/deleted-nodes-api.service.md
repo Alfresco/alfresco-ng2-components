@@ -13,9 +13,9 @@ Gets a list of Content Services nodes currently in the trash.
 
 ### Methods
 
--   **getDeletedNodes**(options?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **getDeletedNodes**(options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets a list of nodes in the trash.
-    -   _options:_ `Object`  - (Optional) Options for JS-API call
+    -   _options:_ `any`  - (Optional) Options for JS-API call
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes in the trash
 
 ## Details

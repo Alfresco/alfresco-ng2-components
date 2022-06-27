@@ -80,7 +80,8 @@ when the task list is empty:
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showActions | `boolean` | false | Toggles the data actions column. |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
-| sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| showMainDatatableActions | `boolean` | false | Toggles main datatable actions. |
+| sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
