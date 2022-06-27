@@ -6,7 +6,7 @@ import { distinctUntilChanged, filter, map, shareReplay, startWith, take } from 
 import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
 import { OauthConfigModel } from '../../../models/oauth-config.model';
 import { StorageService } from '../../../services/storage.service';
-import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module';
+import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module.token';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -148,8 +148,8 @@ export class RedirectAuthService extends AuthService {
 
     const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
-    // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to
-    // cannot match any routes error, and displaying the wildcard ** error page
+    // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
+    // `cannot match any routes`, and displaying the wildcard ** error page
     return oauth2.implicitFlow && this.authModuleConfig.useHash ? `${redirectUri}/?` : redirectUri;
   }
 
