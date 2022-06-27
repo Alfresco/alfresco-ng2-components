@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BaseAuthenticationService } from '../base-authentication.service';
 import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-  constructor(private _auth: AuthService) {}
+export class OidcAuthGuard implements CanActivate {
+  constructor(private _auth: AuthService, private readonly authentication: BaseAuthenticationService) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -27,7 +28,8 @@ export class AuthGuard implements CanActivate {
    * @param state Represents the state of the router at that moment in time.
    */
   private _isAuthenticated(state: RouterStateSnapshot) {
-    if (this._auth.authenticated) {
+
+    if (this.shouldBeBypassed() || this._auth.authenticated) {
       return true;
     }
 
@@ -39,4 +41,8 @@ export class AuthGuard implements CanActivate {
 
     return false;
   }
+
+    shouldBeBypassed() {
+        return this.authentication.authName !== 'OIDC';
+    }
 }

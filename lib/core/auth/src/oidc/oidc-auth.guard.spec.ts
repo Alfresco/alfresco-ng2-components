@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { MockProvider } from 'ng-mocks';
-import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { OidcAuthGuard } from './oidc-auth.guard';
 
-describe('AuthGuard', () => {
-  let guard: AuthGuard;
+describe('OidcAuthGuard', () => {
+  let guard: OidcAuthGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MockProvider(AuthService)],
+      providers: [MockProvider(AuthService)]
     });
-    guard = TestBed.inject(AuthGuard);
+    guard = TestBed.inject(OidcAuthGuard);
   });
 
   it('should be created', () => {

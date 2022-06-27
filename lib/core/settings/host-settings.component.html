@@ -112,15 +112,6 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="adf-full-width">
-                        <mat-label>OAUTH2 Handler (legacy | oidc)</mat-label>
-                        <input matInput name="handler" id="handler" formControlName="handler"
-                               placeholder="legacy">
-                        <mat-error *ngIf="handler.hasError('required')">
-                            Error...
-                        </mat-error>
-                    </mat-form-field>
-
                     <label for="silentLogin">{{ 'CORE.HOST_SETTINGS.SILENT'| translate }}</label>
                     <mat-slide-toggle class="adf-full-width" name="silentLogin" [color]="'primary'"
                                       formControlName="silentLogin">

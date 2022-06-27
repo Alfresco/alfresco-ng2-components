@@ -29,6 +29,7 @@ export abstract class AuthService {
 
   /**
    * Disconnect from IdP.
+   *
    * @returns Promise may be returned depending on implementation
    */
   abstract logout(): Promise<void> | void;

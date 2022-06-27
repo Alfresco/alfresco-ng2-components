@@ -46,6 +46,7 @@ export abstract class BaseAuthenticationService {
         });
     }
 
+    abstract authName: string;
     abstract onLogin: ReplaySubject<any>;
     abstract onLogout: ReplaySubject<any>;
 
@@ -56,7 +57,6 @@ export abstract class BaseAuthenticationService {
     abstract isLoggedInWith(provider: string): boolean;
     abstract isKerberosEnabled(): boolean;
     abstract isOauth(): boolean;
-    abstract oidcHandlerEnabled(): boolean;
     abstract isImplicitFlow(): boolean;
     abstract isAuthCodeFlow(): boolean;
     abstract isPublicUrl(): boolean;

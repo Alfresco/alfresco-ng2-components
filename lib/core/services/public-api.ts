@@ -19,7 +19,7 @@ export * from './auth-guard-base';
 export * from './authentication.service';
 export * from './alfresco-api.service';
 export * from './content.service';
-// export * from './auth-guard.service';
+export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';
 export * from './auth-guard-bpm.service';
 export * from './auth-guard-sso-role.service';

@@ -61,6 +61,8 @@ export class OIDCAuthenticationService extends BaseAuthenticationService  {
     authClient: HttpClient;
     processAuth: HttpClient;
 
+    authName: string = 'OIDC';
+
     getTicketEcm(): string | null {
         return null;
     }
@@ -114,11 +116,6 @@ export class OIDCAuthenticationService extends BaseAuthenticationService  {
 
     isOauth(): boolean {
         return this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
-    }
-
-    oidcHandlerEnabled(): boolean {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return oauth2?.handler === 'oidc';
     }
 
     isImplicitFlow() {

@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
+import { ApiClientsService } from '@alfresco/adf-core/api';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+import { UserRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, ReplaySubject, forkJoin } from 'rxjs';
+import { forkJoin, from, Observable, ReplaySubject, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
+import { RedirectionModel } from '../models/redirection.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { RedirectionModel } from '../models/redirection.model';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserRepresentation } from '@alfresco/js-api';
-import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
+import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-import { ApiClientsService } from '@alfresco/adf-core/api';
-import { OauthConfigModel } from '../models/oauth-config.model';
-import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -57,6 +57,8 @@ export class AuthenticationService extends BaseAuthenticationService {
         return this.apiClientsService.get('ActivitiClient.user-profile');
     }
 
+    authName: string = 'Legacy';
+
     constructor(
         private appConfig: AppConfigService,
         private storageService: StorageService,
@@ -75,10 +77,6 @@ export class AuthenticationService extends BaseAuthenticationService {
                 this.loadUserDetails();
             }
         });
-    }
-
-    oidcHandlerEnabled(): boolean {
-        return false;
     }
 
     isImplicitFlow(): boolean {

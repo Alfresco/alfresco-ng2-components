@@ -16,7 +16,6 @@
     "threads": 1
   },
   "oauth2": {
-    "handler": "oidc",
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
     "clientId": "alfresco",
     "scope": "openid profile email",
