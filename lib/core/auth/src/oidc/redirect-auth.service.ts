@@ -97,7 +97,7 @@ export class RedirectAuthService extends AuthService {
   /**
    * Initiate the login flow.
    */
-  login(currentUrl: string): void {
+  login(currentUrl?: string): void {
     let stateKey: string | undefined;
 
     if (currentUrl) {
