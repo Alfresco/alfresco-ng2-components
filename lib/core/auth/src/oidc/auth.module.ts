@@ -16,14 +16,8 @@ export const loginFactory = (service: RedirectAuthService) => () => service.init
     OAuthModule.forRoot()
   ],
   providers: [
-    {
-        provide: BaseAuthenticationService,
-        useClass: OIDCAuthenticationService
-    },
-    {
-      provide: AuthService,
-      useExisting: RedirectAuthService
-    },
+    { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
+    { provide: AuthService, useExisting: RedirectAuthService },
     {
       provide: APP_INITIALIZER,
       useFactory: loginFactory,

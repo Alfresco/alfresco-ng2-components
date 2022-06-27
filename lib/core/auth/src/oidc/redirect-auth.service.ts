@@ -89,10 +89,6 @@ export class RedirectAuthService extends AuthService {
         if (!loaded) {
           return this.oauthService.loadDiscoveryDocument().then(() => true);
         }
-
-        const redirect = this._getRiderectUrl();
-        console.log(`%c DEBUG:LOG redirect ${redirect}`, 'color: green');
-
         return true;
       });
     return this._loadDiscoveryDocumentPromise;
@@ -145,14 +141,14 @@ export class RedirectAuthService extends AuthService {
     const origin = window.location.origin;
 
     return {
-      issuer: oauth2.host,
-      redirectUri: `${origin}/#/view/authentication-confirmation`,
-      silentRefreshRedirectUri:`${origin}/silent-refresh.html`,
-      postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
-      clientId: oauth2.clientId,
-      scope: oauth2.scope,
-      dummyClientSecret: oauth2.secret || '',
-        ...(oauth2.codeFlow ? { responseType: 'code' } : {})
+        issuer: oauth2.host,
+        redirectUri: `${origin}/#/view/authentication-confirmation`, // required for code flow as we handle the returned token on this view
+        silentRefreshRedirectUri:`${origin}/silent-refresh.html`,
+        postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
+        clientId: oauth2.clientId,
+        scope: oauth2.scope,
+        dummyClientSecret: oauth2.secret || '',
+        ...(oauth2.codeFlow && { responseType: 'code' })
     };
   }
 
