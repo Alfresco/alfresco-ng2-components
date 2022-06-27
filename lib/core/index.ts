@@ -43,16 +43,6 @@ export * from './dialogs/index';
 export * from './icon/index';
 export * from './notifications/index';
 export * from './search-text/index';
-export * from './services/index';
-export * from './settings/index';
-export * from './sorting-picker/index';
-export * from './templates/index';
-export * from './testing';
-
-export * from './toolbar/index';
-export * from './userinfo/index';
-export * from './utils/index';
-export * from './viewer/index';
 export * from './blank-page/index';
 
 export * from './utils/index';
@@ -62,3 +52,5 @@ export * from './events/index';
 export * from './mock/index';
 export * from './testing';
 
+export * from './material.module';
+export * from './core.module';
