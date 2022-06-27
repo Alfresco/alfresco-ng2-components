@@ -68,7 +68,13 @@ update() {
     git fetch
 
     # Checkout branch if exist, otherwise create it
-    git checkout $BRANCH_TO_CREATE 2>/dev/null || git checkout -b $BRANCH_TO_CREATE origin/develop
+    BRANCH_CREATED=false
+    if git checkout $BRANCH_TO_CREATE 2>/dev/null ; then
+        git reset --hard origin/develop
+    else
+        BRANCH_CREATED=true
+        git checkout -b $BRANCH_TO_CREATE origin/develop
+    fi
 
     update_js_dependency "@alfresco/js-api" $JS_API_INSTALLED
     update_dependency "@alfresco/adf-extensions"
@@ -79,7 +85,11 @@ update() {
     update_dependency "@alfresco/adf-cli"
     update_dependency "@alfresco/adf-testing"
 
-    git push origin $BRANCH_TO_CREATE
+    if [ "$BRANCH_CREATED" = true ]; then
+        git push origin $BRANCH_TO_CREATE
+    else
+        git push --force origin $BRANCH_TO_CREATE
+    fi
 
     node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO
 
