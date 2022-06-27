@@ -76,10 +76,10 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
                 const today = moment().format(DATE_FORMAT_CLOUD);
-                if (this.field.minDateRangeValue) {
+                if (!isNaN(this.field.minDateRangeValue)) {
                     this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
                 }
-                if (this.field.maxDateRangeValue) {
+                if (!isNaN(this.field.maxDateRangeValue)) {
                     this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
                 }
             } else {
