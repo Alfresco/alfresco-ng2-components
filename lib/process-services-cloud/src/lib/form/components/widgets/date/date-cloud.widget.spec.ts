@@ -302,4 +302,72 @@ describe('DateWidgetComponent', () => {
         });
     });
 
+    describe('Set dynamic dates', () => {
+        it('should min date equal to the today date minus minimum date range value', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                minDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const todayDate = moment().format(DATE_FORMAT_CLOUD);
+            const expected = moment(todayDate).subtract(widget.field.minDateRangeValue, 'days');
+            expect(widget.minDate).toEqual(expected);
+        });
+
+        it('should min date and max date be undefined if dynamic min and max date are not set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).toBeUndefined();
+            expect(widget.maxDate).toBeUndefined();
+        });
+
+        it('should max date be undefined if only minimum date range value is set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                minDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).toBeUndefined();
+        });
+
+        it('should min date be undefined if only maximum date range value is set', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 4
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should max date equal to the today date plus maximum date range value', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 5
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const todayDate = moment().format(DATE_FORMAT_CLOUD);
+            const expected = moment(todayDate).add(widget.field.maxDateRangeValue, 'days');
+            expect(widget.maxDate).toEqual(expected);
+        });
+
+    });
+
+
 });

@@ -54,6 +54,9 @@ export class FormFieldModel extends FormWidgetModel {
     maxLength: number = 0;
     minValue: string;
     maxValue: string;
+    maxDateRangeValue: number = 0;
+    minDateRangeValue: number = 0;
+    dynamicDateRangeSelection: boolean;
     regexPattern: string;
     options: FormFieldOption[] = [];
     restUrl: string;
@@ -167,6 +170,9 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxLength = json.maxLength || 0;
             this.minValue = json.minValue;
             this.maxValue = json.maxValue;
+            this.minDateRangeValue = json.minDateRangeValue;
+            this.maxDateRangeValue = json.maxDateRangeValue;
+            this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
             this.options = json.options || [];
             this.hasEmptyValue = json.hasEmptyValue;

@@ -74,12 +74,22 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
-            }
+            if (this.field.dynamicDateRangeSelection) {
+                const today = moment().format(DATE_FORMAT_CLOUD);
+                if (!isNaN(this.field.minDateRangeValue)) {
+                    this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
+                }
+                if (!isNaN(this.field.maxDateRangeValue)) {
+                    this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
+                }
+            } else {
+                if (this.field.minValue) {
+                    this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
+                }
 
-            if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
+                if (this.field.maxValue) {
+                    this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
+                }
             }
         }
     }
