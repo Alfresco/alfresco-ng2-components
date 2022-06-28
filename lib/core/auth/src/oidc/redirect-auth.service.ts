@@ -2,12 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { AuthConfig, OAuthErrorEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, startWith, take } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
-import { OauthConfigModel } from '../../../models/oauth-config.model';
-import { StorageService } from '../../../services/storage.service';
-import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module.token';
+import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
+import { AUTH_CONFIG } from './auth.module.token';
 import { AuthService } from './auth.service';
+
+const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +38,7 @@ export class RedirectAuthService extends AuthService {
   constructor(
     private oauthService: OAuthService,
     protected _oauthStorage: OAuthStorage,
-    private storageService: StorageService,
-    private appConfigService: AppConfigService,
-    @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
+    @Inject(AUTH_CONFIG) private readonly authConfig: AuthConfig | Promise<AuthConfig>
   ) {
     super();
   }
@@ -61,10 +58,12 @@ export class RedirectAuthService extends AuthService {
       map((event) => event.reason as Error)
     );
 
-    this.appConfigService.onLoad
-      .pipe(take(1))
-      .toPromise()
-      .then(this.configureAuth.bind(this));
+    if (isPromise(this.authConfig)) {
+        return this.authConfig.then((config) => this.configureAuth(config));
+    }
+
+    return this.configureAuth(this.authConfig);
+
   }
 
   logout() {
@@ -137,46 +136,9 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  getRedirectUri(): string {
-
-    // required for this package as we handle the returned token on this view, with is provided by the AuthModule
-    const viewUrl = `view/authentication-confirmation`;
-
-    const redirectUri = this.authModuleConfig.useHash
-        ? `${window.location.origin}/#/${viewUrl}`
-        : `${window.location.origin}/${viewUrl}`;
-
-    const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-
-    // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
-    // `cannot match any routes`, and displaying the wildcard ** error page
-    return oauth2.implicitFlow && this.authModuleConfig.useHash ? `${redirectUri}/?` : redirectUri;
-  }
-
-  private getAuthConfig(): AuthConfig {
-    const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-    const origin = window.location.origin;
-    const redirectUri = this.getRedirectUri();
-
-    return {
-        issuer: oauth2.host,
-        redirectUri,
-        silentRefreshRedirectUri:`${origin}/silent-refresh.html`,
-        postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
-        clientId: oauth2.clientId,
-        scope: oauth2.scope,
-        dummyClientSecret: oauth2.secret || '',
-        ...(oauth2.codeFlow && { responseType: 'code' })
-    };
-  }
-
-  private configureAuth() {
-    const config = this.getAuthConfig();
-
+  private configureAuth(config: AuthConfig) {
     this.oauthService.configure(config);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.setStorage(this.storageService);
-
 
     if (config.sessionChecksEnabled) {
       this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {

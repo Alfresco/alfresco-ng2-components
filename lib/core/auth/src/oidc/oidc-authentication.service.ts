@@ -18,14 +18,14 @@
 import { ApiClientsService } from '@alfresco/adf-core/api';
 import { AlfrescoApiConfig, HttpClient, LegacyTicketApi, PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import minimatch from 'minimatch';
 import { EMPTY, from, Observable, ReplaySubject, throwError } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../../../app-config';
-import { OauthConfigModel, RedirectionModel } from '../../../models';
+import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
+import { OauthConfigModel } from '../../../models/oauth-config.model';
+import { RedirectionModel } from '../../../models/redirection.model';
 import { JwtHelperService } from '../../../services/jwt-helper.service';
 import { LogService } from '../../../services/log.service';
-import { StorageService } from '../../../services/storage.service';
 import { BaseAuthenticationService } from '../base-authentication.service';
 
 @Injectable({
@@ -45,7 +45,7 @@ export class OIDCAuthenticationService extends BaseAuthenticationService  {
     constructor(
         private apiClientsService: ApiClientsService,
         private appConfig: AppConfigService,
-        private storageService: StorageService,
+        private authStorage: OAuthStorage,
         private oauthService: OAuthService,
         private logService: LogService
     ) {
@@ -181,6 +181,6 @@ export class OIDCAuthenticationService extends BaseAuthenticationService  {
     }
 
     getToken(): string {
-        return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+        return this.authStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 }
