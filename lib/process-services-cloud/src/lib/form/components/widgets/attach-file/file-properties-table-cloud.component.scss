@@ -4,6 +4,14 @@
         border: 1px solid var(--theme-border-color);
         box-shadow: none;
 
+        .adf-file {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+                // color: var(--theme-text-bold-color);
+            }
+        }
+
         .adf-datatable-selected {
             padding: 6px;
         }
