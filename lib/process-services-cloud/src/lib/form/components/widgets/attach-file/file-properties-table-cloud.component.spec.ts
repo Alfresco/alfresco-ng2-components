@@ -80,7 +80,7 @@ describe('FilePropertiesTableCloudComponent', () => {
         fixture.destroy();
     });
 
-    fit('should emit attachFileClick', async (done) => {
+    it('should emit attachFileClick', async (done) => {
         widget.attachFileClick.subscribe((fileClicked) => {
             expect(fileClicked.id).toBe('id');
             expect(fileClicked.mimeType).toBe('image/png');
