@@ -27,8 +27,7 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    Inject,
-    ChangeDetectionStrategy
+    Inject
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
