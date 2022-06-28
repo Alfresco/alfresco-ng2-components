@@ -24,8 +24,6 @@ import {
     MOMENT_DATE_FORMATS, MomentDateAdapter,
     LogService,
     UserPreferencesService,
-    IdentityUserService,
-    IdentityUserModel,
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
@@ -34,6 +32,8 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
+import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
 const MAX_NAME_LENGTH = 255;
 const DATE_FORMAT: string = 'DD/MM/YYYY';

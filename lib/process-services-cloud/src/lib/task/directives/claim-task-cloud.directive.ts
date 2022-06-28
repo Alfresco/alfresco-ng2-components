@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
-import { IdentityUserService } from '@alfresco/adf-core';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({

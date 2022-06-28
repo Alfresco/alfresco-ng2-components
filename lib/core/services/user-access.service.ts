@@ -22,6 +22,8 @@ import { UserAccessModel } from '../models/user-access.model';
 import { AppConfigService } from '../app-config/app-config.service';
 import { OAuth2Service } from './oauth2.service';
 
+const IDENTITY_MICRO_SERVICE_INGRESS = 'modeling-service';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -50,7 +52,7 @@ export class UserAccessService {
     }
 
     private async fetchAccessFromApi() {
-        const url = `${ this.identityHost }/v1/identity/roles`;
+        const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/identity/roles`;
         await this.oAuth2Service.get({ url })
             .toPromise()
             .then((response: UserAccessModel) => {
@@ -68,7 +70,7 @@ export class UserAccessService {
     }
 
     private get identityHost(): string {
-        return `${this.appConfigService.get('identityHost')}`;
+        return `${this.appConfigService.get('bpmHost')}`;
     }
 
     private isOauth(): boolean {

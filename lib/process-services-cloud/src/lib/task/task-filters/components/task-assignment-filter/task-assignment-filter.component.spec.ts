@@ -16,13 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { setupTestBed, TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
 import { GroupCloudModule } from 'process-services-cloud/src/lib/group/public-api';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType } from '../../models/filter-cloud.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { IdentityUserService } from '../../../../people/services/identity-user.service';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;

@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, AppConfigService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import {
     TaskDetailsCloudModel,
     StartTaskCloudResponseModel,
@@ -35,6 +35,7 @@ import {
     TaskPriorityOption
 } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
+import { IdentityUserService } from '../../people/services/identity-user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -242,7 +243,9 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
-            return this.get<string[]>(queryUrl);
+            return this.get<string[]>(queryUrl).pipe(
+                catchError((err) => this.handleError(err))
+            );
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate user');
             return of([]);
@@ -319,5 +322,10 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     private isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
+    }
+
+    private handleError(error?: any) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
     }
 }

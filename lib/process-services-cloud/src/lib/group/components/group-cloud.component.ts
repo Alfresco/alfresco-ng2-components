@@ -27,14 +27,17 @@ import {
     SimpleChanges,
     OnChanges,
     OnDestroy,
-    SimpleChange
+    Inject
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map, takeUntil, debounceTime } from 'rxjs/operators';
-import { IdentityGroupModel, IdentityGroupService, LogService } from '@alfresco/adf-core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
+import { LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
+import { IdentityGroupModel } from '../models/identity-group.model';
+import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
+import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -125,7 +128,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     searchGroups$ = new BehaviorSubject<IdentityGroupModel[]>(this.searchGroups);
     subscriptAnimationState: string = 'enter';
-    clientId: string;
     isFocused: boolean;
     touched: boolean = false;
 
@@ -135,12 +137,14 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     validationLoading = false;
     searchLoading = false;
 
+    typingUniqueValueNotEmpty$: Observable<any>;
+
     constructor(
-        private identityGroupService: IdentityGroupService,
+        @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
+        private identityGroupService: IdentityGroupServiceInterface,
         private logService: LogService) {}
 
     ngOnInit(): void {
-        this.loadClientId();
         this.initSearch();
     }
 
@@ -157,41 +161,52 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.invalidGroups = [];
             }
         }
-
-        if (changes.appName && this.isAppNameChanged(changes.appName)) {
-            this.loadClientId();
-        }
     }
 
-    private isAppNameChanged(change: SimpleChange): boolean {
-        return change
-            && change.previousValue !== change.currentValue
-            && this.appName
-            && this.appName.length > 0;
+    private initSearch(): void {
+        this.initializeStream();
+        this.typingUniqueValueNotEmpty$.pipe(
+            switchMap((name: string) =>
+                this.identityGroupService.search(name, { roles: this.roles, withinApplication: this.appName })
+            ),
+            mergeMap((groups: IdentityGroupModel[]) => {
+                this.resetSearchGroups();
+                this.searchLoading = false;
+                return groups;
+            }),
+            filter(group => !this.isGroupAlreadySelected(group)),
+            takeUntil(this.onDestroy$)
+        ).subscribe((searchedGroup: IdentityGroupModel) => {
+            this.searchGroups.push(searchedGroup);
+            this.searchGroups$.next(this.searchGroups);
+        });
     }
 
-    private async loadClientId(): Promise<void> {
-        this.clientId = await this.identityGroupService.getClientIdByApplicationName(this.appName).toPromise();
+    private initializeStream() {
+        const typingValueFromControl$ = this.searchGroupsControl.valueChanges;
 
-        if (this.clientId) {
-            this.searchGroupsControl.enable();
-        }
-    }
-
-    initSearch(): void {
-        this.searchGroupsControl.valueChanges.pipe(
-            filter((value) => {
+        const typingValueTypeSting$ = typingValueFromControl$.pipe(
+            filter(value => {
                 this.searchLoading = true;
                 return typeof value === 'string';
-            }),
+            })
+        );
+
+        const typingValueHandleErrorMessage$ = typingValueTypeSting$.pipe(
             tap((value: string) => {
                 if (value) {
                     this.setTypingError();
                 }
-            }),
+            })
+        );
+
+        const typingValueDebouncedUnique$ = typingValueHandleErrorMessage$.pipe(
             debounceTime(500),
-            distinctUntilChanged(),
-            tap((value) => {
+            distinctUntilChanged()
+        );
+
+        this.typingUniqueValueNotEmpty$ = typingValueDebouncedUnique$.pipe(
+            tap((value: string) => {
                 if (value.trim()) {
                     this.searchedValue = value;
                 } else {
@@ -199,42 +214,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                     this.searchGroupsControl.markAsUntouched();
                 }
             }),
-            tap(() => this.resetSearchGroups()),
-            switchMap((name: string) =>
-                this.identityGroupService.findGroupsByName({ name: name.trim() })
-            ),
-            mergeMap((groups) => {
-                this.resetSearchGroups();
-                this.searchLoading = false;
-                return groups;
-            }),
-            filter(group => !this.isGroupAlreadySelected(group)),
-            mergeMap(group => {
-                if (this.appName) {
-                    return this.checkGroupHasAccess(group.id).pipe(
-                        mergeMap(
-                            hasRole => hasRole ? of(group) : of()
-                        )
-                    );
-                } else if (this.hasRoles()) {
-                    return this.filterGroupsByRoles(group);
-                } else {
-                    return of(group);
-                }
-            }),
-            takeUntil(this.onDestroy$)
-        ).subscribe(searchedGroup => {
-            this.searchGroups.push(searchedGroup);
-            this.searchGroups$.next(this.searchGroups);
-        });
-    }
-
-    checkGroupHasAccess(groupId: string): Observable<boolean> {
-        if (this.hasRoles()) {
-            return this.identityGroupService.checkGroupHasAnyClientAppRole(groupId, this.clientId, this.roles);
-        } else {
-            return this.identityGroupService.checkGroupHasClientApp(groupId, this.clientId);
-        }
+            tap(() => this.resetSearchGroups())
+        );
     }
 
     private isGroupAlreadySelected(group: IdentityGroupModel): boolean {
@@ -246,8 +227,8 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    async searchGroup(name: string): Promise<IdentityGroupModel> {
-        return (await this.identityGroupService.findGroupsByName({ name }).toPromise())[0];
+    private async searchGroup(name: string): Promise<IdentityGroupModel> {
+        return (await this.identityGroupService.search(name).toPromise())[0];
     }
 
     private getPreselectedGroups(): IdentityGroupModel[] {
@@ -258,7 +239,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    async validatePreselectGroups(): Promise<any> {
+    private async validatePreselectGroups(): Promise<any> {
         this.invalidGroups = [];
 
         for (const group of this.getPreselectedGroups()) {
@@ -276,7 +257,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.checkPreselectValidationErrors();
     }
 
-    checkPreselectValidationErrors(): void {
+    private checkPreselectValidationErrors(): void {
         this.invalidGroups = this.removeDuplicatedGroups(this.invalidGroups);
 
         if (this.invalidGroups.length > 0) {
@@ -289,7 +270,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    generateInvalidGroupsMessage(): void {
+    private generateInvalidGroupsMessage(): void {
         this.validateGroupsMessage = '';
 
         this.invalidGroups.forEach((invalidGroup: IdentityGroupModel, index) => {
@@ -315,13 +296,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             await this.validatePreselectGroups();
             this.validationLoading = false;
         }
-    }
-
-    filterGroupsByRoles(group: IdentityGroupModel): Observable<IdentityGroupModel> {
-        return this.identityGroupService.checkGroupHasRole(group.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole, group })),
-            filter((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.hasRole),
-            map((filteredGroup: { hasRole: boolean; group: IdentityGroupModel }) => filteredGroup.group));
     }
 
     onSelect(group: IdentityGroupModel): void {
@@ -365,6 +339,19 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    private isPreselectedGroupInvalid(preselectedGroup: IdentityGroupModel, validatedGroup: IdentityGroupModel): boolean {
+        if (validatedGroup && validatedGroup.name !== undefined) {
+            return preselectedGroup.name !== validatedGroup.name;
+        } else {
+            return true;
+        }
+    }
+
+    removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
+        return groups.filter((group, index, self) =>
+            index === self.findIndex((auxGroup) => group.id === auxGroup.id && group.name === auxGroup.name));
+    }
+
     private groupChipsCtrlValue(value: string) {
         this.groupChipsCtrl.setValue(value);
         this.groupChipsCtrl.markAsDirty();
@@ -392,41 +379,16 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.searchGroups$.next(this.searchGroups);
     }
 
-    isPreselectedGroupInvalid(preselectedGroup: IdentityGroupModel, validatedGroup: IdentityGroupModel): boolean {
-        if (validatedGroup && validatedGroup.name !== undefined) {
-            return preselectedGroup.name !== validatedGroup.name;
-        } else {
-            return true;
-        }
-    }
-
-    isSingleMode(): boolean {
-        return this.mode === 'single';
-    }
-
     private isSingleSelectionReadonly(): boolean {
         return this.isSingleMode() && this.selectedGroups.length === 1 && this.selectedGroups[0].readonly === true;
     }
 
-    hasPreselectError(): boolean {
-        return this.invalidGroups && this.invalidGroups.length > 0;
+    private isSingleMode(): boolean {
+        return this.mode === 'single';
     }
 
-    isReadonly(): boolean {
-        return this.readOnly || this.isSingleSelectionReadonly();
-    }
-
-    isMultipleMode(): boolean {
+    private isMultipleMode(): boolean {
         return this.mode === 'multiple';
-    }
-
-    getDisplayName(group: IdentityGroupModel): string {
-        return group ? group.name : '';
-    }
-
-    removeDuplicatedGroups(groups: IdentityGroupModel[]): IdentityGroupModel[] {
-        return groups.filter((group, index, self) =>
-            index === self.findIndex((auxGroup) => group.id === auxGroup.id && group.name === auxGroup.name));
     }
 
     private hasPreSelectGroups(): boolean {
@@ -457,15 +419,23 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
             && changes.preSelectGroups.currentValue.length === 0;
     }
 
-    private hasRoles(): boolean {
-        return this.roles && this.roles.length > 0;
-    }
-
     private setTypingError(): void {
         this.searchGroupsControl.setErrors({
             searchTypingError: true,
             ...this.searchGroupsControl.errors
         });
+    }
+
+    hasPreselectError(): boolean {
+        return this.invalidGroups && this.invalidGroups.length > 0;
+    }
+
+    isReadonly(): boolean {
+        return this.readOnly || this.isSingleSelectionReadonly();
+    }
+
+    getDisplayName(group: IdentityGroupModel): string {
+        return group ? group.name : '';
     }
 
     hasError(): boolean {
