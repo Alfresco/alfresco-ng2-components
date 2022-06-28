@@ -379,7 +379,6 @@ jobs:
               - FOLDER="process-services-cloud/form-field"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - IDENTITY_HOST=$CLOUD_PROXY_HOST_ADF
               - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
@@ -398,7 +397,6 @@ jobs:
               - FOLDER="process-services-cloud/people"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - IDENTITY_HOST=$CLOUD_PROXY_HOST_ADF
               - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
@@ -417,7 +415,6 @@ jobs:
               - FOLDER="process-services-cloud/process"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - IDENTITY_HOST=$CLOUD_PROXY_HOST_ADF
               - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
@@ -436,7 +433,6 @@ jobs:
               - FOLDER="process-services-cloud/start-task"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
-              - IDENTITY_HOST=$CLOUD_PROXY_HOST_ADF
               - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: "e2e Test"
@@ -455,7 +451,6 @@ jobs:
              - FOLDER="process-services-cloud/task-list"
              - PROVIDER="ALL"
              - AUTH_TYPE="OAUTH"
-             - IDENTITY_HOST=$CLOUD_PROXY_HOST_ADF
              - PROXY_HOST_BPM=$E2E_HOST_APA
 
         - stage: Check bundle
