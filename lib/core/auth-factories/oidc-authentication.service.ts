@@ -16,17 +16,17 @@
  */
 
 import { ApiClientsService } from '@alfresco/adf-core/api';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { AlfrescoApiConfig, HttpClient, LegacyTicketApi, PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import minimatch from 'minimatch';
 import { EMPTY, from, Observable, ReplaySubject, throwError } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../../../app-config/app-config.service';
-import { OauthConfigModel } from '../../../models/oauth-config.model';
-import { RedirectionModel } from '../../../models/redirection.model';
-import { JwtHelperService } from '../../../services/jwt-helper.service';
-import { LogService } from '../../../services/log.service';
-import { BaseAuthenticationService } from '../base-authentication.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
+import { RedirectionModel } from '../models/redirection.model';
+import { JwtHelperService } from '../services/jwt-helper.service';
+import { LogService } from '../services/log.service';
 
 @Injectable({
     providedIn: 'root'

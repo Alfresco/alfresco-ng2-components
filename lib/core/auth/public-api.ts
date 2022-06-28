@@ -3,5 +3,5 @@
  */
 
 export * from './src/base-authentication.service';
-export * from './src/oidc';
+export * from './src/oidc/index';
 

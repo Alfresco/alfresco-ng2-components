@@ -1,9 +1,9 @@
-import { AlfrescoApiV2LoaderService, API_CLIENT_FACTORY_TOKEN, createAlfrescoApiV2Service, LegacyAlfrescoApiServiceFacade } from '@alfresco/adf-core/api';
+import { API_CLIENT_FACTORY_TOKEN, LegacyAlfrescoApiServiceFacade, AlfrescoApiV2 } from '@alfresco/adf-core/api';
 import { AuthBearerInterceptor } from '@alfresco/adf-core/auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AlfrescoApiV2 } from '../api/alfresco-api-v2';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiV2LoaderService, createAlfrescoApiV2Service } from './alfresco-api-v2-loader.service';
 import { AngularClientFactory } from './angular-api-client.factory';
 
 @NgModule({

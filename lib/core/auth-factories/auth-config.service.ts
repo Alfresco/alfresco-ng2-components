@@ -1,9 +1,9 @@
+import { AuthModuleConfig, AUTH_MODULE_CONFIG } from '@alfresco/adf-core/auth';
 import { Inject, Injectable } from '@angular/core';
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../../app-config';
-import { OauthConfigModel } from '../../../models/oauth-config.model';
-import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module.token';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 
 export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {

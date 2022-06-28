@@ -142,7 +142,7 @@ registerLocaleData(localeSv);
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot({ useLegacy: false}),
+        CoreModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),

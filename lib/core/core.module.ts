@@ -49,12 +49,16 @@ import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
-import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+import { BaseAuthenticationService, AUTH_CONFIG } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
+import { authConfigFactory, AuthConfigService } from './auth-factories/auth-config.service';
+import { OIDCAuthenticationService } from './auth-factories/oidc-authentication.service';
+import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
 import { IconModule } from './icon/icon.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AuthenticationService } from './services';
+import { AuthenticationService, StorageService } from './services';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
@@ -64,7 +68,6 @@ import { TranslationService } from './services/translation.service';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
-import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
 
 const defaultConfig: CoreModuleConfig = { useLegacy: true };
 
@@ -176,7 +179,15 @@ export class CoreModule {
                             deps: [ AlfrescoApiService ],
                             multi: true
                         }
-                    ] : []
+                    ] : [
+                        { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
+                        { provide: OAuthStorage, useExisting: StorageService },
+                        {
+                            provide: AUTH_CONFIG,
+                            useFactory: authConfigFactory,
+                            deps: [AuthConfigService]
+                        }
+                    ]
                 )
             ]
         };

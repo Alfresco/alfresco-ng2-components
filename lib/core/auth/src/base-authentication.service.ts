@@ -18,7 +18,6 @@
 import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, Observer, ReplaySubject } from 'rxjs';
-import { RedirectionModel } from '../../models';
 
 export abstract class BaseAuthenticationService {
     protected bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/', 'idp/']; // IDP ADDED
@@ -74,7 +73,7 @@ export abstract class BaseAuthenticationService {
     abstract isBpmLoggedIn(): boolean;
     abstract getEcmUsername(): string;
     abstract getBpmUsername(): string;
-    abstract setRedirect(url: RedirectionModel): void;
+    abstract setRedirect(url: any): void;
     abstract getRedirect(): string;
     abstract getBpmLoggedUser(): Observable<UserRepresentation>;
     abstract handleError(error: any): Observable<any>;
