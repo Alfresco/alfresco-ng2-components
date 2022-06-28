@@ -16,6 +16,6 @@
  */
 
 export interface IdentityGroupFilterInterface {
-    roles: string[];
+    roles?: string[];
     withinApplication?: string;
 }

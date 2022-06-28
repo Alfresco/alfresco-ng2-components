@@ -65,18 +65,6 @@ export class PeopleGroupCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudMultipleSelectionChecked);
     }
 
-    // async checkPeopleCloudFilterRole(): Promise<void> {
-    //     await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudFilterRole);
-    // }
-
-    // async clickPeopleCloudFilterRole(): Promise<void> {
-    //     await BrowserActions.click(this.peopleCloudFilterRole);
-    // }
-
-    // async clickGroupCloudFilterRole(): Promise<void> {
-    //     await BrowserActions.click(this.groupCloudFilterRole);
-    // }
-
     async enterPeopleRoles(roles: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleRoleInput, roles);
     }
