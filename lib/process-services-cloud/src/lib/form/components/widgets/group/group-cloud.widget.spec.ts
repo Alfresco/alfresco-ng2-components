@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel, setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -65,7 +65,7 @@ describe('GroupCloudWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should be invalid if no default option after interaction', async () => {
+        it('should be invalid if no option is selected after interaction', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -78,6 +78,58 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        });
+    });
+
+    describe('when is readOnly', () => {
+
+        it('should single chip be disabled', async () => {
+            const mockSpaghetti: IdentityGroupModel[] = [{
+                id: 'bolognese',
+                name: 'Bolognese'
+            }];
+
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
+                type: FormFieldTypes.GROUP,
+                value: mockSpaghetti
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
+            expect(disabledFormField).toBeTruthy();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const disabledGroupChip: HTMLElement = element.querySelector('.mat-chip-disabled');
+            expect(disabledGroupChip).toBeTruthy();
+        });
+
+        it('should multi chips be disabled', async () => {
+            const mockSpaghetti: IdentityGroupModel[] = [
+                { id: 'bolognese', name: 'Bolognese' },
+                { id: 'carbonara', name: 'Carbonara' }
+            ];
+
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
+                type: FormFieldTypes.GROUP,
+                value: mockSpaghetti
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
+            expect(disabledFormField).toBeTruthy();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
+            expect(disabledGroupChips.item(0)).toBeTruthy();
+            expect(disabledGroupChips.item(1)).toBeTruthy();
         });
     });
 
