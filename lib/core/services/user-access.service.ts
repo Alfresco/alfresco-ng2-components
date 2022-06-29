@@ -84,7 +84,10 @@ export class UserAccessService {
      * @returns True if it contains at least one of the given roles, false otherwise
      */
     hasGlobalAccess(rolesToCheck: string[]): boolean {
-        return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
+        if (rolesToCheck?.length > 0) {
+            return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
+        }
+        return true;
     }
 
     /**
@@ -95,8 +98,11 @@ export class UserAccessService {
      * @returns True if it contains at least one of the given roles, false otherwise
      */
     hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
-        const appAccess = this.hasRolesInJwt() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
-        return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
+        if (rolesToCheck?.length > 0) {
+            const appAccess = this.hasRolesInJwt() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
+            return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
+        }
+        return true;
     }
 
     /**
