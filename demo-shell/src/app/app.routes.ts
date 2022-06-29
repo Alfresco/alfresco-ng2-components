@@ -16,7 +16,6 @@
  */
 
 import { AuthGuard, AuthGuardBpm, AuthGuardEcm, AuthGuardSsoRoleService, ErrorContentComponent } from '@alfresco/adf-core';
-import { OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
