@@ -23,7 +23,7 @@ import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from 'core';
 
-fdescribe('FilePropertiesTableCloudComponent', () => {
+describe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
     let fixture: ComponentFixture<FilePropertiesTableCloudComponent>;
 
