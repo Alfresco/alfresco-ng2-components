@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 
-fdescribe('FilePropertiesTableCloudComponent', () => {
+describe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
     let fixture: ComponentFixture<FilePropertiesTableCloudComponent>;
 
