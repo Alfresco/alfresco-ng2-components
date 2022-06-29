@@ -21,9 +21,10 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { TranslateModule } from '@ngx-translate/core';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from 'core';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
-describe('FilePropertiesTableCloudComponent', () => {
+fdescribe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
     let fixture: ComponentFixture<FilePropertiesTableCloudComponent>;
 
@@ -32,7 +33,8 @@ describe('FilePropertiesTableCloudComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule,
-                MaterialModule
+                MatTableModule,
+                MatIconModule
             ],
             declarations: [FilePropertiesTableCloudComponent]
         }).compileComponents();
