@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { AboutApi, DiscoveryApi, RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -38,9 +38,7 @@ export class DiscoveryApiService {
     constructor(
         private apiService: AlfrescoApiService,
         private authenticationService: BaseAuthenticationService,
-        private apiClientsService: ApiClientsService,
-        private readonly discoveryApi: DiscoveryApi,
-        private readonly aboutApi: AboutApi
+        private apiClientsService: ApiClientsService
     ) {
         this.authenticationService.onLogin
             .pipe(
@@ -58,8 +56,9 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
+        const discoveryApi = this.apiClientsService.get('DiscoveryClient.discovery');
 
-        return from(this.discoveryApi.getRepositoryInformation())
+        return from(discoveryApi.getRepositoryInformation())
             .pipe(
                 map((res) => res.entry.repository),
                 catchError((err) => throwError(err))
@@ -72,7 +71,9 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        return from(this.aboutApi.getAppVersion())
+        const aboutApi = this.apiClientsService.get('ActivitiClient.about');
+
+        return from(aboutApi.getAppVersion())
             .pipe(
                 map((res) => new BpmProductVersionModel(res)),
                 catchError((err) => throwError(err))
