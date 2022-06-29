@@ -61,19 +61,11 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-        if (this.shouldBeBypassed()) {
-            return true;
-        }
-
         if (this.authenticationService.isLoggedIn() && this.authenticationService.isOauth() && this.isLoginFragmentPresent()) {
             return this.redirectSSOSuccessURL();
         }
 
         return this.checkLogin(route, state.url);
-    }
-
-    shouldBeBypassed() {
-        return this.authenticationService.authName !== 'Legacy';
     }
 
     canActivateChild(

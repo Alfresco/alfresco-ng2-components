@@ -18,7 +18,7 @@
 import {
     AppConfigModule, AppConfigService, CoreAutomationService, CoreModule, DebugAppConfigService, TRANSLATION_PROVIDER
 } from '@alfresco/adf-core';
-import { AuthModule, OidcAuthGuard } from '@alfresco/adf-core/auth';
+import { AuthModule } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -141,7 +141,7 @@ registerLocaleData(localeSv);
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot({ useLegacy: false}),
+        CoreModule.forRoot({useLegacy: false}),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
@@ -207,7 +207,6 @@ registerLocaleData(localeSv);
         SearchFilterChipsComponent
     ],
     providers: [
-        OidcAuthGuard,
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
             provide: TRANSLATION_PROVIDER,

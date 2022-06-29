@@ -107,7 +107,7 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [AuthGuard, OidcAuthGuard],
+        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
