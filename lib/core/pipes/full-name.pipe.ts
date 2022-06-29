@@ -22,27 +22,15 @@ export class FullNamePipe implements PipeTransform {
     transform(user: any): string {
         let fullName = '';
         if (user) {
-            if (user.displayName) {
-                const firstAndLastName = user.displayName.split('\ (.*)');
-                if (firstAndLastName[0]) {
-                    fullName += firstAndLastName[0];
-                }
-                if (firstAndLastName[1]) {
-                    fullName += fullName.length > 0 ? ' ' : '';
-                    fullName += firstAndLastName[1];
-                }
-
-            } else {
-                if (user.firstName && user.firstName !== 'null') {
-                    fullName += user.firstName;
-                }
-                if (user.lastName && user.lastName !== 'null') {
-                    fullName += fullName.length > 0 ? ' ' : '';
-                    fullName += user.lastName;
-                }
-                if (!fullName) {
-                    fullName += user.username ? user.username : user.email ? user.email : '';
-                }
+            if (user.firstName && user.firstName !== 'null') {
+                fullName += user.firstName;
+            }
+            if (user.lastName && user.lastName !== 'null') {
+                fullName += fullName.length > 0 ? ' ' : '';
+                fullName += user.lastName;
+            }
+            if (!fullName) {
+                fullName += user.username ? user.username : user.email ? user.email : '';
             }
         }
         return fullName;
