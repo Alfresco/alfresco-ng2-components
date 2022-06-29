@@ -16,9 +16,8 @@
  */
 
 import {
-    ApiClientModule, AppConfigModule, AppConfigService, CoreAutomationService, CoreModule, DebugAppConfigService, TRANSLATION_PROVIDER
+    AppConfigModule, AppConfigService, CoreAutomationService, CoreModule, DebugAppConfigService, TRANSLATION_PROVIDER
 } from '@alfresco/adf-core';
-import { AuthModule } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
