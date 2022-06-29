@@ -49,7 +49,7 @@ import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiV2, AlfrescoJsClientsModule, API_CLIENT_FACTORY_TOKEN, LegacyAlfrescoApiServiceFacade } from '@alfresco/adf-core/api';
-import { BaseAuthenticationService, AUTH_CONFIG, AuthBearerInterceptor } from '@alfresco/adf-core/auth';
+import { BaseAuthenticationService, AUTH_CONFIG, AuthBearerInterceptor, OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
@@ -58,7 +58,7 @@ import { OIDCAuthenticationService } from './auth-factories/oidc-authentication.
 import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
 import { IconModule } from './icon/icon.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AuthenticationService, StorageService } from './services';
+import { AuthenticationService, AuthGuard, StorageService } from './services';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
@@ -199,6 +199,7 @@ export class CoreModule {
                             provide: AlfrescoApiService,
                             useExisting: LegacyAlfrescoApiServiceFacade
                         },
+                        { provide: AuthGuard, useClass: OidcAuthGuard },
                         { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
                         { provide: OAuthStorage, useExisting: StorageService },
                         {
