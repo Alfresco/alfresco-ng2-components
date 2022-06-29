@@ -28,7 +28,6 @@ const defaultConfig: AuthModuleConfig = {
     }
   ]
 })
-
 export class AuthModule {
   static forRoot(config: AuthModuleConfig = defaultConfig): ModuleWithProviders<AuthModule> {
     return {
