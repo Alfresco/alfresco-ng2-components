@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiClientModule, AppConfigModule, AppConfigService, CoreAutomationService, CoreModule, DebugAppConfigService, TRANSLATION_PROVIDER
+    AppConfigModule, AppConfigService, CoreAutomationService, CoreModule, DebugAppConfigService, TRANSLATION_PROVIDER
 } from '@alfresco/adf-core';
 import { AuthModule, OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
@@ -134,7 +134,6 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        ApiClientModule,
         AuthModule.forRoot({ useHash: true }),
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy'}),
         FormsModule,
@@ -142,7 +141,7 @@ registerLocaleData(localeSv);
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreModule.forRoot({ useLegacy: false}),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),

@@ -148,8 +148,7 @@ export class AlfrescoApiV2 extends LegacyAlfrescoApi implements AlfrescoApiType 
         console.log(hostBpm);
     }
 
-    login(username: string, password: string) {
-        console.log(username, password);
+    login(_username: string, _password: string) {
         return Promise.reject();
     }
 
