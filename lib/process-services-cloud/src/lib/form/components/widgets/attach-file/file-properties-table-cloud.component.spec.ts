@@ -18,13 +18,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { ContentModule } from '@alfresco/adf-content-services';
-import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
+import { MaterialModule } from 'core';
 
-describe('FilePropertiesTableCloudComponent', () => {
+fdescribe('FilePropertiesTableCloudComponent', () => {
     let widget: FilePropertiesTableCloudComponent;
     let fixture: ComponentFixture<FilePropertiesTableCloudComponent>;
 
@@ -33,8 +32,7 @@ describe('FilePropertiesTableCloudComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule,
-                FormCloudModule,
-                ContentModule.forRoot()
+                MaterialModule
             ],
             declarations: [FilePropertiesTableCloudComponent]
         }).compileComponents();
@@ -80,16 +78,13 @@ describe('FilePropertiesTableCloudComponent', () => {
         fixture.destroy();
     });
 
-    it('should emit attachFileClick', async (done) => {
-        widget.attachFileClick.subscribe((fileClicked) => {
-            expect(fileClicked.id).toBe('id');
-            expect(fileClicked.mimeType).toBe('image/png');
-            expect(fileClicked.name).toBe('download.png');
-            done();
-        });
+    it('should emit attachFileClick', () => {
+        const attachFileClickSpy = spyOn(widget.attachFileClick, 'emit').and.callThrough();
 
         const attachedFile = fixture.debugElement.query(By.css('#file-id')).nativeElement as HTMLButtonElement;
         attachedFile.click();
         fixture.detectChanges();
+
+        expect(attachFileClickSpy).toHaveBeenCalledWith(widget.uploadedFiles[0]);
     });
 });
