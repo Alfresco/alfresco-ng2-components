@@ -6,6 +6,7 @@ import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import * as ColorPlugin from 'editorjs-text-color-plugin';
+import * as Paragraph from 'editorjs-paragraph-with-alignment';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -47,6 +48,10 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                         defaultColor: '#FFBF00',
                         type: 'marker'
                     }
+                },
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true
                 }
             }
         } as any);
