@@ -62,6 +62,7 @@ import { versionCompatibilityFactory } from './services/version-compatibility-fa
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
+import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 
 @NgModule({
     imports: [
@@ -99,7 +100,8 @@ import { LegacyApiClientModule } from './api-factories/legacy-api-client.module'
         SearchTextModule,
         BlankPageModule,
         LegacyApiClientModule,
-        AlfrescoJsClientsModule
+        AlfrescoJsClientsModule,
+        RichTextEditorModule
     ],
     exports: [
         AboutModule,
@@ -134,7 +136,8 @@ import { LegacyApiClientModule } from './api-factories/legacy-api-client.module'
         IconModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule
+        BlankPageModule,
+        RichTextEditorModule
     ]
 })
 export class CoreModule {
