@@ -51,6 +51,22 @@ describe('UserAccessService', () => {
         });
     }
 
+    it('should return true when no roles to check are passed in global access', async () => {
+        spyUserAccess(['MOCK_USER_ROLE'], {});
+        await userAccessService.fetchUserAccess();
+        const hasGlobalAccess = userAccessService.hasGlobalAccess([]);
+
+        expect(hasGlobalAccess).toBe(true);
+    });
+
+    it('should return true when no roles to check are passed in application access', async () => {
+        spyUserAccess([], { mockApp: { roles: ['MOCK_APP_ROLE'] } });
+        await userAccessService.fetchUserAccess();
+        const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', []);
+
+        expect(hasApplicationAccess).toBe(true);
+    });
+
     describe('Access from JWT token', () => {
 
         it('should return true when the user has one of the global roles', async () => {
