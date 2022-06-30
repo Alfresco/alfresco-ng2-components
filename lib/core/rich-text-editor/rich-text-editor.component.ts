@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 import EditorJS from '@editorjs/editorjs';
+
+/** Plugin import */
 import Header from '@editorjs/header';
+import List from '@editorjs/list';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -21,7 +24,14 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.editor = new EditorJS({
             logLevel: 'ERROR',
             tools: {
-                header: Header
+                header: Header,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    config: {
+                        defaultStyle: 'unordered'
+                    }
+                }
             }
         } as any);
     }
