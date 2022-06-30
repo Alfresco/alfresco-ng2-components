@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input, Inject } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { ENTER } from '@angular/cdk/keycodes';
+import { CORE_MODULE_CONFIG, CoreModuleConfig } from '../core.module.token';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
 
@@ -60,11 +61,13 @@ export class HostSettingsComponent implements OnInit {
     @Output()
     success = new EventEmitter<boolean>();
 
-    constructor(private formBuilder: FormBuilder,
-                private storageService: StorageService,
-                private alfrescoApiService: AlfrescoApiService,
-                private appConfig: AppConfigService) {
-    }
+    constructor(
+        private formBuilder: FormBuilder,
+        private storageService: StorageService,
+        private alfrescoApiService: AlfrescoApiService,
+        private appConfig: AppConfigService,
+        @Inject(CORE_MODULE_CONFIG) private coreModuleConfig: CoreModuleConfig
+    ) {}
 
     ngOnInit() {
         if (this.providers.length === 1) {
@@ -149,6 +152,7 @@ export class HostSettingsComponent implements OnInit {
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
             implicitFlow: oauth.implicitFlow,
+            codeFlow: oauth.codeFlow,
             publicUrls: [oauth.publicUrls]
         });
     }
@@ -231,6 +235,10 @@ export class HostSettingsComponent implements OnInit {
         return this.form.get('authType').value === 'OAUTH';
     }
 
+    get supportCodeFlow(): boolean {
+        return this.coreModuleConfig.useLegacy === false;
+    }
+
     get providersControl(): FormControl {
         return this.form.get('providersControl') as FormControl;
     }
@@ -265,6 +273,10 @@ export class HostSettingsComponent implements OnInit {
 
     get implicitFlow(): FormControl {
         return this.oauthConfig.get('implicitFlow') as FormControl;
+    }
+
+    get codeFlow(): FormControl {
+        return this.oauthConfig.get('codeFlow') as FormControl;
     }
 
     get silentLogin(): FormControl {

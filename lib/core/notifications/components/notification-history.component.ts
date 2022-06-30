@@ -59,7 +59,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         private notificationService: NotificationService,
         public storageService: StorageService,
         public cd: ChangeDetectorRef) {
-
     }
 
     ngOnInit() {

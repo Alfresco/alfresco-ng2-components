@@ -36,4 +36,5 @@ export abstract class AuthService {
    * @returns Promise, resolve with stored state, reject if unable to reach IdP
    */
   abstract loginCallback(): Promise<string | undefined>;
+  abstract updateIDPConfiguration(...args: any[]): void;
 }

@@ -15,22 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    PageTitleService
-} from '@alfresco/adf-core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { StorageService } from '../services/storage.service';
+import { AppConfigService, AppConfigValues } from './app-config.service';
 
-@Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None
-})
-export class AppComponent implements OnInit {
-
-    constructor(private pageTitleService: PageTitleService) {}
-
-    ngOnInit() {
-        this.pageTitleService.setTitle('title');
-    }
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+    return () => appConfigService.load().then(() => {
+        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+    });
 }

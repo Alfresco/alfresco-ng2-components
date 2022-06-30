@@ -17,7 +17,8 @@
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ExternalAlfrescoApiService, AlfrescoApiService, LoginDialogPanelComponent, SearchService, TranslationService, AuthenticationService, SitesService } from '@alfresco/adf-core';
+import { ExternalAlfrescoApiService, AlfrescoApiService, LoginDialogPanelComponent, SearchService, TranslationService, SitesService } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { DocumentListService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
@@ -28,7 +29,6 @@ import { Node } from '@alfresco/js-api';
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
-        AuthenticationService,
         DocumentListService,
         SitesService,
         SearchService,
@@ -47,7 +47,7 @@ export class AttachFileWidgetDialogComponent {
     constructor(private translation: TranslationService,
                 @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
                 private externalApiService: AlfrescoApiService,
-                private authenticationService: AuthenticationService,
+                private authenticationService: BaseAuthenticationService,
                 private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>) {
         (externalApiService as any).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';

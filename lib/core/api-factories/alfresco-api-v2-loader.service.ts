@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-/*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
-
+import { AlfrescoApiV2 } from '@alfresco/adf-core/api';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../app-config';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { AlfrescoApiV2 } from './alfresco-api-v2';
 import { LegacyAlfrescoApiServiceFacade } from './legacy-alfresco-api-service.facade';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiV2LoaderService) {
     return () => angularAlfrescoApiService.load();
 }
@@ -35,10 +32,10 @@ export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoAp
 })
 export class AlfrescoApiV2LoaderService {
 
-    protected alfrescoApi: AlfrescoApi;
+    alfrescoApi: AlfrescoApi;
 
     constructor(
-        protected appConfig: AppConfigService,
+        private appConfig: AppConfigService,
         private legacyAlfrescoApiServiceFacade: LegacyAlfrescoApiServiceFacade,
         private alfrescoApiV2Service?: AlfrescoApiV2) {
     }
@@ -49,8 +46,9 @@ export class AlfrescoApiV2LoaderService {
         });
     }
 
-    protected initAngularAlfrescoApi() {
+    private initAngularAlfrescoApi() {
         const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+
         if (oauth) {
             oauth.redirectUri = window.location.origin + window.location.pathname;
             oauth.redirectUriLogout = window.location.origin + window.location.pathname;

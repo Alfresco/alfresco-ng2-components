@@ -15,16 +15,19 @@
  * limitations under the License.
  */
 
-/*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
-
-import { AlfrescoApiType } from '@alfresco/js-api';
+import { AuthService } from '@alfresco/adf-core/auth';
+import { AlfrescoApiType, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import { AlfrescoApiV2 } from './alfresco-api-v2';
+import { ReplaySubject, Subject } from 'rxjs';
+import { AlfrescoApiV2 } from '@alfresco/adf-core/api';
+import { AuthConfigService } from '../auth-factories/auth-config.service';
 
 @Injectable()
 export class LegacyAlfrescoApiServiceFacade {
-    constructor(private alfrescoApiV2: AlfrescoApiV2) {}
+
+    nodeUpdated = new Subject<Node>();
+
+    constructor(private alfrescoApiV2: AlfrescoApiV2, private readonly auth: AuthService, private readonly authConfig: AuthConfigService) { }
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
@@ -35,4 +38,11 @@ export class LegacyAlfrescoApiServiceFacade {
     init() {
         this.alfrescoApiInitialized.next(true);
     }
+
+    async reset() {
+        const config = this.authConfig.loadAppConfig();
+        this.auth.updateIDPConfiguration(config);
+        this.auth.login();
+    }
+
 }

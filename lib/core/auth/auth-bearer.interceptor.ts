@@ -21,7 +21,7 @@ import {
 import { Injectable, Injector } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { BaseAuthenticationService } from '../base-authentication.service';
+import { BaseAuthenticationService } from './base-authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {

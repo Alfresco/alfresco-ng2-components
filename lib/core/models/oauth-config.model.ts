@@ -20,10 +20,12 @@ export interface OauthConfigModel {
     clientId: string;
     scope: string;
     implicitFlow: boolean;
+    codeFlow?: boolean;
     redirectUri: string;
     silentLogin?: boolean;
     secret?: string;
     redirectUriLogout?: string;
+    redirectSilentIframeUri?: string;
     refreshTokenTimeout?: number;
     publicUrls: string[];
 }

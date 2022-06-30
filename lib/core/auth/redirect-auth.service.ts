@@ -25,12 +25,17 @@ export class RedirectAuthService extends AuthService {
     return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
   }
 
+  private authConfig!: AuthConfig | Promise<AuthConfig>;
+
   constructor(
     private oauthService: OAuthService,
-    protected _oauthStorage: OAuthStorage,
-    @Inject(AUTH_CONFIG) private readonly authConfig: AuthConfig | Promise<AuthConfig>
+    private _oauthStorage: OAuthStorage,
+    // we use any, because currently for prod build we are disabling ivy and thus we can't use the @Inject decorator with correct type inside the constructor
+    // as its leading to error: Could not resolve type https://github.com/angular/angular/issues/20351#issuecomment-344009887
+    @Inject(AUTH_CONFIG) authConfig: any
   ) {
     super();
+    this.authConfig = authConfig;
   }
 
   init() {
@@ -125,6 +130,12 @@ export class RedirectAuthService extends AuthService {
 
     return this.ensureDiscoveryDocument().then(() =>
       void this.oauthService.setupAutomaticSilentRefresh()
-    );
+    ).catch(() => {
+       // catch error to prevent the app from crashing when trying to access unprotected routes
+    });
+  }
+
+  updateIDPConfiguration(config: AuthConfig) {
+    this.oauthService.configure(config);
   }
 }
