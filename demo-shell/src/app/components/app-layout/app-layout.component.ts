@@ -74,6 +74,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
             { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' },
             { href: '/copy-content', icon: 'view_module', title: 'Copy Content' }
         ]},
+        { href: '/rich-text-editor', icon: 'list_alt', title: 'APP_LAYOUT.RICH_TEXT_EDITOR' },
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
