@@ -144,6 +144,7 @@
     "cspell": "^5.5.1",
     "css-loader": "^5.2.6",
     "dotenv": "^8.2.0",
+    "editorjs-text-color-plugin": "^1.13.1",
     "eslint": "^7.6.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-import": "2.25.4",
