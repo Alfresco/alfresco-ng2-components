@@ -18,7 +18,8 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { AboutComponent } from './about.component';
 import { AboutModule } from './about.module';
-import { AuthenticationService, DiscoveryApiService } from '../services';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+import { DiscoveryApiService } from '../services';
 import { AppConfigServiceMock, AuthenticationMock } from '../mock';
 import { DiscoveryApiServiceMock } from '../mock/discovery-api.service.mock';
 import { AppExtensionService, AppExtensionServiceMock } from '@alfresco/adf-extensions';
@@ -32,7 +33,7 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, AboutModule],
             providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock },
+                { provide: BaseAuthenticationService, useClass: AuthenticationMock },
                 { provide: DiscoveryApiService, useClass: DiscoveryApiServiceMock },
                 { provide: AppExtensionService, useClass: AppExtensionServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }

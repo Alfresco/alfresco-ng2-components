@@ -22,7 +22,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 
 import { BpmProductVersionModel } from '../models/product-version.model';
-import { AuthenticationService } from '../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { LicenseData, PackageInfo, StatusData } from './interfaces';
 
@@ -57,7 +57,7 @@ export class AboutComponent implements OnInit {
 
     extensions$: Observable<ExtensionRef[]>;
 
-    constructor(private authService: AuthenticationService,
+    constructor(private authService: BaseAuthenticationService,
                 private discovery: DiscoveryApiService,
                 private appExtensions: AppExtensionService,
                 private appConfigService: AppConfigService) {

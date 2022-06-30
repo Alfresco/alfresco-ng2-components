@@ -16,7 +16,8 @@
  */
 
 import { Component } from '@angular/core';
-import { ObjectDataTableAdapter, AuthenticationService } from '@alfresco/adf-core';
+import { ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 @Component({
     selector: 'app-lazy-component',
@@ -43,7 +44,7 @@ export class LazyLoadingComponent {
         return this.auth.getEcmUsername();
     }
 
-    constructor(private auth: AuthenticationService) {
+    constructor(private auth: BaseAuthenticationService) {
         this.data = new ObjectDataTableAdapter(
             // data
             [

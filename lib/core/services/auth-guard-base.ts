@@ -23,7 +23,8 @@ import {
     CanActivateChild,
     UrlTree
 } from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import {
     AppConfigService,
     AppConfigValues
@@ -43,13 +44,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     constructor(
-        protected authenticationService: AuthenticationService,
+        protected authenticationService: BaseAuthenticationService,
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
         private storageService: StorageService
-    ) {
-    }
+    ) {}
 
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from '../../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -29,7 +29,7 @@ describe('LoginDialogPanelComponent', () => {
     let element: HTMLElement;
     let usernameInput: HTMLInputElement;
     let passwordInput: HTMLInputElement;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
 
     setupTestBed({
         imports: [
@@ -42,7 +42,7 @@ describe('LoginDialogPanelComponent', () => {
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
 
         fixture.detectChanges();
         await fixture.whenStable();

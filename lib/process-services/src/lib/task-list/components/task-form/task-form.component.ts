@@ -21,10 +21,11 @@ import {
   ContentLinkModel,
   FormFieldValidator,
   FormOutcomeEvent,
-  AuthenticationService,
   TranslationService,
   FormFieldModel
 } from '@alfresco/adf-core';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation, LightGroupRepresentation, LightUserRepresentation } from '@alfresco/js-api';
@@ -134,7 +135,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   constructor(
     private taskListService: TaskListService,
-    private authService: AuthenticationService,
+    private authService: BaseAuthenticationService,
     private translationService: TranslationService
   ) {
   }

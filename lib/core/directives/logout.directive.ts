@@ -18,7 +18,7 @@
 import { Input, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 
 @Directive({
     selector: '[adf-logout]'
@@ -37,7 +37,7 @@ export class LogoutDirective implements OnInit {
                 private renderer: Renderer2,
                 private router: Router,
                 private appConfig: AppConfigService,
-                private auth: AuthenticationService) {
+                private auth: BaseAuthenticationService) {
     }
 
     ngOnInit() {

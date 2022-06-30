@@ -20,13 +20,14 @@ import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService } from './authentication.service';
+import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
+
 import { ContentService } from './content.service';
 
 describe('EcmUserService', () => {
 
     let service: EcmUserService;
-    let authService: AuthenticationService;
+    let authService: BaseAuthenticationService;
     let contentService: ContentService;
 
     beforeEach(() => {
@@ -38,7 +39,7 @@ describe('EcmUserService', () => {
         });
 
         service = TestBed.inject(EcmUserService);
-        authService = TestBed.inject(AuthenticationService);
+        authService = TestBed.inject(BaseAuthenticationService);
         contentService = TestBed.inject(ContentService);
     });
 
