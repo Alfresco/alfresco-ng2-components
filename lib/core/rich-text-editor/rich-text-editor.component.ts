@@ -29,7 +29,10 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.editor = new EditorJS({
             logLevel: 'ERROR',
             tools: {
-                underline: Underline,
+                underline: {
+                    class: Underline,
+                    shortcut: 'CMD+U'
+                },
                 header: {
                     class: Header,
                     inlineToolbar: true
