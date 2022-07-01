@@ -8,6 +8,7 @@ import List from '@editorjs/list';
 import * as ColorPlugin from 'editorjs-text-color-plugin';
 import * as Paragraph from 'editorjs-paragraph-with-alignment';
 import * as ChangeFontSize from '@quanzo/change-font-size';
+import Underline from '@editorjs/underline';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -27,6 +28,7 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.editor = new EditorJS({
             logLevel: 'ERROR',
             tools: {
+                underline: Underline,
                 header: {
                     class: Header,
                     inlineToolbar: true
