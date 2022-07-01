@@ -9,6 +9,7 @@ import * as ColorPlugin from 'editorjs-text-color-plugin';
 import * as Paragraph from 'editorjs-paragraph-with-alignment';
 import * as ChangeFontSize from '@quanzo/change-font-size';
 import Underline from '@editorjs/underline';
+import InlineCode from '@editorjs/inline-code';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -64,6 +65,10 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                     config: {
                         cssClass: 'plus20pc'
                     }
+                },
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+M'
                 }
             }
         } as any);
