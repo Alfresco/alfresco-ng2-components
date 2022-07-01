@@ -18,8 +18,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentGroups, PeopleContentService } from './people-content.service';
+import { ContentGroups } from './people-content.service';
 import { UserAccessService } from './user-access.service';
+import { UserContentAccessService } from './user-content-access.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
     constructor(private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog,
-                private peopleContentService: PeopleContentService) {
+                private userContentAccessService: UserContentAccessService) {
     }
 
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
@@ -74,8 +75,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
 
     private async hasRoles(roles: string[] = []): Promise<boolean> {
         if (this.containsAlfrescoAdminRole(roles)) {
-            await this.peopleContentService.getCurrentUserInfo().toPromise();
-            return this.peopleContentService.isCurrentUserAdmin() || this.userAccessService.hasGlobalAccess(roles);
+            return await this.userContentAccessService.isCurrentUserAdmin() || this.userAccessService.hasGlobalAccess(roles);
         }
         return this.userAccessService.hasGlobalAccess(roles);
     }
