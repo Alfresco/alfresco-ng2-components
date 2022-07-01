@@ -7,6 +7,7 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import * as ColorPlugin from 'editorjs-text-color-plugin';
 import * as Paragraph from 'editorjs-paragraph-with-alignment';
+import * as ChangeFontSize from '@quanzo/change-font-size';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -26,7 +27,10 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.editor = new EditorJS({
             logLevel: 'ERROR',
             tools: {
-                header: Header,
+                header: {
+                    class: Header,
+                    inlineToolbar: true
+                },
                 list: {
                     class: List,
                     inlineToolbar: true,
@@ -52,6 +56,12 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                 paragraph: {
                     class: Paragraph,
                     inlineToolbar: true
+                },
+                'Increase/Decrease font size': {
+                    class: ChangeFontSize,
+                    config: {
+                        cssClass: 'plus20pc'
+                    }
                 }
             }
         } as any);
