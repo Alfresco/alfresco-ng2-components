@@ -48,7 +48,8 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                 Color: {
                     class: ColorPlugin,
                     config: {
-                        colorCollections: ['#EC7878', '#9C27B0', '#673AB7', '#3F51B5', '#0070FF', '#03A9F4', '#00BCD4', '#4CAF50', '#8BC34A', '#CDDC39', '#FFF'],
+                        customPicker: true,
+                        colorCollections: ['#FF1300', '#ffa500', '#9C27B0', '#673AB7', '#3F51B5', '#0070FF', '#03A9F4', '#00BCD4', '#5f9ea0', '#4CAF50', '#8BC34A', '#CDDC39', '#FFF', '#000', '#c0c0c0', '#808080', '#800000'],
                         defaultColor: '#FF1300',
                         type: 'text'
                     }
