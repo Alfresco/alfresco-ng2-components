@@ -22,14 +22,7 @@ import { User } from '../models/general-user.model';
 export class FullNamePipe implements PipeTransform {
 
     transform(user: User): string {
-        let fullName = '';
-        fullName = this.buildFullName(user);
-
-        if (!fullName) {
-            fullName = fullName.concat(user.username ? user.username : user.email ? user.email : '');
-        }
-
-        return fullName;
+        return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
     }
 
     buildFullName(user: User): string {
@@ -39,5 +32,9 @@ export class FullNamePipe implements PipeTransform {
         fullName.push(user?.lastName);
 
         return fullName.join(' ').trim();
+    }
+
+    buildFromUsernameOrEmail(user: User): string {
+        return (user.username || user.email) ?? '' ;
     }
 }
