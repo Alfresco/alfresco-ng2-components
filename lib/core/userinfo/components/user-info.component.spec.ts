@@ -354,34 +354,6 @@ describe('User info component', () => {
                 expect(fullNameElement.textContent).not.toContain('fake-first-name');
             });
 
-            it('should not show first name if it is null string', async () => {
-                const wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
-                    firstName: 'null',
-                    lastName: 'fake-last-name'
-                });
-                getCurrentUserInfoStub.and.returnValue(of(wrongFirstNameBpmUser));
-                await whenFixtureReady();
-
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-last-name');
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
-            });
-
-            it('should not show last name if it is null string', async () => {
-                const wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
-                    firstName: 'fake-first-name',
-                    lastName: 'null'
-                });
-                getCurrentUserInfoStub.and.returnValue(of(wrongLastNameBpmUser));
-                await whenFixtureReady();
-
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-first-name');
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
-            });
-
             it('should not show the tabs', async () => {
                 await whenFixtureReady();
                 openUserInfo();

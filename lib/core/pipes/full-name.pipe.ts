@@ -16,23 +16,28 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { User } from '../models/general-user.model';
 
 @Pipe({ name: 'fullName' })
 export class FullNamePipe implements PipeTransform {
-    transform(user: any): string {
+
+    transform(user: User): string {
         let fullName = '';
-        if (user) {
-            if (user.firstName && user.firstName !== 'null') {
-                fullName += user.firstName;
-            }
-            if (user.lastName && user.lastName !== 'null') {
-                fullName += fullName.length > 0 ? ' ' : '';
-                fullName += user.lastName;
-            }
-            if (!fullName) {
-                fullName += user.username ? user.username : user.email ? user.email : '';
-            }
+        fullName = this.buildFullName(user);
+
+        if (!fullName) {
+            fullName = fullName.concat(user.username ? user.username : user.email ? user.email : '');
         }
+
         return fullName;
+    }
+
+    buildFullName(user: User): string {
+        const fullName: string[] = [];
+
+        fullName.push(user?.firstName);
+        fullName.push(user?.lastName);
+
+        return fullName.join(' ').trim();
     }
 }

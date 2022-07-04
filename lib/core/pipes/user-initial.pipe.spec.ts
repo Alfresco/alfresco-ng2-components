@@ -16,7 +16,8 @@
  */
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { InitialUsernamePipe, User } from './user-initial.pipe';
+import { User } from '../models/general-user.model';
+import { InitialUsernamePipe } from './user-initial.pipe';
 
 class FakeSanitizer extends DomSanitizer {
 

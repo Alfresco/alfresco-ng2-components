@@ -17,11 +17,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { UserProcessModel } from '../models/user-process.model';
-import { EcmUserModel } from '../models/ecm-user.model';
-import { IdentityUserModel } from '../models/identity-user.model';
-
-export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string } & { username?: string };
+import { User } from '../models/general-user.model';
 
 @Pipe({
     name: 'usernameInitials'
