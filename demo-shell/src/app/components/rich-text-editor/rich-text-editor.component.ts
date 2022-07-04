@@ -22,7 +22,7 @@ export class RichTextEditorComponent implements OnInit {
                 id: 'ffdulIdU1E',
                 type: 'paragraph',
                 data: {
-                    text: `is simply dummy text of the <font color="#ff1300">printing</font> and typesetting industry.
+                    text: `is simply <mark class="cdx-marker">dummy</mark> text of the <font color="#ff1300">printing</font> and typesetting industry.
                     <b><i><span class="plus20pc">Lorem</span></i></b> Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
                     but also the leap into electronic typesetting, remaining essentially <font color="#0070ff"><b>unchanged</b></font>.

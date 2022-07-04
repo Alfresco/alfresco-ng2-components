@@ -12,6 +12,7 @@ import * as ChangeFontSize from '@quanzo/change-font-size';
 import Underline from '@editorjs/underline';
 import InlineCode from '@editorjs/inline-code';
 import CodeTool from '@editorjs/code';
+import Marker from '@editorjs/marker';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -59,11 +60,8 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                     }
                 },
                 Marker: {
-                    class: ColorPlugin,
-                    config: {
-                        defaultColor: '#FFBF00',
-                        type: 'marker'
-                    }
+                    class: Marker,
+                    shortcut: 'CMD+M'
                 },
                 paragraph: {
                     class: Paragraph,
@@ -81,7 +79,16 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                 },
                 code: CodeTool
             },
-            data: this.data
+            data: this.data,
+            onChange: (api, event) => {
+                console.log(api);
+
+                this.editor.save().then((outputData) => {
+                    console.log('Article data: ', outputData)
+                  }).catch((error) => {
+                    console.log('Saving failed: ', error)
+                  });console.log('Now I know that Editor\'s content changed!', event)
+              }
         } as any);
     }
 
