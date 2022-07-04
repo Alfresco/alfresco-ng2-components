@@ -35,6 +35,6 @@ export class FullNamePipe implements PipeTransform {
     }
 
     buildFromUsernameOrEmail(user: User): string {
-        return (user.username || user.email) ?? '' ;
+        return (user?.username || user?.email) ?? '' ;
     }
 }
