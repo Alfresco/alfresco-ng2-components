@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 import EditorJS from '@editorjs/editorjs';
+import { BlockToolData } from '@editorjs/editorjs/types';
 
 /** Plugin import */
 import Header from '@editorjs/header';
@@ -18,6 +19,9 @@ import CodeTool from '@editorjs/code';
     styleUrls: ['./rich-text-editor.component.scss']
 })
 export class RichTextEditorComponent implements OnInit, AfterViewInit {
+
+    @Input()
+    data: BlockToolData<any> = {};
 
     editor: any;
 
@@ -76,7 +80,8 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
                     shortcut: 'CMD+SHIFT+M'
                 },
                 code: CodeTool
-            }
+            },
+            data: this.data
         } as any);
     }
 
