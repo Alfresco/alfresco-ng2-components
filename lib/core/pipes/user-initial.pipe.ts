@@ -17,11 +17,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { UserProcessModel } from '../models/user-process.model';
-import { EcmUserModel } from '../models/ecm-user.model';
-import { IdentityUserModel } from '../models/identity-user.model';
-
-export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string };
+import { User } from '../models/general-user.model';
 
 @Pipe({
     name: 'usernameInitials'
@@ -34,7 +30,7 @@ export class InitialUsernamePipe implements PipeTransform {
     transform(user: User, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
-            const initialResult = this.getInitialUserName(user.firstName || user.displayName, user.lastName, delimiter);
+            const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);
             safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return safeHtml;
