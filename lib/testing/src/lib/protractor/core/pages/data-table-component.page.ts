@@ -37,6 +37,7 @@ export class DataTableComponentPage {
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
     noContentContainer: ElementFinder;
+    mainMenuButton: ElementFinder;
 
     rows = `adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
 
@@ -46,6 +47,7 @@ export class DataTableComponentPage {
         this.contents = this.rootElement.$$('.adf-datatable-body span');
         this.tableBody = this.rootElement.$$(`.adf-datatable-body`).first();
         this.allColumns = this.rootElement.$$('div[data-automation-id*="auto_id_entry."]');
+        this.mainMenuButton = this.rootElement.$('[data-automation-id="adf-datatable-main-menu-button"]');
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
         this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] mat-checkbox`);
