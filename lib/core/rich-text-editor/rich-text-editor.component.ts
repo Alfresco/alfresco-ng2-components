@@ -1,18 +1,26 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { BlockToolData } from '@editorjs/editorjs/types';
-
-/** Plugin import */
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import * as ColorPlugin from 'editorjs-text-color-plugin';
-import * as Paragraph from 'editorjs-paragraph-with-alignment';
-import * as ChangeFontSize from '@quanzo/change-font-size';
-import Underline from '@editorjs/underline';
-import InlineCode from '@editorjs/inline-code';
-import CodeTool from '@editorjs/code';
-import Marker from '@editorjs/marker';
+import { Subject } from 'rxjs';
+import { editorJsConfig } from './editorjs-config';
 
 @Component({
     selector: 'adf-rich-text-editor',
@@ -24,7 +32,11 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     @Input()
     data: BlockToolData<any> = {};
 
-    editor: any;
+    private _outputData = new Subject<OutputData>();
+
+    outputData$ = this._outputData.asObservable();
+
+    editorInstance: EditorJS;
 
     constructor() { }
 
@@ -32,64 +44,28 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.editor = new EditorJS({
-            logLevel: 'ERROR',
-            tools: {
-                underline: {
-                    class: Underline,
-                    shortcut: 'CMD+U'
-                },
-                header: {
-                    class: Header,
-                    inlineToolbar: true
-                },
-                list: {
-                    class: List,
-                    inlineToolbar: true,
-                    config: {
-                        defaultStyle: 'unordered'
-                    }
-                },
-                Color: {
-                    class: ColorPlugin,
-                    config: {
-                        customPicker: true,
-                        colorCollections: ['#FF1300', '#ffa500', '#9C27B0', '#673AB7', '#3F51B5', '#0070FF', '#03A9F4', '#00BCD4', '#5f9ea0', '#4CAF50', '#8BC34A', '#CDDC39', '#FFF', '#000', '#c0c0c0', '#808080', '#800000'],
-                        defaultColor: '#FF1300',
-                        type: 'text'
-                    }
-                },
-                Marker: {
-                    class: Marker,
-                    shortcut: 'CMD+M'
-                },
-                paragraph: {
-                    class: Paragraph,
-                    inlineToolbar: true
-                },
-                'Increase/Decrease font size': {
-                    class: ChangeFontSize,
-                    config: {
-                        cssClass: 'plus20pc'
-                    }
-                },
-                inlineCode: {
-                    class: InlineCode,
-                    shortcut: 'CMD+SHIFT+M'
-                },
-                code: CodeTool
-            },
+        this.editorInstance = new EditorJS({
+            ...editorJsConfig,
             data: this.data,
-            onChange: (api, event) => {
-                console.log(api);
-
-                this.editor.save().then((outputData) => {
-                    console.log('Article data: ', outputData)
-                  }).catch((error) => {
-                    console.log('Saving failed: ', error)
-                  });console.log('Now I know that Editor\'s content changed!', event)
-              }
+            onChange: () => {
+                this.sendEditorOutputData();
+            },
+            onReady: () => {
+                this.sendEditorOutputData();
+            }
         } as any);
+    }
+
+    private sendEditorOutputData() {
+        this.editorInstance.save().then((outputData) => {
+            this._outputData.next(outputData);
+        }).catch((error) => {
+            console.log('Saving failed: ', error);
+        });
+    }
+
+    getEditorContent() {
+        this.sendEditorOutputData();
     }
 
 }
