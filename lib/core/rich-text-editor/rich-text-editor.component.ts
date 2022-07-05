@@ -32,6 +32,9 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     @Input()
     data: BlockToolData<any> = {};
 
+    @Input()
+    readOnly = false;
+
     private _outputData = new Subject<OutputData>();
 
     outputData$ = this._outputData.asObservable();
@@ -47,6 +50,7 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
         this.editorInstance = new EditorJS({
             ...editorJsConfig,
             data: this.data,
+            readOnly: this.readOnly,
             onChange: () => {
                 this.sendEditorOutputData();
             },
