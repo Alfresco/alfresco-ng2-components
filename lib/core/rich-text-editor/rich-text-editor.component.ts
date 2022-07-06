@@ -69,7 +69,7 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     }
 
     getEditorContent() {
-        this.sendEditorOutputData();
+        return this.editorInstance.save();
     }
 
 }
