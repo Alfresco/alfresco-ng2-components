@@ -51,14 +51,12 @@ import { PipeModule } from './pipes/pipe.module';
 import { AlfrescoApiV2, AlfrescoJsClientsModule, API_CLIENT_FACTORY_TOKEN, LegacyAlfrescoApiServiceFacade } from '@alfresco/adf-core/api';
 import { BaseAuthenticationService, AUTH_CONFIG, AuthBearerInterceptor, OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { OAuthStorage } from 'angular-oauth2-oidc';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { authConfigFactory, AuthConfigService } from './auth-factories/auth-config.service';
 import { OIDCAuthenticationService } from './auth-factories/oidc-authentication.service';
-import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
 import { IconModule } from './icon/icon.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AuthenticationService, AuthGuard, StorageService } from './services';
+import { AuthenticationService, AuthGuard } from './services';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
@@ -71,6 +69,10 @@ import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { createAlfrescoApiV2Service, AlfrescoApiV2LoaderService } from './api-factories/alfresco-api-v2-loader.service';
 import { AngularClientFactory } from './api-factories/angular-api-client.factory';
+
+interface CoreModuleConfig {
+    useLegacy: boolean;
+}
 
 const defaultConfig: CoreModuleConfig = { useLegacy: true };
 
@@ -168,10 +170,6 @@ export class CoreModule {
                     deps: [VersionCompatibilityService],
                     multi: true
                 },
-                {
-                    provide: CORE_MODULE_CONFIG,
-                    useValue: config
-                },
                 ...(config.useLegacy ?
                     [
                         { provide: BaseAuthenticationService, useClass: AuthenticationService },
@@ -179,7 +177,7 @@ export class CoreModule {
                         {
                             provide: APP_INITIALIZER,
                             useFactory: startupServiceFactory,
-                            deps: [ AlfrescoApiService ],
+                            deps: [AlfrescoApiService],
                             multi: true
                         }
                     ] : [
@@ -201,7 +199,6 @@ export class CoreModule {
                         },
                         { provide: AuthGuard, useClass: OidcAuthGuard },
                         { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
-                        { provide: OAuthStorage, useExisting: StorageService },
                         {
                             provide: AUTH_CONFIG,
                             useFactory: authConfigFactory,

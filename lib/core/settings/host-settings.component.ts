@@ -16,10 +16,9 @@
  */
 
 import { ENTER } from '@angular/cdk/keycodes';
-import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { CoreModuleConfig, CORE_MODULE_CONFIG } from '../core.module.token';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../services/storage.service';
@@ -65,9 +64,8 @@ export class HostSettingsComponent implements OnInit {
         private formBuilder: FormBuilder,
         private storageService: StorageService,
         private alfrescoApiService: AlfrescoApiService,
-        private appConfig: AppConfigService,
-        @Inject(CORE_MODULE_CONFIG) private coreModuleConfig: CoreModuleConfig
-    ) {}
+        private appConfig: AppConfigService
+    ) { }
 
     ngOnInit() {
         if (this.providers.length === 1) {
@@ -233,10 +231,6 @@ export class HostSettingsComponent implements OnInit {
 
     isOAUTH(): boolean {
         return this.form.get('authType').value === 'OAUTH';
-    }
-
-    get supportCodeFlow(): boolean {
-        return this.coreModuleConfig.useLegacy === false;
     }
 
     get providersControl(): FormControl {

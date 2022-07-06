@@ -6,7 +6,9 @@ import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 
-export const loginFactory = (service: RedirectAuthService) => () => service.init();
+export function loginFactory(service: RedirectAuthService) {
+    service.init();
+}
 
 const defaultConfig: AuthModuleConfig = {
     useHash: false
