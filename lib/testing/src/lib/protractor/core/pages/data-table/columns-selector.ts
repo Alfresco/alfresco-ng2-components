@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by } from 'protractor';
+import { by } from 'protractor';
 import { TestElement } from '../../test-element';
 
 export class DataTableColumnSelector {

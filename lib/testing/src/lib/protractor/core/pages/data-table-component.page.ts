@@ -433,7 +433,7 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible($(`div[data-automation-id="auto_id_${columnKey}"]`));
     }
 
-    async isColumnIsDisplayed(columnTitle: string): Promise<boolean> {
+    async isColumnDisplayed(columnTitle: string): Promise<boolean> {
         const isColumnDisplated = (await this.allColumns).some(
             async column => {
                 const columnText = await column.getText();
