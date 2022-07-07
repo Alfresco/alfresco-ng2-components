@@ -15,47 +15,45 @@
  * limitations under the License.
  */
 
-import { $$ } from 'protractor';
+import { browser, by } from 'protractor';
 import { TestElement } from '../../test-element';
-import { BrowserActions } from '../../utils/browser-actions';
 
 export class DataTableColumnSelector {
     columnsSelectorComponent = TestElement.byCss('[data-automation-id="adf-columns-selector"]');
+
     closeButton = TestElement.byCss('[data-automation-id="adf-columns-selector-close-button"]');
     searchInput = TestElement.byCss('[data-automation-id="adf-columns-selector-search-input"]');
-    columnsList = TestElement.byCss('.adf-columns-selector-list-container');
+    applyButton = TestElement.byCss('[data-automation-id="adf-columns-selector-apply-button"]');
+    columnsListContainer = TestElement.byCss('.adf-columns-selector-list-container');
+    allColumnsSelectors = this.columnsListContainer.elementFinder.all(
+        by.css('.adf-columns-selector-column-checkbox')
+    );
 
-    async getAllColmns(): Promise<{name: string; isChecked: boolean}[]> {
+    async getAllColumnSelectors(): Promise<{ name: string; isSelected: boolean }[]> {
+        const columnCheckboxes = this.allColumnsSelectors.map<[string, boolean]>(column => {
+            const checkBoxElement = column.element(by.tagName('input'));
+            return Promise.all([
+                column.getText(),
+                checkBoxElement.isSelected()
+            ]);
+        });
 
-        const columnNames = await BrowserActions.getArrayText($$('.adf-columns-selector-column-checkbox')) as any as string[];
+        const checkboxesValues = await columnCheckboxes;
 
-        const req = columnNames.map(column => )
+        return checkboxesValues.map(([name, isSelected]) => ({
+            name,
+            isSelected
+        }));
+    }
 
+    async selectColumn(columnName: string): Promise<void> {
+        const columnSelector = this.allColumnsSelectors.filter(
+            async column => {
+                const columnText = await column.getText();
+                return columnText === columnName;
+            }
+        ).first();
 
-
-        const c = await Promise.all(b);
-        console.log(c);
-        // const value = $$('.adf-columns-selector-column-checkbox').reduce(function(acc, elem) {
-        //     return elem.getText().then(function(text) {
-        //       return acc + text + ' ';
-        //     });
-        //   }, '');
-
-        // const a = await Promise.all([value] as any);
-
-
-        // const allColumns = await columnCheckBoxes.getText();
-        // debugger;
-        // columnCheckBoxes.forEach((element => {
-        //     debugger;
-        //     console.log('element', element);
-
-        // }));
-
-        // const TestElement.byTag('mat-checkbox');
-
-
-
-        return Promise.resolve([]);
+        return columnSelector.click();
     }
 }

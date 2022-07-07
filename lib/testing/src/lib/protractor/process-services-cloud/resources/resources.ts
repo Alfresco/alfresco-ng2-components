@@ -170,7 +170,8 @@ export const ACTIVITI_CLOUD_APPS = {
             candidateUserProcess: 'candidateuserprocess',
             outputVariablesMapping: 'output-variables-mapping',
             outcomeVisibilityProcess: 'outcome-visib-process',
-            restConnectorProcess: 'rest-connector-process'
+            restConnectorProcess: 'rest-connector-process',
+            withDisplayedVariables: 'with-displayed-variables'
         },
         forms: {
             tabVisibilityFields: {
