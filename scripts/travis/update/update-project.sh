@@ -14,6 +14,7 @@ show_help() {
     echo "-t or --token: Github ouath token"
     echo "-p or --pr: Originating jsapi PR number"
     echo "-v or --version version to update"
+    echo "-c or --commit The commit that the current build is testing"
 }
 
 set_token() {
@@ -26,6 +27,10 @@ set_pr() {
 
 version() {
     VERSION=$1
+}
+
+set_commit() {
+    COMMIT=$1
 }
 
 update_dependency() {
@@ -91,7 +96,7 @@ update() {
         git push --force origin $BRANCH_TO_CREATE
     fi
 
-    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO
+    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT
 
     cd ..
     rm -rf $TEMP_GENERATOR_DIR
@@ -103,6 +108,7 @@ while [[ $1 == -* ]]; do
       -t|--token) set_token $2; shift; shift;;
       -p|--pr) set_pr $2; shift; shift;;
       -v|--version)  version $2; shift 2;;
+      -c|--commit) set_commit $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
