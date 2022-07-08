@@ -170,7 +170,8 @@ export const ACTIVITI_CLOUD_APPS = {
             candidateUserProcess: 'candidateuserprocess',
             outputVariablesMapping: 'output-variables-mapping',
             outcomeVisibilityProcess: 'outcome-visib-process',
-            restConnectorProcess: 'rest-connector-process'
+            restConnectorProcess: 'rest-connector-process',
+            withDisplayedVariables: 'with-displayed-variables'
         },
         forms: {
             tabVisibilityFields: {
@@ -383,7 +384,19 @@ export const ACTIVITI_CLOUD_APPS = {
             nonInterruptingBoundaryTask: 'nonint-boundary-task',
             subprocessInterruptingTask: 'subprocess-task',
             finalTask: 'final-task',
-            finalTaskUnited: 'finaltask'
+            finalTaskUnited: 'finaltask',
+            withDisplayedVariables: 'with-displayed-variables'
+        },
+        tasksData: {
+            withDisplayedVariables: {
+                variablesColumns: [
+                    { name: 'Column A', value: 'Value A' },
+                    { name: 'Column B', value: '123' },
+                    { name: 'Column C', value: 'Nov 3, 2033' },
+                    { name: 'Column D', value: 'Oct 16, 2024' },
+                    { name: 'Column E', value: 'false' }
+                ]
+            }
         },
         security: [
             {

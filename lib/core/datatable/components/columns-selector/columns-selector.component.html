@@ -1,10 +1,18 @@
-<div class="adf-columns-selector" (click)="$event.stopPropagation();">
+<div
+    class="adf-columns-selector"
+    data-automation-id="adf-columns-selector"
+    (click)="$event.stopPropagation();"
+>
     <div class="adf-columns-selector-header">
         <span class="adf-columns-selector-header-label">
             {{"ADF-DATATABLE.COLUMNS_SELECTOR.COLUMNS" | translate}}
         </span>
 
-        <button mat-icon-button (click)="closeMenu()">
+        <button
+            data-automation-id="adf-columns-selector-close-button"
+            mat-icon-button
+            (click)="closeMenu()"
+        >
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -20,6 +28,7 @@
         <input
             [formControl]="searchInputControl"
             class="adf-columns-selector-search-input"
+            data-automation-id="adf-columns-selector-search-input"
             type="text"
             [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
     </div>
@@ -46,6 +55,7 @@
     <div class="adf-columns-selector-footer">
         <button
             mat-flat-button
+            data-automation-id="adf-columns-selector-apply-button"
             color="primary"
             (click)="apply()">
             {{"ADF-DATATABLE.COLUMNS_SELECTOR.APPLY" | translate}}

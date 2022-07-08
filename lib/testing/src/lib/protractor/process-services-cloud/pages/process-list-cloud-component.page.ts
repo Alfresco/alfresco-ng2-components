@@ -19,6 +19,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { browser, $, $$ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DataTableColumnSelector } from '../../core/pages/data-table/columns-selector';
 
 export class ProcessListCloudComponentPage {
 
@@ -136,6 +137,13 @@ export class ProcessListCloudComponentPage {
     async getNumberOfOptions(): Promise<number> {
         const options = await this.actionMenu.$$(`button`);
         return options.length;
+    }
+
+    async clickMainMenuButton(): Promise<DataTableColumnSelector> {
+        await this.dataTable.mainMenuButton.click();
+        const columnsSelector = new DataTableColumnSelector();
+        await columnsSelector.columnsSelectorComponent.waitVisible();
+        return columnsSelector;
     }
 
     async waitTillProcessListContentLoaded(): Promise<void> {
