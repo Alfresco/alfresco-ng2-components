@@ -1,5 +1,6 @@
+import { StorageService } from '@alfresco/adf-core/storage';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module.token';
 import { AuthService } from './auth.service';
@@ -22,6 +23,7 @@ const defaultConfig: AuthModuleConfig = {
   ],
   providers: [
     { provide: AuthService, useExisting: RedirectAuthService },
+    { provide: OAuthStorage, useExisting: StorageService },
     {
       provide: APP_INITIALIZER,
       useFactory: loginFactory,

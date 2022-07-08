@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { Injectable } from '@angular/core';
 import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
-import { StorageService } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from './content.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from './storage.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from '../services/storage.service';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { ExtensionService } from '@alfresco/adf-extensions';
 

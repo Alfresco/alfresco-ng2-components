@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
-import { StorageService } from '../../services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 

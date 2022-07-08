@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'

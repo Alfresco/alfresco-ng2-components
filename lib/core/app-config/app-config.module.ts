@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
-import { StorageService } from '../services/storage.service';
 import { loadAppConfig } from './app-config.loader';
 import { AppConfigPipe } from './app-config.pipe';
 import { AppConfigService } from './app-config.service';

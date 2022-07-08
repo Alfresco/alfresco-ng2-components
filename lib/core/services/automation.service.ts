@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { StorageService } from '@alfresco/adf-core/storage';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { DemoForm } from '../mock/form/demo-form.mock';
 

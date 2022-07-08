@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '@alfresco/adf-core/storage';
 import { AppConfigService, AppConfigValues } from './app-config.service';
 
 export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
