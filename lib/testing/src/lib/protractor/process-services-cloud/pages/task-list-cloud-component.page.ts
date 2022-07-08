@@ -19,6 +19,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { by, ElementFinder, $$, $ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DataTableColumnSelector } from '../../core/pages/data-table/columns-selector';
 
 const column = {
     id: 'Id',
@@ -92,6 +93,13 @@ export class TaskListCloudComponentPage {
 
     getRow(taskName: string): ElementFinder {
         return this.dataTable.getCellElementByValue(column.name, taskName);
+    }
+
+    async clickMainMenuButton(): Promise<DataTableColumnSelector> {
+        await this.dataTable.mainMenuButton.click();
+        const columnsSelector = new DataTableColumnSelector();
+        await columnsSelector.columnsSelectorComponent.waitVisible();
+        return columnsSelector;
     }
 
     checkContentIsDisplayedById(taskId: string): Promise<void> {
