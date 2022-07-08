@@ -8,10 +8,10 @@ const ATTEMPT_MSG = [
     `Emm did you forget? 🤡`,
     `Where are you? 🤷`,
     `We are going to die!! 👻`,
-    `I guess that the Apocalypse happened and I am alone 👽`
+    `I guess the Apocalypse happened and I am alone 👽`
 ];
 
-GIVE_UP_MSG =  `I gave up, it would be fixed eventually 🔴`;
+GIVE_UP_MSG =  `I gave up, it will be fix eventually 🔴`;
 
 class PrCreator {
     constructor(githubUser, githubRepo, token, commit) {
