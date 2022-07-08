@@ -161,7 +161,7 @@ jobs:
 
         - stage: "Trigger Alpha ADF child build"
           name: "Trigger Alpha ADF child build"
-          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
+          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
           workspaces:
             use: built_libs_cache
 
