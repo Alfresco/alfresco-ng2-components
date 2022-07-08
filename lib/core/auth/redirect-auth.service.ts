@@ -8,9 +8,7 @@ import { AuthService } from './auth.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RedirectAuthService extends AuthService {
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 

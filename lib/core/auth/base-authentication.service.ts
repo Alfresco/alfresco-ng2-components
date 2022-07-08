@@ -20,12 +20,17 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, Observer, ReplaySubject } from 'rxjs';
 
 export abstract class BaseAuthenticationService {
-    protected bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/', 'idp/'];
-
+    // TODO: read the idp url from the app config, so we can exclude it, when making requests to the provider;
+    protected idpUrls: string[] = ['auth/realms', 'idp/'];
+    protected bearerExcludedUrls: string[] = ['resources/', 'assets/'];
     abstract getToken(): string;
 
     getBearerExcludedUrls(): string[] {
         return this.bearerExcludedUrls;
+    }
+
+    getIdpUrls(): string[] {
+        return this.idpUrls;
     }
 
     addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {

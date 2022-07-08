@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ApiClientsService } from '@alfresco/adf-core/api';
 import { BaseAuthenticationService } from '@alfresco/adf-core/auth';
 import { AlfrescoApiConfig, HttpClient, LegacyTicketApi, PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
@@ -25,6 +24,7 @@ import { EMPTY, from, Observable, ReplaySubject, throwError } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { RedirectionModel } from '../models/redirection.model';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { LogService } from '../services/log.service';
 
@@ -32,18 +32,24 @@ import { LogService } from '../services/log.service';
     providedIn: 'root'
 })
 export class OIDCAuthenticationService extends BaseAuthenticationService  {
+
     onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+    _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
-        return this.apiClientsService.get('ContentClient.people');
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
+        return this._peopleApi;
     }
+
+    _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
-        return this.apiClientsService.get('ActivitiClient.user-profile');
+        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
+        return this._profileApi;
     }
 
     constructor(
-        private apiClientsService: ApiClientsService,
+        private alfrescoApi: AlfrescoApiService,
         private appConfig: AppConfigService,
         private authStorage: OAuthStorage,
         private oauthService: OAuthService,
