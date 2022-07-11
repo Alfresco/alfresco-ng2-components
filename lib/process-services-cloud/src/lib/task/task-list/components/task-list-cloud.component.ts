@@ -214,20 +214,23 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             completedTo: this.completedTo,
             completedDate: this.completedDate,
             candidateGroupId: this.candidateGroupId,
-            variableDefinitions: this.getRequestNodeVariableIds()
+            variableKeys: this.getRequestNodeVariables()
         };
 
         return new TaskQueryCloudRequestModel(requestNode);
     }
 
-    private getRequestNodeVariableIds(): string[] | undefined {
+    private getRequestNodeVariables(): string[] | undefined {
         const displayedVariableColumns: string[] = (this.columns ?? [])
             .filter(column =>
                 column.customData?.columnType === 'process-variable-column' &&
                 column.isHidden !== true
             )
-            .map(column => column.customData.assignedVariableDefinitionIds)
-            .reduce((allIds, ids) => [...ids, ...allIds], []);
+            .map(column => {
+                const variableDefinitionsPayload = column.customData.variableDefinitionsPayload;
+                return variableDefinitionsPayload;
+            })
+            .reduce((allRequestKeys, requestKeys) => [...requestKeys, ...allRequestKeys], []);
 
         return displayedVariableColumns.length ? displayedVariableColumns : undefined;
     }

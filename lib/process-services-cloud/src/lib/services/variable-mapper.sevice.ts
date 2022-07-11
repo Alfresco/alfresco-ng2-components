@@ -33,7 +33,7 @@ export class VariableMapperService {
                 return instance;
             }
 
-            const variablesMap = (instance.variables ?? []).reduce((variableAccumulator, variable) => {
+            const variablesMap = (instance.variables ?? []).reduce<{[columnTitle: string]: ProcessInstanceVariable}>((variableAccumulator, variable) => {
                 const processVariableDefinitionId = variable.variableDefinitionId;
 
                 const column = columnsByVariableId[processVariableDefinitionId];

@@ -41,6 +41,7 @@ describe('ProcessListDatatableAdapter', () => {
             title: 'columnDisplayName1',
             customData: {
                 assignedVariableDefinitionIds: ['1'],
+                variableDefinitionsPayload: ['processKey/variableName'],
                 columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });

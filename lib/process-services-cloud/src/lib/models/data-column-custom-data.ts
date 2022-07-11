@@ -18,5 +18,6 @@
 export const PROCESS_LIST_CUSTOM_VARIABLE_COLUMN = 'process-variable-column';
 export interface ProcessListDataColumnCustomData {
     assignedVariableDefinitionIds: string[];
+    variableDefinitionsPayload: string[];
     columnType: string;
 }
