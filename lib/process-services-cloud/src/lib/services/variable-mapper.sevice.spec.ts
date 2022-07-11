@@ -42,6 +42,7 @@ describe('VariableMapperService', () => {
             title: 'column name',
             key: '',
             customData: {
+                variableDefinitionsPayload: ['processKey/variableName'],
                 assignedVariableDefinitionIds: [variable.variableDefinitionId],
                 columnType: 'text'
             }

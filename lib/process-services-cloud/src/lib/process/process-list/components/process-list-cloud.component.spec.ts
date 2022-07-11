@@ -115,6 +115,7 @@ describe('ProcessListCloudComponent', () => {
                         getDataColumnMock({
                             id: 'variableColumnId',
                             customData: {
+                                variableDefinitionsPayload: ['processKey/variableName'],
                                 assignedVariableDefinitionIds: ['variableDefinitionId'],
                                 columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
                             }
@@ -321,7 +322,7 @@ describe('ProcessListCloudComponent', () => {
         component.ngAfterContentInit();
         component.reload();
 
-        expect(component.requestNode.variableDefinitions).not.toBeDefined();
+        expect(component.requestNode.variableKeys).not.toBeDefined();
     });
 
     it('should request process variable if column for process variable is displayed', () => {
@@ -333,7 +334,7 @@ describe('ProcessListCloudComponent', () => {
                 entries: [{
                     entry: {
                         key: ProcessListCloudPreferences.columnsVisibility,
-                        value: '{"variableColumnId":true, "2":true}'
+                        value: '{"variableColumnId":"id", "2":true}'
                     }
                 }]
             }
@@ -342,7 +343,7 @@ describe('ProcessListCloudComponent', () => {
         component.ngAfterContentInit();
         component.reload();
 
-        expect(component.requestNode.variableDefinitions).toEqual(['variableDefinitionId']);
+        expect(component.requestNode.variableKeys).toEqual(['processKey/variableName']);
     });
 
     it('should reload tasks when reload() is called', (done) => {

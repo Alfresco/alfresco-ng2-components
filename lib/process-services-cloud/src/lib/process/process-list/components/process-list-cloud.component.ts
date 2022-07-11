@@ -440,7 +440,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             suspendedTo: this.suspendedTo,
             completedDate: this.completedDate,
             sorting: this.sorting,
-            variableDefinitions: this.getRequestNodeVariableIds()
+            variableKeys: this.getVariableDefinitionsRequestModel()
         };
 
         return new ProcessQueryCloudRequestModel(requestNode);
@@ -469,14 +469,17 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 
-    private getRequestNodeVariableIds(): string[] | undefined {
+    private getVariableDefinitionsRequestModel(): string[] | undefined {
         const displayedVariableColumns = this.columns
             .filter(column =>
                 column.customData?.columnType === PROCESS_LIST_CUSTOM_VARIABLE_COLUMN &&
                 column.isHidden !== true
             )
-            .map(column => column.customData.assignedVariableDefinitionIds)
-            .reduce((allIds, ids) => [...ids, ...allIds], []);
+            .map(column => {
+                const variableDefinitionsPayload = column.customData.variableDefinitionsPayload;
+                return variableDefinitionsPayload;
+            })
+            .reduce((variablesPayload, payload) => [...variablesPayload, ...payload], []);
 
         return displayedVariableColumns.length ? displayedVariableColumns : undefined;
     }

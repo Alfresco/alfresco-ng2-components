@@ -88,7 +88,7 @@ export class ProcessListCloudService extends BaseCloudService {
         requestNode: ProcessQueryCloudRequestModel,
         property: keyof ProcessQueryCloudRequestModel
     ) {
-        if (property === 'variableDefinitions' && requestNode[property]?.length > 0) {
+        if (property === 'variableKeys' && requestNode[property]?.length > 0) {
             return `${requestNode[property].map(variableId => variableId).join(',')}`;
         }
 
