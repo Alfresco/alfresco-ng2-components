@@ -369,4 +369,29 @@ export class TaskFilterCloudService extends BaseCloudService {
         return this.notificationCloudService.makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
             .pipe(map((events: any) => events.data.engineEvents));
     }
+
+    writeQueryParams(value: any, filterProperties: string[], appName?: string, id?: string): any {
+        value = value || {};
+        const result = {
+            appName: appName || value['appName'],
+            id: id || value['id']
+        };
+
+        for (const prop of filterProperties) {
+            if (prop === 'lastModified') {
+                if (value['lastModifiedFrom']) {
+                    result['lastModifiedFrom'] = value['lastModifiedFrom'].valueOf();
+                }
+
+                if (value['lastModifiedTo']) {
+                    result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
+                }
+
+            } else if (value.hasOwnProperty(prop)) {
+                result[prop] = value[prop];
+            }
+        }
+
+        return result;
+    }
 }

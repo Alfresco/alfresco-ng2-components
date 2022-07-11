@@ -104,30 +104,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this._filter;
     }
 
-    @Input()
-    set processFilter(value: ProcessFilterCloudModel) {
-        const isChanged = this.isFilterChanged(this._filter, value);
-
-        this._filter = value;
-
-        if (value?.appName) {
-            this.appName = value.appName;
-        }
-
-        if (value?.id) {
-            this.id = value.id;
-        }
-
-        this.processFilterProperties = this.createAndFilterProperties();
-        this.processFilterActions = this.createAndFilterActions();
-
-        this.buildForm(this.processFilterProperties);
-
-        if (isChanged) {
-            this.filterChange.emit(value);
-        }
-    }
-
     status: Array<DropdownOption> = [
         { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
         { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
@@ -223,9 +199,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .pipe(finalize(() => this.isLoading = false))
             .subscribe(response => {
                 this.filterHasBeenChanged = false;
-                this.processFilter = new ProcessFilterCloudModel(
-                    Object.assign({}, response || {}, this.processFilter || {})
-                );
+                this._filter = response;
+                this.processFilterProperties = this.createAndFilterProperties();
+                this.processFilterActions = this.createAndFilterActions();
+
+                this.buildForm(this.processFilterProperties);
             });
     }
 
@@ -500,7 +478,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 this.action.emit(resetAction);
             }),
             switchMap(() => this.restoreDefaultProcessFilters()))
-            .subscribe(() => { });
+            .subscribe();
     }
 
     /**
@@ -686,17 +664,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 value: 'businessKey'
             }
         ];
-    }
-
-    private isFilterChanged(oldValue: ProcessFilterCloudModel, newValue: ProcessFilterCloudModel): boolean {
-        const oldJson = JSON.stringify(
-            this.processFilterCloudService.writeQueryParams(oldValue || {}, this.filterProperties)
-        );
-        const newJson = JSON.stringify(
-            this.processFilterCloudService.writeQueryParams(newValue || {}, this.filterProperties)
-        );
-
-        return oldJson !== newJson;
     }
 
     private createProcessFilterProperties(filterModel: ProcessFilterCloudModel): ProcessFilterProperties[] {

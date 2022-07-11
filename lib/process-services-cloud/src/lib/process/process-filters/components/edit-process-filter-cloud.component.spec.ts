@@ -104,6 +104,7 @@ describe('EditProcessFilterCloudComponent', () => {
         getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+        component.appName = fakeFilter.appName;
         fixture.detectChanges();
     });
 
@@ -111,15 +112,11 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.destroy();
     });
 
-    it('should not raise filter change events if filter remains the same', () => {
+    it('should raise filter change events if filter remains the same', () => {
         let count = 0;
         component.filterChange.subscribe(() => count++);
 
-        component.processFilter = fakeFilter;
-        component.processFilter = fakeFilter;
-        component.processFilter = fakeFilter;
-
-        expect(count).toBe(1);
+        expect(count).toBe(0);
     });
 
     it('should fetch process instance filter by id', async () => {

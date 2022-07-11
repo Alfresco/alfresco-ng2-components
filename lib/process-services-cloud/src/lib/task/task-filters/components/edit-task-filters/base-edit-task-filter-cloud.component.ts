@@ -144,7 +144,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
-        if (id && id.currentValue !== id.previousValue) {
+        if (id && id.currentValue && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilterAndBuildForm();
         }
     }
