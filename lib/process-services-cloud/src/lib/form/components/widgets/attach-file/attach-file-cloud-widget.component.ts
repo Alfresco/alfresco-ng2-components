@@ -224,6 +224,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onAttachFileClicked(nodeSelector: any) {
         nodeSelector.nodeId = nodeSelector.id;
+        debugger;
         this.fileClicked(new ContentLinkModel(nodeSelector));
     }
 

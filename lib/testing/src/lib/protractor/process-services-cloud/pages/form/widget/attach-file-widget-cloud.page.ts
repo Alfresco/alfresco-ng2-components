@@ -61,6 +61,11 @@ export class AttachFileWidgetCloudPage {
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
+    async clickOnFile(name: string): Promise<void> {
+        const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
+        await BrowserActions.click(fileAttached);
+
+    }
     async checkFilesAreAttached(filesName: string[]): Promise<void> {
         for (const fileName of filesName) {
             await this.checkFileIsAttached(fileName);

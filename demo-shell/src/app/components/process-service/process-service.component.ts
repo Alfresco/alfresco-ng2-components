@@ -229,6 +229,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         formService.formContentClicked
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((content) => {
+                debugger;
                 this.showContentPreview(content);
             });
 
@@ -462,6 +463,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     private showContentPreview(content: any) {
+        debugger;
         if (content.contentBlob) {
             this.preview.showBlob(content.name, content.contentBlob);
         } else {
