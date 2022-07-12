@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import EditorJS, { OutputData } from '@editorjs/editorjs';
-import { BlockToolData } from '@editorjs/editorjs/types';
 import { Subject } from 'rxjs';
 import { editorJsConfig } from './editorjs-config';
 
 @Component({
     selector: 'adf-rich-text-editor',
     templateUrl: './rich-text-editor.component.html',
-    styleUrls: ['./rich-text-editor.component.scss']
+    styleUrls: ['./rich-text-editor.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class RichTextEditorComponent implements OnInit, AfterViewInit {
 
     @Input()
-    data: BlockToolData<any> = {};
+    data: OutputData;
 
     @Input()
     readOnly = false;
@@ -40,14 +40,18 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     outputData$ = this._outputData.asObservable();
 
     editorInstance: EditorJS;
+    dynamicId: string;
 
-    constructor() { }
+    constructor() {
+    }
 
     ngOnInit(): void {
+        this.dynamicId = `editorjs-${crypto.getRandomValues(new Uint32Array(1))}`;
     }
 
     ngAfterViewInit(): void {
         this.editorInstance = new EditorJS({
+            holder: this.dynamicId,
             ...editorJsConfig,
             data: this.data,
             readOnly: this.readOnly,
