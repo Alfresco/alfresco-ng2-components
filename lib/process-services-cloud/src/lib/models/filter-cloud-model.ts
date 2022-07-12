@@ -49,7 +49,7 @@ export class TaskQueryCloudRequestModel {
     completedFrom?: string;
     completedTo?: string;
     candidateGroupId?: string;
-    variableDefinitions?: string[];
+    variableKeys?: string[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -84,7 +84,7 @@ export class TaskQueryCloudRequestModel {
             this.completedTo = obj.completedTo;
             this.completedDate = obj.completedDate;
             this.candidateGroupId = obj.candidateGroupId;
-            this.variableDefinitions = obj.variableDefinitions;
+            this.variableKeys = obj.variableKeys;
         }
     }
 }

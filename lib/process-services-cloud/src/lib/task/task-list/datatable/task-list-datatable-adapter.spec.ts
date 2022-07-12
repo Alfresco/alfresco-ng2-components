@@ -51,6 +51,7 @@ describe('TasksListDatatableAdapter', () => {
             title: 'columnDisplayName1',
             customData: {
                 assignedVariableDefinitionIds: ['variableDefinitionId'],
+                variableDefinitionsPayload: ['processKey/variableName'],
                 columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });
