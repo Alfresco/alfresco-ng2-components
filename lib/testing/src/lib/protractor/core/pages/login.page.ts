@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor, $ } from 'protractor';
+import { browser, protractor, $ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
@@ -29,7 +29,7 @@ export class LoginPage {
     usernameField = $('#username');
     passwordField = $('#password');
     loginButton = $('input[type="submit"]');
-    header = element(by.tagName('adf-layout-header'));
+    header = $('.studio-main-navigation-header');
     loginError = $(`div[data-automation-id="login-error"]`);
     visibilityLabel = $('#v');
 
