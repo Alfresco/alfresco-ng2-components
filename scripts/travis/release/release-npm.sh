@@ -8,7 +8,7 @@ if [ $TRAVIS_EVENT_TYPE == "push"  ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $T
 then
     TAG_NPM=latest
 
-    if [ $TRAVIS_BRANCH == "develop" ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $TRAVIS_EVENT_TYPE == "api" ]
+    if [ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $TRAVIS_EVENT_TYPE == "api" ]
     then
         TAG_NPM=alpha
     fi
