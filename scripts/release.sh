@@ -36,8 +36,6 @@ LICENSE_GREP=`escape_for_grep "$LICENSE_ROW"`
 LICENSE_README="$ROOTDIR/docs/license-info/README.md";
 LICENSE_GREP_RESULT=`grep "$LICENSE_GREP" "$LICENSE_README"`;
 
-#./scripts/update-version.sh -v $VERSION
-
 if [ -z "$LICENSE_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding third party license info for version: $VERSION\e[0m"
@@ -62,3 +60,5 @@ then
 else
     echo -e "\e[32mVulnerability info is already added for version: $VERSION, nothing to do here.\e[0m"
 fi
+
+./scripts/update-version.sh -v $VERSION
