@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { Subject } from 'rxjs';
@@ -27,7 +27,7 @@ import { editorJsConfig } from './editorjs-config';
     styleUrls: ['./rich-text-editor.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class RichTextEditorComponent implements OnInit, AfterViewInit {
+export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input()
     data: OutputData;
@@ -74,6 +74,10 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
 
     getEditorContent() {
         return this.editorInstance.save();
+    }
+
+    ngOnDestroy(): void {
+        this.editorInstance.destroy();
     }
 
 }
