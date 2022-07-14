@@ -22,15 +22,16 @@ import {
 } from '@alfresco/js-api';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+
 /** tslint:disable-next line */
-export class BaseJsApiAngularHttpClient implements JsApiHttpClient {
+export class JsApiAngularHttpClient implements JsApiHttpClient {
     public basePath: string;
 
     constructor(
         public config: HttpClientConfig,
         private httpClient: HttpClient
     ) {
-        this.basePath = `${this.config.host}/${this.config.contextRoot}${this.config.servicePath}`;
+        this.basePath = `${this.config.host}/${this.config.contextRoot}${this.config.servicePath || ''}`;
     }
 
     request<T = any>(options: RequestOptions): Promise<T> {

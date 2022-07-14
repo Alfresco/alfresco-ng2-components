@@ -18,225 +18,81 @@
 /*tslint:disable*/ // => because of ADF file naming problems... Try to remove it, if you don't believe me :P
 /* eslint-disable */
 
-import { AlfrescoApiConfig, AlfrescoApiType, HttpClient as JsApiHttpClient, LegacyAlfrescoApi, LegacyTicketApi } from "@alfresco/js-api";
+import { AlfrescoApiConfig, BaseAlfrescoApi, ContentAuth, ContentClient, Oauth2Auth, ProcessAuth, ProcessClient } from "@alfresco/js-api";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { OAuthService } from 'angular-oauth2-oidc';
-import { BaseJsApiAngularHttpClient } from "./js-api-angular-http-client";
-import { JsApiAngularHttpClientLegacyTicketApi } from "./js-api-angular-http-client-with-ticket";
-import { OauthJsApiAngularHttpClient } from "./oauth-js-api-angular-http-client-with-ticket";
+import { JsApiAngularHttpClient } from "./js-api-angular-http-client";
 
-@Injectable()
-export class AlfrescoApiV2 extends LegacyAlfrescoApi implements AlfrescoApiType {
+@Injectable({
+    providedIn: "root"
+})
+export class AlfrescoApiV2 extends BaseAlfrescoApi {
 
-    public config: AlfrescoApiConfig;
-    public contentPrivateClient: JsApiHttpClient & LegacyTicketApi;
-    public contentClient: JsApiHttpClient & LegacyTicketApi;
-    public authClient: JsApiHttpClient;
-    public searchClient: JsApiHttpClient;
-    public discoveryClient: JsApiHttpClient;
-    public gsClient: JsApiHttpClient;
-    public processClient: JsApiHttpClient;
-    public processAuth: JsApiHttpClient;
-    public oauth2Auth: OauthJsApiAngularHttpClient;
+    constructor(config: AlfrescoApiConfig, httpClient: HttpClient) {
+        // const config = new AlfrescoApiConfig({
+        //     "hostEcm": "http://localhost:3000",
+        //     "hostBpm": "http://localhost:3000",
+        //     "authType": "OAUTH",
+        //     "contextRoot": "alfresco",
+        //     "tenant": "-default-",
+        //     "contextRootBpm": "activiti-app",
+        //     "domainPrefix": "ADF",
+        //     "provider": "ALL",
+        //     "disableCsrf": false,
+        //     "withCredentials": false,
+        //     "oauth2": {
+        //         "host": "https://apadev.envalfresco.com/auth/realms/alfresco",
+        //         "clientId": "alfresco",
+        //         "redirectUri": "http://localhost:3000/",
+        //         "redirectUriLogout": "http://localhost:3000/",
+        //         "scope": "openid profile email",
+        //         "secret": "",
+        //         "silentLogin": true,
+        //         "implicitFlow": false,
+        //         "codeFlow": true,
+        //         "publicUrls": [
+        //             "**/preview/s/*",
+        //             "**/settings",
+        //             "**/logout"
+        //         ]
+        //     }
+        // });
 
-    constructor(private httpClient: HttpClient, private readonly auth: OAuthService) {
-        super();
+        super(config, httpClient);
     }
 
-    init(config: AlfrescoApiConfig) {
-        this.config = config;
+    initProcessClient(config: AlfrescoApiConfig): ProcessClient {
+        const { hostBpm: host, contextRootBpm: contextRoot } = config;
+        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
 
-        this.contentPrivateClient = new JsApiAngularHttpClientLegacyTicketApi(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api/${config.tenant}/private/alfresco/versions/1`,
-
-            },
-            this.httpClient
-        );
-
-        this.contentClient = new JsApiAngularHttpClientLegacyTicketApi(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api/${config.tenant}/public/alfresco/versions/1`,
-
-            },
-            this.httpClient
-        );
-
-        this.authClient = new BaseJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api/${config.tenant}/public/authentication/versions/1`,
-
-            },
-            this.httpClient
-        );
-
-        this.searchClient = new BaseJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api/${config.tenant}/public/search/versions/1`,
-
-            },
-            this.httpClient
-        );
-        this.discoveryClient = new BaseJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api`,
-
-            },
-            this.httpClient
-        );
-
-        this.gsClient = new BaseJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: `/api/${config.tenant}/public/gs/versions/1`,
-
-            },
-            this.httpClient
-        );
-
-        this.processClient = new BaseJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRootBpm,
-                host: config.hostBpm,
-                servicePath: ``,
-            },
-            this.httpClient
-        );
-
-        this.oauth2Auth = new OauthJsApiAngularHttpClient(
-            {
-                contextRoot: config.contextRoot,
-                host: config.hostEcm,
-                servicePath: ``,
-            },
-            this.httpClient,
-            this.auth,
-        )
+        return new ProcessClient(config, http)
     }
 
-    setConfig(config: AlfrescoApiConfig) {
-        this.config = config;
+    initOauth2Auth(config: AlfrescoApiConfig): Oauth2Auth {
+        const { hostEcm: host, contextRoot } = config;
+        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
+
+        return new Oauth2Auth(config, this, http);
     }
 
-    changeWithCredentialsConfig(withCredentials: boolean) {
-        console.log(withCredentials);
-        return false;
+    initProcessAuth(config: AlfrescoApiConfig): ProcessAuth {
+        const { hostEcm: host, contextRoot } = config;
+        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
+
+        return new ProcessAuth(config, http);
     }
 
-    changeCsrfConfig(disableCsrf: boolean) {
-        console.log(disableCsrf);
+    initContentAuth(config: AlfrescoApiConfig): ContentAuth {
+        const { hostEcm: host, contextRoot } = config;
+        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
+
+        return new ContentAuth(config, this, http);
     }
 
-    changeEcmHost(hostEcm: string) {
-        console.log(hostEcm);
-    }
+    initContentClient(config: AlfrescoApiConfig, servicePath: string): ContentClient {
+        const { hostEcm: host, contextRoot } = config;
+        const http = new JsApiAngularHttpClient({ host, contextRoot, servicePath }, this.httpClient);
 
-    changeBpmHost(hostBpm: string) {
-        console.log(hostBpm);
-    }
-
-    login(username: string, password: string) {
-        console.log(username, password);
-        return Promise.reject();
-    }
-
-    isCredentialValid(credential: string) {
-        console.log(credential);
-        return false;
-    }
-
-    implicitLogin() {
-        return Promise.reject();
-    }
-
-    loginTicket(ticketEcm: string, ticketBpm: string) {
-        console.log(ticketEcm, ticketBpm);
-        return Promise.reject();
-    }
-
-    logout() {
-        return Promise.resolve();
-    }
-
-    isLoggedIn() {
-        return false;
-    }
-
-    isBpmLoggedIn() {
-        return false;
-    }
-
-    isEcmLoggedIn() {
-        return false;
-    }
-
-    getBpmUsername() {
-        return "Kakarot";
-    }
-
-    getEcmUsername() {
-        return "Vegeta";
-    }
-
-    refreshToken() {
-        return Promise.reject();
-    }
-
-    getTicketAuth() {
-        return "xyz-123";
-    }
-
-    setTicket(ticketEcm: string, TicketBpm: string) {
-        console.log(ticketEcm, TicketBpm);
-    }
-
-    invalidateSession() { }
-
-    getTicketBpm() {
-        return "xyz-456";
-    }
-
-    getTicketEcm() {
-        return "xyz-789";
-    }
-
-    getTicket() {
-        return ["xyz-000"];
-    }
-
-    isBpmConfiguration() {
-        return false;
-    }
-
-    isEcmConfiguration() {
-        return false;
-    }
-
-    isOauthConfiguration() {
-        return false;
-    }
-
-    isPublicUrl() {
-        return false;
-    }
-
-    isEcmBpmConfiguration() {
-        return false;
-    }
-
-    reply(event: string, callback?: any) {
-        console.log(event, callback);
+        return new ContentClient(config, servicePath, http);
     }
 }

@@ -48,10 +48,9 @@ import { DialogModule } from './dialogs/dialog.module';
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
-import { AlfrescoApiV2, AlfrescoJsClientsModule, API_CLIENT_FACTORY_TOKEN } from '@alfresco/adf-core/api';
+import { AlfrescoJsClientsModule, API_CLIENT_FACTORY_TOKEN } from '@alfresco/adf-core/api';
 import { BaseAuthenticationService, AUTH_CONFIG, AuthBearerInterceptor, OidcAuthGuard } from '@alfresco/adf-core/auth';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { authConfigFactory, AuthConfigService } from './auth-factories/auth-config.service';
 import { OIDCAuthenticationService } from './auth-factories/oidc-authentication.service';
 import { CoreModuleConfig, CORE_MODULE_CONFIG } from './core.module.token';
@@ -67,10 +66,10 @@ import { TranslationService } from './services/translation.service';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { createAlfrescoApiV2Service, AlfrescoApiV2LoaderService } from './api-factories/alfresco-api-v2-loader.service';
-import { AngularClientFactory } from './api-factories/angular-api-client.factory';
 import { LegacyAlfrescoApiServiceFacade } from './api-factories/legacy-alfresco-api-service.facade';
+import { LegacyClientFactory } from './api-factories/legacy-api-client.factory';
 
 const defaultConfig: CoreModuleConfig = { useLegacy: true };
 
@@ -109,8 +108,8 @@ const defaultConfig: CoreModuleConfig = { useLegacy: true };
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
-        LegacyApiClientModule,
-        AlfrescoJsClientsModule
+        AlfrescoJsClientsModule,
+        HttpClientModule
     ],
     exports: [
         AboutModule,
@@ -172,6 +171,7 @@ export class CoreModule {
                     provide: CORE_MODULE_CONFIG,
                     useValue: config
                 },
+                { provide: API_CLIENT_FACTORY_TOKEN, useClass: LegacyClientFactory },
                 ...(config.useLegacy ?
                     [
                         { provide: BaseAuthenticationService, useClass: AuthenticationService },
@@ -183,10 +183,8 @@ export class CoreModule {
                             multi: true
                         }
                     ] : [
-                        AlfrescoApiV2,
                         LegacyAlfrescoApiServiceFacade,
                         { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
-                        { provide: API_CLIENT_FACTORY_TOKEN, useClass: AngularClientFactory },
                         {
                             provide: APP_INITIALIZER,
                             useFactory: createAlfrescoApiV2Service,

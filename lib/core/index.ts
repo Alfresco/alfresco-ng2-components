@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './api-factories/index';
 export * from './about/index';
 export * from './viewer/index';
 export * from './userinfo/index';

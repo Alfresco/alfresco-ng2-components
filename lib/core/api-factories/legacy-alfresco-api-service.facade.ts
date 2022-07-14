@@ -16,27 +16,40 @@
  */
 
 import { AuthService } from '@alfresco/adf-core/auth';
-import { AlfrescoApiType, Node } from '@alfresco/js-api';
+import { AlfrescoApiConfig, AlfrescoApiType, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { AlfrescoApiV2 } from '@alfresco/adf-core/api';
 import { AuthConfigService } from '../auth-factories/auth-config.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LegacyAlfrescoApiServiceFacade {
 
     nodeUpdated = new Subject<Node>();
 
-    constructor(private alfrescoApiV2: AlfrescoApiV2, private readonly auth: AuthService, private readonly authConfig: AuthConfigService) { }
+    instance: AlfrescoApiType;
+
+    constructor(private readonly auth: AuthService, private readonly authConfig: AuthConfigService, private readonly httpClient: HttpClient) { }
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     getInstance(): AlfrescoApiType {
-        return this.alfrescoApiV2;
+        return this.instance;
     }
 
-    init() {
+    init(config: AlfrescoApiConfig) {
+        this.createInstance(config);
         this.alfrescoApiInitialized.next(true);
+    }
+
+    createInstance(config: AlfrescoApiConfig) {
+
+        console.log(`%c DEBUG:LOG config`, 'color: green');
+        console.log(config);
+        console.log('%c ------------------------------', 'color: tomato');
+
+        return this.instance = new AlfrescoApiV2(config, this.httpClient);
     }
 
     async reset() {
