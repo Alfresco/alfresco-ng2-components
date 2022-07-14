@@ -31,7 +31,6 @@ import {
     taskDetailsWithParentTaskIdMock,
     createdTaskDetailsCloudMock
 } from '../mocks/task-details-cloud.mock';
-import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -67,9 +66,14 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     beforeEach(() => {
+        appConfigService = TestBed.inject(AppConfigService);
+        appConfigService.config = {
+            dateValues: {
+                taskHeaderDateFormat: 'full'
+            }
+        };
         fixture = TestBed.createComponent(TaskHeaderCloudComponent);
         component = fixture.componentInstance;
-        appConfigService = TestBed.inject(AppConfigService);
         taskCloudService = TestBed.inject(TaskCloudService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.appName = 'mock-app-name';
@@ -103,7 +107,7 @@ describe('TaskHeaderCloudComponent', () => {
             expect(taskTitle).toBeTruthy();
         });
 
-        it('should fectch task details when appName and taskId defined', async () => {
+        it('should fetch task details when appName and taskId defined', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expect(getTaskByIdSpy).toHaveBeenCalled();
@@ -149,7 +153,7 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
 
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
+            expect(valueEl.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 1:00:55 PM GMT+01:00');
         });
 
         it('should display process instance id', async () => {
@@ -501,7 +505,13 @@ describe('TaskHeaderCloudComponent', () => {
     describe('Config properties', () => {
 
         it('should show only the properties from the configuration file', async () => {
-            spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
+            appConfigService.config = {
+                'adf-cloud-task-header': {
+                    presets: {
+                        properties: ['assignee', 'status']
+                    }
+                }
+            };
             component.ngOnChanges();
             fixture.detectChanges();
             const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
@@ -526,6 +536,18 @@ describe('TaskHeaderCloudComponent', () => {
             expect(propertyList.length).toBe(component.properties.length);
             expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
             expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
+        });
+
+        it('should format the dates based on app config format configuration', async () => {
+            component.ngOnInit();
+            component.ngOnChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const createdDateElement = fixture.debugElement.query(By.css('[data-automation-id="header-created"] .adf-property-value'));
+
+            expect(component.dateFormat).toEqual('full');
+            expect(createdDateElement.nativeElement.innerText.trim()).toBe('Monday, December 17, 2018 at 1:00:55 PM GMT+01:00');
         });
     });
 

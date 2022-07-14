@@ -55,7 +55,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
     }
 
     ngOnInit() {
-        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateFormat = this.appConfig.get('dateValues.processHeaderDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
 
         this.processCloudService.dataChangesDetected

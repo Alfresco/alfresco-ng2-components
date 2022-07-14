@@ -206,4 +206,28 @@ describe('ProcessHeaderCloudComponent', () => {
             expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME');
         });
     });
+
+    describe('Date values format', () => {
+
+        beforeEach(() => {
+            appConfigService.config = {
+                dateValues: {
+                    processHeaderDateFormat: 'full'
+                }
+            };
+            component.ngOnInit();
+            component.ngOnChanges();
+        });
+
+        it('should format the dates based on app config format configuration', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startedDateElement = fixture.debugElement.query(By.css('[data-automation-id="header-startDate"] .adf-property-value'));
+            const lastModifiedElement = fixture.debugElement.query(By.css('[data-automation-id="header-lastModified"] .adf-property-value'));
+
+            expect(component.dateFormat).toEqual('full');
+            expect(startedDateElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 6:23:07 PM GMT+01:00');
+            expect(lastModifiedElement.nativeElement.innerText.trim()).toBe('Saturday, March 9, 2019 at 6:23:07 PM GMT+01:00');
+        });
+    });
 });
