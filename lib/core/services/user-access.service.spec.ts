@@ -152,7 +152,7 @@ describe('UserAccessService', () => {
             appConfigService.config.bpmHost = fakeIdentityHost;
             await userAccessService.fetchUserAccess();
 
-            expect(getAccessFromApiSpy).toHaveBeenCalledWith({ url: `${fakeIdentityHost}/modeling-service/v1/identity/roles` });
+            expect(getAccessFromApiSpy).toHaveBeenCalledWith({ url: `${fakeIdentityHost}/identity-adapter-service/v1/roles` });
         });
 
         it('should not fetch the access from the API if is not configured with OAUTH', async () => {
