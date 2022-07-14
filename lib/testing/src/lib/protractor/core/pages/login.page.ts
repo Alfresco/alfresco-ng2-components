@@ -29,7 +29,7 @@ export class LoginPage {
     usernameField = $('#username');
     passwordField = $('#password');
     loginButton = $('input[type="submit"]');
-    header = $('.studio-main-navigation-header');
+    userIcon = $(`[id*='user-initials']`);
     loginError = $(`div[data-automation-id="login-error"]`);
     visibilityLabel = $('#v');
 
@@ -94,7 +94,7 @@ export class LoginPage {
         await this.enterPassword(password);
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header, BrowserVisibility.DEFAULT_TIMEOUT * 2);
+        await BrowserVisibility.waitUntilElementIsVisible(this.userIcon, BrowserVisibility.DEFAULT_TIMEOUT * 2);
     }
 
     async loginBasicAuth(username: string, password: string): Promise<void> {
@@ -103,7 +103,7 @@ export class LoginPage {
         await this.enterUsernameBasicAuth(username);
         await this.enterPasswordBasicAuth(password);
         await this.clickSignInBasicAuthButton();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await BrowserVisibility.waitUntilElementIsVisible(this.userIcon);
     }
 
     async clickSignInBasicAuthButton(): Promise<void> {
