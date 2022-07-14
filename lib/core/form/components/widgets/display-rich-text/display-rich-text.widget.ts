@@ -20,6 +20,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
+/* cspell:disable-next-line */
 import * as edjsHTML from 'editorjs-html';
 @Component({
     selector: 'display-rich-text',
@@ -47,6 +48,7 @@ export class DisplayRichTextComponent extends WidgetComponent implements OnInit 
     }
 
     ngOnInit(): void {
+        /* cspell:disable-next-line */
         this.parsedHTML = edjsHTML().parseStrict(this.field.value).join('\n');
     }
 
