@@ -20,7 +20,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
-
+import * as edjsHTML from 'editorjs-html';
 @Component({
     selector: 'display-rich-text',
     templateUrl: './display-rich-text.widget.html',
@@ -40,11 +40,14 @@ import { WidgetComponent } from '../widget.component';
 })
 export class DisplayRichTextComponent extends WidgetComponent implements OnInit {
 
+    parsedHTML: any;
+
     constructor(public formService: FormService) {
         super(formService);
     }
 
     ngOnInit(): void {
+        this.parsedHTML = edjsHTML().parseStrict(this.field.value).join('\n');
     }
 
 }
