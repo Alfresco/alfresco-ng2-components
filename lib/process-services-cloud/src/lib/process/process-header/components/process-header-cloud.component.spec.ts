@@ -211,8 +211,8 @@ describe('ProcessHeaderCloudComponent', () => {
 
         beforeEach(() => {
             appConfigService.config = {
-                dateValues: {
-                    processHeaderDateFormat: 'full'
+                'adf-cloud-process-header': {
+                    defaultDateFormat: 'full'
                 }
             };
             component.ngOnInit();

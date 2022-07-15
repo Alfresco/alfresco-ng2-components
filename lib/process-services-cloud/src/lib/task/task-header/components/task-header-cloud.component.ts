@@ -87,7 +87,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private appConfig: AppConfigService,
         private cardViewUpdateService: CardViewUpdateService
     ) {
-        this.dateFormat = this.appConfig.get('dateValues.taskHeaderDateFormat');
+        this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 

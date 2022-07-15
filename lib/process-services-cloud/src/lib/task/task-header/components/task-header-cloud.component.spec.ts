@@ -68,8 +68,8 @@ describe('TaskHeaderCloudComponent', () => {
     beforeEach(() => {
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
-            dateValues: {
-                taskHeaderDateFormat: 'full'
+            'adf-cloud-task-header': {
+                defaultDateFormat: 'full'
             }
         };
         fixture = TestBed.createComponent(TaskHeaderCloudComponent);
