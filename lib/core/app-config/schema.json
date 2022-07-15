@@ -1011,6 +1011,18 @@
         "defaultLocale": {
           "description": "Default date locale",
           "type": "string"
+        },
+        "defaultTooltipDateFormat": {
+          "description": "The format of the tooltip",
+          "type": "string"
+        },
+        "taskHeaderDateFormat": {
+          "description": "The format of the task header date values",
+          "type": "string"
+        },
+        "processHeaderDateFormat": {
+          "description": "The format of the process header date values",
+          "type": "string"
         }
       }
     },
