@@ -151,7 +151,6 @@
     "cspell": "^5.5.1",
     "css-loader": "^5.2.6",
     "dotenv": "^8.2.0",
-    "editorjs-inline-font-size-tool": "1.0.1",
     "editorjs-text-color-plugin": "1.13.1",
     "eslint": "^7.6.0",
     "eslint-plugin-ban": "^1.6.0",
