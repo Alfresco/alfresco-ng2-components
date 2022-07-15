@@ -6,7 +6,7 @@
       "NONE": "No process instance filter selected."
     },
     "PROPERTIES": {
-      "NAME": "Name",
+      "NAME": "Process Name",
       "CREATED": "Created",
       "STATUS": "Status",
       "START_DATE": "Start Date",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Name",
+      "NAME": "Task Name",
       "ASSIGNEE": "Assignee",
       "ID": "Id",
       "STATUS": "Status",
