@@ -16,40 +16,46 @@
  */
 
 import { AuthService } from '@alfresco/adf-core/auth';
-import { AlfrescoApiConfig, AlfrescoApiType, Node } from '@alfresco/js-api';
+import { AlfrescoApiConfig, BaseAlfrescoApi, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { AlfrescoApiV2 } from '@alfresco/adf-core/api';
 import { AuthConfigService } from '../auth-factories/auth-config.service';
 import { HttpClient } from '@angular/common/http';
 
+export interface ApiService {
+    alfrescoApiInitialized: ReplaySubject<boolean>;
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated: Subject<Node>;
+    getInstance(): BaseAlfrescoApi;
+    createInstance(config: AlfrescoApiConfig): BaseAlfrescoApi;
+    init(config: AlfrescoApiConfig): void;
+    reset(): void;
+}
+
 @Injectable()
-export class LegacyAlfrescoApiServiceFacade {
+export class LegacyAlfrescoApiServiceFacade implements ApiService {
 
     nodeUpdated = new Subject<Node>();
+    instance: BaseAlfrescoApi;
 
-    instance: AlfrescoApiType;
-
-    constructor(private readonly auth: AuthService, private readonly authConfig: AuthConfigService, private readonly httpClient: HttpClient) { }
+    constructor(private readonly auth: AuthService, private readonly authConfig: AuthConfigService, private readonly httpClient: HttpClient) {}
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
-    getInstance(): AlfrescoApiType {
+    getInstance(): BaseAlfrescoApi {
         return this.instance;
     }
 
     init(config: AlfrescoApiConfig) {
-        this.createInstance(config);
+        this.instance = this.createInstance(config);
         this.alfrescoApiInitialized.next(true);
     }
 
     createInstance(config: AlfrescoApiConfig) {
-
-        console.log(`%c DEBUG:LOG config`, 'color: green');
-        console.log(config);
-        console.log('%c ------------------------------', 'color: tomato');
-
-        return this.instance = new AlfrescoApiV2(config, this.httpClient);
+        return new AlfrescoApiV2(config, this.httpClient);
     }
 
     async reset() {

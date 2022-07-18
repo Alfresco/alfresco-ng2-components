@@ -60,14 +60,13 @@ import { AuthenticationService, AuthGuard } from './services';
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
-import { startupServiceFactory } from './services/startup-service-factory';
 import { TranslateLoaderService } from './services/translate-loader.service';
 import { TranslationService } from './services/translation.service';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { createAlfrescoApiV2Service, AlfrescoApiV2LoaderService } from './api-factories/alfresco-api-v2-loader.service';
+import { createAlfrescoApiV2Service, AlfrescoApiLoaderService } from './api-factories/alfresco-api-v2-loader.service';
 import { LegacyAlfrescoApiServiceFacade } from './api-factories/legacy-alfresco-api-service.facade';
 import { LegacyClientFactory } from './api-factories/legacy-api-client.factory';
 
@@ -172,30 +171,21 @@ export class CoreModule {
                     useValue: config
                 },
                 { provide: API_CLIENT_FACTORY_TOKEN, useClass: LegacyClientFactory },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: createAlfrescoApiV2Service,
+                    deps: [ AlfrescoApiLoaderService ],
+                    multi: true
+                },
                 ...(config.useLegacy ?
                     [
                         { provide: BaseAuthenticationService, useClass: AuthenticationService },
-                        AlfrescoApiService,
-                        {
-                            provide: APP_INITIALIZER,
-                            useFactory: startupServiceFactory,
-                            deps: [ AlfrescoApiService ],
-                            multi: true
-                        }
+                        AlfrescoApiService
                     ] : [
-                        LegacyAlfrescoApiServiceFacade,
                         { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
                         {
-                            provide: APP_INITIALIZER,
-                            useFactory: createAlfrescoApiV2Service,
-                            deps: [
-                                AlfrescoApiV2LoaderService
-                            ],
-                            multi: true
-                        },
-                        {
                             provide: AlfrescoApiService,
-                            useExisting: LegacyAlfrescoApiServiceFacade
+                            useClass: LegacyAlfrescoApiServiceFacade
                         },
                         { provide: AuthGuard, useClass: OidcAuthGuard },
                         { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },

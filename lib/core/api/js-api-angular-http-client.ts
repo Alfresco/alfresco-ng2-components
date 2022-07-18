@@ -23,7 +23,6 @@ import {
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 
-/** tslint:disable-next line */
 export class JsApiAngularHttpClient implements JsApiHttpClient {
     public basePath: string;
 

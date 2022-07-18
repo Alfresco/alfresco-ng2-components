@@ -15,27 +15,25 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { LegacyAlfrescoApiServiceFacade } from './legacy-alfresco-api-service.facade';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
-export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiV2LoaderService) {
+export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiLoaderService) {
     return () => angularAlfrescoApiService.load();
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class AlfrescoApiV2LoaderService {
-
-    alfrescoApi: AlfrescoApi;
+export class AlfrescoApiLoaderService {
 
     constructor(
         private appConfig: AppConfigService,
-        private legacyAlfrescoApiServiceFacade: LegacyAlfrescoApiServiceFacade
+        private apiService: AlfrescoApiService
     ) {}
 
     load(): Promise<any> {
@@ -65,6 +63,6 @@ export class AlfrescoApiV2LoaderService {
             oauth2: oauth
         });
 
-        this.legacyAlfrescoApiServiceFacade.init(config);
+        this.apiService.init(config);
     }
 }
