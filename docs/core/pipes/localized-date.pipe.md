@@ -55,7 +55,8 @@ You can overwrite the default values of this pipe by adding these properties to 
  "dateValues": {
    "defaultDateFormat": "mediumDate",
    "defaultDateTimeFormat": "MMM d, y, H:mm",
-   "defaultLocale": "en-US"
+   "defaultLocale": "en-US",
+   "defaultTooltipDateFormat": "medium"
  }
 ```
 
@@ -64,5 +65,6 @@ You can overwrite the default values of this pipe by adding these properties to 
 | defaultDateFormat | string | The format to apply to date values |
 | defaultDateTimeFormat | string | The format to apply to date-time values |
 | defaultLocale | string | The locale id to apply |
+| defaultTooltipDateFormat | string | The format to apply on tooltips |
 
 This configuration overwrites the values in the [localized date pipe](../../core/pipes/localized-date.pipe.md) as well as other components to have more consistency across your app. However, you can still overwrite these values any time by using the pipe in your code. 
