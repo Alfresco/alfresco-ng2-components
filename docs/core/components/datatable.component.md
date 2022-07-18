@@ -847,6 +847,16 @@ here is the sample resolver which merge the users property and status and it wil
 
 ![](../../docassets/images/custom-data-table-resolver.png)
 
+# Tooltip
+
+You can define the tooltip format for cells of type date using a configuration in `app.config.json`:
+
+```json
+ "dateValues": {
+    "defaultTooltipDateFormat": "medium"
+ }
+```
+
 ## See also
 
 -   [Data column component](data-column.component.md)
