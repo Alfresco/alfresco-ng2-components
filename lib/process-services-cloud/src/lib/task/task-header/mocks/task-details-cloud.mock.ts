@@ -49,7 +49,7 @@ export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     name: 'This is a new task',
     description: 'This is the description ',
     createdDate: new Date(1545048055900),
-    dueDate: new Date(),
+    dueDate: new Date(1545048055900),
     claimedDate: null,
     priority: 1,
     category: null,

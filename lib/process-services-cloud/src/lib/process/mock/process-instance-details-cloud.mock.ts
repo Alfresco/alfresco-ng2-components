@@ -34,7 +34,7 @@ export const processInstancePlaceholdersCloudMock: ProcessInstanceCloud = {
     businessKey: '',
     id: '00fcc4ab-4290-11e9-b133-0a586460016a',
     initiator: 'devopsuser',
-    lastModified: new Date(1552152187081),
+    lastModified: new Date(2022, 1, 1, 1, 30, 40),
     name: '',
     parentId: '',
     startDate: new Date(1552152187080),

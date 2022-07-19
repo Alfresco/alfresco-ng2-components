@@ -25,7 +25,7 @@ export class ProcessListCloudComponentPage {
 
     columns = {
         id: 'Id',
-        name: 'Name',
+        name: 'Process Name',
         processDefinitionName: 'Process Definition Name'
     };
 

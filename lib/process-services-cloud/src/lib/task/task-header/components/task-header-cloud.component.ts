@@ -74,7 +74,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     inEdit: boolean = false;
     parentTaskName: string;
     dateFormat: string;
-    dateTimeFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
     isLoading = true;
@@ -88,9 +87,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private appConfig: AppConfigService,
         private cardViewUpdateService: CardViewUpdateService
     ) {
-        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateFormat = this.appConfig.get('adf-cloud-task-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
-        this.dateTimeFormat = this.appConfig.get('dateValue.defaultDateTimeFormat');
     }
 
     ngOnInit() {
@@ -178,7 +176,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
                     editable: true,
-                    format: this.dateTimeFormat,
+                    format: this.dateFormat,
                     locale: this.dateLocale
                 }
             ),
