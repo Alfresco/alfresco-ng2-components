@@ -41,6 +41,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
     editorInstance: EditorJS;
     dynamicId: string;
+    isReady = false;
 
     constructor() {
     }
@@ -59,6 +60,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
                 this.sendEditorOutputData();
             },
             onReady: () => {
+                this.isReady = true;
                 this.sendEditorOutputData();
             }
         } as any);
@@ -77,7 +79,9 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnDestroy(): void {
-        this.editorInstance.destroy();
+        if(this.isReady){
+            this.editorInstance.destroy();
+        }
     }
 
 }

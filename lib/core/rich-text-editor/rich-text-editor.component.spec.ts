@@ -22,36 +22,94 @@ import { By } from '@angular/platform-browser';
 import { RichTextEditorComponent } from './rich-text-editor.component';
 
 describe('RichTextEditorComponent', () => {
-  let component: RichTextEditorComponent;
-  let fixture: ComponentFixture<RichTextEditorComponent>;
-  let debugElement: DebugElement;
+    let component: RichTextEditorComponent;
+    let fixture: ComponentFixture<RichTextEditorComponent>;
+    let debugElement: DebugElement;
 
-  const cssSelectors = {
-    editorContent: '.codex-editor'
-  };
+    const cssSelectors = {
+        editorContent: '.codex-editor',
+        editorJsElement: '.editorjs'
+    };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ RichTextEditorComponent ]
-    })
-    .compileComponents();
-  });
+    const mockEditorData = {
+        time: 1658154611110,
+        blocks: [
+            {
+                id: '1',
+                type: 'header',
+                data: {
+                    text: 'Editor.js',
+                    level: 2
+                }
+            }
+        ],
+        version: 1
+    };
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RichTextEditorComponent);
-    component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [RichTextEditorComponent]
+        })
+            .compileComponents();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(RichTextEditorComponent);
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+    });
 
-  it('should render rich text editor', async () => {
-    await fixture.whenStable();
-    const editor = debugElement.query(By.css(cssSelectors.editorContent));
-    expect(editor).toBeTruthy();
-  });
+    it('should create', () => {
+        fixture.detectChanges();
+        expect(component).toBeTruthy();
+    });
+
+    it('should render rich text editor', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const editor = debugElement.query(By.css(cssSelectors.editorContent));
+        expect(editor).toBeTruthy();
+    });
+
+    it('should generate dynamic id', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(component.dynamicId).toContain('editorjs');
+    });
+
+    it('should set dynamic id to editor js element', async () => {
+        spyOn(window.crypto, 'getRandomValues').and.returnValue('randomId');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const editor = debugElement.query(By.css(cssSelectors.editorJsElement));
+        expect(editor.nativeElement.id).toEqual('editorjs-randomId');
+    });
+
+    it('should get editorjs data by calling getEditorContent', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData));
+        const savedEditorData = await component.getEditorContent();
+        expect(savedEditorData).toEqual(mockEditorData);
+    });
+
+    it('should destroy editor instance on ngOnDestroy', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
+        component.ngOnDestroy();
+        expect(destroyEditorSpy).toHaveBeenCalledTimes(1);
+        expect(destroyEditorSpy).toHaveBeenCalled();
+    });
+
+    it('should not destroy editor instance on ngOnDestroy if editor is not ready', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
+        component.isReady = false;
+        component.ngOnDestroy();
+        expect(destroyEditorSpy).not.toHaveBeenCalled();
+    });
+
 
 });
