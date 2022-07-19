@@ -182,18 +182,16 @@ export class CoreModule {
                         { provide: BaseAuthenticationService, useClass: AuthenticationService },
                         AlfrescoApiService
                     ] : [
-                        { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
-                        {
-                            provide: AlfrescoApiService,
-                            useClass: LegacyAlfrescoApiServiceFacade
-                        },
+                        { provide: AlfrescoApiService, useClass: LegacyAlfrescoApiServiceFacade },
+                        // AUTH
                         { provide: AuthGuard, useClass: OidcAuthGuard },
                         { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
                         {
                             provide: AUTH_CONFIG,
                             useFactory: authConfigFactory,
                             deps: [AuthConfigService]
-                        }
+                        },
+                        { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true }
                     ]
                 )
             ]

@@ -16,7 +16,6 @@
  */
 
 import { AlfrescoApiConfig, BaseAlfrescoApi, ContentAuth, ContentClient, Oauth2Auth, ProcessAuth, ProcessClient } from '@alfresco/js-api';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JsApiAngularHttpClient } from './js-api-angular-http-client';
 
@@ -25,42 +24,27 @@ import { JsApiAngularHttpClient } from './js-api-angular-http-client';
 })
 export class AlfrescoApiV2 extends BaseAlfrescoApi {
 
-    constructor(config: AlfrescoApiConfig, httpClient: HttpClient) {
-        super(config, httpClient);
+    constructor(config: AlfrescoApiConfig, jsHttpClient: JsApiAngularHttpClient) {
+        super(config, jsHttpClient);
     }
 
     initProcessClient(config: AlfrescoApiConfig): ProcessClient {
-        const { hostBpm: host, contextRootBpm: contextRoot } = config;
-        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
-
-        return new ProcessClient(config, http);
+        return new ProcessClient(config, this.httpClient);
     }
 
     initOauth2Auth(config: AlfrescoApiConfig): Oauth2Auth {
-        const { hostEcm: host, contextRoot } = config;
-        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
-
-        return new Oauth2Auth(config, this, http);
+        return new Oauth2Auth(config, this, this.httpClient);
     }
 
     initProcessAuth(config: AlfrescoApiConfig): ProcessAuth {
-        const { hostEcm: host, contextRoot } = config;
-        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
-
-        return new ProcessAuth(config, http);
+        return new ProcessAuth(config, this.httpClient);
     }
 
     initContentAuth(config: AlfrescoApiConfig): ContentAuth {
-        const { hostEcm: host, contextRoot } = config;
-        const http = new JsApiAngularHttpClient({ host, contextRoot }, this.httpClient);
-
-        return new ContentAuth(config, this, http);
+        return new ContentAuth(config, this, this.httpClient);
     }
 
     initContentClient(config: AlfrescoApiConfig, servicePath: string): ContentClient {
-        const { hostEcm: host, contextRoot } = config;
-        const http = new JsApiAngularHttpClient({ host, contextRoot, servicePath }, this.httpClient);
-
-        return new ContentClient(config, servicePath, http);
+        return new ContentClient(config, servicePath, this.httpClient);
     }
 }
