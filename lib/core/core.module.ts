@@ -186,12 +186,12 @@ export class CoreModule {
                         // AUTH
                         { provide: AuthGuard, useClass: OidcAuthGuard },
                         { provide: BaseAuthenticationService, useClass: OIDCAuthenticationService },
+                        { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
                         {
                             provide: AUTH_CONFIG,
                             useFactory: authConfigFactory,
                             deps: [AuthConfigService]
-                        },
-                        { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true }
+                        }
                     ]
                 )
             ]

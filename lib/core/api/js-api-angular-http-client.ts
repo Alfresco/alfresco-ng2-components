@@ -59,16 +59,17 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return newObj;
     }
 
-    private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' {
-        let responseType = null;
+    private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
 
-        if (options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob') {
-            responseType = 'blob';
+        const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
+
+        if (isBlobType) {
+            return 'blob';
         } else if (options.returnType === 'String') {
-            responseType = 'text';
+            return 'text';
         }
 
-        return responseType;
+        return null;
     }
 
     post<T = any>(url: string, options: RequestOptions): Promise<T> {
