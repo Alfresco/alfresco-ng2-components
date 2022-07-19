@@ -57,11 +57,15 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
             data: this.data,
             readOnly: this.readOnly,
             onChange: () => {
-                this.sendEditorOutputData();
+                if (!this.readOnly) {
+                    this.sendEditorOutputData();
+                }
             },
             onReady: () => {
                 this.isReady = true;
-                this.sendEditorOutputData();
+                if (!this.readOnly) {
+                    this.sendEditorOutputData();
+                }
             }
         } as any);
     }
@@ -79,7 +83,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnDestroy(): void {
-        if(this.isReady){
+        if (this.isReady) {
             this.editorInstance.destroy();
         }
     }
