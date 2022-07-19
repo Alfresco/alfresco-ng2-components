@@ -23,7 +23,7 @@ import { DataTableColumnSelector } from '../../core/pages/data-table/columns-sel
 
 const column = {
     id: 'Id',
-    name: 'Name',
+    name: 'Task Name',
     processInstanceId: 'ProcessInstanceId',
     processDefinitionId: 'ProcessDefinitionId',
     assignee: 'Assignee',
