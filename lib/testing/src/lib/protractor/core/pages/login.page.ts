@@ -22,7 +22,7 @@ import { LocalStorageUtil } from '../utils/local-storage.util';
 import { Logger } from '../utils/logger';
 
 export interface LoginOptions {
-    waitForUserIcon: boolean
+    waitForUserIcon: boolean;
 }
 export class LoginPage {
 
