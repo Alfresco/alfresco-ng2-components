@@ -48,7 +48,7 @@ import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { UploadFolderWidgetComponent } from './upload-folder/upload-folder.widget';
 import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
-import { DisplayRichTextComponent } from './display-rich-text/display-rich-text.widget';
+import { DisplayRichTextWidgetComponent } from './display-rich-text/display-rich-text.widget';
 
 // core
 export * from './widget.component';
@@ -126,7 +126,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     AmountEditorComponent,
     UploadFolderWidgetComponent,
     FileViewerWidgetComponent,
-    DisplayRichTextComponent
+    DisplayRichTextWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

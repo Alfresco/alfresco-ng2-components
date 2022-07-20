@@ -23,7 +23,7 @@ import {
     UploadWidgetComponent,
     TextWidgetComponent,
     JsonWidgetComponent,
-    DisplayRichTextComponent
+    DisplayRichTextWidgetComponent
 } from './../components/widgets/index';
 import { FormRenderingService } from './form-rendering.service';
 
@@ -133,6 +133,6 @@ describe('FormRenderingService', () => {
     it('should resolve Display Rich Text widget for display-rich-text field type', () => {
         const resolver = service.getComponentTypeResolver('display-rich-text');
         const type = resolver(null);
-        expect(type).toBe(DisplayRichTextComponent);
+        expect(type).toBe(DisplayRichTextWidgetComponent);
     });
 });

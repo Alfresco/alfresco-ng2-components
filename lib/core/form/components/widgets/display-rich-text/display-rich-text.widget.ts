@@ -39,7 +39,7 @@ import * as edjsHTML from 'editorjs-html';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DisplayRichTextComponent extends WidgetComponent implements OnInit {
+export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
 
     parsedHTML: any;
 

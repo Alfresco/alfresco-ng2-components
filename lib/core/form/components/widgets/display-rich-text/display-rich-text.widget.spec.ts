@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CoreTestingModule, setupTestBed } from 'core/testing';
 
-import { DisplayRichTextComponent } from './display-rich-text.widget';
+import { DisplayRichTextWidgetComponent } from './display-rich-text.widget';
 
-describe('DisplayRichTextComponent', () => {
-    let widget: DisplayRichTextComponent;
-    let fixture: ComponentFixture<DisplayRichTextComponent>;
+describe('DisplayRichTextWidgetComponent', () => {
+    let widget: DisplayRichTextWidgetComponent;
+    let fixture: ComponentFixture<DisplayRichTextWidgetComponent>;
     let debugEl: DebugElement;
 
     const cssSelector = {
@@ -51,7 +51,7 @@ describe('DisplayRichTextComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DisplayRichTextComponent);
+        fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
         debugEl = fixture.debugElement;
         widget.field = fakeFormField;

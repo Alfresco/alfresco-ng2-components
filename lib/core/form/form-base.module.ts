@@ -41,7 +41,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
-import { DisplayRichTextComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
+import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorModule } from '../rich-text-editor';
 
 @NgModule({
@@ -73,7 +73,7 @@ import { RichTextEditorModule } from '../rich-text-editor';
         ...MASK_DIRECTIVE,
         WidgetComponent,
         InplaceFormInputComponent,
-        DisplayRichTextComponent
+        DisplayRichTextWidgetComponent
     ],
     exports: [
         ContentWidgetComponent,
