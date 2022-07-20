@@ -42,7 +42,7 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit, OnDestroy
                 id: '99jwc03ETP',
                 type: 'header',
                 data: {
-                    text: 'Headet',
+                    text: 'Header',
                     level: 2
                 }
             },
