@@ -66,6 +66,7 @@
     "intitem",
     "jira",
     "jsons",
+    "Jwks",
     "keycodes",
     "keyvaluepairs",
     "keyvaluepairsitem",
@@ -132,7 +133,8 @@
     "webm",
     "webscript",
     "Whitespaces",
-    "xdescribe"
+    "xdescribe",
+    "Xsrf"
   ],
   "dictionaries": [
     "html",
