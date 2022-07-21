@@ -1806,27 +1806,115 @@ export class DemoForm {
                                     }
                                 }
                             ],
-                            2: [{
-                                fieldType: 'AttachFileFieldRepresentation',
-                                id: 'attachfiletest',
-                                name: 'attachfiletest',
-                                type: 'upload',
-                                required: true,
-                                colspan: 2,
-                                placeholder: 'attachfile',
-                                params: {
-                                    existingColspan: 2,
-                                    maxColspan: 2,
-                                    fileSource: {
-                                        serviceId: 'local-file',
-                                        name: 'Local File'
+                            2: [
+                                {
+                                    fieldType: 'AttachFileFieldRepresentation',
+                                    id: 'attachfiletest',
+                                    name: 'attachfiletest',
+                                    type: 'upload',
+                                    required: true,
+                                    colspan: 2,
+                                    placeholder: 'attachfile',
+                                    params: {
+                                        existingColspan: 2,
+                                        maxColspan: 2,
+                                        fileSource: {
+                                            serviceId: 'local-file',
+                                            name: 'Local File'
+                                        },
+                                        multiple: true,
+                                        link: false,
+                                        displayableCMProperties: []
                                     },
-                                    multiple: true,
-                                    link: false
-                                },
-                                visibilityCondition: {
+                                    visibilityCondition: {}
                                 }
-                            }]
+                            ]
+                        }
+                    },
+                    {
+                        id: 'c23bf7e8-d43c-48b6-86b9-56d174faec4f',
+                        name: 'Label',
+                        type: 'container',
+                        tab: null,
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: 'DisplayRichtext06jsjb',
+                                    name: 'Display Rich text',
+                                    type: 'display-rich-text',
+                                    readOnly: false,
+                                    value: {
+                                        time: 1658423394276,
+                                        blocks: [
+                                            {
+                                                id: 'dry4RE17v_',
+                                                type: 'header',
+                                                data: {
+                                                    text: 'Display Rich Text widget example',
+                                                    level: 1
+                                                }
+                                            },
+                                            {
+                                                id: 'my1r7YmMOs',
+                                                type: 'paragraph',
+                                                data: {
+                                                    text: `<font color="#000000">Is simply a redonly</font><mark class="cdx-marker">
+                                                    <font color="#000000">dummy </font><b>text</b></mark><b></b><font color="#000000">
+                                                    of the </font><i>printing and typesetting</i><font color="#000000"> industry.\n
+                                                    </font><b><i>Lorem</i></b><font color="#000000"> Ipsum has been the industry\'s standard du</font><b>
+                                                    <i>mmy text ever since the 1500s,\n                    when an unknown printer took a galley of type
+                                                    and scrambled it to make a type specime</i></b><font color="#000000">n book. </font><font color="#ff1300">
+                                                    It has survived not only five centuries</font><font color="#000000">,\n
+                                                    but also the leap into </font><u>electronic </u><font color="#000000">typesetting,
+                                                    </font><a href="#kljh">remaining </a><font color="#000000">essentially </font><b>unchanged</b><font color="#000000">.\n
+                                                    It was </font><u class="cdx-underline"><font color="#0070ff">underline</font></u><font color="#000000">&nbsp;
+                                                    in the 1960s with </font><u>the release of sheets</u><font color="#000000"> containing\n
+                                                    </font><a href="#link">Lorem</a><font color="#000000"> Ipsum passages, and more recently with desktop
+                                                    publishing software like Aldus PageMaker including versions of <span class="plus20pc">Lorem</span>,
+                                                    <code class="inline-code">example of inline code</code></font>`
+                                                }
+                                            },
+                                            {
+                                                id: 'vgpY3obXS7',
+                                                type: 'list',
+                                                data: {
+                                                    style: 'unordered',
+                                                    items: [
+                                                        'Unordered list example',
+                                                        'Unordered list example'
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                id: 'lWR9x3OF1M',
+                                                type: 'list',
+                                                data: {
+                                                    style: 'ordered',
+                                                    items: ['Ordered list example', 'Ordered list example']
+                                                }
+                                            },
+                                            {
+                                                id: 'aeZV7M8sU1',
+                                                type: 'code',
+                                                data: {
+                                                    code: '// Code Block Example\ncatch(Exception ex){\n   // Houston, we have a problem\n}'
+                                                }
+                                            }
+                                        ],
+                                        version: '2.25.0'
+                                    },
+                                    isCustomType: false,
+                                    colspan: 1,
+                                    rowspan: 1,
+                                    visibilityCondition: null,
+                                    params: {
+                                        existingColspan: 1,
+                                        maxColspan: 2
+                                    }
+                                }
+                            ],
+                            2: []
                         }
                     }
                 ],
