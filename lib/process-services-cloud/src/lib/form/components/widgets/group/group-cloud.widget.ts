@@ -51,6 +51,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     title: string;
     preSelectGroup: IdentityGroupModel[];
     search: FormControl;
+    validate = false;
 
     constructor(formService: FormService) {
         super(formService);
@@ -62,6 +63,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.mode = this.field.optionType as ComponentSelectionMode;
             this.title = this.field.placeholder;
             this.preSelectGroup = this.field.value ? this.field.value : [];
+            this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),

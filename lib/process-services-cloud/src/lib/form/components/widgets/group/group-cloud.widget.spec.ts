@@ -46,6 +46,18 @@ describe('GroupCloudWidgetComponent', () => {
         element = fixture.nativeElement;
     });
 
+    it('should have enabled validation if field is NOT readOnly', () => {
+        const readOnly = false;
+        widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }, null, readOnly), {
+            type: FormFieldTypes.GROUP,
+            value: []
+        });
+
+        widget.ngOnInit();
+
+        expect(widget.validate).toBeTruthy();
+    });
+
     describe('when is required', () => {
 
         beforeEach(() => {
@@ -83,13 +95,15 @@ describe('GroupCloudWidgetComponent', () => {
 
     describe('when is readOnly', () => {
 
+        const readOnly = true;
+
         it('should single chip be disabled', async () => {
             const mockSpaghetti: IdentityGroupModel[] = [{
                 id: 'bolognese',
                 name: 'Bolognese'
             }];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
                 type: FormFieldTypes.GROUP,
                 value: mockSpaghetti
             });
@@ -113,7 +127,7 @@ describe('GroupCloudWidgetComponent', () => {
                 { id: 'carbonara', name: 'Carbonara' }
             ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
                 type: FormFieldTypes.GROUP,
                 value: mockSpaghetti
             });
@@ -130,6 +144,17 @@ describe('GroupCloudWidgetComponent', () => {
             const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
             expect(disabledGroupChips.item(0)).toBeTruthy();
             expect(disabledGroupChips.item(1)).toBeTruthy();
+        });
+
+        it('should have disabled validation', () => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+                type: FormFieldTypes.GROUP,
+                value: []
+            });
+
+            widget.ngOnInit();
+
+            expect(widget.validate).toBeFalsy();
         });
     });
 
