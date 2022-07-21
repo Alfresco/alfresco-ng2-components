@@ -26,6 +26,7 @@ import * as ChangeFontSize from '@quanzo/change-font-size';
 import * as ColorPlugin from 'editorjs-text-color-plugin';
 
 export const editorJsConfig = {
+    autofocus: true,
     logLevel: 'ERROR',
     tools: {
         underline: {
