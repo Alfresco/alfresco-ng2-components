@@ -23,7 +23,6 @@ import List from '@editorjs/list';
 import Marker from '@editorjs/marker';
 import Underline from '@editorjs/underline';
 import * as ChangeFontSize from '@quanzo/change-font-size';
-import * as Paragraph from 'editorjs-paragraph-with-alignment';
 import * as ColorPlugin from 'editorjs-text-color-plugin';
 
 export const editorJsConfig = {
@@ -56,10 +55,6 @@ export const editorJsConfig = {
         Marker: {
             class: Marker,
             shortcut: 'CMD+M'
-        },
-        paragraph: {
-            class: Paragraph,
-            inlineToolbar: true
         },
         'Increase/Decrease font size': {
             class: ChangeFontSize,
