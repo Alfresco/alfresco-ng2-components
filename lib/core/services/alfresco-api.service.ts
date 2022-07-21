@@ -17,45 +17,33 @@
 
 import { StorageService } from '@alfresco/adf-core/storage';
 import { Injectable } from '@angular/core';
-import { Node, AlfrescoApi, AlfrescoApiConfig, BaseAlfrescoApi } from '@alfresco/js-api';
+import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { OpenidConfiguration } from './openid-configuration.interface';
 
 
-export interface ApiService {
-    alfrescoApiInitialized: ReplaySubject<boolean>;
-    /**
-     * Publish/subscribe to events related to node updates.
-     */
-    nodeUpdated: Subject<Node>;
-    getInstance(): BaseAlfrescoApi;
-    createInstance(config: AlfrescoApiConfig): BaseAlfrescoApi;
-    init(config: AlfrescoApiConfig): void;
-    reset(): void;
-}
-
 @Injectable({
     providedIn: 'root'
 })
-export class AlfrescoApiService implements ApiService {
+export class AlfrescoApiService {
     nodeUpdated = new Subject<Node>();
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
     lastConfig: AlfrescoApiConfig;
     currentAppConfig: AlfrescoApiConfig;
     idpConfig: OpenidConfiguration;
 
-    protected alfrescoApi: BaseAlfrescoApi;
+    protected alfrescoApi: AlfrescoApi;
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
-    getInstance(): BaseAlfrescoApi {
+    getInstance(): AlfrescoApi {
         return this.alfrescoApi;
     }
 
     constructor(
         protected appConfig: AppConfigService,
-        protected storageService: StorageService) {
-    }
+        protected storageService: StorageService
+    ) {}
 
     async init(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
@@ -92,7 +80,7 @@ export class AlfrescoApiService implements ApiService {
         this.lastConfig = config;
     }
 
-    createInstance(config: AlfrescoApiConfig): BaseAlfrescoApi {
+    createInstance(config: AlfrescoApiConfig): AlfrescoApi {
         return this.alfrescoApi = new AlfrescoApi(config);
     }
 
