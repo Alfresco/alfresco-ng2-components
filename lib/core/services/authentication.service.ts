@@ -66,7 +66,7 @@ export class AuthenticationService extends BaseAuthenticationService {
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
-        private logService: LogService,
+        private logService: LogService
     ) {
         super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {

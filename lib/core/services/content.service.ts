@@ -56,7 +56,7 @@ export class ContentService {
         private logService: LogService,
         private sanitizer: DomSanitizer,
         private downloadService: DownloadService,
-        private thumbnailService: ThumbnailService,
+        private thumbnailService: ThumbnailService
     ) {}
 
     /**
