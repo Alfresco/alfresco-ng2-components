@@ -367,6 +367,48 @@ describe('DateWidgetComponent', () => {
             expect(widget.maxDate).toEqual(expected);
         });
 
+        it('should maxDate and minDate be undefined if minDateRangeValue and maxDateRangeValue are null', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: null,
+                minDateRangeValue: null
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).toBeUndefined();
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should minDate be undefined if minDateRangeValue is null and maxDateRangeValue is greater than 0', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: 15,
+                minDateRangeValue: null
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.maxDate).not.toBeUndefined();
+            expect(widget.minDate).toBeUndefined();
+        });
+
+        it('should maxDate be undefined if maxDateRangeValue is null and minDateRangeValue is greater than 0', async () => {
+            widget.field = new FormFieldModel(null, {
+                dynamicDateRangeSelection: true,
+                maxDateRangeValue: null,
+                minDateRangeValue: 10
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(widget.minDate).not.toBeUndefined();
+            expect(widget.maxDate).toBeUndefined();
+        });
+
     });
 
 
