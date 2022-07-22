@@ -21,25 +21,24 @@ import {
 import { Injectable, Injector } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { BaseAuthenticationService } from './base-authentication.service';
+import { AuthenticationService } from '../services';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
   private excludedUrlsRegex: RegExp[];
 
-  constructor(private injector: Injector, private authService: BaseAuthenticationService) { }
+  constructor(private injector: Injector, private authService: AuthenticationService) { }
 
   private loadExcludedUrlsRegex() {
     const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
-    const idpUrls: string[] = this.authService.getIdpUrls();
 
-    this.excludedUrlsRegex = [...excludedUrls, ...idpUrls].map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
+    this.excludedUrlsRegex = [...excludedUrls].map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
-    this.authService = this.injector.get(BaseAuthenticationService);
+    this.authService = this.injector.get(AuthenticationService);
 
     if (!this.authService || !this.authService.getBearerExcludedUrls()) {
       return next.handle(req);
