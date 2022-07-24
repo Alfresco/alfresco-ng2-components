@@ -46,31 +46,6 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         }).toPromise() as unknown as Promise<T>;
     }
 
-    // Poor man's sanitizer
-    private removeUndefinedValues(obj: {[key: string]: any}) {
-        const newObj = {};
-        Object.keys(obj).forEach((key) => {
-            if (obj[key] === Object(obj[key])) {
-                newObj[key] = this.removeUndefinedValues(obj[key]);
-            } else if (obj[key] !== undefined && obj[key] !== null) {
-                newObj[key] = obj[key];
-            }
-        });
-        return newObj;
-    }
-
-    private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
-
-        const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
-
-        if (isBlobType) {
-            return 'blob';
-        } else if (options.returnType === 'String') {
-            return 'text';
-        }
-
-        return null;
-    }
 
     post<T = any>(url: string, options: RequestOptions): Promise<T> {
         return this.request<T>(url, {
@@ -108,14 +83,30 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         });
     }
 
-    /** @deprecated */
-    callApi(url: string, options: RequestOptions): Promise<any> {
-        return this.request(url, options);
+
+    // Poor man's sanitizer
+    private removeUndefinedValues(obj: {[key: string]: any}) {
+        const newObj = {};
+        Object.keys(obj).forEach((key) => {
+            if (obj[key] === Object(obj[key])) {
+                newObj[key] = this.removeUndefinedValues(obj[key]);
+            } else if (obj[key] !== undefined && obj[key] !== null) {
+                newObj[key] = obj[key];
+            }
+        });
+        return newObj;
     }
 
-    /** @deprecated */
-    callCustomApi(url: string, options: RequestOptions): Promise<any> {
-        return this.request(url, options);
-    }
+    private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
 
+        const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
+
+        if (isBlobType) {
+            return 'blob';
+        } else if (options.returnType === 'String') {
+            return 'text';
+        }
+
+        return null;
+    }
 }
