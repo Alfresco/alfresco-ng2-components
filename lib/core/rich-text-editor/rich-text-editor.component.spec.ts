@@ -127,6 +127,4 @@ describe('RichTextEditorComponent', () => {
         expect(editorEl.nativeElement.classList).not.toContain('readonly');
     });
 
-
-
 });
