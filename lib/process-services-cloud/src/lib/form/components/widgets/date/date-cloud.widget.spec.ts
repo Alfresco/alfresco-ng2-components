@@ -409,6 +409,89 @@ describe('DateWidgetComponent', () => {
             expect(widget.maxDate).toBeUndefined();
         });
 
+        describe('check date validation by dynamic date ranges', () => {
+            it('should minValue be equal to today date minus minDateRangeValue', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: null,
+                    minDateRangeValue: 1,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMinValueString = '2022-07-21';
+
+                expect(widget.field.minValue).toEqual(expectedMinValueString);
+                expect(widget.maxDate).toBeUndefined();
+                expect(widget.field.maxValue).toBeNull();
+            });
+
+            it('should maxValue be equal to today date plus maxDateRangeValue', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: 8,
+                    minDateRangeValue: null,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMaxValueString = '2022-07-30';
+
+                expect(widget.field.maxValue).toEqual(expectedMaxValueString);
+                expect(widget.minDate).toBeUndefined();
+                expect(widget.field.minValue).toBeNull();
+            });
+
+            it('should maxValue and minValue be null if maxDateRangeValue and minDateRangeValue are null', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: null,
+                    minDateRangeValue: null,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(widget.minDate).toBeUndefined();
+                expect(widget.maxDate).toBeUndefined();
+                expect(widget.field.minValue).toBeNull();
+                expect(widget.field.maxValue).toBeNull();
+            });
+
+            it('should maxValue and minValue not be null if maxDateRangeVale and minDateRangeValue are not null', async () => {
+                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
+                widget.field = new FormFieldModel(null, {
+                    dynamicDateRangeSelection: true,
+                    maxDateRangeValue: 8,
+                    minDateRangeValue: 10,
+                    maxValue: null,
+                    minValue: null
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const expectedMaxValueString = '2022-07-30';
+                const expectedMinValueString = '2022-07-12';
+
+                expect(widget.field.maxValue).toEqual(expectedMaxValueString);
+                expect(widget.field.minValue).toEqual(expectedMinValueString);
+            });
+
+        });
+
+
     });
 
 

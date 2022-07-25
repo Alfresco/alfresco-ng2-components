@@ -75,12 +75,14 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                const today = moment().format(DATE_FORMAT_CLOUD);
+                const today = this.getTodaysFormattedDate();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
                     this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
+                    this.field.minValue = this.minDate.format(DATE_FORMAT_CLOUD);
                 }
                 if (Number.isInteger(this.field.maxDateRangeValue)) {
                     this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
+                    this.field.maxValue = this.maxDate.format(DATE_FORMAT_CLOUD);
                 }
             } else {
                 if (this.field.minValue) {
@@ -92,6 +94,10 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
                 }
             }
         }
+    }
+
+    getTodaysFormattedDate() {
+        return moment().format(DATE_FORMAT_CLOUD);
     }
 
     ngOnDestroy() {
