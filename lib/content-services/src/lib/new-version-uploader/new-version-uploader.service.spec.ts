@@ -181,7 +181,7 @@ describe('NewVersionUploaderService', () => {
                 spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
                 spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
                     list: { entries: [{ entry: '2' }] }
-                } as any);
+                }) as any);
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
                     file: mockFile
