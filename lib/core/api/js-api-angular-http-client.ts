@@ -17,10 +17,24 @@
 
 import {
     HttpClient as JsApiHttpClient,
-    RequestOptions
+    RequestOptions,
+    SecurityOptions
 } from '@alfresco/js-api';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+type EventListener = (...args: any[]) => void;
+type EmitterMethod = (type: string, listener: EventListener) => void;
+
+interface Emitter {
+    emit(type: string, ...args: any[]): void;
+    off: EmitterMethod;
+    on: EmitterMethod;
+    once: EmitterMethod;
+}
+
 
 @Injectable({
     providedIn: 'root'
@@ -29,12 +43,12 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, emitter: Emitter): Promise<T> {
 
         const responseType = this.getResponseType(options);
         const params = new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) });
 
-        return this.httpClient.request(
+        const request = this.httpClient.request(
             options.httpMethod,
             url,
             {
@@ -43,57 +57,120 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             observe: 'body',
             ...(options.queryParams ? { params } : {}),
             ...(responseType ? { responseType } : {})
-        }).toPromise() as unknown as Promise<T>;
+        });
+
+        return this.requestWithLegacyEventEmitters<T>(request, emitter);
+    }
+
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<T>, emitter: Emitter): Promise<T> {
+
+        const promise = request$.pipe(
+            map((res: T) => {
+                emitter.emit('success', res);
+
+                console.log(`%c DEBUG:LOG res`, 'color: green');
+                console.log(res);
+                console.log('%c ------------------------------', 'color: tomato');
+
+                return res;
+            }),
+            catchError((err: HttpErrorResponse) => {
+                emitter.emit('error', err);
+
+                if (err.status === 401) {
+                    emitter.emit('unauthorized');
+                }
+
+                return Promise.reject(err);
+            })
+        ).toPromise();
+
+        // for Legacy backward compatibility
+
+        (promise as any).on = function() {
+            console.log(`%c DEBUG:IM HERE -> on`, 'color: orange');
+            emitter.on.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).once = function() {
+            console.log(`%c DEBUG:IM HERE -> once`, 'color: orange');
+            emitter.once.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).emit = function() {
+            console.log(`%c DEBUG:IM HERE -> emit`, 'color: orange');
+            emitter.emit.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).off = function() {
+            console.log(`%c DEBUG:IM HERE -> off`, 'color: orange');
+            emitter.off.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).abort = function() {
+            console.log(`%c DEBUG:IM HERE -> abort`, 'color: orange');
+            return this;
+        };
+
+        return promise;
     }
 
 
-    post<T = any>(url: string, options: RequestOptions): Promise<T> {
+    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod: 'POST',
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        });
+        }, sc, emitter);
     }
 
-    put<T = any>(url: string, options: RequestOptions): Promise<T> {
+    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod: 'PUT',
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        });
+        }, sc, emitter);
     }
 
-    get<T = any>(url: string, options: RequestOptions): Promise<T> {
+    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod: 'GET',
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        });
+        }, sc, emitter);
     }
 
-    delete<T = void>(url: string, options: RequestOptions): Promise<T> {
+    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod: 'DELETE',
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        });
+        }, sc, emitter);
     }
 
 
     // Poor man's sanitizer
     private removeUndefinedValues(obj: {[key: string]: any}) {
         const newObj = {};
-        Object.keys(obj).forEach((key) => {
-            if (obj[key] === Object(obj[key])) {
-                newObj[key] = this.removeUndefinedValues(obj[key]);
-            } else if (obj[key] !== undefined && obj[key] !== null) {
-                newObj[key] = obj[key];
-            }
-        });
+
+        if(obj) {
+            Object.keys(obj).forEach((key) => {
+                if (obj[key] === Object(obj[key])) {
+                    newObj[key] = this.removeUndefinedValues(obj[key]);
+                } else if (obj[key] !== undefined && obj[key] !== null) {
+                    newObj[key] = obj[key];
+                }
+            });
+        }
+
         return newObj;
     }
 
