@@ -34,7 +34,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
-import moment from 'moment-es6';
+import moment from 'moment';
 
 describe('Search Filters', () => {
 

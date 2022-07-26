@@ -23,7 +23,7 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 
 describe('DateRangeFilterComponent', () => {

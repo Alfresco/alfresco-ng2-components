@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { Observable, from, throwError } from 'rxjs';
 import {
     FormFieldModel,

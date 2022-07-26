@@ -16,7 +16,6 @@
             "allowedCommonJsDependencies": [
               "minimatch",
               "minimatch-browser",
-              "moment-es6",
               "superagent",
               "event-emitter",
               "brace-expansion",

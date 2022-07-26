@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { ProcessNameCloudPipe } from './process-name-cloud.pipe';
 import { setupTestBed, LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../process/start-process/models/process-instance-cloud.model';

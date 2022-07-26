@@ -99,7 +99,6 @@
     "editorjs-paragraph-with-alignment": "3.0.0",
     "minimatch": "^3.0.4",
     "minimatch-browser": "1.0.0",
-    "moment-es6": "^1.0.0",
     "ng2-charts": "2.4.2",
     "ngx-monaco-editor": "8.1.1",
     "pdfjs-dist": "2.5.207",

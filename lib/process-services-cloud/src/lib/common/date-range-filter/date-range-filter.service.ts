@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 
 @Injectable({

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import moment from 'moment';
 
 export class DateUtil {
 

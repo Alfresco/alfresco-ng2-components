@@ -18,7 +18,7 @@
  */
 
 import * as program from 'commander';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { logger } from './logger';
 import * as kube from './kube-utils';

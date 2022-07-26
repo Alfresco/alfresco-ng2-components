@@ -21,8 +21,7 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction } from '../../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
