@@ -126,8 +126,14 @@ fi
 
 rm -rf $TEMP_GENERATOR_DIR
 
-update "generator-alfresco-adf-app"
-update "alfresco-content-app"
-update "alfresco-apps"
+isSameADFSha=$(node $BUILD_PIPELINE_DIR/adf-same-commit-verify.js --token=$TOKEN --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT )
+if [ "$isSameADFSha" = 'true' ]; then
+        echo 'ADF sha is the same. No need to create another pr'
+    else
+        update "generator-alfresco-adf-app"
+        update "alfresco-content-app"
+        update "alfresco-apps"
+fi
+
 
 exit $?
