@@ -93,6 +93,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
         (promise as any).on = function() {
             console.log(`%c DEBUG:IM HERE -> on`, 'color: orange');
+
+            console.log(`%c DEBUG:LOG arguments`, 'color: green');
+            console.log(arguments);
+            console.log('%c ------------------------------', 'color: tomato');
+
             emitter.on.apply(emitter, arguments);
             return this;
         };

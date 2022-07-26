@@ -22,6 +22,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
 import { OpenidConfiguration } from './openid-configuration.interface';
+import { JsApiAngularHttpClient } from '../api/js-api-angular-http-client';
 
 @Injectable({
     providedIn: 'root'
@@ -49,8 +50,9 @@ export class AlfrescoApiService {
 
     constructor(
         protected appConfig: AppConfigService,
-        protected storageService: StorageService) {
-    }
+        protected storageService: StorageService,
+        private jsHttpClient: JsApiAngularHttpClient
+    ) {}
 
     async load() {
         try {
@@ -121,7 +123,7 @@ export class AlfrescoApiService {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
             this.alfrescoApi.setConfig(this.currentAppConfig);
         } else {
-            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
+            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig, this.jsHttpClient);
         }
         this.lastConfig = this.currentAppConfig;
     }
