@@ -26,6 +26,7 @@ export * from './language-menu/index';
 export * from './info-drawer/index';
 export * from './data-column/index';
 export * from './datatable/index';
+export * from './rich-text-editor/index';
 export * from './context-menu/index';
 export * from './card-view/index';
 export * from './app-config/index';

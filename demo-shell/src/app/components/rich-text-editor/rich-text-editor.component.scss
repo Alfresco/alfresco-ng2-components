@@ -1,0 +1,19 @@
+.app-rich-text-editor-container {
+    .app-rich-text-editor-col {
+        padding: 20px;
+
+        &-rx {
+            border-left: 1px dashed var(--theme-primary-color);
+            border-spacing: 5px;
+        }
+
+        &-title {
+            text-align: center;
+        }
+    }
+
+    .app-rich-text-editor-output {
+        max-width: 30vw;
+        overflow-x: scroll;
+    }
+}

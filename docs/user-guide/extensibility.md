@@ -90,6 +90,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Display value | readonly | DisplayValueWidgetComponent |
 | Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
+| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](../../lib/core/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Typeahead | typeahead | [`TypeaheadWidgetComponent`](../../lib/core/form/components/widgets/typeahead/typeahead.widget.ts) |
 | People | people | [`PeopleWidgetComponent`](../../lib/core/form/components/widgets/people/people.widget.ts) |
 | Group of people | functional-group | [`FunctionalGroupWidgetComponent`](../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |

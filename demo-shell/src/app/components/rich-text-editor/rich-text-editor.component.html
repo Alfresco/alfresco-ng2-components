@@ -1,0 +1,12 @@
+<div class="app-rich-text-editor-container" fxLayout="row wrap" fxLayoutAlign="center start">
+
+    <div fxFlex="50" class="app-rich-text-editor-col app-rich-text-editor-col-sx">
+        <h1 class="app-rich-text-editor-col-title">Rich Text Editor</h1>
+        <adf-rich-text-editor [data]="sampleData" #textEditor></adf-rich-text-editor>
+    </div>
+    <div fxFlex="50" class="app-rich-text-editor-col app-rich-text-editor-col-rx">
+        <h1 class="app-rich-text-editor-col-title">Output Data</h1>
+        <pre class="app-rich-text-editor-output">{{editorOutputData | json}}</pre>
+    </div>
+
+</div>

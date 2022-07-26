@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Groups Cloud Component",
     "CONFIRM-DIALOG": "Confirmation Dialog",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Service Task List"
+    "SERVICE_TASK_LIST": "Service Task List",
+    "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
   "TRASHCAN": {
     "ACTIONS": {

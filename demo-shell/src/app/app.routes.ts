@@ -322,6 +322,10 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/datatable/drag-and-drop/datatable-dnd.module').then(m => m.AppDataTableDndModule)
             },
             {
+                path: 'rich-text-editor',
+                loadChildren: () => import('./components/rich-text-editor/rich-text-editor.module').then(m => m.AppRichTextEditorModule)
+            },
+            {
                 path: 'search',
                 component: SearchResultComponent,
                 canActivate: [AuthGuardEcm]
