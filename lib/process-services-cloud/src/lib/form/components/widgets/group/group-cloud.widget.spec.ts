@@ -46,14 +46,17 @@ describe('GroupCloudWidgetComponent', () => {
         element = fixture.nativeElement;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should have enabled validation if field is NOT readOnly', () => {
         const readOnly = false;
         widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }, null, readOnly), {
             type: FormFieldTypes.GROUP,
             value: []
         });
-
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         expect(widget.validate).toBeTruthy();
     });
@@ -151,8 +154,7 @@ describe('GroupCloudWidgetComponent', () => {
                 type: FormFieldTypes.GROUP,
                 value: []
             });
-
-            widget.ngOnInit();
+            fixture.detectChanges();
 
             expect(widget.validate).toBeFalsy();
         });

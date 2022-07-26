@@ -51,6 +51,10 @@ describe('PeopleCloudWidgetComponent', () => {
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockShepherdsPie);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should preselect the current user', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.PEOPLE,
@@ -79,8 +83,7 @@ describe('PeopleCloudWidgetComponent', () => {
             type: FormFieldTypes.PEOPLE,
             value: []
         });
-
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         expect(widget.validate).toBeTruthy();
     });
@@ -179,8 +182,7 @@ describe('PeopleCloudWidgetComponent', () => {
                 type: FormFieldTypes.PEOPLE,
                 value: []
             });
-
-            widget.ngOnInit();
+            fixture.detectChanges();
 
             expect(widget.validate).toBeFalsy();
         });
