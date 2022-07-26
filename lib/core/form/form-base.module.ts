@@ -41,8 +41,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
-import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
-import { RichTextEditorModule } from '../rich-text-editor';
 
 @NgModule({
     imports: [
@@ -60,8 +58,7 @@ import { RichTextEditorModule } from '../rich-text-editor';
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         EditJsonDialogModule,
-        ViewerModule,
-        RichTextEditorModule
+        ViewerModule
     ],
     declarations: [
         ContentWidgetComponent,
@@ -72,8 +69,7 @@ import { RichTextEditorModule } from '../rich-text-editor';
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE,
         WidgetComponent,
-        InplaceFormInputComponent,
-        DisplayRichTextWidgetComponent
+        InplaceFormInputComponent
     ],
     exports: [
         ContentWidgetComponent,
