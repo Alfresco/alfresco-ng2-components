@@ -22,8 +22,8 @@ import {
 } from '@alfresco/js-api';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 type EventListener = (...args: any[]) => void;
 type EmitterMethod = (type: string, listener: EventListener) => void;
@@ -59,19 +59,22 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             ...(responseType ? { responseType } : {})
         });
 
+        // if (securityOptions.isBpmRequest) {
+        //     if (response.header && response.header.hasOwnProperty('set-cookie')) {
+        //         this.authCookie = response.header['set-cookie'][0];
+        //     }
+        // }
+
         return this.requestWithLegacyEventEmitters<T>(request, emitter);
     }
 
     private requestWithLegacyEventEmitters<T = any>(request$: Observable<T>, emitter: Emitter): Promise<T> {
 
+        const abort$ = new Subject<void>();
+
         const promise = request$.pipe(
             map((res: T) => {
                 emitter.emit('success', res);
-
-                console.log(`%c DEBUG:LOG res`, 'color: green');
-                console.log(res);
-                console.log('%c ------------------------------', 'color: tomato');
-
                 return res;
             }),
             catchError((err: HttpErrorResponse) => {
@@ -81,8 +84,9 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                     emitter.emit('unauthorized');
                 }
 
-                return Promise.reject(err);
-            })
+                return throwError(err);
+            }),
+            takeUntil(abort$)
         ).toPromise();
 
         // for Legacy backward compatibility
@@ -112,7 +116,9 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         };
 
         (promise as any).abort = function() {
-            console.log(`%c DEBUG:IM HERE -> abort`, 'color: orange');
+            emitter.emit('abort');
+            abort$.next();
+            abort$.complete();
             return this;
         };
 
