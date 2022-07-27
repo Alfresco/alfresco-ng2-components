@@ -4,13 +4,14 @@ import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybo
 import { LanguageMenuComponent } from './language-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 export default {
     component: LanguageMenuComponent,
     title: 'Core/Components/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule, MatMenuModule, MatIconModule]
+            imports: [CoreStoryModule, LanguageMenuModule, MatMenuModule, MatIconModule, TranslateModule]
         })
     ],
     argTypes: {
@@ -23,6 +24,9 @@ const Template: Story<LanguageMenuComponent> = (args) => ({
 
 export const LanguageMenuAsMainMenu = Template.bind({});
 LanguageMenuAsMainMenu.args = {
+    key1 : 'CORE.HOST_SETTINGS.TITLE',
+    key2 : 'ADF.LANGUAGE',
+    key3 : 'CORE.METADATA.ACTIONS.SAVE'
 };
 LanguageMenuAsMainMenu.decorators = [
     componentWrapperDecorator(story => `<button mat-icon-button [matMenuTriggerFor]="langMenu">
@@ -37,6 +41,7 @@ LanguageMenuAsMainMenu.decorators = [
 
 export const LanguageMenuAsNestedMenu = Template.bind({});
 LanguageMenuAsNestedMenu.args = {
+    ...LanguageMenuAsMainMenu.args
 };
 LanguageMenuAsNestedMenu.decorators = [
     componentWrapperDecorator(story => `<button mat-icon-button [matMenuTriggerFor]="profileMenu">
@@ -46,13 +51,13 @@ LanguageMenuAsNestedMenu.decorators = [
       </button>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item>
-          profile-settings
+        {{ '${LanguageMenuAsNestedMenu.args.key1}' | translate }}
         </button>
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
-          Languages
+        {{ 'ADF.LANGUAGE' | translate }}
         </button>
         <button mat-menu-item>
-         sign-out
+        {{ 'CORE.METADATA.ACTIONS.SAVE' | translate }}
         </button>
       </mat-menu>
       <mat-menu #langMenu="matMenu">
