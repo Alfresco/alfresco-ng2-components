@@ -12,8 +12,7 @@ if [ $TRAVIS_EVENT_TYPE == "push" ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $TR
 then
     if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ]] || [[ $TRAVIS_EVENT_TYPE == "cron" ]] || [[ $TRAVIS_EVENT_TYPE == "api" ]]
     then
-
-        isSameADFSha=$(node $BUILD_PIPELINE_DIR/adf-same-commit-verify.js --token=$TOKEN --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT )
+        isSameADFSha=$(node ./scripts/travis/update/adf-same-commit-verify.js --token=$TOKEN --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT )
         if [ "$isSameADFSha" = 'true' ]; then
                 echo 'ADF sha is the same. No need to publish again on NPM'
             else
