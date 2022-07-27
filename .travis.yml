@@ -102,8 +102,9 @@ jobs:
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
+            - ./scripts/travis/update/verify-adf-same-commit.sh -t $GITHUB_TOKEN -c $TRAVIS_COMMIT && ./scripts/travis/update/update-version-checks.sh || travis_terminate 1
             - ./scripts/travis/build/build-libs.sh || travis_terminate 1
-            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
+            - ./scripts/travis/update/verify-adf-same-commit.sh -t $GITHUB_TOKEN -c $TRAVIS_COMMIT && ./scripts/travis/release/release-npm.sh || travis_terminate 1
           workspaces:
             create:
               name: built_libs_cache
@@ -159,7 +160,7 @@ jobs:
 
         - stage: "Trigger Alpha ADF child build"
           name: "Trigger Alpha ADF child build"
-          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
+          script: - ./scripts/travis/update/verify-adf-same-commit.sh -t $GITHUB_TOKEN -c $TRAVIS_COMMIT && ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
           workspaces:
             use: built_libs_cache
 

@@ -67,5 +67,6 @@ main()
     .catch(error => {
         console.error(error.response.status);
         console.error(error.response.statusText);
+        process.stdout.write('true');
         process.exit(1);
     });
