@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "peerDependencies": {
+  "dependencies": {
     "cropperjs": "1.5.11",
     "@editorjs/editorjs": "2.25.0",
     "@editorjs/code": "2.7.0",
@@ -22,7 +22,9 @@
     "@quanzo/change-font-size": "1.0.0",
     "editorjs-text-color-plugin": "1.13.1",
     "editorjs-html": "3.4.2",
-    "editorjs-paragraph-with-alignment": "3.0.0",
+    "editorjs-paragraph-with-alignment": "3.0.0"
+  },
+  "peerDependencies": {
     "@angular/animations": ">=10.0.2",
     "@angular/cdk": ">=10.0.1",
     "@angular/common": ">=10.0.2",
