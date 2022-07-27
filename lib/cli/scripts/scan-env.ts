@@ -29,6 +29,7 @@ export default async function main(_args: string[]) {
     program
         .version('0.1.0')
         .option('--host <type>', 'Remote environment host')
+        .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password <type>', 'password ')
         .option('-u, --username <type>', 'username ')
         .parse(process.argv);
@@ -79,7 +80,7 @@ async function attemptLogin() {
             authType: 'OAUTH',
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
-                clientId: 'alfresco',
+                clientId: `${program.clientId}`,
                 scope: 'openid',
                 redirectUri: '/',
                 implicitFlow: false

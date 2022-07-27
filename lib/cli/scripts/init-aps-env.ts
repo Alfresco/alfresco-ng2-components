@@ -26,7 +26,9 @@ async function main() {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
+        .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password [type]', 'password ')
+        .option('-u, --username [type]', 'username ')
         .option('-u, --username [type]', 'username ')
         .option('--license [type]', 'APS license S3 path ')
         .parse(process.argv);
@@ -119,7 +121,7 @@ async function checkEnv() {
             authType: 'OAUTH',
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
-                clientId: 'alfresco',
+                clientId: `${program.clientId}`,
                 scope: 'openid'
             }
         });
