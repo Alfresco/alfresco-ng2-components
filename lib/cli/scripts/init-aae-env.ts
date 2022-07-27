@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
+import program from 'commander';
 import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';

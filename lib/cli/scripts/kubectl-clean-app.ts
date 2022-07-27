@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
+import program from 'commander';
 import moment from 'moment';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { logger } from './logger';
