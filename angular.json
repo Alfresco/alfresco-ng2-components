@@ -744,7 +744,12 @@
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
-            "project": "lib/testing/ng-package.json"
+            "additionalEntryPoints": [
+              {
+                "entryName": "shared",
+                "entryPath": "/lib/testing/src/lib/shared/index.ts"
+              }
+            ]
           },
           "configurations": {
             "production": {
