@@ -36,22 +36,22 @@ export const sixButtons: Story = args => ({
     template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>settings</mat-icon><span> Settings </span>
         </button>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>home</mat-icon><span> Home </span>
         </button>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>search</mat-icon><span> Search </span>
         </button>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>done</mat-icon><span> Done </span>
         </button>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>delete</mat-icon><span> Delete </span>
         </button>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>block</mat-icon><span> Block </span>
         </button>
     </adf-buttons-action-menu>
 `
@@ -62,7 +62,7 @@ export const oneButton: Story = args => ({
     template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
-            <mat-icon>settings</mat-icon><span> Button </span>
+            <mat-icon>settings</mat-icon><span> Settings </span>
         </button>
     </adf-buttons-action-menu>
 `
