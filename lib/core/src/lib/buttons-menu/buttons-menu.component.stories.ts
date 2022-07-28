@@ -28,11 +28,27 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, ButtonsMenuModule, MatIconModule]
         })
-    ]
+    ],
+    argTypes: {
+        mobile: {
+            type: { name: 'boolean', required: true },
+            name: 'isMobile',
+            defaultValue: false,
+            control: {
+                disable: false
+            }
+        }
+    }
 } as Meta;
 
 export const sixButtons: Story = args => ({
-    props: { ...args, isMenuEmpty: false },
+    props: {
+        ...args,
+        isMenuEmpty: false,
+        isMobile() {
+            return args.mobile;
+        }
+    },
     template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
@@ -58,7 +74,13 @@ export const sixButtons: Story = args => ({
 });
 
 export const oneButton: Story = args => ({
-    props: { ...args, isMenuEmpty: false },
+    props: {
+        ...args,
+        isMenuEmpty: false,
+        isMobile() {
+            return args.mobile;
+        }
+    },
     template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
@@ -69,7 +91,13 @@ export const oneButton: Story = args => ({
 });
 
 export const zeroButtons: Story = args => ({
-    props: { ...args, isMenuEmpty: true },
+    props: {
+        ...args,
+        isMenuEmpty: true,
+        isMobile() {
+            return args.mobile;
+        }
+    },
     template: `
     <adf-buttons-action-menu></adf-buttons-action-menu>`
 });
