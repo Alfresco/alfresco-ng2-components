@@ -29,7 +29,6 @@ async function main() {
         .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
-        .option('-u, --username [type]', 'username ')
         .option('--license [type]', 'APS license S3 path ')
         .parse(process.argv);
 
