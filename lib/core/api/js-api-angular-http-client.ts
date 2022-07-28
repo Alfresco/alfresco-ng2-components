@@ -20,7 +20,7 @@ import {
     RequestOptions,
     SecurityOptions
 } from '@alfresco/js-api';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
@@ -28,13 +28,17 @@ import { catchError, map, takeUntil } from 'rxjs/operators';
 type EventListener = (...args: any[]) => void;
 type EmitterMethod = (type: string, listener: EventListener) => void;
 
-interface Emitter {
+export interface Emitter {
     emit(type: string, ...args: any[]): void;
     off: EmitterMethod;
     on: EmitterMethod;
     once: EmitterMethod;
 }
 
+declare const Blob: any;
+declare const Buffer: any;
+
+export const isBrowser = (): boolean => typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 @Injectable({
     providedIn: 'root'
@@ -54,82 +58,13 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             {
             ...(options.bodyParam ? { body: options.bodyParam } : {}),
             ...(options.headerParams ? { headers: new HttpHeaders(options.headerParams) } : {}),
-            observe: 'body',
             ...(options.queryParams ? { params } : {}),
-            ...(responseType ? { responseType } : {})
+            ...(responseType ? { responseType } : {}),
+            observe: 'response'
         });
 
-        // if (securityOptions.isBpmRequest) {
-        //     if (response.header && response.header.hasOwnProperty('set-cookie')) {
-        //         this.authCookie = response.header['set-cookie'][0];
-        //     }
-        // }
-
-        return this.requestWithLegacyEventEmitters<T>(request, emitter);
+        return this.requestWithLegacyEventEmitters<T>(request, emitter, options.returnType);
     }
-
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<T>, emitter: Emitter): Promise<T> {
-
-        const abort$ = new Subject<void>();
-
-        const promise = request$.pipe(
-            map((res: T) => {
-                emitter.emit('success', res);
-                return res;
-            }),
-            catchError((err: HttpErrorResponse) => {
-                emitter.emit('error', err);
-
-                if (err.status === 401) {
-                    emitter.emit('unauthorized');
-                }
-
-                return throwError(err);
-            }),
-            takeUntil(abort$)
-        ).toPromise();
-
-        // for Legacy backward compatibility
-
-        (promise as any).on = function() {
-            console.log(`%c DEBUG:IM HERE -> on`, 'color: orange');
-
-            console.log(`%c DEBUG:LOG arguments`, 'color: green');
-            console.log(arguments);
-            console.log('%c ------------------------------', 'color: tomato');
-
-            emitter.on.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).once = function() {
-            console.log(`%c DEBUG:IM HERE -> once`, 'color: orange');
-            emitter.once.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).emit = function() {
-            console.log(`%c DEBUG:IM HERE -> emit`, 'color: orange');
-            emitter.emit.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).off = function() {
-            console.log(`%c DEBUG:IM HERE -> off`, 'color: orange');
-            emitter.off.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).abort = function() {
-            emitter.emit('abort');
-            abort$.next();
-            abort$.complete();
-            return this;
-        };
-
-        return promise;
-    }
-
 
     post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
         return this.request<T>(url, {
@@ -188,13 +123,100 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
 
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
+        const isDefaultSuperAgentType = !options.responseType && !options.returnType;
 
         if (isBlobType) {
             return 'blob';
-        } else if (options.returnType === 'String') {
+        } else if (options.returnType === 'String' || isDefaultSuperAgentType) {
             return 'text';
         }
 
         return null;
+    }
+
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpResponse<T>>, emitter: Emitter, returnType: any): Promise<T> {
+
+        const abort$ = new Subject<void>();
+
+        const promise = request$.pipe(
+            map((res) => {
+                emitter.emit('success', res.body);
+
+                return JsApiAngularHttpClient.deserialize(res.body, returnType);
+            }),
+            catchError((err: HttpErrorResponse) => {
+                emitter.emit('error', err);
+
+                if (err.status === 401) {
+                    emitter.emit('unauthorized');
+                }
+
+                return throwError(err);
+            }),
+            takeUntil(abort$)
+        ).toPromise();
+
+        // for Legacy backward compatibility
+
+        (promise as any).on = function() {
+            emitter.on.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).once = function() {
+            emitter.once.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).emit = function() {
+            emitter.emit.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).off = function() {
+            emitter.off.apply(emitter, arguments);
+            return this;
+        };
+
+        (promise as any).abort = function() {
+            emitter.emit('abort');
+            abort$.next();
+            abort$.complete();
+            return this;
+        };
+
+        return promise;
+    }
+
+    /**
+     * Deserializes an HTTP response body into a value of the specified type.
+     */
+     private static deserialize(response: any, returnType?: any): any {
+
+        // if (res.type === 'text/html') {
+        //     return JsApiAngularHttpClient.deserialize(res);
+        //     returnType = undefined;
+        // }
+
+        if (response && returnType) {
+            if (returnType === 'blob') {
+                return JsApiAngularHttpClient.deserializeBlobResponse(response);
+            } else if (Array.isArray(response)) {
+                return response.map((element) => new returnType(element));
+            }
+
+            return new returnType(response);
+        }
+
+        return response;
+    }
+
+    private static deserializeBlobResponse(response: any) {
+
+        if (isBrowser()) {
+            return new Blob([response], { type: response.header['content-type'] });
+        }
+
+        return new Buffer.from(response, 'binary');
     }
 }
