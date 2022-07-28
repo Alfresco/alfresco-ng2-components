@@ -40,7 +40,6 @@ export default {
             },
         },
         value: {
-            name: 'value',
             description: 'icon name',
             table: {
                 type: { summary: 'string' },
