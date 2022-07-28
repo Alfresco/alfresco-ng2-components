@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
+import { RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions, Emitter } from '@alfresco/js-api';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { JsApiAngularHttpClient, Emitter } from './js-api-angular-http-client';
+import { JsApiAngularHttpClient } from './js-api-angular-http-client';
 
 
 const securityOptions: SecurityOptions = {

@@ -17,6 +17,7 @@
 
 import {
     HttpClient as JsApiHttpClient,
+    Emitter as JsEmitter,
     RequestOptions,
     SecurityOptions
 } from '@alfresco/js-api';
@@ -25,20 +26,12 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 
-type EventListener = (...args: any[]) => void;
-type EmitterMethod = (type: string, listener: EventListener) => void;
-
-export interface Emitter {
-    emit(type: string, ...args: any[]): void;
-    off: EmitterMethod;
-    on: EmitterMethod;
-    once: EmitterMethod;
-}
-
 declare const Blob: any;
 declare const Buffer: any;
 
 export const isBrowser = (): boolean => typeof window !== 'undefined' && typeof window.document !== 'undefined';
+
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 
 @Injectable({
     providedIn: 'root'
@@ -47,7 +40,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, emitter: Emitter): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
 
         const responseType = this.getResponseType(options);
         const params = new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) });
@@ -63,45 +56,33 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             observe: 'response'
         });
 
-        return this.requestWithLegacyEventEmitters<T>(request, emitter, options.returnType);
+        return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, options.returnType);
     }
 
-    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
+    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'POST');
+    }
+
+    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'PUT');
+    }
+
+    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'GET');
+    }
+
+    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'DELETE');
+    }
+
+    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, httpMethod: HttpMethod): Promise<T> {
         return this.request<T>(url, {
             ...options,
-            httpMethod: 'POST',
+            httpMethod,
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        }, sc, emitter);
+        }, sc, eventEmitter);
     }
-
-    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
-        return this.request<T>(url, {
-            ...options,
-            httpMethod: 'PUT',
-            contentTypes: options.contentTypes || ['application/json'],
-            accepts: options.accepts || ['application/json']
-        }, sc, emitter);
-    }
-
-    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
-        return this.request<T>(url, {
-            ...options,
-            httpMethod: 'GET',
-            contentTypes: options.contentTypes || ['application/json'],
-            accepts: options.accepts || ['application/json']
-        }, sc, emitter);
-    }
-
-    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, emitter: Emitter): Promise<T> {
-        return this.request<T>(url, {
-            ...options,
-            httpMethod: 'DELETE',
-            contentTypes: options.contentTypes || ['application/json'],
-            accepts: options.accepts || ['application/json']
-        }, sc, emitter);
-    }
-
 
     // Poor man's sanitizer
     private removeUndefinedValues(obj: {[key: string]: any}) {
@@ -134,7 +115,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return null;
     }
 
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpResponse<T>>, emitter: Emitter, returnType: any): Promise<T> {
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpResponse<T>>, emitter: JsEmitter, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
 
@@ -189,7 +170,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     }
 
     /**
-     * Deserializes an HTTP response body into a value of the specified type.
+     * Deserialize an HTTP response body into a value of the specified type.
      */
      private static deserialize(response: any, returnType?: any): any {
 
