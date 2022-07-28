@@ -36,15 +36,15 @@ export default {
             defaultValue: 'primary',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'primary' },
-            },
+                defaultValue: { summary: 'primary' }
+            }
         },
         value: {
             description: 'icon name',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'settings' },
-            },
+                defaultValue: { summary: 'settings' }
+            }
         }
     }
 } as Meta;
@@ -55,10 +55,10 @@ const template: Story<IconComponent> = (args: IconComponent) => ({
 
 export const defaultIcon = template.bind({});
 defaultIcon.args = {
-    value: '',
+    value: ''
 };
 
 export const customIcon = template.bind({});
 customIcon.args = {
-    value: 'cloud_download',
+    value: 'cloud_download'
 };
