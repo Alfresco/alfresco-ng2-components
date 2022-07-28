@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, fakeViewerForm } from '../../mock/form.mock';
+import { cloudFormMock, fakeMetadataForm, fakeViewerForm } from '../../mock/form.mock';
 import { Node } from '@alfresco/js-api';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { AlfrescoApiService } from '../../../../services';
