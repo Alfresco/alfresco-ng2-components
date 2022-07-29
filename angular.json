@@ -807,13 +807,11 @@
       "projectType": "library",
       "architect": {
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
+            "browserTarget": "stories:build-storybook",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            }
+            "configFolder": "lib/stories/.storybook"
           },
           "configurations": {
             "ci": {
@@ -822,16 +820,13 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/stories",
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            }
+            "outputDir": "dist/storybook/stories",
+            "configDir": "lib/stories/.storybook",
+            "browserTarget": "stories:build-storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
