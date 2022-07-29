@@ -44,7 +44,7 @@ export class LanguageServiceMock implements LanguageServiceInterface{
 
     languages$ = this.languages.asObservable();
 
-    changeLanguage(language: LanguageItem): void {
+    changeLanguage(_language: LanguageItem): void {
     }
 
     setLanguages(items: LanguageItem[]): void {
