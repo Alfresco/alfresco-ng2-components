@@ -15,28 +15,29 @@
  * limitations under the License.
  */
 
-import { LanguageService } from '../services/language.service';
+import { LanguageMenuComponent } from './language-menu.component';
 import { LanguageMenuModule } from './language-menu.module';
+import { LanguageService } from '../services/language.service';
+import { LanguageServiceMock } from '../mock/language.service.mock';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { LanguageMenuComponent } from './language-menu.component';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
 import { action } from '@storybook/addon-actions';
-import { LanguageServiceMock } from '../mock/language.service.mock';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 export default {
     component: LanguageMenuComponent,
     title: 'Core/Components/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule, MatMenuModule, MatIconModule, TranslateModule],
+            imports: [CoreStoryModule, CommonModule, MaterialModule, TranslateModule, LanguageMenuModule],
             providers: [
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
         })
-    ]
+    ],
+    excludeStories: /.*Data$/
 } as Meta;
 
 const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
@@ -70,11 +71,14 @@ asNestedMenu.decorators = [
       </button>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
-        {{ 'ADF.LANGUAGE' | translate }}
+          <mat-icon>
+            language
+          </mat-icon>
+          {{ 'ADF.LANGUAGE' | translate }}
         </button>
       </mat-menu>
       <mat-menu #langMenu="matMenu">
         ${story}
       </mat-menu>
-      `)
+    `)
 ];
