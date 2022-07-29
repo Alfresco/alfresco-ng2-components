@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Notification Service](../../../lib/core/notifications/services/notification.service.ts "Defined in notification.service.ts")
+# [Notification Service](lib/core/src/lib/notifications/services/notification.service.ts "Defined in notification.service.ts")
 
 Shows a notification message with optional feedback.
 
@@ -30,9 +30,9 @@ Shows a notification message with optional feedback.
     -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
--   **pushToNotificationHistory**(notification: [`NotificationModel`](../../../lib/core/notifications/models/notification.model.ts))<br/>
+-   **pushToNotificationHistory**(notification: [`NotificationModel`](lib/core/src/lib/notifications/models/notification.model.ts))<br/>
     Push new notification to Notification History
-    -   _notification:_ [`NotificationModel`](../../../lib/core/notifications/models/notification.model.ts)  - Notification model to be pushed.
+    -   _notification:_ [`NotificationModel`](lib/core/src/lib/notifications/models/notification.model.ts)  - Notification model to be pushed.
 -   **showError**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase error message
     -   _message:_ `string`  - Text message or translation key for the message.

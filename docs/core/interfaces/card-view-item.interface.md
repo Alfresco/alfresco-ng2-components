@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-08
 ---
 
-# [Card View Item interface](../../../lib/core/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
+# [Card View Item interface](lib/core/src/lib/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
 
 Defines the implementation of an item in a [Card View component](../components/card-view.component.md).
 
@@ -50,8 +50,8 @@ Picard's birthday (47457.1):
 
 1.  Define the model for the custom type.
 
-    Your model must extend the [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)
-    and [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts) interfaces. See the
+    Your model must extend the [`CardViewBaseItemModel`](lib/core/src/lib/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](lib/core/src/lib/card-view/interfaces/card-view-item.interface.ts)
+    and [`DynamicComponentModel`](lib/core/src/lib/services/dynamic-component-mapper.service.ts) interfaces. See the
     [Card View Text Item model source](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     for an example of how to do this.
 

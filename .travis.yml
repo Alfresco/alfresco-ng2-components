@@ -182,15 +182,6 @@ jobs:
               - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
 
         - stage: "e2e Test"
-          name: "Process Cloud:playwright"
-          before_script: ./scripts/ci/jobs/dbpci-before-playwright
-          script: ./scripts/travis/storybook-testing/storybook-test.sh
-          workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
-
-        - stage: "e2e Test"
           name: "Core"
           before_script:
             - ./scripts/ci/job_hooks/before_e2e.sh

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-27
 ---
 
-# [Format Space pipe](../../../lib/core/pipes/format-space.pipe.ts "Defined in format-space.pipe.ts")
+# [Format Space pipe](lib/core/src/lib/pipes/format-space.pipe.ts "Defined in format-space.pipe.ts")
 
 Replaces all the white space in a string with a supplied character.
 

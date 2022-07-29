@@ -62,12 +62,12 @@ Manages process instances, process variables, and process audit Log.
     -   _requestNode:_ [`ProcessFilterParamRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - Filter for instances
     -   _processDefinitionKey:_ `string`  - (Optional) Limits returned instances to a process definition
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` - List of processes
--   **startProcess**(processDefinitionId: `string`, name: `string`, outcome?: `string`, startFormValues?: [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts), variables?: [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>`<br/>
+-   **startProcess**(processDefinitionId: `string`, name: `string`, outcome?: `string`, startFormValues?: [`FormValues`](lib/core/src/lib/form/components/widgets/core/form-values.ts), variables?: [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>`<br/>
     Starts a process based on a process definition, name, form values or variables.
     -   _processDefinitionId:_ `string`  - Process definition ID
     -   _name:_ `string`  - Process name
     -   _outcome:_ `string`  - (Optional) Process outcome
-    -   _startFormValues:_ [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts)  - (Optional) Values for the start form
+    -   _startFormValues:_ [`FormValues`](lib/core/src/lib/form/components/widgets/core/form-values.ts)  - (Optional) Values for the start form
     -   _variables:_ [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]`  - (Optional) Array of process instance variables
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` - Details of the process instance just started
 

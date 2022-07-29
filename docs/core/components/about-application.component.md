@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-09-09
 ---
 
-# [About Application Modules Component](../../../lib/core/about/about-application-modules/about-application-modules.component.ts "Defined in about-application-modules.component.ts")
+# [About Application Modules Component](lib/core/src/lib/about/about-application-modules/about-application-modules.component.ts "Defined in about-application-modules.component.ts")
 
 Shows which ADF libraries and plugins an application is using.
 

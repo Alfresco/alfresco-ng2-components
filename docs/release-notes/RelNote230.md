@@ -321,7 +321,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2421](https://issues.alfresco.com/jira/browse/ADF-2421)] - CLONE - Unable to copy / move a file from Recent or Favorites when user has only granular permissions on the file
 -   \[[ADF-2428](https://issues.alfresco.com/jira/browse/ADF-2428)] - \[Demo shell Unable to view document metadata from document list view
 -   \[[ADF-2429](https://issues.alfresco.com/jira/browse/ADF-2429)] - Viewer - media file full screen
--   \[[ADF-2442](https://issues.alfresco.com/jira/browse/ADF-2442)] - [Search Service](../../lib/core/services/search.service.ts) has wrong types for the 'search' API
+-   \[[ADF-2442](https://issues.alfresco.com/jira/browse/ADF-2442)] - [Search Service](lib/core/src/lib/services/search.service.ts) has wrong types for the 'search' API
 -   \[[ADF-2443](https://issues.alfresco.com/jira/browse/ADF-2443)] - Typo in the UserPreferences service
 -   \[[ADF-2444](https://issues.alfresco.com/jira/browse/ADF-2444)] - CLONE - Incorrect Items per page values on all lists after upgrade to ADF 2.2.0
 -   \[[ADF-2448](https://issues.alfresco.com/jira/browse/ADF-2448)] - Wrong type definition for [`RequestPagination`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/RequestPagination.md)
@@ -357,7 +357,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2660](https://issues.alfresco.com/jira/browse/ADF-2660)] - ADF [Process Service](../process-services/services/process.service.md) lib is not importing the content dependency
 -   \[[ADF-2662](https://issues.alfresco.com/jira/browse/ADF-2662)] - [Settings Component] Still able to sign in when changing APS or ACS URLS to invalid URL
 -   \[[ADF-2669](https://issues.alfresco.com/jira/browse/ADF-2669)] - Delete version confirmation dialog has wrong 'cancel' color
--   \[[ADF-2673](https://issues.alfresco.com/jira/browse/ADF-2673)] - [`DebugAppConfigService`](../../lib/core/app-config/debug-app-config.service.ts) breaks default values for application config
+-   \[[ADF-2673](https://issues.alfresco.com/jira/browse/ADF-2673)] - [`DebugAppConfigService`](lib/core/src/lib/app-config/debug-app-config.service.ts) breaks default values for application config
 -   \[[ADF-2676](https://issues.alfresco.com/jira/browse/ADF-2676)] - SupportedPageSizes from app.config.json file are not displayed in Content Services Page
 -   \[[ADF-2681](https://issues.alfresco.com/jira/browse/ADF-2681)] - Not all sites are displayed in Site List dropdown
 -   \[[ADF-2682](https://issues.alfresco.com/jira/browse/ADF-2682)] - Number of page doesn't change when navigating to another folder

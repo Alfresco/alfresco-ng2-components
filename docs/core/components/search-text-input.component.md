@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-11-06
 ---
 
-# [Search Text Input Component](../../../lib/core/search-text/search-text-input.component.ts "Defined in search-text-input.component.ts")
+# [Search Text Input Component](lib/core/src/lib/search-text/search-text-input.component.ts "Defined in search-text-input.component.ts")
 
 Displays a input text that supports autocompletion
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Toolbar Title Component](../../../lib/core/toolbar/toolbar-title.component.ts "Defined in toolbar-title.component.ts")
+# [Toolbar Title Component](lib/core/src/lib/toolbar/toolbar-title.component.ts "Defined in toolbar-title.component.ts")
 
 Supplies custom HTML to be included in a [Toolbar component](toolbar.component.md) title.
 
