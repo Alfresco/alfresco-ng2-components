@@ -52,7 +52,7 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
-| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| data | [`DataTableAdapter`](lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |

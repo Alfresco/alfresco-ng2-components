@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-07-13
 ---
 
-# [Identity Group service](../../../lib/core/services/identity-group.service.ts "Defined in identity-group.service.ts")
+# [Identity Group service](lib/core/src/lib/services/identity-group.service.ts "Defined in identity-group.service.ts")
 
 Performs CRUD operations on identity groups.
 
@@ -13,10 +13,10 @@ Performs CRUD operations on identity groups.
 
 ### Methods
 
--   **assignRoles**(groupId: `string`, roles: [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **assignRoles**(groupId: `string`, roles: [`IdentityRoleModel`](lib/core/src/lib/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Assigns roles to the group
     -   _groupId:_ `string`  - The ID of the group
-    -   _roles:_ [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`  - Array of roles to assign
+    -   _roles:_ [`IdentityRoleModel`](lib/core/src/lib/models/identity-role.model.ts)`[]`  - Array of roles to assign
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
 -   **checkGroupHasAnyClientAppRole**(groupId: `string`, clientId: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
     Check if a group has any of the client app roles in the supplied list.
@@ -34,17 +34,17 @@ Performs CRUD operations on identity groups.
     -   _groupId:_ `string`  - Id of the target group
     -   _roleNames:_ `string[]`  - Array of role names
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the group has one or more of the roles, false otherwise
--   **createGroup**(newGroup: [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **createGroup**(newGroup: [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Creates new group.
-    -   _newGroup:_ [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)  - Object of containing the new group details.
+    -   _newGroup:_ [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)  - Object of containing the new group details.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the group created.
 -   **deleteGroup**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes Group.
     -   _groupId:_ `string`  - Id of the group.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the group deleted.
--   **findGroupsByName**(searchParams: [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>`<br/>
+-   **findGroupsByName**(searchParams: [`IdentityGroupSearchParam`](lib/core/src/lib/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>`<br/>
     Finds groups filtered by name.
-    -   _searchParams:_ [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)  - Object containing the name filter string
+    -   _searchParams:_ [`IdentityGroupSearchParam`](lib/core/src/lib/models/identity-group.model.ts)  - Object containing the name filter string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` - List of group information
 -   **getAssignedRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
     Gets assigned roles
@@ -77,19 +77,19 @@ Performs CRUD operations on identity groups.
 -   **getTotalGroupsCount**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupCountModel`](../../../lib/core/models/identity-group.model.ts)`>`<br/>
     Gets groups total count.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupCountModel`](../../../lib/core/models/identity-group.model.ts)`>` - Number of groups count.
--   **queryGroups**(requestQuery: [`IdentityGroupQueryCloudRequestModel`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupQueryResponse`](../../../lib/core/models/identity-group.model.ts)`>`<br/>
+-   **queryGroups**(requestQuery: [`IdentityGroupQueryCloudRequestModel`](lib/core/src/lib/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupQueryResponse`](../../../lib/core/models/identity-group.model.ts)`>`<br/>
     Queries groups.
-    -   _requestQuery:_ [`IdentityGroupQueryCloudRequestModel`](../../../lib/core/models/identity-group.model.ts)  - 
+    -   _requestQuery:_ [`IdentityGroupQueryCloudRequestModel`](lib/core/src/lib/models/identity-group.model.ts)  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupQueryResponse`](../../../lib/core/models/identity-group.model.ts)`>` - Array of user information objects
--   **removeRoles**(groupId: `string`, roles: [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **removeRoles**(groupId: `string`, roles: [`IdentityRoleModel`](lib/core/src/lib/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Removes roles from the group
     -   _groupId:_ `string`  - The ID of the group
-    -   _roles:_ [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`  - Array of roles to remove
+    -   _roles:_ [`IdentityRoleModel`](lib/core/src/lib/models/identity-role.model.ts)`[]`  - Array of roles to remove
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
--   **updateGroup**(groupId: `string`, updatedGroup: [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **updateGroup**(groupId: `string`, updatedGroup: [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Updates group details.
     -   _groupId:_ `string`  - Id of the targeted group.
-    -   _updatedGroup:_ [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)  - Object of containing the group details
+    -   _updatedGroup:_ [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)  - Object of containing the group details
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the group updated.
 
 ## See also

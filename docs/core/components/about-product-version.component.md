@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-09-09
 ---
 
-# [About Product Version Component](../../../lib/core/about/about-product-version/about-product-version.component.ts "Defined in about-product-version.component.ts")
+# [About Product Version Component](lib/core/src/lib/about/about-product-version/about-product-version.component.ts "Defined in about-product-version.component.ts")
 
 Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application.
 

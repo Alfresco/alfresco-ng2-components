@@ -61,5 +61,16 @@ module.exports = {
                 changeOrigin: true,
             },
         }
+    },
+    getIdentityAdapterServiceProxy: function(host) {
+        console.log('Target for /identity-adapter-service', host);
+        return {
+            '/identity-adapter-service': {
+                target: host,
+                secure: false,
+                logLevel: 'debug',
+                changeOrigin: true,
+            },
+        }
     }
 };

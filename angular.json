@@ -11,7 +11,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "allowedCommonJsDependencies": [
               "minimatch",
               "minimatch-browser",
@@ -64,7 +63,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/assets",
+                "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -84,7 +83,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/i18n",
+                "input": "lib/core/src/lib/i18n",
                 "output": "/assets/adf-core/i18n"
               },
               {
@@ -121,47 +120,47 @@
             "styles": [
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss",
                 "bundleName": "adf-blue-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-purple.scss",
                 "bundleName": "adf-blue-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-orange.scss",
                 "bundleName": "adf-cyan-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-purple.scss",
                 "bundleName": "adf-cyan-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-orange.scss",
                 "bundleName": "adf-green-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-purple.scss",
                 "bundleName": "adf-green-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-indigo-pink.scss",
                 "bundleName": "adf-indigo-pink"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-pink-bluegrey.scss",
                 "bundleName": "adf-pink-bluegrey"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-purple-green.scss",
                 "bundleName": "adf-purple-green"
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -297,7 +296,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/assets",
+                "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -317,7 +316,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/i18n",
+                "input": "lib/core/src/lib/i18n",
                 "output": "/assets/adf-core/i18n"
               },
               {
@@ -838,8 +837,8 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "browserTarget": "stories:storybook",
-            "configDir": "lib/stories/.storybook",
+            "browserTarget": "core:storybook",
+            "configDir": "lib/core/.storybook",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -858,9 +857,9 @@
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
-            "browserTarget": "stories:build-storybook",
-            "configDir": "lib/stories/.storybook",
-            "outputDir": "dist/storybook/stories",
+            "browserTarget": "core:build-storybook",
+            "configDir": "lib/core/.storybook",
+            "outputDir": "dist/storybook/core",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",

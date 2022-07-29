@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-04
 ---
 
-# [Favorites Api service](../../../lib/core/services/favorites-api.service.ts "Defined in favorites-api.service.ts")
+# [Favorites Api service](lib/core/src/lib/services/favorites-api.service.ts "Defined in favorites-api.service.ts")
 
 Gets a list of items a user has marked as their favorites.
 

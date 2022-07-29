@@ -19,7 +19,7 @@ import { FormService, LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'adf-attach-form',
@@ -55,14 +55,14 @@ export class AttachFormComponent implements OnInit, OnChanges {
     disableSubmit: boolean = true;
     selectedFormId: number;
 
-    attachFormControl: FormControl;
+    attachFormControl: UntypedFormControl;
 
     constructor(private taskService: TaskListService,
         private logService: LogService,
         private formService: FormService) { }
 
     ngOnInit() {
-        this.attachFormControl = new FormControl('', Validators.required);
+        this.attachFormControl = new UntypedFormControl('', Validators.required);
         this.attachFormControl.valueChanges.subscribe( (currentValue) => {
             if (this.attachFormControl.valid) {
                 this.disableSubmit = this.formId === currentValue;

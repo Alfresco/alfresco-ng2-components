@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-19
 ---
 
-# [Authentication Service](../../../lib/core/services/authentication.service.ts "Defined in authentication.service.ts")
+# [Authentication Service](lib/core/src/lib/services/authentication.service.ts "Defined in authentication.service.ts")
 
 Provides authentication to ACS and APS.
 
@@ -93,9 +93,9 @@ Provides authentication to ACS and APS.
 -   **logout**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Logs the user out.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Response event called when logout is complete
--   **setRedirect**(url: [`RedirectionModel`](../../../lib/core/models/redirection.model.ts))<br/>
+-   **setRedirect**(url: [`RedirectionModel`](lib/core/src/lib/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
-    -   _url:_ [`RedirectionModel`](../../../lib/core/models/redirection.model.ts)  - URL to redirect to
+    -   _url:_ [`RedirectionModel`](lib/core/src/lib/models/redirection.model.ts)  - URL to redirect to
 -   **ssoImplicitLogin**()<br/>
     Logs the user in with SSO
 

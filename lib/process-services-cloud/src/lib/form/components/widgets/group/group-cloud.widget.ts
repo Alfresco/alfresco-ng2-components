@@ -17,7 +17,7 @@
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormService } from '@alfresco/adf-core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
@@ -50,7 +50,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     mode: ComponentSelectionMode;
     title: string;
     preSelectGroup: IdentityGroupModel[];
-    search: FormControl;
+    search: UntypedFormControl;
     validate = false;
 
     constructor(formService: FormService) {
@@ -66,7 +66,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search =  new FormControl({value: '', disabled: this.field.readOnly}, []),
+        this.search =  new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
 
         this.search.statusChanges
             .pipe(

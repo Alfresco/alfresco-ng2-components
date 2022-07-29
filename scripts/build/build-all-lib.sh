@@ -8,10 +8,10 @@ echo "====== Run lib ====="
 
 if [ "$CI" = "true" ]; then
     echo "Building libs for production"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx affected:build --all --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx affected:build --prod --exclude=demoshell || exit 1
 else
     echo "Building libs for development"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx affected:build --all || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx affected:build --exclude=demoshell || exit 1
 fi
 
 echo "====== run core ====="
@@ -36,5 +36,6 @@ echo "====== Run Cli ====="
 ./scripts/build/build-cli.sh || exit 1
 
 echo "====== Copy schema ====="
-cp lib/core/app-config/schema.json lib/dist/core/app.config.schema.json
+cp lib/core/src/lib/app-config/schema.json lib/dist/core/app.config.schema.json
+
 

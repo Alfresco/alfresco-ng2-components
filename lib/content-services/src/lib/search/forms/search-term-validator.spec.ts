@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { SearchTermValidator } from './search-term-validator';
 
 describe('Search term validator', () => {
 
     it('should pass validation for a value with the specified required number of alphanumeric characters', () => {
-        const control = new FormControl('ab', SearchTermValidator.minAlphanumericChars(2));
+        const control = new UntypedFormControl('ab', SearchTermValidator.minAlphanumericChars(2));
         expect(control.valid).toBe(true);
     });
 
     it('should pass validation for a value with more than the specified required number of alphanumeric characters', () => {
-        const control = new FormControl('abc', SearchTermValidator.minAlphanumericChars(2));
+        const control = new UntypedFormControl('abc', SearchTermValidator.minAlphanumericChars(2));
         expect(control.valid).toBe(true);
     });
 
     it('should fail validation for a value with less than the specified required number of alphanumeric characters', () => {
-        const control = new FormControl('a', SearchTermValidator.minAlphanumericChars(2));
+        const control = new UntypedFormControl('a', SearchTermValidator.minAlphanumericChars(2));
         expect(control.valid).toBe(false);
     });
 
     /* eslint-disable max-len */
     it('should fail validation for a value with less than the specified required number of alphanumeric characters but with other non-alphanumeric characters', () => {
-        const control = new FormControl('a ._-?b', SearchTermValidator.minAlphanumericChars(3));
+        const control = new UntypedFormControl('a ._-?b', SearchTermValidator.minAlphanumericChars(3));
         expect(control.valid).toBe(false);
     });
 });

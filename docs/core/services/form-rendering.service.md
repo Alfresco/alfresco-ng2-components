@@ -73,7 +73,7 @@ The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.t
 | Checkbox | "boolean" | [`CheckboxWidgetComponent`](../../../lib/core/form/components/widgets/checkbox/checkbox.widget.ts) |
 | Date | "date" | [`DateWidgetComponent`](../../../lib/core/form/components/widgets/date/date.widget.ts) |
 | Display text | "readonly-text" | [`DisplayTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
-| Display Rich text | "display-rich-text" | [`DisplayRichTextWidgetComponent`](../../../lib/core/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
+| Display Rich text | "display-rich-text" | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Display value | "readonly" | DisplayValueWidgetComponent |
 | Dropdown | "dropdown" | [`DropdownWidgetComponent`](../../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts) |
 | Dynamic table | "dynamic-table" | [`DynamicTableWidgetComponent`](../../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |

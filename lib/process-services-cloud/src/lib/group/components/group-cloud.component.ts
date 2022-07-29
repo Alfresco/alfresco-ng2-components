@@ -29,7 +29,7 @@ import {
     OnDestroy,
     Inject
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
@@ -91,11 +91,11 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to list of group */
     @Input()
-    groupChipsCtrl = new FormControl({ value: '', disabled: false });
+    groupChipsCtrl = new UntypedFormControl({ value: '', disabled: false });
 
     /** FormControl to search the group */
     @Input()
-    searchGroupsControl = new FormControl({ value: '', disabled: false });
+    searchGroupsControl = new UntypedFormControl({ value: '', disabled: false });
 
     /** Role names of the groups to be listed. */
     @Input()

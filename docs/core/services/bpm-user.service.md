@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Bpm User service](../../../lib/core/services/bpm-user.service.ts "Defined in bpm-user.service.ts")
+# [Bpm User service](lib/core/src/lib/services/bpm-user.service.ts "Defined in bpm-user.service.ts")
 
 Gets information about the current Process Services user.
 
