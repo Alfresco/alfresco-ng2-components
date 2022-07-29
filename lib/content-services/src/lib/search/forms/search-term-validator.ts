@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 export class SearchTermValidator {
 
     static minAlphanumericChars(minChars: number) {
-        return (control: FormControl) => ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
+        return (control: UntypedFormControl) => ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
             hasMinAlphanumericChars: false
         };
     }

@@ -16,7 +16,7 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -50,10 +50,10 @@ const DEFAULT_DATETIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 })
 export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
 
-    from: FormControl;
-    to: FormControl;
+    from: UntypedFormControl;
+    to: UntypedFormControl;
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     matcher = new LiveErrorStateMatcher();
 
     id: string;
@@ -108,14 +108,14 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             const splitValue = this.startValue.split('||');
             const fromValue = this.dateAdapter.parse(splitValue[0], this.datetimePickerFormat);
             const toValue = this.dateAdapter.parse(splitValue[1], this.datetimePickerFormat);
-            this.from = new FormControl(fromValue, validators);
-            this.to = new FormControl(toValue, validators);
+            this.from = new UntypedFormControl(fromValue, validators);
+            this.to = new UntypedFormControl(toValue, validators);
         } else {
-            this.from = new FormControl('', validators);
-            this.to = new FormControl('', validators);
+            this.from = new UntypedFormControl('', validators);
+            this.to = new UntypedFormControl('', validators);
         }
 
-        this.form = new FormGroup({
+        this.form = new UntypedFormGroup({
             from: this.from,
             to: this.to
         });
@@ -206,7 +206,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         }
     }
 
-    onChangedHandler(event: any, formControl: FormControl) {
+    onChangedHandler(event: any, formControl: UntypedFormControl) {
 
         const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datetimePickerFormat);

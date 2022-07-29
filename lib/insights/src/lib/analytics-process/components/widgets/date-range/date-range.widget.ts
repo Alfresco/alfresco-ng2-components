@@ -19,7 +19,7 @@
 
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
 import { Subject } from 'rxjs';
@@ -39,7 +39,7 @@ const SHOW_FORMAT = 'DD/MM/YYYY';
 })
 export class DateRangeWidgetComponent implements OnInit, OnDestroy {
     @Input('group')
-    dateRange: FormGroup;
+    dateRange: UntypedFormGroup;
 
     @Input()
     field: any;
@@ -78,11 +78,11 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
             }
         }
 
-        const startDateControl = new FormControl(this.startDatePicker);
+        const startDateControl = new UntypedFormControl(this.startDatePicker);
         startDateControl.setValidators(Validators.required);
         this.dateRange.addControl('startDate', startDateControl);
 
-        const endDateControl = new FormControl(this.endDatePicker);
+        const endDateControl = new UntypedFormControl(this.endDatePicker);
         endDateControl.setValidators(Validators.required);
         this.dateRange.addControl('endDate', endDateControl);
 

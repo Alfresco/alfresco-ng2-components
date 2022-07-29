@@ -63,7 +63,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/assets",
+                "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -83,7 +83,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/i18n",
+                "input": "lib/core/src/lib/i18n",
                 "output": "/assets/adf-core/i18n"
               },
               {
@@ -120,47 +120,47 @@
             "styles": [
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss",
                 "bundleName": "adf-blue-orange"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-purple.scss",
                 "bundleName": "adf-blue-purple"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-orange.scss",
                 "bundleName": "adf-cyan-orange"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-purple.scss",
                 "bundleName": "adf-cyan-purple"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-orange.scss",
                 "bundleName": "adf-green-orange"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-purple.scss",
                 "bundleName": "adf-green-purple"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-indigo-pink.scss",
                 "bundleName": "adf-indigo-pink"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-pink-bluegrey.scss",
                 "bundleName": "adf-pink-bluegrey"
               },
               {
                 "inject": true,
-                "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-purple-green.scss",
                 "bundleName": "adf-purple-green"
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -296,7 +296,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/assets",
+                "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -316,7 +316,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/i18n",
+                "input": "lib/core/src/lib/i18n",
                 "output": "/assets/adf-core/i18n"
               },
               {

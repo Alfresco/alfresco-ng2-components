@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Log Service](../../../lib/core/services/log.service.ts "Defined in log.service.ts")
+# [Log Service](lib/core/src/lib/services/log.service.ts "Defined in log.service.ts")
 
 Provides log functionality.
 
@@ -64,10 +64,10 @@ export class AppComponent {
     Logs a message at the "ERROR" level.
     -   _message:_ `any`  - (Optional) Message to log
     -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
--   **getLogLevel**(level: `string`): [`LogLevelsEnum`](../../../lib/core/models/log-levels.model.ts)<br/>
+-   **getLogLevel**(level: `string`): [`LogLevelsEnum`](lib/core/src/lib/models/log-levels.model.ts)<br/>
     Converts a log level name string into its numeric equivalent.
     -   _level:_ `string`  - Level name
-    -   **Returns** [`LogLevelsEnum`](../../../lib/core/models/log-levels.model.ts) - Numeric log level
+    -   **Returns** [`LogLevelsEnum`](lib/core/src/lib/models/log-levels.model.ts) - Numeric log level
 -   **group**(groupTitle?: `string`, optionalParams: `any[]`)<br/>
     Starts an indented group of log messages.
     -   _groupTitle:_ `string`  - (Optional) Title shown at the start of the group

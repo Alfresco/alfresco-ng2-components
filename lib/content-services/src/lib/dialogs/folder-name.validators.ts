@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 const I18N_ERRORS_PATH = 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS';
 
-export const forbidSpecialCharacters = ({ value }: FormControl) => {
+export const forbidSpecialCharacters = ({ value }: UntypedFormControl) => {
     const specialCharacters: RegExp = /([\*\"\<\>\\\/\?\:\|])/;
     const isValid: boolean = !specialCharacters.test(value);
 
@@ -28,7 +28,7 @@ export const forbidSpecialCharacters = ({ value }: FormControl) => {
     };
 };
 
-export const forbidEndingDot = ({ value }: FormControl) => {
+export const forbidEndingDot = ({ value }: UntypedFormControl) => {
     const isValid: boolean = ((value || '').trim().split('').pop() !== '.');
 
     return isValid ? null : {
@@ -36,7 +36,7 @@ export const forbidEndingDot = ({ value }: FormControl) => {
     };
 };
 
-export const forbidOnlySpaces = ({ value }: FormControl) => {
+export const forbidOnlySpaces = ({ value }: UntypedFormControl) => {
     const isValid: boolean = !!((value || '')).trim();
 
     return isValid ? null : {

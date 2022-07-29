@@ -40,7 +40,7 @@ import {
     DataSorting,
     ShowHeaderMode
 } from '@alfresco/adf-core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
@@ -264,7 +264,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     infiniteScroll: boolean = false;
     debounceSearch: number = 200;
-    searchInput: FormControl = new FormControl();
+    searchInput: UntypedFormControl = new UntypedFormControl();
 
     target: PaginatedComponent;
     preselectedNodes: NodeEntry[] = [];

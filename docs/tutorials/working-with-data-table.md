@@ -104,7 +104,7 @@ the `src/app/mydatatable/mydatatable.component.ts` file and add the following im
 import { ObjectDataTableAdapter } from '@alfresco/adf-core';
 ```
 
-A DataTable needs an instance of [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) to be configured as the data source. Add
+A DataTable needs an instance of [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) to be configured as the data source. Add
 the source code below to the `mydatatable` component, just before the constructor:
 
 ```ts
@@ -207,7 +207,7 @@ is quite in-depth and has lots of examples. We highly recommend checking it out.
 From the documentation we can see that the [Data Column component](../core/components/data-column.component.md) has quite a few properties but the
 most important ones are `key`, `type`, `sortable`, `title` and  `class`. 
 
--   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) object. 
+-   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) object. 
 -   `type` indicates how to render. By default it will take the `text` from the matching key in the data,
     but other modes are also available:
     	 \- `image` will take a URI for a Material Icon or a URL for any image and display it.
@@ -280,7 +280,7 @@ to integrate an external API (in this example the
 [`/people` service](https://api-explorer.alfresco.com/api-explorer/#!/people/listPeople)
 that lists all the users available in an Alfresco Content Services instance).
 
-As explained above, you can do this by populating the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) object that acts as
+As explained above, you can do this by populating the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) object that acts as
 the data source of the `DataTable` component. Open the `src/app/mydatatable/mydatatable.component.ts`
 file and replace the content with the following:
 

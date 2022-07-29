@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import '../../lib/core/styles/index';
+@import '../../lib/core/src/lib/styles/index';
 @include mat.core($alfresco-typography);
 
 $primary: mat.define-palette($alfresco-accent-orange);

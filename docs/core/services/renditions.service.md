@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-23
 ---
 
-# [Renditions service](../../../lib/core/services/renditions.service.ts "Defined in renditions.service.ts")
+# [Renditions service](lib/core/src/lib/services/renditions.service.ts "Defined in renditions.service.ts")
 
 Manages prearranged conversions of content to different formats.
 

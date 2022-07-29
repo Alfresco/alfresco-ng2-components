@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Buttons Menu Component](../../../lib/core/buttons-menu/buttons-menu.component.ts "Defined in buttons-menu.component.ts")
+# [Buttons Menu Component](lib/core/src/lib/buttons-menu/buttons-menu.component.ts "Defined in buttons-menu.component.ts")
 
 Displays buttons on a responsive menu. 
 

@@ -18,7 +18,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDe
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import {
     MOMENT_DATE_FORMATS, MomentDateAdapter,
     LogService,
@@ -91,7 +91,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     dateError: boolean;
 
-    taskForm: FormGroup;
+    taskForm: UntypedFormGroup;
 
     currentUser: IdentityUserModel;
 
@@ -99,14 +99,14 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     priorities: TaskPriorityOption[];
 
-    private assigneeForm = new FormControl('');
-    private groupForm = new FormControl('');
+    private assigneeForm = new UntypedFormControl('');
+    private groupForm = new UntypedFormControl('');
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
-                private formBuilder: FormBuilder,
+                private formBuilder: UntypedFormBuilder,
                 private identityUserService: IdentityUserService,
                 private logService: LogService) {
     }
@@ -128,10 +128,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
-            priority: new FormControl(''),
-            description: new FormControl('', [this.whitespaceValidator]),
-            formKey: new FormControl()
+            name: new UntypedFormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
+            priority: new UntypedFormControl(''),
+            description: new UntypedFormControl('', [this.whitespaceValidator]),
+            formKey: new UntypedFormControl()
         });
     }
 
@@ -216,25 +216,25 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
                 this.candidateGroups.hasError());
     }
 
-    public whitespaceValidator(control: FormControl) {
+    public whitespaceValidator(control: UntypedFormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
         const isValid = control.value.length === 0 || !isWhitespace;
         return isValid ? null : { whitespace: true };
     }
 
-    get nameController(): FormControl {
-        return this.taskForm.get('name') as FormControl;
+    get nameController(): UntypedFormControl {
+        return this.taskForm.get('name') as UntypedFormControl;
     }
 
-    get priorityController(): FormControl {
-        return this.taskForm.get('priority') as FormControl;
+    get priorityController(): UntypedFormControl {
+        return this.taskForm.get('priority') as UntypedFormControl;
     }
 
-    get assigneeFormControl(): FormControl {
+    get assigneeFormControl(): UntypedFormControl {
         return this.assigneeForm;
     }
 
-    get candidateUserFormControl(): FormControl {
+    get candidateUserFormControl(): UntypedFormControl {
         return this.groupForm;
     }
 

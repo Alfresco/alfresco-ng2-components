@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../dist/extensions/",
     "declarationMap": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "target": "es2020"
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

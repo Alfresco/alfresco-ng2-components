@@ -5,7 +5,7 @@ Status: Deprecated
 Last reviewed: 2018-11-20
 ---
 
-# [Context Menu directive](../../../lib/core/context-menu/context-menu.directive.ts "Defined in context-menu.directive.ts")
+# [Context Menu directive](lib/core/src/lib/context-menu/context-menu.directive.ts "Defined in context-menu.directive.ts")
 
 Adds a context menu to a component.
 

@@ -16,7 +16,7 @@
  */
 
 import { SearchNumberRangeComponent } from './search-number-range.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
 
@@ -127,9 +127,9 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should return true if TO value is bigger than FROM value', () => {
         component.ngOnInit();
-        component.from = new FormControl('10');
-        component.to = new FormControl('20');
-        component.form = new FormGroup({
+        component.from = new UntypedFormControl('10');
+        component.to = new UntypedFormControl('20');
+        component.form = new UntypedFormGroup({
             from: component.from,
             to: component.to
         }, component.formValidator);
@@ -139,31 +139,31 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should throw pattern error if "from" value is formed by letters', () => {
         component.ngOnInit();
-        component.from = new FormControl('abc', component.validators);
+        component.from = new UntypedFormControl('abc', component.validators);
         expect(component.from.hasError('pattern')).toBe(true);
     });
 
     it('should not throw pattern error if "from" value is formed by digits', () => {
         component.ngOnInit();
-        component.from = new FormControl(123, component.validators);
+        component.from = new UntypedFormControl(123, component.validators);
         expect(component.from.hasError('pattern')).toBe(false);
     });
 
     it('should throw required error if "from" value is empty', () => {
         component.ngOnInit();
-        component.from = new FormControl('', component.validators);
+        component.from = new UntypedFormControl('', component.validators);
         expect(component.from.hasError('required')).toBe(true);
     });
 
     it('should not throw required error if "from" value is not empty', () => {
         component.ngOnInit();
-        component.from = new FormControl(123, component.validators);
+        component.from = new UntypedFormControl(123, component.validators);
         expect(component.from.hasError('required')).toBe(false);
     });
 
     it('should throw error if "from" value is a negative value', () => {
         component.ngOnInit();
-        component.from = new FormControl(-100, component.validators);
+        component.from = new UntypedFormControl(-100, component.validators);
         expect(component.from.hasError('min')).toBe(true);
     });
 });

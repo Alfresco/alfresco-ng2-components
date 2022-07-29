@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2020-07-20
 ---
 
-# [Rich Text Editor component](../../../lib/core/rich-text-editor/rich-text-editor.component.ts "Defined in rich-text-editor.component.ts")
+# [Rich Text Editor component](lib/core/src/lib/rich-text-editor/rich-text-editor.component.ts "Defined in rich-text-editor.component.ts")
 
 Wrap [Editor.js](https://editorjs.io/) element to show a Rich Text editor allows to add formatted text.
 
