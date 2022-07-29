@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 export class DateUtil {
 
