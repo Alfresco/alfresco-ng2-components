@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2022 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import { LanguageServiceInterface } from './../services/language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LanguageItem } from '../services/language-item.interface';
 
 @Injectable()
-export class LanguageServiceMock {
+export class LanguageServiceMock implements LanguageServiceInterface{
 
     private languages = new BehaviorSubject<LanguageItem[]>([
         {key: 'de', label: 'Deutsch'},
@@ -43,4 +43,13 @@ export class LanguageServiceMock {
     ]);
 
     languages$ = this.languages.asObservable();
+
+    changeLanguage(language: LanguageItem): void {
+    }
+
+    setLanguages(items: LanguageItem[]): void {
+        if (items && items.length > 0) {
+            this.languages.next(items);
+        }
+    }
 }
