@@ -1,5 +1,4 @@
 import { LanguagePickerComponent } from './language-picker.component';
-import { LanguageMenuComponent } from './language-menu.component';
 import { LanguageMenuModule } from './language-menu.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { CoreStoryModule } from './../testing/core.story.module';
@@ -17,12 +16,14 @@ export default {
     ]
 } as Meta;
 
-const Template: Story<LanguageMenuComponent> = (args) => ({
-    props: args
+const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: LanguagePickerComponent) => ({
+    props: {
+        ...args
+    }
 });
 
-export const Default = Template.bind({});
-Default.decorators = [
+export const primary = languagePickerComponentTemplate.bind({});
+primary.decorators = [
     componentWrapperDecorator(story =>`
       <style>
         table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}
@@ -38,8 +39,8 @@ Default.decorators = [
     `)
 ];
 
-export const AsNestedMenu = Template.bind({});
-AsNestedMenu.decorators = [
+export const asNestedMenu = languagePickerComponentTemplate.bind({});
+asNestedMenu.decorators = [
     componentWrapperDecorator(story => `
       <style>
         table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}

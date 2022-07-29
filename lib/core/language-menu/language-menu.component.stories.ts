@@ -22,15 +22,15 @@ export default {
     ]
 } as Meta;
 
-const Template: Story<LanguageMenuComponent> = (args) => ({
+const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
     props: {
         ...args,
         changedLanguage: action('changedLanguage')
     }
 });
 
-export const AsMainMenu = Template.bind({});
-AsMainMenu.decorators = [
+export const asMainMenu = languageMenuComponentTemplate.bind({});
+asMainMenu.decorators = [
     componentWrapperDecorator(story => `
       <style>
         table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}
@@ -53,8 +53,8 @@ AsMainMenu.decorators = [
     `)
 ];
 
-export const AsNestedMenu = Template.bind({});
-AsNestedMenu.decorators = [
+export const asNestedMenu = languageMenuComponentTemplate.bind({});
+asNestedMenu.decorators = [
     componentWrapperDecorator(story => `
       <style>
         table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}
