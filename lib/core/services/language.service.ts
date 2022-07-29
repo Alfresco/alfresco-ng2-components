@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2022 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { LanguageServiceInterface } from './language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
@@ -22,7 +23,7 @@ import { LanguageItem } from './language-item.interface';
 import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable({providedIn: 'root'})
-export class LanguageService {
+export class LanguageService implements LanguageServiceInterface{
 
     private languages = new BehaviorSubject<LanguageItem[]>([
         {key: 'de', label: 'Deutsch'},
