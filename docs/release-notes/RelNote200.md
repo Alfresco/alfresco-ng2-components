@@ -332,7 +332,7 @@ We have added all the [process service](../process-services/services/process.ser
 
 The [Login component](../core/components/login.component.md) now redirects users back to the originally requested URLs.
 
-For example, if you have a route "/my-files" protected by the **[`AuthGuardEcm`](../../lib/core/services/auth-guard-ecm.service.ts)** (for ACS-related content) or **[`AuthGuardBpm`](../../lib/core/services/auth-guard-bpm.service.ts)** (for APS-related content), users may be redirected to a "/login" route if they are not authenticated. Upon successful login, the user is then redirected back to the "/my-files" page.
+For example, if you have a route "/my-files" protected by the **[`AuthGuardEcm`](lib/core/src/lib/services/auth-guard-ecm.service.ts)** (for ACS-related content) or **[`AuthGuardBpm`](lib/core/src/lib/services/auth-guard-bpm.service.ts)** (for APS-related content), users may be redirected to a "/login" route if they are not authenticated. Upon successful login, the user is then redirected back to the "/my-files" page.
 
 ### 16. Task List override the columns
 
@@ -759,7 +759,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1879](https://issues.alfresco.com/jira/browse/ADF-1879)] - ADF Process Services is not working properly
 -   \[[ADF-1885](https://issues.alfresco.com/jira/browse/ADF-1885)] - Once accessed process services components appear throughout app
 -   \[[ADF-1890](https://issues.alfresco.com/jira/browse/ADF-1890)] - Viewer - Content projection for sidebar only works if sidebarPosition is left
--   \[[ADF-1891](https://issues.alfresco.com/jira/browse/ADF-1891)] - [`ActivitiContentService`](../../lib/core/form/services/activiti-alfresco.service.ts) is not exported
+-   \[[ADF-1891](https://issues.alfresco.com/jira/browse/ADF-1891)] - [`ActivitiContentService`](lib/core/src/lib/form/services/activiti-alfresco.service.ts) is not exported
 -   \[[ADF-1898](https://issues.alfresco.com/jira/browse/ADF-1898)] - [`ProcessService`](../process-services/services/process.service.md).createOrUpdateProcessInstanceVariables has incorrect method signature
 -   \[[ADF-1900](https://issues.alfresco.com/jira/browse/ADF-1900)] - [`ProcessService`](../process-services/services/process.service.md).getProcessInstanceVariables has incorrect method signature
 -   \[[ADF-1901](https://issues.alfresco.com/jira/browse/ADF-1901)] - [`ProcessService`](../process-services/services/process.service.md).createDefaultFilters has incorrect method signature
@@ -801,7 +801,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1982](https://issues.alfresco.com/jira/browse/ADF-1982)] - [Destination Picker] Destination Picker doesn't match the designed component
 -   \[[ADF-1989](https://issues.alfresco.com/jira/browse/ADF-1989)] - Content is not properly sorted
 -   \[[ADF-1990](https://issues.alfresco.com/jira/browse/ADF-1990)] - Able to add comments on a completed task
--   \[[ADF-1993](https://issues.alfresco.com/jira/browse/ADF-1993)] - [`AuthGuardEcm`](../../lib/core/services/auth-guard-ecm.service.ts) - canActivateChild missing
+-   \[[ADF-1993](https://issues.alfresco.com/jira/browse/ADF-1993)] - [`AuthGuardEcm`](lib/core/src/lib/services/auth-guard-ecm.service.ts) - canActivateChild missing
 -   \[[ADF-1994](https://issues.alfresco.com/jira/browse/ADF-1994)] - Document cannot be uploaded in a process
 -   \[[ADF-1995](https://issues.alfresco.com/jira/browse/ADF-1995)] - [Mobile] Menu button is not displayed - portrait orientation
 -   \[[ADF-1996](https://issues.alfresco.com/jira/browse/ADF-1996)] - Task document path is not displayed properly

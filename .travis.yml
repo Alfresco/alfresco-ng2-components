@@ -133,7 +133,7 @@ jobs:
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
-              - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci --projectBuildConfig=stories:build-storybook
+              - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:
@@ -180,15 +180,6 @@ jobs:
           script:
               - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
               - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
-
-        - stage: "e2e Test"
-          name: "Process Cloud:playwright"
-          before_script: ./scripts/ci/jobs/dbpci-before-playwright
-          script: ./scripts/travis/storybook-testing/storybook-test.sh
-          workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
 
         - stage: "e2e Test"
           name: "Core"

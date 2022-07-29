@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import {
     Component,
     OnInit,
@@ -112,11 +112,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to list of users */
     @Input()
-    userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+    userChipsCtrl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: false });
 
     /** FormControl to search the user */
     @Input()
-    searchUserCtrl = new FormControl({ value: '', disabled: false });
+    searchUserCtrl = new UntypedFormControl({ value: '', disabled: false });
 
     /** Placeholder translation key
      */

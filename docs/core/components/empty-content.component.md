@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-02-01
 ---
 
-# [Empty Content Component](../../../lib/core/templates/empty-content/empty-content.component.ts "Defined in empty-content.component.ts")
+# [Empty Content Component](lib/core/src/lib/templates/empty-content/empty-content.component.ts "Defined in empty-content.component.ts")
 
 Provides a generic "Empty Content" placeholder for components.
 

@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { UntypedFormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -33,7 +33,7 @@ export class NumberWidgetAnalyticsComponent extends WidgetComponent implements O
     field: any;
 
     @Input('group')
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
 
     @Input('controllerName')
     public controllerName: string;

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
@@ -148,7 +148,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         value: ''
     };
     processDefinitionNames: any[] = [];
-    editProcessFilterForm: FormGroup;
+    editProcessFilterForm: UntypedFormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
     toggleFilterActions: boolean = false;
@@ -160,7 +160,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private filterChangeSub: Subscription;
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         public dialog: MatDialog,
         private dateAdapter: DateAdapter<Moment>,
         private userPreferencesService: UserPreferencesService,

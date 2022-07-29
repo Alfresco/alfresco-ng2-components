@@ -18,7 +18,7 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import moment from 'moment';
 
@@ -43,9 +43,9 @@ import moment from 'moment';
 
     type: DateCloudFilterType;
     filteredProperties: ProcessFilterOptions[] = [];
-    dateRangeForm = new FormGroup({
-        from: new FormControl(),
-        to: new FormControl()
+    dateRangeForm = new UntypedFormGroup({
+        from: new UntypedFormControl(),
+        to: new UntypedFormControl()
     });
 
     ngOnInit() {

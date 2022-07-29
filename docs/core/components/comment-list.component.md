@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Comment list component](../../../lib/core/comments/comment-list.component.ts "Defined in comment-list.component.ts")
+# [Comment list component](lib/core/src/lib/comments/comment-list.component.ts "Defined in comment-list.component.ts")
 
 Shows a list of comments.
 
@@ -65,7 +65,7 @@ In the component template use the [comment list component](comment-list.componen
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| comments | [`CommentModel`](../../../lib/core/models/comment.model.ts)`[]` |  | The comments data used to populate the list. |
+| comments | [`CommentModel`](lib/core/src/lib/models/comment.model.ts)`[]` |  | The comments data used to populate the list. |
 
 ### Events
 

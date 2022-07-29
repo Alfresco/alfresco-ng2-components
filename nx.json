@@ -25,5 +25,21 @@
   },
   "affected": {
     "defaultBase": "master"
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["lint", "test"],
+        "runtimeCacheInputs": ["node -v"]
+      }
+    }
   }
 }
+

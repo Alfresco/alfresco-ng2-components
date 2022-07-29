@@ -4,7 +4,7 @@ Added: v3.2.0
 Status: Active
 ---
 
-# [Multi Value Pipe](../../../lib/core/pipes/multi-value.pipe.ts "Defined in multi-value.pipe.ts")
+# [Multi Value Pipe](lib/core/src/lib/pipes/multi-value.pipe.ts "Defined in multi-value.pipe.ts")
 
 Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ```, ```  however, you can set your own separator in the params of the pipe. 
 
