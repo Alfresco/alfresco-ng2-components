@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule, setupTestBed } from 'core/testing';
+import { CoreTestingModule, setupTestBed } from '../../../../testing';
 
 import { DisplayRichTextWidgetComponent } from './display-rich-text.widget';
 
