@@ -31,7 +31,7 @@ import Task = require('../../models/APS/Task');
 import TaskModel = require('../../models/APS/TaskModel');
 import FormModel = require('../../models/APS/FormModel');
 import CONSTANTS = require('../../util/constants');
-import moment = require('moment');
+import * as moment from 'moment';
 
 describe('Task Details component', () => {
 

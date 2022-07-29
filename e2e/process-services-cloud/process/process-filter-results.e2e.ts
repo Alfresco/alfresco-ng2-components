@@ -35,7 +35,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessListPage } from '../../process-services/pages/process-list.page';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
-import moment = require('moment');
+import * as moment from 'moment';
 
 describe('Process filters cloud', () => {
 

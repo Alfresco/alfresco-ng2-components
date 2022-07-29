@@ -21,7 +21,7 @@ import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import moment = require('moment');
+import * as moment from 'moment';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 
 describe('Process Header cloud component', () => {

@@ -30,7 +30,7 @@ import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import moment = require('moment');
+import * as moment from 'moment';
 
 describe('Metadata component', () => {
 
