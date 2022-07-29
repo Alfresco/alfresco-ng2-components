@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2022 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { LanguageService } from '../services/language.service';
 import { LanguageMenuModule } from './language-menu.module';
 import { CoreStoryModule } from '../testing/core.story.module';
@@ -32,10 +49,6 @@ const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: Langu
 export const asMainMenu = languageMenuComponentTemplate.bind({});
 asMainMenu.decorators = [
     componentWrapperDecorator(story => `
-      <style>
-        table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}
-        td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}
-      </style>
       <button mat-icon-button [matMenuTriggerFor]="langMenu">
         <mat-icon>
           language
@@ -44,22 +57,12 @@ asMainMenu.decorators = [
       <mat-menu #langMenu="matMenu">
         ${story}
       </mat-menu>
-        <table>
-          <tr><th>Example key</th><th>Value</th></tr>
-          <tr><td>CORE.HOST_SETTINGS.TITLE</td><td>{{ 'CORE.HOST_SETTINGS.TITLE' | translate }}</td></tr>
-          <tr><td>CORE.METADATA.ACTIONS.SAVE</td><td>{{ 'CORE.METADATA.ACTIONS.SAVE' | translate }}</td></tr>
-          <tr><td>ADF.LANGUAGE</td><td>{{ 'ADF.LANGUAGE' | translate }}</td></tr>
-        </table>
     `)
 ];
 
 export const asNestedMenu = languageMenuComponentTemplate.bind({});
 asNestedMenu.decorators = [
     componentWrapperDecorator(story => `
-      <style>
-        table {font-family: arial, sans-serif;border-collapse: collapse;margin-top:10px;}
-        td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}
-      </style>
       <button mat-icon-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>
           more_vert
@@ -73,11 +76,5 @@ asNestedMenu.decorators = [
       <mat-menu #langMenu="matMenu">
         ${story}
       </mat-menu>
-      <table>
-        <tr><th>Example key</th><th>Value</th></tr>
-        <tr><td>CORE.HOST_SETTINGS.TITLE</td><td>{{ 'CORE.HOST_SETTINGS.TITLE' | translate }}</td></tr>
-        <tr><td>CORE.METADATA.ACTIONS.SAVE</td><td>{{ 'CORE.METADATA.ACTIONS.SAVE' | translate }}</td></tr>
-        <tr><td>ADF.LANGUAGE</td><td>{{ 'ADF.LANGUAGE' | translate }}</td></tr>
-      </table>
       `)
 ];
