@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
-import { LanguagePickerComponent } from './language-picker.component';
-import { LanguageMenuModule } from './language-menu.module';
-import { action } from '@storybook/addon-actions';
-import { CoreStoryModule } from './../testing/core.story.module';
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { action } from '@storybook/addon-actions';
+import { CoreStoryModule } from '../testing/core.story.module';
+
+import { LanguageMenuModule } from './language-menu.module';
+import { LanguagePickerComponent } from './language-picker.component';
+
 import { LanguageService } from '../services/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
+
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export default {
     component: LanguagePickerComponent,
     title: 'Core/Components/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CommonModule, MaterialModule, TranslateModule, LanguageMenuModule],
+            imports: [CoreStoryModule, MatMenuModule, MatIconModule,MatButtonModule, LanguageMenuModule],
             providers: [
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
@@ -51,7 +54,7 @@ export const primary = languagePickerComponentTemplate.bind({});
 export const asNestedMenu = languagePickerComponentTemplate.bind({});
 asNestedMenu.decorators = [
     componentWrapperDecorator(story => `
-      <button mat-icon-button class="dw-profile-menu" [matMenuTriggerFor]="menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">

@@ -20,7 +20,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LanguageItem } from '../services/language-item.interface';
 
 @Injectable()
-export class LanguageServiceMock implements LanguageServiceInterface{
+export class LanguageServiceMock implements LanguageServiceInterface {
 
     private languages = new BehaviorSubject<LanguageItem[]>([
         {key: 'de', label: 'Deutsch'},
@@ -48,7 +48,7 @@ export class LanguageServiceMock implements LanguageServiceInterface{
     }
 
     setLanguages(items: LanguageItem[]): void {
-        if (items && items.length > 0) {
+        if (items?.length > 0) {
             this.languages.next(items);
         }
     }

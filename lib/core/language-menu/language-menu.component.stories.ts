@@ -15,29 +15,31 @@
  * limitations under the License.
  */
 
-import { LanguageMenuComponent } from './language-menu.component';
-import { LanguageMenuModule } from './language-menu.module';
-import { LanguageService } from '../services/language.service';
-import { LanguageServiceMock } from '../mock/language.service.mock';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreStoryModule } from '../testing/core.story.module';
+
+import { LanguageMenuModule } from './language-menu.module';
+import { LanguageMenuComponent } from './language-menu.component';
+
+import { LanguageService } from '../services/language.service';
+import { LanguageServiceMock } from '../mock/language.service.mock';
+
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export default {
     component: LanguageMenuComponent,
     title: 'Core/Components/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CommonModule, MaterialModule, TranslateModule, LanguageMenuModule],
+            imports: [CoreStoryModule, MatMenuModule, MatIconModule, MatButtonModule, LanguageMenuModule],
             providers: [
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
         })
-    ],
-    excludeStories: /.*Data$/
+    ]
 } as Meta;
 
 const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
@@ -74,7 +76,7 @@ asNestedMenu.decorators = [
           <mat-icon>
             language
           </mat-icon>
-          {{ 'ADF.LANGUAGE' | translate }}
+          Language
         </button>
       </mat-menu>
       <mat-menu #langMenu="matMenu">

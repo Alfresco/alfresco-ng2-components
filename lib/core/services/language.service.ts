@@ -23,7 +23,7 @@ import { LanguageItem } from './language-item.interface';
 import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable({providedIn: 'root'})
-export class LanguageService implements LanguageServiceInterface{
+export class LanguageService implements LanguageServiceInterface {
 
     private languages = new BehaviorSubject<LanguageItem[]>([
         {key: 'de', label: 'Deutsch'},
@@ -61,7 +61,7 @@ export class LanguageService implements LanguageServiceInterface{
     }
 
     setLanguages(items: LanguageItem[]) {
-        if (items && items.length > 0) {
+        if (items?.length > 0) {
             this.languages.next(items);
         }
     }
