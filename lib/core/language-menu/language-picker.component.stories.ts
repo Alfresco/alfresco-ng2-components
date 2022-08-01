@@ -17,23 +17,34 @@
 
 import { LanguagePickerComponent } from './language-picker.component';
 import { LanguageMenuModule } from './language-menu.module';
-import { MatMenuModule } from '@angular/material/menu';
+import { action } from '@storybook/addon-actions';
 import { CoreStoryModule } from './../testing/core.story.module';
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
+import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
     component: LanguagePickerComponent,
     title: 'Core/Components/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule, MatMenuModule, MatIconModule, TranslateModule]
+            imports: [CoreStoryModule, CommonModule, MaterialModule, TranslateModule, LanguageMenuModule],
+            providers: [
+                { provide: LanguageService, useClass: LanguageServiceMock }
+            ]
         })
     ]
 } as Meta;
 
-const languagePickerComponentTemplate: Story<LanguagePickerComponent> = () => ({});
+const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: LanguagePickerComponent) => ({
+    props: {
+        ...args,
+        changedLanguage: action('changedLanguage')
+    }
+});
 
 export const primary = languagePickerComponentTemplate.bind({});
 
@@ -46,5 +57,5 @@ asNestedMenu.decorators = [
       <mat-menu #menu="matMenu">
         ${story}
       </mat-menu>
-      `)
+    `)
 ];

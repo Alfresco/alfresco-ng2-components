@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { LanguageItem } from '../services/language-item.interface';
 
 @Component({
     selector: 'adf-picker-button',
@@ -25,8 +26,12 @@ import { Component } from '@angular/core';
             {{ 'ADF.LANGUAGE' | translate }}
         </button>
         <mat-menu #langMenu="matMenu">
-            <adf-language-menu></adf-language-menu>
+            <adf-language-menu (changedLanguage)="changedLanguage.emit($event)"></adf-language-menu>
         </mat-menu>
     `
 })
-export class LanguagePickerComponent {}
+export class LanguagePickerComponent {
+    @Output()
+    public changedLanguage = new EventEmitter<LanguageItem>();
+
+}
