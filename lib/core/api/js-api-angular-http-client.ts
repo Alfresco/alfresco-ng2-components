@@ -40,23 +40,44 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
 
         const responseType = this.getResponseType(options);
         const params = new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) });
+
+        const headers = this.getRequestHeaders(options, sc);
 
         const request = this.httpClient.request(
             options.httpMethod,
             url,
             {
             ...(options.bodyParam ? { body: options.bodyParam } : {}),
-            ...(options.headerParams ? { headers: new HttpHeaders(options.headerParams) } : {}),
+            headers,
             ...(options.queryParams ? { params } : {}),
             ...(responseType ? { responseType } : {}),
             observe: 'response'
         });
 
         return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, options.returnType);
+    }
+
+    private getRequestHeaders(options: RequestOptions, sc: SecurityOptions): HttpHeaders {
+        const headers = new HttpHeaders(options.headerParams || {});
+
+        const type = sc.authentications.type?.toLowerCase();
+
+        switch (type) {
+            case 'basic':
+                return headers.set('Authorization', 'Basic ' + btoa(sc.authentications.basicAuth.password));
+            case 'activiti': {
+                if (sc.authentications.basicAuth.ticket) {
+                    return headers.set('Authorization', 'Basic ' + btoa(sc.authentications.basicAuth.ticket));
+                }
+                return headers;
+            };
+            default:
+                return headers;
+        }
     }
 
     post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {

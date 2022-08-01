@@ -395,13 +395,30 @@ export class AuthenticationService {
                 headers = new HttpHeaders();
             }
             try {
-                const token: string = this.getToken();
-                headers = headers.set('Authorization', 'bearer ' + token);
-                observer.next(headers);
+                const header = this.getAuthHeaders(headers);
+
+                observer.next(header);
                 observer.complete();
             } catch (error) {
                 observer.error(error);
             }
         });
     }
+
+    private getAuthHeaders(header: HttpHeaders): HttpHeaders {
+        const authType = this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC');
+
+        switch (authType) {
+            case 'OAUTH':
+                return this.addBearerToken(header);
+            default:
+                return header;
+        }
+    }
+
+    private addBearerToken(header: HttpHeaders): HttpHeaders {
+        const token: string = this.getToken();
+        return header.set('Authorization', 'bearer ' + token);
+    }
+
 }
