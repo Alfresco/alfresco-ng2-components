@@ -103,7 +103,7 @@ export class FormModel implements ProcessFormModel {
             this.customFieldTemplates = json.customFieldTemplates || {};
             this.selectedOutcome = json.selectedOutcome;
             this.className = json.className || '';
-            this.variables = json.variables || [];
+            this.variables = json.variables || json.formDefinition?.variables || [];
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace ? true : false;
             this.confirmMessage = json.confirmMessage || {};
