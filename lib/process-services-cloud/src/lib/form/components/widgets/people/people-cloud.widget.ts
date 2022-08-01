@@ -54,6 +54,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     preSelectUsers: IdentityUserModel[];
     search: FormControl;
     groupsRestriction: string[];
+    validate = false;
 
     constructor(formService: FormService, private identityUserService: IdentityUserService) {
         super(formService);
@@ -66,6 +67,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.title = this.field.placeholder;
             this.preSelectUsers = this.field.value ? this.field.value : [];
             this.groupsRestriction = this.field.groupsRestriction;
+            this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.search = new FormControl({value: '', disabled: this.field.readOnly}, []),
