@@ -246,7 +246,7 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketEcm(): string | null {
-        return this.alfrescoApi.getInstance().getTicketEcm();
+        return this.alfrescoApi.getInstance()?.getTicketEcm();
     }
 
     /**
@@ -255,7 +255,7 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketBpm(): string | null {
-        return this.alfrescoApi.getInstance().getTicketBpm();
+        return this.alfrescoApi.getInstance()?.getTicketBpm();
     }
 
     /**
@@ -264,7 +264,7 @@ export class AuthenticationService {
      * @returns The ticket or `null` if none was found
      */
     getTicketEcmBase64(): string | null {
-        const ticket = this.alfrescoApi.getInstance().getTicketEcm();
+        const ticket = this.alfrescoApi.getInstance()?.getTicketEcm();
         if (ticket) {
             return 'Basic ' + btoa(ticket);
         }
@@ -411,6 +411,8 @@ export class AuthenticationService {
         switch (authType) {
             case 'OAUTH':
                 return this.addBearerToken(header);
+            case 'BASIC':
+                return this.addBasicAuth(header);
             default:
                 return header;
         }
@@ -418,7 +420,22 @@ export class AuthenticationService {
 
     private addBearerToken(header: HttpHeaders): HttpHeaders {
         const token: string = this.getToken();
+
+        if (!token) {
+            return header;
+        }
+
         return header.set('Authorization', 'bearer ' + token);
+    }
+
+    private addBasicAuth(header: HttpHeaders): HttpHeaders {
+        const ticket: string = this.getTicketEcmBase64();
+
+        if (!ticket) {
+            return header;
+        }
+
+        return header.set('Authorization', ticket);
     }
 
 }
