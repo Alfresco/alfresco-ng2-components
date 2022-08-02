@@ -86,7 +86,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
             const queryUrl = `${this.getBasePath(appName)}/rb/admin/v1/executions/${executionId}/replay/service-task`;
             return this.post(queryUrl, payload);
         } else {
-            this.logService.error('Appname, executionId and flowNodeId are mandatory for querying a task');
+            this.logService.error('Appname, executionId and flowNodeId are mandatory to replaying a service task');
             return throwError('Appname/executionId/flowNodeId not configured');
         }
     }
