@@ -25,16 +25,12 @@ import { LanguageMenuComponent } from './language-menu.component';
 import { LanguageService } from '../services/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-
 export default {
     component: LanguageMenuComponent,
     title: 'Core/Components/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, MatMenuModule, MatIconModule, MatButtonModule, LanguageMenuModule],
+            imports: [CoreStoryModule, LanguageMenuModule],
             providers: [
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
