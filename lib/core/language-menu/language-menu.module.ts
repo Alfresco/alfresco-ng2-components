@@ -41,11 +41,9 @@ import { LanguagePickerComponent } from './language-picker.component';
     exports: [
         LanguageMenuComponent,
         LanguagePickerComponent,
-        CommonModule,
         MatMenuModule,
         MatIconModule,
-        MatButtonModule,
-        TranslateModule
+        MatButtonModule
     ]
 })
 export class LanguageMenuModule {}
