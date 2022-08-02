@@ -17,16 +17,21 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { LanguageMenuComponent } from './language-menu.component';
 import { LanguagePickerComponent } from './language-picker.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
         TranslateModule
     ],
     declarations: [
@@ -35,7 +40,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
     exports: [
         LanguageMenuComponent,
-        LanguagePickerComponent
+        LanguagePickerComponent,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule
     ]
 })
 export class LanguageMenuModule {}

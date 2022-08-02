@@ -14,16 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { LanguageServiceInterface } from './language.service.interface';
+import { LanguageServiceInterface } from './../services/language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { LanguageItem } from './language-item.interface';
-import { UserPreferencesService } from './user-preferences.service';
+import { LanguageItem } from '../services/language-item.interface';
 
-@Injectable({providedIn: 'root'})
-export class LanguageService implements LanguageServiceInterface {
+@Injectable()
+export class LanguageServiceMock implements LanguageServiceInterface {
 
     private languages = new BehaviorSubject<LanguageItem[]>([
         {key: 'de', label: 'Deutsch'},
@@ -47,20 +44,10 @@ export class LanguageService implements LanguageServiceInterface {
 
     languages$ = this.languages.asObservable();
 
-    constructor(
-        appConfigService: AppConfigService,
-        private userPreferencesService: UserPreferencesService) {
-
-        const customLanguages = appConfigService.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        this.setLanguages(customLanguages);
+    changeLanguage(_language: LanguageItem): void {
     }
 
-    changeLanguage(language: LanguageItem) {
-        this.userPreferencesService.locale = language.key;
-        this.userPreferencesService.set('textOrientation', language.direction || 'ltr');
-    }
-
-    setLanguages(items: LanguageItem[]) {
+    setLanguages(items: LanguageItem[]): void {
         if (items?.length > 0) {
             this.languages.next(items);
         }
