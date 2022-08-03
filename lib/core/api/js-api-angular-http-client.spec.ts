@@ -72,7 +72,11 @@ describe('JsApiAngularHttpClient', () => {
             const options: RequestOptions = {
                 path: '',
                 httpMethod: 'POST',
-                returnType: ResultListDataRepresentationTaskRepresentation
+                returnType: ResultListDataRepresentationTaskRepresentation,
+                headerParams: {
+                    'Content-Type': 'application/json'
+                },
+                accepts: ['application/json']
             };
 
             angularHttpClient.request('http://example.com', options, securityOptions, emitter).then((res: ResultListDataRepresentationTaskRepresentation) => {
