@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2022 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -32,6 +33,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         FlexLayoutModule
     ],
     declarations: [ButtonsMenuComponent],
-    exports: [ButtonsMenuComponent, MatIconModule]
+    exports: [ButtonsMenuComponent, MatIconModule, MatMenuModule, MatButtonModule]
 })
 export class ButtonsMenuModule {}
