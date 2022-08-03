@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
 import { CommentModel, UserProcessModel } from '../models';
 import { CommentProcessServiceInterface } from '../services/comment-process.service.interface';
 import { testUser, fakeUser1 } from '../mock/comment-content.mock';
+
 @Injectable()
 export class CommentProcessServiceMock implements CommentProcessServiceInterface {
     private comments: CommentModel [] = [];
