@@ -23,11 +23,12 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
+import { CommentProcessServiceInterface } from './comment-process.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CommentProcessService {
+export class CommentProcessService implements CommentProcessServiceInterface {
 
     _commentsApi: ActivitiCommentsApi;
     get commentsApi(): ActivitiCommentsApi {
