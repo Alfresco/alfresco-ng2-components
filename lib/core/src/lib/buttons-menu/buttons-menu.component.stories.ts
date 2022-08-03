@@ -19,14 +19,13 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { ButtonsMenuModule } from './buttons-menu.module';
-import { MatIconModule } from '@angular/material/icon';
 
 export default {
     component: ButtonsMenuComponent,
     title: 'Core/Components/ButtonsMenu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ButtonsMenuModule, MatIconModule]
+            imports: [CoreStoryModule, ButtonsMenuModule]
         })
     ],
     argTypes: {

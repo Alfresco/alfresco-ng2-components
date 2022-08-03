@@ -18,22 +18,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
+        MatIconModule,
+        MatMenuModule,
         TranslateModule,
         FlexLayoutModule
     ],
-    declarations: [
-        ButtonsMenuComponent
-    ],
-    exports: [
-        ButtonsMenuComponent
-    ]
+    declarations: [ButtonsMenuComponent],
+    exports: [ButtonsMenuComponent, MatIconModule]
 })
 export class ButtonsMenuModule {}
