@@ -52,6 +52,10 @@ export default {
         nodeId: {
             control: 'text',
             description: 'Necessary in order to add a new Node comment',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'undefined' }
+            },
             type: { required: true },
             if: { arg: 'taskId', exists: false }
         },
