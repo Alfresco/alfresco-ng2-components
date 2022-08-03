@@ -72,6 +72,25 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         }
     }
 
+    /**
+     * Replay a service task based on the related execution id and flow-node id
+     *
+     * @param appName string
+     * @param executionId string
+     * @param flowNodeId string
+     * @returns Replay task informations
+     */
+    replayServiceTaskRequest(appName: string, executionId: string, flowNodeId: string): Observable<any> {
+        if (appName && executionId && flowNodeId) {
+            const payload = { flowNodeId };
+            const queryUrl = `${this.getBasePath(appName)}/rb/admin/v1/executions/${executionId}/replay/service-task`;
+            return this.post(queryUrl, payload);
+        } else {
+            this.logService.error('Appname, executionId and flowNodeId are mandatory to replaying a service task');
+            return throwError('Appname/executionId/flowNodeId not configured');
+        }
+    }
+
     protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
