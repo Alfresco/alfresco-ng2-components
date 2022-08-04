@@ -117,7 +117,8 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
 
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
-        const isDefaultSuperAgentType = !options.responseType && !options.returnType;
+        // const isDefaultSuperAgentType = !options.responseType && !options.returnType;
+        const isDefaultSuperAgentType = false;
 
         if (isBlobType) {
             return 'blob';

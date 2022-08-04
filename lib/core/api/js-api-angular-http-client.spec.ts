@@ -112,25 +112,6 @@ describe('JsApiAngularHttpClient', () => {
 
         });
 
-        it('should return string when responseType and returnType are undefined', (done) => {
-
-            const options: RequestOptions = {
-                path: '',
-                httpMethod: 'POST'
-            };
-
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter).then((res) => {
-                expect(res).toEqual(JSON.stringify(mockResponse));
-                done();
-            });
-
-            const req = controller.expectOne('http://example.com');
-            expect(req.request.method).toEqual('POST');
-
-            req.flush(mockResponse);
-
-        });
-
         it('should emit unauthorized message for 401 request', (done) => {
             const options: RequestOptions = {
                 path: '',
