@@ -34,9 +34,9 @@ export class VariableMapperService {
             }
 
             const variablesMap = (instance.variables ?? []).reduce<{[columnTitle: string]: ProcessInstanceVariable}>((variableAccumulator, variable) => {
-                const processVariableDefinitionId = variable.variableDefinitionId;
+                const processVariableDefinitionPayload =  `${variable.processDefinitionKey}/${variable.name}`;
 
-                const column = columnsByVariableId[processVariableDefinitionId];
+                const column = columnsByVariableId[processVariableDefinitionPayload];
                 if (column) {
                     variableAccumulator[column] = {
                         ...variable,
@@ -63,7 +63,7 @@ export class VariableMapperService {
             .filter(column => !!column.customData)
             .reduce<{ [variableId: string]: string }>((columnsByVariable, column) => {
                 const columnTitle = column.title;
-                const variableIds = column.customData.assignedVariableDefinitionIds;
+                const variableIds = column.customData.variableDefinitionsPayload;
 
                 variableIds.forEach((variableId) => {
                     columnsByVariable[variableId] = columnTitle;
