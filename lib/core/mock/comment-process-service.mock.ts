@@ -48,7 +48,7 @@ export class CommentProcessServiceMock implements CommentProcessServiceInterface
 
         this.comments.push(new CommentModel({
             id: 46,
-            message: "Hello from Process Model",
+            message: 'Hello from Process Model',
             created: new Date('2022-08-02T03:37:30.010+0000'),
             createdBy: user
         }));
