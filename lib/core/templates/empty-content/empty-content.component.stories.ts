@@ -29,13 +29,54 @@ export default {
         })
     ],
     argTypes: {
+        icon: {
+            description: 'Angular Material icon',
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: 'cake'
+                }
+            }
+        },
+        title: {
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
+                }
+            }
+        },
+        subtitle: {
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
+                }
+            }
+        },
         lines: {
             name: 'lines',
+            description: 'Content Projection Text',
             type: { name: 'object', required: false },
             defaultValue: [
                 'Items you removed are moved to the Trash',
                 'Empty Trash to permanently delete items'
-            ]
+            ],
+            table: {
+                category: 'Strories Inputs',
+                type: {
+                    summary: 'array'
+                }
+            }
         }
     }
 } as Meta;
