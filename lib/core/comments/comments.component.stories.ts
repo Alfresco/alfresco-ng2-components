@@ -76,9 +76,17 @@ const template: Story<CommentsComponent> = (args: CommentsComponent) => ({
     props: args
 });
 
-export const singleComment = template.bind({});
-singleComment.args = {
+export const singleCommentWithAvatar = template.bind({});
+singleCommentWithAvatar.args = {
     comments: [commentsNodeData[0]],
+    nodeId: undefined,
+    readOnly: true,
+    taskId: undefined
+};
+
+export const singleCommentWithoutAvatar = template.bind({});
+singleCommentWithoutAvatar.args = {
+    comments: [commentsTaskData[1]],
     nodeId: undefined,
     readOnly: true,
     taskId: undefined
