@@ -89,7 +89,7 @@ export const oneButton: Story = args => ({
 `
 });
 
-export const zeroButtons: Story = args => ({
+export const noButtons: Story = args => ({
     props: {
         ...args,
         isMenuEmpty: true,
