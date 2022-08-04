@@ -57,7 +57,6 @@ export default {
                 defaultValue: { summary: 'undefined' }
             },
             type: { required: true }
-            // if: { arg: 'taskId', exists: false } //UNCOMMENT AFTER NG13 UPGRADE
         },
         taskId: {
             control: 'text',
@@ -67,7 +66,6 @@ export default {
                 defaultValue: { summary: 'undefined' }
             },
             type: { required: true }
-            // if: { arg: 'nodeId', exists: false } //UNCOMMENT AFTER NG13 UPGRADE
         }
     }
 } as Meta;
