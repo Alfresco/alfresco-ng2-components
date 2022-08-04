@@ -56,8 +56,7 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
             },
-            type: { required: true },
-            if: { arg: 'taskId', exists: false }
+            type: { required: true }
         },
         taskId: {
             control: 'text',
@@ -66,8 +65,7 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
             },
-            type: { required: true },
-            if: { arg: 'nodeId', exists: false }
+            type: { required: true }
         }
     }
 } as Meta;
