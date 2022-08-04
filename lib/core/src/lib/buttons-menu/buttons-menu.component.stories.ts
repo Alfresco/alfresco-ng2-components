@@ -30,11 +30,28 @@ export default {
     ],
     argTypes: {
         mobile: {
-            type: { name: 'boolean', required: true },
+            type: { name: 'boolean' },
             name: 'isMobile',
+            description:
+                'Determines whether it is displayed on a mobile device',
             defaultValue: false,
             control: {
                 disable: false
+            },
+            table: {
+                category: 'Component methods',
+                type: {
+                    summary: '() => boolean'
+                }
+            }
+        },
+        isMenuEmpty: {
+            description: 'Determines whether it has anything to display',
+            table: {
+                category: 'Component properties',
+                type: {
+                    summary: 'boolean'
+                }
             }
         }
     }
