@@ -22,11 +22,12 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
 import { map, catchError } from 'rxjs/operators';
 import { CommentEntry, CommentsApi } from '@alfresco/js-api';
+import { CommentContentServiceInterface } from './comment-content.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CommentContentService {
+export class CommentContentService implements CommentContentServiceInterface {
 
     _commentsApi: CommentsApi;
     get commentsApi(): CommentsApi {

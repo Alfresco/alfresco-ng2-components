@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CommentModel } from '../models/comment.model';
-import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
+import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process.mock';
 import { CommentProcessService } from './comment-process.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
