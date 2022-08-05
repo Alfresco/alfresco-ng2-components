@@ -26,7 +26,7 @@ export class VariableMapperService {
         instancesList: T[] = [],
         columnsSchema: DataColumn<ProcessListDataColumnCustomData>[] = []
     ): Array<WithVariablesMap<T>> {
-        const columnsByVariableId = this.mapColumnKeysByVariableId(columnsSchema);
+        const columnsByVariables = this.mapColumnKeysByVariable(columnsSchema);
 
         const rowsViewModel = instancesList.map<WithVariablesMap<T>>((instance) => {
             if (!instance.variables?.length) {
@@ -36,7 +36,7 @@ export class VariableMapperService {
             const variablesMap = (instance.variables ?? []).reduce<{[columnTitle: string]: ProcessInstanceVariable}>((variableAccumulator, variable) => {
                 const processVariableDefinitionPayload =  `${variable.processDefinitionKey}/${variable.name}`;
 
-                const column = columnsByVariableId[processVariableDefinitionPayload];
+                const column = columnsByVariables[processVariableDefinitionPayload];
                 if (column) {
                     variableAccumulator[column] = {
                         ...variable,
@@ -56,23 +56,23 @@ export class VariableMapperService {
         return rowsViewModel;
     }
 
-    private mapColumnKeysByVariableId(
+    private mapColumnKeysByVariable(
         columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]
     ): { [variableId: string]: string } {
-        const columnsByVariableId = columnsSchema
+        const columnsByVariables = columnsSchema
             .filter(column => !!column.customData)
             .reduce<{ [variableId: string]: string }>((columnsByVariable, column) => {
                 const columnTitle = column.title;
-                const variableIds = column.customData.variableDefinitionsPayload;
+                const variables = column.customData.variableDefinitionsPayload;
 
-                variableIds.forEach((variableId) => {
+                variables.forEach((variableId) => {
                     columnsByVariable[variableId] = columnTitle;
                 });
                 return columnsByVariable;
 
             }, {});
 
-        return columnsByVariableId;
+        return columnsByVariables;
     }
 
     private mapProcessVariableTypes(variableType: string): DataColumnType {
