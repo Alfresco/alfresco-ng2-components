@@ -691,6 +691,8 @@ export class MyView {
 
 This single extra line in the template enables context menu items for documents and folders.
 
+The actions visibility and disabled states are evaluated once for each node and then cached by [Document List component](document-list.component.md) for futurs uses. If your actions states might have changed since the first evaluation of the node, you should call `clearActionsCache()`.
+
 ### Navigation mode
 
 By default, the [Document List component](document-list.component.md) uses 'double-click' mode for navigation.

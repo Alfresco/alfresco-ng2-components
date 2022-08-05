@@ -610,6 +610,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return [];
     }
 
+    /**
+     * Clear the actions cache. This should be called before .reload() when the actions available on the nodes might have changed.
+     */
+    clearActionsCache(): void {
+        this.rowMenuCache = {};
+    }
+
     private refreshAction(action: ContentActionModel, node: NodeEntry) {
         action.disabled = this.isActionDisabled(action, node);
         action.visible = this.isActionVisible(action, node);

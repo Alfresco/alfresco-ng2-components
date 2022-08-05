@@ -430,6 +430,10 @@ funcName = (parameters): boolean => {
 }
 ```
 
+#### Clearing actions cache
+
+The actions visibility and disabled states are evaluated once for each node and then cached by [Document List component](document-list.component.md) for futurs uses. If your actions states might have changed since the first evaluation of the node, you should call `clearActionsCache()`.
+
 ### Customizing built-in actions
 
 The built-in actions are defined in the [Document Actions service](../services/document-actions.service.md) and
