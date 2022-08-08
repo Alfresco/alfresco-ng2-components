@@ -58,15 +58,15 @@ export class VariableMapperService {
 
     private mapColumnKeysByVariable(
         columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]
-    ): { [variableId: string]: string } {
+    ): { [key: string]: string } {
         const columnsByVariables = columnsSchema
             .filter(column => !!column.customData)
-            .reduce<{ [variableId: string]: string }>((columnsByVariable, column) => {
+            .reduce<{ [key: string]: string }>((columnsByVariable, column) => {
                 const columnTitle = column.title;
                 const variables = column.customData.variableDefinitionsPayload;
 
-                variables.forEach((variableId) => {
-                    columnsByVariable[variableId] = columnTitle;
+                variables.forEach((key) => {
+                    columnsByVariable[key] = columnTitle;
                 });
                 return columnsByVariable;
 
