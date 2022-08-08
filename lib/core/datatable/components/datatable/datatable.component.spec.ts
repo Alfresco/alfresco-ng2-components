@@ -1688,7 +1688,7 @@ describe('Drag&Drop column header', () => {
             previousContainer: undefined,
             isPointerOverContainer: true,
             distance: { x: 0, y: 0 }
-        };
+        } as any;
 
         dataTable.onDropHeaderColumn(dropEvent);
 
@@ -1704,7 +1704,7 @@ describe('Drag&Drop column header', () => {
             previousContainer: undefined,
             isPointerOverContainer: true,
             distance: { x: 0, y: 0 }
-        };
+        } as any;
 
         dataTable.onDropHeaderColumn(dropEvent);
 

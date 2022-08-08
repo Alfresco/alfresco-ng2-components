@@ -11,47 +11,19 @@
     "e2e/protractor.excludes.json": "*",
     "e2e/protractor.conf.js": "*"
   },
-  "projects": {
-    "demoshell": {
-      "implicitDependencies": ["process-services", "content-services", "process-services-cloud", "core", "insights", "extensions"],
-      "tags": ["scope:demoshell", "type:app"]
-    },
-    "extensions": {
-      "tags": ["scope:extensions", "type:lib"]
-    },
-    "core": {
-      "implicitDependencies": ["extensions"],
-      "tags": ["scope:core", "type:lib"]
-    },
-    "content-services": {
-      "implicitDependencies": ["core"],
-      "tags": ["scope:content-services", "type:lib"]
-    },
-    "process-services": {
-      "implicitDependencies": ["content-services"],
-      "tags": ["scope:process-services", "type:lib"]
-    },
-    "process-services-cloud": {
-      "implicitDependencies": ["content-services"],
-      "tags": ["scope:process-services-cloud", "type:lib"]
-    },
-    "insights": {
-      "implicitDependencies": ["core"],
-      "tags": ["scope:insights", "type:lib"]
-    },
-    "demoshell-e2e": {
-      "implicitDependencies": ["testing"],
-      "tags": ["scope:demoshell-e2e", "type:e2e"]
-    },
-    "testing": {
-      "implicitDependencies": [],
-      "tags": ["scope:testing", "type:lib"]
-    },
-    "cli": {
-      "tags": ["scope:cli", "type:lib"]
-    },
-    "stories": {
-      "tags": ["scope:stories", "type:lib"]
-    }
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "demoshell",
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }

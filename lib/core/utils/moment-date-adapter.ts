@@ -17,8 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import { isMoment, Moment } from 'moment';
-import moment from 'moment-es6';
+import moment, { isMoment, Moment } from 'moment';
 
 @Injectable()
 export class MomentDateAdapter extends DateAdapter<Moment> {

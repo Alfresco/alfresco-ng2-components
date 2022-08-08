@@ -18,7 +18,7 @@
  */
 
 import { exec } from './exec';
-import * as program from 'commander';
+import program from 'commander';
 import { logger } from './logger';
 
 export interface CommitArgs {

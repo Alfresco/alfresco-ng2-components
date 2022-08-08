@@ -877,7 +877,7 @@ describe('WidgetVisibilityService', () => {
                 visibilityCondition: visibilityObjTest
             }));
 
-            fakeFormWithField.fields.push(contModel);
+            fakeFormWithField.fieldsCache.push(contModel.field);
             service.refreshVisibility(fakeFormWithField);
             expect(contModel.isVisible).toBeFalsy();
         });

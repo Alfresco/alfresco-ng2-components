@@ -1,9 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "lib": {
-    "entryFile": "public-api.ts",
-    "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api"
-    }
+    "entryFile": "public-api.ts"
   }
 }

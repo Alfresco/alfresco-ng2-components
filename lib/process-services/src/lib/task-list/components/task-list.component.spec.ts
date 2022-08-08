@@ -936,10 +936,6 @@ describe('TaskListContextMenuComponent', () => {
     });
 
     afterEach(() => {
-        const event = new KeyboardEvent('keydown', {
-          bubbles : true, cancelable : true, key : 'Escape'
-        });
-        document.querySelector('.cdk-overlay-backdrop').dispatchEvent(event);
         fixture.detectChanges();
     });
 

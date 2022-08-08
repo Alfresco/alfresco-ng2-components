@@ -363,7 +363,7 @@ describe('ProcessService', () => {
             }]));
 
             createOrUpdateProcessInstanceVariablesSpy = spyOn(service['processInstanceVariablesApi'],
-                'createOrUpdateProcessInstanceVariables').and.returnValue(Promise.resolve({}));
+                'createOrUpdateProcessInstanceVariables').and.returnValue(Promise.resolve({} as any));
 
             deleteProcessInstanceVariableSpy = spyOn(service['processInstanceVariablesApi'],
                 'deleteProcessInstanceVariable').and.returnValue(Promise.resolve());

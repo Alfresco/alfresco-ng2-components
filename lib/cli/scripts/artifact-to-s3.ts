@@ -19,7 +19,7 @@
 
 import { exec } from './exec';
 import { logger } from './logger';
-import * as program from 'commander';
+import program from 'commander';
 
 function zipArtifact(artifact: string) {
     logger.info(`Perform zip artifact ${artifact}`);

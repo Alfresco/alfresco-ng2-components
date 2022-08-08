@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
+import program from 'commander';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as shell from 'shelljs';

@@ -49,7 +49,7 @@ describe('IdentityGroupService', () => {
     describe('Search', () => {
 
         it('should fetch groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups )as any);
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake').subscribe(
@@ -65,7 +65,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
@@ -85,7 +85,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups by roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups)  as any);
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByRoles).subscribe(
@@ -102,7 +102,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups by roles if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByRoles)
@@ -125,7 +125,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups within app', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups) as any);
 
             service.search('fake', mockSearchGroupByApp).subscribe(
                 res => {
@@ -140,7 +140,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups within app with roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups));
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups) as any);
 
             service.search('fake', mockSearchGroupByRolesAndApp).subscribe(
                 res => {
@@ -156,7 +156,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups within app if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByApp)

@@ -158,7 +158,7 @@ describe('LoginComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['route-app-config']);
     });
 
-    it('should redirect to previous route state on successful login', () => {
+    it('should redirect to previous route state on successful login', fakeAsync(() => {
         appConfigService.config = {};
         appConfigService.config.providers = 'ECM';
 
@@ -171,7 +171,7 @@ describe('LoginComponent', () => {
 
         loginWithCredentials('fake-username', 'fake-password');
         expect(router.navigateByUrl).toHaveBeenCalledWith('some-route');
-    });
+    }));
 
     it('should update user preferences upon login', fakeAsync(() => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
@@ -292,14 +292,14 @@ describe('LoginComponent', () => {
             expect(component.rememberMe).toBe(true);
         });
 
-        it('should be taken into consideration during login attempt', () => {
+        it('should be taken into consideration during login attempt', fakeAsync(() => {
             spyOn(authService, 'login').and.stub();
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(authService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
-        });
+        }));
     });
 
     it('should render Login form with all the keys to be translated', () => {
@@ -310,7 +310,7 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#adf-login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
 
         expect(element.querySelector('[for="password"]')).toBeDefined();
-        expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
+        expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD *');
 
         expect(element.querySelector('#adf-login-action-left')).toBeDefined();
         expect(element.querySelector('#adf-login-action-left').innerText).toEqual('LOGIN.ACTION.HELP');

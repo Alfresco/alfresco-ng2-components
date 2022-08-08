@@ -1,5 +1,5 @@
 import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import * as program from 'commander';
+import program from 'commander';
 import { logger } from './logger';
 
 interface PeopleTally { enabled: number; disabled: number }

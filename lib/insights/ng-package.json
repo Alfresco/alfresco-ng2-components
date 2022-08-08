@@ -8,14 +8,6 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-insights",
-    "umdModuleIds": {
-      "@alfresco/adf-core": "@alfresco/adf-core",
-      "ng2-charts": "ng2-charts",
-      "raphael": "raphael",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "@ngx-translate/core": "@ngx-translate/core"
-    }
+    "flatModuleFile": "adf-insights"
   }
 }

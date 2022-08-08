@@ -30,7 +30,7 @@ import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import moment = require('moment');
+import * as moment from 'moment';
 
 describe('Metadata component', () => {
 
@@ -269,7 +269,7 @@ describe('Metadata component', () => {
     it('[C279960] Should show the last username modifier when modify a File', async () => {
         await loginPage.loginWithProfile('admin');
 
-        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pngFileModel.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/files(overlay:files/${pngFileModel.id}/view)`);
 
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();

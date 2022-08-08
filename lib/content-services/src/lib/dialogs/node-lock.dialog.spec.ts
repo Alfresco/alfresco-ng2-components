@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import moment from 'moment';
 
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';

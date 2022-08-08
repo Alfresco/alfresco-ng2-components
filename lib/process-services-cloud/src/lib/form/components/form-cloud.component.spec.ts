@@ -17,7 +17,15 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Component, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import {
+    Component,
+    DebugElement,
+    SimpleChange,
+    NgModule,
+    Injector,
+    ComponentFactoryResolver,
+    ViewChild
+} from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
@@ -82,7 +90,7 @@ describe('FormCloudComponent', () => {
         selector: 'adf-cloud-custom-widget',
         template: '<div></div>'
     })
-    // eslint-disable-next-line @angular-eslint/component-class-suffix
+        // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }
@@ -91,7 +99,8 @@ describe('FormCloudComponent', () => {
         declarations: [CustomWidget],
         exports: [CustomWidget]
     })
-    class CustomUploadModule { }
+    class CustomUploadModule {
+    }
 
     const buildWidget = (type: string, injector: Injector): any => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
@@ -798,7 +807,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should submit form when user confirms', () => {
-        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) });
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as any);
         fixture.detectChanges();
 
         const formModel = new FormModel({
@@ -806,12 +815,12 @@ describe('FormCloudComponent', () => {
                 show: true,
                 message: 'Are you sure you want to submit the form?'
             }
-        });
+        } as any);
         formComponent.form = formModel;
         formComponent.taskId = 'id';
         formComponent.appName = 'appName';
 
-        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel));
+        spyOn(formComponent['formCloudService'], 'completeTaskForm').and.returnValue(of(formModel as any));
         formComponent.completeTaskForm('complete');
 
         expect(formComponent['formCloudService'].completeTaskForm).toHaveBeenCalled();
@@ -819,7 +828,7 @@ describe('FormCloudComponent', () => {
 
     it('should not confirm form if user rejects', () => {
         const outcome = 'complete';
-        spyOn(matDialog, 'open').and.returnValue({  afterClosed: () => of(false) });
+        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
 
         const formModel = new FormModel({
             confirmMessage: {
@@ -1129,16 +1138,16 @@ describe('FormCloudComponent', () => {
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
     template: `
-    <adf-cloud-form #adfCloudForm>
-        <adf-cloud-form-custom-outcomes>
-            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
-            CUSTOM-BUTTON-1
-            </button>
-            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
-                CUSTOM-BUTTON-2
-            </button>
-        </adf-cloud-form-custom-outcomes>
-    </adf-cloud-form>`
+        <adf-cloud-form #adfCloudForm>
+            <adf-cloud-form-custom-outcomes>
+                <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
+                    CUSTOM-BUTTON-1
+                </button>
+                <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
+                    CUSTOM-BUTTON-2
+                </button>
+            </adf-cloud-form-custom-outcomes>
+        </adf-cloud-form>`
 })
 
 class FormCloudWithCustomOutComesComponent {
@@ -1146,8 +1155,11 @@ class FormCloudWithCustomOutComesComponent {
     @ViewChild('adfCloudForm', { static: true })
     adfCloudForm: FormCloudComponent;
 
-    onCustomButtonOneClick() { }
-    onCustomButtonTwoClick() { }
+    onCustomButtonOneClick() {
+    }
+
+    onCustomButtonTwoClick() {
+    }
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {
@@ -1247,15 +1259,15 @@ describe('retrieve metadata on submit', () => {
     } as Node;
 
     beforeEach(() => {
-       const apiService = TestBed.inject(AlfrescoApiService);
-       spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
-       formService = TestBed.inject(FormService);
+        formService = TestBed.inject(FormService);
 
-       fixture = TestBed.createComponent(FormCloudComponent);
-       formComponent = fixture.componentInstance;
-       formComponent.form = formComponent.parseForm(fakeMetadataForm);
-       fixture.detectChanges();
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+        formComponent.form = formComponent.parseForm(fakeMetadataForm);
+        fixture.detectChanges();
     });
 
     it('should set values when updateFormValuesRequested is updated', async () => {
@@ -1280,8 +1292,8 @@ describe('retrieve metadata on submit', () => {
         expect(addValuesNotPresent).toHaveBeenCalledWith(values);
         expect(formComponent.form.values['pfx_property_one']).toBe('testValue');
         expect(formComponent.form.values['pfx_property_two']).toBe(true);
-        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
-        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
+        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
         expect(formComponent.form.values['pfx_property_five']).toEqual('green');
         expect(formDataRefreshed).toHaveBeenCalled();
     });

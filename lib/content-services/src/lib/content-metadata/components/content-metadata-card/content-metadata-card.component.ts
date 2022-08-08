@@ -18,7 +18,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService, AllowableOperationsEnum, VersionCompatibilityService } from '@alfresco/adf-core';
-import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
+import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
 @Component({
     selector: 'adf-content-metadata-card',

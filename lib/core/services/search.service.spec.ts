@@ -21,6 +21,7 @@ import { SearchService } from './search.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodePaging } from '@alfresco/js-api';
 
 describe('SearchService', () => {
 
@@ -39,7 +40,7 @@ describe('SearchService', () => {
 
     it('should call search API with no additional options', (done) => {
         const searchTerm = 'searchTerm63688';
-        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(new NodePaging(fakeSearch)));
         service.getNodeQueryResults(searchTerm).subscribe(
             () => {
                 expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
@@ -55,21 +56,10 @@ describe('SearchService', () => {
             rootNodeId: '-root-',
             nodeType: 'cm:content'
         };
-        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(new NodePaging(fakeSearch)));
         service.getNodeQueryResults(searchTerm, options).subscribe(
             () => {
                 expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
-                done();
-            }
-        );
-    });
-
-    it('should return search results returned from the API', (done) => {
-        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
-        service.getNodeQueryResults('').subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(fakeSearch);
                 done();
             }
         );

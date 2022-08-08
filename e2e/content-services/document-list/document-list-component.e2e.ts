@@ -19,7 +19,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Document List Component', () => {

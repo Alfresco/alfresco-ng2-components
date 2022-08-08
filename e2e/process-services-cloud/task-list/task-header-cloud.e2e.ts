@@ -29,7 +29,7 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import moment = require('moment');
+import * as moment from 'moment';
 
 const isValueInvalid = (value: any): boolean => {
     return value === null || value === undefined;

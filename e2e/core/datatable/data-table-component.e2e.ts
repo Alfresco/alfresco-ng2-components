@@ -29,8 +29,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Datatable component', () => {
 
-    const dataTablePage = new DataTablePage('defaultTable');
-    const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
     const loginPage = new LoginPage();
     const acsUser = new UserModel();
@@ -54,48 +52,6 @@ describe('Datatable component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-    });
-
-    describe('Datatable component - copyContent', () => {
-        beforeAll(async () => {
-            await navigationBarPage.navigateToCopyContentDatatable();
-            await dataTablePage.dataTable.waitForTableBody();
-        });
-
-        it('[C307040] A column value with copyContent set to true is copied when clicking on it', async () => {
-            await dataTablePage.mouseOverIdColumn('1');
-            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await dataTablePage.clickOnIdColumn('1');
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await dataTablePage.clickOnIdColumn('2');
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await dataTablePage.pasteClipboard();
-            await expect(await dataTablePage.getClipboardInputText()).toEqual('2');
-        });
-
-        it('[C307073] A column value with copyContent set to true is copied when clicking on it', async () => {
-            await copyContentDataTablePage.mouseOverIdColumn('1');
-            await expect(await copyContentDataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await copyContentDataTablePage.clickOnIdColumn('1');
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await copyContentDataTablePage.clickOnIdColumn('2');
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await copyContentDataTablePage.pasteClipboard();
-            await expect(await copyContentDataTablePage.getClipboardInputText()).toEqual('2');
-        });
-
-        it('[C307100] A column value of type text and with copyContent set to true is copied when clicking on it', async () => {
-            await dataTablePage.mouseOverIdColumn('1');
-            await expect(await dataTablePage.getCopyContentTooltip()).toEqual('Click to copy');
-            await dataTablePage.clickOnIdColumn('1');
-            await notificationHistoryPage.checkNotifyContains('Text copied to clipboard');
-            await dataTablePage.pasteClipboard();
-            await expect(await dataTablePage.getClipboardInputText()).toEqual('1');
-        });
-
-        afterAll(async () => {
-            await navigationBarPage.clickHomeButton();
-        });
     });
 
     describe('Datatable component - Drag and Drop', () => {

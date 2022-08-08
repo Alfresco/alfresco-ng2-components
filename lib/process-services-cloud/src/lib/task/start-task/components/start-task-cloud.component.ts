@@ -16,8 +16,7 @@
  */
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import {

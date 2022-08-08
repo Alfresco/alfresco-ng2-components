@@ -59,7 +59,7 @@ describe('Comment ProcessService Service', () => {
             beforeEach(() => {
                 getProcessInstanceComments = spyOn(service['commentsApi'], 'getProcessInstanceComments')
                     .and
-                    .returnValue(Promise.resolve({data: [fakeProcessComment, fakeProcessComment]}));
+                    .returnValue(Promise.resolve({ data: [fakeProcessComment, fakeProcessComment] }) as any);
             });
 
             it('should return the correct number of comments', (done) => {
@@ -107,7 +107,7 @@ describe('Comment ProcessService Service', () => {
             beforeEach(() => {
                 addProcessInstanceComment = spyOn(service['commentsApi'], 'addProcessInstanceComment')
                     .and
-                    .returnValue(Promise.resolve(fakeProcessComment));
+                    .returnValue(Promise.resolve(fakeProcessComment) as any);
             });
 
             it('should call service to add comment', () => {
@@ -130,7 +130,8 @@ describe('Comment ProcessService Service', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(null));
                 service.addProcessInstanceComment(processId, message).subscribe(
-                    () => {},
+                    () => {
+                    },
                     (res) => {
                         expect(res).toBe('Server error');
                         done();
@@ -139,7 +140,7 @@ describe('Comment ProcessService Service', () => {
             });
 
         });
-   });
+    });
 
     describe('Task  comments', () => {
 

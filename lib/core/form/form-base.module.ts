@@ -78,6 +78,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         FormRendererComponent,
         StartFormCustomButtonDirective,
         InplaceFormInputComponent,
+        WidgetComponent,
         ...WIDGET_DIRECTIVES
     ]
 })

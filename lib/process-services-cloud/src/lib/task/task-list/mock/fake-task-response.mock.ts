@@ -16,7 +16,7 @@
  */
 
 import { ObjectDataColumn } from '@alfresco/adf-core';
-import { ProcessListDataColumnCustomData } from 'process-services-cloud/src/lib/models/data-column-custom-data';
+import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { getTaskCloudModelMock } from '../../../mock/task-cloud-model.mock';
 
 export const fakeGlobalTask = getTaskCloudModelMock({

@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
-import moment = require('moment');
+import * as moment from 'moment';
 
 describe('Start Task - Custom App', () => {
 

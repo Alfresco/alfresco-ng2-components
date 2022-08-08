@@ -77,18 +77,10 @@ describe('RichTextEditorComponent', () => {
         expect(component.dynamicId).toContain('editorjs');
     });
 
-    it('should set dynamic id to editor js element', async () => {
-        spyOn(window.crypto, 'getRandomValues').and.returnValue('randomId');
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const editor = debugElement.query(By.css(cssSelectors.editorJsElement));
-        expect(editor.nativeElement.id).toEqual('editorjs-randomId');
-    });
-
     it('should get editorjs data by calling getEditorContent', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
-        spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData));
+        spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData) as any);
         const savedEditorData = await component.getEditorContent();
         expect(savedEditorData).toEqual(mockEditorData);
     });
