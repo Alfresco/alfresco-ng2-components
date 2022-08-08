@@ -41,7 +41,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
 
         const responseType = this.getResponseType(options);
 
@@ -68,33 +68,33 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             }
         );
 
-        return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, options.returnType);
+        return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, globalEmitter, options.returnType);
     }
 
 
-    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'POST');
+    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'POST');
     }
 
-    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'PUT');
+    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'PUT');
     }
 
-    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'GET');
+    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'GET');
     }
 
-    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, 'DELETE');
+    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'DELETE');
     }
 
-    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, httpMethod: HttpMethod): Promise<T> {
+    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter, httpMethod: HttpMethod): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod,
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        }, sc, eventEmitter);
+        }, sc, eventEmitter, globalEmitter);
     }
 
     // Poor man's sanitizer
@@ -129,7 +129,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return null;
     }
 
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: JsEmitter, returnType: any): Promise<T> {
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: JsEmitter, globalEmitter: JsEmitter, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
 
@@ -149,9 +149,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             }),
             catchError((err: HttpErrorResponse) => {
                 emitter.emit('error', err);
+                globalEmitter.emit('error', err);
 
                 if (err.status === 401) {
                     emitter.emit('unauthorized');
+                    globalEmitter.emit('unauthorized');
                 }
 
                 return throwError(err);
@@ -160,26 +162,6 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         ).toPromise();
 
         // for Legacy backward compatibility
-
-        (promise as any).on = function() {
-            emitter.on.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).once = function() {
-            emitter.once.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).emit = function() {
-            emitter.emit.apply(emitter, arguments);
-            return this;
-        };
-
-        (promise as any).off = function() {
-            emitter.off.apply(emitter, arguments);
-            return this;
-        };
 
         (promise as any).abort = function() {
             emitter.emit('abort');

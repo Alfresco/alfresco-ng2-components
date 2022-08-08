@@ -79,7 +79,7 @@ describe('JsApiAngularHttpClient', () => {
                 accepts: ['application/json']
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter).then((res: ResultListDataRepresentationTaskRepresentation) => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res: ResultListDataRepresentationTaskRepresentation) => {
                 expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
                 expect(res.data[0].created instanceof Date).toBeTruthy();
                 done();
@@ -100,7 +100,7 @@ describe('JsApiAngularHttpClient', () => {
                 responseType: 'json'
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter).then((res) => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res) => {
                 expect(res).toEqual(mockResponse);
                 done();
             });
@@ -120,7 +120,7 @@ describe('JsApiAngularHttpClient', () => {
 
             const spy = spyOn(emitter, 'emit').and.callThrough();
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter).catch(() => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch(() => {
                 expect(spy).toHaveBeenCalledWith('unauthorized');
                 done();
             });
