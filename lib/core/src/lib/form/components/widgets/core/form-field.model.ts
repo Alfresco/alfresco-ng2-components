@@ -76,6 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
     currency: string = null;
     dateDisplayFormat: string = this.defaultDateFormat;
     selectionType: 'single' | 'multiple' = null;
+    alignmentType: 'vertical' | 'horizontal' = null;
     rule?: FormFieldRule;
     selectLoggedUser: boolean;
     groupsRestriction: string[];
@@ -189,6 +190,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
             this.selectionType = json.selectionType;
+            this.alignmentType = json.alignmentType;
             this.rule = json.rule;
             this.selectLoggedUser = json.selectLoggedUser;
             this.groupsRestriction = json.groupsRestriction?.groups;
