@@ -119,7 +119,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     selectedInstances: any[];
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
-
+    isPreferencesLoaded = false;
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
@@ -154,6 +154,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             this.formatSorting(changes['sorting'].currentValue);
         }
         this.reload();
+        this.getPreferences();
     }
 
     ngOnDestroy() {
@@ -162,30 +163,38 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     ngAfterContentInit() {
-        this.cloudPreferenceService.getPreferences(this.appName).pipe(
-            take(1),
-            map((preferences => {
-                const preferencesList = preferences?.list?.entries ?? [];
-                const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
-                const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
+        this.getPreferences();
+    }
 
-                return {
-                    columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
-                };
-            }))
-        ).subscribe(({ columnsOrder, columnsVisibility }) => {
-                if (columnsOrder) {
-                    this.columnsOrder = columnsOrder;
+    getPreferences() {
+        if (this.appName && !this.isPreferencesLoaded) {
+            this.isPreferencesLoaded = true;
+            this.cloudPreferenceService.getPreferences(this.appName).pipe(
+                take(1),
+                map((preferences => {
+                    const preferencesList = preferences?.list?.entries ?? [];
+                    const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                    const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
+
+                    return {
+                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                    };
+                }),
+                takeUntil(this.onDestroy$))
+            ).subscribe(({ columnsOrder, columnsVisibility }) => {
+                    if (columnsOrder) {
+                        this.columnsOrder = columnsOrder;
+                    }
+
+                    if (columnsVisibility) {
+                        this.columnsVisibility = columnsVisibility;
+                    }
+
+                    this.createDatatableSchema();
                 }
-
-                if (columnsVisibility) {
-                    this.columnsVisibility = columnsVisibility;
-                }
-
-                this.createDatatableSchema();
-            }
-        );
+            );
+        }
     }
 
     isListEmpty(): boolean {
