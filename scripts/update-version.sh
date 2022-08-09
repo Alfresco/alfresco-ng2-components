@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+VERSION_IN_PACKAGE_JSON=`node -p "require('$DIR/../package.json')".version;`;
+
 eval JS_API=true
 eval GNU=false
 eval DIFFERENT_JS_API=false
@@ -47,8 +49,15 @@ last_alpha_mode() {
 }
 
 next_alpha_mode() {
-    echo "====== Auto find next ALPHA version ===== ${SEMANTIC} "
-    VERSION=$(./next_version.sh -${SEMANTIC} -alpha)
+    # If we are creating a new alpha for a prerelease, we need to simply call it with -alpha
+    if [[ $VERSION_IN_PACKAGE_JSON =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
+        SEMANTIC_PARAM="";
+    else
+        SEMANTIC_PARAM="-${SEMANTIC}";
+    fi
+
+    echo "====== Auto find next ALPHA version ===== ${SEMANTIC_PARAM} "
+    VERSION=$(./next_version.sh ${SEMANTIC_PARAM} -alpha)
 
     echo "====== version lib ${VERSION} ====="
     JS_API=false
