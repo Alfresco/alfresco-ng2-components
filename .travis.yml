@@ -127,6 +127,9 @@ jobs:
 
         - stage: "Build Demo shell"
           name:  "Demo Shell & Storybook :Build && dockerize"
+          before_script:
+            - NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx run cli:build --prod
+            - ./scripts/build/build-cli.sh
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
