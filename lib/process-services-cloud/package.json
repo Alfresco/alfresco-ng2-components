@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-process-services-cloud",
   "description": "Alfresco ADF process services cloud",
-  "version": "5.0.0-angular.13",
+  "version": "5.0.0-angular.13.1",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
     "@angular/platform-browser-dynamic": ">=13.3.11",
     "@angular/router": ">=13.3.11",
     "@alfresco/js-api": "4.12.0-244",
-    "@alfresco/adf-core": "5.0.0-angular.13",
-    "@alfresco/adf-content-services": "5.0.0-angular.13",
+    "@alfresco/adf-core": "5.0.0-angular.13.1",
+    "@alfresco/adf-content-services": "5.0.0-angular.13.1",
     "@apollo/client": "^3.3.7",
     "@ngx-translate/core": ">=13.0.0",
     "apollo-angular": "^2.2.0",
