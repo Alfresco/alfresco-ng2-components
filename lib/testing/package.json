@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-testing",
   "description": "Alfresco ADF testing page and utils",
-  "version": "5.0.0-angular.13.1",
+  "version": "5.0.0-angular.13.2",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",

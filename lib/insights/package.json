@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-insights",
   "description": "Alfresco ADF insights",
-  "version": "5.0.0-angular.13.1",
+  "version": "5.0.0-angular.13.2",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "@angular/flex-layout": ">=13.0.0-beta.38",
     "@angular/forms": ">=13.3.11",
     "@angular/material": ">=13.3.9",
-    "@alfresco/adf-core": "5.0.0-angular.13.1",
+    "@alfresco/adf-core": "5.0.0-angular.13.2",
     "@ngx-translate/core": ">=13.0.0",
     "chart.js": ">=2.9.3",
     "moment": ">=2.22.2",
