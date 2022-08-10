@@ -64,7 +64,7 @@ import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthBearerInterceptor } from './auth/auth-bearer.interceptor';
+import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 
 @NgModule({
     imports: [

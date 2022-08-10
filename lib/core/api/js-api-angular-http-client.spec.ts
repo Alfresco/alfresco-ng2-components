@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 import { RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions, Emitter } from '@alfresco/js-api';
+import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { JsApiAngularHttpClient } from './js-api-angular-http-client';
@@ -131,6 +132,63 @@ describe('JsApiAngularHttpClient', () => {
             req.flush('<div></div>', { status: 401, statusText: 'unauthorized'});
         });
 
+    });
+
+    describe('upload', () => {
+
+        afterEach(() => {
+            controller.verify();
+        });
+
+        it('should behave...', () => {
+            const requestOptions: RequestOptions = {
+                path: '/nodes/{nodeId}/children',
+                httpMethod: 'POST',
+                queryParams: {
+                    autoRename: true,
+                    include: 'allowableOperations',
+                    fields: null
+                },
+                formParams: {
+                    filedata: new File([], 'file.txt'),
+                    relativePath: '',
+                    include: ['allowableOperations'],
+                    renditions: 'doclib',
+                    autoRename: true,
+                    nodeType: 'cm:content'
+                },
+                bodyParam: {
+                    name: 'demo.txt',
+                    nodeType: 'cm:content',
+                    relativePath: '',
+                    newVersion: false,
+                    majorVersion: false,
+                    parentId: '-my-',
+                    path: ''
+                },
+                contentTypes: ['multipart/form-data'],
+                accepts: ['application/json'],
+                returnType: null
+            };
+
+            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitter, emitter);
+            const req = controller.expectOne('http://example.com?autoRename=true&include=allowableOperations');
+            expect(req.request.method).toEqual('POST');
+
+            // filedata: (binary)
+            // include: allowableOperations
+
+            const body = req.request.body as HttpParams;
+
+            expect(body.get('relativePath')).toBe('');
+            expect(body.get('renditions')).toBe('doclib');
+            expect(body.get('autoRename')).toBeTruthy();
+            expect(body.get('nodeType')).toBe('cm:content');
+            expect(body.get('include')).toBe('allowableOperations');
+            expect(body.get('filedata')).toEqual(jasmine.any(File));
+
+            req.flush('');
+        });
     });
 
 });
