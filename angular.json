@@ -442,7 +442,8 @@
             "port": 4400,
             "config": {
               "configFolder": "lib/core/.storybook"
-            }
+            },
+            "projectBuildConfig": "core:build-storybook"
           },
           "configurations": {
             "ci": {
@@ -514,7 +515,8 @@
             "port": 4400,
             "config": {
               "configFolder": "lib/content-services/.storybook"
-            }
+            },
+            "projectBuildConfig": "content-services:build-storybook"
           },
           "configurations": {
             "ci": {
@@ -625,7 +627,8 @@
             "port": 4400,
             "config": {
               "configFolder": "lib/process-services-cloud/.storybook"
-            }
+            },
+            "projectBuildConfig": "process-services-cloud:build-storybook"
           },
           "configurations": {
             "ci": {
@@ -814,7 +817,8 @@
             "port": 4400,
             "config": {
               "configFolder": "lib/stories/.storybook"
-            }
+            },
+            "projectBuildConfig": "stories:build-storybook"
           },
           "configurations": {
             "ci": {
