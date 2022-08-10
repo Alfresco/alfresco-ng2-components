@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 
 export default {
     component: ErrorContentComponent,
-    title: 'Core/Components/Error Content',
+    title: 'Core/Template/Error Content',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, TemplateModule, MatButtonModule],
@@ -95,6 +95,7 @@ errorKnownParamStory.decorators = [
         ]
     })
 ];
+errorKnownParamStory.storyName = 'Error Param with Known ID';
 
 export const errorUnknownParamStory = template.bind({});
 errorUnknownParamStory.args = {
@@ -113,3 +114,4 @@ errorUnknownParamStory.decorators = [
         ]
     })
 ];
+errorUnknownParamStory.storyName = 'Error Param with Unknown ID';
