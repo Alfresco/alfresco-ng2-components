@@ -197,7 +197,6 @@ jobs:
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -218,7 +217,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -239,7 +237,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -260,7 +257,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -281,7 +277,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -302,7 +297,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -323,7 +317,6 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -345,7 +338,6 @@ jobs:
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -367,7 +359,6 @@ jobs:
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -389,7 +380,6 @@ jobs:
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -411,7 +401,6 @@ jobs:
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -433,7 +422,6 @@ jobs:
               - ./scripts/ci/jobs/dbpci-before-playwright || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/storybook-testing/storybook-test.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
             use:
               - built_libs_cache
@@ -446,7 +434,6 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -469,7 +456,7 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
+          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -492,7 +479,6 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -515,7 +501,6 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache
@@ -538,7 +523,6 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/e2e.sh
-          after_script: ./scripts/ci/job_hooks/after-e2e.sh
           workspaces:
               create:
                   name: e2e_cache

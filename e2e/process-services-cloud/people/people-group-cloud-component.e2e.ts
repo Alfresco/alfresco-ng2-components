@@ -245,4 +245,8 @@ describe('People Groups Cloud Component', () => {
         await peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
         await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
     });
+
+    it('[FAKE] FAKE FAILING TEST', async () => {
+        expect(true).toEqual(false);
+    });
 });
