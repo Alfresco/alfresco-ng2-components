@@ -40,11 +40,45 @@ export default {
     argTypes: {
         errorCode: {
             type: 'string',
+            description: 'Component level Error Code',
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: 'UNKNOWN'
+                }
+            },
             defaultValue: '404'
+        },
+        errorCodeTranslated: {
+            type: 'string',
+            description:
+                'Code of translated Error - if translation doesn\'t exist then is UNKNOWN',
+            table: {
+                category: 'Component Variables',
+                type: {
+                    summary: 'string'
+                }
+            },
+            control: {
+                disable: true
+            }
         },
         isAdditionalContent: {
             type: 'boolean',
-            defaultValue: true
+            description: 'Enable Content Projection',
+            defaultValue: false,
+            table: {
+                category: 'Story Controls',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: false
+                }
+            }
         }
     }
 } as Meta;
@@ -79,9 +113,6 @@ const template: Story = args => ({
 });
 
 export const errorKnownParamStory = template.bind({});
-errorKnownParamStory.args = {
-    isAdditionalContent: true
-};
 errorKnownParamStory.argTypes = templateArgTypes;
 errorKnownParamStory.decorators = [
     moduleMetadata({
@@ -98,9 +129,6 @@ errorKnownParamStory.decorators = [
 errorKnownParamStory.storyName = 'Error Param with Known ID';
 
 export const errorUnknownParamStory = template.bind({});
-errorUnknownParamStory.args = {
-    isAdditionalContent: true
-};
 errorUnknownParamStory.argTypes = templateArgTypes;
 errorUnknownParamStory.decorators = [
     moduleMetadata({
