@@ -212,5 +212,9 @@ describe('Comment', () => {
             await commentsPage.checkCommentInputIsNotDisplayed();
             await viewerPage.clickCloseButton();
         });
+
+        it('[FAKE] FAKE FAILING TEST', async () => {
+            expect(true).toEqual(false);
+        });
     });
 });
