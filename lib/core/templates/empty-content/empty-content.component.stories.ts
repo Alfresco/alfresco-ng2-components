@@ -22,7 +22,7 @@ import { TemplateModule } from '../template.module';
 
 export default {
     component: EmptyContentComponent,
-    title: 'Core/Components/Empty Content',
+    title: 'Core/Template/Empty Content',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, TemplateModule]
@@ -72,7 +72,7 @@ export default {
                 'Empty Trash to permanently delete items'
             ],
             table: {
-                category: 'Strories Inputs',
+                category: 'Strories Controls',
                 type: {
                     summary: 'array'
                 }
