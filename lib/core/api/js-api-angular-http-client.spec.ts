@@ -191,4 +191,29 @@ describe('JsApiAngularHttpClient', () => {
         });
     });
 
+    it('should return a Error type on failed promise, for backward compatibility, with string value to prevent JSON.parse from not getting correct statusCode', (done) => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'POST'
+        };
+
+        const errorResponse = {
+            error: {
+                errorKey: 'Cant perform action',
+                statusCode: 403
+            }
+        };
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: Error) => {
+            expect(res instanceof Error).toBeTruthy();
+            expect(res.message).toBe(JSON.stringify(errorResponse));
+            done();
+        });
+
+        const req = controller.expectOne('http://example.com');
+        expect(req.request.method).toEqual('POST');
+
+        req.flush(errorResponse, { status: 403, statusText: 'Forbidden' });
+    });
+
 });

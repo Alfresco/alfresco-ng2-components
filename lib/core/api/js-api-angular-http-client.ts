@@ -51,7 +51,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         const optionsHeaders = {
             ...options.headerParams,
             ...(options.accepts?.length && { Accept: options.accepts.join(',') }),
-            ...((contentType) && { 'Content-Type': contentType }),
+            ...((contentType) && { 'Content-Type': contentType })
         };
 
         const params = options.queryParams ? new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) }) : {};
@@ -175,7 +175,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 return res;
 
             }),
-            catchError((err: HttpErrorResponse) => {
+            catchError((err: HttpErrorResponse): Observable<Error> => {
                 emitter.emit('error', err);
                 globalEmitter.emit('error', err);
 
@@ -184,7 +184,13 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                     globalEmitter.emit('unauthorized');
                 }
 
-                return throwError(err);
+                // for backwards compatibility we need to convert it to error class.
+                // to avoid issues with instanceof Error validations, not passing and wrong statusCodes that are
+                // being extracted from the error response
+                const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
+                const error = new Error(msg);
+
+                return throwError(error);
             }),
             takeUntil(abort$)
         ).toPromise();
