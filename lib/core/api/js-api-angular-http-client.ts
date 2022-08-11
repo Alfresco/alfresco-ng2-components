@@ -51,7 +51,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         const optionsHeaders = {
             ...options.headerParams,
             ...(options.accepts?.length && { Accept: options.accepts.join(',') }),
-            ...((contentType && !isFormData) && { 'Content-Type': contentType }),
+            ...((contentType) && { 'Content-Type': contentType }),
         };
 
         const params = options.queryParams ? new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) }) : {};
