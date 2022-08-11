@@ -20,6 +20,7 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 export const getProcessInstanceVariableMock = (variable: Partial<ProcessInstanceVariable> = {}): ProcessInstanceVariable => ({
     id: 1,
     variableDefinitionId: 'variableDefinitionId',
+    processDefinitionKey: 'processDefinitionKey',
     value: 'value',
     appName: 'appName',
     createTime: 'createTime',

@@ -31,7 +31,8 @@ describe('VariableMapperService', () => {
 
     it('should map variables by column title', () => {
         const variable: ProcessInstanceVariable = getProcessInstanceVariableMock({
-            variableDefinitionId: 'variableDefinitionIdOne'
+            processDefinitionKey: 'processKey',
+            name: 'variableName'
         });
 
         const objectWithVariables = {
