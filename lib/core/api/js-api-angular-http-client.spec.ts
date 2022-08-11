@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions, Emitter } from '@alfresco/js-api';
+import { Emitter, RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { JsApiAngularHttpClient } from './js-api-angular-http-client';
+import { JsApiAngularHttpClient, ResponseError } from './js-api-angular-http-client';
 
 
 const securityOptions: SecurityOptions = {
@@ -204,9 +204,10 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: Error) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: ResponseError) => {
             expect(res instanceof Error).toBeTruthy();
             expect(res.message).toBe(JSON.stringify(errorResponse));
+            expect(res.status).toBe(403);
             done();
         });
 

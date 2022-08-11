@@ -34,6 +34,25 @@ type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 const isHttpUploadProgressEvent = <T>(val: HttpEvent<T>): val is HttpUploadProgressEvent => val?.type === HttpEventType.UploadProgress;
 const isHttpResponseEvent = <T>(val: HttpEvent<T>): val is HttpResponse<T> => val?.type === HttpEventType.Response;
 
+
+// for backward compatibility we need to return Error message with status code
+export class ResponseError extends Error {
+
+    public name = 'ResponseError';
+
+    // to handle for example demo-shell/src/app/components/files/files.component.ts
+        /*
+            onNavigationError(error: any) {
+            if (error) {
+                this.router.navigate(['/error', error.status]);
+            }
+        }
+    */
+    constructor(msg: string, public status: number) {
+        super(msg);
+    }
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -175,7 +194,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 return res;
 
             }),
-            catchError((err: HttpErrorResponse): Observable<Error> => {
+            catchError((err: HttpErrorResponse): Observable<ResponseError> => {
                 emitter.emit('error', err);
                 globalEmitter.emit('error', err);
 
@@ -184,11 +203,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                     globalEmitter.emit('unauthorized');
                 }
 
-                // for backwards compatibility we need to convert it to error class.
-                // to avoid issues with instanceof Error validations, not passing and wrong statusCodes that are
-                // being extracted from the error response
+                // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
+                // and we need to be able to correctly pass instanceof Error conditions used inside repository
+                // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
                 const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
-                const error = new Error(msg);
+                const error = new ResponseError(msg, err.status);
 
                 return throwError(error);
             }),
