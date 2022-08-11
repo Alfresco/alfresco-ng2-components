@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LanguageServiceInterface } from './../services/language.service.interface';
+import { LanguageServiceInterface } from '../services/language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LanguageItem } from '../services/language-item.interface';
