@@ -46,15 +46,16 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         const responseType = this.getResponseType(options);
 
         const contentType = options.contentTypes ? options.contentTypes[0] : undefined;
+        const isFormData = contentType === 'multipart/form-data';
 
         const optionsHeaders = {
             ...options.headerParams,
-            ...(options.accepts?.length && { Accept: options.accepts.join(',') })
+            ...(options.accepts?.length && { Accept: options.accepts.join(',') }),
+            ...((contentType && !isFormData) && { 'Content-Type': contentType }),
         };
 
         const params = options.queryParams ? new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) }) : {};
         const isFormType = contentType === 'application/x-www-form-urlencoded';
-        const isFormData = contentType === 'multipart/form-data';
 
         const body = isFormData ? this.convertToFormData(options.formParams) : isFormType ? new HttpParams({ fromObject: this.removeUndefinedValues(options.formParams) }) : options.bodyParam;
 
@@ -141,16 +142,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
         // const isDefaultSuperAgentType = !options.responseType && !options.returnType;
-        // const isFile = JsApiAngularHttpClient.isFileParam(options.formParams?.filedata);
         const isDefaultSuperAgentType = false;
 
         if (isBlobType) {
             return 'blob';
         }
-
-        // if (isFile) {
-        //     return 'arraybuffer';
-        // }
 
         if (options.returnType === 'String' || isDefaultSuperAgentType) {
             return 'text';
@@ -158,27 +154,6 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
         return null;
     }
-
-    // private static isFileParam(param: any): boolean {
-    //     // Buffer in Node.js
-    //     if (typeof Buffer === 'function' && (param instanceof Buffer || param?.path)) {
-    //         return true;
-    //     }
-    //     // Blob in browser
-    //     if (typeof Blob === 'function' && param instanceof Blob) {
-    //         return true;
-    //     }
-    //     // File in browser (it seems File object is also instance of Blob, but keep this for safe)
-    //     if (typeof File === 'function' && param instanceof File) {
-    //         return true;
-    //     }
-    //     // Safari fix
-    //     if (typeof File === 'object' && param instanceof File) {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
 
     private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: JsEmitter, globalEmitter: JsEmitter, returnType: any): Promise<T> {
 
