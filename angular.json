@@ -440,7 +440,15 @@
           "options": {
             "port": 4400,
             "browserTarget": "core:storybook",
-            "configDir": "lib/core/.storybook"
+            "configDir": "lib/core/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -452,7 +460,16 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "browserTarget": "core:build-storybook",
-            "configDir": "lib/core/.storybook"
+            "configDir": "lib/core/.storybook",
+            "outputDir": "dist/storybook/core",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -503,7 +520,16 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "projectBuildConfig": "content-services:build-storybook"
+            "browserTarget": "content-services:storybook",
+            "configDir": "lib/content-services/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -513,6 +539,19 @@
         },
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "browserTarget": "content-services:build-storybook",
+            "configDir": "lib/content-services/.storybook",
+            "outputDir": "dist/storybook/content-services",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
+          },
           "configurations": {
             "ci": {
               "quiet": true
@@ -601,7 +640,16 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "projectBuildConfig": "process-services-cloud:build-storybook"
+            "browserTarget": "process-services-cloud:storybook",
+            "configDir": "lib/process-services-cloud/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -611,6 +659,19 @@
         },
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "browserTarget": "process-services-cloud:build-storybook",
+            "configDir": "lib/process-services-cloud/.storybook",
+            "outputDir": "dist/storybook/process-services-cloud",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
+          },
           "configurations": {
             "ci": {
               "quiet": true
@@ -777,11 +838,16 @@
             "port": 4400,
             "browserTarget": "stories:storybook",
             "configDir": "lib/stories/.storybook",
-            "docsMode": false,
-            "quiet": true
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
-            "outputPath": "dist/storybook/stories",
             "ci": {
               "quiet": true
             }
@@ -792,11 +858,17 @@
           "options": {
             "browserTarget": "stories:build-storybook",
             "configDir": "lib/stories/.storybook",
-            "docsMode": false,
-            "quiet": true
+            "outputDir": "dist/storybook/stories",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
-            "outputPath": "dist/storybook/stories",
             "ci": {
               "quiet": true
             }
