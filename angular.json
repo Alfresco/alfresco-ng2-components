@@ -440,7 +440,8 @@
           "options": {
             "port": 4400,
             "browserTarget": "core:storybook",
-            "configDir": "lib/core/.storybook"
+            "configDir": "lib/core/.storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -452,7 +453,8 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "browserTarget": "core:build-storybook",
-            "configDir": "lib/core/.storybook"
+            "configDir": "lib/core/.storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -503,7 +505,8 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "projectBuildConfig": "content-services:build-storybook"
+            "projectBuildConfig": "content-services:build-storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -513,6 +516,9 @@
         },
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "compodoc": false
+          },
           "configurations": {
             "ci": {
               "quiet": true
@@ -601,7 +607,8 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "projectBuildConfig": "process-services-cloud:build-storybook"
+            "projectBuildConfig": "process-services-cloud:build-storybook",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -611,6 +618,9 @@
         },
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "compodoc": false
+          },
           "configurations": {
             "ci": {
               "quiet": true
@@ -778,7 +788,8 @@
             "browserTarget": "stories:storybook",
             "configDir": "lib/stories/.storybook",
             "docsMode": false,
-            "quiet": true
+            "quiet": true,
+            "compodoc": false
           },
           "configurations": {
             "outputPath": "dist/storybook/stories",
@@ -793,7 +804,8 @@
             "browserTarget": "stories:build-storybook",
             "configDir": "lib/stories/.storybook",
             "docsMode": false,
-            "quiet": true
+            "quiet": true,
+            "compodoc": false
           },
           "configurations": {
             "outputPath": "dist/storybook/stories",
