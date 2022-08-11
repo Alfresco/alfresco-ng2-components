@@ -436,14 +436,11 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/core/.storybook"
-            },
-            "projectBuildConfig": "core:build-storybook"
+            "browserTarget": "core:storybook",
+            "configDir": "lib/core/.storybook"
           },
           "configurations": {
             "ci": {
@@ -452,16 +449,10 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/core",
-            "config": {
-              "configFolder": "lib/core/.storybook"
-            }
+            "browserTarget": "core:build-storybook",
+            "configDir": "lib/core/.storybook"
           },
           "configurations": {
             "ci": {
@@ -509,13 +500,9 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/content-services/.storybook"
-            },
             "projectBuildConfig": "content-services:build-storybook"
           },
           "configurations": {
@@ -525,17 +512,7 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/content-services",
-            "config": {
-              "configFolder": "lib/content-services/.storybook"
-            }
-          },
+          "builder": "@storybook/angular:build-storybook",
           "configurations": {
             "ci": {
               "quiet": true
@@ -621,13 +598,9 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/process-services-cloud/.storybook"
-            },
             "projectBuildConfig": "process-services-cloud:build-storybook"
           },
           "configurations": {
@@ -637,17 +610,7 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/process-services-cloud",
-            "config": {
-              "configFolder": "lib/process-services-cloud/.storybook"
-            }
-          },
+          "builder": "@storybook/angular:build-storybook",
           "configurations": {
             "ci": {
               "quiet": true
@@ -743,7 +706,6 @@
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
-            "outputPath": "lib/dist/testing",
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
@@ -757,7 +719,6 @@
           "configurations": {
             "production": {
               "projectRoot": "lib/testing",
-              "outputPath": "lib/dist/testing",
               "main": "lib/testing/index.ts",
               "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
@@ -811,34 +772,31 @@
       "projectType": "library",
       "architect": {
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            },
-            "projectBuildConfig": "stories:build-storybook"
+            "browserTarget": "stories:storybook",
+            "configDir": "lib/stories/.storybook",
+            "docsMode": false,
+            "quiet": true
           },
           "configurations": {
+            "outputPath": "dist/storybook/stories",
             "ci": {
               "quiet": true
             }
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/stories",
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            }
+            "browserTarget": "stories:build-storybook",
+            "configDir": "lib/stories/.storybook",
+            "docsMode": false,
+            "quiet": true
           },
           "configurations": {
+            "outputPath": "dist/storybook/stories",
             "ci": {
               "quiet": true
             }

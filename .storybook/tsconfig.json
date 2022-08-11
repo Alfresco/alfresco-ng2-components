@@ -1,10 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "exclude": [
-    "../**/*.spec.js",
     "../**/*.spec.ts",
-    "../**/*.spec.tsx",
-    "../**/*.spec.jsx"
+    "../**/*.e2e.ts",
   ],
-  "include": ["../**/*"]
+  "include": ["*.js", "../lib/core/**/*", "../lib/content-services/**/*", "../lib/process-services-cloud/**/*"]
 }
