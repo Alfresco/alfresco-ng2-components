@@ -39,6 +39,7 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -219,7 +220,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.sharedLinksApiService
             .deleteSharedLink(sharedId)
             .subscribe((response: any) => {
-                if (response instanceof Error) {
+                if (response instanceof Error || response instanceof HttpErrorResponse) {
                     this.isDisabled = false;
                     this.isFileShared = true;
                     this.handleError(response);
@@ -234,22 +235,29 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-    private handleError(error: Error) {
-        let message = 'SHARE.UNSHARE_ERROR';
-        let statusCode = 0;
-
-        try {
-            statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
-
-        if (statusCode === 403) {
-            message = 'SHARE.UNSHARE_PERMISSION_ERROR';
-        }
+    private handleError(error: Error | HttpErrorResponse) {
+        const statusCode = this.getErrorStatusCode(error);
+        const message = statusCode === 403 ? 'SHARE.UNSHARE_PERMISSION_ERROR' : 'SHARE.UNSHARE_ERROR';
 
         this.sharedLinksApiService.error.next({
             statusCode,
             message
         });
+    }
+
+    getErrorStatusCode(error: Error | HttpErrorResponse): number {
+
+        const defaultStatusCode = 0;
+
+        if (error instanceof HttpErrorResponse) {
+            return error.status ?? defaultStatusCode;
+        }
+
+        try {
+            return JSON.parse(error.message).error.statusCode;
+        } catch {}
+
+        return defaultStatusCode;
     }
 
     private updateForm() {

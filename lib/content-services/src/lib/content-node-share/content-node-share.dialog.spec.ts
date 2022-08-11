@@ -30,6 +30,7 @@ import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -357,5 +358,25 @@ describe('ShareDialogComponent', () => {
                     properties: { 'qshare:expiryDate': date.utc().format() }
             });
         }));
+    });
+
+    describe('getErrorStatusCode', () => {
+        it('should get 404 error status code from error message', () => {
+            const error = new Error('{"error":{"statusCode":404}}');
+            expect(component.getErrorStatusCode(error)).toBe(404);
+          });
+
+          it('should return default error code (0) when no statusCode was provided inside a message', () => {
+            const error = new Error('fake Error');
+            expect(component.getErrorStatusCode(error)).toBe(0);
+          });
+
+          it('should get 300 status code directly from HttpErrorResponse', () => {
+            const error = new HttpErrorResponse({
+              error: new Error('fake Error'),
+              status: 300
+            });
+            expect(component.getErrorStatusCode(error)).toBe(300);
+          });
     });
 });
