@@ -352,7 +352,7 @@ describe('Form service', () => {
             expect(formParsed).toBeDefined();
         });
 
-        it('should create a Form form a Node', (done) => {
+        it('should create a Form form a Node', async() => {
             const nameForm = 'testNode';
             const formId = 100;
 
@@ -403,9 +403,8 @@ describe('Form service', () => {
             stubGetEcmModel();
             stubAddFieldsToAForm();
 
-            service.createFormFromANode(nameForm).subscribe((result) => {
+            await service.createFormFromANode(nameForm).subscribe((result) => {
                 expect(result.id).toEqual(formId);
-                done();
             });
         });
     });
