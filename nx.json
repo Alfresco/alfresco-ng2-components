@@ -24,7 +24,7 @@
     ]
   },
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "develop"
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
