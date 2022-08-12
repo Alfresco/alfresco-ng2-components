@@ -61,19 +61,18 @@ describe('AnalyticsReportParametersComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('Should initialize the Report form with a Form Group ', (done) => {
+        it('Should initialize the Report form with a Form Group ', async () => {
             const fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
-            component.successReportParams.subscribe(() => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 expect(component.reportForm.get('taskGroup')).toBeDefined();
                 expect(component.reportForm.get('taskGroup').get('taskName')).toBeDefined();
-                done();
             });
             component.successReportParams.emit(fakeReportParam);
         });
 
-        it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', async () => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-status');
                 expect(element.querySelector('h4').textContent.trim()).toEqual('Fake Task overview status');
@@ -83,7 +82,6 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(dropDown[1].innerHTML).toEqual('All');
                 expect(dropDown[2].innerHTML).toEqual('Active');
                 expect(dropDown[3].innerHTML).toEqual('Complete');
-                done();
             });
 
             const reportId = 1;
@@ -97,13 +95,11 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should render a number with the default value when the definition parameter type is \'integer\' ', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a number with the default value when the definition parameter type is \'integer\' ', async () => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const numberElement: any = element.querySelector('#slowProcessInstanceInteger');
                 expect(numberElement.value).toEqual('10');
-
-                done();
             });
 
             const reportId = 1;
@@ -117,8 +113,8 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should render a duration component when the definition parameter type is "duration"', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a duration component when the definition parameter type is "duration"', async () => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     const numberElement: any = element.querySelector('#duration');
@@ -131,7 +127,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     expect(dropDown[1].innerHTML).toEqual('Minutes');
                     expect(dropDown[2].innerHTML).toEqual('Hours');
                     expect(dropDown[3].innerHTML).toEqual('Days');
-                    done();
                 });
             });
 
@@ -189,12 +184,11 @@ describe('AnalyticsReportParametersComponent', () => {
             component.submit(values);
         });
 
-        it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', async () => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const checkElement: any = element.querySelector('#typeFiltering-input');
                 expect(checkElement.checked).toBeTruthy();
-                done();
             });
 
             const reportId = 1;
@@ -208,11 +202,10 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a date range components when the definition parameter type is \'dateRange\' ', async () => {
+            await component.successReportParams.subscribe(() => {
                 const dateElement: any = element.querySelector('adf-date-range-widget');
                 expect(dateElement).toBeDefined();
-                done();
             });
 
             const reportId = 1;
@@ -227,8 +220,8 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', (done) => {
-            component.successReportParams.subscribe(() => {
+        it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', async () => {
+            await component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-dateRangeInterval');
                 expect(dropDown).toBeDefined();
@@ -238,7 +231,6 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(dropDown[2].innerHTML).toEqual('By week');
                 expect(dropDown[3].innerHTML).toEqual('By month');
                 expect(dropDown[4].innerHTML).toEqual('By year');
-                done();
             });
 
             const reportId = 1;
@@ -253,8 +245,8 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
-            ' reportId change', (done) => {
-            component.successParamOpt.subscribe(() => {
+            ' reportId change', async () => {
+            await component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -264,7 +256,6 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
                 expect(dropDown[3].innerHTML).toEqual('Fake Process Test 2 Name  (v 1) ');
                 expect(dropDown[4].innerHTML).toEqual('Fake Process Test 3 Name  (v 1) ');
-                done();
             });
 
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
@@ -286,8 +277,8 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
-            ' appId change', (done) => {
-            component.successParamOpt.subscribe(() => {
+            ' appId change', async () => {
+            await component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -295,7 +286,6 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
                 expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
                 expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
-                done();
             });
 
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
@@ -358,10 +348,9 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should emit an error with a 404 response when the options response is not found', (done) => {
-            component.error.subscribe((err) => {
+        it('Should emit an error with a 404 response when the options response is not found', async () => {
+            await component.error.subscribe((err) => {
                 expect(err).toBeDefined();
-                done();
             });
 
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
@@ -382,10 +371,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
         });
 
-        it('Should emit an error with a 404 response when the report parameters response is not found', (done) => {
-            component.error.subscribe((err) => {
+        it('Should emit an error with a 404 response when the report parameters response is not found', async () => {
+            await component.error.subscribe((err) => {
                 expect(err).toBeDefined();
-                done();
             });
 
             const reportId = 1;
@@ -423,7 +411,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('Should be able to change the report title', (done) => {
+            it('Should be able to change the report title', async () => {
                 spyOn(service, 'updateReport').and.returnValue(of(analyticParamsMock.reportDefParamStatus));
 
                 const title = element.querySelector<HTMLElement>('h4');
@@ -439,12 +427,9 @@ describe('AnalyticsReportParametersComponent', () => {
                 reportName.dispatchEvent(new Event('blur'));
 
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const titleChanged = element.querySelector<HTMLElement>('h4');
-                    expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
-                    done();
-                });
+                await fixture.whenStable();
+                const titleChanged = element.querySelector<HTMLElement>('h4');
+                expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
             });
 
             it('should render adf-buttons-menu component', async () => {

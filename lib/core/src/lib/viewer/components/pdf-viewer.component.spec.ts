@@ -116,7 +116,7 @@ class BlobTestComponent {
     }
 
 }
-
+// eslint-disable-next-line
 xdescribe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;

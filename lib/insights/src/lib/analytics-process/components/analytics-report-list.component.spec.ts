@@ -73,7 +73,7 @@ describe('AnalyticsReportListComponent', () => {
             expect(component.isReportsEmpty()).toBeTruthy();
         });
 
-        it('should return the default reports when the report list is empty', (done) => {
+        it('should return the default reports when the report list is empty', async () => {
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
@@ -94,7 +94,7 @@ describe('AnalyticsReportListComponent', () => {
                 responseText: reportList
             });
 
-            component.success.subscribe(() => {
+            await component.success.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
@@ -103,14 +103,13 @@ describe('AnalyticsReportListComponent', () => {
                 expect(element.querySelector('#report-list-3 > span').innerHTML).toBe('Fake Test Task overview');
                 expect(element.querySelector('#report-list-4 > span').innerHTML).toBe('Fake Test Task service level agreement');
                 expect(component.isReportsEmpty()).toBeFalsy();
-                done();
             });
         });
 
-        it('Report render the report list relative to a single app', (done) => {
+        it('Report render the report list relative to a single app', async () => {
             fixture.detectChanges();
 
-            component.success.subscribe(() => {
+            await component.success.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
@@ -119,7 +118,6 @@ describe('AnalyticsReportListComponent', () => {
                 expect(element.querySelector('#report-list-3 > span').innerHTML).toBe('Fake Test Task overview');
                 expect(element.querySelector('#report-list-4 > span').innerHTML).toBe('Fake Test Task service level agreement');
                 expect(component.isReportsEmpty()).toBeFalsy();
-                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -129,12 +127,11 @@ describe('AnalyticsReportListComponent', () => {
             });
         });
 
-        it('Report emit an error with a empty response', (done) => {
+        it('Report emit an error with a empty response', async () => {
             fixture.detectChanges();
 
-            component.error.subscribe((err) => {
+            await component.error.subscribe((err) => {
                 expect(err).toBeDefined();
-                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -163,16 +160,15 @@ describe('AnalyticsReportListComponent', () => {
             expect(component.isSelected(anotherReport)).toBe(false);
         });
 
-        it('Should reload the report list', (done) => {
+        it('Should reload the report list', async () => {
             component.initObserver();
             const report = new ReportParametersModel({ id: 2002, name: 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
             component.reload();
 
-            component.success.subscribe(() => {
+            await component.success.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
-                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -182,18 +178,17 @@ describe('AnalyticsReportListComponent', () => {
             });
         });
 
-        it('Should reload the report list and select the report with the given id', (done) => {
+        it('Should reload the report list and select the report with the given id', async () => {
             component.initObserver();
             expect(component.reports.length).toEqual(0);
 
             component.reload(2002);
 
-            component.success.subscribe(() => {
+            await component.success.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 expect(component.currentReport).toBeDefined();
                 expect(component.currentReport).not.toBeNull();
                 expect(component.currentReport.id).toEqual(2002);
-                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({

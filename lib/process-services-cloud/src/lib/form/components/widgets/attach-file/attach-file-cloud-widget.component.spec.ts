@@ -721,7 +721,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             widget.onRowClicked(fakeNodeWithProperties);
 
-            fixture.detectChanges()
+            fixture.detectChanges();
             await fixture.whenStable();
 
             expect(widget.selectedNode).toEqual(fakeNodeWithProperties);
