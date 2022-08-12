@@ -767,6 +767,7 @@
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
+            "outputPath": "lib/dist/testing",
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
@@ -780,6 +781,7 @@
           "configurations": {
             "production": {
               "projectRoot": "lib/testing",
+              "outputPath": "lib/dist/testing",
               "main": "lib/testing/index.ts",
               "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
