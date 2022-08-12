@@ -89,7 +89,7 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
-    it('should merge the configs upon new data loaded', async (done) => {
+    it('should merge the configs upon new data loaded', async () => {
         appConfigService.config = {
             application: {
                 name: 'application name'
@@ -109,7 +109,6 @@ describe('AppConfigService', () => {
         await appConfigService.load();
 
         expect(appConfigService.get('application.name')).toEqual('custom name');
-        done();
     });
 
     it('should stream only the selected attribute changes when using select',  fakeAsync(() => {

@@ -62,11 +62,10 @@ describe('NodeAspectService', () => {
         expect(nodeApiService.updateNode).toHaveBeenCalledWith('fake-node-id', expectedParameters);
     });
 
-    it('should send and update node event once the node has been updated', (done) => {
-        alfrescoApiService.nodeUpdated.subscribe((nodeUpdated) => {
+    it('should send and update node event once the node has been updated', async () => {
+        await alfrescoApiService.nodeUpdated.subscribe((nodeUpdated) => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
-            done();
         });
         const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
@@ -74,11 +73,10 @@ describe('NodeAspectService', () => {
         nodeAspectService.updateNodeAspects('fake-node-id');
     });
 
-    it('should send and update node aspect once the node has been updated', (done) => {
-        cardViewUpdateService.updatedAspect$.subscribe((nodeUpdated) => {
+    it('should send and update node aspect once the node has been updated', async () => {
+        await cardViewUpdateService.updatedAspect$.subscribe((nodeUpdated) => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
-            done();
         });
         const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));

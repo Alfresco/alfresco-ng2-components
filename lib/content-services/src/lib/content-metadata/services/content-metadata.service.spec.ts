@@ -276,7 +276,7 @@ describe('ContentMetaDataService', () => {
     });
 
     describe('Provided preset config', () => {
-       it('should create the metadata config on the fly when preset config is provided', async (done) => {
+       it('should create the metadata config on the fly when preset config is provided', (done) => {
             const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
 
             const customLayoutOrientedScheme = [
@@ -310,12 +310,11 @@ describe('ContentMetaDataService', () => {
                 (res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
+                    expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+                    expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
                     done();
                 }
             );
-
-            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
-            expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
         });
     });
 });

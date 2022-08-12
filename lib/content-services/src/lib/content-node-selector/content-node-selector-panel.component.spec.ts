@@ -141,10 +141,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.currentFolderId = 'fake-starting-folder';
             });
 
-            it('should trigger siteChange event on init with parent site Title of start folder', (done) => {
-                component.siteChange.subscribe((siteTitle: string) => {
+            it('should trigger siteChange event on init with parent site Title of start folder', async () => {
+                await component.siteChange.subscribe((siteTitle: string) => {
                     expect(siteTitle).toBe('fake-site');
-                    done();
                 });
 
                 component.ngOnInit();
@@ -152,19 +151,17 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.startSiteGuid).toBe('fake-site');
             });
 
-            it('should trigger siteChange event when a site is selected in sites-dropdown', (done) => {
+            it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
                 const fakeSiteEntry = new SiteEntry({ entry: { title: 'fake-new-site', guid: 'fake-new-site' } });
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    component.siteChange.subscribe((siteTitle: string) => {
-                        expect(siteTitle).toBe('fake-new-site');
-                        done();
-                    });
-
-                    const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
-                    sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
+                await component.siteChange.subscribe((siteTitle: string) => {
+                    expect(siteTitle).toBe('fake-new-site');
                 });
+
+                const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
+                sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
             });
         });
 
@@ -194,12 +191,11 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.documentList.sortingMode).toBe('server');
             });
 
-            it('should trigger the select event when selection has been made', (done) => {
+            it('should trigger the select event when selection has been made', async () => {
                 const expectedNode = { id: 'fakeid' } as Node;
-                component.select.subscribe((nodes) => {
+                await component.select.subscribe((nodes) => {
                     expect(nodes.length).toBe(1);
                     expect(nodes[0]).toBe(expectedNode);
-                    done();
                 });
 
                 component.chosenNode = [expectedNode];
@@ -288,16 +284,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should show the breadcrumb for the currentFolderId by default', (done) => {
+            it('should show the breadcrumb for the currentFolderId by default', async () => {
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb).not.toBeNull();
-                    expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
-                    done();
-                });
+                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                expect(breadcrumb).not.toBeNull();
+                expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
+
             });
 
             it('should not show the breadcrumb if search was performed as last action', async () => {
@@ -367,37 +361,31 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
             });
 
-            it('should keep breadcrumb folderNode unchanged if breadcrumbTransform is NOT defined', (done) => {
+            it('should keep breadcrumb folderNode unchanged if breadcrumbTransform is NOT defined', async () => {
                 fixture.detectChanges();
+                await fixture.whenStable();
+                expect(component.breadcrumbTransform).toBeNull();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(component.breadcrumbTransform).toBeNull();
-
-                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
-                    done();
-                });
+                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
             });
 
-            it('should make changes to breadcrumb folderNode if breadcrumbTransform is defined', (done) => {
+            it('should make changes to breadcrumb folderNode if breadcrumbTransform is defined', async () => {
                 const transformedFolderNode = {
                     id: 'trans-node',
                     name: 'trans-node-name',
                     path: { elements: [{ id: 'testId', name: 'testName' }] }
                 };
                 component.breadcrumbTransform = (() => transformedFolderNode);
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(component.breadcrumbTransform).not.toBeNull();
+                expect(component.breadcrumbTransform).not.toBeNull();
 
-                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb.componentInstance.route[0].name).toBe('testName');
-                    expect(breadcrumb.componentInstance.route[0].id).toBe('testId');
-                    done();
-                });
+                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                expect(breadcrumb.componentInstance.route[0].name).toBe('testName');
+                expect(breadcrumb.componentInstance.route[0].id).toBe('testId');
             });
         });
 
@@ -830,9 +818,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.getSelectedCount()).toBe(0);
             });
 
-            it('should not render component input if `showNodeCounter` is false', () => {
+            it('should not render component input if `showNodeCounter` is false', async () => {
                 component.showNodeCounter = false;
                 fixture.detectChanges();
+                await fixture.whenStable();
                 expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
             });
         });

@@ -66,15 +66,15 @@ describe('LanguageMenuComponent', () => {
         fixture.destroy();
     });
 
-    it('should fetch the languages from the app config if present', async (done) => {
+    it('should fetch the languages from the app config if present', (done) => {
         languageService.setLanguages(languages);
 
         fixture.detectChanges();
-        await fixture.whenStable();
-
-        component.languages$.subscribe(langs => {
-            expect(langs).toEqual(languages);
-            done();
+        fixture.whenStable().then(() => {
+            component.languages$.subscribe(langs => {
+                expect(langs).toEqual(languages);
+                done();
+            });
         });
     });
 

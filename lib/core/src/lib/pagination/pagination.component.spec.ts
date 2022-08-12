@@ -61,12 +61,11 @@ describe('PaginationComponent', () => {
         fixture.destroy();
     });
 
-    it('should have an "empty" class if no items present', async (done) => {
+    it('should have an "empty" class if no items present', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
-        done();
     });
 
     describe('Single page', () => {
