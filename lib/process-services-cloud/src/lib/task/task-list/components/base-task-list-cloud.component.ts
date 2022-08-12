@@ -119,7 +119,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     selectedInstances: any[];
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
-    isPreferencesLoaded = false;
+
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
@@ -154,7 +154,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             this.formatSorting(changes['sorting'].currentValue);
         }
         this.reload();
-        this.getPreferences();
     }
 
     ngOnDestroy() {
@@ -163,12 +162,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     ngAfterContentInit() {
-        this.getPreferences();
-    }
-
-    getPreferences() {
-        if (this.appName && !this.isPreferencesLoaded) {
-            this.isPreferencesLoaded = true;
+        if (this.appName) {
             this.cloudPreferenceService.getPreferences(this.appName).pipe(
                 take(1),
                 map((preferences => {
@@ -180,8 +174,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
                         columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
                         columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
                     };
-                }),
-                takeUntil(this.onDestroy$))
+                }))
             ).subscribe(({ columnsOrder, columnsVisibility }) => {
                     if (columnsOrder) {
                         this.columnsOrder = columnsOrder;
