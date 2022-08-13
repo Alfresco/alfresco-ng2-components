@@ -76,7 +76,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         const params = options.queryParams ? new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) }) : {};
         const isFormType = contentType === 'application/x-www-form-urlencoded';
 
-        const body = isFormData ? this.convertToFormData(options.formParams) : isFormType ? new HttpParams({ fromObject: this.removeUndefinedValues(options.formParams) }) : options.bodyParam;
+        const body = isFormData
+            ? this.convertToFormData(options.formParams)
+            : isFormType
+                ? new HttpParams({ fromObject: this.removeUndefinedValues(options.formParams) })
+                : options.bodyParam;
 
         const headers = new HttpHeaders(optionsHeaders);
 
@@ -240,7 +244,14 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             return new returnType(response.body);
         }
 
-        return response.body;
+        // for backwards compatibility we need to return empty string instead of null,
+        // to avoid issues when accessing response values would break application [C309878]
+        /*
+            return this.post(apiUrl, saveFormRepresentation).pipe(
+                map((res: any) => res.entry)
+            );
+        */
+        return response.body !== null ? response.body : '';
     }
 
     private static deserializeBlobResponse<T>(response: HttpResponse<T>) {
