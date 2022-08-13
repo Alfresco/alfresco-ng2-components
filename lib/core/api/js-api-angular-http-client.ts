@@ -246,7 +246,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     private static deserializeBlobResponse<T>(response: HttpResponse<T>) {
 
         if (isBrowser()) {
-            return new Blob([response.body], { type: response.headers['content-type'] });
+            return new Blob([response.body], { type: response.headers.get('Content-Type') });
         }
 
         return new Buffer.from(response.body, 'binary');

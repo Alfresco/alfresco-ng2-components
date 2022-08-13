@@ -80,7 +80,11 @@ export class AuthBearerInterceptor implements HttpInterceptor {
         return headers.delete('Content-Type');
     }
 
-    return headers.set('Content-Type', 'application/json;charset=UTF-8');
+    if (!headers.get('Content-Type')) {
+        return headers.set('Content-Type', 'application/json;charset=UTF-8');
+    }
+
+    return headers;
   }
 
 }
