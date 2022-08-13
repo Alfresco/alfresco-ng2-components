@@ -63,7 +63,7 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 
 @NgModule({
@@ -103,7 +103,12 @@ import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
         BlankPageModule,
         LegacyApiClientModule,
         AlfrescoJsClientsModule,
-        RichTextEditorModule
+        RichTextEditorModule,
+        HttpClientModule,
+        HttpClientXsrfModule.withOptions({
+            cookieName: 'CSRF-TOKEN',
+            headerName: 'X-CSRF-TOKEN'
+        })
     ],
     exports: [
         AboutModule,

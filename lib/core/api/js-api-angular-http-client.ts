@@ -96,7 +96,6 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, globalEmitter, options.returnType);
     }
 
-
     private convertToFormData(formParams: {[key: string]: any}): FormData {
 
         const formData = new FormData();
@@ -188,7 +187,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
                 if (isHttpResponseEvent(res)) {
                     emitter.emit('success', res.body);
-                    return JsApiAngularHttpClient.deserialize(res.body, returnType);
+                    return JsApiAngularHttpClient.deserialize(res, returnType);
                 }
 
                 return res;
@@ -229,27 +228,27 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     /**
      * Deserialize an HTTP response body into a value of the specified type.
      */
-     private static deserialize(response: any, returnType?: any): any {
+     private static deserialize<T>(response: HttpResponse<T>, returnType?: any): any {
 
-        if (response && returnType) {
+        if (response.body && returnType) {
             if (returnType === 'blob') {
                 return JsApiAngularHttpClient.deserializeBlobResponse(response);
-            } else if (Array.isArray(response)) {
-                return response.map((element) => new returnType(element));
+            } else if (Array.isArray(response.body)) {
+                return response.body.map((element) => new returnType(element));
             }
 
-            return new returnType(response);
+            return new returnType(response.body);
         }
 
-        return response;
+        return response.body;
     }
 
-    private static deserializeBlobResponse(response: any) {
+    private static deserializeBlobResponse<T>(response: HttpResponse<T>) {
 
         if (isBrowser()) {
-            return new Blob([response], { type: response.header['content-type'] });
+            return new Blob([response.body], { type: response.headers['content-type'] });
         }
 
-        return new Buffer.from(response, 'binary');
+        return new Buffer.from(response.body, 'binary');
     }
 }
