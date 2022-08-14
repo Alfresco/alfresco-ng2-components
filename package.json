@@ -115,7 +115,7 @@
     "@angular-devkit/schematics": "13.3.9",
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
-    "@angular-eslint/eslint-plugin-template": "1.2.0",
+    "@angular-eslint/eslint-plugin-template": "14.0.2",
     "@angular-eslint/schematics": "1.2.0",
     "@angular-eslint/template-parser": "^13.1.0",
     "@angular/cli": "13.3.9",
