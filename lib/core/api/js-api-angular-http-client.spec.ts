@@ -217,4 +217,42 @@ describe('JsApiAngularHttpClient', () => {
         req.flush(errorResponse, { status: 403, statusText: 'Forbidden' });
     });
 
+    it('should correctly handle queryParams with arrays', () => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'POST',
+            queryParams: {
+                skipCount: 0,
+                status: [
+                    'RUNNING',
+                    'SUSPENDED'
+                ],
+                sort: 'startDate,DESC'
+            }
+        };
+
+        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitter, emitter);
+
+        const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate,DESC');
+        expect(req.request.method).toEqual('POST');
+
+        req.flush(null, { status: 200, statusText: 'Ok' });
+    });
+
+    it('should convert null values to empty stirng for backward compatibility', (done) => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'GET'
+        };
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res) => {
+            expect(res).toEqual('');
+            done();
+        });
+
+        const req = controller.expectOne('http://example.com');
+
+        req.flush(null, { status: 200, statusText: 'Ok' });
+    });
+
 });

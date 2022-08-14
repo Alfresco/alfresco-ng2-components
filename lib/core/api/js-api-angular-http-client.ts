@@ -73,7 +73,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             ...((contentType) && { 'Content-Type': contentType })
         };
 
-        const params = options.queryParams ? new HttpParams({ fromObject: this.removeUndefinedValues(options.queryParams) }) : {};
+        const params = options.queryParams ? this.convertObjectToHttpParams(options.queryParams) : {};
         const isFormType = contentType === 'application/x-www-form-urlencoded';
 
         const body = isFormData
@@ -88,7 +88,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             options.httpMethod,
             url,
             {
-                body,
+                ...(body && { body }),
                 headers,
                 params,
                 ...(responseType ? { responseType } : {}),
@@ -98,6 +98,29 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         );
 
         return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, globalEmitter, options.returnType);
+    }
+
+    private convertObjectToHttpParams(obj: {[key: string]: any}): HttpParams {
+
+        let httpParams = new HttpParams();
+
+        const params = this.removeUndefinedValues(obj);
+
+        for (const key in params) {
+
+            if (Object.prototype.hasOwnProperty.call(params, key)) {
+                const value = params[key];
+                if (value instanceof Array) {
+                    httpParams = httpParams.appendAll({
+                        [key]: value
+                    });
+                } else {
+                    httpParams = httpParams.append(key, value);
+                }
+            }
+        }
+
+        return httpParams;
     }
 
     private convertToFormData(formParams: {[key: string]: any}): FormData {
@@ -145,19 +168,16 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     // Poor man's sanitizer
     private removeUndefinedValues(obj: {[key: string]: any}) {
-        const newObj = {};
 
-        if(obj) {
-            Object.keys(obj).forEach((key) => {
-                if (obj[key] === Object(obj[key])) {
-                    newObj[key] = this.removeUndefinedValues(obj[key]);
-                } else if (obj[key] !== undefined && obj[key] !== null) {
-                    newObj[key] = obj[key];
-                }
-            });
+        if(!obj) {
+            return {};
         }
 
-        return newObj;
+        return Object.keys(obj).reduce((acc, key) => {
+            const value = obj[key];
+            const isNil = value === undefined || value === null;
+            return isNil ? acc : { ...acc, [key]: value };
+        }, {});
     }
 
     private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
