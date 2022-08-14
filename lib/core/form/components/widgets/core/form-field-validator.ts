@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import moment from 'moment-es6';
+import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';

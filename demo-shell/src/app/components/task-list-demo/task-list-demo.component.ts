@@ -19,7 +19,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { Subject } from 'rxjs';
 
 const DEFAULT_SIZE = 20;

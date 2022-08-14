@@ -23,9 +23,9 @@ import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { CardViewSelectItemModel } from 'core/card-view/models/card-view-selectitem.model';
+import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { of } from 'rxjs';
-import { CardViewSelectItemOption } from 'core/card-view/interfaces/card-view-selectitem-properties.interface';
+import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
 
 describe('CardViewComponent', () => {
 

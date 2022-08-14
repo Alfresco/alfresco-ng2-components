@@ -50,7 +50,7 @@ for PACKAGE in ${projects[@]}
 do
 echo "@alfresco/$PACKAGE"
 
-    for VERSION_TO_DEPRECATE in $(npm view "@alfresco/$PACKAGE" versions --json | jq -r '.[] | select( . | contains("-")) | select( . | contains("'$VERSION'"))')
+    for VERSION_TO_DEPRECATE in $(npm view "@alfresco/$PACKAGE" versions --json | jq -r '.[] | select( . | match("-[0-9].*$") ) | select( . | contains("'$VERSION'"))')
     do
         deprecated=$(npm view "@alfresco/$PACKAGE@$VERSION_TO_DEPRECATE" -json | jq '.deprecated')
 

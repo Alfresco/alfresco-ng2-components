@@ -5,6 +5,6 @@
 
   },
 
-  "exclude": ["../**/*.spec.ts" ],
-  "include": ["../src/**/*", "*.js"]
+  "exclude": ["../**/*.spec.ts", "../../core/**/*.spec.ts", "../../content-services/**/*.spec.ts", "../../process-services-cloud/**/*.spec.ts"  ],
+  "include": ["../src/**/*", "*.js", "../../core/**/*", "../../content-services/**/*", "../../process-services-cloud/**/*"]
 }

@@ -18,15 +18,15 @@
 import { MinimalNode } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, CardViewUpdateService, NodesApiService, setupTestBed } from 'core';
+import { AlfrescoApiService, CardViewUpdateService, NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { AspectListService } from './aspect-list.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
+import { DialogAspectListService } from './dialog-aspect-list.service';
 
 describe('NodeAspectService', () => {
 
-    let aspectListService: AspectListService;
+    let dialogAspectListService: DialogAspectListService;
     let nodeAspectService: NodeAspectService;
     let nodeApiService: NodesApiService;
     let alfrescoApiService: AlfrescoApiService;
@@ -40,7 +40,7 @@ describe('NodeAspectService', () => {
     });
 
     beforeEach(() => {
-        aspectListService = TestBed.inject(AspectListService);
+        dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
         nodeApiService = TestBed.inject(NodesApiService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -48,15 +48,15 @@ describe('NodeAspectService', () => {
     });
 
     it('should open the aspect list dialog', () => {
-        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of([]));
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
-        expect(aspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
+        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
     });
 
     it('should update the node when the aspect dialog apply the changes', () => {
         const expectedParameters = { aspectNames: ['a', 'b', 'c'] };
-        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
         expect(nodeApiService.updateNode).toHaveBeenCalledWith('fake-node-id', expectedParameters);
@@ -69,7 +69,7 @@ describe('NodeAspectService', () => {
             done();
         });
         const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
-        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
     });
@@ -81,7 +81,7 @@ describe('NodeAspectService', () => {
             done();
         });
         const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
-        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
     });

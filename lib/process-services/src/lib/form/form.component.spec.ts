@@ -15,14 +15,24 @@
  * limitations under the License.
  */
 
-import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component, ViewChild, DebugElement } from '@angular/core';
+import {
+    SimpleChange,
+    ComponentFactoryResolver,
+    Injector,
+    NgModule,
+    Component,
+    ViewChild,
+    DebugElement
+} from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
+import {
+    FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
     setupTestBed,
-    NodeMetadata } from '@alfresco/adf-core';
+    NodeMetadata
+} from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -42,7 +52,7 @@ describe('FormComponent', () => {
         selector: 'adf-custom-widget',
         template: '<div></div>'
     })
-    // eslint-disable-next-line @angular-eslint/component-class-suffix
+        // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }
@@ -51,7 +61,8 @@ describe('FormComponent', () => {
         declarations: [CustomWidget],
         exports: [CustomWidget]
     })
-    class CustomUploadModule {}
+    class CustomUploadModule {
+    }
 
     setupTestBed({
         imports: [
@@ -777,6 +788,7 @@ describe('FormComponent', () => {
 
         const containerModel = new ContainerModel(field);
         formModel.fields.push(containerModel);
+        formModel.fieldsCache = [field];
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
@@ -893,6 +905,7 @@ describe('FormComponent', () => {
 
         const containerModel = new ContainerModel(field);
         formModel.fields.push(containerModel);
+        formModel.fieldsCache = [field];
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
@@ -994,16 +1007,16 @@ describe('FormComponent', () => {
 @Component({
     selector: 'adf-form-with-custom-outcomes',
     template: `
-    <adf-form #adfForm>
-        <adf-form-custom-outcomes>
-            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
-            CUSTOM-BUTTON-1
-            </button>
-            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
-                CUSTOM-BUTTON-2
-            </button>
-        </adf-form-custom-outcomes>
-    </adf-form>`
+        <adf-form #adfForm>
+            <adf-form-custom-outcomes>
+                <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
+                    CUSTOM-BUTTON-1
+                </button>
+                <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
+                    CUSTOM-BUTTON-2
+                </button>
+            </adf-form-custom-outcomes>
+        </adf-form>`
 })
 
 class FormWithCustomOutComesComponent {
@@ -1011,8 +1024,11 @@ class FormWithCustomOutComesComponent {
     @ViewChild('adfForm', { static: true })
     adfForm: FormComponent;
 
-    onCustomButtonOneClick() { }
-    onCustomButtonTwoClick() { }
+    onCustomButtonOneClick() {
+    }
+
+    onCustomButtonTwoClick() {
+    }
 }
 
 describe('FormWithCustomOutComesComponent', () => {

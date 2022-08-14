@@ -182,6 +182,6 @@ describe('Notification History Component', () => {
                 expect(notifications.length).toBe(6);
                 done();
             });
-        });
+        }, 45000);
     });
 });

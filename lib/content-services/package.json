@@ -1,9 +1,8 @@
 {
   "name": "@alfresco/adf-content-services",
   "description": "Alfresco ADF content services",
-  "version": "4.11.0",
+  "version": "5.0.0-angular.13.2",
   "author": "Alfresco Software, Ltd.",
-  "main": "bundles/adf-content-services.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -12,18 +11,21 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "peerDependencies": {
-    "@angular/animations": ">=10.0.2",
-    "@angular/cdk": ">=10.0.1",
-    "@angular/common": ">10.0.2",
-    "@angular/core": ">=10.0.2",
-    "@angular/flex-layout": ">=10.0.0-beta.32",
-    "@angular/forms": ">=10.0.2",
-    "@angular/material": ">=10.0.1",
-    "@angular/router": ">=10.0.2",
-    "@alfresco/js-api": "4.12.0-197",
-    "@alfresco/adf-core": "4.11.0",
+    "@angular/animations": ">=13.3.11",
+    "@angular/cdk": ">=13.3.9",
+    "@angular/common": ">=13.3.11",
+    "@angular/compiler": ">=13.3.11",
+    "@angular/core": ">=13.3.11",
+    "@angular/flex-layout": ">=13.0.0-beta.38",
+    "@angular/forms": ">=13.3.11",
+    "@angular/material": ">=13.3.9",
+    "@angular/platform-browser": ">=13.3.11",
+    "@angular/platform-browser-dynamic": ">=13.3.11",
+    "@angular/router": ">=13.3.11",
+    "@alfresco/js-api": "4.12.0-244",
     "@ngx-translate/core": ">=13.0.0",
-    "moment": ">=2.22.2"
+    "moment": ">=2.22.2",
+    "@alfresco/adf-core": "5.0.0-angular.13.2"
   },
   "keywords": [
     "content-services",

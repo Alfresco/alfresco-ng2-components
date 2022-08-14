@@ -51,18 +51,41 @@ describe('PeopleCloudWidgetComponent', () => {
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockShepherdsPie);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should preselect the current user', () => {
-        widget.field = new FormFieldModel(new FormModel(), { value: null, selectLoggedUser: true });
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.PEOPLE,
+            value: null,
+            selectLoggedUser: true
+        });
         fixture.detectChanges();
         expect(widget.preSelectUsers).toEqual([mockShepherdsPie]);
         expect(identityUserService.getCurrentUserInfo).toHaveBeenCalled();
     });
 
     it('should not preselect the current user if value exist', () => {
-        widget.field = new FormFieldModel(new FormModel(), { value: [mockYorkshirePudding], selectLoggedUser: true });
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.PEOPLE,
+            value: [mockYorkshirePudding],
+            selectLoggedUser: true
+        });
         fixture.detectChanges();
         expect(widget.preSelectUsers).toEqual([mockYorkshirePudding]);
         expect(identityUserService.getCurrentUserInfo).not.toHaveBeenCalled();
+    });
+
+    it('should have enabled validation if field is NOT readOnly', () => {
+        const readOnly = false;
+        widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            type: FormFieldTypes.PEOPLE,
+            value: []
+        });
+        fixture.detectChanges();
+
+        expect(widget.validate).toBeTruthy();
     });
 
     describe('when is required', () => {
@@ -102,6 +125,8 @@ describe('PeopleCloudWidgetComponent', () => {
 
     describe('when is readOnly', () => {
 
+        const readOnly = true;
+
         it('should single chip be disabled', async () => {
             const mockSpaghetti: IdentityUserModel[] = [{
                 id: 'bolognese',
@@ -109,8 +134,8 @@ describe('PeopleCloudWidgetComponent', () => {
                 email: 'bolognese@example.com'
             }];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
-                type: FormFieldTypes.GROUP,
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+                type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
 
@@ -123,8 +148,8 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledGroupChip: HTMLElement = element.querySelector('.mat-chip-disabled');
-            expect(disabledGroupChip).toBeTruthy();
+            const disabledPeopleChip: HTMLElement = element.querySelector('.mat-chip-disabled');
+            expect(disabledPeopleChip).toBeTruthy();
         });
 
         it('should multi chips be disabled', async () => {
@@ -133,8 +158,8 @@ describe('PeopleCloudWidgetComponent', () => {
                 { id: 'carbonara', username: 'Carbonara', email: 'carbonara@example.com' }
             ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, true), {
-                type: FormFieldTypes.GROUP,
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+                type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
 
@@ -147,9 +172,19 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
-            expect(disabledGroupChips.item(0)).toBeTruthy();
-            expect(disabledGroupChips.item(1)).toBeTruthy();
+            const disabledPeopleChips = element.querySelectorAll('.mat-chip-disabled');
+            expect(disabledPeopleChips.item(0)).toBeTruthy();
+            expect(disabledPeopleChips.item(1)).toBeTruthy();
+        });
+
+        it('should have disabled validation', () => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+                type: FormFieldTypes.PEOPLE,
+                value: []
+            });
+            fixture.detectChanges();
+
+            expect(widget.validate).toBeFalsy();
         });
     });
 

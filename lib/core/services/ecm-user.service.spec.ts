@@ -49,7 +49,7 @@ describe('EcmUserService', () => {
         });
 
         it('should be able to retrieve current user info', (done) => {
-            spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));
+            spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser } as any));
             service.getCurrentUserInfo().subscribe(
                 (user) => {
                     expect(user).toBeDefined();

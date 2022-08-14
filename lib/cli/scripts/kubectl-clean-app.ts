@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import * as program from 'commander';
-import moment from 'moment-es6';
+import program from 'commander';
+import moment from 'moment';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { logger } from './logger';
 import * as kube from './kube-utils';
@@ -192,13 +192,16 @@ const main = async (args: ConfigArgs) => {
             'adf-cli kubectl-clean-app --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --oauth "identity_env" --username "username" --password "password"')
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
-        .option('--clientId[type]', 'sso client')
+        .option('--clusterEnv [type]', 'cluster Envirorment')
+        .option('--clusterUrl [type]', 'cluster URL')
+        .option('--clientId [type]', 'sso client')
         .option('--devopsUsername [type]', 'username of user with ACTIVITI_DEVOPS role')
         .option('--devopsPassword [type]', 'password of user with ACTIVITI_DEVOPS role')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
         .option('--rancherUsername [type]', 'rancher username')
-        .option('--rancherPassword [type]', 'rancher password')
+        .option('--rancherToken [type]', 'rancher token')
+        .option('--apps [type]', 'Application prefix')
         .option('--enableLike [boolean]', 'Enable the like for app name')
         .option('--intervalTime [string]', 'In case of enableLike it specify the time related to the createDate')
         .parse(process.argv);

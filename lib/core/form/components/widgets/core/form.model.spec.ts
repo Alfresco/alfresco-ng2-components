@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { cloudFormMock, fakeMetadataForm, fakeViewerForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
+import { cloudFormMock, fakeMetadataForm, fakeViewerForm } from '../../mock/form.mock';
 import { Node } from '@alfresco/js-api';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { AlfrescoApiService } from '../../../../services';
@@ -319,7 +319,7 @@ describe('FormModel', () => {
     });
 
     it('should validate fields when form validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel(fakeMetadataForm, null, false, formService);
 
         let validated = false;
 
@@ -328,7 +328,7 @@ describe('FormModel', () => {
         });
 
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
-        spyOn(form, 'getFormFields').and.returnValue([field]);
+        form.fieldsCache = [field];
 
         form.validateForm();
 
@@ -391,12 +391,10 @@ describe('FormModel', () => {
     });
 
     it('should get field by id', () => {
-        const form = new FormModel({}, null, false, formService);
-        const field: any = { id: 'field1' };
-        spyOn(form, 'getFormFields').and.returnValue([field]);
+        const form = new FormModel(fakeMetadataForm, null, false, formService);
 
-        const result = form.getFieldById('field1');
-        expect(result).toBe(field);
+        const result = form.getFieldById('pfx_property_three');
+        expect(result.id).toBe('pfx_property_three');
     });
 
     it('should use custom field validator', () => {
@@ -405,7 +403,7 @@ describe('FormModel', () => {
             id: 'test-field-1'
         });
 
-        spyOn(form, 'getFormFields').and.returnValue([testField]);
+        form.fieldsCache = [testField];
 
         const validator = {
             isSupported: (): boolean => true,

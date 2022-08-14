@@ -6,7 +6,11 @@
     "./theming/**/*.scss",
     "./**/*.theme.scss"
   ],
-  "whitelistedNonPeerDependencies": [
+  "lib": {
+    "entryFile": "./public-api.ts",
+    "flatModuleFile": "adf-core"
+  },
+  "allowedNonPeerDependencies": [
     "cropperjs",
     "@editorjs/editorjs",
     "@editorjs/code",
@@ -19,32 +23,5 @@
     "editorjs-text-color-plugin",
     "editorjs-html",
     "editorjs-paragraph-with-alignment"
-  ],
-  "lib": {
-    "entryFile": "./public-api.ts",
-    "flatModuleFile": "adf-core",
-    "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api",
-      "@alfresco/adf-extensions": "@alfresco/adf-extensions",
-      "minimatch": "minimatch-browser",
-      "@mat-datetimepicker/core": "@mat-datetimepicker/core",
-      "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
-      "moment": "moment",
-      "moment-es6": "moment-es6",
-      "moment/src/moment": "moment/src/moment",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "cropperjs": "cropperjs",
-      "@editorjs/editorjs": "@editorjs/editorjs",
-      "@editorjs/code": "@editorjs/code",
-      "@editorjs/header": "@editorjs/header",
-      "@editorjs/inline-code": "@editorjs/inline-code",
-      "@editorjs/list": "@editorjs/list",
-      "@editorjs/marker": "@editorjs/marker",
-      "@editorjs/underline": "@editorjs/underline",
-      "@quanzo/change-font-size": "@quanzo/change-font-size",
-      "editorjs-text-color-plugin": "editorjs-text-color-plugin",
-      "editorjs-html": "editorjs-html",
-      "editorjs-paragraph-with-alignment": "editorjs-paragraph-with-alignment"
-    }
-  }
+  ]
 }

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2022 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,55 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '../models/comment.model';
-import { UserProcessModel } from '../models/user-process.model';
+import { Injectable } from '@angular/core';
+import { Observable, from, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CommentModel, UserProcessModel } from '../models';
+import { CommentProcessServiceInterface } from '../services/comment-process.service.interface';
+import { testUser, fakeUser1 } from '../mock/comment-content.mock';
 
-export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+@Injectable()
+export class CommentProcessServiceMock implements CommentProcessServiceInterface {
+    private comments: CommentModel [] = [];
 
-export const fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
+    addTaskComment(taskId: string, message: string): Observable<CommentModel> {
+        const comment = new CommentModel({
+            id: taskId,
+            message: message,
+            created: new Date(),
+            createdBy: testUser,
+            isSelected: false
+        });
+        this.comments.push(comment);
 
-export const fakeTasksComment = {
-    size: 2, total: 2, start: 0,
-    data: [
-        {
-            id: 1, message: 'fake-message-1', created: '', createdBy: fakeUser1
-        },
-        {
-            id: 2, message: 'fake-message-2', created: '', createdBy: fakeUser1
-        }
-    ]
-};
+        return of(comment);
+    }
 
-export const fakeProcessComment = new CommentModel({id: 1, message: 'Test', created: new Date('2016-11-10T03:37:30.010+0000'), createdBy: new UserProcessModel({
-    id: 13,
-    firstName: 'Wilbur',
-    lastName: 'Adams',
-    email: 'wilbur@app.com'
-})});
+    getTaskComments(_taskId: string): Observable<CommentModel[]> {
+        return of(this.comments);
+    }
+
+    getProcessInstanceComments(_processInstanceId: string): Observable<CommentModel[]> {
+        const user = new UserProcessModel(fakeUser1);
+
+        this.comments.push(new CommentModel({
+            id: 46,
+            message: 'Hello from Process Model',
+            created: new Date('2022-08-02T03:37:30.010+0000'),
+            createdBy: user
+        }));
+
+        return of(this.comments);
+    }
+
+    addProcessInstanceComment(_processInstanceId: string, _message: string): Observable<CommentModel> {
+        return from(this.comments).pipe(
+            map((response) => new CommentModel({
+                id: response.id,
+                message: response.message,
+                created: response.created,
+                createdBy: response.createdBy
+            }))
+        );
+    }
+}

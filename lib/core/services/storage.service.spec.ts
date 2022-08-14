@@ -58,9 +58,8 @@ describe('StorageService', () => {
         });
 
         it('should set a property with the prefix in the local storage', (done) => {
-            storage.clear();
-
             appConfig.load().then(() => {
+                storage.clear();
                 storage.setItem(key, value);
                 const storageKey = localStorage.key(0);
                 expect(storageKey).toBe('ADF_APP_' + key);

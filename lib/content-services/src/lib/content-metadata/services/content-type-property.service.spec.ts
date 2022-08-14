@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ContentTypePropertiesService } from './content-type-property.service';
-import { CardViewItem, CardViewSelectItemModel, CardViewTextItemModel, setupTestBed, VersionCompatibilityService } from 'core';
+import { CardViewItem, CardViewSelectItemModel, CardViewTextItemModel, setupTestBed, VersionCompatibilityService } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';

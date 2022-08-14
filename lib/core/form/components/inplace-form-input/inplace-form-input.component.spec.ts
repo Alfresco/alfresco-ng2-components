@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContentTestingModule } from 'content-services/src/lib/testing/content.testing.module';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
 
 describe('InplaceFormInputComponent', () => {
@@ -30,7 +30,7 @@ describe('InplaceFormInputComponent', () => {
         await TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                ContentTestingModule
+                CoreTestingModule
             ],
             declarations: [InplaceFormInputComponent]
         }).compileComponents();

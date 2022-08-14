@@ -1,11 +1,11 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 @import '../../lib/core/styles/index';
-@include mat-core($alfresco-typography);
+@include mat.core($alfresco-typography);
 
-$primary: mat-palette($alfresco-accent-orange);
-$accent: mat-palette($alfresco-accent-purple);
-$warn: mat-palette($alfresco-warn);
-$theme: mat-light-theme(
+$primary: mat.define-palette($alfresco-accent-orange);
+$accent: mat.define-palette($alfresco-accent-purple);
+$warn: mat.define-palette($alfresco-warn);
+$theme: mat.define-light-theme(
     (
         color: (
             primary: $primary,
@@ -14,7 +14,7 @@ $theme: mat-light-theme(
     )
 );
 
-@include angular-material-theme($theme);
+@include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
 
 body,
@@ -22,9 +22,9 @@ html {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-size: mat-font-size($alfresco-typography, body-1);
-    font-family: mat-font-family($alfresco-typography);
-    line-height: mat-line-height($alfresco-typography, body-1);
+    font-size: mat.font-size($alfresco-typography, body-1);
+    font-family: mat.font-family($alfresco-typography);
+    line-height: mat.line-height($alfresco-typography, body-1);
 }
 
 body {

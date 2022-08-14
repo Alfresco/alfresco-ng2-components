@@ -25,7 +25,7 @@ import {
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './../config/task-list-cloud.config';
-import moment = require('moment');
+import * as moment from 'moment';
 import { taskFilterConfiguration } from './../config/task-filter.config';
 
 describe('Edit task filters and task list properties', () => {

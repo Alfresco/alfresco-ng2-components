@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
-import moment from 'moment-es6';
+import moment from 'moment';
 
 describe('Date Range Filter service', () => {
 

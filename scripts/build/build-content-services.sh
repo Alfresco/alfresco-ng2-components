@@ -5,15 +5,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../..
 
 echo "====== Content Services ======"
-echo "====== Build ======"
-
-if [ "$CI" = "true" ]; then
-    echo "Building content-services for production"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build content-services --configuration production || exit 1
-else
-    echo "Building content-services for development"
-    NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx build content-services || exit 1
-fi
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/content-services/bundles/assets/adf-content-services/i18n

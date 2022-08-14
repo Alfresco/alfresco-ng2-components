@@ -26,6 +26,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from './../../../search/search-query-servi
 import { DocumentListComponent } from './../document-list.component';
 import { FilterHeaderComponent } from './filter-header.component';
 import { Pagination } from '@alfresco/js-api';
+import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 
 describe('FilterHeaderComponent', () => {
     let fixture: ComponentFixture<FilterHeaderComponent>;
@@ -52,6 +53,7 @@ describe('FilterHeaderComponent', () => {
             ContentTestingModule
         ],
         providers: [
+            { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
             { provide: SearchService, useValue: searchMock },
             { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService },
             { provide: DocumentListComponent, useValue: documentListMock },
@@ -121,7 +123,7 @@ describe('FilterHeaderComponent', () => {
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
 
-        const initialFilterValue = { name: 'pinocchio'};
+        const initialFilterValue = { name: 'pinocchio' };
         component.value = initialFilterValue;
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
         component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });

@@ -17,7 +17,7 @@
 
 import { $$, $ } from 'protractor';
 import { BrowserVisibility, TogglePage, BrowserActions, DateTimePickerPage } from '@alfresco/adf-testing';
-import moment = require('moment');
+import * as moment from 'moment';
 
 export class ShareDialogPage {
 

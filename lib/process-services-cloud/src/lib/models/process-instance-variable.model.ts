@@ -22,6 +22,7 @@ export type WithVariablesMap<T> = T & {
 export interface ProcessInstanceVariable  {
     id: number;
     variableDefinitionId: string;
+    processDefinitionKey: string;
     value: string;
     appName: string;
     createTime: string;

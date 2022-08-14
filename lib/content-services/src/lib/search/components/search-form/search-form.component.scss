@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
 .adf-search-form {
     &.mat-button {
@@ -37,7 +37,7 @@
     }
 
     &-menu + * .mat-menu-panel {
-        @include mat-elevation(2);
+        @include mat.elevation(2);
 
         border-radius: 6px;
 

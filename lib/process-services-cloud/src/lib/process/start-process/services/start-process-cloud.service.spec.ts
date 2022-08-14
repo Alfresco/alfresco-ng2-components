@@ -164,7 +164,7 @@ describe('StartProcessCloudService', () => {
         oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
         spyOn(alfrescoApiService, 'getInstance').and.returnValue({
             oauth2Auth
-        });
+        } as any);
 
         service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).subscribe((result) => {
             expect(result.length).toEqual(3);

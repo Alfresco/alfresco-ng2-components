@@ -74,7 +74,7 @@ export function oAuthMockApiWithIdentityUsers(users: IdentityUserModel[]) {
             callCustomApi: () => Promise.resolve(users)
         },
         reply: jasmine.createSpy('reply')
-    };
+    } as any;
 }
 
 const errorResponse = new HttpErrorResponse({
@@ -87,4 +87,4 @@ export const oAuthMockApiWithError = {
         callCustomApi: () => throwError(errorResponse)
     },
     reply: jasmine.createSpy('reply')
-};
+} as any;

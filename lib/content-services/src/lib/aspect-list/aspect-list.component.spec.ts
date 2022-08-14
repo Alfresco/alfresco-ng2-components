@@ -20,7 +20,7 @@ import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';
-import { AspectListService } from './aspect-list.service';
+import { AspectListService } from './services/aspect-list.service';
 import { of } from 'rxjs';
 import { AspectEntry } from '@alfresco/js-api';
 import { delay } from 'rxjs/operators';

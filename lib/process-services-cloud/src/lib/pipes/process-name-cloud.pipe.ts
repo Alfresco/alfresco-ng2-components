@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import moment from 'moment-es6';
+import moment from 'moment';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../process/start-process/models/process-instance-cloud.model';
 

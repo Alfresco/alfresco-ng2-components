@@ -101,27 +101,15 @@ export class ContextMenuOverlayService {
             } as any)
         };
 
-        const positionStrategy = this.overlay.position()
-            .connectedTo(
-                new ElementRef(fakeElement),
-                { originX: 'start', originY: 'bottom' },
-                { overlayX: 'start', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'top' },
-                { overlayX: 'start', overlayY: 'bottom' })
-            .withFallbackPosition(
-                { originX: 'end', originY: 'top' },
-                { overlayX: 'start', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'top' },
-                { overlayX: 'end', overlayY: 'top' })
-            .withFallbackPosition(
-                { originX: 'end', originY: 'center' },
-                { overlayX: 'start', overlayY: 'center' })
-            .withFallbackPosition(
-                { originX: 'start', originY: 'center' },
-                { overlayX: 'end', overlayY: 'center' }
-            );
+        const positionStrategy = this.overlay
+            .position()
+            .flexibleConnectedTo(new ElementRef(fakeElement))
+            .withPositions([{
+                originX: 'start',
+                originY: 'bottom',
+                overlayX: 'start',
+                overlayY: 'top'
+            }]);
 
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,
