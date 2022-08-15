@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-if [[ $TRAVIS_EVENT_TYPE == "pull_request"  ]] || [[ $TRAVIS_EVENT_TYPE == "cron" ]] || [[ $TRAVIS_EVENT_TYPE == "api" ]]
+if [[ $TRAVIS_EVENT_TYPE == "push"  ]] || [[ $TRAVIS_EVENT_TYPE == "cron" ]] || [[ $TRAVIS_EVENT_TYPE == "api" ]]
 then
 
     if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]
