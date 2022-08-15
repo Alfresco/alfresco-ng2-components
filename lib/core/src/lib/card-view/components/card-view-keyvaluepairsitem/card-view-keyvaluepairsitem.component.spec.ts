@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
@@ -125,7 +125,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             expect(component.property.value.length).toBe(0);
         });
 
-        it('should update property on input blur', fakeAsync(() => {
+        it('should update property on input blur', waitForAsync(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
             fixture.detectChanges();
@@ -153,7 +153,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             });
         }));
 
-        it('should not update property if at least one input is empty on blur', fakeAsync(() => {
+        it('should not update property if at least one input is empty on blur', waitForAsync(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
             fixture.detectChanges();
