@@ -50,7 +50,6 @@ branches:
   - master
   - develop
 #remove after upgrade
-  - angular-upgrade-v13
   - angular-14-rebase
   - /.*old-env.*/
   - /.*next-release.*/
@@ -68,9 +67,9 @@ stages:
   - name: "Build Demo shell"
     if: tag IS blank
   - name: "Unit test Lib"
-    if: type = pull_request || (type = cron || type = api) || branch = "angular-upgrade-v13"
+    if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
-    if: type = pull_request || (type = cron || type = api) || branch = "angular-upgrade-v13"
+    if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch =~ /^master(-patch.*)?$/
   - name: "Deprecate develop builds"
