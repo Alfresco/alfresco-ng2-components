@@ -88,14 +88,13 @@ describe('FolderActionsService', () => {
         expect(service.getHandler('delete')).toBeDefined();
     });
 
-    it('should not delete the folder node if there are no permissions', (done) => {
+    it('should not delete the folder node if there are no permissions', async () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
-        service.permissionEvent.subscribe((permission) => {
+        await service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
             expect(permission.type).toEqual('folder');
             expect(permission.action).toEqual('delete');
-            done();
         });
 
         const folder = new FolderNode();
@@ -118,17 +117,16 @@ describe('FolderActionsService', () => {
         expect(deleteObservable.subscribe).toBeDefined();
     });
 
-    it('should not delete the folder node if there is no delete permission', (done) => {
+    it('should not delete the folder node if there is no delete permission', async () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
             observer.next();
             observer.complete();
         }));
 
-        service.permissionEvent.subscribe((permission) => {
+        await service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
             expect(permission.type).toEqual('folder');
             expect(permission.action).toEqual('delete');
-            done();
         });
 
         const folder = new FolderNode();
@@ -137,7 +135,7 @@ describe('FolderActionsService', () => {
         service.getHandler('delete')(folderWithPermission);
     });
 
-    it('should call the error on the returned Observable if there is no delete permission', (done) => {
+    it('should call the error on the returned Observable if there is no delete permission', async () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
             observer.next();
             observer.complete();
@@ -148,10 +146,9 @@ describe('FolderActionsService', () => {
         folderWithPermission.entry.allowableOperations = ['create', 'update'];
         const deleteObservable = service.getHandler('delete')(folderWithPermission);
 
-        deleteObservable.subscribe({
+        await deleteObservable.subscribe({
             error: (error) => {
                 expect(error.message).toEqual('No permission to delete');
-                done();
             }
         });
    });
@@ -202,7 +199,7 @@ describe('FolderActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should reload target upon node deletion', (done) => {
+    it('should reload target upon node deletion', async () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
             observer.next();
             observer.complete();
@@ -216,23 +213,21 @@ describe('FolderActionsService', () => {
 
         const deleteHandler = service.getHandler('delete')(folderWithPermission, target, permission);
 
-        deleteHandler.subscribe(() => {
+        await deleteHandler.subscribe(() => {
             expect(target.reload).toHaveBeenCalled();
-            done();
         });
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
     });
 
-    it('should emit success event upon node deletion', (done) => {
+    it('should emit success event upon node deletion', async () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => new Observable<any>((observer) => {
             observer.next();
             observer.complete();
         }));
 
-        service.success.subscribe((nodeId) => {
+        await service.success.subscribe((nodeId) => {
             expect(nodeId).not.toBeNull();
-            done();
         });
 
         const permission = 'delete';

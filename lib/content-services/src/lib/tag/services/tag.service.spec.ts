@@ -48,10 +48,9 @@ describe('TagService', () => {
 
     describe('Content tests', () => {
 
-        it('getTagsByNodeId catch errors call', (done) => {
-            service.getTagsByNodeId('fake-node-id').subscribe(() => {
-            }, () => {
-                done();
+        it('getTagsByNodeId catch errors call', async () => {
+            await service.getTagsByNodeId('fake-node-id').subscribe((res) => {
+                expect(res).toEqual({});
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -59,9 +58,9 @@ describe('TagService', () => {
             });
         });
 
-        it('delete tag should trigger a refresh event', (done) => {
-            service.refresh.subscribe(() => {
-                done();
+        it('delete tag should trigger a refresh event', async () => {
+            await service.refresh.subscribe((res) => {
+                expect(res).toBeDefined();
             });
 
             service.removeTag('fake-node-id', 'fake-tag');
@@ -71,9 +70,9 @@ describe('TagService', () => {
             });
         });
 
-        it('add tag should trigger a refresh event', (done) => {
-            service.refresh.subscribe(() => {
-                done();
+        it('add tag should trigger a refresh event', async () => {
+            await service.refresh.subscribe((res) => {
+                expect(res).toBeDefined();
             });
 
             service.addTag('fake-node-id', 'fake-tag');
