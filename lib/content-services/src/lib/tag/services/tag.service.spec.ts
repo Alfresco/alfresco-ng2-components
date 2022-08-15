@@ -36,10 +36,10 @@ describe('TagService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(TagService);
-        spyOn(service["tagsApi"], "deleteTagFromNode").and.returnValue(
+        spyOn(service['tagsApi'], 'deleteTagFromNode').and.returnValue(
             Promise.resolve({})
         );
-        spyOn(service["tagsApi"], "createTagForNode").and.returnValue(
+        spyOn(service['tagsApi'], 'createTagForNode').and.returnValue(
             Promise.resolve(new TagEntry({}))
         );
     });

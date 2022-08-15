@@ -387,7 +387,7 @@ describe('UploadDragAreaComponent', () => {
             component.onUploadFiles(fakeCustomEvent);
         });
 
-        it('should trigger updating the file version when we drop a file over another file', async() => {
+        it('should trigger updating the file version when we drop a file over another file', async () => {
             spyOn(component.updateFileVersion, 'emit');
             const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
