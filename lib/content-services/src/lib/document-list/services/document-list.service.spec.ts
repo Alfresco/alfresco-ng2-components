@@ -157,7 +157,7 @@ describe('DocumentListService', () => {
     });
 
     it('should copy a node', (done) => {
-        service.copyNode('node-id', 'parent-id').subscribe(() => done());
+        service.copyNode('node-id', 'parent-id').subscribe(done);
 
         expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
         expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
@@ -167,7 +167,7 @@ describe('DocumentListService', () => {
     });
 
     it('should move a node', (done) => {
-        service.moveNode('node-id', 'parent-id').subscribe(() => done());
+        service.moveNode('node-id', 'parent-id').subscribe(done);
 
         expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
         expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');

@@ -104,7 +104,7 @@ export class PeopleCloudComponentPage {
 
     async checkSelectedPeople(person: string): Promise<boolean> {
         try {
-        	await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+            await TestElement.byText('mat-chip-list mat-chip', person).waitVisible();
             return true;
         } catch (e) {
             return false;

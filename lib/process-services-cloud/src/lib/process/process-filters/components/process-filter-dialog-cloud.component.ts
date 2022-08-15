@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, AbstractControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'adf-cloud-process-filter-dialog-cloud',
@@ -30,10 +30,10 @@ export class ProcessFilterDialogCloudComponent implements OnInit {
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 
-    filterForm: UntypedFormGroup;
+    filterForm: FormGroup;
 
     constructor(
-        private fb: UntypedFormBuilder,
+        private fb: FormBuilder,
         public dialogRef: MatDialogRef<ProcessFilterDialogCloudComponent>,
         @Inject(MAT_DIALOG_DATA) public data) {
     }

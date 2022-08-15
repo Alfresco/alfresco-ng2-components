@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Icon Component](lib/core/src/lib/icon/icon.component.ts "Defined in icon.component.ts")
+# [Icon Component](../../../lib/core/icon/icon.component.ts "Defined in icon.component.ts")
 
 Provides a universal way of rendering registered and named icons.
 

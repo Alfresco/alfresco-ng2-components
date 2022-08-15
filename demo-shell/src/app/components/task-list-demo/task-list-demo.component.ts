@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import moment from 'moment';
@@ -31,7 +31,7 @@ const DEFAULT_SIZE = 20;
 })
 
 export class TaskListDemoComponent implements OnInit, OnDestroy {
-    taskListForm: UntypedFormGroup;
+    taskListForm: FormGroup;
 
     errorMessage: string;
     minValue = 1;
@@ -79,7 +79,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: UntypedFormBuilder) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -104,20 +104,20 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.taskListForm = this.formBuilder.group({
-            taskAppId: new UntypedFormControl(this.defaultAppId, [Validators.pattern('^[0-9]*$')]),
-            taskName: new UntypedFormControl(''),
-            taskId: new UntypedFormControl(''),
-            taskProcessDefinitionId: new UntypedFormControl(''),
-            taskProcessInstanceId: new UntypedFormControl(''),
-            taskAssignment: new UntypedFormControl(''),
-            taskState: new UntypedFormControl(''),
-            taskSort: new UntypedFormControl(''),
-            taskSize: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            taskPage: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            taskDueAfter: new UntypedFormControl(''),
-            taskDueBefore: new UntypedFormControl(''),
-            taskStart: new UntypedFormControl('', [Validators.pattern('^[0-9]*$')]),
-            taskIncludeProcessInstance: new UntypedFormControl('')
+            taskAppId: new FormControl(this.defaultAppId, [Validators.pattern('^[0-9]*$')]),
+            taskName: new FormControl(''),
+            taskId: new FormControl(''),
+            taskProcessDefinitionId: new FormControl(''),
+            taskProcessInstanceId: new FormControl(''),
+            taskAssignment: new FormControl(''),
+            taskState: new FormControl(''),
+            taskSort: new FormControl(''),
+            taskSize: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            taskPage: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            taskDueAfter: new FormControl(''),
+            taskDueBefore: new FormControl(''),
+            taskStart: new FormControl('', [Validators.pattern('^[0-9]*$')]),
+            taskIncludeProcessInstance: new FormControl('')
         });
 
         this.taskListForm.valueChanges
@@ -198,59 +198,59 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         return this.taskListForm.get(key) as T;
     }
 
-    get taskAppId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskAppId');
+    get taskAppId(): FormControl {
+        return this.getControl<FormControl>('taskAppId');
     }
 
-    get taskId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskId');
+    get taskId(): FormControl {
+        return this.getControl<FormControl>('taskId');
     }
 
-    get taskProcessDefinitionId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskProcessDefinitionId');
+    get taskProcessDefinitionId(): FormControl {
+        return this.getControl<FormControl>('taskProcessDefinitionId');
     }
 
-    get taskProcessInstanceId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskProcessInstanceId');
+    get taskProcessInstanceId(): FormControl {
+        return this.getControl<FormControl>('taskProcessInstanceId');
     }
 
-    get taskName(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskName');
+    get taskName(): FormControl {
+        return this.getControl<FormControl>('taskName');
     }
 
-    get taskAssignment(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskAssignment');
+    get taskAssignment(): FormControl {
+        return this.getControl<FormControl>('taskAssignment');
     }
 
-    get taskState(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskState');
+    get taskState(): FormControl {
+        return this.getControl<FormControl>('taskState');
     }
 
-    get taskSort(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskSort');
+    get taskSort(): FormControl {
+        return this.getControl<FormControl>('taskSort');
     }
 
-    get taskIncludeProcessInstance(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskIncludeProcessInstance');
+    get taskIncludeProcessInstance(): FormControl {
+        return this.getControl<FormControl>('taskIncludeProcessInstance');
     }
 
-    get taskStart(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskStart');
+    get taskStart(): FormControl {
+        return this.getControl<FormControl>('taskStart');
     }
 
-    get taskSize(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskSize');
+    get taskSize(): FormControl {
+        return this.getControl<FormControl>('taskSize');
     }
 
-    get taskPage(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskPage');
+    get taskPage(): FormControl {
+        return this.getControl<FormControl>('taskPage');
     }
 
-    get taskDueAfter(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskDueAfter');
+    get taskDueAfter(): FormControl {
+        return this.getControl<FormControl>('taskDueAfter');
     }
 
-    get taskDueBefore(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('taskDueBefore');
+    get taskDueBefore(): FormControl {
+        return this.getControl<FormControl>('taskDueBefore');
     }
 }

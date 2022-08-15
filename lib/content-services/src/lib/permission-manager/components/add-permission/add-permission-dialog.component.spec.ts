@@ -113,7 +113,7 @@ describe('AddPermissionDialog', () => {
         expect(confirmButton.disabled).toBe(false);
     });
 
-    it('should update the role after selection', async () => {
+    it('should update the role after selection', async (done) => {
         spyOn(component, 'onMemberUpdate').and.callThrough();
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
@@ -143,17 +143,14 @@ describe('AddPermissionDialog', () => {
 
         expect(component.onMemberUpdate).toHaveBeenCalled();
 
-        let currentSelection = [];
-
         data.confirm.subscribe((selection) => {
-            currentSelection = selection;
+            expect(selection.length).toBe(1);
+            done();
         });
 
         confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
-
-        expect(currentSelection.length).toBe(1);
     });
 
     it('should update all the user role on header column update', async () => {

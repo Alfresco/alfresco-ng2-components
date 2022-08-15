@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -30,7 +30,7 @@ const DEFAULT_SIZE = 20;
 
 export class ProcessListDemoComponent implements OnInit, OnDestroy {
     minValue = 0;
-    processListForm: UntypedFormGroup;
+    processListForm: FormGroup;
     appId: number;
     processDefId: string;
     processInsId: string;
@@ -55,7 +55,7 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private route: ActivatedRoute,
-                private formBuilder: UntypedFormBuilder) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -79,13 +79,13 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.processListForm = this.formBuilder.group({
-            processAppId: new UntypedFormControl(this.appId, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            processDefinitionId: new UntypedFormControl(''),
-            processInstanceId: new UntypedFormControl(''),
-            processState: new UntypedFormControl(''),
-            processSort: new UntypedFormControl(''),
-            processSize: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            processPage: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)])
+            processAppId: new FormControl(this.appId, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            processDefinitionId: new FormControl(''),
+            processInstanceId: new FormControl(''),
+            processState: new FormControl(''),
+            processSort: new FormControl(''),
+            processSize: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            processPage: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)])
         });
 
         this.processListForm.valueChanges
@@ -149,31 +149,31 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
         return this.processListForm.get(key) as T;
     }
 
-    get processAppId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processAppId');
+    get processAppId(): FormControl {
+        return this.getControl<FormControl>('processAppId');
     }
 
-    get processDefinitionId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processDefinitionId');
+    get processDefinitionId(): FormControl {
+        return this.getControl<FormControl>('processDefinitionId');
     }
 
-    get processInstanceId(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processInstanceId');
+    get processInstanceId(): FormControl {
+        return this.getControl<FormControl>('processInstanceId');
     }
 
-    get processState(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processState');
+    get processState(): FormControl {
+        return this.getControl<FormControl>('processState');
     }
 
-    get processSort(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processSort');
+    get processSort(): FormControl {
+        return this.getControl<FormControl>('processSort');
     }
 
-    get processSize(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processSize');
+    get processSize(): FormControl {
+        return this.getControl<FormControl>('processSize');
     }
 
-    get processPage(): UntypedFormControl {
-        return this.getControl<UntypedFormControl>('processPage');
+    get processPage(): FormControl {
+        return this.getControl<FormControl>('processPage');
     }
 }

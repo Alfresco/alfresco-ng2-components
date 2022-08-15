@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -32,10 +32,10 @@ import { Subject } from 'rxjs';
 })
 export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
-    from: UntypedFormControl;
-    to: UntypedFormControl;
+    from: FormControl;
+    to: FormControl;
 
-    form: UntypedFormGroup;
+    form: FormGroup;
     matcher = new LiveErrorStateMatcher();
 
     id: string;
@@ -66,14 +66,14 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         ]);
 
         if (this.startValue) {
-            this.from = new UntypedFormControl(this.startValue['from'], this.validators);
-            this.to = new UntypedFormControl(this.startValue['to'], this.validators);
+            this.from = new FormControl(this.startValue['from'], this.validators);
+            this.to = new FormControl(this.startValue['to'], this.validators);
         } else {
-            this.from = new UntypedFormControl('', this.validators);
-            this.to = new UntypedFormControl('', this.validators);
+            this.from = new FormControl('', this.validators);
+            this.to = new FormControl('', this.validators);
         }
 
-        this.form = new UntypedFormGroup({
+        this.form = new FormGroup({
             from: this.from,
             to: this.to
         }, this.formValidator);
@@ -82,7 +82,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.updateDisplayValue();
     }
 
-    formValidator(formGroup: UntypedFormGroup) {
+    formValidator(formGroup: FormGroup) {
         return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : {mismatch: true};
     }
 

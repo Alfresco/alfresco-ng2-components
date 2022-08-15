@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-08
 ---
 
-# [Download zip service](lib/core/src/lib/services/download-zip.service.ts "Defined in download-zip.service.ts")
+# [Download zip service](../../../lib/core/services/download-zip.service.ts "Defined in download-zip.service.ts")
 
 Creates and manages downloads.
 

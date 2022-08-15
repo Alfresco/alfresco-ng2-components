@@ -9,8 +9,7 @@
       "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
       "@alfresco/adf-core": ["../../dist/core"],
       "@alfresco/adf-core/*": ["../../dist/core/*"]
-    },
-    "target": "es2020"
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

@@ -79,26 +79,26 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 | Stencil Name | Field Type | Component Type |
 | ------------ | ---------- | -------------- |
-| Text | text | [`TextWidgetComponent`](lib/core/src/lib/form/components/widgets/text/text.widget.ts) |
-| Number | integer | [`NumberWidgetComponent`](lib/core/src/lib/form/components/widgets/number/number.widget.ts) |
-| Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/multiline-text/multiline-text.widget.ts) |
-| Checkbox | boolean | [`CheckboxWidgetComponent`](lib/core/src/lib/form/components/widgets/checkbox/checkbox.widget.ts) |
-| Dropdown | dropdown | [`DropdownWidgetComponent`](lib/core/src/lib/form/components/widgets/dropdown/dropdown.widget.ts) |
-| Date | date | [`DateWidgetComponent`](lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
-| Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
-| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/core/src/lib/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
-| Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
+| Text | text | [`TextWidgetComponent`](../../lib/core/form/components/widgets/text/text.widget.ts) |
+| Number | integer | [`NumberWidgetComponent`](../../lib/core/form/components/widgets/number/number.widget.ts) |
+| Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
+| Checkbox | boolean | [`CheckboxWidgetComponent`](../../lib/core/form/components/widgets/checkbox/checkbox.widget.ts) |
+| Dropdown | dropdown | [`DropdownWidgetComponent`](../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts) |
+| Date | date | [`DateWidgetComponent`](../../lib/core/form/components/widgets/date/date.widget.ts) |
+| Amount | amount | [`AmountWidgetComponent`](../../lib/core/form/components/widgets/amount/amount.widget.ts) |
+| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](../../lib/core/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
+| Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Display value | readonly | DisplayValueWidgetComponent |
-| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
-| Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/display-text/display-text.widget.ts) |
-| Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/core/src/lib/form/components/widgets/typeahead/typeahead.widget.ts) |
-| People | people | [`PeopleWidgetComponent`](lib/core/src/lib/form/components/widgets/people/people.widget.ts) |
-| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/core/src/lib/form/components/widgets/functional-group/functional-group.widget.ts) |
-| Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
-| N/A | container | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) (layout component) |
-| Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |
-| Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/core/src/lib/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
-| N/A | N/A | [`UnknownWidgetComponent`](lib/core/src/lib/form/components/widgets/unknown/unknown.widget.ts) |
+| Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
+| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](../../lib/core/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
+| Typeahead | typeahead | [`TypeaheadWidgetComponent`](../../lib/core/form/components/widgets/typeahead/typeahead.widget.ts) |
+| People | people | [`PeopleWidgetComponent`](../../lib/core/form/components/widgets/people/people.widget.ts) |
+| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |
+| Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
+| N/A | container | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
+| Header | group | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) |
+| Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
+| N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
 
 ## Form Extensibility for APS/AAE
 -   [Form Extensibility for APS Stencil](./aps-extensions.md)

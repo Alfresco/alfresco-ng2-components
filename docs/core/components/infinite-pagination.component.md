@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Infinite Pagination component](lib/core/src/lib/pagination/infinite-pagination.component.ts "Defined in infinite-pagination.component.ts")
+# [Infinite Pagination component](../../../lib/core/pagination/infinite-pagination.component.ts "Defined in infinite-pagination.component.ts")
 
 Adds "infinite" pagination to the component it is used with.
 
@@ -40,7 +40,7 @@ Adds "infinite" pagination to the component it is used with.
 | ---- | ---- | ------------- | ----------- |
 | isLoading | `boolean` | false | Is a new page loading? |
 | pageSize | `number` |  | Number of items that are added with each "load more" event. |
-| target | [`PaginatedComponent`](lib/core/src/lib/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
+| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
 
 ### Events
 

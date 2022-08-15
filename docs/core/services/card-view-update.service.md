@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Card View Update service](lib/core/src/lib/card-view/services/card-view-update.service.ts "Defined in card-view-update.service.ts")
+# [Card View Update service](../../../lib/core/card-view/services/card-view-update.service.ts "Defined in card-view-update.service.ts")
 
 Reports edits and clicks within fields of a [Card View component](../components/card-view.component.md).
 
@@ -55,7 +55,7 @@ constructor(private cardViewUpdateService: CardViewUpdateService) {
 }
 ```
 
-The constructor here also sets the [`CardViewTextItemModel`](lib/core/src/lib/card-view/models/card-view-textitem.model.ts) instances that define the layout of the
+The constructor here also sets the [`CardViewTextItemModel`](../../../lib/core/card-view/models/card-view-textitem.model.ts) instances that define the layout of the
 card view (see the [Card View component](../components/card-view.component.md) for further information
 about this). The model objects and the `key` property are used to identify which item has been clicked
 or updated when an event occurs. 
@@ -77,7 +77,7 @@ called after updates and clicks, respectively.
 
 ### Responding to updates
 
-The update function is passed a parameter of type [`UpdateNotification`](lib/core/src/lib/card-view/services/card-view-update.service.ts):
+The update function is passed a parameter of type [`UpdateNotification`](../../../lib/core/card-view/services/card-view-update.service.ts):
 
 ```ts
 export interface UpdateNotification {
@@ -86,8 +86,8 @@ export interface UpdateNotification {
 }
 ```
 
-Here, `target` contains the [`CardViewTextItemModel`](lib/core/src/lib/card-view/models/card-view-textitem.model.ts) that was used to initialize
-the field in question (in practice, this might be a [`CardViewDateItemModel`](lib/core/src/lib/card-view/models/card-view-dateitem.model.ts) or [`CardViewMapItemModel`](lib/core/src/lib/card-view/models/card-view-mapitem.model.ts) if
+Here, `target` contains the [`CardViewTextItemModel`](../../../lib/core/card-view/models/card-view-textitem.model.ts) that was used to initialize
+the field in question (in practice, this might be a [`CardViewDateItemModel`](../../../lib/core/card-view/models/card-view-dateitem.model.ts) or [`CardViewMapItemModel`](../../../lib/core/card-view/models/card-view-mapitem.model.ts) if
 the card layout includes these objects). The `changed` property contains an object with a single property:
 
 ```ts
@@ -115,7 +115,7 @@ on the [Card View component](../components/card-view.component.md) itself.
 
 ### Responding to clicks
 
-The click function is passed a [`ClickNotification`](lib/core/src/lib/card-view/services/card-view-update.service.ts) object, which is similar to [`UpdateNotification`](lib/core/src/lib/card-view/services/card-view-update.service.ts) described above,
+The click function is passed a [`ClickNotification`](../../../lib/core/card-view/services/card-view-update.service.ts) object, which is similar to [`UpdateNotification`](../../../lib/core/card-view/services/card-view-update.service.ts) described above,
 but without the `changed` property. Use the `target` property to identify the item that was clicked:
 
 ```ts
@@ -128,7 +128,7 @@ Note that this function will only be called if the `clickable` property of the m
 
 ## Update cardview update item
 
-[`updateElement`](lib/core/src/lib/card-view/services/card-view-update.service.ts)  function helps to update the card view item. It takes the [`CardViewBaseItemModel`](lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)  type object as parameter.
+[`updateElement`](../../../lib/core/card-view/services/card-view-update.service.ts)  function helps to update the card view item. It takes the [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts)  type object as parameter.
 
 Example
 

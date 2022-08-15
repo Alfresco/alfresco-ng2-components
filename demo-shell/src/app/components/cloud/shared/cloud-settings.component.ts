@@ -19,7 +19,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CloudLayoutService, ActionMenuModel } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-cloud-settings',
@@ -44,12 +44,12 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
         { value: 'multiple', title: 'Multiple' }
     ];
 
-    actionMenuForm = new UntypedFormGroup({
-        key: new UntypedFormControl(''),
-        title: new UntypedFormControl(''),
-        icon: new UntypedFormControl(''),
-        visible: new UntypedFormControl(true),
-        disabled: new UntypedFormControl(false)
+    actionMenuForm = new FormGroup({
+        key: new FormControl(''),
+        title: new FormControl(''),
+        icon: new FormControl(''),
+        visible: new FormControl(true),
+        disabled: new FormControl(false)
       });
 
     constructor(private cloudLayoutService: CloudLayoutService) { }

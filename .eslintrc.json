@@ -1,14 +1,7 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*",
-    "**/node_modules/**/*",
-    "lib/cli/node_modules/**/*",
-    "**/node_modules",
-    "**/docker",
-    "**/assets",
-    "**/scripts",
-    "**/docs"
+    "projects/**/*"
   ],
   "overrides": [
     {
@@ -81,23 +74,7 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
-        "@typescript-eslint/naming-convention": [
-          "error",
-          {
-            "selector": [
-              "classProperty",
-              "objectLiteralProperty",
-              "typeProperty",
-              "classMethod",
-              "objectLiteralMethod",
-              "typeMethod",
-              "accessor",
-              "enumMember"
-            ],
-            "format": null,
-            "modifiers": ["requiresQuotes"]
-          }
-        ],
+
         "@typescript-eslint/member-ordering": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
 

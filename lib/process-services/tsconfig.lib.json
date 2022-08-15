@@ -11,8 +11,7 @@
       "@alfresco/adf-core/*": ["../../dist/core/*"],
       "@alfresco/adf-content-services": ["../../dist/content-services"],
       "@alfresco/adf-content-services/*": ["../../dist/content-services/*"]
-    },
-    "target": "es2020"
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

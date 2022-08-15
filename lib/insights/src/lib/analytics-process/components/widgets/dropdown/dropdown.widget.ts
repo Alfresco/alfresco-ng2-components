@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -33,7 +33,7 @@ export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements
     field: any;
 
     @Input('group')
-    public formGroup: UntypedFormGroup;
+    public formGroup: FormGroup;
 
     @Input('controllerName')
     public controllerName: string;
@@ -60,7 +60,7 @@ export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements
         }
     }
 
-    validateDropDown(controller: UntypedFormControl) {
+    validateDropDown(controller: FormControl) {
         return controller.value !== 'null' ? null : { controllerName: false };
     }
 

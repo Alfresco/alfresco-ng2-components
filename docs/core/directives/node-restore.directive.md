@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Node Restore directive](lib/core/src/lib/directives/node-restore.directive.ts "Defined in node-restore.directive.ts")
+# [Node Restore directive](../../../lib/core/directives/node-restore.directive.ts "Defined in node-restore.directive.ts")
 
 Restores deleted nodes to their original location.
 

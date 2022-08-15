@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Info Drawer Tab component](lib/core/src/lib/info-drawer/info-drawer.component.ts "Defined in info-drawer.component.ts")
+# [Info Drawer Tab component](../../../lib/core/info-drawer/info-drawer.component.ts "Defined in info-drawer.component.ts")
 
 Renders tabs in a [Info drawer component](info-drawer.component.md).
 

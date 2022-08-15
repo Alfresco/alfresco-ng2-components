@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-12
 ---
 
-# [DataTable component](lib/core/src/lib/datatable/components/datatable/datatable.component.ts "Defined in datatable.component.ts")
+# [DataTable component](../../../lib/core/datatable/components/datatable/datatable.component.ts "Defined in datatable.component.ts")
 
 Displays data as a table with customizable columns and presentation.
 
@@ -80,7 +80,7 @@ export class DataTableDemo {
 
 ### Setting the rows and column schema
 
-You can set rows and columns in the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) as shown below:
+You can set rows and columns in the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) as shown below:
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -157,7 +157,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows in the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
+You can also set rows in the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -371,7 +371,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use [facet widget](../../../lib/content-services/src/lib/search/models/facet-widget.interface.ts) search for filtering. |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
-| data | [`DataTableAdapter`](lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source for the table |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
 | display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
@@ -405,10 +405,10 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 ### Supplying data for the table
 
 The column layout and row data are supplied to the table using an object that implements the
-[`DataTableAdapter`](lib/core/src/lib/datatable/data/datatable-adapter.ts) interface. This interface hides the internal details of the class that provides
+[`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) interface. This interface hides the internal details of the class that provides
 the data, which gives a lot of flexibility in how the data can be stored and accessed. The DataTable
-library includes a standard adapter class called [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) that is useful in many
-common cases. See the [`DataTableAdapter`](lib/core/src/lib/datatable/data/datatable-adapter.ts) for full details about the interface and the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) class.
+library includes a standard adapter class called [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) that is useful in many
+common cases. See the [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) for full details about the interface and the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) class.
 
 ### Customizing columns
 

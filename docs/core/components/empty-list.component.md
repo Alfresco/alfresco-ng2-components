@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Empty list component](lib/core/src/lib/datatable/components/empty-list/empty-list.component.ts "Defined in empty-list.component.ts")
+# [Empty list component](../../../lib/core/datatable/components/empty-list/empty-list.component.ts "Defined in empty-list.component.ts")
 
 Displays a message indicating that a list is empty.
 

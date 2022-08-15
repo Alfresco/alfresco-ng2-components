@@ -21,7 +21,7 @@ import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
@@ -102,7 +102,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected processDefinitionNames: DropdownOption[] = [];
     protected formHasBeenChanged = false;
 
-    editTaskFilterForm: UntypedFormGroup;
+    editTaskFilterForm: FormGroup;
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
@@ -126,7 +126,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     isLoading: boolean = false;
 
     constructor(
-        protected formBuilder: UntypedFormBuilder,
+        protected formBuilder: FormBuilder,
         protected dateAdapter: DateAdapter<Moment>,
         protected userPreferencesService: UserPreferencesService,
         protected appsProcessCloudService: AppsProcessCloudService,

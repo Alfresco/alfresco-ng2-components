@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil, map } from 'rxjs/operators';
@@ -39,7 +39,7 @@ import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-ta
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
     constructor(
-        formBuilder: UntypedFormBuilder,
+        formBuilder: FormBuilder,
         dialog: MatDialog,
         translateService: TranslationService,
         private taskFilterCloudService: TaskFilterCloudService,

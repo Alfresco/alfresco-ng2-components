@@ -76,11 +76,11 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task whose details you want
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Task details
--   **isAssigneePropertyClickable**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts), candidateUsers: [`CardViewArrayItem`](lib/core/src/lib/card-view/models/card-view-arrayitem.model.ts)`[]`, candidateGroups: [`CardViewArrayItem`](lib/core/src/lib/card-view/models/card-view-arrayitem.model.ts)`[]`): `boolean`<br/>
+-   **isAssigneePropertyClickable**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts), candidateUsers: [`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)`[]`, candidateGroups: [`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)`[]`): `boolean`<br/>
 
     -   _taskDetails:_ [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - 
-    -   _candidateUsers:_ [`CardViewArrayItem`](lib/core/src/lib/card-view/models/card-view-arrayitem.model.ts)`[]`  - 
-    -   _candidateGroups:_ [`CardViewArrayItem`](lib/core/src/lib/card-view/models/card-view-arrayitem.model.ts)`[]`  - 
+    -   _candidateUsers:_ [`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)`[]`  - 
+    -   _candidateGroups:_ [`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)`[]`  - 
     -   **Returns** `boolean` - 
 
 -   **isTaskEditable**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): `boolean`<br/>

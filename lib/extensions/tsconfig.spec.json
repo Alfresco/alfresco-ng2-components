@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.spec.json",
-  "files": ["src/test.ts"],
-  "compilerOptions": {
-    "target": "es2020"
-  }
+  "files": [
+    "src/test.ts"
+  ]
 }

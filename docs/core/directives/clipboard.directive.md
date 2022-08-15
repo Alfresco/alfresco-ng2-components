@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-12
 ---
 
-# [Clipboard directive](lib/core/src/lib/clipboard/clipboard.directive.ts "Defined in clipboard.directive.ts")
+# [Clipboard directive](../../../lib/core/clipboard/clipboard.directive.ts "Defined in clipboard.directive.ts")
 
 Copies text to the clipboard.
 

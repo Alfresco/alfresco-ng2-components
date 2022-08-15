@@ -151,7 +151,7 @@ Result:
 
 ### 7. Process and Task attachment list component
 
-This component shows all the attachments added to a task/process as a list. The component is using the [data table component](lib/core/src/lib/datatable/components/datatable/datatable.component.ts) to show the list and the context menu with the actions. At the moment, you can open the attachment doing the double click on the row or select the action view from the menu actions. There is also the ability to download the attachment or remove it.
+This component shows all the attachments added to a task/process as a list. The component is using the [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) to show the list and the context menu with the actions. At the moment, you can open the attachment doing the double click on the row or select the action view from the menu actions. There is also the ability to download the attachment or remove it.
 
     <alfresco-datatable *ngIf="!isEmpty()"
         [rows]="attachments"
@@ -176,7 +176,7 @@ This component was already present in the previous ADF versions but we changed t
 
 With this component, you can easily involve a person into a task. The component itself is composed of two different component, the [search component,](../content-services/components/search.component.md) the [people list component](../process-services/components/people-list.component.md).
 
-The [search component](../content-services/components/search.component.md) has the goal to find a person not involved and show the results in a list. The list is always a [data table component](lib/core/src/lib/datatable/components/datatable/datatable.component.ts) with the action menu disabled.
+The [search component](../content-services/components/search.component.md) has the goal to find a person not involved and show the results in a list. The list is always a [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) with the action menu disabled.
 
 The [people list component](../process-services/components/people-list.component.md) shows all the people involved in a task in a list.
 
@@ -279,7 +279,7 @@ And the underlying component controller code can be as follows:
 
 #### Parsing form definitions
 
-The [`FormService`](../core/services/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](lib/core/src/lib/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Component like it was previously.
+The [`FormService`](../core/services/form.service.md) got a new API to parse form definitions from JSON into the [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instances without using [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) Component like it was previously.
 
     formService.parseForm(formDefinitionJSON)
 

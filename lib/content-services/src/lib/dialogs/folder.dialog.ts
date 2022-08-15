@@ -18,7 +18,7 @@
 import { Observable } from 'rxjs';
 
 import { Component, Inject, OnInit, Optional, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Node } from '@alfresco/js-api';
@@ -34,7 +34,7 @@ import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './fo
 })
 export class FolderDialogComponent implements OnInit {
 
-    form: UntypedFormGroup;
+    form: FormGroup;
 
     folder: Node = null;
 
@@ -53,7 +53,7 @@ export class FolderDialogComponent implements OnInit {
     nodeType = 'cm:folder';
 
     constructor(
-        private formBuilder: UntypedFormBuilder,
+        private formBuilder: FormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
         private nodesApi: NodesApiService,
         private translation: TranslationService,

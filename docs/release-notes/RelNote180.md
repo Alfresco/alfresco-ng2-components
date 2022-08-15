@@ -135,7 +135,7 @@ New "getFieldById" method to simplify certain scenarios when accessing multiple 
 
     getFieldById(fieldId: string): FormFieldModel
 
-The [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](lib/core/src/lib/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
+The [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](../../lib/core/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
 
 You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) readme: [Form Field Validators](../core/interfaces/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/interfaces/form-field-validator.interface.md).
 

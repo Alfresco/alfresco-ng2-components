@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-12
 ---
 
-# [Clipboard service](lib/core/src/lib/clipboard/clipboard.service.ts "Defined in clipboard.service.ts")
+# [Clipboard service](../../../lib/core/clipboard/clipboard.service.ts "Defined in clipboard.service.ts")
 
 Copies text to the clipboard.
 

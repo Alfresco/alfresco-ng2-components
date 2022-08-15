@@ -53,18 +53,19 @@ describe('ProcessFiltersComponent', () => {
         fixture.destroy();
     });
 
-    it('should return the filter task list', async () => {
+    it('should return the filter task list', async (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.success.subscribe((res) => {
+        filterList.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
             expect(filterList.filters[0].name).toEqual('FakeCompleted');
             expect(filterList.filters[1].name).toEqual('FakeAll');
             expect(filterList.filters[2].name).toEqual('Running');
+            done();
         });
 
         spyOn(filterList, 'getFiltersByAppId').and.callThrough();
@@ -77,15 +78,16 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getFiltersByAppId).toHaveBeenCalled();
     });
 
-    it('should select the Running process filter', async () => {
+    it('should select the Running process filter', async (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.success.subscribe(() => {
+        filterList.success.subscribe(() => {
             filterList.selectRunningFilter();
             expect(filterList.currentFilter.name).toEqual('Running');
+            done();
         });
 
         filterList.ngOnChanges({ appId: change });
@@ -94,14 +96,15 @@ describe('ProcessFiltersComponent', () => {
         await fixture.whenStable();
     });
 
-    it('should emit the selected filter based on the filterParam input', async () => {
+    it('should emit the selected filter based on the filterParam input', async (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.filterSelected.subscribe((filter) => {
+        filterList.filterSelected.subscribe((filter) => {
             expect(filter.name).toEqual('FakeCompleted');
+            done();
         });
 
         filterList.ngOnChanges({ appId: change });
@@ -139,23 +142,24 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.currentFilter).toBe(undefined);
     });
 
-    it('should return the filter task list, filtered By Name', async () => {
+    it('should return the filter task list, filtered By Name', (done) => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ appName: change });
 
-        await filterList.success.subscribe((res) => {
+        filterList.success.subscribe((res) => {
             const deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
+            done();
         });
 
         fixture.detectChanges();
     });
 
-    it('should emit an error with a bad response', async () => {
+    it('should emit an error with a bad response', (done) => {
         const mockErrorFilterPromise = Promise.reject({
             error: 'wrong request'
         });
@@ -165,14 +169,15 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ appId: change });
 
-        await filterList.error.subscribe((err) => {
+        filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
+            done();
         });
 
         fixture.detectChanges();
     });
 
-    it('should emit an error with a bad response', async () => {
+    it('should emit an error with a bad response', (done) => {
         const mockErrorFilterPromise = Promise.reject({
             error: 'wrong request'
         });
@@ -182,24 +187,26 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ appName: change });
 
-        await filterList.error.subscribe((err) => {
+        filterList.error.subscribe((err) => {
             expect(err).toBeDefined();
+            done();
         });
 
         fixture.detectChanges();
     });
 
-    it('should emit an event when a filter is selected', async () => {
+    it('should emit an event when a filter is selected', (done) => {
         const currentFilter = new FilterProcessRepresentationModel({
             id: 10,
             name: 'FakeCompleted',
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
-        await filterList.filterClicked.subscribe((filter) => {
+        filterList.filterClicked.subscribe((filter) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);
+            done();
         });
 
         filterList.selectFilter(currentFilter);
@@ -245,7 +252,7 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
-    it('should select the filter passed as input by id', async () => {
+    it('should select the filter passed as input by id', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
@@ -255,14 +262,17 @@ describe('ProcessFiltersComponent', () => {
 
         filterList.ngOnChanges({ appId: change });
 
-        await fixture.whenStable();
-        expect(filterList.filters).toBeDefined();
-        expect(filterList.filters.length).toEqual(3);
-        expect(filterList.currentFilter).toBeDefined();
-        expect(filterList.currentFilter.name).toEqual('FakeAll');
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeAll');
+            done();
+        });
     });
 
-    it('should select the filter passed as input by name', async () => {
+    it('should select the filter passed as input by name', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeAll' });
@@ -272,36 +282,45 @@ describe('ProcessFiltersComponent', () => {
 
         filterList.ngOnChanges({ appId: change });
 
-        await fixture.whenStable();
-        expect(filterList.filters).toBeDefined();
-        expect(filterList.filters.length).toEqual(3);
-        expect(filterList.currentFilter).toBeDefined();
-        expect(filterList.currentFilter.name).toEqual('FakeAll');
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeAll');
+            done();
+        });
     });
 
-    it('should attach specific icon for each filter if hasIcon is true', async () => {
+    it('should attach specific icon for each filter if hasIcon is true', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = true;
         const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
-        await fixture.whenStable();
-        expect(filterList.filters.length).toBe(3);
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(3);
-        expect(filters[0].nativeElement.innerText).toContain('dashboard');
-        expect(filters[1].nativeElement.innerText).toContain('shuffle');
-        expect(filters[2].nativeElement.innerText).toContain('check_circle');
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters.length).toBe(3);
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
+            expect(filters.length).toBe(3);
+            expect(filters[0].nativeElement.innerText).toContain('dashboard');
+            expect(filters[1].nativeElement.innerText).toContain('shuffle');
+            expect(filters[2].nativeElement.innerText).toContain('check_circle');
+            done();
+        });
     });
 
-    it('should not attach icons for each filter if hasIcon is false', async () => {
+    it('should not attach icons for each filter if hasIcon is false', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = false;
         const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
-        await fixture.whenStable();
-        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-        expect(filters.length).toBe(0);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
+            expect(filters.length).toBe(0);
+            done();
+        });
     });
 });

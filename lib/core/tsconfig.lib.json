@@ -3,12 +3,11 @@
   "compilerOptions": {
     "outDir": "../dist/core/",
     "declarationMap": true,
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@alfresco/adf-extensions": ["../../dist/extensions"],
-      "@alfresco/adf-extensions/*": ["../../dist/extensions/*"]
-    },
-    "target": "es2020"
+      "@alfresco/adf-extensions": ["../dist/extensions"],
+      "@alfresco/adf-extensions/*": ["../dist/extensions/*"]
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

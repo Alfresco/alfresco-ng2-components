@@ -56,7 +56,7 @@ describe('IdentityUserService', () => {
             const store = {};
 
             spyOn(localStorage, 'getItem').and.callFake((key: string): string => store[key] || null);
-            spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => store[key] = value);
+            spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  store[key] = value);
         });
 
         it('should fetch identity user info from Jwt id token', () => {
@@ -100,7 +100,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should not fetch users if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 

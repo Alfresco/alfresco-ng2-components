@@ -110,7 +110,7 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
     });
 
-    it('should emit an error with a bad response', async() => {
+    it('should emit an error with a bad response', (done) => {
         const mockErrorFilterList = {
             error: 'wrong request'
         };
@@ -119,8 +119,9 @@ describe('ProcessFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        await component.error.subscribe((err) => {
+        component.error.subscribe((err) => {
             expect(err).toBeDefined();
+            done();
         });
 
         component.ngOnChanges({appName: change});

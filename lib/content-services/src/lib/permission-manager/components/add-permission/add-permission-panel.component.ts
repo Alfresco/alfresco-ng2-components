@@ -18,7 +18,7 @@
 import { SearchConfigurationService, SearchService } from '@alfresco/adf-core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchComponent } from '../../../search/components/search.component';
@@ -46,7 +46,7 @@ export class AddPermissionPanelComponent {
     @Output()
     select: EventEmitter<NodeEntry[]> = new EventEmitter();
 
-    searchInput: UntypedFormControl = new UntypedFormControl();
+    searchInput: FormControl = new FormControl();
     searchedWord = '';
     debounceSearch: number = 200;
 

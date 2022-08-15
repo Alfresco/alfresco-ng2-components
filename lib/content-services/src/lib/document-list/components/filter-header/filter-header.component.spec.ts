@@ -135,7 +135,7 @@ describe('FilterHeaderComponent', () => {
         expect(queryBuilder.getActiveFilters()[0].value).toBe('pinocchio');
     });
 
-    it('should emit filterSelection when a filter is changed', (done) => {
+    it('should emit filterSelection when a filter is changed', async (done) => {
         spyOn(queryBuilder, 'getActiveFilters').and.returnValue([{ key: 'name', value: 'pinocchio' }]);
 
         component.filterSelection.subscribe((selectedFilters) => {
@@ -147,7 +147,7 @@ describe('FilterHeaderComponent', () => {
 
         component.onFilterSelectionChange();
         fixture.detectChanges();
-        fixture.whenStable();
+        await fixture.whenStable();
     });
 
 });

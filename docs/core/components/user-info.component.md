@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [User Info component](lib/core/src/lib/userinfo/components/user-info.component.ts "Defined in user-info.component.ts")
+# [User Info component](../../../lib/core/userinfo/components/user-info.component.ts "Defined in user-info.component.ts")
 
 Shows user information.
 

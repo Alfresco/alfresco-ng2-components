@@ -307,7 +307,7 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(getServiceTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reset pagination when resetPaginationValues is called', async (done) => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -331,9 +331,8 @@ describe('ServiceTaskListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            fixture.whenStable().then( () => {
-                component.resetPagination();
-            });
+            await fixture.whenStable();
+            component.resetPagination();
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {

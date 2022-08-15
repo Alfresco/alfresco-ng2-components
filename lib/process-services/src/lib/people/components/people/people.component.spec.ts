@@ -191,36 +191,42 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should log error message when search fails', async () => {
-            await activitiPeopleComponent.peopleSearch$.subscribe(() => {
+        it('should log error message when search fails', fakeAsync(() => {
+            activitiPeopleComponent.peopleSearch$.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
             activitiPeopleComponent.searchUser('fake-search');
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        });
+        }));
 
-        it('should not remove user if remove involved user fail', async () => {
+        it('should not remove user if remove involved user fail', fakeAsync(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-            await fixture.whenStable();
-            const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-            expect(gatewayElement).not.toBeNull();
-            expect(gatewayElement.children.length).toBe(2);
-        });
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
+                });
+        }));
 
-        it('should not involve user if involve user fail', async () => {
+        it('should not involve user if involve user fail', fakeAsync(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-            await fixture.whenStable();
-            const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-            expect(gatewayElement).not.toBeNull();
-            expect(gatewayElement.children.length).toBe(2);
-        });
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
+                });
+        }));
     });
 });

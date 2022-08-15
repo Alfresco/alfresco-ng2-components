@@ -259,13 +259,13 @@ The following classes have been moved from their original libraries to the Core
 library. You should modify your code to import these classes from
 `@alfresco/adf-core`.
 
--   [`DownloadZipDialogComponent`](lib/core/src/lib/dialogs/download-zip/download-zip.dialog.ts) (formerly Content Services)
+-   [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip/download-zip.dialog.ts) (formerly Content Services)
 -   [`NodeDownloadDirective`](../core/directives/node-download.directive.md) (formerly Content Services)
--   [`CommentsModule`](lib/core/src/lib/comments/comments.module.ts) (formerly Process Services)
+-   [`CommentsModule`](../../lib/core/comments/comments.module.ts) (formerly Process Services)
 -   [`CommentListComponent`](../core/components/comment-list.component.md) (formerly Process Services)
 -   [`CommentsComponent`](../core/components/comments.component.md)  (formerly Process Services)
 
-Also, `CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](lib/core/src/lib/models/comment.model.ts). You should update both the name of the class and the import line in your code.
+Also, `CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/models/comment.model.ts). You should update both the name of the class and the import line in your code.
 
 ## Renamed items
 
@@ -275,7 +275,7 @@ you should replace them with the new ones.
 
 ### Classes
 
-`CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](lib/core/src/lib/models/comment.model.ts)
+`CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/models/comment.model.ts)
 
 ### Properties and methods
 
@@ -338,7 +338,7 @@ These changes are noted with an arrow "->".
 -   `adf-input-action`
 -   `adf-full-width`
 
-#### [../../lib/core/dialogs/download-zip.dialog.scss](lib/core/src/lib/dialogs/download-zip.dialog.scss)
+#### [../../lib/core/dialogs/download-zip.dialog.scss](../../lib/core/dialogs/download-zip.dialog.scss)
 
 -   `adf-spacer`
 
@@ -388,23 +388,23 @@ These changes are noted with an arrow "->".
 
 ### Core CSS classes
 
-#### [../../lib/core/about/about.component.scss](lib/core/src/lib/about/about.component.scss)
+#### [../../lib/core/about/about.component.scss](../../lib/core/about/about.component.scss)
 
 -   `adf-about-container`
 
-#### [../../lib/core/buttons-menu/buttons-menu.component.scss](lib/core/src/lib/buttons-menu/buttons-menu.component.scss)
+#### [../../lib/core/buttons-menu/buttons-menu.component.scss](../../lib/core/buttons-menu/buttons-menu.component.scss)
 
 -   `adf-material-icons`
 
-#### [../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss](lib/core/src/lib/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.theme.scss)
+#### [../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss](../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.theme.scss)
 
 -   `adf-card-view`
 
-#### [../../lib/core/comments/comment-list.component.scss](lib/core/src/lib/comments/comment-list.theme.scss)
+#### [../../lib/core/comments/comment-list.component.scss](../../lib/core/comments/comment-list.theme.scss)
 
 -   `adf-is-selected`
 
-#### [../../lib/core/datatable/components/datatable/datatable.component.scss](lib/core/src/lib/datatable/components/datatable/datatable.component.scss)
+#### [../../lib/core/datatable/components/datatable/datatable.component.scss](../../lib/core/datatable/components/datatable/datatable.component.scss)
 
 -   `adf-is-selected`
 -   `alfresco-datatable__actions-cell` -> `adf-datatable__actions-cell`
@@ -419,12 +419,12 @@ These changes are noted with an arrow "->".
 -   `adf-hidden`
 -   `adf-desktop-only`
 
-#### [../../lib/core/form/components/form.component.scss](lib/core/src/lib/form/components/form.component.scss)
+#### [../../lib/core/form/components/form.component.scss](../../lib/core/form/components/form.component.scss)
 
 -   `adf-debug-toggle-text`
 -   `adf-invalid-color`
 
-#### [../../lib/core/form/components/widgets/container/container.widget.scss](lib/core/src/lib/form/components/widgets/container/container.widget.scss)
+#### [../../lib/core/form/components/widgets/container/container.widget.scss](../../lib/core/form/components/widgets/container/container.widget.scss)
 
 -   `adf-hidden`
 -   `adf-container-widget__header-text`
@@ -432,27 +432,27 @@ These changes are noted with an arrow "->".
 -   `adf-grid-list`
 -   `adf-grid-list-item`
 
-#### [../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.scss)
+#### [../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss](../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss)
 
 -   `adf-is-selected`
 -   `adf-no-select`
 -   `adf-sortable`
 -   `adf-full-width`
 
-#### [../../lib/core/layout/components/layout-container/layout-container.component.scss](lib/core/src/lib/layout/components/layout-container/layout-container.component.scss)
+#### [../../lib/core/layout/components/layout-container/layout-container.component.scss](../../lib/core/layout/components/layout-container/layout-container.component.scss)
 
 -   `adf-sidenav--hidden`
 
-#### [../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.scss](lib/core/src/lib/layout/components/sidenav-layout/sidenav-layout.component.scss)
+#### [../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.scss](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.scss)
 
 -   `adf-sidenav-layout`
 -   `adf-layout__content`
 
-#### [../../lib/core/login/components/login-dialog-panel.component.scss](lib/core/src/lib/login/components/login-dialog-panel.component.scss)
+#### [../../lib/core/login/components/login-dialog-panel.component.scss](../../lib/core/login/components/login-dialog-panel.component.scss)
 
 -   `adf-copyright`
 
-#### [../../lib/core/login/components/login.component.scss](lib/core/src/lib/login/components/login.component.scss)
+#### [../../lib/core/login/components/login.component.scss](../../lib/core/login/components/login.component.scss)
 
 -   `adf-ie11FixerParent`
 -   `adf-ie11FixerChild`
@@ -468,25 +468,25 @@ These changes are noted with an arrow "->".
 -   `adf-copyright`
 -   `adf-login-rememberme` -> - `adf-login-remember-me`
 
-#### [../../lib/core/settings/host-settings.component.scss](lib/core/src/lib/settings/host-settings.component.scss)
+#### [../../lib/core/settings/host-settings.component.scss](../../lib/core/settings/host-settings.component.scss)
 
 -   `adf-full-width`
 
-#### [../../lib/core/viewer/components/imgViewer.component.scss](lib/core/src/lib/viewer/components/img-viewer.component.scss)
+#### [../../lib/core/viewer/components/imgViewer.component.scss](../../lib/core/viewer/components/img-viewer.component.scss)
 
 -   `adf-image-container`
 
-#### [../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss](lib/core/src/lib/viewer/components/pdf-viewer-thumbnails.component.scss)
+#### [../../lib/core/viewer/components/pdfViewer-thumbnails.component.scss](../../lib/core/viewer/components/pdf-viewer-thumbnails.component.scss)
 
 -   `adf-pdf-thumbnails`
 
-#### [../../lib/core/viewer/components/pdfViewer.component.scss](lib/core/src/lib/viewer/components/pdf-viewer.component.scss)
+#### [../../lib/core/viewer/components/pdfViewer.component.scss](../../lib/core/viewer/components/pdf-viewer.component.scss)
 
 -   `adf-loader-container`
 -   `adf-thumbnails-template`
 -   `adf-loader-item`
 
-#### [../../lib/core/viewer/components/pdfViewerHost.component.scss](lib/core/src/lib/viewer/components/pdf-viewer-host.component.scss)
+#### [../../lib/core/viewer/components/pdfViewerHost.component.scss](../../lib/core/viewer/components/pdf-viewer-host.component.scss)
 
 -   `adf-highlight`
 -   `adf-begin`
@@ -512,7 +512,7 @@ These changes are noted with an arrow "->".
 -   `adf-hidden`
 -   `adf-viewer-pdf-viewer`
 
-#### [../../lib/core/viewer/components/viewer.component.scss](lib/core/src/lib/viewer/components/viewer.component.scss)
+#### [../../lib/core/viewer/components/viewer.component.scss](../../lib/core/viewer/components/viewer.component.scss)
 
 -   `adf-full-screen`
 -   `adf-info-drawer-content`

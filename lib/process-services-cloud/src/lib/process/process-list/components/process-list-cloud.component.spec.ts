@@ -436,7 +436,7 @@ describe('ProcessListCloudComponent', () => {
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reset pagination when resetPaginationValues is called', async (done) => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -460,9 +460,8 @@ describe('ProcessListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            fixture.whenStable().then( () => {
-                component.resetPagination();
-            });
+            await fixture.whenStable();
+            component.resetPagination();
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {

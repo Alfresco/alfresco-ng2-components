@@ -11,9 +11,9 @@ Defines the Image Resolver function used by the [Document List Component](../com
 
 ## Definitions
 
--   `type` **[`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts)** = (row: [`DataRow`](lib/core/src/lib/datatable/data/data-row.model.ts), column: [`DataColumn`](lib/core/src/lib/datatable/data/data-column.model.ts)) => `string`
-    -   _row:_ [`DataRow`](lib/core/src/lib/datatable/data/data-row.model.ts) - Data that defines the row
-    -   _column:_ [`DataColumn`](lib/core/src/lib/datatable/data/data-column.model.ts) - Data that defines the column
+-   `type` **[`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts)** = (row: [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts), column: [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)) => `string`
+    -   _row:_ [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) - Data that defines the row
+    -   _column:_ [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) - Data that defines the column
     -   **Returns** File path for the image
 
 ## Details
@@ -26,7 +26,7 @@ to manage the way folder/file icons and thumbnails are resolved (ie, which image
 
 **Note:** Image resolvers are executed only for columns of the `image` type.
 
-A typical image resolver implementation receives [`DataRow`](lib/core/src/lib/datatable/data/data-row.model.ts) and [`DataColumn`](lib/core/src/lib/datatable/data/data-column.model.ts) objects as parameters:
+A typical image resolver implementation receives [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
 
 ```ts
 myImageResolver(row: DataRow, col: DataColumn): string {

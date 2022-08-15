@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [FormFieldValidator interface](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts "Defined in form-field-validator.ts")
+# [FormFieldValidator interface](../../../lib/core/form/components/widgets/core/form-field-validator.ts "Defined in form-field-validator.ts")
 
 Defines how the input fields of [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) and Task Details components are validated.
 
@@ -62,16 +62,16 @@ Several validator classes are predefined for you to use:
 
 | Validator name | Checks that: |
 | -------------- | ------------ |
-| [`RequiredFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field is not left blank |
-| [`NumberFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field contains numeric data |
-| [`MinLengthFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field text has at least a minimum number of characters |
-| [`MaxLengthFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field text has no more than a maximum number of characters |
-| [`MinValueFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Numeric field's value is greater than a lower limit |
-| [`MaxValueFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Numeric field's vaue is less than an upper limit |
-| [`RegExFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field text matches a regular expression |
-| [`DateFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Field contains a date in the correct format |
-| [`MinDateFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs after a certain starting point |
-| [`MaxDateFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs before a certain end point |
+| [`RequiredFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field is not left blank |
+| [`NumberFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains numeric data |
+| [`MinLengthFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has at least a minimum number of characters |
+| [`MaxLengthFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has no more than a maximum number of characters |
+| [`MinValueFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's value is greater than a lower limit |
+| [`MaxValueFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's vaue is less than an upper limit |
+| [`RegExFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text matches a regular expression |
+| [`DateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains a date in the correct format |
+| [`MinDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs after a certain starting point |
+| [`MaxDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs before a certain end point |
 
 The `FORM_FIELD_VALIDATORS` array contains an instance of each of these classes. You can assign this to the `fieldValidators` property of a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) or [Task Details component](../../process-services/components/task-details.component.md) to enable standard validation.
 
@@ -83,7 +83,7 @@ the form (currency values adding up to a given total, say).
 
 The `type` property of [`FormFieldModel`](../../core/models/form-field.model.md) is often used in the `isSupported` function, since
 validation methods typically apply only to specific types of data.
-The [`FormFieldTypes`](lib/core/src/lib/form/components/widgets/core/form-field-types.ts)
+The [`FormFieldTypes`](../../../lib/core/form/components/widgets/core/form-field-types.ts)
 class defines convenient constants for the type strings. 
 
 The validator in the example

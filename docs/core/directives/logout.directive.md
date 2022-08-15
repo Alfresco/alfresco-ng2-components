@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Logout directive](lib/core/src/lib/directives/logout.directive.ts "Defined in logout.directive.ts")
+# [Logout directive](../../../lib/core/directives/logout.directive.ts "Defined in logout.directive.ts")
 
 Logs the user out when the decorated element is clicked.
 

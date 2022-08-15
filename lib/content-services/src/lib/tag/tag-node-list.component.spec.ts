@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
@@ -55,6 +55,9 @@ describe('TagNodeList', () => {
     });
 
     beforeEach(() => {
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
+        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
         fixture = TestBed.createComponent(TagNodeListComponent);
 
         tagService = TestBed.inject(TagService);
@@ -67,59 +70,72 @@ describe('TagNodeList', () => {
 
     describe('Rendering tests', () => {
 
-        it('Tag list relative a single node should be rendered', async () => {
+        it('Tag list relative a single node should be rendered', (done) => {
             component.nodeId = 'fake-node-id';
 
+            component.results.subscribe(() => {
+                fixture.detectChanges();
+
+                expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
+                expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
+                expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
+
+                expect(element.querySelector('#tag_chips_delete_test1')).not.toBe(null);
+                expect(element.querySelector('#tag_chips_delete_test2')).not.toBe(null);
+                expect(element.querySelector('#tag_chips_delete_test3')).not.toBe(null);
+
+                done();
+            });
+
             component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
-            expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
-            expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
-
-            expect(element.querySelector('#tag_chips_delete_test1')).not.toBe(null);
-            expect(element.querySelector('#tag_chips_delete_test2')).not.toBe(null);
-            expect(element.querySelector('#tag_chips_delete_test3')).not.toBe(null);
         });
 
-        it('Tag list click on delete button should delete the tag', async () => {
+        it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
 
             spyOn(tagService, 'removeTag').and.returnValue(of(true));
 
+            component.results.subscribe(() => {
+                fixture.detectChanges();
+
+                const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
+                deleteButton.click();
+
+                expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                done();
+            });
+
             component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            deleteButton.click();
-
-            expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
         });
 
-        it('Should not show the delete tag button if showDelete is false', async () => {
+        it('Should not show the delete tag button if showDelete is false', (done) => {
             component.nodeId = 'fake-node-id';
             component.showDelete = false;
 
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
+            component.results.subscribe(() => {
+                fixture.detectChanges();
 
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            expect(deleteButton).toBeNull();
+                const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
+                expect(deleteButton).toBeNull();
+                done();
+            });
+
+            component.ngOnChanges();
         });
 
-        it('Should show the delete tag button if showDelete is true', async () => {
+        it('Should show the delete tag button if showDelete is true', (done) => {
             component.nodeId = 'fake-node-id';
             component.showDelete = true;
 
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
+            component.results.subscribe(() => {
+                fixture.detectChanges();
 
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            expect(deleteButton).not.toBeNull();
+                const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
+                expect(deleteButton).not.toBeNull();
+                done();
+            });
+
+            component.ngOnChanges();
         });
     });
 });

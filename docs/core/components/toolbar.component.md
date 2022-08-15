@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Toolbar Component](lib/core/src/lib/toolbar/toolbar.component.ts "Defined in toolbar.component.ts")
+# [Toolbar Component](../../../lib/core/toolbar/toolbar.component.ts "Defined in toolbar.component.ts")
 
 Simple container for headers, titles, actions and breadcrumbs.
 

@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
  import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
- import { UntypedFormGroup } from '@angular/forms';
+ import { FormGroup } from '@angular/forms';
  import { WidgetComponent } from './../widget.component';
 
  @Component({
@@ -32,7 +32,7 @@ export class CheckboxWidgetAnalyticsComponent extends WidgetComponent {
     field: any;
 
     @Input('group')
-    public formGroup: UntypedFormGroup;
+    public formGroup: FormGroup;
 
     @Input('controllerName')
     public controllerName: string;

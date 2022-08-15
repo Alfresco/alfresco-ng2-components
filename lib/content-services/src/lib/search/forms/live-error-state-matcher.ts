@@ -16,11 +16,11 @@
  */
 
 import { ErrorStateMatcher } from '@angular/material/core';
-import { UntypedFormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
 export class LiveErrorStateMatcher implements ErrorStateMatcher {
 
-    isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         const isSubmitted = form && form.submitted;
         return !!(control && control.invalid && (control.dirty || control.touched || (!control.pristine && isSubmitted)));
     }

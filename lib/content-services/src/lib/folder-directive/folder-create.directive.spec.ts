@@ -100,15 +100,16 @@ describe('FolderCreateDirective', () => {
             spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
 
-        it('should not emit folderCreate event when input value is undefined', async () => {
+        it('should not emit folderCreate event when input value is undefined', () => {
             spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(null));
             spyOn(contentService.folderCreate, 'next');
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
-            element.nativeElement.click();
-            expect(contentService.folderCreate.next).not.toHaveBeenCalled();
+            fixture.whenStable().then(() => {
+                element.nativeElement.click();
+                expect(contentService.folderCreate.next).not.toHaveBeenCalled();
+            });
         });
 
         it('should emit success event with node if the folder creation was successful', async () => {

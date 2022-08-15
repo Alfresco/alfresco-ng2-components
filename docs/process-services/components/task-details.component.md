@@ -24,7 +24,7 @@ Shows the details of the task ID passed in as input.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | debugMode | `boolean` | false | Toggles debug mode. |
-| fieldValidators | [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Field validators for use with the form. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Field validators for use with the form. |
 | readOnlyForm | `boolean` | false | Toggles read-only state of the form. All form widgets render as read-only if enabled. |
 | showChecklist | `boolean` | true | Toggles `Checklist` feature for the Header component. |
 | showComments | `boolean` | true | Toggles `Comments` feature for the Header component. |

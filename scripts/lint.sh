@@ -11,7 +11,7 @@ if grep "envalfresco" . -R --exclude-dir={.angular,.lib,.coverage,node_modules,.
 fi
 
 echo "Lint"
-nx affected:lint $NX_CALCULATION_FLAGS --parallel=5 || exit 1
+nx affected:lint --parallel=5 --all || exit 1
 
 echo "Style Lint"
 npm run stylelint || exit 1

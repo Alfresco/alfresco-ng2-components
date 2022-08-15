@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { getDeployedAppsProxy, getShareProxy, getApsProxy, getIdentityAdapterServiceProxy } = require('./proxy-helpers');
+const { getDeployedAppsProxy, getShareProxy, getApsProxy } = require('./proxy-helpers');
 
 const legacyHost = process.env.PROXY_HOST_ADF;
 const cloudHost = process.env.CLOUD_PROXY_HOST_ADF || process.env.PROXY_HOST_ADF;
@@ -10,6 +10,5 @@ const apsHost = process.env.PROXY_HOST_ADF;
 module.exports = {
     ...getShareProxy(legacyHost),
     ...getApsProxy(apsHost),
-    ...getDeployedAppsProxy(cloudHost, cloudApps),
-    ...getIdentityAdapterServiceProxy(cloudHost)
+    ...getDeployedAppsProxy(cloudHost, cloudApps)
 };

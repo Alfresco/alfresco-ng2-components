@@ -112,18 +112,42 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
+    it('should emit navigation event when clicking on an option', (done) => {
+        const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
 
-    it('should update document list when clicking on an option', async () => {
+        triggerComponentChange(fakeNodeWithCreatePermissionInstance);
+
+        fixture.whenStable().then(() => {
+
+            openSelect();
+
+            fixture.whenStable().then(() => {
+                component.navigate.subscribe((val) => {
+                    expect(val).toEqual({ id: '1', name: 'Stark Industries' });
+                    done();
+                });
+
+                clickOnTheFirstOption();
+            });
+        });
+    });
+
+    it('should update document list when clicking on an option', (done) => {
         component.target = documentList;
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
-        openSelect();
-        await fixture.whenStable();
-        clickOnTheFirstOption();
+        fixture.whenStable().then(() => {
+            openSelect();
+            fixture.whenStable().then(() => {
+                clickOnTheFirstOption();
 
-        expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, null);
+                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, null);
+                done();
+            });
+        });
     });
 
     it('should open the selectBox when clicking on the folder icon', (done) => {

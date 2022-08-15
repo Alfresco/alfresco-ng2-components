@@ -33,7 +33,7 @@ import { fakeFilter, fakeRepresentationFilter1, fakeRepresentationFilter2 } from
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
-import { TaskRepresentation, TaskUpdateRepresentation } from '@alfresco/js-api';
+import { TaskUpdateRepresentation } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
@@ -284,22 +284,21 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should remove a checklist task ', async () => {
-            await service.deleteTask('999').subscribe((res) => {
-                expect(res).toEqual({});
+        it('should remove a checklist task ', (done) => {
+            service.deleteTask('999').subscribe(() => {
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({})
+                contentType: 'application/json'
             });
         });
 
-        it('should complete the task', async () => {
-            await service.completeTask('999').subscribe((res: any) => {
+        it('should complete the task', (done) => {
+            service.completeTask('999').subscribe((res: any) => {
                 expect(res).toBeDefined();
-                expect(res).toEqual({});
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -309,11 +308,12 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the total number of tasks', async () => {
-            await service.getTotalTasks(fakeFilter).subscribe((res: any) => {
+        it('should return the total number of tasks', (done) => {
+            service.getTotalTasks(fakeFilter).subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.total).toEqual(1);
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -323,20 +323,21 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should create a new standalone task ', async () => {
+        it('should create a new standalone task ', (done) => {
             const taskFake = new TaskDetailsModel({
                 name: 'FakeNameTask',
                 description: 'FakeDescription',
                 category: '3'
             });
 
-            await service.createNewTask(taskFake).subscribe((res: TaskDetailsModel) => {
+            service.createNewTask(taskFake).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual('');
                 expect(res.name).toEqual('FakeNameTask');
                 expect(res.description).toEqual('FakeDescription');
                 expect(res.category).toEqual('3');
                 expect(res.created).not.toEqual(null);
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -353,9 +354,9 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should assign task to a user', async () => {
+        it('should assign task to a user', (done) => {
             const testTaskId = '8888';
-            await service.assignTask(testTaskId, fakeUser2).subscribe((res: TaskDetailsModel) => {
+            service.assignTask(testTaskId, fakeUser2).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(testTaskId);
                 expect(res.name).toEqual('FakeNameTask');
@@ -368,6 +369,7 @@ describe('Activiti TaskList Service', () => {
                 expect(res.involvedPeople[0].firstName).toEqual(fakeUser1.firstName);
                 expect(res.involvedPeople[0].lastName).toEqual(fakeUser1.lastName);
                 expect(res.involvedPeople[0].id).toEqual(fakeUser1.id);
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -386,9 +388,9 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should assign task to a userId', async () => {
+        it('should assign task to a userId', (done) => {
             const testTaskId = '8888';
-            await service.assignTaskByUserId(testTaskId, fakeUser2.id.toString()).subscribe((res: TaskDetailsModel) => {
+            service.assignTaskByUserId(testTaskId, fakeUser2.id.toString()).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(testTaskId);
                 expect(res.name).toEqual('FakeNameTask');
@@ -399,6 +401,7 @@ describe('Activiti TaskList Service', () => {
                 expect(res.assignee).toEqual(new UserProcessModel(fakeUser2));
                 expect(res.involvedPeople[0].email).toEqual(fakeUser1.email);
                 expect(res.involvedPeople[0].firstName).toEqual(fakeUser1.firstName);
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -417,11 +420,11 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should claim a task', async () => {
+        it('should claim a task', (done) => {
             const taskId = '111';
 
-            await service.claimTask(taskId).subscribe((res) => {
-                expect(res).toEqual({});
+            service.claimTask(taskId).subscribe(() => {
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -431,11 +434,11 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should unclaim a task', async() => {
+        it('should unclaim a task', (done) => {
             const taskId = '111';
 
-            await service.unclaimTask(taskId).subscribe((res) => {
-                expect(res).toEqual({});
+            service.unclaimTask(taskId).subscribe(() => {
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -445,14 +448,14 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should update a task', async() => {
+        it('should update a task', (done) => {
             const taskId = '111';
             const updated: TaskUpdateRepresentation = {
                 name: 'someName'
             };
 
-            await service.updateTask(taskId, updated).subscribe((res) => {
-                expect(res).toEqual(new TaskRepresentation({}));
+            service.updateTask(taskId, updated).subscribe(() => {
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -462,7 +465,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the filter if it contains task id', async () => {
+        it('should return the filter if it contains task id', (done) => {
             const taskId = '1';
             const filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',
@@ -475,9 +478,10 @@ describe('Activiti TaskList Service', () => {
                 }
             });
 
-            await service.isTaskRelatedToFilter(taskId, filterFake).subscribe((res: any) => {
+            service.isTaskRelatedToFilter(taskId, filterFake).subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res).not.toBeNull();
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -487,19 +491,20 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the filters if it contains task id', async () => {
+        it('should return the filters if it contains task id', (done) => {
             const taskId = '1';
 
             const fakeFilterList: FilterRepresentationModel[] = [];
             fakeFilterList.push(fakeRepresentationFilter1, fakeRepresentationFilter2);
             let resultFilter: FilterRepresentationModel = null;
-            await service.getFilterForTaskById(taskId, fakeFilterList).subscribe((res: FilterRepresentationModel) => {
+            service.getFilterForTaskById(taskId, fakeFilterList).subscribe((res: FilterRepresentationModel) => {
                 resultFilter = res;
             }, () => {
             }, () => {
                 expect(resultFilter).toBeDefined();
                 expect(resultFilter).not.toBeNull();
                 expect(resultFilter.name).toBe('CONTAIN FILTER');
+                done();
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
@@ -515,14 +520,15 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should get possible form list', async () => {
-            await service.getFormList().subscribe((res: any) => {
+        it('should get possible form list', (done) => {
+            service.getFormList().subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.length).toBe(2);
                 expect(res[0].id).toBe(1);
                 expect(res[0].name).toBe('form with all widgets');
                 expect(res[1].id).toBe(2);
                 expect(res[1].name).toBe('uppy');
+                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({

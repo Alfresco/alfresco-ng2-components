@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Node Service](lib/core/src/lib/form/services/node.service.ts "Defined in node.service.ts") **Deprecated**
+# [Node Service](../../../lib/core/form/services/node.service.ts "Defined in node.service.ts") **Deprecated**
 
 use [Nodes Api service](./nodes-api.service.md) instead of this.
 

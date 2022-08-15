@@ -57,7 +57,7 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| additionalSorting | [`DataSorting`](lib/core/src/lib/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
+| additionalSorting | [`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
 | allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |

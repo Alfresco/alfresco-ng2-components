@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Sites service](lib/core/src/lib/services/sites.service.ts "Defined in sites.service.ts")
+# [Sites service](../../../lib/core/services/sites.service.ts "Defined in sites.service.ts")
 
 Accesses and manipulates sites from a Content Services repository.
 

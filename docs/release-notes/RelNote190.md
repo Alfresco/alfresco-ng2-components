@@ -352,7 +352,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1251](https://issues.alfresco.com/jira/browse/ADF-1251)] - Remove mdl from demo shell
 -   \[[ADF-1492](https://issues.alfresco.com/jira/browse/ADF-1492)] - Document List - Export [`ContentNodeSelectorComponent`](../content-services/components/content-node-selector.component.md) and [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts)
 -   \[[ADF-1496](https://issues.alfresco.com/jira/browse/ADF-1496)] - Remove "Disable upload button when user has no permissions" switch.
--   \[[ADF-1504](https://issues.alfresco.com/jira/browse/ADF-1504)] - Rename UserInfoComponentModule to [`UserInfoModule`](lib/core/src/lib/userinfo/userinfo.module.ts)
+-   \[[ADF-1504](https://issues.alfresco.com/jira/browse/ADF-1504)] - Rename UserInfoComponentModule to [`UserInfoModule`](../../lib/core/userinfo/userinfo.module.ts)
 -   \[[ADF-1515](https://issues.alfresco.com/jira/browse/ADF-1515)] - Internationalization - ADF strings review
 -   \[[ADF-1517](https://issues.alfresco.com/jira/browse/ADF-1517)] - Prebuilt theme
 -   \[[ADF-1518](https://issues.alfresco.com/jira/browse/ADF-1518)] - Update material 2 to beta 10

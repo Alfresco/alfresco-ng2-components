@@ -272,7 +272,7 @@ We have added the [target] property in the [infinite pagination component](../co
 For more information about the infinite pagination see the following links:
 
 -   [Infinite pagination component](../core/components/infinite-pagination.component.md)
--   [Paginated component interface](lib/core/src/lib/pagination/paginated-component.interface.ts)
+-   [Paginated component interface](../../lib/core/pagination/paginated-component.interface.ts)
 
 ### 10. App drop-down dialog selector
 
@@ -365,7 +365,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 
 -   \[[ADF-1752](https://issues.alfresco.com/jira/browse/ADF-1752)] - allowInfoDrawer property does not disable the feature when showInfoDrawer is set to true
 -   \[[ADF-1882](https://issues.alfresco.com/jira/browse/ADF-1882)] - Preview uploaded content in APS fails in form
--   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [`ExternalContent`](lib/core/src/lib/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
+-   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [`ExternalContent`](../../lib/core/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
 -   \[[ADF-1889](https://issues.alfresco.com/jira/browse/ADF-1889)] - Viewer does not render PDF renditions unless urlFile ends with .pdf
 -   \[[ADF-1926](https://issues.alfresco.com/jira/browse/ADF-1926)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1959](https://issues.alfresco.com/jira/browse/ADF-1959)] - Apps with description appear with larger size on the Processes Services page

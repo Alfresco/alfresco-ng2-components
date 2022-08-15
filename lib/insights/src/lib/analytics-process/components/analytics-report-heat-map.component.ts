@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
@@ -39,13 +39,13 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     field: any = {};
 
-    metricForm: UntypedFormGroup;
+    metricForm: FormGroup;
     currentMetric: string;
     currentMetricColors: any;
     metricType: string;
 
     constructor(private analyticsService: AnalyticsService,
-                private formBuilder: UntypedFormBuilder) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -79,8 +79,8 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     initForm() {
         this.metricForm = this.formBuilder.group({
-            metricGroup: new UntypedFormGroup({
-                metric: new UntypedFormControl()
+            metricGroup: new FormGroup({
+                metric: new FormControl()
             })
         });
     }
@@ -91,8 +91,8 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
             this.report.avgTimePercentages);
     }
 
-    get metricGroup(): UntypedFormGroup {
-        return this.metricForm.controls.metricGroup as UntypedFormGroup;
+    get metricGroup(): FormGroup {
+        return this.metricForm.controls.metricGroup as FormGroup;
     }
 
 }

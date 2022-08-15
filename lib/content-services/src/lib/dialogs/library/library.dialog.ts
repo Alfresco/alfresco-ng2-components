@@ -25,10 +25,10 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {
-    UntypedFormBuilder,
-    UntypedFormGroup,
+    FormBuilder,
+    FormGroup,
     Validators,
-    UntypedFormControl,
+    FormControl,
     AbstractControl
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -59,7 +59,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     createTitle = 'LIBRARY.DIALOG.CREATE_TITLE';
     libraryTitleExists = false;
-    form: UntypedFormGroup;
+    form: FormGroup;
     visibilityOption: any;
     visibilityOptions = [
         { value: 'PUBLIC', label: 'LIBRARY.VISIBILITY.PUBLIC', disabled: false },
@@ -81,7 +81,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     constructor(
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
-        private formBuilder: UntypedFormBuilder,
+        private formBuilder: FormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>
     ) {
     }
@@ -235,7 +235,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private forbidSpecialCharacters({ value }: UntypedFormControl) {
+    private forbidSpecialCharacters({ value }: FormControl) {
         if (value === null || value.length === 0) {
             return null;
         }
@@ -250,7 +250,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
             };
     }
 
-    private forbidOnlySpaces({ value }: UntypedFormControl) {
+    private forbidOnlySpaces({ value }: FormControl) {
         if (value === null || value.length === 0) {
             return null;
         }

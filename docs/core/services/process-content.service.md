@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Process Content Service](lib/core/src/lib/form/services/process-content.service.ts "Defined in process-content.service.ts")
+# [Process Content Service](../../../lib/core/form/services/process-content.service.ts "Defined in process-content.service.ts")
 
 Manipulates content related to a Process Instance or Task Instance in APS.
 

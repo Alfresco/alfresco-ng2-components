@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Highlight directive](lib/core/src/lib/directives/highlight.directive.ts "Defined in highlight.directive.ts")
+# [Highlight directive](../../../lib/core/directives/highlight.directive.ts "Defined in highlight.directive.ts")
 
 Adds highlighting to selected sections of an HTML element's content.
 

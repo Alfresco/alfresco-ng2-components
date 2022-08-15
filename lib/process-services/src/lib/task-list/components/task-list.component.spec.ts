@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
@@ -689,7 +689,7 @@ describe('TaskListComponent', () => {
         expect(selectRow2).toBeNull();
     });
 
-    it('should select only one row when selection mode is set to SINGLE and multiselection is enabled', async () => {
+    it('should select only one row when selection mode is set to SINGLE and multiselection is enabled', fakeAsync(() => {
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
         const state = new SimpleChange(null, 'open', true);
         component.multiselect = true;
@@ -703,23 +703,24 @@ describe('TaskListComponent', () => {
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
-
         fixture.detectChanges();
-        await fixture.whenStable();
-        expect(component.selectedInstances.length).toBe(2);
 
-        // const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
-        // selectTask2Row.click();
+        fixture.whenStable().then(() => {
+            expect(component.selectedInstances.length).toBe(2);
+            const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
+            selectTask2Row.click();
 
-        // fixture.detectChanges();
-        // await fixture.whenStable();
-
-        // expect(component.selectedInstances.length).toBe(1);
-        // const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        // const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        // expect(selectRow1).toBeNull();
-        // expect(selectRow2).toBeDefined();
-    });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(component.selectedInstances.length).toBe(1);
+                const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+                const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+                expect(selectRow1).toBeNull();
+                expect(selectRow2).toBeDefined();
+            });
+        });
+    }));
 
     it('should change selected row after clicking on different row', async () => {
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));

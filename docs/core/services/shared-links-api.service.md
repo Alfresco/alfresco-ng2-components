@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Shared Links Api service](lib/core/src/lib/services/shared-links-api.service.ts "Defined in shared-links-api.service.ts")
+# [Shared Links Api service](../../../lib/core/services/shared-links-api.service.ts "Defined in shared-links-api.service.ts")
 
 Finds shared links to Content Services items.
 

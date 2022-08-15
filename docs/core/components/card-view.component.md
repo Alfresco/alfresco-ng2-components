@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-09
 ---
 
-# [Card View component](lib/core/src/lib/card-view/components/card-view/card-view.component.ts "Defined in card-view.component.ts")
+# [Card View component](../../../lib/core/card-view/components/card-view/card-view.component.ts "Defined in card-view.component.ts")
 
 Displays a configurable property list renderer.
 
@@ -114,7 +114,7 @@ Defining properties from Typescript:
 | displayNoneOption | `boolean` | true | Toggles whether or not to display none option. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
 | multiValueSeparator | `string` | DEFAULT_SEPARATOR | String separator between multi-value property items. |
-| properties | [`CardViewItem`](lib/core/src/lib/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
+| properties | [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
 | useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
 
 ## Details
@@ -171,12 +171,12 @@ clicked item.
 
 The `properties` array contains instances of models that represent the layout of the Card View.
 The ordering of the models in the array matches the ordering of items in the view. Each of the
-models extends the abstract [`CardViewBaseItemModel`](lib/core/src/lib/card-view/models/card-view-baseitem.model.ts) class to add functionality for
+models extends the abstract [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts) class to add functionality for
 specific data types, as described below.
 
 #### Card Text Item
 
-[`CardViewTextItemModel`](lib/core/src/lib/card-view/models/card-view-textitem.model.ts) is a property type for text properties.
+[`CardViewTextItemModel`](../../../lib/core/card-view/models/card-view-textitem.model.ts) is a property type for text properties.
 
 ```ts
 const textItemProperty = new CardViewTextItemModel(options);
@@ -197,7 +197,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | multiValueSeparator | `string` | ',' | String separator between multi-value property items. |
 | icon | string |  | The material icon to show beside the item if it is clickable |
 | multiline | boolean | false | Single or multiline text |
-| pipes | [`CardViewTextItemPipeProperty`](lib/core/src/lib/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
+| pipes | [`CardViewTextItemPipeProperty`](../../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
 
 ##### Using pipes with a Card Text Item
 
@@ -221,7 +221,7 @@ new CardViewTextItemModel({
 
 #### Card Map Item
 
-[`CardViewMapItemModel`](lib/core/src/lib/card-view/models/card-view-mapitem.model.ts) is a property type for map properties.
+[`CardViewMapItemModel`](../../../lib/core/card-view/models/card-view-mapitem.model.ts) is a property type for map properties.
 
 ```ts
 const mapItemProperty = new CardViewMapItemModel(options);
@@ -238,7 +238,7 @@ const mapItemProperty = new CardViewMapItemModel(options);
 
 #### Card Date Item
 
-[`CardViewDateItemModel`](lib/core/src/lib/card-view/models/card-view-dateitem.model.ts) is a property type for date properties.
+[`CardViewDateItemModel`](../../../lib/core/card-view/models/card-view-dateitem.model.ts) is a property type for date properties.
 
 ```ts
 const dateItemProperty = new CardViewDateItemModel(options);
@@ -257,7 +257,7 @@ const dateItemProperty = new CardViewDateItemModel(options);
 
 #### Card Datetime Item
 
-[`CardViewDatetimeItemModel`](lib/core/src/lib/card-view/models/card-view-datetimeitem.model.ts) is a property type for datetime properties.
+[`CardViewDatetimeItemModel`](../../../lib/core/card-view/models/card-view-datetimeitem.model.ts) is a property type for datetime properties.
 
 ```ts
 const datetimeItemProperty = new CardViewDatetimeItemModel(options);
@@ -275,7 +275,7 @@ const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 
 #### Card Bool Item
 
-[`CardViewBoolItemModel`](lib/core/src/lib/card-view/models/card-view-boolitem.model.ts) is a property type for boolean properties.
+[`CardViewBoolItemModel`](../../../lib/core/card-view/models/card-view-boolitem.model.ts) is a property type for boolean properties.
 
 ```ts
 const boolItemProperty = new CardViewBoolItemModel(options);
@@ -292,7 +292,7 @@ const boolItemProperty = new CardViewBoolItemModel(options);
 
 #### Card Int Item
 
-[`CardViewIntItemModel`](lib/core/src/lib/card-view/models/card-view-intitem.model.ts) is a property type for integer properties.
+[`CardViewIntItemModel`](../../../lib/core/card-view/models/card-view-intitem.model.ts) is a property type for integer properties.
 
 ```ts
 const intItemProperty = new CardViewIntItemModel(options);
@@ -309,7 +309,7 @@ const intItemProperty = new CardViewIntItemModel(options);
 
 #### Card Float Item
 
-[`CardViewFloatItemModel`](lib/core/src/lib/card-view/models/card-view-floatitem.model.ts) is a property type for float properties.
+[`CardViewFloatItemModel`](../../../lib/core/card-view/models/card-view-floatitem.model.ts) is a property type for float properties.
 
 ```ts
 const floatItemProperty = new CardViewFloatItemModel(options);
@@ -326,7 +326,7 @@ const floatItemProperty = new CardViewFloatItemModel(options);
 
 #### Card Key Value Pairs Item
 
-[`CardViewKeyValuePairsItemModel`](lib/core/src/lib/card-view/models/card-view-keyvaluepairs.model.ts) is a property type for key-value properties.
+[`CardViewKeyValuePairsItemModel`](../../../lib/core/card-view/models/card-view-keyvaluepairs.model.ts) is a property type for key-value properties.
 
 ```ts
 const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
@@ -341,7 +341,7 @@ const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 
 #### Card Select Item
 
-[`CardViewSelectItemModel`](lib/core/src/lib/card-view/models/card-view-selectitem.model.ts) is a property type for select properties.
+[`CardViewSelectItemModel`](../../../lib/core/card-view/models/card-view-selectitem.model.ts) is a property type for select properties.
 
 ```ts
 const selectItemProperty = new CardViewSelectItemModel(options);
@@ -357,7 +357,7 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 
 #### Card Array Item
 
-[`CardViewArrayItemModel`](lib/core/src/lib/card-view/models/card-view-arrayitem.model.ts) is a property type for array properties.
+[`CardViewArrayItemModel`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts) is a property type for array properties.
 
 ```ts
 const arrayItemProperty = new CardViewArrayItemModel(items);

@@ -363,7 +363,7 @@ describe('TaskListCloudComponent', () => {
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reset pagination when resetPaginationValues is called', async (done) => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -387,9 +387,8 @@ describe('TaskListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            fixture.whenStable().then( () => {
-                component.resetPagination();
-            });
+            await fixture.whenStable();
+            component.resetPagination();
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {

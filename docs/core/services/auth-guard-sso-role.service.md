@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-19
 ---
 
-# [Auth Guard SSO role service](lib/core/src/lib/services/auth-guard-sso-role.service.ts "Defined in auth-guard-sso-role.service.ts")
+# [Auth Guard SSO role service](../../../lib/core/services/auth-guard-sso-role.service.ts "Defined in auth-guard-sso-role.service.ts")
 
 Checks the user roles of a user.
 

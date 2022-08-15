@@ -87,7 +87,7 @@ You can intercept the upload process using the `beginUpload` event.
 
 The event has a type of [`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts) and provides the following APIs:
 
--   **files**: accesses the [`FileInfo`](lib/core/src/lib/utils/file-utils.ts) objects that are prepared for the upload
+-   **files**: accesses the [`FileInfo`](../../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
 -   **pauseUpload**: pauses the upload and performs additional tasks, like showing the confirmation dialog
 -   **resumeUpload**: resumes the upload process
 

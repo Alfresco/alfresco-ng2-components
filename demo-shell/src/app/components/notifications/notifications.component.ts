@@ -18,7 +18,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
-import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     actionOutput = '';
     snackBarConfigObject = '';
 
-    configForm: UntypedFormGroup;
+    configForm: FormGroup;
 
     snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
 
@@ -60,16 +60,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private notificationService: NotificationService,
-                private formBuilder: UntypedFormBuilder) {
+                private formBuilder: FormBuilder) {
         this.snackBarConfig.duration = this.defaultDuration;
     }
 
     ngOnInit() {
         this.configForm = this.formBuilder.group({
-            direction: new UntypedFormControl(''),
-            horizontalPosition: new UntypedFormControl(''),
-            verticalPosition: new UntypedFormControl(''),
-            duration: new UntypedFormControl('')
+            direction: new FormControl(''),
+            horizontalPosition: new FormControl(''),
+            verticalPosition: new FormControl(''),
+            duration: new FormControl('')
         });
 
         this.configForm.valueChanges

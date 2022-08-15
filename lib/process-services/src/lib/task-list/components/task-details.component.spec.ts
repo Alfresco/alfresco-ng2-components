@@ -130,9 +130,10 @@ describe('TaskDetailsComponent', () => {
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
 
-    it('should send a claim task event when a task is claimed', async () => {
-        await component.claimedTask.subscribe((taskId) => {
+    it('should send a claim task event when a task is claimed', (done) => {
+        component.claimedTask.subscribe((taskId) => {
             expect(taskId).toBe('FAKE-TASK-CLAIM');
+            done();
         });
         component.onClaimAction('FAKE-TASK-CLAIM');
     });
@@ -210,6 +211,22 @@ describe('TaskDetailsComponent', () => {
             component.ngOnChanges({ taskId: change });
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
+
+        it('should NOT fetch new task details when empty changeset made', fakeAsync(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({});
+                expect(getTaskDetailsSpy).not.toHaveBeenCalled();
+            });
+        }));
+
+        it('should NOT fetch new task details when taskId changed to null', fakeAsync(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                component.ngOnChanges({ taskId: nullChange });
+                expect(getTaskDetailsSpy).not.toHaveBeenCalled();
+            });
+        }));
 
         it('should set a placeholder message when taskId changed to null', () => {
             component.ngOnChanges({ taskId: nullChange });
@@ -397,7 +414,7 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should return an observable with user search results', async () => {
+        it('should return an observable with user search results', (done) => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([{
                 id: 1,
                 firstName: 'fake-test-1',
@@ -410,33 +427,35 @@ describe('TaskDetailsComponent', () => {
                 email: 'fake-test-2@test.com'
             }]));
 
-            await component.peopleSearch.subscribe((users) => {
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
                 expect(users[0].lastName).toBe('fake-last-1');
                 expect(users[0].email).toBe('fake-test-1@test.com');
                 expect(users[0].id).toBe(1);
+                done();
             });
             component.searchUser('fake-search-word');
         });
 
-        it('should return an empty list for not valid search', async () => {
+        it('should return an empty list for not valid search', (done) => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
-            await component.peopleSearch.subscribe((users) => {
+            component.peopleSearch.subscribe((users) => {
                 expect(users.length).toBe(0);
+                done();
             });
             component.searchUser('fake-search-word');
         });
 
-        it('should log error message when search fails', async () => {
+        it('should log error message when search fails', fakeAsync(() => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(''));
 
-            await component.peopleSearch.subscribe(() => {
+            component.peopleSearch.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
             component.searchUser('fake-search');
-        });
+        }));
 
         it('should assign task to user', () => {
             component.assignTaskToUser(fakeUser);

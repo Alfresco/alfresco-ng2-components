@@ -47,7 +47,7 @@ Starts a process.
 | showSelectApplicationDropdown | `boolean` | false | (optional) Hide or show application selection dropdown. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
 | title | `string` |  | (optional) Define the header of the component. |
-| values | [`FormValues`](lib/core/src/lib/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
+| values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/RestVariable.md). |
 
 ### Events

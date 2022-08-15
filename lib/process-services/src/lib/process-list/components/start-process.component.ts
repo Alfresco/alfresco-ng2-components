@@ -30,7 +30,7 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-import { UntypedFormControl, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -117,8 +117,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
     selectedProcessDef: ProcessDefinitionRepresentation;
-    processNameInput: UntypedFormControl;
-    processDefinitionInput: UntypedFormControl;
+    processNameInput: FormControl;
+    processDefinitionInput: FormControl;
     filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = MAX_LENGTH;
     alfrescoRepositoryName: string;
@@ -138,8 +138,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
 
     ngOnInit() {
-        this.processNameInput = new UntypedFormControl('', [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
-        this.processDefinitionInput = new UntypedFormControl();
+        this.processNameInput = new FormControl('', [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
+        this.processDefinitionInput = new FormControl();
 
         this.load();
 

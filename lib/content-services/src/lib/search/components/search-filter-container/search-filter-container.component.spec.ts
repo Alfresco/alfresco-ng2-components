@@ -125,27 +125,20 @@ describe('SearchFilterContainerComponent', () => {
         expect(queryBuilder.getActiveFilters().length).toBe(0);
     });
 
-    it('should emit filterChange after the Enter key is pressed', async () => {
+    it('should emit filterChange after the Enter key is pressed', async (done) => {
         spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
-
-        let eventRaised = false;
         component.filterChange.subscribe(() => {
-            eventRaised = true;
+            done();
         });
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
         menuButton.click();
-
         fixture.detectChanges();
         await fixture.whenStable();
-
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
         widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
-
         fixture.detectChanges();
         await fixture.whenStable();
-
-        expect(eventRaised).toBe(true);
     });
 
     describe('Accessibility', () => {

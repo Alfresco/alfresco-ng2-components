@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-03-20
 ---
 
-# [Form Field model](lib/core/src/lib/form/components/widgets/core/form-field.model.ts "Defined in form-field.model.ts")
+# [Form Field model](../../../lib/core/form/components/widgets/core/form-field.model.ts "Defined in form-field.model.ts")
 
 Contains the value and metadata for a field of a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) component.
 
@@ -30,7 +30,7 @@ Contains the value and metadata for a field of a [`Form`](../../../lib/process-s
 | minValue | string |  | Minimum allowed value (eg, for number or date) |
 | maxValue | string |  | Minimum allowed value (eg, for number or date) |
 | regexPattern | string |  | Regular expression that text data should match |
-| options | [`FormFieldOption`](lib/core/src/lib/form/components/widgets/core/form-field-option.ts)\[] | \[] | Option items for a dropdown menu |
+| options | [`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts)\[] | \[] | Option items for a dropdown menu |
 | restUrl | string |  | URL for a REST call to populate a dropdown menu |
 | restResponsePath | string |  | Path within REST response JSON to the array of dropdown data |
 | restIdProperty | string |  | JSON property name to use for the `id` property of a dropdown item |
@@ -38,19 +38,19 @@ Contains the value and metadata for a field of a [`Form`](../../../lib/process-s
 | hasEmptyValue | boolean |  | Is the field's value empty? (eg, dropdown with no item selected) |
 | className | string |  | CSS class name for the field |
 | optionType | string |  |  |
-| params | [`FormFieldMetadata`](lib/core/src/lib/form/components/widgets/core/form-field-metadata.ts) | {} |  |
+| params | [`FormFieldMetadata`](../../../lib/core/form/components/widgets/core/form-field-metadata.ts) | {} |  |
 | hyperlinkUrl | string |  | URL for Hyperlink widgets |
 | displayText | string |  | Displayed text for Hyperlink widgets |
 | isVisible | boolean | true | Is the field shown on the form? |
-| visibilityCondition | [`WidgetVisibilityModel`](lib/core/src/lib/form/models/widget-visibility.model.ts) | null | Defines a expression that determines whether the field is visible or not, based on its logical relation to values in other fields |
+| visibilityCondition | [`WidgetVisibilityModel`](../../../lib/core/form/models/widget-visibility.model.ts) | null | Defines a expression that determines whether the field is visible or not, based on its logical relation to values in other fields |
 | enableFractions | boolean | false | Are numeric values allowed to contain a decimal point? |
 | currency | string | null | Currency symbol for Amount widgets |
 | dateDisplayFormat | string |  | Date/time display format template |
 | numberOfColumns | number | 1 | Number of columns defined by a container field |
 | fields | [`FormFieldModel`](../../core/models/form-field.model.md)\[] | \[] | Fields contained within a container field |
-| columns | [`ContainerColumnModel`](lib/core/src/lib/form/components/widgets/core/container-column.model.ts)\[] | \[] | Column definitions for a container field |
-| emptyOption | [`FormFieldOption`](lib/core/src/lib/form/components/widgets/core/form-field-option.ts) |  | Dropdown menu item to use when no option is chosen |
-| validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) interface) |
+| columns | [`ContainerColumnModel`](../../../lib/core/form/components/widgets/core/container-column.model.ts)\[] | \[] | Column definitions for a container field |
+| emptyOption | [`FormFieldOption`](../../../lib/core/form/components/widgets/core/form-field-option.ts) |  | Dropdown menu item to use when no option is chosen |
+| validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) interface) |
 
 ## Details
 
@@ -73,7 +73,7 @@ check to a field. A number of [`FormFieldModel`](../../core/models/form-field.mo
 example, `minValue` and `maxValue` are used to check that a numeric value falls within an
 allowed range and `regexPattern` defines a regular expression that a text field should
 match. Also, the `validationSummary` is used to send a message back from the validator
-for the user to read. See the [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts) page for more information about implementing validators.
+for the user to read. See the [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) page for more information about implementing validators.
 
 ### REST properties
 
@@ -97,6 +97,6 @@ contains full details about how the REST calls work, along with a worked example
 ## See also
 
 -   [Extensibility](../../user-guide/extensibility.md)
--   [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)
+-   [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)
 -   [Form rendering service](../services/form-rendering.service.md)
 -   [Form component](../components/form.component.md)

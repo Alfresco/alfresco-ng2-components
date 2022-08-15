@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-12
 ---
 
-# [Full name pipe](lib/core/src/lib/pipes/full-name.pipe.ts "Defined in full-name.pipe.ts")
+# [Full name pipe](../../../lib/core/pipes/full-name.pipe.ts "Defined in full-name.pipe.ts")
 
 Joins the first and last name properties from a [`UserProcessModel`](../../core/models/user-process.model.md) object into a single string.
 

@@ -17,7 +17,7 @@
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormService } from '@alfresco/adf-core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
@@ -52,7 +52,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     mode: ComponentSelectionMode;
     title: string;
     preSelectUsers: IdentityUserModel[];
-    search: UntypedFormControl;
+    search: FormControl;
     groupsRestriction: string[];
     validate = false;
 
@@ -70,7 +70,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
+        this.search = new FormControl({value: '', disabled: this.field.readOnly}, []),
 
         this.search.statusChanges
             .pipe(

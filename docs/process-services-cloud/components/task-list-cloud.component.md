@@ -215,8 +215,8 @@ The Tasklist also supports pagination as shown in the example below:
 
 ### DataTableAdapter example
 
-See the [`DataTableAdapter`](lib/core/src/lib/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
-implementation, [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
+See the [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
+implementation, [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
 typical tasklist.
 
 ```json
@@ -230,7 +230,7 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](lib/core/src/lib/datatable/data/data-column.model.ts) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
 
 #### showRowContextMenu event
 

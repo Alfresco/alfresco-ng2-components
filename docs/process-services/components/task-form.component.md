@@ -23,7 +23,7 @@ Shows a [`form`](../../../lib/process-services/src/lib/task-list/models/form.mod
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| fieldValidators | [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Field validators for use with the form. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Field validators for use with the form. |
 | readOnlyForm | `boolean` | false | Toggles read-only state of the form. All form widgets render as read-only if enabled. |
 | showCancelButton | `boolean` | true | Toggle rendering of the `Cancel` button. |
 | showFormCompleteButton | `boolean` | true | Toggles rendering of the `Complete` outcome button. |

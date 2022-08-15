@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {
     SharedLinksApiService,
@@ -57,9 +57,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     baseShareUrl: string;
     isFileShared: boolean = false;
     isDisabled: boolean = false;
-    form: UntypedFormGroup = new UntypedFormGroup({
-        sharedUrl: new UntypedFormControl(''),
-        time: new UntypedFormControl({ value: '', disabled: true })
+    form: FormGroup = new FormGroup({
+        sharedUrl: new FormControl(''),
+        time: new FormControl({ value: '', disabled: true })
     });
     type: DatePickerType = 'datetime';
     maxDebounceTime = 500;

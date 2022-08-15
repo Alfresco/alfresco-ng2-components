@@ -47,8 +47,7 @@ describe('ContentNodeSelectorComponent', () => {
             imageResolver: () => 'piccolo',
             currentFolderId: 'cat-girl-nuku-nuku',
             selectionMode: 'multiple',
-            showLocalUploadButton: true,
-            restrictRootToCurrentFolderId: true
+            showLocalUploadButton: true
         };
 
         TestBed.configureTestingModule({
@@ -75,17 +74,15 @@ describe('ContentNodeSelectorComponent', () => {
 
         const documentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
-
         dialog = TestBed.inject(MatDialogRef);
         uploadService = TestBed.inject(UploadService);
 
-        spyOn(documentListService, 'getFolder');
-        spyOn(documentListService, 'getFolderNode');
+        spyOn(documentListService, 'getFolder').and.callThrough();
+        spyOn(documentListService, 'getFolderNode').and.callThrough();
         spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
-
         const contentService = TestBed.inject(ContentService);
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 

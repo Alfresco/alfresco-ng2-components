@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [User Preferences Service](lib/core/src/lib/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
+# [User Preferences Service](../../../lib/core/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
 
 Stores preferences for the app and for individual components.
 
@@ -112,7 +112,7 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](lib/core/src/lib/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale**, **SupportedPageSizes** and **ExpandedSideNavStatus**.
+A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale**, **SupportedPageSizes** and **ExpandedSideNavStatus**.
 
 ```ts
     userPreferences.disableCSRF = true;
