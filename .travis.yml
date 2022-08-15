@@ -51,7 +51,7 @@ branches:
   - develop
 #remove after upgrade
   - angular-upgrade-v13
-  - angular-upgrade-v14
+  - angular-14-rebase
   - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
