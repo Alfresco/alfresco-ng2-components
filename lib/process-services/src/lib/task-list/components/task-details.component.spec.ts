@@ -211,12 +211,6 @@ describe('TaskDetailsComponent', () => {
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new task details when taskId changed to null', async () => {
-
-            component.ngOnChanges({ taskId: nullChange });
-            expect(getTaskDetailsSpy).not.toHaveBeenCalled();
-        });
-
         it('should set a placeholder message when taskId changed to null', () => {
             component.ngOnChanges({ taskId: nullChange });
             fixture.detectChanges();
