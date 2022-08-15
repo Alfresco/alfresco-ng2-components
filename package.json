@@ -137,7 +137,7 @@
     "@playwright/test": "^1.20.0",
     "@quanzo/change-font-size": "1.0.0",
     "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/angular": "6.5.9",
+    "@storybook/angular": "6.5.10",
     "@storybook/builder-webpack5": "6.5.9",
     "@storybook/manager-webpack5": "6.5.9",
     "@types/jasmine": "4.0.3",
