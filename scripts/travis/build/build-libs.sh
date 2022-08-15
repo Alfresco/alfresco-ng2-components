@@ -25,7 +25,7 @@ then
 
     if [[ $TRAVIS_BRANCH =~ angular-14-rebase ]]
     then
-      ./scripts/update-version.sh -gnu -nextalpha -major || exit 1;
+      ./scripts/update-version.sh -gnu -nextalpha || exit 1;
     fi
 
     node ./scripts/pre-publish.js
