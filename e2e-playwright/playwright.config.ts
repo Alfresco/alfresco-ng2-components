@@ -8,7 +8,7 @@
  */
 
 import { PlaywrightTestConfig, ReporterDescription, WebServerConfig } from '@playwright/test';
-import { dotenvConfig } from '@alfresco/adf-cli/tooling';
+import { dotenvConfig } from '../lib/cli/tooling';
 import { paths } from './utils/paths';
 import { timeouts } from './utils/timeouts';
 import path from 'path';

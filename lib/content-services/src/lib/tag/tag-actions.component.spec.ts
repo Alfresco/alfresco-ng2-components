@@ -18,35 +18,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TagActionsComponent } from './tag-actions.component';
+import { TagService } from './services/tag.service';
+import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-declare let jasmine: any;
-
 describe('TagActionsComponent', () => {
-
-    let component: any;
-    let fixture: ComponentFixture<TagActionsComponent>;
-    let element: HTMLElement;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TagActionsComponent);
-
-        element = fixture.nativeElement;
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
 
     const dataTag = {
         list: {
@@ -65,206 +42,104 @@ describe('TagActionsComponent', () => {
         }
     };
 
+    let component: any;
+    let fixture: ComponentFixture<TagActionsComponent>;
+    let element: HTMLElement;
+    let tagService: TagService;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TagActionsComponent);
+        tagService = TestBed.inject(TagService);
+        spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('Rendering tests', () => {
 
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
 
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
-        it('Tag list relative a single node should be rendered', (done) => {
+        it('Tag list relative a single node should be rendered', async () => {
             component.nodeId = 'fake-node-id';
 
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                expect(element.querySelector('#tag_name_test1').innerHTML.trim()).toBe('test1');
-                expect(element.querySelector('#tag_name_test2').innerHTML.trim()).toBe('test2');
-                expect(element.querySelector('#tag_name_test3').innerHTML.trim()).toBe('test3');
-
-                expect(element.querySelector('#tag_delete_test1')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_test2')).not.toBe(null);
-                expect(element.querySelector('#tag_delete_test3')).not.toBe(null);
-
-                done();
-            });
-
             component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
+            expect(element.querySelector('#tag_name_test1').innerHTML.trim()).toBe('test1');
+            expect(element.querySelector('#tag_name_test2').innerHTML.trim()).toBe('test2');
+            expect(element.querySelector('#tag_name_test3').innerHTML.trim()).toBe('test3');
+
+            expect(element.querySelector('#tag_delete_test1')).not.toBe(null);
+            expect(element.querySelector('#tag_delete_test2')).not.toBe(null);
+            expect(element.querySelector('#tag_delete_test3')).not.toBe(null);
+
         });
 
-        it('Tag list click on delete button should delete the tag', (done) => {
+        it('Tag list click on delete button should delete the tag', async () => {
             component.nodeId = 'fake-node-id';
 
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                const deleteButton: any = element.querySelector('#tag_delete_test1');
-                deleteButton.click();
-
-                expect(jasmine.Ajax.requests.at(1).url)
-                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
-                expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json'
-                });
-
-                done();
-            });
+            spyOn(tagService, 'removeTag').and.returnValue(of(true));
 
             component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
+            const deleteButton: any = element.querySelector('#tag_delete_test1');
+            deleteButton.click();
+            expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
         });
 
-        it('Add tag', (done) => {
+        it('Add tag should be disabled by default', async () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
             fixture.detectChanges();
-
-            component.successAdd.subscribe(() => {
-                done();
-            });
-
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                const addButton: any = element.querySelector('#add-tag');
-                addButton.click();
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200
-                });
-            });
-
-            component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
-
-        });
-
-        it('The input box should be cleared after add tag', (done) => {
-            component.nodeId = 'fake-node-id';
-            component.newTagName = 'fake-tag-name';
-
-            fixture.detectChanges();
-
-            component.successAdd.subscribe(() => {
-                expect(component.newTagName).toBe('');
-                done();
-            });
-
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                const addButton: any = element.querySelector('#add-tag');
-                addButton.click();
-
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200
-                });
-            });
-
-            component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
-        });
-
-        it('Add tag should be disabled by default', () => {
-            component.nodeId = 'fake-node-id';
-            component.newTagName = 'fake-tag-name';
-
-            fixture.detectChanges();
+            await fixture.whenStable();
 
             const addButton: any = element.querySelector('#add-tag');
             expect(addButton.disabled).toEqual(true);
         });
 
-        it('Add tag should return an error if the tag is already present', (done) => {
+        it('Add tag should return an error if the tag is already present', async () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'test1';
 
+
+            await component.error.subscribe( (res) => {
+                expect(res).toEqual('TAG.MESSAGES.EXIST');
+            });
+
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            component.error.subscribe(() => {
-                done();
-            });
-
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                const addButton: any = element.querySelector('#add-tag');
-                addButton.click();
-            });
-
-            component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
+            const addButton: any = element.querySelector('#add-tag');
+            addButton.click();
         });
 
-        it('Add tag should be disabled if the node id is not a correct node', (done) => {
+        it('Add tag should be enable if the node id is a correct node', async () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
-            component.result.subscribe(() => {
-                const addButton: any = element.querySelector('#add-tag');
-                expect(addButton.disabled).toEqual(true);
-                done();
-            });
 
             component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 404
-            });
-        });
-
-        it('Add tag should be enable if the node id is a correct node', (done) => {
-            component.nodeId = 'fake-node-id';
-            component.newTagName = 'fake-tag-name';
-
-            component.result.subscribe(() => {
-                fixture.detectChanges();
-
-                const addButton: any = element.querySelector('#add-tag');
-                expect(addButton.disabled).toEqual(false);
-                done();
-            });
-
-            component.ngOnChanges();
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: dataTag
-            });
+            const addButton: any = element.querySelector('#add-tag');
+            expect(addButton.disabled).toEqual(false);
         });
     });
 });

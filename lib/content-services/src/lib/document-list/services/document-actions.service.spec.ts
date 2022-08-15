@@ -96,30 +96,28 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('delete')).toBeDefined();
     });
 
-    it('should not delete the file node if there are no permissions', (done) => {
+    it('should not delete the file node if there are no permissions', async () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        service.permissionEvent.subscribe((permission) => {
+        await service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
             expect(permission.type).toEqual('content');
             expect(permission.action).toEqual('delete');
-            done();
         });
 
         const file = new FileNode();
         service.getHandler('delete')(file);
    });
 
-    it('should call the error on the returned Observable if there are no permissions', (done) => {
+    it('should call the error on the returned Observable if there are no permissions', async () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
         const file = new FileNode();
         const deleteObservable = service.getHandler('delete')(file);
 
-        deleteObservable.subscribe({
+        await deleteObservable.subscribe({
             error: (error) => {
                 expect(error.message).toEqual('No permission to delete');
-                done();
             }
         });
     });
@@ -136,14 +134,13 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
     });
 
-    it('should not delete the file node if there is no delete permission', (done) => {
+    it('should not delete the file node if there is no delete permission', async () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
-        service.permissionEvent.subscribe((permissionBack) => {
+        await service.permissionEvent.subscribe((permissionBack) => {
             expect(permissionBack).toBeDefined();
             expect(permissionBack.type).toEqual('content');
             expect(permissionBack.action).toEqual('delete');
-            done();
         });
 
         const permission = 'delete';
@@ -207,10 +204,9 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should emit success event upon node deletion', (done) => {
-        service.success.subscribe((message) => {
+    it('should emit success event upon node deletion', async () => {
+        await service.success.subscribe((message) => {
             expect(message).toEqual('CORE.DELETE_NODE.SINGULAR');
-            done();
         });
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 

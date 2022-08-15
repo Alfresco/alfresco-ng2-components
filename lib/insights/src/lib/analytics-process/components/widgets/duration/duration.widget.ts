@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { NumberWidgetAnalyticsComponent } from './../number/number.widget';
@@ -35,7 +35,7 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
     field: any;
 
     @Input('group')
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
 
     @Input('controllerName')
     public controllerName: string;
@@ -46,14 +46,14 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
     duration: ReportParameterDetailsModel;
     currentValue: number;
 
-    public selectionGroup: FormGroup;
+    public selectionGroup: UntypedFormGroup;
 
     constructor(public elementRef: ElementRef) {
         super(elementRef);
     }
 
     ngOnInit() {
-        const timeType = new FormControl();
+        const timeType = new UntypedFormControl();
         this.formGroup.addControl('timeType', timeType);
 
         if (this.required) {

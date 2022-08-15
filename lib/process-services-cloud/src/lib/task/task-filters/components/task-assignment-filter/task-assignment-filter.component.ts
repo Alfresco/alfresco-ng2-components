@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
@@ -39,7 +39,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
 
     assignmentType: AssignmentType;
     candidateGroups: IdentityGroupModel[] = [];
-    groupForm = new FormControl('');
+    groupForm = new UntypedFormControl('');
     assignmentTypeList = {
         unassigned: AssignmentType.UNASSIGNED,
         currentUser: AssignmentType.CURRENT_USER,

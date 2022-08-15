@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, AbstractControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'adf-cloud-task-filter-dialog',
@@ -30,10 +30,10 @@ export class TaskFilterDialogCloudComponent implements OnInit {
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 
-    filterForm: FormGroup;
+    filterForm: UntypedFormGroup;
 
     constructor(
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         public dialogRef: MatDialogRef<TaskFilterDialogCloudComponent>,
         @Inject(MAT_DIALOG_DATA) public data) {
     }

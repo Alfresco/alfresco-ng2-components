@@ -17,7 +17,7 @@
 
 import { UserProcessModel, TranslationService, PeopleProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
@@ -43,7 +43,7 @@ export class PeopleSearchFieldComponent {
     rowClick = new EventEmitter<UserProcessModel>();
 
     users$: Observable<UserProcessModel[]>;
-    searchUser: FormControl = new FormControl();
+    searchUser: UntypedFormControl = new UntypedFormControl();
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
 

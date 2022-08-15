@@ -19,7 +19,7 @@ import moment from 'moment';
 
 import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
@@ -31,7 +31,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 })
 export class NodeLockDialogComponent implements OnInit {
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     node: Node = null;
     nodeName: string;
 
@@ -42,7 +42,7 @@ export class NodeLockDialogComponent implements OnInit {
     }
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
         private alfrescoApi: AlfrescoApiService,
         @Optional()

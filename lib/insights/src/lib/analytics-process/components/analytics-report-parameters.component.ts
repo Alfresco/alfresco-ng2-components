@@ -29,7 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
@@ -93,7 +93,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     successParamOpt = new EventEmitter();
 
     reportParameters: ReportParametersModel;
-    reportForm: FormGroup;
+    reportForm: UntypedFormGroup;
     action: string;
     isEditable: boolean = false;
     reportName: string;
@@ -104,7 +104,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private analyticsService: AnalyticsService,
-                private formBuilder: FormBuilder,
+                private formBuilder: UntypedFormBuilder,
                 private logService: LogService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
@@ -330,36 +330,36 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
     }
 
-    get taskGroup(): FormGroup {
-        return this.reportForm.controls.taskGroup as FormGroup;
+    get taskGroup(): UntypedFormGroup {
+        return this.reportForm.controls.taskGroup as UntypedFormGroup;
     }
 
-    get processDefGroup(): FormGroup {
-        return this.reportForm.controls.processDefGroup as FormGroup;
+    get processDefGroup(): UntypedFormGroup {
+        return this.reportForm.controls.processDefGroup as UntypedFormGroup;
     }
 
-    get dateIntervalGroup(): FormGroup {
-        return this.reportForm.controls.dateIntervalGroup as FormGroup;
+    get dateIntervalGroup(): UntypedFormGroup {
+        return this.reportForm.controls.dateIntervalGroup as UntypedFormGroup;
     }
 
-    get dateRange(): FormGroup {
-        return this.reportForm.controls.dateRange as FormGroup;
+    get dateRange(): UntypedFormGroup {
+        return this.reportForm.controls.dateRange as UntypedFormGroup;
     }
 
-    get statusGroup(): FormGroup {
-        return this.reportForm.controls.statusGroup as FormGroup;
+    get statusGroup(): UntypedFormGroup {
+        return this.reportForm.controls.statusGroup as UntypedFormGroup;
     }
 
-    get typeFilteringGroup(): FormGroup {
-        return this.reportForm.controls.typeFilteringGroup as FormGroup;
+    get typeFilteringGroup(): UntypedFormGroup {
+        return this.reportForm.controls.typeFilteringGroup as UntypedFormGroup;
     }
 
-    get durationGroup(): FormGroup {
-        return this.reportForm.controls.durationGroup as FormGroup;
+    get durationGroup(): UntypedFormGroup {
+        return this.reportForm.controls.durationGroup as UntypedFormGroup;
     }
 
-    get processInstanceGroup(): FormGroup {
-        return this.reportForm.controls.processInstanceGroup as FormGroup;
+    get processInstanceGroup(): UntypedFormGroup {
+        return this.reportForm.controls.processInstanceGroup as UntypedFormGroup;
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
@@ -367,41 +367,41 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         parameters.forEach((param: ReportParameterDetailsModel) => {
             switch (param.type) {
                 case 'dateRange':
-                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
+                    formBuilderGroup.dateRange = new UntypedFormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
-                    formBuilderGroup.processDefGroup = new FormGroup({
-                        processDefinitionId: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.processDefGroup = new UntypedFormGroup({
+                        processDefinitionId: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'duration':
-                    formBuilderGroup.durationGroup = new FormGroup({
-                        duration: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.durationGroup = new UntypedFormGroup({
+                        duration: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'dateInterval':
-                    formBuilderGroup.dateIntervalGroup = new FormGroup({
-                        dateRangeInterval: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.dateIntervalGroup = new UntypedFormGroup({
+                        dateRangeInterval: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'boolean':
-                    formBuilderGroup.typeFilteringGroup = new FormGroup({
-                        typeFiltering: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.typeFilteringGroup = new UntypedFormGroup({
+                        typeFiltering: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'task':
-                    formBuilderGroup.taskGroup = new FormGroup({
-                        taskName: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.taskGroup = new UntypedFormGroup({
+                        taskName: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'integer':
-                    formBuilderGroup.processInstanceGroup = new FormGroup({
-                        slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.processInstanceGroup = new UntypedFormGroup({
+                        slowProcessInstanceInteger: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 case 'status':
-                    formBuilderGroup.statusGroup = new FormGroup({
-                        status: new FormControl(null, Validators.required, null)
+                    formBuilderGroup.statusGroup = new UntypedFormGroup({
+                        status: new UntypedFormControl(null, Validators.required, null)
                     }, Validators.required);
                     break;
                 default:

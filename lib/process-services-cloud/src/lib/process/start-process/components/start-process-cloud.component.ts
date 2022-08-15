@@ -22,7 +22,7 @@ import {
 
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
+import { UntypedFormControl, Validators, UntypedFormGroup, AbstractControl, UntypedFormBuilder, ValidatorFn } from '@angular/forms';
 import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -101,7 +101,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent: ProcessDefinitionCloud;
     errorMessageId: string = '';
-    processForm: FormGroup;
+    processForm: UntypedFormGroup;
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
@@ -116,14 +116,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionLoaded = false;
 
     constructor(private startProcessCloudService: StartProcessCloudService,
-                private formBuilder: FormBuilder,
+                private formBuilder: UntypedFormBuilder,
                 private processNameCloudPipe: ProcessNameCloudPipe) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
-            processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
+            processInstanceName: new UntypedFormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
+            processDefinition: new UntypedFormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
         });
 
         this.processDefinition.valueChanges
@@ -388,8 +388,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return !!process.name ? process.name : process.key;
     }
 
-    get processInstanceName(): FormControl {
-        return this.processForm.get('processInstanceName') as FormControl;
+    get processInstanceName(): UntypedFormControl {
+        return this.processForm.get('processInstanceName') as UntypedFormControl;
     }
 
     get processDefinition(): AbstractControl {

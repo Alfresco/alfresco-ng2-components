@@ -55,7 +55,7 @@ describe('Rating component', () => {
 
     describe('Rendering tests', () => {
 
-        it('should rating component should be present', (done) => {
+        it('should rating component should be present', async () => {
             spyOn(service, 'getRating').and.returnValue(of({
                 entry: {
                     id: 'fiveStar',
@@ -69,12 +69,12 @@ describe('Rating component', () => {
             component.ngOnChanges();
 
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('#adf-rating-container')).not.toBe(null);
-            done();
         });
 
-        it('should the star rating filled with the right grey/colored star', (done) => {
+        it('should the star rating filled with the right grey/colored star', async () => {
             spyOn(service, 'getRating').and.returnValue(of({
                 entry: {
                     myRating: 3,
@@ -85,16 +85,15 @@ describe('Rating component', () => {
             }));
 
             component.ngOnChanges();
-
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
             expect(element.querySelectorAll('.adf-grey-star').length).toBe(2);
-            done();
         });
     });
 
-    it('should click on a star to change your vote', (done) => {
+    it('should click on a star to change your vote', async () => {
         spyOn(service, 'getRating').and.returnValue(of({
             entry: {
                 myRating: 1,
@@ -115,19 +114,19 @@ describe('Rating component', () => {
 
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(element.querySelectorAll('.adf-colored-star').length).toBe(1);
 
-        component.changeVote.subscribe(() => {
-            fixture.detectChanges();
-            expect(rateSpy).toHaveBeenCalled();
-            expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
-
-            done();
-        });
-
         const starThree: any = element.querySelector('#adf-grey-star-2');
         starThree.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(rateSpy).toHaveBeenCalled();
+        expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
+
     });
 
     it('should click on the rated star to remove your vote', () => {

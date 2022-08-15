@@ -197,7 +197,7 @@ describe('TaskHeaderCloudComponent', () => {
             expect(valueEl.nativeElement.value).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
         });
 
-        it('should be able to call update service on updating task description', async (done) => {
+        it('should be able to call update service on updating task description', async () => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
             fixture.detectChanges();
             await fixture.whenStable();
@@ -209,7 +209,6 @@ describe('TaskHeaderCloudComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(taskCloudService.updateTask).toHaveBeenCalled();
-            done();
         });
 
         it('should roll back task description on error', fakeAsync(() => {
@@ -579,20 +578,13 @@ describe('TaskHeaderCloudComponent', () => {
         });
 
         it('should emit an error when app name and/or task id are not provided', (done) => {
-            component.error.subscribe((error) => {
-                expect(error).toEqual('App Name and Task Id are mandatory');
+            component.error.subscribe( (err) => {
+                expect(err).toEqual('App Name and Task Id are mandatory');
                 done();
             });
 
-            component.appName = '';
-            component.taskId = '';
-            component.ngOnChanges();
-
             component.appName = 'app';
-            component.ngOnChanges();
-
-            component.appName = '';
-            component.taskId = 'taskId';
+            component.taskId = undefined;
             component.ngOnChanges();
         });
 

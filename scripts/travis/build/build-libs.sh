@@ -28,7 +28,7 @@ then
         ./scripts/update-version.sh -gnu -nextalpha -major || exit 1;
     fi
 
-    if [[ $TRAVIS_BRANCH =~ angular-upgrade-v14 ]]
+    if [[ $TRAVIS_BRANCH =~ angular-14-rebase ]]
     then
       ./scripts/update-version.sh -gnu -nextalpha -major || exit 1;
     fi
