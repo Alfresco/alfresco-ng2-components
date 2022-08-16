@@ -1,5 +1,5 @@
 <div [attr.data-automation-id]="'card-array-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
-<div class="adf-property-value adf-card-view-array-item-container" (click)="clicked()">
+<div class="adf-property-value adf-card-view-array-item-container">
     <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
         <mat-chip-list *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
             <ng-container *ngIf="displayCount() > 0; else withOutDisplayCount" >
@@ -46,6 +46,7 @@
         <span class="adf-card-array-item-default" data-automation-id="card-arrayitem-default">{{ property?.default | translate }}</span>
     </ng-template>
     <button mat-icon-button *ngIf="showClickableIcon()"
+        (click)="clicked()"
         class="adf-array-item-action"
         [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
