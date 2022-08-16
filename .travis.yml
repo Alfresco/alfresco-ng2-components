@@ -144,25 +144,25 @@ jobs:
 
         - stage: "Unit test Lib"
           name: "content::unit"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" --watch=false
+          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "core-extension::unit"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud" --watch=false
+          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "process-insights::unit"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud" --watch=false
+          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "process-cloud::unit"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services" --watch=false
+          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
           workspaces:
             use: built_libs_cache
 

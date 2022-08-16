@@ -17,11 +17,6 @@ then
         TAG_NPM=alpha
     fi
 
-    if [[ $TRAVIS_BRANCH =~ angular-upgrade-v13 ]]
-    then
-        TAG_NPM=a13
-    fi
-
     if [[ $TRAVIS_BRANCH =~ angular-14-rebase ]]
     then
         TAG_NPM=a14
