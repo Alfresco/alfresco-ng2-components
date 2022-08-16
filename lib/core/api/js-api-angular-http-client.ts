@@ -34,6 +34,7 @@ type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 
 const isHttpUploadProgressEvent = <T>(val: HttpEvent<T>): val is HttpUploadProgressEvent => val?.type === HttpEventType.UploadProgress;
 const isHttpResponseEvent = <T>(val: HttpEvent<T>): val is HttpResponse<T> => val?.type === HttpEventType.Response;
+const isDate = (value: any): value is Date => value instanceof Date;
 
 
 // for backward compatibility we need to return Error message with status code
@@ -114,16 +115,21 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             if (Object.prototype.hasOwnProperty.call(params, key)) {
                 const value = params[key];
                 if (value instanceof Array) {
+                    const array = value.map(JsApiAngularHttpClient.convertValuesToCorrectType);
                     httpParams = httpParams.appendAll({
-                        [key]: value
+                        [key]: array
                     });
                 } else {
-                    httpParams = httpParams.append(key, value);
+                    httpParams = httpParams.append(key, JsApiAngularHttpClient.convertValuesToCorrectType(value));
                 }
             }
         }
 
         return httpParams;
+    }
+
+    static convertValuesToCorrectType(value: any): any {
+        return isDate(value) ? value.toISOString() : value;
     }
 
     private convertToFormData(formParams: {[key: string]: any}): FormData {

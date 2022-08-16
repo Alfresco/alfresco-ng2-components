@@ -271,4 +271,20 @@ describe('JsApiAngularHttpClient', () => {
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
 
+    it('should correctly decode Date types to string ', () => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'POST',
+            queryParams: {
+                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            }
+        };
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter);
+
+        const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
+
+        req.flush(null, { status: 200, statusText: 'Ok' });
+    });
+
 });
