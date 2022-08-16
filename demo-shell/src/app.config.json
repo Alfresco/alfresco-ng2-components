@@ -1156,8 +1156,18 @@
   },
   "adf-edit-task-filter": {
     "filterProperties": [
+      "taskId",
+      "appName",
       "status",
       "assignee",
+      "taskName",
+      "parentTaskId",
+      "priority",
+      "standalone",
+      "owner",
+      "processDefinitionId",
+      "processInstanceId",
+      "lastModified",
       "sort",
       "order"
     ],
