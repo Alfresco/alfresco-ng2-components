@@ -23,6 +23,7 @@ import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, H
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
+import { JsApiHttpParamEncoder } from './js-api-http-param-encoder';
 
 declare const Blob: any;
 declare const Buffer: any;
@@ -102,7 +103,9 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     private convertObjectToHttpParams(obj: {[key: string]: any}): HttpParams {
 
-        let httpParams = new HttpParams();
+        let httpParams = new HttpParams({
+            encoder: new JsApiHttpParamEncoder()
+        });
 
         const params = this.removeUndefinedValues(obj);
 

@@ -233,7 +233,7 @@ describe('JsApiAngularHttpClient', () => {
 
         angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitter, emitter);
 
-        const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate,DESC');
+        const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC');
         expect(req.request.method).toEqual('POST');
 
         req.flush(null, { status: 200, statusText: 'Ok' });
@@ -251,6 +251,22 @@ describe('JsApiAngularHttpClient', () => {
         });
 
         const req = controller.expectOne('http://example.com');
+
+        req.flush(null, { status: 200, statusText: 'Ok' });
+    });
+
+    it('should correctly decode types to string', () => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'POST',
+            queryParams: {
+                lastModifiedFrom: '2022-08-17T00:00:00.000+02:00'
+            }
+        };
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter);
+
+        const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
