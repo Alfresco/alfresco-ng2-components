@@ -72,7 +72,7 @@ if [ $PACKAGE == 'adf-testing' ]; then
 fi
 
 if [ $PACKAGE == 'adf-core' ]; then
-    if [ ! -f package/prebuilt-themes/'adf-blue-orange.css' ]; then
+    if [ ! -f package/lib/prebuilt-themes/'adf-blue-orange.css' ]; then
         error_out '31;1' "$PACKAGE prebuilt-theme not found!" >&2
         exit 1
      else

@@ -58,7 +58,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/dist/core/prebuilt-themes",
+                "input": "lib/dist/core/lib/prebuilt-themes",
                 "output": ""
               },
               {
@@ -287,7 +287,7 @@
     "core": {
       "projectType": "library",
       "root": "lib/core",
-      "sourceRoot": "lib/core",
+      "sourceRoot": "lib/core/src",
       "prefix": "adf",
       "architect": {
         "build": {

@@ -6,16 +6,6 @@ cd $DIR/../..
 
 echo "====== Core ======"
 
-echo "====== Copy i18n ======"
-mkdir -p ./lib/dist/core/bundles/assets/adf-core/i18n
-cp -R ./lib/core/src/lib/i18n/* ./lib/dist/core/bundles/assets/adf-core/i18n
-
-echo "====== Copy schema ======"
-cp -R ./lib/core/src/lib/app-config/schema.json lib/dist/core/app.config.schema.json
-
-echo "====== Copy assets ======"
-cp -R ./lib/core/src/lib/assets/* ./lib/dist/core/bundles/assets
-
 echo "====== Prebuilt Themes ====="
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
-rm ./lib/dist/core/prebuilt-themes/*.js
+rm ./lib/dist/core/lib/prebuilt-themes/*.js

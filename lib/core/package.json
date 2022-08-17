@@ -10,6 +10,11 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
+  "exports": {
+    "./theming": {
+      "sass": "./lib/theming/_index.scss"
+    }
+  },
   "dependencies": {
     "cropperjs": "1.5.11",
     "@editorjs/editorjs": "2.25.0",

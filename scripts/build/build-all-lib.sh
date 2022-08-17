@@ -53,18 +53,6 @@ fi
 echo "====== run core ====="
 ./scripts/build/build-core.sh || exit 1
 
-echo "====== Run content-services ====="
-./scripts/build/build-content-services.sh || exit 1
-
-echo "====== Run process-services ====="
-./scripts/build/build-process-services.sh || exit 1
-
-echo "====== Run insights ====="
-./scripts/build/build-insights.sh || exit 1
-
-echo "====== Run process-services-cloud ====="
-./scripts/build/build-process-services-cloud.sh || exit 1
-
 echo "====== Run testing ====="
 ./scripts/build/build-testing.sh || exit 1
 
