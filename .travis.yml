@@ -182,7 +182,7 @@ jobs:
               - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
 
         - stage: "e2e Test"
-          name: "Process Cloud:playwright"
+          name: "Process Cloud: Storybook Playwright"
           before_script: ./scripts/ci/jobs/dbpci-before-playwright
           script: ./scripts/travis/storybook-testing/storybook-test.sh
           workspaces:
@@ -425,18 +425,6 @@ jobs:
               - FOLDER="process-services/widgets"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
-
-        - stage: "e2e Test"
-          name: "Process Cloud:playwright"
-          before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh
-              - ./scripts/ci/jobs/dbpci-before-playwright || travis_terminate 1
-              - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/storybook-testing/storybook-test.sh
-          workspaces:
-            use:
-              - built_libs_cache
-              - built_demo_shell_cache
 
         - stage: "e2e Test"
           name: "Process Cloud : Form"
