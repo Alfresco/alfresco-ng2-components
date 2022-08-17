@@ -17,16 +17,19 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-
 import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsDirective, InfoDrawerContentDirective } from './info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
+        MatTabsModule,
+        MatIconModule,
+        MatCardModule,
         TranslateModule
     ],
     declarations: [
@@ -43,7 +46,10 @@ import { TranslateModule } from '@ngx-translate/core';
         InfoDrawerComponent,
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
-        InfoDrawerContentDirective
+        InfoDrawerContentDirective,
+        MatTabsModule,
+        MatCardModule,
+        MatIconModule
     ]
 })
 export class InfoDrawerModule {}

@@ -27,7 +27,7 @@ import { commentsTaskData, commentsNodeData } from '../mock/comment-content.mock
 
 export default {
     component: CommentsComponent,
-    title: 'Core/Components/Comments/Comment',
+    title: 'Core/Comments/Comment',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
@@ -47,23 +47,31 @@ export default {
         readOnly: {
             control: 'boolean',
             description: 'Displays input area to add new comment',
-            table: { type: { summary: 'boolean' } }
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false'}
+            }
         },
         nodeId: {
             control: 'text',
             description: 'Necessary in order to add a new Node comment',
+            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
-            }
+            },
+            if: { arg: 'taskId', exists: false }
         },
         taskId: {
             control: 'text',
             description: 'Necessary in order to add a new Task comment',
+            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
-            }
+            },
+            if: { arg: 'nodeId', exists: false }
         }
     }
 } as Meta;
@@ -75,39 +83,29 @@ const template: Story<CommentsComponent> = (args: CommentsComponent) => ({
 export const singleCommentWithAvatar = template.bind({});
 singleCommentWithAvatar.args = {
     comments: [commentsNodeData[0]],
-    nodeId: undefined,
-    readOnly: true,
-    taskId: undefined
+    readOnly: true
 };
 
 export const singleCommentWithoutAvatar = template.bind({});
 singleCommentWithoutAvatar.args = {
     comments: [commentsTaskData[1]],
-    nodeId: undefined,
-    readOnly: true,
-    taskId: undefined
+    readOnly: true
 };
 
 export const noComments = template.bind({});
 noComments.args = {
     comments: [],
-    nodeId: undefined,
-    readOnly: true,
-    taskId: undefined
+    readOnly: true
 };
 
 export const nodeComments = template.bind({});
 nodeComments.args = {
     comments: commentsNodeData,
-    nodeId: '-fake-',
-    readOnly: false,
-    taskId: undefined
+    nodeId: '-fake-'
 };
 
 export const taskComments = template.bind({});
 taskComments.args = {
     comments: commentsTaskData,
-    nodeId: undefined,
-    readOnly: false,
     taskId: '-fake-'
 };
