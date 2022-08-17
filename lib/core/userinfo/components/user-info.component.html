@@ -80,6 +80,8 @@
                                 <span id="ecm-full-name"
                                       class="adf-userinfo__detail-title">{{ecmUser | fullName}}</span>
                                 <span class="adf-userinfo__detail-profile" id="ecm-email"> {{ecmUser.email}} </span>
+                                <a class="adf-userinfo__detail-profile" href="#/profile">
+                                    {{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
                             </div>
                             <div class="adf-userinfo-detail">
                                     <span class="adf-userinfo__secondary-info" id="ecm-job-title-label">
@@ -87,9 +89,6 @@
                                         <span id="ecm-job-title"
                                               class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
                                     </span>
-                            </div>
-                            <div class="adf-userinfo-detail">
-                                <a class="adf-userinfo__detail-profile" href="#/profile">{{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
                             </div>
                         </div>
                     </mat-card-content>
