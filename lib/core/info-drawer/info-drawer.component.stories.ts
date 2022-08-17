@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { InfoDrawerModule } from './info-drawer.module';
-import { mockTabText, mockCardText } from '../mock/info-drawer.mock';
+import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 
 export default {
     component: InfoDrawerComponent,
