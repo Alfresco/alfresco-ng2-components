@@ -365,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "My Profile"
     },
     "TAB": {
       "CS": "Content Services",
