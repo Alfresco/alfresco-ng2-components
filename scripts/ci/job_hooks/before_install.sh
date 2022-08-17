@@ -20,6 +20,9 @@ export HEAD_HASH="HEAD"
 export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
 export COMMIT_MESSAGE=`git log --format=%B -n 1 $HEAD_COMMIT_HASH`
 
+# Settings for S3 caching -------------------------------------------------------------
+pip install --user awscli
+
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     echo "push"
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then

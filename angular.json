@@ -436,13 +436,19 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/core/.storybook"
-            }
+            "browserTarget": "core:storybook",
+            "configDir": "lib/core/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -451,16 +457,19 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/core",
-            "config": {
-              "configFolder": "lib/core/.storybook"
-            }
+            "browserTarget": "core:build-storybook",
+            "configDir": "lib/core/.storybook",
+            "outputDir": "dist/storybook/core",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -508,13 +517,19 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/content-services/.storybook"
-            }
+            "browserTarget": "content-services:storybook",
+            "configDir": "lib/content-services/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -523,16 +538,19 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/content-services",
-            "config": {
-              "configFolder": "lib/content-services/.storybook"
-            }
+            "browserTarget": "content-services:build-storybook",
+            "configDir": "lib/content-services/.storybook",
+            "outputDir": "dist/storybook/content-services",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -619,13 +637,19 @@
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/process-services-cloud/.storybook"
-            }
+            "browserTarget": "process-services-cloud:storybook",
+            "configDir": "lib/process-services-cloud/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -634,16 +658,19 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/process-services-cloud",
-            "config": {
-              "configFolder": "lib/process-services-cloud/.storybook"
-            }
+            "browserTarget": "process-services-cloud:build-storybook",
+            "configDir": "lib/process-services-cloud/.storybook",
+            "outputDir": "dist/storybook/process-services-cloud",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -808,13 +835,19 @@
       "projectType": "library",
       "architect": {
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            }
+            "browserTarget": "stories:storybook",
+            "configDir": "lib/stories/.storybook",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {
@@ -823,16 +856,19 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@storybook/angular:build-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/stories",
-            "config": {
-              "configFolder": "lib/stories/.storybook"
-            }
+            "browserTarget": "stories:build-storybook",
+            "configDir": "lib/stories/.storybook",
+            "outputDir": "dist/storybook/stories",
+            "compodoc": false,
+            "styles": [
+              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
+              "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/styles.scss",
+              "demo-shell/src/custom-style-dev.scss",
+              "node_modules/cropperjs/dist/cropper.min.css"
+            ]
           },
           "configurations": {
             "ci": {

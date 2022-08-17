@@ -26,21 +26,11 @@
             max-height: 300px;
             overflow-y: auto;
         }
-
-        .mat-chip {
-            cursor: pointer;
-        }
     }
 
     &-property-value {
         .mat-chip-list {
-            width: 100%;
             padding-top: 6px;
-            cursor: pointer;
-        }
-
-        .mat-chip {
-            cursor: pointer;
         }
     }
 
@@ -50,5 +40,9 @@
         display: flex;
         place-content: center space-between;
         align-items: center;
+
+        .mat-chip:hover {
+            cursor: pointer;
+        }
     }
 }

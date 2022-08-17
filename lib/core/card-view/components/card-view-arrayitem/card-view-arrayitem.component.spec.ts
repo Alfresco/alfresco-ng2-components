@@ -23,10 +23,13 @@ import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardViewUpdateService } from 'core/public-api';
 
 describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
+    let service: CardViewUpdateService;
+    let serviceSpy: jasmine.Spy;
 
     const mockData = [
         { icon: 'person', value: 'Zlatan' },
@@ -55,8 +58,42 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
+        service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewArrayItemModel(mockDefaultProps);
+    });
+
+    describe('Click event', () => {
+        beforeEach(() => {
+            serviceSpy = spyOn(service, 'clicked');
+            component.property = new CardViewArrayItemModel({
+                ...mockDefaultProps,
+                clickable: true
+            });
+
+            fixture.detectChanges();
+        });
+
+        it('should call service on chip click', () => {
+            const chip: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"]');
+            chip.dispatchEvent(new Event('click'));
+
+            expect(serviceSpy).toHaveBeenCalled();
+        });
+
+        it('should call service on edit icon click', () => {
+            const editIcon: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
+            editIcon.dispatchEvent(new Event('click'));
+
+            expect(serviceSpy).toHaveBeenCalled();
+        });
+
+        it('should NOT call service on chip list container click', () => {
+            const chiplistContainer: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-list-container"]');
+            chiplistContainer.dispatchEvent(new Event('click'));
+
+            expect(serviceSpy).not.toHaveBeenCalled();
+        });
     });
 
     describe('Rendering', () => {

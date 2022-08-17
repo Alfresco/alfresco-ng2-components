@@ -7,8 +7,8 @@
  * agreement is prohibited.
  */
 
-import { PlaywrightTestConfig, ReporterDescription, WebServerConfig } from '@playwright/test';
-import { dotenvConfig } from '@alfresco/adf-cli/tooling';
+import { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
+import { dotenvConfig } from '../lib/cli/tooling';
 import { paths } from './utils/paths';
 import { timeouts } from './utils/timeouts';
 import path from 'path';
@@ -28,8 +28,8 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
         report = ['html', { outputFolder: path.resolve(`../${paths.report}`), open: 'on-failure' }];
     }
 
-    const webServer: WebServerConfig = {
-        command: startCommand,
+    const webServer = {
+        command: `cd .. && ${startCommand}`,
         // It's true, but watch on on localhost! If you'll have other app up and running then it'll use this app to run the tests.
         // It won't check what application is currently running.
         reuseExistingServer: true,
@@ -53,7 +53,7 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
         retries: env.CI ? 2 : 0,
 
         /* Opt out of parallel tests on CI. */
-        workers: env.PLAYWRIGHT_WORKERS ? parseInt(env.PLAYWRIGHT_WORKERS, 0) : 1,
+        workers: env.PLAYWRIGHT_WORKERS ? parseInt(env.PLAYWRIGHT_WORKERS, 10) : 1,
 
         /* Reporter to use. See https://playwright.dev/docs/test-reporters */
         reporter: [['list'], report],
