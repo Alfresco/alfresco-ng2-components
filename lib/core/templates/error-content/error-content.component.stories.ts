@@ -20,7 +20,6 @@ import { ErrorContentComponent } from './error-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
 import { ActivatedRoute } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { of } from 'rxjs';
 
 export default {
@@ -28,7 +27,7 @@ export default {
     title: 'Core/Template/Error Content',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, TemplateModule, MatButtonModule],
+            imports: [CoreStoryModule, TemplateModule],
             providers: [
                 {
                     provide: ActivatedRoute,
@@ -83,16 +82,6 @@ export default {
     }
 } as Meta;
 
-export const errorCodeStory: Story = args => ({
-    props: args,
-    template: `
-    <adf-error-content [errorCode]="${args.errorCode}">
-        <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
-        <button mat-raised-button type="button">MyAction</button>
-        </div>
-    </adf-error-content>`
-});
-
 const templateArgTypes = {
     errorCode: {
         control: {
@@ -101,7 +90,9 @@ const templateArgTypes = {
     }
 };
 
-const template: Story = args => ({
+const template: Story<ErrorContentComponent> = (
+    args: ErrorContentComponent & { isAdditionalContent: boolean }
+) => ({
     props: args,
     template: `
         <adf-error-content>
@@ -143,3 +134,15 @@ errorUnknownParamStory.decorators = [
     })
 ];
 errorUnknownParamStory.storyName = 'Error Param with Unknown ID';
+
+export const errorCodeStory: Story<ErrorContentComponent> = (
+    args: ErrorContentComponent & { isAdditionalContent: boolean }
+) => ({
+    props: args,
+    template: `
+    <adf-error-content [errorCode]="${args.errorCode}">
+        <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
+        <button mat-raised-button type="button">MyAction</button>
+        </div>
+    </adf-error-content>`
+});
