@@ -81,7 +81,9 @@ export default {
     }
 } as Meta;
 
-const template: Story = args => ({
+const template: Story<EmptyContentComponent> = (
+    args: EmptyContentComponent
+) => ({
     props: args
 });
 
@@ -98,7 +100,9 @@ defaultStory.args = {
 };
 defaultStory.storyName = 'Default';
 
-export const multipleLines: Story = args => ({
+export const multipleLines: Story<EmptyContentComponent> = (
+    args: EmptyContentComponent & { lines: string[] }
+) => ({
     props: {
         ...args
     },
