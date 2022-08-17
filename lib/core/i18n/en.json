@@ -360,6 +360,7 @@
   },
   "USER_PROFILE": {
     "LABELS": {
+      "MY_PROFILE": "My Profile",
       "ECM": {
         "JOB_TITLE": "Job Title"
       },
