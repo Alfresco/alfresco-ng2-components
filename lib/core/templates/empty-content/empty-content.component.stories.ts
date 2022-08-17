@@ -66,7 +66,7 @@ export default {
         lines: {
             name: 'lines',
             description: 'Content Projection Text',
-            type: { name: 'object', required: false },
+            control: {type: 'object'},
             defaultValue: [
                 'Items you removed are moved to the Trash',
                 'Empty Trash to permanently delete items'
