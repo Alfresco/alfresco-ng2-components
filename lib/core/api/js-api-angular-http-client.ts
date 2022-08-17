@@ -21,7 +21,7 @@ import {
 } from '@alfresco/js-api';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpResponse, HttpUploadProgressEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { JsApiHttpParamEncoder } from './js-api-http-param-encoder';
 
@@ -189,21 +189,19 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         }, {});
     }
 
-    private getResponseType(options: RequestOptions): 'arraybuffer' | 'blob' | 'json' | 'text' | null {
+    private getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
 
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
-        // const isDefaultSuperAgentType = !options.responseType && !options.returnType;
-        const isDefaultSuperAgentType = false;
 
         if (isBlobType) {
             return 'blob';
         }
 
-        if (options.returnType === 'String' || isDefaultSuperAgentType) {
+        if (options.returnType === 'String') {
             return 'text';
         }
 
-        return null;
+       return 'json';
     }
 
     private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: JsEmitter, globalEmitter: JsEmitter, returnType: any): Promise<T> {
@@ -227,6 +225,15 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
             }),
             catchError((err: HttpErrorResponse): Observable<ResponseError> => {
+
+                // since we can't always determinate ahead of time if the response is xml or String type,
+                // we need to handle false positive cases here.
+
+                if (err.status === 200) {
+                    emitter.emit('success', err.error.text);
+                    return of(err.error.text);
+                }
+
                 emitter.emit('error', err);
                 globalEmitter.emit('error', err);
 
