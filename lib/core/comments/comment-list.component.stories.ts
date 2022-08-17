@@ -26,7 +26,7 @@ import { EcmUserService } from '../services';
 
 export default {
     component: CommentListComponent,
-    title: 'Core/Components/Comments/Comment List',
+    title: 'Core/Comments/Comment List',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
@@ -40,9 +40,7 @@ export default {
             type: CommentModel,
             description: 'CommentModel array',
             table: {
-                type: {
-                    summary: 'CommentModel'
-                }
+                type: { summary: 'CommentModel' }
             }
         }
     }
