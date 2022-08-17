@@ -16,10 +16,10 @@
 */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { InfoDrawerModule } from './info-drawer.module';
+import { mockTabText, mockCardText } from '../mock/info-drawer.mock';
 
 export default {
     component: InfoDrawerComponent,
@@ -47,7 +47,8 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'null' }
-            }
+            },
+            if: { arg: 'showHeader', truthy: true }
         },
         showHeader: {
             control: 'boolean',
@@ -82,7 +83,8 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+                defaultValue: { summary: 'undefined' },
+                category: 'Labels'
             }
         },
         label2: {
@@ -91,8 +93,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Labels'
+            },
+            if: { arg: 'showSecondTab', truthy: true }
         },
         label3: {
             control: 'text',
@@ -100,8 +104,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Labels'
+            },
+            if: { arg: 'showThirdTab', truthy: true }
         },
         icon1: {
             control: 'text',
@@ -109,7 +115,8 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+                defaultValue: { summary: 'undefined' },
+                category: 'Icons'
             }
         },
         icon2: {
@@ -118,8 +125,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Icons'
+            },
+            if: { arg: 'showSecondTab', truthy: true }
         },
         icon3: {
             control: 'text',
@@ -127,8 +136,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Icons'
+            },
+            if: { arg: 'showThirdTab', truthy: true }
         },
         tab1Text: {
             control: 'text',
@@ -136,7 +147,8 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+                defaultValue: { summary: 'undefined' },
+                category: 'Tab Content'
             }
         },
         tab2Text: {
@@ -145,8 +157,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Tab Content'
+            },
+            if: { arg: 'showSecondTab', truthy: true }
         },
         tab3Text: {
             control: 'text',
@@ -154,8 +168,10 @@ export default {
             defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
-            }
+                defaultValue: { summary: 'undefined' },
+                category: 'Tab Content'
+            },
+            if: { arg: 'showThirdTab', truthy: true }
         },
         cardText: {
             control: 'text',
@@ -165,17 +181,18 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
             }
+        },
+        currentTab: {
+            action: 'currentTab',
+            table: { disable: true }
         }
     }
 } as Meta;
 
 const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
-    props: {
-        ...args,
-        currentTab: action('currentTab')
-    },
+    props: args,
     template:
-        `<adf-info-drawer title="Activities" [showHeader]="showHeader" (currentTab)="currentTab($event)">
+        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
             </div>
@@ -191,13 +208,14 @@ const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) =
             <adf-info-drawer-tab [label]="label3" [icon]="[icon3]" *ngIf="showThirdTab">
                 <div class="info-drawer-tab-text">{{ tab3Text }}</div>
             </adf-info-drawer-tab>
+
         </adf-info-drawer>`
 });
 
 const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
     props: args,
     template:
-        `<adf-info-drawer title="Single Activities" [showHeader]="showHeader">
+        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 
             <div info-drawer-buttons>
@@ -215,62 +233,48 @@ const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent
 export const tabLayoutWithTextLabels = tabLayoutTemplate.bind({});
 tabLayoutWithTextLabels.args = {
     title: 'Activities',
-    showSecondTab: true,
-    showThirdTab: true,
     label1: 'Activity',
     label2: 'Details',
     label3: 'More Info',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam urna odio, sagittis vel nulla vel, condimentum egestas dolor.
-    Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris eu hendrerit lectus. Aliquam et ex imperdiet, sodales tellus finibus, malesuada eros. Vestibulum aliquet eros sed diam euismod tincidunt.
-    Pellentesque euismod, augue at blandit dapibus, ex nunc viverra nisl, non laoreet nibh odio in libero. Quisque facilisis, dui luctus fringilla lacinia, dui enim accumsan diam, a vehicula mi nulla quis dolor.
-    Maecenas non neque sed nulla tincidunt vehicula.`,
+    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+    tab2Text: mockTabText,
+    tab3Text: mockTabText
+};
 
-    tab2Text: `Suspendisse euismod egestas nisi, non ullamcorper orci scelerisque id. Vestibulum mollis ex imperdiet nisl viverra egestas. Nunc commodo, mi elementum auctor bibendum, neque tortor tincidunt justo, eget gravida eros.
-    Vestibulum nec dui ac ipsum posuere ullamcorper. Nullam ultrices eget tellus ut gravida. Aliquam ullamcorper tellus ac dui vehicula venenatis. Maecenas ante ipsum, vestibulum sit amet fringilla a, fringilla quis leo.
-    Sed nisl nisi, lacinia ac ullamcorper non, tincidunt at massa. Sed at metus fermentum augue eleifend porta. Sed nec dui ut quam facilisis cursus at et eros.
-    Nulla quis diam vitae odio faucibus faucibus ac ac erat. Sed vehicula est eu congue pretium.
-    Donec quis nisi ligula. Donec pellentesque nibh nec scelerisque placerat. Nulla facilisi. Sed egestas nisi at risus iaculis faucibus. Nulla facilisi. Aliquam ac tincidunt justo, sit amet aliquet libero.`,
-
-    tab3Text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus saepe labore laboriosam nam! Natus nulla harum, accusamus voluptas rem, autem vitae, aliquam incidunt ad quibusdam iste sunt dignissimos enim.
-    Commodi deleniti sint reprehenderit ipsa quisquam explicabo mollitia itaque tenetur, quo labore. At aliquid sunt quam! Necessitatibus nemo cumque, excepturi earum sed ipsam rem nostrum dignissimos veritatis recusandae eaque?
-    Assumenda nostrum perferendis vero officiis aliquid possimus molestias quisquam quasi ea eveniet, a, distinctio at cupiditate aliquam dolore?
-    Nesciunt similique iure nihil, inventore perferendis reiciendis minima architecto, qui vel amet autem rem sequi exercitationem? Praesentium error odit provident rerum voluptatibus?`
+tabLayoutWithTextLabels.parameters = {
+    controls: {
+        exclude: ['cardText'],
+        expanded: true
+    }
 };
 
 export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
 tabLayoutWithIconLabels.args = {
     title: 'Activities',
-    showSecondTab: true,
-    showThirdTab: true,
     icon1: 'people',
     icon2: 'android',
     icon3: 'comment',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam urna odio, sagittis vel nulla vel, condimentum egestas dolor.
-    Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris eu hendrerit lectus. Aliquam et ex imperdiet, sodales tellus finibus, malesuada eros. Vestibulum aliquet eros sed diam euismod tincidunt.
-    Pellentesque euismod, augue at blandit dapibus, ex nunc viverra nisl, non laoreet nibh odio in libero. Quisque facilisis, dui luctus fringilla lacinia, dui enim accumsan diam, a vehicula mi nulla quis dolor.
-    Maecenas non neque sed nulla tincidunt vehicula.`,
+    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+    tab2Text: mockTabText,
+    tab3Text: mockTabText
+};
 
-    tab2Text: `Suspendisse euismod egestas nisi, non ullamcorper orci scelerisque id. Vestibulum mollis ex imperdiet nisl viverra egestas. Nunc commodo, mi elementum auctor bibendum, neque tortor tincidunt justo, eget gravida eros.
-    Vestibulum nec dui ac ipsum posuere ullamcorper. Nullam ultrices eget tellus ut gravida. Aliquam ullamcorper tellus ac dui vehicula venenatis. Maecenas ante ipsum, vestibulum sit amet fringilla a, fringilla quis leo.
-    Sed nisl nisi, lacinia ac ullamcorper non, tincidunt at massa. Sed at metus fermentum augue eleifend porta. Sed nec dui ut quam facilisis cursus at et eros.
-    Nulla quis diam vitae odio faucibus faucibus ac ac erat. Sed vehicula est eu congue pretium.
-    Donec quis nisi ligula. Donec pellentesque nibh nec scelerisque placerat. Nulla facilisi. Sed egestas nisi at risus iaculis faucibus. Nulla facilisi. Aliquam ac tincidunt justo, sit amet aliquet libero.`,
-
-    tab3Text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus saepe labore laboriosam nam! Natus nulla harum, accusamus voluptas rem, autem vitae, aliquam incidunt ad quibusdam iste sunt dignissimos enim.
-    Commodi deleniti sint reprehenderit ipsa quisquam explicabo mollitia itaque tenetur, quo labore. At aliquid sunt quam! Necessitatibus nemo cumque, excepturi earum sed ipsam rem nostrum dignissimos veritatis recusandae eaque?
-    Assumenda nostrum perferendis vero officiis aliquid possimus molestias quisquam quasi ea eveniet, a, distinctio at cupiditate aliquam dolore?
-    Nesciunt similique iure nihil, inventore perferendis reiciendis minima architecto, qui vel amet autem rem sequi exercitationem? Praesentium error odit provident rerum voluptatibus?`
+tabLayoutWithIconLabels.parameters = {
+    controls: {
+        exclude: ['cardText'],
+        expanded: true
+    }
 };
 
 export const singleLayout = singleLayoutTemplate.bind({});
 singleLayout.args = {
     title: 'Single Activities',
-    cardText: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus saepe labore laboriosam nam! Natus nulla harum, accusamus voluptas rem, autem vitae, aliquam incidunt ad quibusdam iste sunt dignissimos enim.
-    Commodi deleniti sint reprehenderit ipsa quisquam explicabo mollitia itaque tenetur, quo labore. At aliquid sunt quam! Necessitatibus nemo cumque, excepturi earum sed ipsam rem nostrum dignissimos veritatis recusandae eaque?
-    Assumenda nostrum perferendis vero officiis aliquid possimus molestias quisquam quasi ea eveniet, a, distinctio at cupiditate aliquam dolore?
-    Nesciunt similique iure nihil, inventore perferendis reiciendis minima architecto, qui vel amet autem rem sequi exercitationem? Praesentium error odit provident rerum voluptatibus?`
+    cardText: mockCardText,
+    showHeader: true,
+    showSecondTab: false,
+    showThirdTab: false
 };
 
 singleLayout.parameters = {
-    controls: { include: ['cardText', 'showHeader', 'title'] }
+    controls: { expanded: true }
 };
