@@ -23,6 +23,10 @@ import { CoreStoryModule } from '../testing/core.story.module';
 import { MatIconModule } from '@angular/material/icon';
 import * as data from './../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DataRow } from 'core/datatable';
+
+const formatCustomTooltip = (row: DataRow): string =>
+    row ? row.getValue('id') + ' by formatCustomTooltip' : null;
 
 export default {
     component: DataColumnComponent,
@@ -37,19 +41,91 @@ export default {
                 RouterTestingModule
             ]
         })
-    ]
+    ],
+    argTypes: {
+        copyContent: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: true
+        },
+        sortable: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: true
+        },
+        draggable: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: true
+        },
+        editable: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: true
+        },
+        focus: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: true
+        },
+        title: {
+            type: {
+                name: 'string'
+            },
+            defaultValue: ''
+        },
+        isHidden: {
+            type: {
+                name: 'boolean'
+            },
+            defaultValue: false
+        },
+        format: {
+            control: 'select',
+            options: [
+                'medium',
+                'short',
+                'long',
+                'full',
+                'shortDate',
+                'mediumDate',
+                'longDate',
+                'fullDate',
+                'shortTime',
+                'mediumTime',
+                'longTime',
+                'fullTime',
+                'timeAgo'
+            ]
+        },
+        cssClass: {
+            type: {
+                name: 'string'
+            },
+            defaultValue: 'adf-datatable-cell-header'
+        },
+        srTitle: {
+            type: {
+                name: 'string'
+            }
+        }
+    }
 } as Meta;
 
 export const textColumn: Story = args => ({
     props: {
         ...args,
-        data: data.dataText,
-        sortable: true
+        data: data.dataText
     },
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="id" type="text" [sortable]="false" title="Text Column"></data-column>
+            <data-column key="id" type="text" title="Text Column" class="cssClass"></data-column>
         </data-columns>
     </adf-datatable>
     `
@@ -63,7 +139,7 @@ export const iconColumn: Story = args => ({
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="icon" type="icon" [sortable]="false" title="Icon Column"></data-column>
+            <data-column key="icon" type="icon" title="Icon Column"></data-column>
         </data-columns>
     </adf-datatable>
     `
@@ -72,13 +148,14 @@ export const iconColumn: Story = args => ({
 export const dateColumn: Story = args => ({
     props: {
         ...args,
-        columns: data.dateColumns,
+        format: 'medium',
+        columns: [{ ...data.dateColumns, format: args.format }],
         rows: data.dateRows
     },
     template: `
     <adf-datatable [columns]="columns" [rows]="rows">
         <data-columns>
-            <data-column key="id" type="date" [sortable]="false"></data-column>
+            <data-column key="id" type="date"></data-column>
         </data-columns>
     </adf-datatable>
     `
@@ -92,7 +169,7 @@ export const fileColumn: Story = args => ({
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="size" type="fileSize" [sortable]="false" title="File Column"></data-column>
+            <data-column key="size" type="fileSize" title="File Column"></data-column>
         </data-columns>
     </adf-datatable>
     `
@@ -107,7 +184,7 @@ export const locationColumn: Story = args => ({
     template: `
     <adf-datatable [columns]="columns" [rows]="rows">
         <data-columns>
-            <data-column key="id" type="location" [sortable]="false"></data-column>
+            <data-column key="id" type="location"></data-column>
         </data-columns>
     </adf-datatable>
     `
@@ -121,7 +198,37 @@ export const jsonColumn: Story = args => ({
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="id" type="json" [sortable]="false" title="JSON Column"></data-column>
+            <data-column key="id" type="json" title="JSON Column"></data-column>
+        </data-columns>
+    </adf-datatable>
+    `
+});
+
+export const customTooltipColumn: Story = args => ({
+    props: {
+        ...args,
+        data: data.dataText,
+        formatTooltip: formatCustomTooltip,
+        hasCustomTooltip: false
+    },
+    template: `
+    <adf-datatable [data]="data">
+        <data-columns>
+            <data-column key="id" type="text" title="Text Column" [formatTooltip]="formatTooltip"></data-column>
+        </data-columns>
+    </adf-datatable>
+    `
+});
+
+export const customCssColumn: Story = args => ({
+    props: {
+        ...args,
+        data: data.dataText
+    },
+    template: `
+    <adf-datatable [data]="data">
+        <data-columns>
+            <data-column key="id" type="text" title="Text Column" [class]="cssClass"></data-column>
         </data-columns>
     </adf-datatable>
     `
