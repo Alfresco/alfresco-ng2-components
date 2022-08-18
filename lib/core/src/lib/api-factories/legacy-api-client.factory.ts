@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiClientFactory, Constructor } from '../api';
+import { ApiClientFactory, Constructor } from '@alfresco/adf-core/api';
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 

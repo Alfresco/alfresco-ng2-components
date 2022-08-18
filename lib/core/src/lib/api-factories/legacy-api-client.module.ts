@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { API_CLIENT_FACTORY_TOKEN } from '../api';
+import { API_CLIENT_FACTORY_TOKEN } from '@alfresco/adf-core/api';
 import { LegacyClientFactory } from './legacy-api-client.factory';
 
 
