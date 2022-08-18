@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../dist/process-services-cloud",
+  "dest": "../../dist/libs/process-services-cloud",
   "assets": [
     {
       "glob": "assets/**/*",

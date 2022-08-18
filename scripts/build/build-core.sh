@@ -8,4 +8,4 @@ echo "====== Core ======"
 
 echo "====== Prebuilt Themes ====="
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
-rm ./lib/dist/core/lib/prebuilt-themes/*.js
+rm ./dist/libs/core/lib/prebuilt-themes/*.js

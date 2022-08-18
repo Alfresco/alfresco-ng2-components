@@ -46,7 +46,7 @@ async function npmPublish(args: PublishArgs, project: string) {
         changeRegistry(args, project);
     }
 
-    const version = require(`${args.pathProject}/lib/dist/${project}/package.json`).version;
+    const version = require(`${args.pathProject}/dist/libs/${project}/package.json`).version;
 
     const exist = npmCheckExist(project, version);
 
@@ -57,7 +57,7 @@ async function npmPublish(args: PublishArgs, project: string) {
             options.push('-tag');
             options.push(`${args.tag}`);
         }
-        const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/dist/libs/${project}`) });
         logger.info(response);
         if (args.npmRegistry) {
             removeNpmConfig(args, project);
@@ -80,7 +80,7 @@ function npmCheckExist(project: string, version: string) {
 
 function changeRegistry(args: PublishArgs, project: string) {
     logger.info(`Change registry... `);
-    const folder = `${args.pathProject}/lib/dist/${project}`;
+    const folder = `${args.pathProject}/dist/libs/${project}`;
     const content =
         `strict-ssl=true
 registry=https://${args.npmRegistry}
@@ -97,7 +97,7 @@ registry=https://${args.npmRegistry}
 function removeNpmConfig(args: PublishArgs, project: string) {
     logger.info(`Removing file from ${project}`);
     try {
-        const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/dist/libs/${project}`) });
         logger.info(response);
     } catch (e) {
         logger.error('Error removing file', e);

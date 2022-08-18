@@ -58,7 +58,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/dist/core/lib/prebuilt-themes",
+                "input": "dist/libs/core/lib/prebuilt-themes",
                 "output": ""
               },
               {
@@ -660,7 +660,7 @@
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
-            "outputPath": "lib/dist/testing",
+            "outputPath": "dist/libs/testing",
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
@@ -674,7 +674,7 @@
           "configurations": {
             "production": {
               "projectRoot": "lib/testing",
-              "outputPath": "lib/dist/testing",
+              "outputPath": "dist/libs/testing",
               "main": "lib/testing/index.ts",
               "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"

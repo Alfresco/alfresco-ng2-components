@@ -1,21 +1,13 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/content-services/",
+    "outDir": "../../dist/out-tsc",
     "declarationMap": true,
-    "baseUrl": "src",
     "paths": {
-      "@alfresco/adf-extensions": ["../../dist/extensions"],
-      "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
-      "@alfresco/adf-core": ["../../dist/core"],
-      "@alfresco/adf-core/*": ["../../dist/core/*"]
-    },
-    "target": "es2020"
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true,
-    "strictTemplates": true
+      "@alfresco/adf-extensions": ["../../../dist/libs/extensions"],
+      "@alfresco/adf-extensions/*": ["../../../dist/libs/extensions/*"],
+      "@alfresco/adf-core": ["../../../dist/libs/core"],
+      "@alfresco/adf-core/*": ["../../../dist/libs/core/*"]
+    }
   }
 }
