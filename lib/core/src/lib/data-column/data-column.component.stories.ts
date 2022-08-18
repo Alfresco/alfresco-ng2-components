@@ -23,7 +23,7 @@ import { CoreStoryModule } from '../testing/core.story.module';
 import { MatIconModule } from '@angular/material/icon';
 import * as data from './../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataRow } from 'core/datatable';
+import { DataRow, ObjectDataTableAdapter } from './../datatable';
 
 const formatCustomTooltip = (row: DataRow): string =>
     row ? row.getValue('id') + ' by formatCustomTooltip' : null;
@@ -44,44 +44,35 @@ export default {
     ],
     argTypes: {
         copyContent: {
-            type: {
-                name: 'boolean'
+            control: {
+                type: 'boolean'
             },
             defaultValue: true
         },
         sortable: {
-            type: {
-                name: 'boolean'
+            control: {
+                type: 'boolean'
             },
             defaultValue: true
         },
         draggable: {
-            type: {
-                name: 'boolean'
+            control: {
+                type: 'boolean'
             },
             defaultValue: true
         },
         editable: {
-            type: {
-                name: 'boolean'
-            },
-            defaultValue: true
-        },
-        focus: {
-            type: {
-                name: 'boolean'
+            control: {
+                type: 'boolean'
             },
             defaultValue: true
         },
         title: {
-            type: {
-                name: 'string'
-            },
-            defaultValue: ''
+            control: { type: 'text' }
         },
         isHidden: {
-            type: {
-                name: 'boolean'
+            control: {
+                type: 'boolean'
             },
             defaultValue: false
         },
@@ -104,20 +95,182 @@ export default {
             ]
         },
         cssClass: {
-            type: {
-                name: 'string'
-            },
-            defaultValue: 'adf-datatable-cell-header'
+            control: { type: 'text' },
+            defaultValue: ''
         },
         srTitle: {
-            type: {
-                name: 'string'
+            control: { type: 'text' },
+            defaultValue: ''
+        },
+        data: {
+            control: { disable: true },
+            mapping: {
+                text: data.dataText,
+                icon: data.dataIcon,
+                file: data.dataSizeInBytes
             }
-        }
+        },
+        columns: {
+            control: { disable: true }
+            // mapping: {
+            //     date: data.dateColumns
+            // }
+        },
+        rows: {
+            control: { disable: true }
+            // mapping: {
+            //     date: data.dateRows
+            // }
+        },
+        key: { control: { disable: true } },
+        type: { control: { disable: true } },
+        formatTooltip: { control: { disable: true } }
     }
 } as Meta;
 
-export const textColumn: Story = args => ({
+const template: Story = (args) => {
+    console.log(args.columns);
+    const temp = {
+        props: args,
+        template: `
+    ${
+        args.columns && args.rows
+            ? '<adf-datatable [columns]="columns' +
+              (args.type === 'date' ? '()' : '') +
+              '" [rows]="rows">'
+            : '<adf-datatable [data]="data">'
+    }
+        <data-columns>
+            <data-column [key]="key" [type]="type" title="${
+                args.title
+            }" [editable]="${args.editable}" [sortable]="${
+            args.sortable
+        }" [draggable]="${args.draggable}" [copyContent]="${
+            args.copyContent
+        }" format="${args.format}"
+            [isHidden]="${args.isHidden}" class="${args.cssClass}" srTitle="${
+            args.srTitle
+        }" [formatTooltip]="formatTooltip"></data-column>
+        </data-columns>
+    </adf-datatable>`
+    };
+
+    console.log(temp.template);
+
+    return temp;
+};
+
+export const testTemplate = template.bind({});
+
+testTemplate.args = {
+    title: 'tytul',
+    data: 'text',
+    type: 'text',
+    key: 'id',
+    format: undefined,
+    cssClass: '',
+    srTitle: ''
+};
+
+export const textTemplateColumn = template.bind({});
+textTemplateColumn.argTypes = {
+    editable: { control: { disable: true } },
+    format: { control: { disable: true } }
+};
+textTemplateColumn.args = {
+    data: 'text',
+    key: 'id',
+    type: 'text',
+    title: 'Text Column'
+};
+
+export const iconTemplateColumn = template.bind({});
+iconTemplateColumn.argTypes = {
+    editable: { control: { disable: true } },
+    format: { control: { disable: true } },
+    copyContent: { control: { disable: true } }
+};
+iconTemplateColumn.args = {
+    data: 'icon',
+    key: 'icon',
+    type: 'icon',
+    title: 'Icon Column'
+};
+
+export const dateTemplateColumn = template.bind({});
+dateTemplateColumn.argTypes = {
+    editable: { control: { disable: true } },
+    title: { control: { disable: true } },
+    copyContent: { control: { disable: true } },
+    sortable: { control: { disable: true } },
+    draggable: { control: { disable: true } },
+    isHidden: { control: { disable: true } }
+};
+dateTemplateColumn.args = {
+    data: undefined,
+    format: 'medium',
+    columns() {
+        return [{ ...data.dateColumns, format: this.format }];
+    },
+    rows: data.dateRows,
+    key: 'id',
+    type: 'date'
+};
+
+export const fileTemplateColumn = template.bind({});
+fileTemplateColumn.argTypes = {
+    editable: { control: { disable: true } },
+    format: { control: { disable: true } },
+    copyContent: { control: { disable: true } }
+};
+fileTemplateColumn.args = {
+    data: 'file',
+    key: 'size',
+    type: 'fileSize',
+    title: 'File Column'
+};
+
+export const locationTemplateColumn = template.bind({});
+locationTemplateColumn.argTypes = {
+    editable: { control: { disable: true } },
+    format: { control: { disable: true } },
+    copyContent: { control: { disable: true } }
+};
+locationTemplateColumn.args = {
+    columns: data.locationColumns,
+    rows: data.locationRows,
+    key: 'id',
+    type: 'location',
+    title: 'Location Column'
+};
+
+export const jsonTemplateColumn = template.bind({});
+jsonTemplateColumn.argTypes = {
+    format: { control: { disable: true } },
+    copyContent: { control: { disable: true } }
+};
+jsonTemplateColumn.args = {
+    data: 'text',
+    key: 'id',
+    type: 'json',
+    title: 'JSON Column'
+};
+
+export const customTooltipTemplateColumn = template.bind({});
+customTooltipTemplateColumn.argTypes = {
+    format: { control: { disable: true } }
+};
+customTooltipTemplateColumn.args = {
+    data: 'text',
+    key: 'id',
+    type: 'text',
+    title: 'Custom Tooltip Column',
+    formatTooltip: formatCustomTooltip
+};
+
+//////////////////////////////////////////
+
+export const textColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataText
@@ -125,13 +278,13 @@ export const textColumn: Story = args => ({
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="id" type="text" title="Text Column" class="cssClass"></data-column>
+            <data-column key="id" type="text" [title]="title" [sortable]="sortable" [copyContent]="copyContent" [editable]="editable" ></data-column>
         </data-columns>
     </adf-datatable>
     `
 });
 
-export const iconColumn: Story = args => ({
+export const iconColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataIcon
@@ -145,7 +298,7 @@ export const iconColumn: Story = args => ({
     `
 });
 
-export const dateColumn: Story = args => ({
+export const dateColumn: Story = (args) => ({
     props: {
         ...args,
         format: 'medium',
@@ -161,7 +314,7 @@ export const dateColumn: Story = args => ({
     `
 });
 
-export const fileColumn: Story = args => ({
+export const fileColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataSizeInBytes
@@ -175,7 +328,7 @@ export const fileColumn: Story = args => ({
     `
 });
 
-export const locationColumn: Story = args => ({
+export const locationColumn: Story = (args) => ({
     props: {
         ...args,
         columns: data.locationColumns,
@@ -190,7 +343,7 @@ export const locationColumn: Story = args => ({
     `
 });
 
-export const jsonColumn: Story = args => ({
+export const jsonColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataText
@@ -198,13 +351,13 @@ export const jsonColumn: Story = args => ({
     template: `
     <adf-datatable [data]="data">
         <data-columns>
-            <data-column key="id" type="json" title="JSON Column"></data-column>
+            <data-column key="id" type="json" title="JSON Column" [editable]="editable"></data-column>
         </data-columns>
     </adf-datatable>
     `
 });
 
-export const customTooltipColumn: Story = args => ({
+export const customTooltipColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataText,
@@ -220,7 +373,7 @@ export const customTooltipColumn: Story = args => ({
     `
 });
 
-export const customCssColumn: Story = args => ({
+export const customCssColumn: Story = (args) => ({
     props: {
         ...args,
         data: data.dataText
