@@ -191,7 +191,7 @@ describe('JsApiAngularHttpClient', () => {
         });
     });
 
-    it('should return a Error type on failed promise, for backward compatibility, with string value to prevent JSON.parse from not getting correct statusCode', (done) => {
+    it('should return a Error type on failed promise, for backward compatibility, with string value to prevent JSON.parse from crashing when we try to get status code from message', (done) => {
         const options: RequestOptions = {
             path: '',
             httpMethod: 'POST'
@@ -215,6 +215,26 @@ describe('JsApiAngularHttpClient', () => {
         expect(req.request.method).toEqual('POST');
 
         req.flush(errorResponse, { status: 403, statusText: 'Forbidden' });
+    });
+
+    it('should return a Error type on failed promise with response body', (done) => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'POST',
+            responseType: 'blob'
+        };
+
+        const errorResponse = new Blob();
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: ResponseError) => {
+            expect(res.status).toBe(400);
+            expect(res.error.response.body instanceof Blob).toBeTruthy();
+            done();
+        });
+
+        const req = controller.expectOne('http://example.com');
+
+        req.flush(errorResponse, { status: 400, statusText: 'Bad request' });
     });
 
     it('should correctly handle queryParams with arrays', () => {

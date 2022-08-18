@@ -50,7 +50,7 @@ export class ResponseError extends Error {
             }
         }
     */
-    constructor(msg: string, public status: number) {
+    constructor(msg: string, public status: number, public error: { response: Record<string, any> }) {
         super(msg);
     }
 }
@@ -246,7 +246,18 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 // and we need to be able to correctly pass instanceof Error conditions used inside repository
                 // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
                 const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
-                const error = new ResponseError(msg, err.status);
+
+                // some more backwards compatibility magic :) to handle cases like
+                // return this.blobService.convert2Json(response.error.response.body)
+
+                const errorResponse = {
+                    response: {
+                        ...err,
+                        body: err.error
+                    }
+                };
+
+                const error = new ResponseError(msg, err.status, errorResponse);
 
                 return throwError(error);
             }),
