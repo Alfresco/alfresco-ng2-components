@@ -1,23 +1,12 @@
 {
-  "extends": "../../.eslintrc.json",
-  "ignorePatterns": [
-    "!**/*"
-  ],
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "lib/insights/tsconfig.lib.json",
-          "lib/insights/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
-      },
-      "plugins": [
-        "eslint-plugin-unicorn",
-        "eslint-plugin-rxjs"
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nrwl/nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
@@ -49,6 +38,7 @@
           }
         ],
         "@angular-eslint/no-host-metadata-property": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
         "@angular-eslint/no-input-prefix": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
@@ -88,9 +78,8 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"

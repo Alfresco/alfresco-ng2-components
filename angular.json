@@ -247,7 +247,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "demo-shell/**/*.ts",
@@ -320,11 +320,13 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/core/**/*.ts",
-              "lib/core/**/*.html"
+              "lib/core/**/*.html",
+              "lib/core/api/**/*.ts",
+              "lib/core/api/**/*.html"
             ]
           }
         },
@@ -401,7 +403,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/content-services/**/*.ts",
@@ -482,7 +484,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/process-services/**/*.ts",
@@ -521,7 +523,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/process-services-cloud/**/*.ts",
@@ -602,7 +604,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/insights/**/*.ts",
@@ -640,7 +642,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/extensions/**/*.ts",
@@ -682,7 +684,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/testing/**/*.ts",
@@ -712,7 +714,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/cli/**/*.ts",
