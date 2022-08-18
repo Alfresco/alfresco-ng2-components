@@ -23,7 +23,7 @@ import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { CardViewUpdateService } from 'core/public-api';
+import { CardViewUpdateService } from '../../services/card-view-update.service';
 
 describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
