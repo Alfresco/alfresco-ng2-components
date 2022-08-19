@@ -36,7 +36,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test"],
+        "cacheableOperations": ["build", "lint", "test", "spellcheck", "stylelint"],
         "cacheDirectory": "nxcache",
         "runtimeCacheInputs": ["node -v"]
       }

@@ -254,6 +254,16 @@
               "demo-shell/**/*.html"
             ]
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/demo-shell/**/*.ts'"
+                  }
+              ]
+          }
         }
       }
     },
@@ -296,6 +306,7 @@
             "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
           },
+          "dependsOn": ["license"],
           "configurations": {
             "production": {
               "project": "lib/core/ng-package.json",
@@ -328,7 +339,11 @@
               "lib/core/api/**/*.ts",
               "lib/core/api/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -371,6 +386,36 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/core/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/core/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
+        },
+        "license": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+                  }
+              ]
+          }
         }
       }
     },
@@ -409,7 +454,11 @@
               "lib/content-services/**/*.ts",
               "lib/content-services/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -452,6 +501,26 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/content-services/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
         }
       }
     },
@@ -490,6 +559,40 @@
               "lib/process-services/**/*.ts",
               "lib/process-services/**/*.html"
             ]
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/process-services/**/*.ts'"
+                  }
+              ]
+          },
+          "stylelint": {
+            "executor": "nx:run-commands",
+                "options": {
+                "commands": [
+                    {
+                        "command": "$(npm bin)/stylelint lib/process-services/**/*.scss --config stylelint-config.json"
+                    }
+                ]
+            }
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                  }
+              ]
           }
         }
       }
@@ -529,7 +632,11 @@
               "lib/process-services-cloud/**/*.ts",
               "lib/process-services-cloud/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -572,6 +679,26 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/process-services-cloud/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
         }
       }
     },
@@ -610,6 +737,30 @@
               "lib/insights/**/*.ts",
               "lib/insights/**/*.html"
             ]
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/insights/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/insights/**/*.scss --config stylelint-config.json"
+                  }
+              ]
           }
         }
       }
@@ -648,6 +799,17 @@
               "lib/extensions/**/*.ts",
               "lib/extensions/**/*.html"
             ]
+          },
+          "dependsOn": ["spellcheck"]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/extensions/**/*.ts'"
+                  }
+              ]
           }
         }
       }
