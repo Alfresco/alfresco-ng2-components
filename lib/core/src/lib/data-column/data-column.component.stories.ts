@@ -39,29 +39,84 @@ export default {
     ],
     argTypes: {
         copyContent: {
+            description:
+                'Enables/disables a Clipboard directive to allow copying of cell contents.',
             control: { type: 'boolean' },
-            defaultValue: true
+            defaultValue: false,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                }
+            }
         },
-        sortable: {
-            control: { type: 'boolean' },
-            defaultValue: true
+        cssClass: {
+            description:
+                'Additional CSS class to be applied to column (header and cells).',
+            control: { type: 'text' },
+            defaultValue: '',
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
+        customData: {
+            description:
+                'You can specify any custom data which can be used by any specific feature',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'any'
+                }
+            }
         },
         draggable: {
+            description: 'Toggles drag and drop for header column.',
             control: { type: 'boolean' },
-            defaultValue: true
+            defaultValue: false,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: false
+                }
+            }
         },
         editable: {
+            description: 'Toggles the editing support of the column data.',
             control: { type: 'boolean', disable: true },
-            defaultValue: true
+            defaultValue: false,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: false
+                }
+            }
         },
-        title: {
-            control: { type: 'text' }
-        },
-        isHidden: {
-            control: { type: 'boolean' },
-            defaultValue: false
+        focus: {
+            description: 'Enable or disable cell focus',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: true
+                }
+            }
         },
         format: {
+            description:
+                'Value format (if supported by the parent component), for example format of the date.',
             control: { type: 'select', disable: true },
             options: [
                 'medium',
@@ -77,38 +132,163 @@ export default {
                 'longTime',
                 'fullTime',
                 'timeAgo'
-            ]
+            ],
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                }
+            }
         },
-        cssClass: {
-            control: { type: 'text' },
-            defaultValue: ''
+        formatTooltip: {
+            description: 'Custom tooltip formatter function.',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'Function'
+                }
+            }
+        },
+        id: {
+            description: 'Column identifier.',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
+                }
+            }
+        },
+        isHidden: {
+            description: 'Hides columns',
+            control: { type: 'boolean' },
+            defaultValue: false,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: 'false'
+                }
+            }
+        },
+        key: {
+            description:
+                'Data source key. Can be either a column/property key like title or a property path like `createdBy.name`.',
+            control: { type: 'text', disable: false },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
+        sortable: {
+            description:
+                'Toggles ability to sort by this column, for example by clicking the column header.',
+            control: { type: 'boolean' },
+            defaultValue: true,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: true
+                }
+            }
+        },
+        sortingKey: {
+            description:
+                'When using server side sorting the column used by the api call where the sorting will be performed',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                }
+            }
         },
         srTitle: {
+            description: 'Title to be used for screen readers.',
             control: { type: 'text' },
-            defaultValue: ''
+            defaultValue: '',
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
+        title: {
+            description:
+                'Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically.',
+            control: { type: 'text' },
+            defaultValue: '',
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
+                }
+            }
+        },
+        type: {
+            description:
+                'Value type for the column. Possible settings are `text`, `image`, `date`, `fileSize`, `location`, and `json`.',
+            control: { disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: 'text'
+                }
+            },
+            defaultValue: 'text'
         },
         data: {
+            description: 'Provides data for DataTable component',
             control: { disable: true },
             mapping: {
                 text: data.dataText,
                 icon: data.dataIcon,
                 file: data.dataSizeInBytes
+            },
+            table: {
+                category: 'Components data',
+                type: {
+                    summary: 'ObjectDataTableAdapter'
+                }
             }
         },
         columns: {
-            control: { disable: true }
+            description: 'Provides columns for DataTable component',
+            control: { disable: true },
+            table: {
+                category: 'Components data',
+                type: {
+                    summary: 'array'
+                }
+            }
         },
         rows: {
-            control: { disable: true }
-        },
-        key: {
-            control: { type: 'text', disable: false }
-        },
-        type: {
-            control: { disable: true }
-        },
-        formatTooltip: {
-            control: { disable: true }
+            description: 'Provides rows for DataTable component',
+            control: { disable: true },
+            table: {
+                category: 'Components data',
+                type: {
+                    summary: 'array'
+                }
+            }
         }
     }
 } as Meta;
