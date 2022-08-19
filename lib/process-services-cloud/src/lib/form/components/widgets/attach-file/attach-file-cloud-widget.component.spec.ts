@@ -66,7 +66,35 @@ import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { mockNode } from 'content-services/src/lib/mock';
+
+const mockNodeToBeVersioned: any = ({
+    isFile: true,
+    createdByUser: { id: 'admin', displayName: 'Administrator' },
+    modifiedAt: '2017-05-24T15:08:55.640Z',
+    nodeType: 'cm:content',
+    content: {
+        mimeType: 'application/rtf',
+        mimeTypeName: 'Rich Text Format',
+        sizeInBytes: 14530,
+        encoding: 'UTF-8'
+    },
+    parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+    createdAt: '2017-05-24T15:08:55.640Z',
+    path: {
+        name: '/Company Home/Guest Home',
+        isComplete: true,
+        elements: [{
+            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+            name: 'Company Home'
+        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+    },
+    isFolder: false,
+    modifiedByUser: { id: 'admin', displayName: 'Administrator' },
+    name: 'b_txt_file.rtf',
+    id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
+    properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+    allowableOperations: ['delete', 'update']
+});
 
 describe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
@@ -837,20 +865,20 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('Should open new version uploader dialog', async () => {
             await fixture.whenStable();
-            widget.onUploadNewFileVersion(mockNode);
-            expect(spyOnOpenUploadNewVersionDialog).toHaveBeenCalledWith(mockNode);
+            widget.onUploadNewFileVersion(mockNodeToBeVersioned);
+            expect(spyOnOpenUploadNewVersionDialog).toHaveBeenCalledWith(mockNodeToBeVersioned);
         });
 
         it('Should not replace old file version with the new one if dialog returned action is not upload', async () => {
             await fixture.whenStable();
-            widget.onUploadNewFileVersion(mockNode);
+            widget.onUploadNewFileVersion(mockNodeToBeVersioned);
             expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
         });
 
         it('Should replace old file version with the new one if dialog returned action is upload', async () => {
             spyOnOpenUploadNewVersionDialog.and.returnValue(of({ action: NewVersionUploaderDataAction.upload }));
             await fixture.whenStable();
-            widget.onUploadNewFileVersion(mockNode);
+            widget.onUploadNewFileVersion(mockNodeToBeVersioned);
             expect(spyOnReplaceOldFileVersionWithNew).toHaveBeenCalledTimes(1);
         });
 
@@ -858,7 +886,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             const mockError = {value: 'Upload error'};
             spyOnOpenUploadNewVersionDialog.and.returnValue(throwError(mockError));
             await fixture.whenStable();
-            widget.onUploadNewFileVersion(mockNode);
+            widget.onUploadNewFileVersion(mockNodeToBeVersioned);
             expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
             expect(spyOnShowError).toHaveBeenCalledWith(mockError.value);
         });

@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { setupTestBed } from 'core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { mockFile, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { UploadVersionButtonComponent } from '../upload';
@@ -131,7 +131,7 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = false;
             fixture.detectChanges();
             component.handleUpload(mockNode);
-            const expectedEmittedValue = {
+            const expectedEmittedValue: any = {
                 action: NewVersionUploaderDataAction.upload,
                 currentVersion: component.data.node,
                 newVersion: mockNode
