@@ -296,7 +296,9 @@ export default {
 const formatCustomTooltip = (row: DataRow): string =>
     row ? row.getValue('id') + ' by formatCustomTooltip' : null;
 
-const template: Story = (args) => ({
+const template: Story<DataColumnComponent> = (
+    args: DataColumnComponent & { columns: any; rows: any; data: any }
+) => ({
     props: args,
     template: `
         ${
@@ -323,27 +325,27 @@ const template: Story = (args) => ({
     </adf-datatable>`
 });
 
-export const textTemplateColumn = template.bind({});
-textTemplateColumn.args = {
+export const textColumn = template.bind({});
+textColumn.args = {
     data: 'text',
     key: 'id',
     type: 'text',
     title: 'Text Column'
 };
 
-export const iconTemplateColumn = template.bind({});
-iconTemplateColumn.argTypes = {
+export const iconColumn = template.bind({});
+iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-iconTemplateColumn.args = {
+iconColumn.args = {
     data: 'icon',
     key: 'icon',
     type: 'icon',
     title: 'Icon Column'
 };
 
-export const dateTemplateColumn = template.bind({});
-dateTemplateColumn.argTypes = {
+export const dateColumn = template.bind({});
+dateColumn.argTypes = {
     format: { control: { disable: false } },
     title: { control: { disable: true } },
     copyContent: { control: { disable: true } },
@@ -351,7 +353,7 @@ dateTemplateColumn.argTypes = {
     draggable: { control: { disable: true } },
     isHidden: { control: { disable: true } }
 };
-dateTemplateColumn.args = {
+dateColumn.args = {
     data: undefined,
     format: 'medium',
     columns() {
@@ -362,22 +364,22 @@ dateTemplateColumn.args = {
     type: 'date'
 };
 
-export const fileTemplateColumn = template.bind({});
-fileTemplateColumn.argTypes = {
+export const fileColumn = template.bind({});
+fileColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-fileTemplateColumn.args = {
+fileColumn.args = {
     data: 'file',
     key: 'size',
     type: 'fileSize',
     title: 'File Column'
 };
 
-export const locationTemplateColumn = template.bind({});
-locationTemplateColumn.argTypes = {
+export const locationColumn = template.bind({});
+locationColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-locationTemplateColumn.args = {
+locationColumn.args = {
     columns: data.locationColumns,
     rows: data.locationRows,
     key: 'id',
@@ -385,20 +387,20 @@ locationTemplateColumn.args = {
     title: 'Location Column'
 };
 
-export const jsonTemplateColumn = template.bind({});
-jsonTemplateColumn.argTypes = {
+export const jsonColumn = template.bind({});
+jsonColumn.argTypes = {
     editable: { control: { disable: false } },
     copyContent: { control: { disable: true } }
 };
-jsonTemplateColumn.args = {
+jsonColumn.args = {
     data: 'text',
     key: 'id',
     type: 'json',
     title: 'JSON Column'
 };
 
-export const customTooltipTemplateColumn = template.bind({});
-customTooltipTemplateColumn.args = {
+export const customTooltipColumn = template.bind({});
+customTooltipColumn.args = {
     data: 'text',
     key: 'id',
     type: 'text',
