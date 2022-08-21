@@ -39,22 +39,51 @@ export default {
     ],
     argTypes: {
         value: {
+            description: 'Displayed text',
             control: {
                 type: 'object'
             },
-            defaultValue: jsonData
+            defaultValue: jsonData,
+            table: {
+                category: 'Provider settings',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
+                }
+            }
         },
         editable: {
+            description: 'Defines if component is editable',
             control: {
                 type: 'boolean'
             },
-            defaultValue: false
+            defaultValue: false,
+            table: {
+                category: 'Provider settings',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: false
+                }
+            }
         },
         title: {
             control: {
                 type: 'text'
             },
-            defaultValue: 'JSON Dialog Title'
+            defaultValue: 'JSON Dialog Title',
+            table: {
+                category: 'Provider settings',
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: 'JSON'
+                }
+            }
         }
     }
 } as Meta;
