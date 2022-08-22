@@ -527,7 +527,7 @@ describe('User info component', () => {
                 expect(fullNameElement.textContent).not.toContain('null');
             });
 
-            it('should not show initials if the user have avatar', async () => {
+            it('should not show initials if the user have avatar and provider is ECM', async () => {
                 getCurrentUserInfoStub.and.returnValue(identityUserWithOutLastNameMock);
                 getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
                 isEcmLoggedInStub.and.returnValue(true);
@@ -536,6 +536,16 @@ describe('User info component', () => {
                 expect(element.querySelector('.adf-userinfo-pic')).toBeNull();
                 expect(element.querySelector('.adf-userinfo-profile-image')).toBeDefined();
                 expect(element.querySelector('.adf-userinfo-profile-image')).not.toBeNull();
+            });
+
+            it('should show initials if the user has avatar but provider is not ECM', async () => {
+                getCurrentUserInfoStub.and.returnValue(identityUserWithOutLastNameMock);
+                getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
+                isEcmLoggedInStub.and.returnValue(false);
+                await whenFixtureReady();
+
+                expect(element.querySelector('.adf-userinfo-pic')).not.toBeNull();
+                expect(element.querySelector('.adf-userinfo-profile-image')).toBeNull();
             });
         });
 

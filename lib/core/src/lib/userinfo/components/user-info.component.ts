@@ -90,7 +90,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
             this.loadIdentityUserInfo();
             this.mode = 'SSO';
 
-            if (this.authService.isEcmLoggedIn()) {
+            if (this.authService.isECMProvider() && this.authService.isEcmLoggedIn()) {
                 this.loadEcmUserInfo();
             }
 
