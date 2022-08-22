@@ -35,14 +35,17 @@ export default {
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        changedLanguage: {
+            action: 'changedLanguage',
+            description: 'Emitted when the user clicks on one of the language buttons.'
+        }
+    }
 } as Meta;
 
 const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: LanguagePickerComponent) => ({
-    props: {
-        ...args,
-        changedLanguage: action('changedLanguage')
-    }
+    props: args
 });
 
 export const primary = languagePickerComponentTemplate.bind({});
