@@ -38,6 +38,8 @@ import { OauthConfigModel } from '../../models/oauth-config.model';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { RecoverPasswordDialogService } from './recover-password-dialog.service';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -121,6 +123,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     actualLoginStep: any = LoginSteps.Landing;
     LoginSteps = LoginSteps;
     rememberMe: boolean = true;
+    forgotPasswordStatus: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
@@ -140,7 +143,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private alfrescoApiService: AlfrescoApiService
+        private alfrescoApiService: AlfrescoApiService,
+        private dialogService: RecoverPasswordDialogService
     ) {
     }
 
@@ -188,6 +192,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit() {
         this.onSubmit(this.form.value);
+    }
+
+    forgotPassword(){
+        this.dialogService
+  .showDialog(RecoverPasswordComponent, {
+      data: {
+          title: 'Recover'
+      }
+  })
+  .afterClosed()
+//   .subscribe((result) => {
+//       if (result) {
+        
+//       }
+//   });
     }
 
     redirectToImplicitLogin() {
@@ -413,4 +432,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isError = false;
         this.initFormError();
     }
+
+    
 }

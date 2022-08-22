@@ -92,6 +92,8 @@
                                     data-automation-id="login-button" [disabled]="!form.valid"
                                     [attr.aria-label]="'LOGIN.BUTTON.LOGIN' | translate">
 
+                                    
+
                                 <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
 
                                 <div *ngIf="actualLoginStep === LoginSteps.Checking"
@@ -117,6 +119,12 @@
                                               (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
                                 </mat-checkbox>
                             </div>
+                            <div class="adf-login-action" *ngIf="forgotPasswordStatus">
+                                <div id="adf-login-action" class="adf-login-action adf-full-width">
+                                    <!-- <a [routerLink]=" '/recover-password' ">Forgot Password?</a> -->
+                                    <a style="cursor: pointer;" (click)="forgotPassword()">Forgot Password?</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div *ngIf="implicitFlow">
@@ -128,6 +136,7 @@
                                 <span  class="adf-login-button-label">{{ 'LOGIN.BUTTON.SSO' | translate }}</span>
                             </button>
                         </div>
+
 
                     </mat-card-content>
 
