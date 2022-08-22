@@ -23,7 +23,7 @@ import { SocialModule } from './social.module';
 
 export default {
     component: LikeComponent,
-    title: 'Content Services/Components/Like',
+    title: 'Content Services/Social/Like',
     decorators: [
         moduleMetadata({
             imports: [SocialModule],

@@ -22,7 +22,7 @@ import { ToolbarModule } from './toolbar.module';
 
 export default {
     component: ToolbarComponent,
-    title: 'Core/Components/Toolbar',
+    title: 'Core/Toolbar/Toolbar',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, ToolbarModule]

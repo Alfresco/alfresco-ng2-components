@@ -27,7 +27,7 @@ import { CoreStoryModule } from '../testing/core.story.module';
 
 export default {
     component: AboutComponent,
-    title: 'Core/Components/About',
+    title: 'Core/About/About',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, AboutModule],
@@ -45,9 +45,9 @@ const template: Story<AboutComponent> = (args: AboutComponent) => ({
     props: args
 });
 
-export const devAbout = template.bind({});
+export const defaultAbout = template.bind({});
 
-devAbout.args = {
+defaultAbout.args = {
     dev: true,
     pkg: {
         name: 'My Storybook App', commit: 'my-commit-value', version: '1.0.0', dependencies: {
@@ -59,9 +59,4 @@ devAbout.args = {
             '@alfresco/js-api': '4.7.0-3976'
         }
     }
-};
-
-export const prodAbout = template.bind({});
-prodAbout.args = {
-    dev: false
 };

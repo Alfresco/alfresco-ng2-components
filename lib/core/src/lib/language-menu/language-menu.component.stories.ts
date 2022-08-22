@@ -27,7 +27,7 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
     component: LanguageMenuComponent,
-    title: 'Core/Components/Language Menu/Language Menu',
+    title: 'Core/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, LanguageMenuModule],

@@ -23,7 +23,7 @@ import { DateRangeFilterComponent } from './date-range-filter.component';
 
 export default {
     component: DateRangeFilterComponent,
-    title: 'Process Services Cloud/Components/Date Range Filter',
+    title: 'Process Services Cloud/Process Common/Date Range Filter',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, ProcessCommonModule]

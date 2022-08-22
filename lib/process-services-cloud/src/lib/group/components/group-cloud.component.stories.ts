@@ -29,7 +29,7 @@ import {
 
 export default {
     component: GroupCloudComponent,
-    title: 'Process Services Cloud/Components/Group',
+    title: 'Process Services Cloud/Group Cloud/Group Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, GroupCloudModule],

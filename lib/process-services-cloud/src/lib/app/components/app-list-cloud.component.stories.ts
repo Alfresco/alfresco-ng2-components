@@ -22,7 +22,7 @@ import { AppListCloudComponent } from './app-list-cloud.component';
 
 export default {
     component: AppListCloudComponent,
-    title: 'Process Services Cloud/Components/App List',
+    title: 'Process Services Cloud/App List Cloud/App List Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, AppListCloudModule]

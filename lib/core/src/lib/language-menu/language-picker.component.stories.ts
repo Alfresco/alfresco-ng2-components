@@ -27,7 +27,7 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
     component: LanguagePickerComponent,
-    title: 'Core/Components/Language Menu/Language Picker',
+    title: 'Core/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, LanguageMenuModule],

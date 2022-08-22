@@ -30,7 +30,7 @@ import {
 
 export default {
     component: PeopleCloudComponent,
-    title: 'Process Services Cloud/Components/People',
+    title: 'Process Services Cloud/People Cloud/People Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, PeopleCloudModule],

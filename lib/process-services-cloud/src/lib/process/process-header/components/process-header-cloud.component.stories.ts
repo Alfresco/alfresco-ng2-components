@@ -24,7 +24,7 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 
 export default {
     component: ProcessHeaderCloudComponent,
-    title: 'Process Services Cloud/Components/Process Header',
+    title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, ProcessHeaderCloudModule],

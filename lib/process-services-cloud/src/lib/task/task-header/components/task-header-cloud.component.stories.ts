@@ -24,7 +24,7 @@ import { ProcessServicesCloudStoryModule } from '../../../testing/process-servic
 
 export default {
     component: TaskHeaderCloudComponent,
-    title: 'Process Services Cloud/Components/Task Header',
+    title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, TaskHeaderCloudModule],

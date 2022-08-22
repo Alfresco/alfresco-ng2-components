@@ -22,7 +22,7 @@ import { IconModule } from './icon.module';
 
 export default {
     component: IconComponent,
-    title: 'Core/Components/Icon',
+    title: 'Core/Icon/Icon',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, IconModule]

@@ -24,7 +24,7 @@ import { FormDefinitionSelectorCloudServiceMock } from '../mocks/form-definition
 
 export default {
     component: FormDefinitionSelectorCloudComponent,
-    title: 'Process Services Cloud/Components/Form Definition Selector',
+    title: 'Process Services Cloud/Form Cloud/Form Definition Selector Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, FormCloudModule],

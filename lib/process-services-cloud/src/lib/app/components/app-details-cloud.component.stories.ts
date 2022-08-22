@@ -23,7 +23,7 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 
 export default {
     component: AppDetailsCloudComponent,
-    title: 'Process Services Cloud/Components/App Details',
+    title: 'Process Services Cloud/App List Cloud/App Details Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, AppListCloudModule]

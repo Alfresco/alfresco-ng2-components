@@ -26,7 +26,7 @@ import { ProcessServicesCloudStoryModule } from '../../../testing/process-servic
 
 export default {
     component: TaskFormCloudComponent,
-    title: 'Process Services Cloud/Components/Task Form',
+    title: 'Process Services Cloud/Task Cloud/Task Form/Task Form Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, TaskFormModule],
