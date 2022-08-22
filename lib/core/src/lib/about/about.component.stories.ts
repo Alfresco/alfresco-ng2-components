@@ -38,7 +38,34 @@ export default {
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        dev: {
+            control: 'boolean',
+            description: 'If active show more information about the app and the platform useful in debug.',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean'},
+                defaultValue: { summary: 'false'}
+            }
+        },
+        pkg: {
+            control: 'object',
+            description: 'pkg json.',
+            table: {
+                type: { summary: 'object'}
+            }
+        },
+        regexp: {
+            control: 'text',
+            description: 'Regular expression for filtering dependencies packages.',
+            defaultValue: '^(@alfresco)',
+            table: {
+                type: { summary: 'string'},
+                defaultValue: { summary: '^(@alfresco)' }
+            }
+        }
+    }
 } as Meta;
 
 const template: Story<AboutComponent> = (args: AboutComponent) => ({
@@ -46,9 +73,7 @@ const template: Story<AboutComponent> = (args: AboutComponent) => ({
 });
 
 export const defaultAbout = template.bind({});
-
 defaultAbout.args = {
-    dev: true,
     pkg: {
         name: 'My Storybook App', commit: 'my-commit-value', version: '1.0.0', dependencies: {
             '@alfresco/adf-content-services': '4.7.0',
