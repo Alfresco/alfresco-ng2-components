@@ -16,7 +16,6 @@
  */
 
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
 import { CoreStoryModule } from '../testing/core.story.module';
 
 import { LanguageMenuModule } from './language-menu.module';
