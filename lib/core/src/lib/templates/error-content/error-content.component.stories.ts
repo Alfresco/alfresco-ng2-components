@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
@@ -29,120 +29,49 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, TemplateModule],
             providers: [
-                {
-                    provide: ActivatedRoute,
-                    useValue: { params: of({}) }
-                }
+                { provide: ActivatedRoute, useValue: { params: of({}) }}
             ]
         })
     ],
     argTypes: {
         errorCode: {
-            type: 'string',
-            description: 'Component level Error Code',
+            control: 'text',
+            description: 'Error code associated with this error.',
+            defaultValue: 'UNKNOWN',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: 'UNKNOWN'
-                }
-            },
-            defaultValue: '404'
-        },
-        errorCodeTranslated: {
-            type: 'string',
-            description:
-                'Code of translated Error - if translation doesn\'t exist then is UNKNOWN',
-            table: {
-                category: 'Component Variables',
-                type: {
-                    summary: 'string'
-                }
-            },
-            control: {
-                disable: true
-            }
-        },
-        isAdditionalContent: {
-            type: 'boolean',
-            description: 'Enable Content Projection',
-            defaultValue: false,
-            table: {
-                category: 'Story Controls',
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: false
-                }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'UNKNOWN' }
             }
         }
     }
 } as Meta;
 
-const templateArgTypes = {
-    errorCode: {
-        control: {
-            disable: true
-        }
-    }
+const template: Story<ErrorContentComponent> = (args: ErrorContentComponent) => ({
+    props: args
+});
+
+export const defaultErrorContent = template.bind({});
+
+export const errorCode500 = template.bind({});
+errorCode500.args = {
+    errorCode: '500'
 };
 
-const template: Story<ErrorContentComponent> = (
-    args: ErrorContentComponent & { isAdditionalContent: boolean }
-) => ({
-    props: args,
-    template: `
-        <adf-error-content>
-            <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
-            <button mat-raised-button type="button">MyAction</button>
-            </div>
-        </adf-error-content>
-        `
-});
+export const errorCode404 = template.bind({});
+errorCode404.args = {
+    errorCode: '404'
+};
 
-export const errorKnownParamStory = template.bind({});
-errorKnownParamStory.argTypes = templateArgTypes;
-errorKnownParamStory.decorators = [
-    moduleMetadata({
-        providers: [
-            {
-                provide: ActivatedRoute,
-                useValue: {
-                    params: of({ id: '500' })
-                }
-            }
-        ]
-    })
+const wrap = (story: string, title?: string, content?:  string): string => `<h3>${title ? title : ''}</h3>${story}`.replace('></adf-error-content>',`>${content ? content : ''}</adf-error-content>`);
+export const withProjectedContent = template.bind({});
+withProjectedContent.decorators = [
+    componentWrapperDecorator(story => wrap(
+        story,
+        `This story supplies the Error Content component with an adf-error-content element:`,
+        `<div adf-error-content-actions>
+          <button type="button">
+            MyAction
+          </button>
+        </div>`
+    ))
 ];
-errorKnownParamStory.storyName = 'Error Param with Known ID';
-
-export const errorUnknownParamStory = template.bind({});
-errorUnknownParamStory.argTypes = templateArgTypes;
-errorUnknownParamStory.decorators = [
-    moduleMetadata({
-        providers: [
-            {
-                provide: ActivatedRoute,
-                useValue: {
-                    params: of({ id: '200' })
-                }
-            }
-        ]
-    })
-];
-errorUnknownParamStory.storyName = 'Error Param with Unknown ID';
-
-export const errorCodeStory: Story<ErrorContentComponent> = (
-    args: ErrorContentComponent & { isAdditionalContent: boolean }
-) => ({
-    props: args,
-    template: `
-    <adf-error-content [errorCode]="${args.errorCode}">
-        <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
-        <button mat-raised-button type="button">MyAction</button>
-        </div>
-    </adf-error-content>`
-});

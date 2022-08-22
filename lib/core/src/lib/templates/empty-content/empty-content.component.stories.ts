@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
@@ -30,88 +30,45 @@ export default {
     ],
     argTypes: {
         icon: {
-            description: 'Angular Material icon',
+            control: 'text',
+            description: 'Material Icon to use.',
+            defaultValue: 'cake',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: 'cake'
-                }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'cake' }
             }
         },
         title: {
+            control: 'text',
+            description: 'String or Resource Key for the title.',
+            defaultValue: 'title',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: ''
-                }
+                type: { summary: 'string' }
             }
         },
         subtitle: {
+            control: 'text',
+            description: 'String or Resource Key for the subtitle.',
+            defaultValue: 'subtitle',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: ''
-                }
-            }
-        },
-        lines: {
-            name: 'lines',
-            description: 'Content Projection Text',
-            control: {type: 'object'},
-            defaultValue: [
-                'Items you removed are moved to the Trash',
-                'Empty Trash to permanently delete items'
-            ],
-            table: {
-                category: 'Strories Controls',
-                type: {
-                    summary: 'array'
-                }
+                type: {summary: 'string' }
             }
         }
     }
 } as Meta;
 
-const template: Story<EmptyContentComponent> = (
-    args: EmptyContentComponent
-) => ({
+const template: Story<EmptyContentComponent> = (args: EmptyContentComponent) => ({
     props: args
 });
 
-export const defaultStory = template.bind({});
-defaultStory.argTypes = {
-    lines: {
-        control: { disable: true }
-    }
-};
-defaultStory.args = {
-    icon: 'star_rate',
-    title: 'No favourite files or folders',
-    subtitle: 'Favourite items that you want to easily find later'
-};
-defaultStory.storyName = 'Default';
+export const defaultEmptyContent = template.bind({});
 
-export const multipleLines: Story<EmptyContentComponent> = (
-    args: EmptyContentComponent & { lines: string[] }
-) => ({
-    props: {
-        ...args
-    },
-    template: `
-    <adf-empty-content icon="delete" title="Trash is empty">
-        <p class="adf-empty-content__text" *ngFor="let line of ${JSON.stringify(
-            args.lines
-        ).replace(/\"/g, '\'')}">
-            {{ line }}
-        </p>
-    </adf-empty-content>`
-});
+const wrap = (story: string, title?: string, content?:  string): string => `<h3>${title ? title : ''}</h3>${story}`.replace('></adf-empty-content>',`>${content ? content : ''}</adf-empty-content>`);
+export const withProjectedContent = template.bind({});
+withProjectedContent.decorators = [
+    componentWrapperDecorator(story => wrap(
+        story,
+        `This story supplies the Empty Content component with a div with red background:`,
+        `<div style="backgroundColor:red;">Projected content</div>`
+    ))
+];
