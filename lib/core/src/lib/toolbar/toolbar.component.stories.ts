@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { ToolbarComponent } from './toolbar.component';
 import { ToolbarModule } from './toolbar.module';
