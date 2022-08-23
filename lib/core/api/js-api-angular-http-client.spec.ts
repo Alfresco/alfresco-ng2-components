@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Emitter, Emitters,  RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
+import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -29,7 +29,7 @@ const securityOptions: SecurityOptions = {
     withCredentials: false
 };
 
-const emitter: Emitter = {
+const emitter = {
     emit: () => {},
     off: () => {},
     on: () => {},
