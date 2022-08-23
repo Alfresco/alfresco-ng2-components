@@ -15,45 +15,23 @@
  * limitations under the License.
  */
 
-import {
-    Emitter as JsEmitter, HttpClient as JsApiHttpClient, RequestOptions,
-    SecurityOptions
-} from '@alfresco/js-api';
+import { Emitter, HttpClient as JsApiHttpClient, RequestOptions, SecurityOptions } from '@alfresco/js-api';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpResponse, HttpUploadProgressEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { JsApiHttpParamEncoder } from './js-api-http-param-encoder';
+import { LegacyResponseError } from './legacy-response-error';
 
 declare const Blob: any;
 declare const Buffer: any;
-
-export const isBrowser = (): boolean => typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 
 const isHttpUploadProgressEvent = <T>(val: HttpEvent<T>): val is HttpUploadProgressEvent => val?.type === HttpEventType.UploadProgress;
 const isHttpResponseEvent = <T>(val: HttpEvent<T>): val is HttpResponse<T> => val?.type === HttpEventType.Response;
 const isDate = (value: any): value is Date => value instanceof Date;
-
-
-// for backward compatibility we need to return Error message with status code
-export class ResponseError extends Error {
-
-    public name = 'ResponseError';
-
-    // to handle for example demo-shell/src/app/components/files/files.component.ts
-        /*
-            onNavigationError(error: any) {
-            if (error) {
-                this.router.navigate(['/error', error.status]);
-            }
-        }
-    */
-    constructor(msg: string, public status: number, public error: { response: Record<string, any> }) {
-        super(msg);
-    }
-}
+const isBrowser = (): boolean => typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 @Injectable({
     providedIn: 'root'
@@ -62,9 +40,9 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, _sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
 
-        const responseType = this.getResponseType(options);
+        const responseType = JsApiAngularHttpClient.getResponseType(options);
 
         const contentType = options.contentTypes ? options.contentTypes[0] : undefined;
         const isFormData = contentType === 'multipart/form-data';
@@ -75,13 +53,13 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             ...((contentType) && { 'Content-Type': contentType })
         };
 
-        const params = options.queryParams ? this.convertObjectToHttpParams(options.queryParams) : {};
+        const params = options.queryParams ? JsApiAngularHttpClient.convertObjectToHttpParams(options.queryParams) : {};
         const isFormType = contentType === 'application/x-www-form-urlencoded';
 
         const body = isFormData
-            ? this.convertToFormData(options.formParams)
+            ? JsApiAngularHttpClient.convertToFormData(options.formParams)
             : isFormType
-                ? new HttpParams({ fromObject: this.removeUndefinedValues(options.formParams) })
+                ? new HttpParams({ fromObject: JsApiAngularHttpClient.removeUndefinedValues(options.formParams) })
                 : options.bodyParam;
 
         const headers = new HttpHeaders(optionsHeaders);
@@ -91,9 +69,10 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             url,
             {
                 ...(body && { body }),
+                ...(responseType ? { responseType } : {}),
+                ...(sc.withCredentials && { withCredentials: true }),
                 headers,
                 params,
-                ...(responseType ? { responseType } : {}),
                 observe: 'events',
                 reportProgress: true
             }
@@ -102,71 +81,23 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, globalEmitter, options.returnType);
     }
 
-    private convertObjectToHttpParams(obj: {[key: string]: any}): HttpParams {
-
-        let httpParams = new HttpParams({
-            encoder: new JsApiHttpParamEncoder()
-        });
-
-        const params = this.removeUndefinedValues(obj);
-
-        for (const key in params) {
-
-            if (Object.prototype.hasOwnProperty.call(params, key)) {
-                const value = params[key];
-                if (value instanceof Array) {
-                    const array = value.map(JsApiAngularHttpClient.convertValuesToCorrectType);
-                    httpParams = httpParams.appendAll({
-                        [key]: array
-                    });
-                } else {
-                    httpParams = httpParams.append(key, JsApiAngularHttpClient.convertValuesToCorrectType(value));
-                }
-            }
-        }
-
-        return httpParams;
-    }
-
-    static convertValuesToCorrectType(value: any): any {
-        return isDate(value) ? value.toISOString() : value;
-    }
-
-    private convertToFormData(formParams: {[key: string]: any}): FormData {
-
-        const formData = new FormData();
-
-        for (const key in formParams) {
-            if (Object.prototype.hasOwnProperty.call(formParams, key)) {
-                const value = formParams[key];
-                if (value instanceof File) {
-                    formData.append(key, value, value.name);
-                } else {
-                    formData.append(key, value);
-                }
-            }
-        }
-
-        return formData;
-    }
-
-    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
         return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'POST');
     }
 
-    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
         return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'PUT');
     }
 
-    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
         return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'GET');
     }
 
-    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter): Promise<T> {
+    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
         return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'DELETE');
     }
 
-    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: JsEmitter, globalEmitter: JsEmitter, httpMethod: HttpMethod): Promise<T> {
+    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter, httpMethod: HttpMethod): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod,
@@ -175,36 +106,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         }, sc, eventEmitter, globalEmitter);
     }
 
-    // Poor man's sanitizer
-    private removeUndefinedValues(obj: {[key: string]: any}) {
-
-        if(!obj) {
-            return {};
-        }
-
-        return Object.keys(obj).reduce((acc, key) => {
-            const value = obj[key];
-            const isNil = value === undefined || value === null;
-            return isNil ? acc : { ...acc, [key]: value };
-        }, {});
-    }
-
-    private getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
-
-        const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
-
-        if (isBlobType) {
-            return 'blob';
-        }
-
-        if (options.returnType === 'String') {
-            return 'text';
-        }
-
-       return 'json';
-    }
-
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: JsEmitter, globalEmitter: JsEmitter, returnType: any): Promise<T> {
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: Emitter, globalEmitter: Emitter, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
 
@@ -224,7 +126,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 return res;
 
             }),
-            catchError((err: HttpErrorResponse): Observable<ResponseError> => {
+            catchError((err: HttpErrorResponse): Observable<LegacyResponseError> => {
 
                 // since we can't always determinate ahead of time if the response is xml or String type,
                 // we need to handle false positive cases here.
@@ -257,7 +159,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                     }
                 };
 
-                const error = new ResponseError(msg, err.status, errorResponse);
+                const error = new LegacyResponseError(msg, err.status, errorResponse);
 
                 return throwError(error);
             }),
@@ -276,10 +178,86 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         return promise;
     }
 
+    private static convertObjectToHttpParams(obj: {[key: string]: unknown}): HttpParams {
+
+        let httpParams = new HttpParams({
+            encoder: new JsApiHttpParamEncoder()
+        });
+
+        const params = JsApiAngularHttpClient.removeUndefinedValues(obj);
+
+        for (const key in params) {
+
+            if (Object.prototype.hasOwnProperty.call(params, key)) {
+                const value = params[key];
+                if (value instanceof Array) {
+                    const array = value.map(JsApiAngularHttpClient.convertParamsToString);
+                    httpParams = httpParams.appendAll({
+                        [key]: array
+                    });
+                } else {
+                    httpParams = httpParams.append(key, JsApiAngularHttpClient.convertParamsToString(value));
+                }
+            }
+        }
+
+        return httpParams;
+    }
+
+    private static convertParamsToString(value: any): any {
+        return isDate(value) ? value.toISOString() : value;
+    }
+
+    private static convertToFormData(formParams: {[key: string]: any}): FormData {
+
+        const formData = new FormData();
+
+        for (const key in formParams) {
+            if (Object.prototype.hasOwnProperty.call(formParams, key)) {
+                const value = formParams[key];
+                if (value instanceof File) {
+                    formData.append(key, value, value.name);
+                } else {
+                    formData.append(key, value);
+                }
+            }
+        }
+
+        return formData;
+    }
+
+    private static removeUndefinedValues(obj: {[key: string]: unknown}) {
+
+        if(!obj) {
+            return {};
+        }
+
+        return Object.keys(obj).reduce((acc, key) => {
+            const value = obj[key];
+            const isNil = value === undefined || value === null;
+            return isNil ? acc : { ...acc, [key]: value };
+        }, {});
+    }
+
+    private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
+
+        const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
+
+        if (isBlobType) {
+            return 'blob';
+        }
+
+        if (options.returnType === 'String') {
+            return 'text';
+        }
+
+       return 'json';
+    }
+
     /**
      * Deserialize an HTTP response body into a value of the specified type.
      */
-     private static deserialize<T>(response: HttpResponse<T>, returnType?: any): any {
+    private static deserialize<T>(response: HttpResponse<T>, returnType?: any): any {
 
         if (response.body && returnType) {
             if (returnType === 'blob') {

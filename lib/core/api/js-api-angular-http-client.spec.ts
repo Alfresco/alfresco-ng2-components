@@ -18,8 +18,8 @@ import { Emitter, RequestOptions, ResultListDataRepresentationTaskRepresentation
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { JsApiAngularHttpClient, ResponseError } from './js-api-angular-http-client';
-
+import { JsApiAngularHttpClient } from './js-api-angular-http-client';
+import { LegacyResponseError } from './legacy-response-error';
 
 const securityOptions: SecurityOptions = {
     authentications: {},
@@ -204,7 +204,7 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: ResponseError) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: LegacyResponseError) => {
             expect(res instanceof Error).toBeTruthy();
             expect(res.message).toBe(JSON.stringify(errorResponse));
             expect(res.status).toBe(403);
@@ -226,7 +226,7 @@ describe('JsApiAngularHttpClient', () => {
 
         const errorResponse = new Blob();
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: ResponseError) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: LegacyResponseError) => {
             expect(res.status).toBe(400);
             expect(res.error.response.body instanceof Blob).toBeTruthy();
             done();
