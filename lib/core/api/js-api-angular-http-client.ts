@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Emitter, HttpClient as JsApiHttpClient, RequestOptions, SecurityOptions } from '@alfresco/js-api';
+import { Emitters, HttpClient as JsApiHttpClient, RequestOptions, SecurityOptions } from '@alfresco/js-api';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpResponse, HttpUploadProgressEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
@@ -40,7 +40,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
+    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters): Promise<T> {
 
         const responseType = JsApiAngularHttpClient.getResponseType(options);
 
@@ -78,48 +78,49 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
             }
         );
 
-        return this.requestWithLegacyEventEmitters<T>(request, eventEmitter, globalEmitter, options.returnType);
+        return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
     }
 
-    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'POST');
+    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, emitters, 'POST');
     }
 
-    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'PUT');
+    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, emitters, 'PUT');
     }
 
-    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'GET');
+    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, emitters, 'GET');
     }
 
-    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter): Promise<T> {
-        return this.requestBuilder<T>(url, options, sc, eventEmitter, globalEmitter, 'DELETE');
+    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters): Promise<T> {
+        return this.requestBuilder<T>(url, options, sc, emitters, 'DELETE');
     }
 
-    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, eventEmitter: Emitter, globalEmitter: Emitter, httpMethod: HttpMethod): Promise<T> {
+    private requestBuilder<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: Emitters, httpMethod: HttpMethod): Promise<T> {
         return this.request<T>(url, {
             ...options,
             httpMethod,
             contentTypes: options.contentTypes || ['application/json'],
             accepts: options.accepts || ['application/json']
-        }, sc, eventEmitter, globalEmitter);
+        }, sc, emitters);
     }
 
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitter: Emitter, globalEmitter: Emitter, returnType: any): Promise<T> {
+    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitters: Emitters, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
+        const { eventEmitter, errorEmitter } = emitters;
 
         const promise = request$.pipe(
             map((res) => {
 
                 if (isHttpUploadProgressEvent(res)) {
                     const percent = Math.round((res.loaded / res.total) * 100);
-                    emitter.emit('progress', { loaded: res.loaded, total: res.total, percent });
+                    eventEmitter.emit('progress', { loaded: res.loaded, total: res.total, percent });
                 }
 
                 if (isHttpResponseEvent(res)) {
-                    emitter.emit('success', res.body);
+                    eventEmitter.emit('success', res.body);
                     return JsApiAngularHttpClient.deserialize(res, returnType);
                 }
 
@@ -132,16 +133,16 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 // we need to handle false positive cases here.
 
                 if (err.status === 200) {
-                    emitter.emit('success', err.error.text);
+                    eventEmitter.emit('success', err.error.text);
                     return of(err.error.text);
                 }
 
-                emitter.emit('error', err);
-                globalEmitter.emit('error', err);
+                eventEmitter.emit('error', err);
+                errorEmitter.emit('error', err);
 
                 if (err.status === 401) {
-                    emitter.emit('unauthorized');
-                    globalEmitter.emit('unauthorized');
+                    eventEmitter.emit('unauthorized');
+                    errorEmitter.emit('unauthorized');
                 }
 
                 // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
@@ -169,7 +170,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
         // for Legacy backward compatibility
 
         (promise as any).abort = function() {
-            emitter.emit('abort');
+            eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
             return this;

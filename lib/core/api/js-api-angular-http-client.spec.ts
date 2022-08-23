@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Emitter, RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
+import { Emitter, Emitters,  RequestOptions, ResultListDataRepresentationTaskRepresentation, SecurityOptions } from '@alfresco/js-api';
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -34,6 +34,11 @@ const emitter: Emitter = {
     off: () => {},
     on: () => {},
     once: () => {}
+};
+
+const emitters: Emitters = {
+    eventEmitter: emitter,
+    errorEmitter: emitter
 };
 
 const mockResponse =  {
@@ -80,7 +85,7 @@ describe('JsApiAngularHttpClient', () => {
                 accepts: ['application/json']
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res: ResultListDataRepresentationTaskRepresentation) => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res: ResultListDataRepresentationTaskRepresentation) => {
                 expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
                 expect(res.data[0].created instanceof Date).toBeTruthy();
                 done();
@@ -101,7 +106,7 @@ describe('JsApiAngularHttpClient', () => {
                 responseType: 'json'
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res) => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
                 expect(res).toEqual(mockResponse);
                 done();
             });
@@ -121,7 +126,7 @@ describe('JsApiAngularHttpClient', () => {
 
             const spy = spyOn(emitter, 'emit').and.callThrough();
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch(() => {
+            angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(() => {
                 expect(spy).toHaveBeenCalledWith('unauthorized');
                 done();
             });
@@ -171,7 +176,7 @@ describe('JsApiAngularHttpClient', () => {
                 returnType: null
             };
 
-            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitter, emitter);
+            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters);
             const req = controller.expectOne('http://example.com?autoRename=true&include=allowableOperations');
             expect(req.request.method).toEqual('POST');
 
@@ -204,7 +209,7 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: LegacyResponseError) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((res: LegacyResponseError) => {
             expect(res instanceof Error).toBeTruthy();
             expect(res.message).toBe(JSON.stringify(errorResponse));
             expect(res.status).toBe(403);
@@ -226,7 +231,7 @@ describe('JsApiAngularHttpClient', () => {
 
         const errorResponse = new Blob();
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).catch((res: LegacyResponseError) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((res: LegacyResponseError) => {
             expect(res.status).toBe(400);
             expect(res.error.response.body instanceof Blob).toBeTruthy();
             done();
@@ -251,7 +256,7 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitter, emitter);
+        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters);
 
         const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC');
         expect(req.request.method).toEqual('POST');
@@ -265,7 +270,7 @@ describe('JsApiAngularHttpClient', () => {
             httpMethod: 'GET'
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter).then((res) => {
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
             expect(res).toEqual('');
             done();
         });
@@ -284,7 +289,7 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter);
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters);
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
@@ -300,7 +305,7 @@ describe('JsApiAngularHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitter, emitter);
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters);
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
