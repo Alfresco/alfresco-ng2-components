@@ -37,9 +37,116 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } },
-        taskId: { table: { disable: true } },
-        readOnly: { table: { disable: true } }
+        appName: {
+            control: 'text',
+            description: 'App id to fetch corresponding form and values.',
+            defaultValue: '',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' }
+            }
+        },
+        taskId: {
+            control: 'text',
+            description: 'Task id to fetch corresponding form and values.',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        showTitle: {
+            control: 'boolean',
+            description: 'Toggle rendering of the form title.',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
+        },
+        showRefreshButton: {
+            control: 'boolean',
+            description: 'Toggle rendering of the `Refresh` button.',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        showValidationIcon: {
+            control: 'boolean',
+            description: 'Toggle rendering of the `Validation` icon.',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
+        },
+        showCancelButton: {
+            control: 'boolean',
+            description: 'Toggle rendering of the `Cancel` button.',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
+        },
+        showCompleteButton: {
+            control: 'boolean',
+            description: 'Toggle rendering of the `Complete` button.',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
+        },
+        readOnly: {
+            control: 'boolean',
+            description: 'Toggle readonly state of the task.',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        formSaved: {
+            action: 'formSaved',
+            description: 'Emitted when the form is saved.',
+            table: { category: 'Actions' }
+        },
+        formCompleted: {
+            action: 'formCompleted',
+            description: 'Emitted when the form is submitted with the `Complete` outcome.',
+            table: { category: 'Actions' }
+        },
+        taskCompleted: {
+            action: 'taskCompleted',
+            description: 'Emitted when the task is completed.',
+            table: { category: 'Actions' }
+        },
+        taskClaimed: {
+            action: 'taskClaimed',
+            description: 'Emitted when the task is claimed.',
+            table: { category: 'Actions' }
+        },
+        taskUnclaimed: {
+            action: 'taskUnclaimed',
+            description: 'mitted when the task is unclaimed.',
+            table: { category: 'Actions' }
+        },
+        cancelClick: {
+            action: 'cancelClick',
+            description: 'Emitted when the cancel button is clicked.',
+            table: { category: 'Actions' }
+        },
+        formContentClicked: {
+            action: 'formContentClicked',
+            description: 'Emitted when form content is clicked.',
+            table: { category: 'Actions' }
+        },
+        error: {
+            action: 'error',
+            description: 'Emitted when any error occurs.',
+            table: { category: 'Actions' }
+        }
     }
 } as Meta;
 
@@ -47,44 +154,20 @@ const template: Story<TaskFormCloudComponent> = (args: TaskFormCloudComponent) =
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
+export const defaultTaskFormCloud = template.bind({});
+defaultTaskFormCloud.args = {
     appName: 'app',
-    readOnly: false,
-    showCancelButton: true,
-    showCompleteButton: true,
-    showRefreshButton: false,
-    showTitle: true,
-    showValidationIcon: true,
     taskId: 'mock-task-with-form'
-};
-
-export const readOnly = template.bind({});
-readOnly.args = {
-    ...primary.args,
-    readOnly: true
-};
-
-export const showRefreshButton = template.bind({});
-showRefreshButton.args = {
-    ...primary.args,
-    showRefreshButton: true
-};
-
-export const hideValidationIcon = template.bind({});
-hideValidationIcon.args = {
-    ...primary.args,
-    showValidationIcon: false
 };
 
 export const invalidOrMissingApp = template.bind({});
 invalidOrMissingApp.args = {
-    ...primary.args,
+    ...defaultTaskFormCloud.args,
     appName: undefined
 };
 
 export const invalidOrMissingTaskId = template.bind({});
 invalidOrMissingTaskId.args = {
-    ...primary.args,
+    ...defaultTaskFormCloud.args,
     taskId: undefined
 };

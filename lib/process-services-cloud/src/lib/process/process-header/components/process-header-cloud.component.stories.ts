@@ -32,8 +32,22 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } },
-        processInstanceId: { table: { disable: true } }
+        appName: {
+            control: 'text',
+            description: '(Required) The name of the application.',
+            defaultValue: '',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' }
+            }
+        },
+        processInstanceId: {
+            control: 'text',
+            description: '(Required) The id of the process instance.',
+            table: {
+                type: { summary: 'string' }
+            }
+        }
     }
 } as Meta;
 
@@ -41,8 +55,8 @@ const template: Story<ProcessHeaderCloudComponent> = (args: ProcessHeaderCloudCo
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
+export const defaultProcessHeaderCloud = template.bind({});
+defaultProcessHeaderCloud.args = {
     appName: 'app',
     processInstanceId: 'mock-process-id'
 };
