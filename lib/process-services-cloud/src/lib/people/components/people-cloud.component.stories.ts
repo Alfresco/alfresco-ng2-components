@@ -27,6 +27,9 @@ import {
     mockShepherdsPie,
     mockYorkshirePudding
 } from '../mock/people-cloud.mock';
+import { FormControl } from '@angular/forms';
+
+const defaultFormControl = new FormControl({ value: '', disabled: false });
 
 export default {
     component: PeopleCloudComponent,
@@ -40,10 +43,135 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } },
+        appName: {
+            control: 'text',
+            description: 'Name of the application. If specified, this shows the users who have access to the app.',
+            defaultValue: 'app',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
         mode: {
+            control: 'radio',
             options: ['single', 'multiple'],
-            control: 'radio'
+            description: 'User selection mode.',
+            defaultValue: 'single',
+            table: {
+                type: {summary: 'ComponentSelectionMode' },
+                defaultValue: { summary: 'single'}
+            }
+        },
+        roles: {
+            control: 'object',
+            description: 'Role names of the users to be listed.',
+            defaultValue: [],
+            table: {
+                type: { summary: 'string[]' },
+                defaultValue: { summary: '[]' }
+            }
+        },
+        validate: {
+            control: 'boolean',
+            description: 'This flag enables the validation on the preSelectUsers passed as input.\n\n'+
+            'In case the flag is true the components call the identity service to verify the validity of the information passed as input.\n\n'+
+            'Otherwise, no check will be done.',
+            defaultValue: false,
+            table: {
+                type: {summary: 'boolean' },
+                defaultValue: { summary: 'false'}
+            }
+        },
+        readOnly: {
+            control: 'boolean',
+            description: 'Show the info in readonly mode.',
+            defaultValue: false,
+            table: {
+                type: {summary: 'boolean' },
+                defaultValue: { summary: 'false'}
+            }
+        },
+        required: {
+            control: 'boolean',
+            description: 'Mark this field as required.',
+            defaultValue: false,
+            table: {
+                type: {summary: 'boolean' },
+                defaultValue: { summary: 'false'}
+            }
+        },
+        preSelectUsers: {
+            control: 'object',
+            description: 'Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username',
+            defaultValue: [],
+            table: {
+                type: {summary: 'IdentityUserModel[]' },
+                defaultValue: { summary: '[]'}
+            }
+        },
+        excludedUsers: {
+            control: 'object',
+            description: 'Array of users to be excluded. Mandatory properties are: id, email, username',
+            defaultValue: [],
+            table: {
+                type: {summary: 'IdentityUserModel[]' },
+                defaultValue: { summary: '[]'}
+            }
+        },
+        groupsRestriction: {
+            control: 'object',
+            description: 'Array of groups to restrict user searches. Mandatory property is group name',
+            defaultValue: [],
+            table: {
+                type: { summary: 'string[]' },
+                defaultValue: { summary: '[]'}
+            }
+        },
+        userChipsCtrl: {
+            control: 'object',
+            description: 'FormControl to list of users.',
+            mapping: { default: defaultFormControl},
+            table: {
+                type: {summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                category: 'Form Controls'
+            }
+        },
+        searchUserCtrl: {
+            control: 'object',
+            description: 'FormControl to search the user.',
+            mapping: { default: defaultFormControl},
+            table: {
+                type: {summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                category: 'Form Controls'
+            }
+        },
+        title: {
+            control: 'text',
+            description: 'Title of the field.',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        selectUser: {
+            action: 'selectUser',
+            description: 'Emitted when a user is selected.',
+            table: { category: 'Actions' }
+        },
+        removeUser: {
+            action: 'removeUser',
+            description: 'Emitted when a selected user is removed in multi selection mode.',
+            table: { category: 'Actions' }
+        },
+        changedUsers: {
+            action: 'changedUsers',
+            description: 'Emitted when a user selection changes.',
+            table: { category: 'Actions' }
+        },
+        warning: {
+            action: 'warning',
+            description: 'Emitted when an warning occurs.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;
@@ -52,20 +180,15 @@ const template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    appName: 'app',
-    excludedUsers: [],
-    mode: 'single',
-    preSelectUsers: [],
-    readOnly: false,
-    title: 'Users',
-    validate: false
+export const defaultPeopleCloud = template.bind({});
+defaultPeopleCloud.args = {
+    userChipsCtrl: 'default',
+    searchUserCtrl: 'default'
 };
 
 export const validPreselectedUsers = template.bind({});
 validPreselectedUsers.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     validate: true,
     mode: 'multiple',
     preSelectUsers: mockFoodUsers
@@ -73,7 +196,7 @@ validPreselectedUsers.args = {
 
 export const mandatoryPreselectedUsers = template.bind({});
 mandatoryPreselectedUsers.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
@@ -81,7 +204,7 @@ mandatoryPreselectedUsers.args = {
 
 export const invalidPreselectedUsers = template.bind({});
 invalidPreselectedUsers.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
@@ -89,7 +212,7 @@ invalidPreselectedUsers.args = {
 
 export const excludedUsers = template.bind({});
 excludedUsers.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     excludedUsers: [
         mockKielbasaSausage,
         mockYorkshirePudding
@@ -98,12 +221,12 @@ excludedUsers.args = {
 
 export const noUsers = template.bind({});
 noUsers.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     excludedUsers: mockFoodUsers
 };
 
 export const invalidOrEmptyAppName = template.bind({});
 invalidOrEmptyAppName.args = {
-    ...primary.args,
+    ...defaultPeopleCloud.args,
     appName: null
 };
