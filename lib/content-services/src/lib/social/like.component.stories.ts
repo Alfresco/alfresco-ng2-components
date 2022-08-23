@@ -33,7 +33,18 @@ export default {
         })
     ],
     argTypes: {
-        nodeId: { table: { disable: true } }
+        taskId: {
+            control: 'text',
+            description: 'Identifier of a node to apply likes to.',
+            defaultValue:'fake-like-node-id',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        changeVote: {
+            action: 'changeVote',
+            description: 'Emitted when the "vote" gets changed.'
+        }
     }
 } as Meta;
 
@@ -41,7 +52,4 @@ const template: Story<LikeComponent> = (args: LikeComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    nodeId: 'fake-like-node-id'
-};
+export const defaultLike = template.bind({});
