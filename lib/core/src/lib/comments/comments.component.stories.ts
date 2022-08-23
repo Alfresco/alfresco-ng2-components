@@ -68,7 +68,8 @@ export default {
         },
         error: {
             action: 'error',
-            description: 'Emitted when an error occurs while displaying/adding a comment.'
+            description: 'Emitted when an error occurs while displaying/adding a comment.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

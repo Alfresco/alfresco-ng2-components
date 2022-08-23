@@ -184,7 +184,8 @@ export default {
         },
         currentTab: {
             action: 'currentTab',
-            table: { disable: true }
+            description: 'Emitted when the currently active tab changes.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

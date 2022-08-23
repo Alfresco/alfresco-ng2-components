@@ -43,7 +43,8 @@ export default {
         },
         clickRow: {
             action: 'clickRow',
-            description: 'Emitted when the user clicks on one of the comment rows.'
+            description: 'Emitted when the user clicks on one of the comment rows.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

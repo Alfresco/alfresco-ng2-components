@@ -44,10 +44,12 @@ export default {
             }
         },
         dateChanged: {
-            action: 'dateChanged'
+            action: 'dateChanged',
+            table: { category: 'Actions' }
         },
         dateTypeChange: {
-            action: 'dateTypeChange'
+            action: 'dateTypeChange',
+            table: { category: 'Actions' }
         }}
 } as Meta;
 

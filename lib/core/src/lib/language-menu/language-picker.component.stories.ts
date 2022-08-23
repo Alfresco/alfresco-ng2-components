@@ -38,7 +38,8 @@ export default {
     argTypes: {
         changedLanguage: {
             action: 'changedLanguage',
-            description: 'Emitted when the user clicks on one of the language buttons.'
+            description: 'Emitted when the user clicks on one of the language buttons.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

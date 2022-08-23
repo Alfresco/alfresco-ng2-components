@@ -41,7 +41,8 @@ export default {
         },
         appClick: {
             action: 'appClick',
-            description: 'Emitted when an app entry is clicked.'
+            description: 'Emitted when an app entry is clicked.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

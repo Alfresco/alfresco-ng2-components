@@ -45,7 +45,8 @@ export default {
         },
         selectForm: {
             action: 'selectForm',
-            description: 'Emitted when a form is selected.'
+            description: 'Emitted when a form is selected.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

@@ -43,7 +43,8 @@ export default {
         },
         changeVote: {
             action: 'changeVote',
-            description: 'Emitted when the "vote" gets changed.'
+            description: 'Emitted when the "vote" gets changed.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;
