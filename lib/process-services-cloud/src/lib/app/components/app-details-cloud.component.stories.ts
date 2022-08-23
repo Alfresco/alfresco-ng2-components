@@ -28,14 +28,24 @@ export default {
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, AppListCloudModule]
         })
-    ]
+    ],
+    argTypes:{
+        applicationInstance: {
+            control: 'object',
+            defaultValue: fakeApplicationInstance[0],
+            table: {
+                type: { summary: 'ApplicationInstanceModel'}
+            }
+        },
+        selectedApp: {
+            action: 'selectedApp',
+            description: 'Emitted when an app entry is clicked.'
+        }
+    }
 } as Meta;
 
 const template: Story<AppDetailsCloudComponent> = (args: AppDetailsCloudComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    applicationInstance: fakeApplicationInstance
-};
+export const appDetailsCloud = template.bind({});

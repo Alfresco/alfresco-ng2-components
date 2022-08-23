@@ -30,10 +30,18 @@ export default {
     ],
     argTypes: {
         layoutType: {
+            control: 'radio',
             options: ['GRID', 'LIST'],
-            control: {
-                type: 'radio'
+            defaultValue: 'GRID',
+            description: 'Defines the layout of the apps.',
+            table: {
+                type: { summary: 'string'},
+                defaultValue: { summary: 'GRID'}
             }
+        },
+        appClick: {
+            action: 'appClick',
+            description: 'Emitted when an app entry is clicked.'
         }
     }
 } as Meta;
@@ -42,7 +50,4 @@ const template: Story<AppListCloudComponent> = (args) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    layoutType: 'GRID'
-};
+export const appListCloud = template.bind({});

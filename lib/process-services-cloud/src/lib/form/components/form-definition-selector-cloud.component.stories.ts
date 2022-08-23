@@ -34,7 +34,19 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } }
+        appName: {
+            control: 'text',
+            defaultValue: '',
+            description: 'Name of the application. If specified, this shows the users who have access to the app.',
+            table: {
+                type: { summary: 'string'},
+                defaultValue: { summary: ''}
+            }
+        },
+        selectForm: {
+            action: 'selectForm',
+            description: 'Emitted when a form is selected.'
+        }
     }
 } as Meta;
 
@@ -42,7 +54,4 @@ const template: Story<FormDefinitionSelectorCloudComponent> = (args: FormDefinit
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    appName: 'app'
-};
+export const formDefinitionSelectorCloud = template.bind({});

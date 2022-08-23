@@ -28,14 +28,31 @@ export default {
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, ProcessCommonModule]
         })
-    ]
+    ],
+    argTypes: {
+        processFilterProperty: {
+            control: 'object',
+            defaultValue: mockFilterProperty,
+            table: {
+                type: { summary: 'ApplicationInstanceModel'}
+            }
+        },
+        options: {
+            control: 'object',
+            table: {
+                type: { summary: 'DateCloudFilterType[]'}
+            }
+        },
+        dateChanged: {
+            action: 'dateChanged'
+        },
+        dateTypeChange: {
+            action: 'dateTypeChange'
+        }}
 } as Meta;
 
 const template: Story<DateRangeFilterComponent> = (args: DateRangeFilterComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    processFilterProperty: mockFilterProperty
-};
+export const dateRangeFilter = template.bind({});
