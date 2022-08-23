@@ -52,4 +52,4 @@ const template: Story<LikeComponent> = (args: LikeComponent) => ({
     props: args
 });
 
-export const defaultLike = template.bind({});
+export const like = template.bind({});

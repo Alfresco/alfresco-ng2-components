@@ -72,8 +72,8 @@ const template: Story<AboutComponent> = (args: AboutComponent) => ({
     props: args
 });
 
-export const defaultAbout = template.bind({});
-defaultAbout.args = {
+export const about = template.bind({});
+about.args = {
     pkg: {
         name: 'My Storybook App', commit: 'my-commit-value', version: '1.0.0', dependencies: {
             '@alfresco/adf-content-services': '4.7.0',
