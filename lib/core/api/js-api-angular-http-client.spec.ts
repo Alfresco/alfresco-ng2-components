@@ -38,7 +38,7 @@ const emitter = {
 
 const emitters: Emitters = {
     eventEmitter: emitter,
-    errorEmitter: emitter
+    apiClientEmitter: emitter
 };
 
 const mockResponse =  {
