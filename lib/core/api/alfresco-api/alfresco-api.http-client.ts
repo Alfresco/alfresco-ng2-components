@@ -20,9 +20,10 @@ import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, Http
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
-import { convertObjectToFormData, getQueryParamsWithCustomEncoder, isBlobResponse, isHttpResponseEvent, isHttpUploadProgressEvent, isXML, removeUndefinedValues } from './alfresco-api.utils';
+import { convertObjectToFormData, getQueryParamsWithCustomEncoder, isBlobResponse, isConstructor, isHttpResponseEvent, isHttpUploadProgressEvent, removeNilValues } from './alfresco-api.utils';
 import { AlfrescoApiParamEncoder } from './alfresco-api.param-encoder';
 import { AlfrescoApiResponseError } from './alfresco-api.response-error';
+import { Constructor } from '../types';
 
 
 @Injectable({
@@ -90,10 +91,10 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
             }),
             catchError((err: HttpErrorResponse): Observable<AlfrescoApiResponseError> => {
 
-                // since we can't always determinate ahead of time if the response is going to be xml (text type)
+                // since we can't always determinate ahead of time if the response is going to be xml or plain text response
                 // we need to handle false positive cases here.
 
-                if (err.status === 200 && isXML(err.error.text)) {
+                if (err.status === 200) {
                     eventEmitter.emit('success', err.error.text);
                     return of(err.error.text);
                 }
@@ -111,24 +112,18 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
                 // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
                 const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
 
-                // some more backwards compatibility magic :) to handle cases like
-                // return this.blobService.convert2Json(response.error.response.body)
+                // for backwards compatibility to handle cases in code where we try read response.error.response.body;
 
-                const errorResponse = {
-                    response: {
-                        ...err,
-                        body: err.error
-                    }
+                const error = {
+                    response: { ...err, body: err.error }
                 };
 
-                const error = new AlfrescoApiResponseError(msg, err.status, errorResponse);
+                const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
 
-                return throwError(error);
+                return throwError(alfrescoApiError);
             }),
             takeUntil(abort$)
         ).toPromise();
-
-        // for Legacy backward compatibility
 
         (promise as any).abort = function() {
             eventEmitter.emit('abort');
@@ -151,7 +146,7 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
         }
 
         if (isFormUrlEncoded) {
-            return new HttpParams({ fromObject: removeUndefinedValues(options.formParams) });
+            return new HttpParams({ fromObject: removeNilValues(options.formParams) });
         }
 
         return body;
@@ -185,30 +180,36 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
     /**
      * Deserialize an HTTP response body into a value of the specified type.
      */
-    private static deserialize<T>(response: HttpResponse<T>, returnType?: any): any {
+    private static deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
 
         if (response === null) {
             return null;
         }
 
-        if (response.body && returnType) {
-            if (isBlobResponse(response, returnType)) {
-                return AlfrescoApiHttpClient.deserializeBlobResponse(response);
-            }
+        const body = response.body;
 
-            if (Array.isArray(response.body)) {
-                return response.body.map((element) => new returnType(element));
-            }
+        if (!returnType) {
+            // for backwards compatibility we need to return empty string instead of null,
+            // to avoid issues when accessing null response would break application [C309878]
+            // cannot read property 'entry' of null in cases like
+            // return this.post(apiUrl, saveFormRepresentation).pipe(map((res: any) => res.entry))
 
-            return new returnType(response.body);
+            return body !== null ? body : '';
         }
 
-        // for backwards compatibility we need to return empty string instead of null,
-        // to avoid issues when accessing null response would break application [C309878]
-        // cannot read property 'entry' of null in cases like
-        // return this.post(apiUrl, saveFormRepresentation).pipe(map((res: any) => res.entry))
+        if (isBlobResponse(response, returnType)) {
+            return AlfrescoApiHttpClient.deserializeBlobResponse(response);
+        }
 
-        return response.body !== null ? response.body : '';
+        if (!isConstructor(returnType)) {
+            return body;
+        }
+
+        if (Array.isArray(body)) {
+            return body.map((element) => new returnType(element));
+        }
+
+        return new returnType(body);
     }
 
 
@@ -221,3 +222,4 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
         return Buffer.from(response.body as unknown as WithImplicitCoercion<string>, 'binary');
     }
 }
+

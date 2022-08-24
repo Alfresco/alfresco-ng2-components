@@ -1,13 +1,15 @@
-import { HttpEvent, HttpUploadProgressEvent, HttpEventType, HttpResponse, HttpParams, HttpParameterCodec } from '@angular/common/http';
+import { HttpEvent, HttpUploadProgressEvent, HttpEventType, HttpResponse, HttpParams, HttpParameterCodec, HttpUrlEncodingCodec } from '@angular/common/http';
+import { Constructor } from '../types';
 
 export const isHttpUploadProgressEvent = <T>(val: HttpEvent<T>): val is HttpUploadProgressEvent => val.type === HttpEventType.UploadProgress;
 export const isHttpResponseEvent = <T>(val: HttpEvent<T>): val is HttpResponse<T> => val.type === HttpEventType.Response;
 export const isDate = (value: unknown): value is Date => value instanceof Date;
 export const isXML = (value: unknown): boolean => typeof value === 'string' && value.startsWith('<?xml');
-export const isBlobResponse = (response: HttpResponse<any>, returnType: any): response is HttpResponse<Blob> => returnType === 'blob' || response.body instanceof Blob;
+export const isBlobResponse = (response: HttpResponse<any>, returnType: Constructor<unknown> | 'blob'): response is HttpResponse<Blob> => returnType === 'blob' || response.body instanceof Blob;
+export const isConstructor = <T = unknown>(value: any): value is Constructor<T> => typeof value === 'function' && !!value?.prototype?.constructor.name;
 
 const convertParamsToString = (value: any): any => isDate(value) ? value.toISOString() : value;
-export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unknown>, encoder: HttpParameterCodec): HttpParams | undefined => {
+export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unknown>, encoder: HttpParameterCodec = new HttpUrlEncodingCodec()): HttpParams | undefined => {
     if (!obj) {
         return undefined;
     }
@@ -16,14 +18,14 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
         encoder
     });
 
-    const params = removeUndefinedValues(obj);
+    const params = removeNilValues(obj);
 
     for (const key in params) {
 
         if (Object.prototype.hasOwnProperty.call(params, key)) {
             const value = params[key];
             if (value instanceof Array) {
-                const array = value.map(convertParamsToString);
+                const array = value.map(convertParamsToString).filter(Boolean);
                 httpParams = httpParams.appendAll({
                     [key]: array
                 });
@@ -36,7 +38,10 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
     return httpParams;
 };
 
-export const removeUndefinedValues = (obj: Record<string | number, unknown>) => {
+/**
+ * Removes null and undefined values from an object.
+ */
+export const removeNilValues = (obj: Record<string | number, unknown>) => {
 
     if (!obj) {
         return {};
