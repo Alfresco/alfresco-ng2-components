@@ -17,9 +17,8 @@
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import { DialogModule } from '../dialog.module';
-import { EditJsonDialogComponent } from './edit-json.dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditJsonDialogModule } from './edit-json.dialog.module';
+import { EditJsonDialogStorybookComponent } from './edit-json.dialog.stories.component';
 
 const jsonData = {
     maxValue: 50,
@@ -30,11 +29,11 @@ const jsonData = {
 };
 
 export default {
-    component: EditJsonDialogComponent,
+    component: EditJsonDialogStorybookComponent,
     title: 'Core/Dialog/Edit JSON Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, DialogModule]
+            imports: [CoreStoryModule, EditJsonDialogModule]
         })
     ],
     argTypes: {
@@ -88,31 +87,8 @@ export default {
     }
 } as Meta;
 
-const obj = {
-    editable: false,
-    value: JSON.stringify(jsonData, null, '  '),
-    title: 'JSON Dialog Title'
-};
+const template: Story<EditJsonDialogStorybookComponent> = (args: EditJsonDialogStorybookComponent) => ({
+    props: args
+});
 
-const template: Story = (args) => {
-    obj.editable = args.editable;
-    obj.value = JSON.stringify(args.value, null, '  ');
-    obj.title = args.title;
-
-    const templateStory = {
-        props: args
-    };
-    return templateStory;
-};
-
-export const editJSONStory = template.bind({});
-editJSONStory.decorators = [
-    moduleMetadata({
-        providers: [
-            {
-                provide: MAT_DIALOG_DATA,
-                useValue: obj
-            }
-        ]
-    })
-];
+export const editJSONDialog = template.bind({});
