@@ -22,7 +22,7 @@
     "@angular/platform-browser": ">=14.0.5",
     "@angular/platform-browser-dynamic": ">=14.0.5",
     "@angular/router": ">=14.0.5",
-    "@alfresco/js-api": "4.12.0-244",
+    "@alfresco/js-api": "file:../../alfresco-js-api-4.12.0.tgz",
     "@alfresco/adf-core": "5.0.0-angular.14.0",
     "@alfresco/adf-content-services": "5.0.0-angular.14.0",
     "@ngx-translate/core": ">=13.0.0",
