@@ -28,7 +28,7 @@
         </mat-expansion-panel-header>
         <ng-container *ngIf="!isLoading;">
             <form *ngIf="editTaskFilterForm" [formGroup]="editTaskFilterForm">
-                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start">
                     <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
                         <mat-form-field fxFlex="23%"
                                         [floatLabel]="'auto'"
@@ -36,7 +36,8 @@
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-select placeholder="{{taskFilterProperty.label | translate}}"
                                         [formControlName]="taskFilterProperty.key"
-                                        [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
+                                        [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"
+                                        (selectionChange)="onStatusChange($event)">
                                 <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
                                             [value]="propertyOption.value"
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
@@ -109,9 +110,13 @@
                         <adf-cloud-task-assignment-filter fxFlex="23%"
                             *ngIf="taskFilterProperty.type === 'assignment'"
                             [taskFilterProperty]="taskFilterProperty"
-                            (assignedChange)="onAssignedChange($event)"
-                            (assignedGroupChange)="onAssignedGroupsChange($event)">
+                            [status]="selectedStatus"
+                            [appName]="appName"
+                            (assignedUsersChange)="onAssignedUsersChange($event)"
+                            (assignedGroupsChange)="onAssignedGroupsChange($event)"
+                            (assignmentTypeChange)="onAssignmentTypeChange($event)">
                         </adf-cloud-task-assignment-filter>
+
                     </ng-container>
                 </div>
             </form>

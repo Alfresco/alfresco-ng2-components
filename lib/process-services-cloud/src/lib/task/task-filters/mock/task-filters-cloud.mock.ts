@@ -16,7 +16,7 @@
  */
 
 import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
-import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType } from '../models/filter-cloud.model';
 
 export const fakeGlobalFilter: any[] = [
     {
@@ -79,6 +79,7 @@ export const fakeFilter = new TaskFilterCloudModel({
     appName: 'mock-app-name',
     processDefinitionId: 'process-def-id',
     assignee: 'fake-involved',
+    assignment: AssignmentType.NONE,
     order: 'ASC',
     sort: 'id',
     completedBy: {

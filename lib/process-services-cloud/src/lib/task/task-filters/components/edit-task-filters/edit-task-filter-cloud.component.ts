@@ -154,7 +154,6 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     createTaskFilterProperties(): TaskFilterProperties[] {
         const statusOptions = this.getStatusOptions();
         const sortProperties = this.createSortProperties;
-
         return [
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
@@ -303,11 +302,12 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'assignment',
                 key: 'assignment',
-                attributes: { assignee: 'assignee', candidateGroups: 'candidateGroups'},
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'},
                 value: {
-                    assignee: this.taskFilter.assignee || null,
+                    assignedUsers: this.taskFilter.assignedUsers || [],
                     candidateGroups: this.taskFilter.candidateGroups || []
-                }
+                },
+                selectionMode: 'multiple'
             }
         ];
     }

@@ -1,6 +1,6 @@
 .adf-cloud-assignment-container {
-    align-items: center;
-
+    display: flex;
+    flex-wrap: wrap;
     mat-form-field {
         width: 100%;
     }
@@ -11,7 +11,6 @@
 }
 
 .adf-group-cloud-filter {
-    margin-left: 15px;
     flex: 1;
     width: 100%;
 }
