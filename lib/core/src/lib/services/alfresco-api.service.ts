@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoApiHttpClient } from '@alfresco/adf-core/api';
 import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject, ReplaySubject } from 'rxjs';
@@ -49,8 +50,9 @@ export class AlfrescoApiService {
 
     constructor(
         protected appConfig: AppConfigService,
-        protected storageService: StorageService) {
-    }
+        protected storageService: StorageService,
+        private alfrescoApiHttpClient: AlfrescoApiHttpClient
+    ) {}
 
     async load() {
         try {
@@ -121,7 +123,7 @@ export class AlfrescoApiService {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
             this.alfrescoApi.setConfig(this.currentAppConfig);
         } else {
-            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
+            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig, this.alfrescoApiHttpClient);
         }
         this.lastConfig = this.currentAppConfig;
     }

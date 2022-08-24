@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoApiHttpClient } from '@alfresco/adf-core/api';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../services/storage.service';
@@ -23,9 +24,12 @@ import { StorageService } from '../services/storage.service';
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
 
-    constructor(protected appConfig: AppConfigService,
-                protected storageService: StorageService) {
-        super(appConfig, storageService);
+    constructor(
+        protected appConfig: AppConfigService,
+        protected storageService: StorageService,
+        alfrescoApiHttpClient: AlfrescoApiHttpClient
+    ) {
+        super(appConfig, storageService, alfrescoApiHttpClient);
         if (!this.alfrescoApi) {
             this.initAlfrescoApi();
         }
