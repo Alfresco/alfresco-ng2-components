@@ -109,7 +109,7 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
     private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitters: Emitters, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
-        const { eventEmitter, errorEmitter } = emitters;
+        const { eventEmitter, apiClientEmitter } = emitters;
 
         const promise = request$.pipe(
             map((res) => {
@@ -138,11 +138,11 @@ export class JsApiAngularHttpClient implements JsApiHttpClient {
                 }
 
                 eventEmitter.emit('error', err);
-                errorEmitter.emit('error', err);
+                apiClientEmitter.emit('error', err);
 
                 if (err.status === 401) {
                     eventEmitter.emit('unauthorized');
-                    errorEmitter.emit('unauthorized');
+                    apiClientEmitter.emit('unauthorized');
                 }
 
                 // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
