@@ -33,7 +33,7 @@ export default {
         })
     ],
     argTypes: {
-        taskId: {
+        nodeId: {
             control: 'text',
             description: 'Identifier of a node to apply likes to.',
             defaultValue:'fake-like-node-id',
