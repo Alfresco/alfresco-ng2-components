@@ -64,8 +64,8 @@ export default {
             description: 'Group selection mode.',
             defaultValue: 'single',
             table: {
-                type: {summary: 'ComponentSelectionMode' },
-                defaultValue: { summary: 'single'}
+                type: { summary: 'ComponentSelectionMode' },
+                defaultValue: { summary: 'single' }
             }
         },
         preSelectGroups: {
@@ -73,8 +73,8 @@ export default {
             description: 'Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode.',
             defaultValue: [],
             table: {
-                type: {summary: 'IdentityGroupModel[]' },
-                defaultValue: { summary: '[]'}
+                type: { summary: 'IdentityGroupModel[]' },
+                defaultValue: { summary: '[]' }
             }
         },
         validate: {
@@ -84,8 +84,8 @@ export default {
             'Otherwise, no check will be done.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         readOnly: {
@@ -93,8 +93,8 @@ export default {
             description: 'Show the info in readonly mode.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         required: {
@@ -102,27 +102,27 @@ export default {
             description: 'Mark this field as required.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         groupChipsCtrl: {
             control: 'object',
             description: 'FormControl to list of group.',
-            mapping: { default: defaultFormControl},
+            mapping: { default: defaultFormControl },
             table: {
-                type: {summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                type: { summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
                 category: 'Form Controls'
             }
         },
         searchGroupsControl: {
             control: 'object',
             description: 'FormControl to search the group.',
-            mapping: { default: defaultFormControl},
+            mapping: { default: defaultFormControl },
             table: {
-                type: {summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                type: { summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
                 category: 'Form Controls'
             }
         },

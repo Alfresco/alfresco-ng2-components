@@ -29,12 +29,12 @@ export default {
             imports: [ProcessServicesCloudStoryModule, AppListCloudModule]
         })
     ],
-    argTypes:{
+    argTypes: {
         applicationInstance: {
             control: 'object',
             defaultValue: fakeApplicationInstance[0],
             table: {
-                type: { summary: 'ApplicationInstanceModel'}
+                type: { summary: 'ApplicationInstanceModel' }
             }
         },
         selectedApp: {

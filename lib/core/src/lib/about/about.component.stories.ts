@@ -45,15 +45,15 @@ export default {
             description: 'If active show more information about the app and the platform useful in debug.',
             defaultValue: false,
             table: {
-                type: { summary: 'boolean'},
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         pkg: {
             control: 'object',
             description: 'pkg json.',
             table: {
-                type: { summary: 'object'}
+                type: { summary: 'object' }
             }
         },
         regexp: {
@@ -61,7 +61,7 @@ export default {
             description: 'Regular expression for filtering dependencies packages.',
             defaultValue: '^(@alfresco)',
             table: {
-                type: { summary: 'string'},
+                type: { summary: 'string' },
                 defaultValue: { summary: '^(@alfresco)' }
             }
         }

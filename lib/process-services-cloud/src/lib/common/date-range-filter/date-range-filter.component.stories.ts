@@ -34,13 +34,13 @@ export default {
             control: 'object',
             defaultValue: mockFilterProperty,
             table: {
-                type: { summary: 'ApplicationInstanceModel'}
+                type: { summary: 'ApplicationInstanceModel' }
             }
         },
         options: {
             control: 'object',
             table: {
-                type: { summary: 'DateCloudFilterType[]'}
+                type: { summary: 'DateCloudFilterType[]' }
             }
         },
         dateChanged: {
@@ -50,7 +50,8 @@ export default {
         dateTypeChange: {
             action: 'dateTypeChange',
             table: { category: 'Actions' }
-        }}
+        }
+    }
 } as Meta;
 
 const template: Story<DateRangeFilterComponent> = (args: DateRangeFilterComponent) => ({

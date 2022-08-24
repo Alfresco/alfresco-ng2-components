@@ -35,8 +35,8 @@ export default {
             defaultValue: 'GRID',
             description: 'Defines the layout of the apps.',
             table: {
-                type: { summary: 'string'},
-                defaultValue: { summary: 'GRID'}
+                type: { summary: 'string' },
+                defaultValue: { summary: 'GRID' }
             }
         },
         appClick: {

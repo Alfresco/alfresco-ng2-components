@@ -243,10 +243,7 @@ tabLayoutWithTextLabels.args = {
 };
 
 tabLayoutWithTextLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
@@ -261,10 +258,7 @@ tabLayoutWithIconLabels.args = {
 };
 
 tabLayoutWithIconLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const singleLayout = singleLayoutTemplate.bind({});
@@ -274,8 +268,4 @@ singleLayout.args = {
     showHeader: true,
     showSecondTab: false,
     showThirdTab: false
-};
-
-singleLayout.parameters = {
-    controls: { expanded: true }
 };

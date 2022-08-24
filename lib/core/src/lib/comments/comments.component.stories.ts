@@ -39,7 +39,9 @@ export default {
     ],
     argTypes: {
         comments: {
-            table: {disable: true}
+            control: 'object',
+            description: 'CommentModel array',
+            table: { type: { summary: 'CommentModel[]' } }
         },
         readOnly: {
             control: 'boolean',
@@ -47,7 +49,7 @@ export default {
             defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                defaultValue: { summary: 'false' }
             }
         },
         nodeId: {

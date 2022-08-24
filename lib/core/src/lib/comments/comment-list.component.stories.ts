@@ -36,9 +36,9 @@ export default {
     argTypes: {
         comments: {
             control: 'object',
-            description: 'The comments data used to populate the list.',
+            description: 'CommentModel array',
             table: {
-                type: { summary: 'CommentModel[]'}
+                type: { summary: 'CommentModel[]' }
             }
         },
         clickRow: {

@@ -38,7 +38,7 @@ export default {
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, PeopleCloudModule],
             providers: [
-                { provide: IdentityUserService, useClass: IdentityUserServiceMock}
+                { provide: IdentityUserService, useClass: IdentityUserServiceMock }
             ]
         })
     ],
@@ -57,8 +57,8 @@ export default {
             description: 'User selection mode.',
             defaultValue: 'single',
             table: {
-                type: {summary: 'ComponentSelectionMode' },
-                defaultValue: { summary: 'single'}
+                type: { summary: 'ComponentSelectionMode' },
+                defaultValue: { summary: 'single' }
             }
         },
         roles: {
@@ -77,8 +77,8 @@ export default {
             'Otherwise, no check will be done.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         readOnly: {
@@ -86,8 +86,8 @@ export default {
             description: 'Show the info in readonly mode.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         required: {
@@ -95,8 +95,8 @@ export default {
             description: 'Mark this field as required.',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         preSelectUsers: {
@@ -104,8 +104,8 @@ export default {
             description: 'Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username',
             defaultValue: [],
             table: {
-                type: {summary: 'IdentityUserModel[]' },
-                defaultValue: { summary: '[]'}
+                type: { summary: 'IdentityUserModel[]' },
+                defaultValue: { summary: '[]' }
             }
         },
         excludedUsers: {
@@ -113,8 +113,8 @@ export default {
             description: 'Array of users to be excluded. Mandatory properties are: id, email, username',
             defaultValue: [],
             table: {
-                type: {summary: 'IdentityUserModel[]' },
-                defaultValue: { summary: '[]'}
+                type: { summary: 'IdentityUserModel[]' },
+                defaultValue: { summary: '[]' }
             }
         },
         groupsRestriction: {
@@ -123,26 +123,26 @@ export default {
             defaultValue: [],
             table: {
                 type: { summary: 'string[]' },
-                defaultValue: { summary: '[]'}
+                defaultValue: { summary: '[]' }
             }
         },
         userChipsCtrl: {
             control: 'object',
             description: 'FormControl to list of users.',
-            mapping: { default: defaultFormControl},
+            mapping: { default: defaultFormControl },
             table: {
-                type: {summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                type: { summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
                 category: 'Form Controls'
             }
         },
         searchUserCtrl: {
             control: 'object',
             description: 'FormControl to search the user.',
-            mapping: { default: defaultFormControl},
+            mapping: { default: defaultFormControl },
             table: {
-                type: {summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })'},
+                type: { summary: 'FormControl' },
+                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
                 category: 'Form Controls'
             }
         },

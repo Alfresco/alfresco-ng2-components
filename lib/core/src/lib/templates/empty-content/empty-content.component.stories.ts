@@ -51,7 +51,7 @@ export default {
             description: 'String or Resource Key for the subtitle.',
             defaultValue: 'subtitle',
             table: {
-                type: {summary: 'string' }
+                type: { summary: 'string' }
             }
         }
     }

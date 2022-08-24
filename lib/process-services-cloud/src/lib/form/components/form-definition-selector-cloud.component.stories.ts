@@ -39,8 +39,8 @@ export default {
             defaultValue: '',
             description: 'Name of the application. If specified, this shows the users who have access to the app.',
             table: {
-                type: { summary: 'string'},
-                defaultValue: { summary: ''}
+                type: { summary: 'string' },
+                defaultValue: { summary: '' }
             }
         },
         selectForm: {
