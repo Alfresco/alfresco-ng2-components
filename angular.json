@@ -260,7 +260,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/demo-shell/**/*.ts'"
+                      "command": "$(npm bin)/cspell 'demo-shell/**/*.ts'"
                   }
               ]
           }
