@@ -500,8 +500,10 @@ describe('EditProcessFilterCloudComponent', () => {
             priority: '12',
             suspendedDateType: DateCloudFilterType.RANGE
         });
-        filter.suspendedFrom = new Date(2021, 1, 1).toString();
-        filter.suspendedTo = new Date(2021, 1, 2).toString();
+        const oneYearAgoDate = moment().add(-1, 'years').format('YYYY-MM-DD');
+        const todayDate = moment().format('YYYY-MM-DD');
+        filter.suspendedFrom = oneYearAgoDate.toString();
+        filter.suspendedTo = todayDate.toString();
         getProcessFilterByIdSpy.and.returnValue(of(filter));
 
         fixture.detectChanges();
@@ -518,8 +520,8 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.editProcessFilterForm.get('_suspendedFrom').value).toEqual(new Date(2021, 1, 1).toString());
-        expect(component.editProcessFilterForm.get('_suspendedTo').value).toEqual(new Date(2021, 1, 2).toString());
+        expect(component.editProcessFilterForm.get('_suspendedFrom').value).toEqual(oneYearAgoDate.toString());
+        expect(component.editProcessFilterForm.get('_suspendedTo').value).toEqual(todayDate.toString());
         expect(component.editProcessFilterForm.get('suspendedDateType').value).toEqual(DateCloudFilterType.RANGE);
     });
 
