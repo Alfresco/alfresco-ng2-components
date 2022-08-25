@@ -31,15 +31,15 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     constructor(private dialog: MatDialog) {}
 
     ngOnInit(): void {
-        if (!this.showLoading) {
-            downloadEntry.entry.status = 'DONE';
-        } else {
-            downloadEntry.entry.status = 'PACKING';
-        }
+        this.setEntryStatus(this.showLoading);
     }
 
     ngOnChanges(): void {
-        if (!this.showLoading) {
+        this.setEntryStatus(this.showLoading);
+    }
+
+    setEntryStatus(isLoading: boolean){
+        if (!isLoading) {
             downloadEntry.entry.status = 'DONE';
         } else {
             downloadEntry.entry.status = 'PACKING';

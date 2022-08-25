@@ -23,13 +23,19 @@ import {
 } from './edit-json.dialog';
 
 @Component({
-    selector: 'adf-edit-json-dialog',
-    template: `<button (click)="openDialog()">
-        Open dialog
-    </button>`
+    selector: 'adf-edit-json-dialog-storybook',
+    template: `<button (click)="openDialog()">Open dialog</button>`
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
-    private settings: EditJsonDialogSettings;
+    private _settings: EditJsonDialogSettings;
+
+    set settings(newSettings: EditJsonDialogSettings) {
+        this._settings = {
+            title: newSettings.title,
+            editable: newSettings.editable,
+            value: JSON.stringify(newSettings.value, null, '  ')
+        };
+    }
 
     @Input()
     title: string;
@@ -46,7 +52,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this.settings = {
             title: this.title,
             editable: this.editable,
-            value: JSON.stringify(this.value, null, '  ')
+            value: this.value
         };
     }
 
@@ -54,23 +60,24 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this.settings = {
             title: this.title,
             editable: this.editable,
-            value: JSON.stringify(this.value, null, '  ')
+            value: this.value
         };
     }
 
     openDialog() {
         this.dialog
             .open(EditJsonDialogComponent, {
-                data: this.settings,
+                data: this._settings,
                 minWidth: `50%`
             })
             .afterClosed()
             .subscribe((value: string) => {
                 if (value) {
-                this.settings.value = JSON.stringify(
-                                        JSON.parse(value),
-                                        null,
-                                        '  ');
+                    this._settings.value = JSON.stringify(
+                        JSON.parse(value),
+                        null,
+                        '  '
+                    );
                 }
             });
     }
