@@ -64,63 +64,80 @@ describe('TaskAssignmentFilterComponent', () => {
         ]
     });
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TaskAssignmentFilterCloudComponent);
-        component = fixture.componentInstance;
-        identityUserService = TestBed.inject(IdentityUserService);
-        component.taskFilterProperty = {
-            key: 'assignment',
-            label: 'mock-filter',
-            value: {},
-            type: 'assignment',
-            attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
-        };
-        fixture.detectChanges();
-    });
+    describe('inputs', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(TaskAssignmentFilterCloudComponent);
+            component = fixture.componentInstance;
+            identityUserService = TestBed.inject(IdentityUserService);
+            component.taskFilterProperty = {
+                key: 'assignment',
+                label: 'mock-filter',
+                value: {},
+                type: 'assignment',
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
+            };
+            fixture.detectChanges();
+        });
 
-    afterEach(() => fixture.destroy());
+        afterEach(() => fixture.destroy());
 
-    it('should display all available assignment types', () => {
-        const assignmentTypeSelect: DebugElement = fixture.debugElement.query(By.css(`[data-automation-id="adf-task-assignment-filter-select"]`));
-        assignmentTypeSelect.nativeElement.click();
-        fixture.detectChanges();
+        it('should display all available assignment types', () => {
+            const assignmentTypeSelect: DebugElement = fixture.debugElement.query(By.css(`[data-automation-id="adf-task-assignment-filter-select"]`));
+            assignmentTypeSelect.nativeElement.click();
+            fixture.detectChanges();
 
-        const assignmentTypeOptions: DebugElement[] = fixture.debugElement.queryAll(By.css('mat-option'));
+            const assignmentTypeOptions: DebugElement[] = fixture.debugElement.queryAll(By.css('mat-option'));
 
-        expect(assignmentTypeOptions.length).toEqual(5);
-        expect(assignmentTypeOptions[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.NONE');
-        expect(assignmentTypeOptions[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.UNASSIGNED');
-        expect(assignmentTypeOptions[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNED_TO');
-        expect(assignmentTypeOptions[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CURRENT_USER');
-        expect(assignmentTypeOptions[4].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CANDIDATE_GROUPS');
-    });
+            expect(assignmentTypeOptions.length).toEqual(5);
+            expect(assignmentTypeOptions[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.NONE');
+            expect(assignmentTypeOptions[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.UNASSIGNED');
+            expect(assignmentTypeOptions[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNED_TO');
+            expect(assignmentTypeOptions[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CURRENT_USER');
+            expect(assignmentTypeOptions[4].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CANDIDATE_GROUPS');
+        });
 
-    it('should emit the current user info when assignment is the current user', () => {
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockFoodUsers[0]);
-        spyOn(component.assignedUsersChange, 'emit');
+        it('should emit the current user info when assignment is the current user', () => {
+            spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockFoodUsers[0]);
+            spyOn(component.assignedUsersChange, 'emit');
 
-        selectAssignmentType(AssignmentType.CURRENT_USER);
+            selectAssignmentType(AssignmentType.CURRENT_USER);
 
-        expect(component.assignedUsersChange.emit).toHaveBeenCalledWith([mockFoodUsers[0]]);
-    });
+            expect(component.assignedUsersChange.emit).toHaveBeenCalledWith([mockFoodUsers[0]]);
+        });
 
-    it('should show the CANDIDATE_GROUPS input', () => {
-        selectAssignmentType(AssignmentType.CANDIDATE_GROUPS);
+        it('should show the CANDIDATE_GROUPS input', () => {
+            selectAssignmentType(AssignmentType.CANDIDATE_GROUPS);
 
-        const candidateGroups = fixture.debugElement.query(By.css('[data-automation-id="adf-group-cloud-candidate-groups-filter"]'));
-        expect(component.candidateGroups.length).toEqual(0);
-        expect(candidateGroups).toBeTruthy();
-    });
+            const candidateGroups = fixture.debugElement.query(By.css('[data-automation-id="adf-group-cloud-candidate-groups-filter"]'));
+            expect(component.candidateGroups.length).toEqual(0);
+            expect(candidateGroups).toBeTruthy();
+        });
 
-    it('should show the ASSIGNED_TO input', () => {
-        selectAssignmentType(AssignmentType.ASSIGNED_TO);
+        it('should show the ASSIGNED_TO input', () => {
+            selectAssignmentType(AssignmentType.ASSIGNED_TO);
 
-        const candidateGroups = fixture.debugElement.query(By.css('[data-automation-id="adf-group-cloud-assigned-to-filter"]'));
-        expect(component.assignedUsers.length).toEqual(0);
-        expect(candidateGroups).toBeTruthy();
+            const candidateGroups = fixture.debugElement.query(By.css('[data-automation-id="adf-group-cloud-assigned-to-filter"]'));
+            expect(component.assignedUsers.length).toEqual(0);
+            expect(candidateGroups).toBeTruthy();
+        });
+
+        it('should have floating labels when values are present', () => {
+            const inputLabelsNodes = document.querySelectorAll('mat-form-field');
+
+            inputLabelsNodes.forEach(labelNode => {
+                expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
+            });
+        });
     });
 
     describe('status input change', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(TaskAssignmentFilterCloudComponent);
+            component = fixture.componentInstance;
+        });
+
+        afterEach(() => fixture.destroy());
+
         it('should CREATED status set assignment type to UNASSIGNED', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.CREATED, true);
             component.ngOnChanges({status: createdStatusChange});
@@ -144,6 +161,13 @@ describe('TaskAssignmentFilterComponent', () => {
     });
 
     describe('set initial assignment type', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(TaskAssignmentFilterCloudComponent);
+            component = fixture.componentInstance;
+        });
+
+        afterEach(() => fixture.destroy());
+
         it('should set assignment type to ASSIGNED_TO if initial assignedUsers exists', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
@@ -152,7 +176,7 @@ describe('TaskAssignmentFilterComponent', () => {
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };
-            component.ngOnInit();
+            fixture.detectChanges();
 
             expect(component.assignmentType).toEqual(AssignmentType.ASSIGNED_TO);
         });
@@ -165,7 +189,7 @@ describe('TaskAssignmentFilterComponent', () => {
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };
-            component.ngOnInit();
+            fixture.detectChanges();
 
             expect(component.assignmentType).toEqual(AssignmentType.CANDIDATE_GROUPS);
         });
@@ -178,17 +202,9 @@ describe('TaskAssignmentFilterComponent', () => {
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };
-            component.ngOnInit();
+            fixture.detectChanges();
 
             expect(component.assignmentType).toEqual(AssignmentType.NONE);
-        });
-    });
-
-    it('should have floating labels when values are present', () => {
-        const inputLabelsNodes = document.querySelectorAll('mat-form-field');
-
-        inputLabelsNodes.forEach(labelNode => {
-            expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
         });
     });
 });
