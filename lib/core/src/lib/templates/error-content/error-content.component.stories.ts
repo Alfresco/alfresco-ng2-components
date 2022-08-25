@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
@@ -43,27 +42,31 @@ export default {
                 defaultValue: { summary: 'UNKNOWN' }
             }
         },
-        isAdditionalContent: {
+        errorContentActions: {
+            name: 'with adf-error-content-actions selector',
             control: 'boolean',
-            description: 'Enable Content Projection',
+            description: 'Showcase content projection with <span style="color:red">adf-error-content-actions</span> selector',
             defaultValue: false,
             table: {
-                category: 'Story Controls',
-                type: { summary: 'boolean' },
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<div adf-error-content-actions>\n  <button>MyAction</button>\n</div>'
+                },
                 defaultValue: { summary: false }
             }
         }
     }
 } as Meta;
 
-const template: Story<ErrorContentComponent> = ( args: ErrorContentComponent & { isAdditionalContent: boolean } ) => ({
+const template: Story<ErrorContentComponent> = ( args: ErrorContentComponent & { errorContentActions: boolean } ) => ({
     props: args,
     template: `
-    <adf-error-content [errorCode]="${args.errorCode}">
-        <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
+    <adf-error-content errorCode="${args.errorCode}">
+        <div adf-error-content-actions *ngIf="${args.errorContentActions}">
         <button mat-raised-button type="button">MyAction</button>
         </div>
     </adf-error-content>`
 });
 
-export const errorCodeStory = template.bind({});
+export const errorContent = template.bind({});

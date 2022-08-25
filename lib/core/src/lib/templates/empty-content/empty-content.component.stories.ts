@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
@@ -53,22 +53,32 @@ export default {
             table: {
                 type: { summary: 'string' }
             }
+        },
+        anyContentProjection: {
+            name: 'with any component / selector',
+            control: 'boolean',
+            description: 'Showcase content projection with any component / selector',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<div style="color:red">\n  projected content\n</div>'
+                },
+                defaultValue: { summary: false }
+            }
         }
     }
 } as Meta;
 
-const template: Story<EmptyContentComponent> = (args: EmptyContentComponent) => ({
-    props: args
+const template: Story<EmptyContentComponent> = ( args: EmptyContentComponent & { anyContentProjection: boolean } ) => ({
+    props: args,
+    template: `
+    <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
+        <div *ngIf="${args.anyContentProjection}" style="color:red">
+            projected content
+        </div>
+    </adf-empty-content>`
 });
 
-export const defaultEmptyContent = template.bind({});
-
-const wrap = (story: string, title?: string, content?:  string): string => `<h3>${title ? title : ''}</h3>${story}`.replace('></adf-empty-content>',`>${content ? content : ''}</adf-empty-content>`);
-export const withProjectedContent = template.bind({});
-withProjectedContent.decorators = [
-    componentWrapperDecorator(story => wrap(
-        story,
-        `This story supplies the Empty Content component with a div with red background:`,
-        `<div style="backgroundColor:red;">Projected content</div>`
-    ))
-];
+export const emptyContent = template.bind({});

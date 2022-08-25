@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { ToolbarComponent } from './toolbar.component';
 import { ToolbarModule } from './toolbar.module';
@@ -47,40 +47,62 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' }
             }
+        },
+        toolbarTitle: {
+            name: 'with adf-toolbar-title component',
+            control: 'boolean',
+            description: 'Showcase content projection with <span style="color:red">adf-toolbar-title</span> component',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<adf-toolbar-title>Projected Title</adf-toolbar-title>'
+                },
+                defaultValue: { summary: false }
+            }
+        },
+        toolbarDivider: {
+            name: 'with adf-toolbar-divider component',
+            control: 'boolean',
+            description: 'Showcase content projection with <span style="color:red">adf-toolbar-divider</span> component',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: 'left<adf-toolbar-divider></adf-toolbar-divider>right'
+                },
+                defaultValue: { summary: false }
+            }
+        },
+        anyContentProjection: {
+            name: 'with any component / selector',
+            control: 'boolean',
+            description: 'Showcase content projection with any component / selector',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<span style="color:red">projected content</span>'
+                },
+                defaultValue: { summary: false }
+            }
         }
     }
 } as Meta;
 
-const template: Story<ToolbarComponent> = (args: ToolbarComponent) => ({
-    props: args
+const template: Story<ToolbarComponent> = (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean } ) => ({
+    props: args,
+    template: `
+    <adf-toolbar color="${args.color}" title="${args.title}">
+        <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
+        <ng-container *ngIf="${args.anyContentProjection}">
+            <span style="color:red">projected content</span>
+        </ng-container>
+        <ng-container *ngIf="${args.toolbarDivider}">left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
+    </adf-toolbar>`
 });
 
-export const defaultToolbar = template.bind({});
-
-const wrap = (story: string, title?: string, content?:  string): string => `<h3>${title ? title : ''}</h3>${story}`.replace('></adf-toolbar>',`>${content ? content : ''}</adf-toolbar>`);
-export const withToolbarTitleComponent = template.bind({});
-withToolbarTitleComponent.decorators = [
-    componentWrapperDecorator(story => wrap(
-        story,
-        `This story supplies the Toolbar component with an adf-toolbar-title element:`,
-        `<div adf-toolbar-title>Toolbar Title</div>`
-    ))
-];
-
-export const withProjectedContent = template.bind({});
-withProjectedContent.decorators = [
-    componentWrapperDecorator(story => wrap(
-        story,
-        `This story supplies the Toolbar component with a div with red background:`,
-        `<div style="backgroundColor:red;">Projected content</div>`
-    ))
-];
-
-export const withToolbarDivider = template.bind({});
-withToolbarDivider.decorators = [
-    componentWrapperDecorator(story => wrap(
-        story,
-        `This story supplies the Toolbar component with two Toolbar Divider components:`,
-        `<div>Text One</div><adf-toolbar-divider></adf-toolbar-divider><div>Text Two</div><adf-toolbar-divider></adf-toolbar-divider><div>Text Three</div>`
-    ))
-];
+export const toolbar = template.bind({});
