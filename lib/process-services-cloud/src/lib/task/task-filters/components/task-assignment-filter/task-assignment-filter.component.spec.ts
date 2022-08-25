@@ -170,19 +170,6 @@ describe('TaskAssignmentFilterComponent', () => {
             expect(component.assignmentType).toEqual(AssignmentType.CANDIDATE_GROUPS);
         });
 
-        it('should set assignment type to CANDIDATE_GROUPS if initial candidateGroups and assignedUsers exists', () => {
-            component.taskFilterProperty = {
-                key: 'assignment',
-                label: 'mock-filter',
-                value: { assignedUsers: mockFoodUsers, candidateGroups: mockFoodGroups },
-                type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
-            };
-            component.ngOnInit();
-
-            expect(component.assignmentType).toEqual(AssignmentType.CANDIDATE_GROUPS);
-        });
-
         it('should set assignment type to NONE if initial value is empty', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
