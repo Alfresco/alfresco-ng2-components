@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-02-13
 ---
 
-# [Check Allowable Operation directive](../../../lib/core/directives/check-allowable-operation.directive.ts "Defined in check-allowable-operation.directive.ts")
+# [Check Allowable Operation directive](lib/core/src/lib/directives/check-allowable-operation.directive.ts "Defined in check-allowable-operation.directive.ts")
 
 Selectively disables an HTML element or Angular component.
 
@@ -80,7 +80,7 @@ one or more documents that they have permission to delete.
 
 ### Angular component example
 
-You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts)
+You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](lib/core/src/lib/directives/check-allowable-operation.directive.ts)
 interface (the [Upload Drag Area component](../../content-services/components/upload-drag-area.component.md),
 for example). You can also use it in much the same way as you would with an HTML element:
 
@@ -95,14 +95,14 @@ for example). You can also use it in much the same way as you would with an HTML
 ```
 
 To enable your own component to work with this directive, you need to implement the
-[`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts) interface and also define it as an
-[`EXTENDIBLE_COMPONENT`](../../../lib/core/interface/injection.tokens.ts)
+[`NodeAllowableOperationSubject`](lib/core/src/lib/directives/check-allowable-operation.directive.ts) interface and also define it as an
+[`EXTENDIBLE_COMPONENT`](lib/core/src/lib/interface/injection.tokens.ts)
 parent component,
 as described in the following sections.
 
 ### Implementing the NodeAllowableOperationSubject interface
 
-The component must implement the [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts) interface which means it must have a
+The component must implement the [`NodeAllowableOperationSubject`](lib/core/src/lib/directives/check-allowable-operation.directive.ts) interface which means it must have a
 boolean `disabled` property. This is the property that will be set by the directive:
 
 ```js
@@ -121,7 +121,7 @@ up to the `@Host()` component. The host component is typically the component tha
 the dependency. However, when this component is projected into a parent component, the
 parent becomes the host. This means you must provide your component with forward referencing
 as the
-[`EXTENDIBLE_COMPONENT`](../../../lib/core/interface/injection.tokens.ts)
+[`EXTENDIBLE_COMPONENT`](lib/core/src/lib/interface/injection.tokens.ts)
 and also provide your component as a `viewProvider`:
 
 ```js

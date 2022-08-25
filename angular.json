@@ -11,7 +11,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "allowedCommonJsDependencies": [
               "minimatch",
               "minimatch-browser",
@@ -59,12 +58,12 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/dist/core/prebuilt-themes",
+                "input": "dist/libs/core/lib/prebuilt-themes",
                 "output": ""
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/assets",
+                "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
               {
@@ -84,7 +83,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "lib/core/i18n",
+                "input": "lib/core/src/lib/i18n",
                 "output": "/assets/adf-core/i18n"
               },
               {
@@ -121,47 +120,47 @@
             "styles": [
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-blue-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss",
                 "bundleName": "adf-blue-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-blue-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-purple.scss",
                 "bundleName": "adf-blue-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-cyan-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-orange.scss",
                 "bundleName": "adf-cyan-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-cyan-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-purple.scss",
                 "bundleName": "adf-cyan-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-green-orange.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-orange.scss",
                 "bundleName": "adf-green-orange"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-green-purple.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-green-purple.scss",
                 "bundleName": "adf-green-purple"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-indigo-pink.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-indigo-pink.scss",
                 "bundleName": "adf-indigo-pink"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-pink-bluegrey.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-pink-bluegrey.scss",
                 "bundleName": "adf-pink-bluegrey"
               },
               {
                 "inject": false,
-                "input": "lib/core/styles/prebuilt/adf-purple-green.scss",
+                "input": "lib/core/src/lib/styles/prebuilt/adf-purple-green.scss",
                 "bundleName": "adf-purple-green"
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -247,119 +246,23 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "demo-shell/src/test.ts",
-            "karmaConfig": "./demo-shell/karma.conf.js",
-            "polyfills": "demo-shell/src/polyfills.ts",
-            "tsConfig": "demo-shell/src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/pdfjs-dist/build/pdf.js",
-              "node_modules/pdfjs-dist/web/pdf_viewer.js",
-              "node_modules/raphael/raphael.min.js",
-              "node_modules/moment/min/moment.min.js"
-            ],
-            "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
-              "demo-shell/src/assets/fonts/muli/muli.css",
-              "demo-shell/src/styles.scss",
-              "demo-shell/src/custom-style-dev.scss"
-            ],
-            "assets": [
-              "demo-shell/src/assets",
-              "demo-shell/src/favicon-96x96.png",
-              "demo-shell/src/app.config.json",
-              {
-                "glob": "**/*",
-                "input": "demo-shell/src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "app.config.json",
-                "input": "demo-shell/src",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "demo-shell/resources",
-                "output": "/resources"
-              },
-              {
-                "glob": "**/*",
-                "input": "demo-shell/src/app/components/lazy-loading/i18n",
-                "output": "/resources/lazy-loading/i18n"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/dist/core/prebuilt-themes",
-                "output": "/assets/prebuilt-themes"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/core/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/process-services/src/lib/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/process-services-cloud/src/lib/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/content-services/src/lib/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/core/i18n",
-                "output": "/assets/adf-core/i18n"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/content-services/src/lib/i18n",
-                "output": "/assets/adf-content-services/i18n"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/process-services/src/lib/i18n",
-                "output": "/assets/adf-process-services/i18n"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/process-services-cloud/src/lib/i18n",
-                "output": "/assets/adf-process-services-cloud/i18n"
-              },
-              {
-                "glob": "**/*",
-                "input": "lib/insights/src/lib/i18n",
-                "output": "/assets/adf-insights/i18n"
-              },
-              {
-                "glob": "pdf.worker.min.js",
-                "input": "node_modules/pdfjs-dist/build",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "/node_modules/ngx-monaco-editor/assets/monaco",
-                "output": "/assets/monaco/"
-              }
-            ]
-          }
-        },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "demo-shell/**/*.ts",
               "demo-shell/**/*.html"
             ]
+          }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/demo-shell/**/*.ts'"
+                  }
+              ]
           }
         }
       }
@@ -394,7 +297,7 @@
     "core": {
       "projectType": "library",
       "root": "lib/core",
-      "sourceRoot": "lib/core",
+      "sourceRoot": "lib/core/src",
       "prefix": "adf",
       "architect": {
         "build": {
@@ -403,6 +306,7 @@
             "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
           },
+          "dependsOn": ["license"],
           "configurations": {
             "production": {
               "project": "lib/core/ng-package.json",
@@ -417,7 +321,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/core/test.ts",
+            "main": "lib/core/src/test.ts",
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "sourceMap": true,
@@ -427,13 +331,19 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/core/**/*.ts",
-              "lib/core/**/*.html"
+              "lib/core/**/*.html",
+              "lib/core/api/**/*.ts",
+              "lib/core/api/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -476,6 +386,36 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/core/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/core/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
+        },
+        "license": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+                  }
+              ]
+          }
         }
       }
     },
@@ -508,13 +448,17 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/content-services/**/*.ts",
               "lib/content-services/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -557,6 +501,26 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/content-services/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
         }
       }
     },
@@ -589,12 +553,46 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/process-services/**/*.ts",
               "lib/process-services/**/*.html"
             ]
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/process-services/**/*.ts'"
+                  }
+              ]
+          },
+          "stylelint": {
+            "executor": "nx:run-commands",
+                "options": {
+                "commands": [
+                    {
+                        "command": "$(npm bin)/stylelint lib/process-services/**/*.scss --config stylelint-config.json"
+                    }
+                ]
+            }
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                  }
+              ]
           }
         }
       }
@@ -628,13 +626,17 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/process-services-cloud/**/*.ts",
               "lib/process-services-cloud/**/*.html"
             ]
-          }
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -677,6 +679,26 @@
               "quiet": true
             }
           }
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/process-services-cloud/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                  }
+              ]
+          }
         }
       }
     },
@@ -709,12 +731,36 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/insights/**/*.ts",
               "lib/insights/**/*.html"
             ]
+          },
+          "dependsOn": [
+            "spellcheck",
+            "stylelint"
+          ]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/insights/**/*.ts'"
+                  }
+              ]
+          }
+        },
+        "stylelint": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/stylelint lib/insights/**/*.scss --config stylelint-config.json"
+                  }
+              ]
           }
         }
       }
@@ -747,12 +793,23 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/extensions/**/*.ts",
               "lib/extensions/**/*.html"
             ]
+          },
+          "dependsOn": ["spellcheck"]
+        },
+        "spellcheck": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/cspell 'lib/extensions/**/*.ts'"
+                  }
+              ]
           }
         }
       }
@@ -767,7 +824,7 @@
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
-            "outputPath": "lib/dist/testing",
+            "outputPath": "dist/libs/testing",
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
@@ -781,7 +838,7 @@
           "configurations": {
             "production": {
               "projectRoot": "lib/testing",
-              "outputPath": "lib/dist/testing",
+              "outputPath": "dist/libs/testing",
               "main": "lib/testing/index.ts",
               "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
@@ -789,7 +846,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/testing/**/*.ts",
@@ -819,7 +876,7 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "lib/cli/**/*.ts",
@@ -838,8 +895,8 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "browserTarget": "stories:storybook",
-            "configDir": "lib/stories/.storybook",
+            "browserTarget": "core:storybook",
+            "configDir": "lib/core/.storybook",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -858,9 +915,9 @@
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
-            "browserTarget": "stories:build-storybook",
-            "configDir": "lib/stories/.storybook",
-            "outputDir": "dist/storybook/stories",
+            "browserTarget": "core:build-storybook",
+            "configDir": "lib/core/.storybook",
+            "outputDir": "dist/storybook/core",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",

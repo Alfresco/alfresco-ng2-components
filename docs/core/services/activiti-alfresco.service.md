@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [APS Alfresco Content Service](../../../lib/core/form/services/activiti-alfresco.service.ts "Defined in activiti-alfresco.service.ts")
+# [APS Alfresco Content Service](lib/core/src/lib/form/services/activiti-alfresco.service.ts "Defined in activiti-alfresco.service.ts")
 
 Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS).
 

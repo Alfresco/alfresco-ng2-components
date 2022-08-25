@@ -1,14 +1,7 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/extensions/",
-    "declarationMap": true,
-    "baseUrl": "src"
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true,
-    "strictTemplates": true
+    "outDir": "../../dist/out-tsc",
+    "declarationMap": true
   }
 }

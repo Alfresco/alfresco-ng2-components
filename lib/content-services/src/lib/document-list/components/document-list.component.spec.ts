@@ -1204,11 +1204,11 @@ describe('DocumentList', () => {
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
-    it('should emit node-click DOM event', (done) => {
+    it('should emit node-click DOM event', () => {
         const node = new NodeMinimalEntry();
 
-        document.addEventListener('node-click', () => {
-            done();
+        document.addEventListener('node-click', (res) => {
+            expect(res).toBeDefined();
         });
 
         documentList.onNodeClick(node);
@@ -1222,11 +1222,11 @@ describe('DocumentList', () => {
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
-    it('should emit node-dblclick DOM event', (done) => {
+    it('should emit node-dblclick DOM event', () => {
         const node = new NodeMinimalEntry();
 
-        document.addEventListener('node-dblclick', () => {
-            done();
+        document.addEventListener('node-dblclick', (res) => {
+            expect(res).toBeDefined();
         });
 
         documentList.onNodeDblClick(node);

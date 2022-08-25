@@ -11,6 +11,7 @@ dist/
 e2e/.env.cloud
 tmp
 temp
+/nxcache
 e2e-output*/
 /e2e/downloads/
 *.npmrc

@@ -1,22 +1,12 @@
 {
-  "extends": "../../.eslintrc.json",
-  "ignorePatterns": [
-    "!**/*"
-  ],
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*", "dist", "node_modules"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "lib/cli/tsconfig.json"
-        ],
-        "createDefaultProgram": true
-      },
-      "plugins": [
-        "eslint-plugin-unicorn",
-        "eslint-plugin-rxjs"
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nrwl/nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": "off",
@@ -24,53 +14,15 @@
         "@typescript-eslint/naming-convention": "warn",
         "quote-props": "warn",
         "no-shadow": "warn",
+        "no-restricted-syntax": "off",
+        "no-underscore-dangle": "off",
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "off",
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
-
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": [
-              "adf",
-              "app"
-            ],
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": [
-              "element",
-              "attribute"
-            ],
-            "prefix": [
-              "adf",
-              "app"
-            ],
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/no-host-metadata-property": "off",
-        "@angular-eslint/no-input-prefix": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
-        "@typescript-eslint/explicit-member-accessibility": [
-          "off",
-          {
-            "accessibility": "explicit"
-          }
-        ],
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
-        "brace-style": [
-          "error",
-          "1tbs"
-        ],
-        "comma-dangle": "error",
         "default-case": "error",
         "import/order": "off",
         "max-len": [
@@ -79,25 +31,16 @@
             "code": 240
           }
         ],
-        "no-bitwise": "off",
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
         "no-redeclare": "error",
-        "no-return-await": "error",
-        "rxjs/no-create": "error",
-        "rxjs/no-subject-unsubscribe": "error",
-        "rxjs/no-subject-value": "error",
-        "rxjs/no-unsafe-takeuntil": "error",
-        "unicorn/filename-case": "error"
+        "no-return-await": "error"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {
-        "@angular-eslint/template/no-autofocus": "error",
-        "@angular-eslint/template/no-positive-tabindex": "error"
       }
     }
   ]

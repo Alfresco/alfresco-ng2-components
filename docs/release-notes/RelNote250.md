@@ -180,7 +180,7 @@ A new input parameter processDefinitionId has been added to the Tasklist and the
 ### Lazy loading improvements
 
 You can now use ADF libraries with the lazy-loaded feature modules. Every ADF library now supports "forRoot" and "forChild" semantics for the main modules.
-For example, you should use ["CoreModule](../../lib/core/core.module.ts).forRoot()" in the main application module, and ["CoreModule](../../lib/core/core.module.ts).forChild()" in the lazy modules.
+For example, you should use ["CoreModule](lib/core/src/lib/core.module.ts).forRoot()" in the main application module, and ["CoreModule](lib/core/src/lib/core.module.ts).forChild()" in the lazy modules.
 
 ### Localization
 
@@ -347,7 +347,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - CLONE - DND - uploading folder into a folder fails
 -   \[
     [ADF-3298](https://issues.alfresco.com/jira/browse/ADF-3298)
-    ] - [`CardViewSelectItemComponent`](../../lib/core/card-view/components/card-view-selectitem/card-view-selectitem.component.ts) has the label twice
+    ] - [`CardViewSelectItemComponent`](lib/core/src/lib/card-view/components/card-view-selectitem/card-view-selectitem.component.ts) has the label twice
 -   \[
     [ADF-3301](https://issues.alfresco.com/jira/browse/ADF-3301)
     ] - Error thrown when user downloads from DocumentList

@@ -19,10 +19,22 @@ import { Inject, Injectable } from '@angular/core';
 import { ApiClientFactory, API_CLIENT_FACTORY_TOKEN } from './api-client.factory';
 import { Constructor, Dictionary } from './types';
 
+/* eslint-disable */
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace AlfrescoCore {
+        interface ApiRegistry {
+        }
+    }
+}
+/* eslint-enable */
+
 @Injectable()
 export class ApiClientsService {
 
-    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) { }
+    constructor(@Inject(API_CLIENT_FACTORY_TOKEN) private apiCreateFactory: ApiClientFactory) {
+    }
 
     private registry: Dictionary<Constructor<any>> = {};
     private instances: Partial<AlfrescoCore.ApiRegistry> = {};

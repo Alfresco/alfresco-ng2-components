@@ -65,17 +65,16 @@ describe('ProcessFilterCloudService', () => {
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create processfilter key by using appName and the username', (done) => {
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+    it('should create processfilter key by using appName and the username', async() => {
+        await service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(getCurrentUserInfoSpy).toHaveBeenCalled();
-            done();
         });
     });
 
-    it('should create default process filters', (done) => {
+    it('should create default process filters', async() => {
         getPreferencesSpy.and.returnValue(of(fakeEmptyProcessCloudFilterEntries));
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+        await service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -94,13 +93,12 @@ describe('ProcessFilterCloudService', () => {
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
-            done();
         });
         expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
-    it('should fetch the process filters if filters are available', (done) => {
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+    it('should fetch the process filters if filters are available', async() => {
+        await service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -119,14 +117,13 @@ describe('ProcessFilterCloudService', () => {
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
-            done();
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
     });
 
-    it('should create the process filters in case the filters are not exist in the user preferences', (done) => {
+    it('should create the process filters in case the filters are not exist in the user preferences', async() => {
         getPreferencesSpy.and.returnValue(of(fakeProcessCloudFilterWithDifferentEntries));
-        service.getProcessFilters('mock-appName').subscribe((res: any) => {
+        await service.getProcessFilters('mock-appName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -145,68 +142,62 @@ describe('ProcessFilterCloudService', () => {
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('MOCK_PROCESS_NAME_3');
             expect(res[2].status).toBe('MOCK-COMPLETED');
-            done();
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
         expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
-    it('should return filter by process filter id', (done) => {
-        service.getFilterById('mock-appName', '2').subscribe((res: any) => {
+    it('should return filter by process filter id', async() => {
+        await service.getFilterById('mock-appName', '2').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.appName).toBe('mock-appName');
             expect(res.id).toBe('2');
             expect(res.name).toBe('MOCK_PROCESS_NAME_2');
             expect(res.status).toBe('MOCK-RUNNING');
-            done();
         });
         expect(getPreferenceByKeySpy).toHaveBeenCalled();
     });
 
-    it('should add process filter if filter is not exist in the filters', (done) => {
+    it('should add process filter if filter is not exist in the filters', async() => {
         getPreferenceByKeySpy.and.returnValue(of([]));
-        service.getFilterById('mock-appName', '2').subscribe((res: any) => {
+        await service.getFilterById('mock-appName', '2').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.appName).toBe('mock-appName');
             expect(res.id).toBe('2');
             expect(res.name).toBe('MOCK_PROCESS_NAME_2');
             expect(res.status).toBe('MOCK-RUNNING');
-            done();
         });
     });
 
-    it('should update filter', (done) => {
-        service.updateFilter(fakeProcessFilter).subscribe((res: any) => {
+    it('should update filter', async() => {
+        await service.updateFilter(fakeProcessFilter).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
             expect(res[0].appName).toBe('mock-appName');
             expect(res[1].appName).toBe('mock-appName');
             expect(res[2].appName).toBe('mock-appName');
-            done();
         });
     });
 
-    it('should create process filter when trying to update in case filter is not exist in the filters', (done) => {
+    it('should create process filter when trying to update in case filter is not exist in the filters', async() => {
         getPreferenceByKeySpy.and.returnValue(of([]));
-        service.updateFilter(fakeProcessFilter).subscribe((res: any) => {
+        await service.updateFilter(fakeProcessFilter).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
             expect(res[0].appName).toBe('mock-appName');
             expect(res[1].appName).toBe('mock-appName');
             expect(res[2].appName).toBe('mock-appName');
-            done();
         });
         expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
-    it('should delete filter', (done) => {
-        service.deleteFilter(fakeProcessFilter).subscribe((res: any) => {
+    it('should delete filter', async() => {
+        await service.deleteFilter(fakeProcessFilter).subscribe((res: any) => {
             expect(res).toBeDefined();
-            done();
         });
         expect(updatePreferenceSpy).toHaveBeenCalled();
     });

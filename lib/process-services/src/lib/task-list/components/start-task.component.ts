@@ -27,7 +27,7 @@ import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
-import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -66,7 +66,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     forms$: Observable<Form[]>;
     assigneeId: number;
     field: FormFieldModel;
-    taskForm: FormGroup;
+    taskForm: UntypedFormGroup;
     dateError: boolean = false;
     maxTaskNameLength: number = MAX_LENGTH;
     loading = false;
@@ -76,7 +76,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     constructor(private taskService: TaskListService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
-                private formBuilder: FormBuilder,
+                private formBuilder: UntypedFormBuilder,
                 private logService: LogService) {
     }
 
@@ -105,9 +105,9 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     buildForm(): void {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength), this.whitespaceValidator]),
-            description: new FormControl('', [this.whitespaceValidator]),
-            formKey: new FormControl('')
+            name: new UntypedFormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength), this.whitespaceValidator]),
+            description: new UntypedFormControl('', [this.whitespaceValidator]),
+            formKey: new UntypedFormControl('')
         });
 
         this.taskForm.valueChanges
@@ -115,7 +115,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             .subscribe(taskFormValues => this.setTaskDetails(taskFormValues));
     }
 
-    whitespaceValidator(control: FormControl): any {
+    whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isValid =  control.value.length === 0 || !isWhitespace;

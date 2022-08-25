@@ -9,4 +9,4 @@ echo "====== Testing ======"
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-testing/ && \
 mkdir -p ./node_modules/@alfresco/adf-testing/ && \
-cp -R ./lib/dist/testing/* ./node_modules/@alfresco/adf-testing/
+cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/

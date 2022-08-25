@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-10-02
 ---
 
-# [Login Dialog component](../../../lib/core/login/components/login-dialog.component.ts "Defined in login-dialog.component.ts")
+# [Login Dialog component](lib/core/src/lib/login/components/login-dialog.component.ts "Defined in login-dialog.component.ts")
 
 Allows a user to perform a login via a dialog.
 
@@ -18,7 +18,7 @@ The [Login Dialog component](login-dialog.component.md) allows you to perform a 
 Unlike most components, the [Login Dialog Component](login-dialog.component.md) is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
-as shown in the usage example. ADF provides the [`LoginDialogComponentData`](../../../lib/core/login/components/login-dialog-component-data.interface.ts) interface
+as shown in the usage example. ADF provides the [`LoginDialogComponentData`](lib/core/src/lib/login/components/login-dialog-component-data.interface.ts) interface
 to work with the Dialog's
 [data option](https://material.angular.io/components/dialog/overview#sharing-data-with-the-dialog-component-):
 
@@ -81,7 +81,7 @@ openLoginDialog() {
 }
 ```
 
-All the results will be streamed to the logged [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`LoginDialogComponentData`](../../../lib/core/login/components/login-dialog-component-data.interface.ts) object passed to the dialog.
+All the results will be streamed to the logged [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`LoginDialogComponentData`](lib/core/src/lib/login/components/login-dialog-component-data.interface.ts) object passed to the dialog.
 When the dialog action is selected by clicking, the `data.logged` stream will be completed.
 
 ## See also

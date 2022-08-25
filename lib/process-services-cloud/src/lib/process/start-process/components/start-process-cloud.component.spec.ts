@@ -44,7 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { ProcessDefinitionCloud, TaskVariableCloud } from 'process-services-cloud';
+import { ProcessDefinitionCloud, TaskVariableCloud } from '@alfresco/adf-process-services-cloud';
 
 describe('StartProcessCloudComponent', () => {
 

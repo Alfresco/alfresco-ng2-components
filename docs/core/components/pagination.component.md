@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Pagination Component](../../../lib/core/pagination/pagination.component.ts "Defined in pagination.component.ts")
+# [Pagination Component](lib/core/src/lib/pagination/pagination.component.ts "Defined in pagination.component.ts")
 
 Adds pagination to the component it is used with.
 
@@ -43,8 +43,8 @@ Adds pagination to the component it is used with.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | supportedPageSizes | `number[]` |  | An array of page sizes. |
-| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
-| pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | Pagination object. |
+| target | [`PaginatedComponent`](lib/core/src/lib/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
+| pagination | [`PaginationModel`](lib/core/src/lib/models/pagination.model.ts) |  | Pagination object. |
 
 ### Events
 
@@ -84,7 +84,7 @@ new object contains updated properties that you can use to fetch the next page o
 ### Custom pagination
 
 The component also makes it easy to integrate your own implementation of pagination.
-You can supply any component that implements the [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) interface as the value of the
+You can supply any component that implements the [`PaginatedComponent`](lib/core/src/lib/pagination/paginated-component.interface.ts) interface as the value of the
 `target` property.
 
 ```js

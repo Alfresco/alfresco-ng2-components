@@ -1,23 +1,12 @@
 {
-  "extends": "../../.eslintrc.json",
-  "ignorePatterns": [
-    "!**/*"
-  ],
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
-      "parserOptions": {
-        "project": [
-          "lib/content-services/tsconfig.lib.json",
-          "lib/content-services/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
-      },
-      "plugins": [
-        "eslint-plugin-unicorn",
-        "eslint-plugin-rxjs"
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nrwl/nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "jsdoc/newline-after-description": "warn",
@@ -99,9 +88,8 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-09
 ---
 
-# [JWT helper service](../../../lib/core/services/jwt-helper.service.ts "Defined in jwt-helper.service.ts")
+# [JWT helper service](lib/core/src/lib/services/jwt-helper.service.ts "Defined in jwt-helper.service.ts")
 
 Decodes a JSON Web Token (JWT) to a JavaScript object.
 

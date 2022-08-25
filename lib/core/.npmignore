@@ -18,7 +18,7 @@ npm-debug.log
 
 **/*.scss
 **/*.css
-!**/_theming.scss
+!**/lib/_theming.scss
 
 coverage/
 demo/
@@ -28,13 +28,13 @@ typings/
 fonts/
 i18n/
 assets/
-!/prebuilt-themes/
-!/prebuilt-themes/adf-indigo-pink.css
-!/prebuilt-themes/adf-cyan-purple.css
-!/prebuilt-themes/adf-green-purple.css
-!/prebuilt-themes/adf-cyan-orange.css
-!/prebuilt-themes/adf-green-orange.css
-!/prebuilt-themes/adf-blue-purple.css
-!/prebuilt-themes/adf-blue-orange.css
-!/prebuilt-themes/adf-pink-bluegrey.css
-!/prebuilt-themes/adf-purple-green.css
+!/lib/prebuilt-themes/
+!/lib/prebuilt-themes/adf-indigo-pink.css
+!/lib/prebuilt-themes/adf-cyan-purple.css
+!/lib/prebuilt-themes/adf-green-purple.css
+!/lib/prebuilt-themes/adf-cyan-orange.css
+!/lib/prebuilt-themes/adf-green-orange.css
+!/lib/prebuilt-themes/adf-blue-purple.css
+!/lib/prebuilt-themes/adf-blue-orange.css
+!/lib/prebuilt-themes/adf-pink-bluegrey.css
+!/lib/prebuilt-themes/adf-purple-green.css

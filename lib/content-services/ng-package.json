@@ -1,10 +1,22 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../dist/content-services",
+  "dest": "../../dist/libs/content-services",
   "assets": [
-    "./src/lib/styles/**/*.scss",
-    "./theming/**/*.scss",
-    "./src/**/*.theme.scss"
+    {
+      "glob": "assets/**/*",
+      "input": "./src/lib",
+      "output": "/bundles/"
+    },
+    {
+      "glob": "i18n/*.json",
+      "input": "./src/lib",
+      "output": "/bundles/assets/adf-content-services/"
+    },
+    {
+      "glob": "**/*.scss",
+      "input": "./src/lib",
+      "output": "/lib"
+    }
   ],
   "lib": {
     "entryFile": "src/public-api.ts",

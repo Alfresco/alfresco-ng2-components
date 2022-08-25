@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { Node, VersionPaging } from '@alfresco/js-api';
@@ -80,17 +80,6 @@ describe('VersionManagerComponent', () => {
         expect(component.viewVersion.emit).toHaveBeenCalledWith('1.0');
     });
 
-    it('should display comments for versions when not configured otherwise', fakeAsync(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const versionCommentEl = fixture.debugElement.query(By.css('.adf-version-list-item-comment'));
-
-            expect(versionCommentEl).not.toBeNull();
-            expect(versionCommentEl.nativeElement.innerText).toBe(expectedComment);
-        });
-    }));
-
     it('should not display comments for versions when configured not to show them', async () => {
         component.showComments = false;
 
@@ -101,21 +90,20 @@ describe('VersionManagerComponent', () => {
         expect(versionCommentEl).toBeNull();
     });
 
-    it('should emit success event upon successful upload of a new version', (done) => {
+    it('should emit success event upon successful upload of a new version', async () => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node }};
-        component.uploadSuccess.subscribe((event) => {
+        await component.uploadSuccess.subscribe((event) => {
             expect(event).toBe(node);
-            done();
         });
         component.onUploadSuccess(emittedData);
     });
 
-    it('should emit nodeUpdated event upon successful upload of a new version', (done) => {
+    it('should emit nodeUpdated event upon successful upload of a new version', () => {
         fixture.detectChanges();
-        alfrescoApiService.nodeUpdated.subscribe(() => {
-            done();
+        alfrescoApiService.nodeUpdated.subscribe((res) => {
+            expect(res).toEqual(node);
         });
 
         const emittedData = { value: { entry: node }};

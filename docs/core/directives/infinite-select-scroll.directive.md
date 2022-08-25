@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2020-01-14
 ---
 
-# [Infinite Select Scroll](../../../lib/core/directives/infinite-select-scroll.directive.ts "Defined in infinite-select-scroll.directive.ts")
+# [Infinite Select Scroll](lib/core/src/lib/directives/infinite-select-scroll.directive.ts "Defined in infinite-select-scroll.directive.ts")
 
 Load more options to select component if API returns more items
 

@@ -40,7 +40,7 @@ Searches Groups.
 | appName | `string` |  | Name of the application. If specified this shows the groups who have access to the app. |
 | groupChipsCtrl | `FormControl` |  | FormControl to list of group |
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | Group selection mode (single/multiple). |
-| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
+| preSelectGroups | [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
 | readOnly | `boolean` | false | Show the info in readonly mode |
 | required | `boolean` | false | Mark this field as required |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |

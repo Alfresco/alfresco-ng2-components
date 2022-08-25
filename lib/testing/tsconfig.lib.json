@@ -1,15 +1,7 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/testing/",
-    "baseUrl": "src",
-    "declarationMap": true,
-    "allowJs": true,
-    "paths": {}
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "outDir": "../../dist/bla",
+    "declarationMap": true
   }
 }

@@ -25,7 +25,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
     classes without the **adf-** prefix, you will now need to update them. For example, `.card-view`
     is now `.adf-card-view`.
 
--   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip/download-zip.dialog.ts)
+-   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): [`DownloadZipDialogComponent`](lib/core/src/lib/dialogs/download-zip/download-zip.dialog.ts)
     and [`NodeDownloadDirective`](../core/directives/node-download.directive.md) have been moved from the Content Services module to the Core module.
     This modification has enabled us to remove some code duplication between the two modules.
 
@@ -48,10 +48,10 @@ This document lists all the deprecated ADF v2.x components that were removed for
         (you can now have two sidebars on the left and right at the same time).
     -   `analytics-report-list` is now `adf-analytics-report-list`.
     -   `analytics-report-parameters` is now `adf-analytics-report-parameters`.
-    -   `CommentProcessModel` was moved into the Core library with the name [`CommentModel`](../../lib/core/models/comment.model.ts) in v2.3.0. Now you
-        can only import it from [`CoreModule`](../../lib/core/core.module.ts).
-    -   [`CommentsModule`](../../lib/core/comments/comments.module.ts), [`CommentListComponent`](../core/components/comment-list.component.md), and [`CommentsComponent`](../core/components/comments.component.md) are no longer exported from
-        [`ProcessModule`](../../lib/process-services/src/lib/process.module.ts) but now from [`CoreModule`](../../lib/core/core.module.ts). The old usage was deprecated in v2.3.0.
+    -   `CommentProcessModel` was moved into the Core library with the name [`CommentModel`](lib/core/src/lib/models/comment.model.ts) in v2.3.0. Now you
+        can only import it from [`CoreModule`](lib/core/src/lib/core.module.ts).
+    -   [`CommentsModule`](lib/core/src/lib/comments/comments.module.ts), [`CommentListComponent`](../core/components/comment-list.component.md), and [`CommentsComponent`](../core/components/comments.component.md) are no longer exported from
+        [`ProcessModule`](../../lib/process-services/src/lib/process.module.ts) but now from [`CoreModule`](lib/core/src/lib/core.module.ts). The old usage was deprecated in v2.3.0.
     -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`. The old
         name was deprecated in v2.4.0.
     -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/src/lib/upload/components/base-upload/upload-base.ts) class (emitted when a folder was
