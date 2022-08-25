@@ -24,8 +24,6 @@ import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
@@ -54,8 +52,6 @@ describe('TaskAssignmentFilterComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             GroupCloudModule,
-            MatSelectModule,
-            MatOptionModule,
             TaskFiltersCloudModule,
             NoopAnimationsModule
         ],
