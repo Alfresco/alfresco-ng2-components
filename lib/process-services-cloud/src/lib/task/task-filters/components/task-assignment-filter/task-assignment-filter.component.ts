@@ -105,7 +105,6 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
             case TaskStatusFilter.ASSIGNED:
                 this.assignmentType = AssignmentType.ASSIGNED_TO;
                 break;
-            case TaskStatusFilter.ALL:
             default:
                 this.assignmentType = AssignmentType.NONE;
         }
