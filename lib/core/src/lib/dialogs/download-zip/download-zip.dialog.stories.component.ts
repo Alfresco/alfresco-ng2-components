@@ -15,40 +15,36 @@
  * limitations under the License.
  */
 
-import { DownloadEntry } from '@alfresco/js-api';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { zipNode, downloadEntry } from './mocks/stub.data';
 
 @Component({
+    selector: 'adf-download-zip-dialog-storybook',
     template: `<button (click)="openDialog()">Open dialog</button>`
 })
-export class DownloadZipDialogStorybookComponent implements OnInit {
+export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
     showLoading: boolean;
 
     constructor(private dialog: MatDialog) {}
 
-    zipNode = {
-        entry: {
-            name: 'files.zip',
-            contentUrl: './../assets/files.zip',
-            id: 'files_in_zip'
-        }
-    };
-
-    downloadEntry: DownloadEntry = {
-        entry: {
-            id: 'entryId',
-            status: 'DONE'
-        }
-    };
-
     ngOnInit(): void {
+        console.log(this.showLoading);
         if (!this.showLoading) {
-            this.downloadEntry.entry.status = 'DONE';
+            downloadEntry.entry.status = 'DONE';
         } else {
-            this.downloadEntry.entry.status = 'PACKING';
+            downloadEntry.entry.status = 'PACKING';
+        }
+    }
+
+    ngOnChanges(): void {
+        console.log(this.showLoading);
+        if (!this.showLoading) {
+            downloadEntry.entry.status = 'DONE';
+        } else {
+            downloadEntry.entry.status = 'PACKING';
         }
     }
 
@@ -56,7 +52,7 @@ export class DownloadZipDialogStorybookComponent implements OnInit {
         this.dialog.open(DownloadZipDialogComponent, {
             minWidth: '50%',
             data: {
-                nodeIds: [this.zipNode.entry.id]
+                nodeIds: [zipNode.entry.id]
             }
         });
     }

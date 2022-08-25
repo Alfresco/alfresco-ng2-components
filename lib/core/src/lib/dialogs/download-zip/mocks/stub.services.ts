@@ -1,23 +1,24 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { DownloadBodyCreate, DownloadEntry } from '@alfresco/js-api';
-import { LogService } from './../../../services/log.service';
-import { from, Observable, of, ReplaySubject, Subject, throwError } from 'rxjs';
+import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
-
-const zipNode = {
-    entry: {
-        name: 'files.zip',
-        contentUrl: './../assets/files.zip',
-        id: 'files_in_zip'
-    }
-};
-
-const downloadEntry: DownloadEntry = {
-    entry: {
-        id: 'entryId',
-        status: 'DONE'
-    }
-};
-
+import { zipNode, downloadEntry } from './stub.data';
 export class AlfrescoApiServiceStub {
     nodeUpdated = new Subject<Node>();
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -48,20 +49,14 @@ class CoreStub {
 }
 
 export class NodesApiStub {
-    getNode = (_: string, _2?: any): any => {
-        console.log('lol xd');
-        return of(zipNode.entry);
-    };
+    getNode = (_: string, _2?: any): any => of(zipNode.entry);
 }
 
 class DownloadsApiStub {
     createDownload = (
         _: DownloadBodyCreate,
         _2?: any
-    ): Promise<DownloadEntry> => {
-        console.log(_);
-        return Promise.resolve(downloadEntry);
-    };
+    ): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
 
     getDownload = (_: string, _2?: any): Promise<DownloadEntry> =>
         Promise.resolve(downloadEntry);
@@ -82,7 +77,6 @@ export class DownloadZipMockService {
     }
 
     getDownload(downloadId: string): Observable<DownloadEntry> {
-        console.log('ja tu jestem');
         return from(this.downloadsApi.getDownload(downloadId));
     }
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DownloadsApi } from '@alfresco/js-api';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { DialogModule } from '../dialog.module';
@@ -52,7 +51,14 @@ export default {
                 { provide: NodesApiService, useClass: NodesApiStub }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        showLoading: {
+            control: {
+                type: 'boolean'
+            }
+        }
+    }
 } as Meta;
 
 export const downloadZIPStory: Story = (args) => ({
