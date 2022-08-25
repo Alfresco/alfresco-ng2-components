@@ -18,7 +18,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { zipNode, downloadEntry } from './mocks/stub.data';
+import { zipNode, downloadEntry } from '../../mock/download-zip-data.mock';
 
 @Component({
     selector: 'adf-download-zip-dialog-storybook',
@@ -31,7 +31,6 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     constructor(private dialog: MatDialog) {}
 
     ngOnInit(): void {
-        console.log(this.showLoading);
         if (!this.showLoading) {
             downloadEntry.entry.status = 'DONE';
         } else {
@@ -40,7 +39,6 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
-        console.log(this.showLoading);
         if (!this.showLoading) {
             downloadEntry.entry.status = 'DONE';
         } else {

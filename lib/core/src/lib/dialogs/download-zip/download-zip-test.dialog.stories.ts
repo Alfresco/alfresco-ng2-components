@@ -30,7 +30,7 @@ import {
     ContentApiStub,
     DownloadZipMockService,
     NodesApiStub
-} from './mocks/stub.services';
+} from '../../mock/download-zip-service.mock';
 
 export default {
     component: DownloadZipDialogStorybookComponent,
