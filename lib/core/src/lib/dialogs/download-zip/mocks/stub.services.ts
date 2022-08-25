@@ -16,7 +16,6 @@
  */
 
 import { DownloadBodyCreate, DownloadEntry } from '@alfresco/js-api';
-import { DownloadZipService } from './../services/download-zip.service';
 import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { zipNode, downloadEntry } from './download-zip-data.mock';
@@ -65,7 +64,7 @@ class DownloadsApiMock {
     cancelDownload(_: string) {}
 }
 
-export class DownloadZipMockService extends DownloadZipService {
+export class DownloadZipMockService {
     private _downloadsApi: DownloadsApiMock;
     get downloadsApi(): DownloadsApiMock {
         this._downloadsApi = this._downloadsApi ?? new DownloadsApiMock();

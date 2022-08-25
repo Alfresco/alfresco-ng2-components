@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2022 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,40 +18,58 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { DialogModule } from '../dialog.module';
-import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
-    LogService,
+    AlfrescoApiService,
+    ContentService,
     DownloadZipService,
-    NodesApiService,
-    ContentService
-} from './../../services';
-
-const dataMock = {
-    nodeIds: ['123']
-};
+    NodesApiService
+} from '../../services';
+import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
+import {
+    AlfrescoApiServiceMock,
+    ContentApiMock,
+    DownloadZipMockService,
+    NodesApiMock
+} from '../../mock/download-zip-service.mock';
 
 export default {
-    component: DownloadZipDialogComponent,
+    component: DownloadZipDialogStorybookComponent,
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, DialogModule],
             providers: [
                 {
-                    provide: MatDialogRef,
-                    useValue: {}
+                    provide: AlfrescoApiService,
+                    useClass: AlfrescoApiServiceMock
                 },
-                { provide: MAT_DIALOG_DATA, useValue: dataMock },
-                LogService,
-                DownloadZipService,
-                NodesApiService,
-                ContentService
+                {
+                    provide: DownloadZipService,
+                    useClass: DownloadZipMockService
+                },
+                { provide: ContentService, useClass: ContentApiMock },
+                { provide: NodesApiService, useClass: NodesApiMock }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        showLoading: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                category: 'Story controls',
+                type: {
+                    summary: 'boolean'
+                }
+            },
+            defaultValue: false
+        }
+    }
 } as Meta;
 
-export const downloadZIPStory: Story = (args) => ({
+export const downloadZIPDialog: Story<DownloadZipDialogStorybookComponent> = (
+    args: DownloadZipDialogStorybookComponent
+) => ({
     props: args
 });
