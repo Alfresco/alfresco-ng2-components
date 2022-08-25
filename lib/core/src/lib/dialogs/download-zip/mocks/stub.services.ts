@@ -16,21 +16,23 @@
  */
 
 import { DownloadBodyCreate, DownloadEntry } from '@alfresco/js-api';
+import { DownloadZipService } from './../services/download-zip.service';
 import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { zipNode, downloadEntry } from './download-zip-data.mock';
-export class AlfrescoApiServiceStub {
+
+export class AlfrescoApiServiceMock {
     nodeUpdated = new Subject<Node>();
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-    alfrescoApi = new AlfrescoApiCompatibilityStub();
+    alfrescoApi = new AlfrescoApiCompatibilityMock();
 
     load() {}
     getInstance = () => this.alfrescoApi;
 }
 
-class AlfrescoApiCompatibilityStub {
-    core = new CoreStub();
-    content = new ContentApiStub();
+class AlfrescoApiCompatibilityMock {
+    core = new CoreMock();
+    content = new ContentApiMock();
 
     isOauthConfiguration = () => true;
     isLoggedIn = () => true;
@@ -38,21 +40,21 @@ class AlfrescoApiCompatibilityStub {
     isEcmLoggedIn = () => true;
 }
 
-export class ContentApiStub {
+export class ContentApiMock {
     getContentUrl = (_: string, _1?: boolean, _2?: string): string =>
         zipNode.entry.contentUrl;
 }
 
-class CoreStub {
-    downloadsApi = new DownloadsApiStub();
-    nodesApi = new NodesApiStub();
+class CoreMock {
+    downloadsApi = new DownloadsApiMock();
+    nodesApi = new NodesApiMock();
 }
 
-export class NodesApiStub {
+export class NodesApiMock {
     getNode = (_: string, _2?: any): any => of(zipNode.entry);
 }
 
-class DownloadsApiStub {
+class DownloadsApiMock {
     createDownload = (
         _: DownloadBodyCreate,
         _2?: any
@@ -63,10 +65,10 @@ class DownloadsApiStub {
     cancelDownload(_: string) {}
 }
 
-export class DownloadZipMockService {
-    private _downloadsApi: DownloadsApiStub;
-    get downloadsApi(): DownloadsApiStub {
-        this._downloadsApi = this._downloadsApi ?? new DownloadsApiStub();
+export class DownloadZipMockService extends DownloadZipService {
+    private _downloadsApi: DownloadsApiMock;
+    get downloadsApi(): DownloadsApiMock {
+        this._downloadsApi = this._downloadsApi ?? new DownloadsApiMock();
         return this._downloadsApi;
     }
 

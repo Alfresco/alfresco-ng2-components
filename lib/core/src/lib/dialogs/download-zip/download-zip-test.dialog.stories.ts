@@ -26,10 +26,10 @@ import {
 } from './../../services';
 import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
 import {
-    AlfrescoApiServiceStub,
-    ContentApiStub,
+    AlfrescoApiServiceMock,
+    ContentApiMock,
     DownloadZipMockService,
-    NodesApiStub
+    NodesApiMock
 } from '../../mock/download-zip-service.mock';
 
 export default {
@@ -41,14 +41,14 @@ export default {
             providers: [
                 {
                     provide: AlfrescoApiService,
-                    useClass: AlfrescoApiServiceStub
+                    useClass: AlfrescoApiServiceMock
                 },
                 {
                     provide: DownloadZipService,
                     useClass: DownloadZipMockService
                 },
-                { provide: ContentService, useClass: ContentApiStub },
-                { provide: NodesApiService, useClass: NodesApiStub }
+                { provide: ContentService, useClass: ContentApiMock },
+                { provide: NodesApiService, useClass: NodesApiMock }
             ]
         })
     ],
