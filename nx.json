@@ -30,6 +30,12 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
+    },
+    "lint": {
+      "dependsOn": [
+            "spellcheck",
+            "stylelint"
+      ]
     }
   },
   "tasksRunnerOptions": {
