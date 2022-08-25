@@ -22,7 +22,7 @@ import { zipNode, downloadEntry } from '../../mock/download-zip-data.mock';
 
 @Component({
     selector: 'adf-download-zip-dialog-storybook',
-    template: `<button (click)="openDialog()">Open dialog</button>`
+    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
 })
 export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()

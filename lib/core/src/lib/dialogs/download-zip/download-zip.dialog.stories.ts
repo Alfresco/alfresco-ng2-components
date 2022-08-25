@@ -18,6 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { DialogModule } from '../dialog.module';
+import { MatButtonModule } from '@angular/material/button';
 import {
     AlfrescoApiService,
     ContentService,
@@ -37,7 +38,7 @@ export default {
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, DialogModule],
+            imports: [CoreStoryModule, DialogModule, MatButtonModule],
             providers: [
                 {
                     provide: AlfrescoApiService,

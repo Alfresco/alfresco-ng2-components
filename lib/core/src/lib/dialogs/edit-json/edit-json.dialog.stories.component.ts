@@ -24,7 +24,7 @@ import {
 
 @Component({
     selector: 'adf-edit-json-dialog-storybook',
-    template: `<button (click)="openDialog()">Open dialog</button>`
+    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     private _settings: EditJsonDialogSettings;
