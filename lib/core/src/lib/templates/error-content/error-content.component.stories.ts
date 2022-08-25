@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story, componentWrapperDecorator } from '@storybook/angular';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
@@ -42,36 +42,28 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'UNKNOWN' }
             }
+        },
+        isAdditionalContent: {
+            control: 'boolean',
+            description: 'Enable Content Projection',
+            defaultValue: false,
+            table: {
+                category: 'Story Controls',
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false }
+            }
         }
     }
 } as Meta;
 
-const template: Story<ErrorContentComponent> = (args: ErrorContentComponent) => ({
-    props: args
+const template: Story<ErrorContentComponent> = ( args: ErrorContentComponent & { isAdditionalContent: boolean } ) => ({
+    props: args,
+    template: `
+    <adf-error-content [errorCode]="${args.errorCode}">
+        <div adf-error-content-actions *ngIf="${args.isAdditionalContent}">
+        <button mat-raised-button type="button">MyAction</button>
+        </div>
+    </adf-error-content>`
 });
 
-export const defaultErrorContent = template.bind({});
-
-export const errorCode500 = template.bind({});
-errorCode500.args = {
-    errorCode: '500'
-};
-
-export const errorCode404 = template.bind({});
-errorCode404.args = {
-    errorCode: '404'
-};
-
-const wrap = (story: string, title?: string, content?:  string): string => `<h3>${title ? title : ''}</h3>${story}`.replace('></adf-error-content>',`>${content ? content : ''}</adf-error-content>`);
-export const withProjectedContent = template.bind({});
-withProjectedContent.decorators = [
-    componentWrapperDecorator(story => wrap(
-        story,
-        `This story supplies the Error Content component with an adf-error-content element:`,
-        `<div adf-error-content-actions>
-          <button type="button">
-            MyAction
-          </button>
-        </div>`
-    ))
-];
+export const errorCodeStory = template.bind({});
