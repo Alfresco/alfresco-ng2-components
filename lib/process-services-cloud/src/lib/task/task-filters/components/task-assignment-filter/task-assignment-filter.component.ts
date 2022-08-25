@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
+import { AssignmentType, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
@@ -35,7 +35,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
 
     @Input() taskFilterProperty: TaskFilterProperties;
 
-    @Input() status: string;
+    @Input() status: TaskStatusFilter;
 
     @Output() assignedUsersChange = new EventEmitter<IdentityUserModel[]>();
 
@@ -82,7 +82,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         if (assignmentChange.value === AssignmentType.CURRENT_USER) {
             this.assignedUsersChange.emit([this.identityUserService.getCurrentUserInfo()]);
         } else if (assignmentChange.value === AssignmentType.NONE) {
-            this.assignedUsersChange.emit(undefined);
+            this.assignedUsersChange.emit([]);
         }
 
         this.assignmentType = assignmentChange.value;
@@ -97,15 +97,15 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         this.assignedUsersChange.emit(users);
     }
 
-    private changeAssignmentTypeByStatus(status: string) {
+    private changeAssignmentTypeByStatus(status: TaskStatusFilter) {
         switch (status) {
-            case 'CREATED':
+            case TaskStatusFilter.CREATED:
                 this.assignmentType = AssignmentType.UNASSIGNED;
                 break;
-            case 'ASSIGNED':
+            case TaskStatusFilter.ASSIGNED:
                 this.assignmentType = AssignmentType.ASSIGNED_TO;
                 break;
-            case '':
+            case TaskStatusFilter.ALL:
             default:
                 this.assignmentType = AssignmentType.NONE;
         }

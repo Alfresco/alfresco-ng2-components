@@ -23,7 +23,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import moment, { Moment } from 'moment';
 
-import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction } from '../../models/filter-cloud.model';
+import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
@@ -142,12 +142,12 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     private getStatusOptions(): DropdownOption[] {
         return [
-            { value: '', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
-            { value: 'CREATED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
-            { value: 'ASSIGNED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
-            { value: 'SUSPENDED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
-            { value: 'CANCELLED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
-            { value: 'COMPLETED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
+            { value: TaskStatusFilter.ALL, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
+            { value: TaskStatusFilter.CREATED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
+            { value: TaskStatusFilter.ASSIGNED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
+            { value: TaskStatusFilter.SUSPENDED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
+            { value: TaskStatusFilter.CANCELLED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
+            { value: TaskStatusFilter.COMPLETED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
         ];
     }
 

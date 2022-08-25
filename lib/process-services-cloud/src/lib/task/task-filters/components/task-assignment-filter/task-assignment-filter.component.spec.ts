@@ -21,14 +21,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
 import { GroupCloudModule } from '../../../../group/group-cloud.module';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
-import { AssignmentType } from '../../models/filter-cloud.model';
+import { AssignmentType, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { mockIdentityGroups, mockIdentityUsers } from '../../mock/edit-task-filter-cloud.mock';
+import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
+import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
 
 describe('TaskAssignmentFilterComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
@@ -95,12 +96,12 @@ describe('TaskAssignmentFilterComponent', () => {
     });
 
     it('should emit the current user info when assignment is the current user', () => {
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockIdentityUsers[0]);
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockFoodUsers[0]);
         spyOn(component.assignedUsersChange, 'emit');
 
         selectAssignmentType(AssignmentType.CURRENT_USER);
 
-        expect(component.assignedUsersChange.emit).toHaveBeenCalledWith([mockIdentityUsers[0]]);
+        expect(component.assignedUsersChange.emit).toHaveBeenCalledWith([mockFoodUsers[0]]);
     });
 
     it('should show the CANDIDATE_GROUPS input', () => {
@@ -121,21 +122,21 @@ describe('TaskAssignmentFilterComponent', () => {
 
     describe('status input change', () => {
         it('should CREATED status set assignment type to UNASSIGNED', () => {
-            const createdStatusChange = new SimpleChange(null, 'CREATED', true);
+            const createdStatusChange = new SimpleChange(null, TaskStatusFilter.CREATED, true);
             component.ngOnChanges({status: createdStatusChange});
 
             expect(component.assignmentType).toEqual(AssignmentType.UNASSIGNED);
         });
 
         it('should ASSIGNED status set assignment type to ASSIGNED_TO', () => {
-            const createdStatusChange = new SimpleChange(null, 'ASSIGNED', true);
+            const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ASSIGNED, true);
             component.ngOnChanges({status: createdStatusChange});
 
             expect(component.assignmentType).toEqual(AssignmentType.ASSIGNED_TO);
         });
 
-        it('should empty status set assignment type to NONE', () => {
-            const createdStatusChange = new SimpleChange(null, '', true);
+        it('should ALL status set assignment type to NONE', () => {
+            const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ALL, true);
             component.ngOnChanges({status: createdStatusChange});
 
             expect(component.assignmentType).toEqual(AssignmentType.NONE);
@@ -147,7 +148,7 @@ describe('TaskAssignmentFilterComponent', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
                 label: 'mock-filter',
-                value: { assignedUsers: mockIdentityUsers },
+                value: { assignedUsers: mockFoodUsers },
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };
@@ -160,7 +161,7 @@ describe('TaskAssignmentFilterComponent', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
                 label: 'mock-filter',
-                value: { candidateGroups: mockIdentityGroups },
+                value: { candidateGroups: mockFoodGroups },
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };
@@ -173,7 +174,7 @@ describe('TaskAssignmentFilterComponent', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
                 label: 'mock-filter',
-                value: { assignedUsers: mockIdentityUsers, candidateGroups: mockIdentityGroups },
+                value: { assignedUsers: mockFoodUsers, candidateGroups: mockFoodGroups },
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
             };

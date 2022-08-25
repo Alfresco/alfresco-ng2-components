@@ -17,8 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import moment from 'moment';
-import { IdentityGroupModel } from '../../../group/models/identity-group.model';
-import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
 
 export const mockAlfrescoApi: any = {
@@ -86,16 +84,3 @@ export const mockCreatedDateFilter = {
         to: '_createdTo'
     }
 };
-
-export const mockIdentityUsers: IdentityUserModel[] = [{
-    id: 'id',
-    username: 'test',
-    firstName: 'first-name',
-    lastName: 'last-name',
-    email: 'email@fake.com'
-}];
-
-export const mockIdentityGroups: IdentityGroupModel[] = [
-    { name: 'group1'},
-    { name: 'group2'}
-];

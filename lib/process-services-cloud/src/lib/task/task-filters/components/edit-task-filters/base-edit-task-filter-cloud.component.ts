@@ -16,7 +16,7 @@
  */
 
 import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter } from '@angular/core';
-import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
+import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
@@ -107,7 +107,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
-    selectedStatus: string;
+    selectedStatus: TaskStatusFilter;
     sortDirections: DropdownOption[] = [
         { value: 'ASC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING' },
         { value: 'DESC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.DESCENDING' }
@@ -320,20 +320,20 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     onAssignmentTypeChange(assignmentType: AssignmentType) {
         switch (assignmentType) {
             case AssignmentType.UNASSIGNED:
-                this.editTaskFilterForm.get('status').setValue('CREATED');
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.CREATED);
                 this.resetAssignmentTypeValues();
                 break;
             case AssignmentType.NONE:
-                this.editTaskFilterForm.get('status').setValue('');
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ALL);
                 this.resetAssignmentTypeValues();
                 break;
             default:
-                this.editTaskFilterForm.get('status').setValue('ASSIGNED');
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ASSIGNED);
         }
     }
 
     onStatusChange(status: MatSelectChange) {
-        if (status.value === 'CREATED') {
+        if (status.value === TaskStatusFilter.CREATED) {
             this.resetAssignmentTypeValues();
         }
 

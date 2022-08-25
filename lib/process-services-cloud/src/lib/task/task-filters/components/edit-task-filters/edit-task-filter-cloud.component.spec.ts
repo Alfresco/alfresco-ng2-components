@@ -36,7 +36,7 @@ import { AbstractControl } from '@angular/forms';
 import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
-import { AssignmentType, TaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
@@ -48,10 +48,10 @@ import {
     mockDateFilterStartEnd,
     mockDefaultTaskFilter,
     mockDueDateFilter,
-    mockIdentityGroups,
-    mockIdentityUsers,
     mockTaskFilterIdChange
 } from '../../mock/edit-task-filter-cloud.mock';
+import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
+import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -108,7 +108,7 @@ describe('EditTaskFilterCloudComponent', () => {
             expect(getTaskFilterSpy).toHaveBeenCalled();
             expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
             expect(component.taskFilter.icon).toEqual('adjust');
-            expect(component.taskFilter.status).toEqual('CREATED');
+            expect(component.taskFilter.status).toEqual(TaskStatusFilter.CREATED);
             expect(component.taskFilter.order).toEqual('ASC');
             expect(component.taskFilter.sort).toEqual('id');
         });
@@ -196,7 +196,7 @@ describe('EditTaskFilterCloudComponent', () => {
             const assigneeController = component.editTaskFilterForm.get('assignee');
             expect(component.editTaskFilterForm).toBeDefined();
             expect(assigneeController).toBeDefined();
-            expect(stateController.value).toBe('CREATED');
+            expect(stateController.value).toBe(TaskStatusFilter.CREATED);
             expect(sortController.value).toBe('id');
             expect(orderController.value).toBe('ASC');
             expect(assigneeController.value).toBe('fake-involved');
@@ -435,7 +435,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             component.filterProperties = [];
             fixture.detectChanges();
-            const stateController = component.editTaskFilterForm.get('status');
+            const statusController = component.editTaskFilterForm.get('status');
             const sortController = component.editTaskFilterForm.get('sort');
             const orderController = component.editTaskFilterForm.get('order');
 
@@ -443,7 +443,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
             expect(component.taskFilterProperties.length).toBe(4);
             expect(component.editTaskFilterForm).toBeDefined();
-            expect(stateController.value).toBe('CREATED');
+            expect(statusController.value).toBe(TaskStatusFilter.CREATED);
             expect(sortController.value).toBe('id');
             expect(orderController.value).toBe('ASC');
         });
@@ -499,7 +499,7 @@ describe('EditTaskFilterCloudComponent', () => {
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedBy');
             startedDateTypeControl.setValue('hruser');
 
-            component.onChangedUser(mockIdentityUsers, {
+            component.onChangedUser(mockFoodUsers, {
                 key: 'completedBy',
                 label: '',
                 type: 'people',
@@ -509,7 +509,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
             fixture.detectChanges();
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.completedBy).toEqual(mockIdentityUsers[0]);
+                expect(component.changedTaskFilter.completedBy).toEqual(mockFoodUsers[0]);
                 done();
             });
             component.onFilterChange();
@@ -639,10 +639,10 @@ describe('EditTaskFilterCloudComponent', () => {
             component.appName = 'fake';
             component.filterProperties = ['assignment'];
             component.ngOnChanges({ id: mockTaskFilterIdChange });
-            component.onAssignedUsersChange(mockIdentityUsers);
+            component.onAssignedUsersChange(mockFoodUsers);
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.assignedUsers).toEqual(mockIdentityUsers);
+                expect(component.changedTaskFilter.assignedUsers).toEqual(mockFoodUsers);
                 expect(component.changedTaskFilter.candidateGroups).toBeNull();
                 done();
             });
@@ -675,10 +675,10 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterProperties = ['assignment'];
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
-            component.onAssignedGroupsChange(mockIdentityGroups);
+            component.onAssignedGroupsChange(mockFoodGroups);
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.candidateGroups).toEqual(mockIdentityGroups);
+                expect(component.changedTaskFilter.candidateGroups).toEqual(mockFoodGroups);
                 expect(component.changedTaskFilter.assignedUsers).toBeNull();
                 done();
             });
@@ -698,7 +698,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.onAssignmentTypeChange(AssignmentType.UNASSIGNED);
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.status).toEqual('CREATED');
+                expect(component.changedTaskFilter.status).toEqual(TaskStatusFilter.CREATED);
                 expect(component.changedTaskFilter.candidateGroups).toBeNull();
                 expect(component.changedTaskFilter.candidateGroups).toBeNull();
                 done();
@@ -706,7 +706,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.onFilterChange();
         });
 
-        it('should NONE assignment type set status to empty', (done) => {
+        it('should NONE assignment type set status to ALL', (done) => {
             component.onAssignmentTypeChange(AssignmentType.NONE);
 
             component.filterChange.subscribe(() => {
@@ -722,7 +722,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.onAssignmentTypeChange(AssignmentType.ASSIGNED_TO);
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.status).toEqual('ASSIGNED');
+                expect(component.changedTaskFilter.status).toEqual(TaskStatusFilter.ASSIGNED);
                 expect(component.changedTaskFilter.candidateGroups).toBeNull();
                 expect(component.changedTaskFilter.candidateGroups).toBeNull();
                 done();

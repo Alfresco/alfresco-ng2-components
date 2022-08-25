@@ -32,7 +32,7 @@ export class TaskFilterCloudModel  {
     icon: string;
     index: number;
     appName: string;
-    status: string;
+    status: TaskStatusFilter;
     sort: string;
     assignee: string;
     assignedUsers: IdentityUserModel[];
@@ -239,6 +239,15 @@ export enum AssignmentType {
     NONE = 'NONE',
     CANDIDATE_GROUPS = 'CANDIDATE_GROUPS',
     ASSIGNED_TO = 'ASSIGNED_TO'
+}
+
+export enum TaskStatusFilter {
+    ALL = '',
+    CREATED = 'CREATED',
+    ASSIGNED = 'ASSIGNED',
+    SUSPENDED = 'SUSPENDED',
+    CANCELLED = 'CANCELLED',
+    COMPLETED = 'COMPLETED'
 }
 
 export interface TaskFilterProperties {
