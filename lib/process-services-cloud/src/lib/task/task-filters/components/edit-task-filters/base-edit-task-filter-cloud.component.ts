@@ -327,6 +327,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ALL);
                 this.resetAssignmentTypeValues();
                 break;
+            case AssignmentType.ASSIGNED_TO:
+            case AssignmentType.CANDIDATE_GROUPS:
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ASSIGNED);
+                this.resetAssignmentTypeValues();
+                break;
             default:
                 this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ASSIGNED);
         }
