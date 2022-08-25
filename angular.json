@@ -875,8 +875,8 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "port": 4400,
-            "browserTarget": "core:storybook",
-            "configDir": "lib/core/.storybook",
+            "browserTarget": "stories:storybook",
+            "configDir": "lib/stories/.storybook",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
@@ -895,9 +895,9 @@
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
-            "browserTarget": "core:build-storybook",
-            "configDir": "lib/core/.storybook",
-            "outputDir": "dist/storybook/core",
+            "browserTarget": "stories:build-storybook",
+            "configDir": "lib/stories/.storybook",
+            "outputDir": "dist/storybook/stories",
             "compodoc": false,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
