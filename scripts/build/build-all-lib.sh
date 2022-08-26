@@ -17,12 +17,6 @@ fi
 echo "====== run core ====="
 ./scripts/build/build-core.sh || exit 1
 
-echo "====== Run testing ====="
-./scripts/build/build-testing.sh || exit 1
-
-echo "====== Run Cli ====="
-./scripts/build/build-cli.sh || exit 1
-
 echo "====== Copy schema ====="
 cp lib/core/src/lib/app-config/schema.json dist/libs/core/app.config.schema.json
 
