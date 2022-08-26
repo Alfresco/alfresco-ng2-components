@@ -91,7 +91,6 @@
     "@mat-datetimepicker/moment": "^9.0.68",
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "6.4.22",
-    "adf-tslint-rules": "0.0.7",
     "apollo-angular": "^2.6.0",
     "chart.js": "2.9.4",
     "cropperjs": "1.5.12",
