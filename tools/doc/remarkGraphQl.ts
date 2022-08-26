@@ -44,6 +44,5 @@ const query = `
 `;
 
 graphql(schema, query, root).then((response) => {
-  // tslint:disable-next-line: no-console
   console.log(JSON.stringify(response));
 });

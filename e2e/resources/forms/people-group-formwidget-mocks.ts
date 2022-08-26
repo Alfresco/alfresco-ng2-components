@@ -15,96 +15,95 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 export const peopleSingleModeFormMock = {
-    "formRepresentation": {
-        "id": "form-d74a4136-af83-4333-ac37-a6a74ac7aa84",
-        "name": "singlepeople",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-d74a4136-af83-4333-ac37-a6a74ac7aa84',
+        name: 'singlepeople',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "7c9ea025-4ae6-4a5a-9184-da8f7d5c5543",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: '7c9ea025-4ae6-4a5a-9184-da8f7d5c5543',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "PeopleSingleMode",
-                                "name": "People",
-                                "type": "people",
-                                "readOnly": false,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'PeopleSingleMode',
+                                name: 'People',
+                                type: 'people',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": []
+            outcomes: [],
+            metadata: {},
+            variables: []
         }
     }
 };
 
 export const peopleMultipleModeFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "44e485d4-c286-425a-b488-3fda1707d319",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: '44e485d4-c286-425a-b488-3fda1707d319',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "PeopleMultipleMode",
-                                "name": "People",
-                                "type": "people",
-                                "readOnly": false,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "multiple",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'PeopleMultipleMode',
+                                name: 'People',
+                                type: 'people',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'multiple',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -112,50 +111,50 @@ export const peopleMultipleModeFormMock = {
 };
 
 export const peopleRequiredFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "44e485d4-c286-425a-b488-3fda1707d319",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: '44e485d4-c286-425a-b488-3fda1707d319',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "PeopleRequired",
-                                "name": "People",
-                                "type": "people",
-                                "readOnly": false,
-                                "required": true,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'PeopleRequired',
+                                name: 'People',
+                                type: 'people',
+                                readOnly: false,
+                                required: true,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -163,50 +162,50 @@ export const peopleRequiredFormMock = {
 };
 
 export const groupSingleModeFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "abccf2c9-b526-45c7-abd4-b969bdf8ce15",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: 'abccf2c9-b526-45c7-abd4-b969bdf8ce15',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "GroupSingleMode",
-                                "name": "Group of people",
-                                "type": "functional-group",
-                                "readOnly": false,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'GroupSingleMode',
+                                name: 'Group of people',
+                                type: 'functional-group',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -214,50 +213,50 @@ export const groupSingleModeFormMock = {
 };
 
 export const groupMultipleModeFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "abccf2c9-b526-45c7-abd4-b969bdf8ce15",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: 'abccf2c9-b526-45c7-abd4-b969bdf8ce15',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "GroupMultipleMode",
-                                "name": "Group of people",
-                                "type": "functional-group",
-                                "readOnly": false,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "multiple",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'GroupMultipleMode',
+                                name: 'Group of people',
+                                type: 'functional-group',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'multiple',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -265,50 +264,50 @@ export const groupMultipleModeFormMock = {
 };
 
 export const groupRequiredFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "abccf2c9-b526-45c7-abd4-b969bdf8ce15",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: 'abccf2c9-b526-45c7-abd4-b969bdf8ce15',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "GroupRequired",
-                                "name": "Group of people",
-                                "type": "functional-group",
-                                "readOnly": false,
-                                "required": true,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'GroupRequired',
+                                name: 'Group of people',
+                                type: 'functional-group',
+                                readOnly: false,
+                                required: true,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -316,50 +315,50 @@ export const groupRequiredFormMock = {
 };
 
 export const peopleReadOnlyFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "44e485d4-c286-425a-b488-3fda1707d319",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: '44e485d4-c286-425a-b488-3fda1707d319',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "PeopleReadOnly",
-                                "name": "People",
-                                "type": "people",
-                                "readOnly": true,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'PeopleReadOnly',
+                                name: 'People',
+                                type: 'people',
+                                readOnly: true,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }
@@ -367,50 +366,50 @@ export const peopleReadOnlyFormMock = {
 };
 
 export const groupReadOnlyFormMock = {
-    "formRepresentation": {
-        "id": "form-0fec4293-a33a-4408-923c-ba2d0645459c",
-        "name": "people",
-        "description": "",
-        "version": 0,
-        "standAlone": true,
-        "formDefinition": {
-            "tabs": [],
-            "fields": [
+    formRepresentation: {
+        id: 'form-0fec4293-a33a-4408-923c-ba2d0645459c',
+        name: 'people',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
                 {
-                    "id": "abccf2c9-b526-45c7-abd4-b969bdf8ce15",
-                    "name": "Label",
-                    "type": "container",
-                    "tab": null,
-                    "numberOfColumns": 2,
-                    "fields": {
-                        "1": [
+                    id: 'abccf2c9-b526-45c7-abd4-b969bdf8ce15',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
                             {
-                                "id": "GroupReadOnly",
-                                "name": "Group of people",
-                                "type": "functional-group",
-                                "readOnly": true,
-                                "required": false,
-                                "colspan": 1,
-                                "optionType": "single",
-                                "visibilityCondition": null,
-                                "params": {
-                                    "existingColspan": 1,
-                                    "maxColspan": 2
+                                id: 'GroupReadOnly',
+                                name: 'Group of people',
+                                type: 'functional-group',
+                                readOnly: true,
+                                required: false,
+                                colspan: 1,
+                                optionType: 'single',
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
                                 }
                             }
                         ],
-                        "2": []
+                        2: []
                     }
                 }
             ],
-            "outcomes": [],
-            "metadata": {},
-            "variables": [
+            outcomes: [],
+            metadata: {},
+            variables: [
                 {
-                    "id": "d6060d6b-1cb0-45dc-a18b-4d7898a9a5ad",
-                    "name": "people",
-                    "type": "string",
-                    "value": "user1"
+                    id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
+                    name: 'people',
+                    type: 'string',
+                    value: 'user1'
                 }
             ]
         }

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 export const displayValueTextJson = {
      formRepresentation : {
      id :  'form-340a2672-429b-454f-9bb1-7b4d7362bb89' ,

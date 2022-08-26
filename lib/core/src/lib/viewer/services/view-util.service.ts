@@ -33,7 +33,6 @@ export class ViewUtilService {
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerComponent
      */
-        // tslint:disable-next-line:variable-name
     static ContentGroup = {
         IMAGE: 'image',
         MEDIA: 'media',
@@ -44,7 +43,6 @@ export class ViewUtilService {
     /**
      * The name of the rendition with the media subtitles in the supported format
      */
-    /* tslint:disable-next-line */
     static SUBTITLES_RENDITION_NAME = 'webvtt';
 
     /**

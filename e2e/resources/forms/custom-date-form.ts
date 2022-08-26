@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 export const customDateFormAPS1 = `{
     "formRepresentation":{
         "id": 18977,
