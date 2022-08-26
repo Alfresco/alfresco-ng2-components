@@ -4,6 +4,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 verifyLib=$1;
 cd $DIR/../../
 
+if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+  echo "Affected not check in case of cron"
+  exit 0
+fi
 AFFECTED_LIBS="$(nx print-affected --type=lib --select=projects --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
 echo "Verify if affected build contains $1"
 
