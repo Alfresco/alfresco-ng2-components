@@ -1,6 +1,6 @@
-export class LegacyResponseError extends Error {
+export class AlfrescoApiResponseError extends Error {
 
-    public name = 'LegacyResponseError';
+    public name = 'AlfrescoApiResponseError';
 
     constructor(msg: string, public status: number, public error: { response: Record<string, any> }) {
         super(msg);

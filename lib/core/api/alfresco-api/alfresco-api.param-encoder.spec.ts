@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { JsApiHttpParamEncoder } from './js-api-http-param-encoder';
+import { AlfrescoApiParamEncoder } from './alfresco-api.param-encoder';
 
-describe('JsApiHttpParamEncoder', () => {
+describe('AlfrescoApiParamEncoder', () => {
     it('should propely encode special "+" character', () => {
-        const encoder = new JsApiHttpParamEncoder();
+        const encoder = new AlfrescoApiParamEncoder();
         const value = '2022-08-17T00:00:00.000+02:00';
         const encodeValue = '2022-08-17T00%3A00%3A00.000%2B02%3A00';
 
