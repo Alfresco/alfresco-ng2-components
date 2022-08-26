@@ -306,7 +306,7 @@
             "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
           },
-          "dependsOn": ["license", "^build"],
+          "dependsOn": ["^build", "license"],
           "configurations": {
             "production": {
               "project": "lib/core/ng-package.json",
@@ -409,6 +409,16 @@
               "commands": [
                   {
                       "command": "$(npm bin)/license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+                  }
+              ]
+          }
+        },
+        "pretheme": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail && rm ./dist/libs/core/lib/prebuilt-themes/*.js"
                   }
               ]
           }
@@ -833,6 +843,16 @@
               "lib/testing/**/*.html"
             ]
           }
+        },
+        "copydist": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+                  }
+              ]
+          }
         }
       }
     },
@@ -862,6 +882,16 @@
               "lib/cli/**/*.ts",
               "lib/cli/**/*.html"
             ]
+          }
+        },
+        "copydist": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "cp -R ./lib/cli/dist dist/libs/cli/ && rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
+                  }
+              ]
           }
         }
       }
