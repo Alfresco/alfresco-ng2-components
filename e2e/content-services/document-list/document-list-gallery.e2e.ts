@@ -146,7 +146,6 @@ describe('Document List Component', () => {
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });
 
-        // tslint:disable-next-line: ban
         xit('[C280129] Should keep Gallery View when accessing a folder', async () => {
             await contentServicesPage.navigateToCardFolder(folderName);
 

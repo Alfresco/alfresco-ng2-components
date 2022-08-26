@@ -19,6 +19,5 @@ var root = {
 };
 var query = "\n    {\n        document {\n          metadata(key: \"Status\")\n          heading {\n            link {\n              text {\n                value\n              }\n            }\n          }\n          paragraph {\n            plaintext\n          }\n        }\n    }\n";
 graphql_1.graphql(schema, query, root).then(function (response) {
-    // tslint:disable-next-line: no-console
     console.log(JSON.stringify(response));
 });

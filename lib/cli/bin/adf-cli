@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// tslint:disable: adf-file-name
-// tslint:disable: no-var-requires
 const minimist = require('minimist');
 const path = require('path');
 const fs = require('fs');

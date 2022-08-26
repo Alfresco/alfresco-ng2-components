@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable */
 export const checkboxVisibilityFormJson = {
 	formRepresentation: {
 		id: 'form-fb9245f6-1132-47bd-b0b3-823bb85002da',

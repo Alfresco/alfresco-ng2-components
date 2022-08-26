@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 export const tabFieldValueVisibilityJson = {
     formRepresentation: {
         id: 'form-3aff57d3-62af-4adf-9b14-1d8f44a28077',
