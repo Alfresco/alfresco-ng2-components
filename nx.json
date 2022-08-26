@@ -42,7 +42,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "spellcheck", "stylelint"],
+        "cacheableOperations": ["build", "lint", "test", "spellcheck", "stylelint", "build-storybook"],
         "cacheDirectory": "nxcache",
         "runtimeCacheInputs": ["node -v"]
       }
