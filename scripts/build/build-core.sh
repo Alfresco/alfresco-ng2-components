@@ -7,5 +7,4 @@ cd $DIR/../..
 echo "====== Core ======"
 
 echo "====== Prebuilt Themes ====="
-npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
-rm ./dist/libs/core/lib/prebuilt-themes/*.js
+nx affected $NX_CALCULATION_FLAGS --target=pretheme

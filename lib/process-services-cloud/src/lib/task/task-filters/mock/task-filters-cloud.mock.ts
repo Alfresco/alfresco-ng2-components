@@ -16,7 +16,7 @@
  */
 
 import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
-import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType, TaskStatusFilter } from '../models/filter-cloud.model';
 
 export const fakeGlobalFilter: any[] = [
     {
@@ -75,10 +75,11 @@ export const fakeFilter = new TaskFilterCloudModel({
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
-    status: 'CREATED',
+    status: TaskStatusFilter.CREATED,
     appName: 'mock-app-name',
     processDefinitionId: 'process-def-id',
     assignee: 'fake-involved',
+    assignment: AssignmentType.NONE,
     order: 'ASC',
     sort: 'id',
     completedBy: {
@@ -103,7 +104,7 @@ export const fakeAllTaskFilter = new TaskFilterCloudModel({
     name: 'AllTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
-    status: '',
+    status: TaskStatusFilter.ALL,
     appName: 'mock-app-name',
     processDefinitionId: 'process-def-id',
     assignee: 'fake-involved',
@@ -296,7 +297,7 @@ export const defaultTaskFiltersMock = [
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'CREATED',
+        status: TaskStatusFilter.CREATED,
         order: 'DESC'
     },
     {
@@ -306,7 +307,7 @@ export const defaultTaskFiltersMock = [
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'ASSIGNED',
+        status: TaskStatusFilter.ASSIGNED,
         order: 'DESC'
     },
     {
@@ -316,7 +317,7 @@ export const defaultTaskFiltersMock = [
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'COMPLETED',
+        status: TaskStatusFilter.COMPLETED,
         order: 'DESC'
     }
 ];

@@ -1,20 +1,35 @@
-<div class="adf-cloud-assignment-container" fxLayout="row">
+<div class="adf-cloud-assignment-container">
     <mat-form-field [floatLabel]="'auto'">
         <mat-select class="adf-task-assignment-filter"
                     placeholder="{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.ASSIGNMENT_TYPE' | translate }}"
                     [(ngModel)]="assignmentType"
-                    (ngModelChange)="onAssignmentTypeChange(assignmentType)">
-            <mat-option [value]="assignmentTypeList.currentUser">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.ASSIGNED_TO_ME' | translate }} </mat-option>
-            <mat-option [value]="assignmentTypeList.unassigned">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.UNASSIGNED' | translate }} </mat-option>
-            <mat-option [value]="assignmentTypeList.candidateGroups">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.LIST_OF_CANDIDATE_GROUPS' | translate }} </mat-option>
+                    [attr.data-automation-id]="'adf-task-assignment-filter-select'"
+                    (selectionChange)="onAssignmentTypeChange($event)">
+            <mat-option *ngFor="let assignmentType of assignmentTypeOptions"
+                [value]="assignmentType.value"
+                [attr.data-automation-id]="'adf-task-assignment-filter-' + assignmentType.value">
+                {{ assignmentType.label | translate }}
+            </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <adf-cloud-group class="adf-group-cloud-filter" *ngIf="isCandidateGroupsType()"
+    <adf-cloud-group *ngIf="isCandidateGroupsType()"
+        class="adf-group-cloud-filter"
+        data-automation-id="adf-group-cloud-candidate-groups-filter"
         [mode]="'multiple'"
         [appName]="appName"
         [preSelectGroups]="candidateGroups"
-        [searchGroupsControl]="groupForm"
-        (changedGroups)="onChangedGroups($event)"
-        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"></adf-cloud-group>
+        [mode]="taskFilterProperty.selectionMode"
+        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
+        (changedGroups)="onChangedGroups($event)">
+    </adf-cloud-group>
+
+    <adf-cloud-people *ngIf="isAssignedToType()"
+        class="adf-group-cloud-filter"
+        data-automation-id="adf-group-cloud-assigned-to-filter"
+        [preSelectUsers]="assignedUsers"
+        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
+        [appName]="appName"
+        (changedUsers)="onChangedAssignedUsers($event)">
+    </adf-cloud-people>
 </div>

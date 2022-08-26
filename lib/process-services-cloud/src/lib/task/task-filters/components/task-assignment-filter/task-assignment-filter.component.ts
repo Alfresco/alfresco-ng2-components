@@ -15,42 +15,54 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
+import { AssignmentType, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
+import { DropdownOption } from '../edit-task-filters/base-edit-task-filter-cloud.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',
     templateUrl: './task-assignment-filter.component.html',
     styleUrls: ['./task-assignment-filter.component.scss']
 })
-export class TaskAssignmentFilterCloudComponent implements OnInit {
+export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
 
     @Input() appName: string;
 
     @Input() taskFilterProperty: TaskFilterProperties;
 
-    @Output() assignedChange = new EventEmitter<IdentityUserModel>();
+    @Input() status: TaskStatusFilter;
 
-    @Output() assignedGroupChange = new EventEmitter<IdentityGroupModel[]>();
+    @Output() assignedUsersChange = new EventEmitter<IdentityUserModel[]>();
+
+    @Output() assignedGroupsChange = new EventEmitter<IdentityGroupModel[]>();
+
+    @Output() assignmentTypeChange = new EventEmitter<AssignmentType>();
 
     assignmentType: AssignmentType;
+    assignedUsers: IdentityUserModel[] = [];
     candidateGroups: IdentityGroupModel[] = [];
-    groupForm = new UntypedFormControl('');
-    assignmentTypeList = {
-        unassigned: AssignmentType.UNASSIGNED,
-        currentUser: AssignmentType.CURRENT_USER,
-        candidateGroups: AssignmentType.CANDIDATE_GROUPS
-    };
+    groupForm = new FormControl('');
+    assignmentTypeOptions: DropdownOption[];
 
     constructor(private identityUserService: IdentityUserService) {}
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.status?.currentValue !== changes?.status?.previousValue) {
+            this.changeAssignmentTypeByStatus(changes?.status?.currentValue);
+        }
+    }
+
     ngOnInit() {
+        this.assignmentTypeOptions = this.getAssignmentTypeOptions();
+
         if (this.isFilterPropertyDefined()) {
-            this.setDefaultAssignedGroups();
+            this.setInitialCandidateGroups();
+            this.setInitialAssignedUsers();
             this.setDefaultAssignmentType();
         }
     }
@@ -59,35 +71,73 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
         return this.assignmentType === AssignmentType.CANDIDATE_GROUPS;
     }
 
-    onAssignmentTypeChange(type: any) {
+    isAssignedToType(): boolean {
+        return this.assignmentType === AssignmentType.ASSIGNED_TO;
+    }
+
+    onAssignmentTypeChange(assignmentChange: MatSelectChange) {
         this.candidateGroups = [];
-        if (type === AssignmentType.CURRENT_USER) {
-            this.assignedChange.emit(this.identityUserService.getCurrentUserInfo());
-        } else if (type === AssignmentType.UNASSIGNED) {
-            this.assignedChange.emit(null);
+        this.assignedUsers = [];
+
+        if (assignmentChange.value === AssignmentType.CURRENT_USER) {
+            this.assignedUsersChange.emit([this.identityUserService.getCurrentUserInfo()]);
+        } else if (assignmentChange.value === AssignmentType.NONE) {
+            this.assignedUsersChange.emit([]);
         }
+
+        this.assignmentType = assignmentChange.value;
+        this.assignmentTypeChange.emit(this.assignmentType);
     }
 
     onChangedGroups(groups: IdentityGroupModel[]) {
-        this.assignedGroupChange.emit(groups);
+        this.assignedGroupsChange.emit(groups);
     }
 
-    private setDefaultAssignmentType() {
-        const assignmentAttr = this.taskFilterProperty.attributes['assignee'];
-        const assignee = this.taskFilterProperty.value[assignmentAttr];
+    onChangedAssignedUsers(users: IdentityUserModel[]) {
+        this.assignedUsersChange.emit(users);
+    }
 
-        if (this.candidateGroups.length > 0) {
-            this.assignmentType = AssignmentType.CANDIDATE_GROUPS;
-        } else if (assignee) {
-            this.assignmentType = AssignmentType.CURRENT_USER;
-        } else {
-            this.assignmentType = AssignmentType.UNASSIGNED;
+    private changeAssignmentTypeByStatus(status: TaskStatusFilter) {
+        switch (status) {
+            case TaskStatusFilter.CREATED:
+                this.assignmentType = AssignmentType.UNASSIGNED;
+                break;
+            case TaskStatusFilter.ASSIGNED:
+                this.assignmentType = AssignmentType.ASSIGNED_TO;
+                break;
+            default:
+                this.assignmentType = AssignmentType.NONE;
         }
     }
 
-    private setDefaultAssignedGroups() {
-        const assignmentGroupsAttr = this.taskFilterProperty.attributes['candidateGroups'];
-        this.candidateGroups = this.taskFilterProperty.value[assignmentGroupsAttr];
+    private getAssignmentTypeOptions(): DropdownOption[] {
+        return [
+            { value: AssignmentType.NONE, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.NONE}` },
+            { value: AssignmentType.UNASSIGNED, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.UNASSIGNED}` },
+            { value: AssignmentType.ASSIGNED_TO, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.ASSIGNED_TO}` },
+            { value: AssignmentType.CURRENT_USER, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CURRENT_USER}` },
+            { value: AssignmentType.CANDIDATE_GROUPS, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CANDIDATE_GROUPS}` }
+        ];
+    }
+
+    private setDefaultAssignmentType() {
+        if (this.candidateGroups?.length) {
+            this.assignmentType = AssignmentType.CANDIDATE_GROUPS;
+        } else if (this.assignedUsers?.length) {
+            this.assignmentType = AssignmentType.ASSIGNED_TO;
+        } else {
+            this.assignmentType = AssignmentType.NONE;
+        }
+    }
+
+    private setInitialCandidateGroups() {
+        const candidateGroupsAttr = this.taskFilterProperty.attributes['candidateGroups'];
+        this.candidateGroups = this.taskFilterProperty.value[candidateGroupsAttr];
+    }
+
+    private setInitialAssignedUsers() {
+        const assignedUsersAttr = this.taskFilterProperty.attributes['assignedUsers'];
+        this.assignedUsers = this.taskFilterProperty.value[assignedUsersAttr];
     }
 
     private isFilterPropertyDefined(): boolean {

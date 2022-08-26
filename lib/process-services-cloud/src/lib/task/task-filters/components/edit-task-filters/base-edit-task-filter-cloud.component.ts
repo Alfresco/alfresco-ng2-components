@@ -16,7 +16,7 @@
  */
 
 import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter } from '@angular/core';
-import { FilterOptions, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
+import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
@@ -30,6 +30,7 @@ import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filte
 import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
+import { MatSelectChange } from '@angular/material/select';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -106,6 +107,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
+    selectedStatus: TaskStatusFilter;
     sortDirections: DropdownOption[] = [
         { value: 'ASC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING' },
         { value: 'DESC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.DESCENDING' }
@@ -305,14 +307,47 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.getPropertyController(userProperty).setValue(selectedUsers);
     }
 
-    onAssignedChange(assignedValue: IdentityUserModel) {
-        this.editTaskFilterForm.get('candidateGroups').setValue([]);
-        this.editTaskFilterForm.get('assignee').setValue(assignedValue?.username);
+    onAssignedUsersChange(assignedUsers: IdentityUserModel[]) {
+        this.editTaskFilterForm.get('candidateGroups').setValue(undefined);
+        this.editTaskFilterForm.get('assignedUsers').setValue(assignedUsers);
     }
 
     onAssignedGroupsChange(groups: IdentityGroupModel[]) {
-        this.editTaskFilterForm.get('assignee').setValue(null);
+        this.editTaskFilterForm.get('assignedUsers').setValue(undefined);
         this.editTaskFilterForm.get('candidateGroups').setValue(groups);
+    }
+
+    onAssignmentTypeChange(assignmentType: AssignmentType) {
+        switch (assignmentType) {
+            case AssignmentType.UNASSIGNED:
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.CREATED);
+                this.resetAssignmentTypeValues();
+                break;
+            case AssignmentType.NONE:
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ALL);
+                this.resetAssignmentTypeValues();
+                break;
+            case AssignmentType.ASSIGNED_TO:
+            case AssignmentType.CANDIDATE_GROUPS:
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ASSIGNED);
+                this.resetAssignmentTypeValues();
+                break;
+            default:
+                this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.ASSIGNED);
+        }
+    }
+
+    onStatusChange(status: MatSelectChange) {
+        if (status.value === TaskStatusFilter.CREATED) {
+            this.resetAssignmentTypeValues();
+        }
+
+        this.selectedStatus = status.value;
+    }
+
+    private resetAssignmentTypeValues() {
+        this.editTaskFilterForm.get('assignedUsers').setValue(undefined);
+        this.editTaskFilterForm.get('candidateGroups').setValue(undefined);
     }
 
     hasError(property: TaskFilterProperties): boolean {
