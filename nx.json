@@ -2,11 +2,13 @@
   "npmScope": "adf",
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": "*",
-    "tsconfig.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*",
-    ".travis.yml": "*",
+    "package.json": {
+      "dependencies": {
+        "@alfresco/*": "*",
+        "@angular/*": "*",
+        "rxjs": "*"
+      }
+    },
     "demo-shell/src/index.html": "*",
     "e2e/protractor.excludes.json": "*",
     "e2e/protractor.conf.js": "*"
