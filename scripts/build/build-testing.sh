@@ -7,4 +7,5 @@ cd $DIR/../..
 echo "====== Testing ======"
 
 echo "====== Move to node_modules ======"
-nx affected --target=copydist --exclude="cli"
+nx build testing
+nx run testing:copydist
