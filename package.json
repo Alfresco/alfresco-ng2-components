@@ -143,7 +143,7 @@
     "@typescript-eslint/parser": "5.30.0",
     "@typescript-eslint/typescript-estree": "5.30.7",
     "ajv-cli": "^4.2.0",
-    "commander": "6.2.1",
+    "commander": "9.4.0",
     "concurrently": "^7.0.0",
     "cspell": "^5.5.1",
     "css-loader": "^5.2.6",
