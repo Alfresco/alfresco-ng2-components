@@ -433,6 +433,14 @@ These events bubble up the component tree and can be handled by any parent compo
 | cell-dragover | Raised when dragging data over the cell. |
 | cell-drop | Raised when data is dropped on the column cell. |
 
+#### Sorting-changed 
+
+sorting-changed event contains
+```ts
+direction: "asc"
+key: "timestamp"
+sortingKey: ""
+```
 #### Drop Events
 
 All custom DOM events related to `drop` handling expose the following interface:
