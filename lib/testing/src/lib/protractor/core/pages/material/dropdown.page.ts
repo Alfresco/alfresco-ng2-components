@@ -76,7 +76,7 @@ export class DropdownPage {
     }
 
     async checkOptionsPanelIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('.mat-select-panel'));
+        await BrowserVisibility.waitUntilElementIsVisible($(`.mat-select-panel[role='listbox']`));
     }
 
     async getSelectedOptionText(): Promise<string> {
