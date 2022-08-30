@@ -195,7 +195,7 @@ jobs:
             - ./scripts/ci/job_hooks/before_e2e.sh
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "core" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "core"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -216,7 +216,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -237,7 +237,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -258,7 +258,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -279,7 +279,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -300,7 +300,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -321,7 +321,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "content-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "content-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -343,7 +343,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -365,7 +365,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -387,7 +387,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -409,7 +409,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -431,7 +431,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services-cloud"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -454,7 +454,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services-cloud"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -477,7 +477,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services-cloud"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -500,7 +500,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services-cloud"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
@@ -523,7 +523,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/e2e/e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh "process-services-cloud"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
