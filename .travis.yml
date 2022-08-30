@@ -183,7 +183,7 @@ jobs:
         - stage: "e2e Test"
           name: "Process Cloud: Storybook Playwright"
           before_script: ./scripts/ci/jobs/dbpci-before-playwright
-          script: ./scripts/travis/affected-contains.sh "process-services-cloud" && ./scripts/travis/storybook-testing/storybook-test.sh
+          script: ./scripts/travis/storybook-testing/storybook-test.sh
           workspaces:
             use:
               - built_libs_cache
