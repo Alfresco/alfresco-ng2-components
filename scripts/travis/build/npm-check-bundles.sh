@@ -79,13 +79,6 @@ if [ $PACKAGE == 'adf-core' ]; then
          echo "prebuilt-theme ok!"
     fi
 
-    if [ ! -f package/'app.config.schema.json' ]; then
-        error_out '31;1'  "$PACKAGE schema not found!" >&2
-        exit 1
-    else
-         echo "schema ok!"
-    fi
-
  fi
 
 if [ $PACKAGE != 'adf-testing' ]; then
