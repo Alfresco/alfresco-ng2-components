@@ -13,7 +13,7 @@
                                     matTooltip="{{ filterAction.tooltip | translate}}"
                                     [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
                                     [disabled]="isDisabledAction(filterAction)"
-                                    (click)="executeFilterActions(filterAction)">
+                                    (click)="executeFilterActions($event, filterAction)">
                                 <adf-icon [value]="filterAction.icon"></adf-icon>
                             </button>
                         </ng-container>

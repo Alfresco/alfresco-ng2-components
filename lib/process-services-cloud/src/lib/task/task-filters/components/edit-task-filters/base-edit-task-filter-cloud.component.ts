@@ -16,13 +16,13 @@
  */
 
 import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter } from '@angular/core';
-import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
+import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterCloudModel, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
@@ -31,6 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { MatSelectChange } from '@angular/material/select';
+import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -46,6 +47,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     public static ACTION_SAVE = 'save';
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
+    public static ACTION_SAVE_DEFAULT = 'saveDefaultFilter';
+    public static ACTION_RESTORE = 'restoreDefaultFilter';
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static APPLICATION_NAME: string = 'appName';
     public static PROCESS_DEFINITION_NAME: string = 'processDefinitionName';
@@ -117,7 +120,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
-    taskFilter: T;
+    taskFilter: TaskFilterCloudModel;
     changedTaskFilter: T;
 
     /** Emitted when a task filter property changes. */
@@ -134,7 +137,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         protected appsProcessCloudService: AppsProcessCloudService,
         protected taskCloudService: TaskCloudService,
         protected dialog: MatDialog,
-        protected translateService: TranslationService) {
+        protected translateService: TranslationService,
+        protected taskFilterCloudService: TaskFilterCloudService) {
     }
 
     ngOnInit() {
@@ -172,6 +176,16 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
+            },
+            {
+                actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE_DEFAULT,
+                icon: 'adf:save',
+                tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
+            },
+            {
+                actionType: BaseEditTaskFilterCloudComponent.ACTION_RESTORE,
+                icon: 'settings_backup_restore',
+                tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.RESTORE'
             }
         ];
     }
@@ -221,14 +235,19 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return name.replace(regExt, '-');
     }
 
-    executeFilterActions(action: TaskFilterAction): void {
+    executeFilterActions(event: Event, action: TaskFilterAction): void {
         if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE) {
             this.save(action);
         } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS) {
             this.saveAs(action);
         } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_DELETE) {
             this.delete(action);
+        } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE_DEFAULT) {
+            this.save(action);
+        } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_RESTORE) {
+            this.reset(action);
         }
+        event.stopPropagation();
     }
 
     getRunningApplications() {
@@ -520,6 +539,16 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         });
     }
 
+    reset(resetAction: TaskFilterAction) {
+        this.taskFilterCloudService.resetTaskFilterToDefaults(this.appName, this.taskFilter).pipe(
+            tap((filters: TaskFilterCloudModel[]) => {
+                resetAction.filter = filters.find(defaultFilter => defaultFilter.name === this.taskFilter.name) || this.taskFilter;
+                this.action.emit(resetAction);
+            }),
+            switchMap(() => this.restoreDefaultTaskFilters()))
+            .subscribe(() => { });
+    }
+
     checkMandatoryFilterProperties() {
         if (this.filterProperties === undefined || this.filterProperties.length === 0) {
             this.filterProperties = this.getDefaultFilterProperties();
@@ -541,6 +570,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     protected abstract restoreDefaultTaskFilters(): Observable<T[]>;
     protected abstract addFilter(filterToAdd: T): Observable<any>;
-    protected abstract deleteFilter(filterToDelete: T): Observable<T[]>;
+    protected abstract deleteFilter(filterToDelete: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]>;
     protected abstract updateFilter(filterToUpdate: T): Observable<any>;
 }

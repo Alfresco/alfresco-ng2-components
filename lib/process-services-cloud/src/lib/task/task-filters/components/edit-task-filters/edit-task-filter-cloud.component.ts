@@ -42,12 +42,12 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         formBuilder: UntypedFormBuilder,
         dialog: MatDialog,
         translateService: TranslationService,
-        private taskFilterCloudService: TaskFilterCloudService,
+        taskFilterCloudService: TaskFilterCloudService,
         dateAdapter: DateAdapter<Moment>,
         userPreferencesService: UserPreferencesService,
         appsProcessCloudService: AppsProcessCloudService,
         taskCloudService: TaskCloudService) {
-        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService, dialog, translateService);
+        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService, dialog, translateService, taskFilterCloudService);
     }
 
     assignNewFilter(model: TaskFilterCloudModel) {

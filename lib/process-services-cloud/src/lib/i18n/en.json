@@ -178,7 +178,8 @@
     "TOOL_TIP": {
       "SAVE": "Save filter",
       "SAVE_AS": "Save filter as",
-      "DELETE": "Delete filter"
+      "DELETE": "Delete filter",
+      "RESTORE":"Restore filter"
     },
     "LABEL": {
       "APP_NAME": "ApplicationName",

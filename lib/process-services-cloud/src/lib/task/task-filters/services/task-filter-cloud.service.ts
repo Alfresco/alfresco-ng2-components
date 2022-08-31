@@ -369,4 +369,19 @@ export class TaskFilterCloudService extends BaseCloudService {
         return this.notificationCloudService.makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
             .pipe(map((events: any) => events.data.engineEvents));
     }
+
+    /**
+     * Reset the task filters to the default configuration if it exists and stores it.
+     * If there is no default configuration for the task cloud filter with the provided filter name,
+     * then it changes nothing but stores the current values of the filter
+     *
+     * @param appName Name of the target app
+     * @param filter The task filter to be restored to defaults
+     * @returns Observable of task filters details
+     */
+    resetTaskFilterToDefaults(appName: string, filter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+        const defaultFilter = this.defaultTaskFilters(appName).find(defaultFilterDefinition => defaultFilterDefinition.name === filter.name) || filter;
+        defaultFilter.id = filter.id;
+        return this.updateFilter(defaultFilter);
+    }
 }
