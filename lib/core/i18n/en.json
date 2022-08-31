@@ -306,9 +306,44 @@
       "HELP": "NEED HELP?",
       "REGISTER": "REGISTER"
     },
+    "FORGOT-PASSWORD": {
+      "FORGOT-PASSWORD": "Forgot Password?"
+    },
+    "RECOVERPASSWORD": {
+      "RECOVERPASSWORD": "Recover Password",
+      "MESSAGES": {
+        "EMAIL-ID-REQUIRED": "Required",
+        "FILLER": "Don't worry, happens to the best of us.",
+        "ENTER-EMAIL": "Enter Email Addresss on your account",
+        "INVALID-EMAIL": "You've entered an invalid Email ID",
+        "RESET-PASSWORD-EMAIL-SENT": "An email has been sent to your registered Email ID. Please click this link when get it."
+      },
+      "PLACEHOLDERS": {
+        "EMAIL-ADDRESS": "Email Address"
+      },
+      "BUTTONS": {
+        "send-INSTRUCTIONS": "Send Instructions"
+      }
+    },
     "DIALOG": {
       "CANCEL": "Cancel",
       "CHOOSE": "Choose"
+    }
+  },
+  "RECOVER-PASSWORD": {
+    "RECOVER-PASSWORD": "Recover Password",
+    "MESSAGES": {
+      "EMAIL-ID-REQUIRED": "Required",
+      "FILLER": "Don't worry, happens to the best of us.",
+      "ENTER-EMAIL": "Enter Email Addresss on your account",
+      "INVALID-EMAIL": "You've entered an invalid Email ID",
+      "RESET-PASSWORD-EMAIL-SENT": "An email has been sent to your registered Email ID. Please click this link when get it."
+    },
+    "PLACEHOLDERS": {
+      "EMAIL-ADDRESS": "Email Address"
+    },
+    "BUTTONS": {
+      "SEND-INSTRUCTIONS": "Send Instructions"
     }
   },
   "ADF-DATATABLE": {

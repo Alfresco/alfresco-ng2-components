@@ -26,6 +26,7 @@
 //import { AlfrescoApiService, AppConfigService, AuthenticationService, CardViewArrayItemModel, CardViewBoolItemModel, CardViewDateItemModel, CardViewDatetimeItemModel, CardViewFloatItemModel, CardViewIntItemModel, CardViewKeyValuePairsItemModel, CardViewMapItemModel, CardViewSelectItemModel, CardViewTextItemModel, LogService, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslationService } from '../../../services/translation.service';
 //import { MatDialogRef } from '@angular/material/dialog';
 // import { FormBuilder } from '@angular/forms';
 // import { DomSanitizer } from '@angular/platform-browser';
@@ -43,27 +44,55 @@ export class RecoverPasswordComponent implements OnInit{
     saveInProgress : boolean = false;
     passwordResetStatus : boolean = false;
     properties = [{label: 'My Label', value: 'My value'}];
-    
-  
+
+
     @ViewChild('DialogBodyContainer') dialogBodyContainer: ElementRef;
 
-   
+
 
     constructor(private formBuilder: FormBuilder,
+        private translateService: TranslationService,
                 //private matDialogRef: MatDialogRef<RecoverPasswordComponent>,
                 //@Inject(MAT_DIALOG_DATA) private data: any
-               ) { }
+               ) {
+                this.translateService.loadTranslation('en');
+                this.translateService.use('en');
 
-    
+                // start() {
+                //     //this.spinner.show();
+                //     if (this.localStorageService.getData('language')) {
+                //       // this.localStorageService.setLanguage('language', 'en')
+                //       let a = this.localStorageService.getData('language');
+                //       this.defaultLanguage = a ? a : 'en';
+                //       // this.generalForm.controls['language'].setValue(a);
+                //     }
+                //     else {
+                //       this.localStorageService.setLanguage('language', 'en')
+                //       let a = this.localStorageService.getData('language');
+                //       this.defaultLanguage = a ? a : 'en';
+                //       // this.generalForm.controls['language'].setValue('en');
+
+                //     }
+                //     this.translate.addLangs(['en', 'hn']);
+                //     this.translate.setDefaultLang(this.defaultLanguage);
+                //     this.translate.use(this.defaultLanguage);
+
+                //   }
+
+               }
+
+
 
     ngOnInit(): void {
-        
+
         this.recoverPasswordForm = this.formBuilder.group({
             emailId:['',[Validators.required, Validators.pattern('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9.-]{2,}$')]]
-        })
+        });
+
+        console.log(  this.translateService.instant('RECOVER-PASSWORD.RECOVER-PASSWORD'), this.translateService.instant('LOGIN.LOGO'))
     }
 
-   
+
 
     sendInstructions() {
         this.saveInProgress = true;
@@ -72,15 +101,15 @@ export class RecoverPasswordComponent implements OnInit{
         //this.matDialogRef.close();
     }
 
-   
+
 
     isSaveDisabled(): boolean {
         return !this.recoverPasswordForm.valid || this.saveInProgress;
     }
 
-  
-   
 
-  
+
+
+
 
 }
