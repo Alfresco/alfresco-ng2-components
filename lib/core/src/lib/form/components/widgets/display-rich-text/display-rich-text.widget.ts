@@ -21,7 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 /* cspell:disable-next-line */
-import * as edjsHTML from 'editorjs-html';
+import edjsHTML from 'editorjs-html';
 @Component({
     selector: 'display-rich-text',
     templateUrl: './display-rich-text.widget.html',

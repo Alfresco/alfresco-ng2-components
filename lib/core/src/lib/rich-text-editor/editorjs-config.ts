@@ -22,8 +22,8 @@ import InlineCode from '@editorjs/inline-code';
 import List from '@editorjs/list';
 import Marker from '@editorjs/marker';
 import Underline from '@editorjs/underline';
-import * as ChangeFontSize from '@quanzo/change-font-size';
-import * as ColorPlugin from 'editorjs-text-color-plugin';
+import ChangeFontSize from '@quanzo/change-font-size';
+import ColorPlugin from 'editorjs-text-color-plugin';
 
 export const editorJsConfig = {
     autofocus: true,
