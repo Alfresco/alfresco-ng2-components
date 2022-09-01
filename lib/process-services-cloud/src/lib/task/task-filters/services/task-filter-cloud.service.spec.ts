@@ -37,6 +37,7 @@ import { NotificationCloudService } from '../../../services/notification-cloud.s
 import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { ApolloModule } from 'apollo-angular';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -52,7 +53,8 @@ describe('TaskFilterCloudService', () => {
     setupTestBed({
         imports: [
             HttpClientTestingModule,
-            ProcessServiceCloudTestingModule
+            ProcessServiceCloudTestingModule,
+            ApolloModule
         ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
@@ -231,7 +233,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
-        imports: [ HttpClientTestingModule ],
+        imports: [ HttpClientTestingModule, ApolloModule ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]

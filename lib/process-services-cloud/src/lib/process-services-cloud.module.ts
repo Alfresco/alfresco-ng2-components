@@ -34,6 +34,7 @@ import {
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
+import { ApolloModule } from 'apollo-angular';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
         PeopleCloudModule,
         FormCloudModule,
         TaskFormModule,
-        ProcessServicesCloudPipeModule
+        ProcessServicesCloudPipeModule,
+        ApolloModule
     ],
     providers: [
         {
