@@ -13,7 +13,7 @@
       "output": "/bundles/assets/adf-core/"
     },
     {
-      "glob": "schema.json",
+      "glob": "app.config.schema.json",
       "input": "./src/lib/app-config",
       "output": "/"
     },
