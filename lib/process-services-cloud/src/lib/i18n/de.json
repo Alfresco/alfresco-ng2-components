@@ -6,7 +6,7 @@
       "NONE": "Kein Prozessinstanzfilter ausgewählt."
     },
     "PROPERTIES": {
-      "NAME": "Name",
+      "NAME": "Prozessname",
       "CREATED": "Erstellt",
       "STATUS": "Status",
       "START_DATE": "Startdatum",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Name",
+      "NAME": "Aufgabenname",
       "ASSIGNEE": "Zugewiesener Benutzer",
       "ID": "ID",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Filter speichern",
       "SAVE_AS": "Filter speichern als",
-      "DELETE": "Filter löschen"
+      "DELETE": "Filter löschen",
+      "RESTORE": "Filter wiederherstellen"
     },
     "DIALOG": {
       "TITLE": "Filter speichern als",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "AutoAusfüllen-Formular"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Mir zugewiesen",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Zugewiesen an",
+    "CURRENT_USER": "Mir zugewiesen",
     "UNASSIGNED": "Nicht zugewiesen",
-    "LIST_OF_CANDIDATE_GROUPS": "Liste der Kandidatengruppen",
+    "NONE": "Keine",
+    "CANDIDATE_GROUPS": "Liste der Kandidatengruppen",
     "ASSIGNEE": "Zugewiesener Benutzer",
     "ASSIGNMENT_TYPE": "Zuweisungstyp"
   }

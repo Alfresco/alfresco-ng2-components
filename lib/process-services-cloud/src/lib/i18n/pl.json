@@ -6,7 +6,7 @@
       "NONE": "Nie wybrano filtra wystąpień procesu."
     },
     "PROPERTIES": {
-      "NAME": "Nazwa",
+      "NAME": "Nazwa procesu",
       "CREATED": "Utworzono",
       "STATUS": "Status",
       "START_DATE": "Data rozpoczęcia",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Nazwa",
+      "NAME": "Nazwa zadania",
       "ASSIGNEE": "Osoba przypisana",
       "ID": "Identyfikator",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Zapisz filtr",
       "SAVE_AS": "Zapisz filtr jako",
-      "DELETE": "Usuń filtr"
+      "DELETE": "Usuń filtr",
+      "RESTORE": "Przywróć filtr"
     },
     "DIALOG": {
       "TITLE": "Zapisz filtr jako",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Automatycznie wypełnij formularz"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Przypisane do mnie",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Przypisane do",
+    "CURRENT_USER": "Przypisane do mnie",
     "UNASSIGNED": "Nieprzypisane",
-    "LIST_OF_CANDIDATE_GROUPS": "Lista kandydujących grup",
+    "NONE": "Brak",
+    "CANDIDATE_GROUPS": "Lista kandydujących grup",
     "ASSIGNEE": "Osoba przypisana",
     "ASSIGNMENT_TYPE": "Typ przypisania"
   }

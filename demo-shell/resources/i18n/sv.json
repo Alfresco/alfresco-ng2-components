@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Grupper moln-komponent",
     "CONFIRM-DIALOG": "Dialogruta för bekräftelse",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Serviceuppgiftslista"
+    "SERVICE_TASK_LIST": "Serviceuppgiftslista",
+    "RICH_TEXT_EDITOR": "RT-redigerare"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Ersätt kolumner",
     "LOAD_NODE": "Läs in nod",
     "MULTISELECT": "Flerval",
-    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt"
+    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt",
+    "USE_CUSTOM_COLUMN_HEADER": "Använd anpassad mall för \"Användare\"-rubrik",
+    "CUSTOM_COLUMN_HEADER": "Anpassad användarhuvudmall"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Ingen rapport vald. Välj en rapport från listan"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Alla förvalda grupper",
     "INVALID_USERS": "Ogiltiga användare",
     "INVALID_GROUPS": "Ogiltiga grupper",
-    "READONLY_MODE": "Skrivskyddat läge"
+    "READONLY_MODE": "Skrivskyddat läge",
+    "GROUPS_RESTRICTION": "Gruppbegränsning"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Flerval",

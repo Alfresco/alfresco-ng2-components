@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Компонент облака «Группы»",
     "CONFIRM-DIALOG": "Диалоговое окно подтверждения",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Список сервисных задач"
+    "SERVICE_TASK_LIST": "Список сервисных задач",
+    "RICH_TEXT_EDITOR": "Редактор форматированного текста"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Заменить столбцы",
     "LOAD_NODE": "Загрузить узел",
     "MULTISELECT": "Выбор нескольких вариантов",
-    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов"
+    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
+    "USE_CUSTOM_COLUMN_HEADER": "Использовать пользовательский шаблон для заголовка «Пользователь»",
+    "CUSTOM_COLUMN_HEADER": "Пользовательский шаблон заголовка пользователя"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Отчет не выбран. Выберите отчет из списка"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Все заранее заданные группы",
     "INVALID_USERS": "Недействительные пользователи",
     "INVALID_GROUPS": "Недействительные группы",
-    "READONLY_MODE": "Режим только для чтения"
+    "READONLY_MODE": "Режим только для чтения",
+    "GROUPS_RESTRICTION": "Ограничение для групп"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Выбор нескольких",

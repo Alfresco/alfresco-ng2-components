@@ -18,7 +18,7 @@
   "COMPLETE": "Completa",
   "CANCEL": "Annulla",
   "CLAIM": "Richiedi",
-  "UNCLAIM": "Restituisci",
+  "UNCLAIM": "Rifiuta",
   "START PROCESS": "Avvia processo",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Non sono presenti notifiche in questo momento.",
@@ -185,8 +185,9 @@
       "REDIRECT_LOGOUT": "Reindirizza logout URI",
       "SILENT": "Login invisibile",
       "SCOPE": "Ambito",
-      "CLIENT": "ID cliente",
-      "PUBLIC_URLS": "URL pubblici per login invisibile"
+      "CLIENT": "ID client",
+      "PUBLIC_URLS": "URL pubblici per login invisibile",
+      "SECRET": "Segreto"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -332,7 +333,7 @@
       "SORT_ASCENDING_BY": "Ordine crescente per {{ string }}",
       "SORT_DESCENDING_BY": "Ordine decrescente per {{ string }}",
       "ICON_TEXT": "Tipo di elemento {{ type }}",
-      "ICON_DISABLED": "Disattivato",
+      "ICON_DISABLED": "Disabilitato",
       "ROW_OPTION_BUTTON": "Azioni"
     },
     "FILE_TYPE": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentazione",
       "SPREADSHEET": "Foglio di calcolo",
       "MISCELLANEOUS": "Vari"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Colonne",
+      "SEARCH": "Cerca",
+      "APPLY": "Applica"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "Il mio profilo"
     },
     "TAB": {
       "CS": "Content Services",

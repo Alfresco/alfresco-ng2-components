@@ -22,6 +22,17 @@
       "NO_LABEL": "Nei"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Håndtere versjoner",
+      "CLOSE": "Lukk"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Last opp ny versjon",
+      "CANCEL": "Avbryt",
+      "UPLOAD": "Last opp"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "Gjeldende",
     "NEW_VERSION": "Ny",
@@ -395,7 +406,7 @@
       "NO-RESULT": "Ingen resultater funnet for dette søket",
       "SELECT-ACTION": "VELG",
       "ADD-ACTION": "LEGG TIL",
-      "CLOSE-ACTION": "AVBRYT",
+      "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
       "EVERYONE": "Alle"
     },

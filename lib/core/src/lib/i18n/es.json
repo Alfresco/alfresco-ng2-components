@@ -186,7 +186,8 @@
       "SILENT": "Inicio de sesión silencioso",
       "SCOPE": "Ámbito",
       "CLIENT": "ID de cliente",
-      "PUBLIC_URLS": "URL públicas para inicio de sesión silencioso"
+      "PUBLIC_URLS": "URL públicas para inicio de sesión silencioso",
+      "SECRET": "Secreto"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -257,7 +258,7 @@
   },
   "COMMENTS": {
     "NONE": "No hay comentarios",
-    "ADD": "Añadir comentario",
+    "ADD": "Añadir",
     "HEADER": "Comentarios ({{ count }})",
     "CREATED_BY_HEADER": "Creado por",
     "MESSAGE_HEADER": "Mensaje",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentación",
       "SPREADSHEET": "Hoja de cálculo",
       "MISCELLANEOUS": "Varios"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Columnas",
+      "SEARCH": "Buscar",
+      "APPLY": "Aplicar"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenencia"
-      }
+      },
+      "MY_PROFILE": "Mi Perfil"
     },
     "TAB": {
       "CS": "Content Services",
@@ -535,12 +542,12 @@
     },
     "LICENSE": {
       "TITLE": "Licencia",
-      "PROPERTY": "Propiedad",
+      "PROPERTY": "Propiedades",
       "VALUE": "Valor"
     },
     "STATUS": {
       "TITLE": "Estado",
-      "PROPERTY": "Propiedad",
+      "PROPERTY": "Propiedades",
       "VALUE": "Valor"
     },
     "MODULES": {

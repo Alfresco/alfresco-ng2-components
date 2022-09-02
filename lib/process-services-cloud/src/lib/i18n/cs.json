@@ -6,7 +6,7 @@
       "NONE": "Nebyl zvolen žádný filtr instancí."
     },
     "PROPERTIES": {
-      "NAME": "Název",
+      "NAME": "Název procesu",
       "CREATED": "Vytvořeno",
       "STATUS": "Stav",
       "START_DATE": "Datum zahájení",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Název",
+      "NAME": "Název úkolu",
       "ASSIGNEE": "Pověřená osoba",
       "ID": "ID",
       "STATUS": "Stav",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Uložit filtr",
       "SAVE_AS": "Uložit filtr jako",
-      "DELETE": "Odstranit filtr"
+      "DELETE": "Odstranit filtr",
+      "RESTORE": "Obnovit filtr"
     },
     "DIALOG": {
       "TITLE": "Uložit filtr jako",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Automatické vyplnění formuláře"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Přiděleno mně",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Přiděleno pro",
+    "CURRENT_USER": "Přiděleno mně",
     "UNASSIGNED": "Nepřiděleno",
-    "LIST_OF_CANDIDATE_GROUPS": "Seznam skupin kandidátů",
+    "NONE": "Žádné",
+    "CANDIDATE_GROUPS": "Seznam skupin kandidátů",
     "ASSIGNEE": "Pověřená osoba",
     "ASSIGNMENT_TYPE": "Typ přidělení"
   }

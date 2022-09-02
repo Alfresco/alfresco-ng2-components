@@ -22,6 +22,17 @@
       "NO_LABEL": "否"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "管理版本",
+      "CLOSE": "关闭"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "上传新版本",
+      "CANCEL": "取消",
+      "UPLOAD": "上传"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "当前",
     "NEW_VERSION": "新建",
@@ -47,7 +58,7 @@
       "THUMBNAIL": "缩略图",
       "NAME": "名称",
       "LOCATION": "位置",
-      "SIZE": "字号(&S)",
+      "SIZE": "尺寸",
       "DELETED_ON": "已删除",
       "DELETED_BY": "删除人",
       "STATUS": "状态",
@@ -334,7 +345,7 @@
       "DESCRIPTION": "说明",
       "AUTHOR": "作者",
       "MIMETYPE": "MIME 类型",
-      "SIZE": "字号(&S)",
+      "SIZE": "尺寸",
       "CREATOR": "创建者",
       "CREATED_DATE": "创建日期",
       "MODIFIER": "修改者",
@@ -345,7 +356,7 @@
       "DIALOG": {
         "TITLE": "更改内容类型",
         "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据.",
-        "CONFIRM": "确定要更改内容类型吗？?",
+        "CONFIRM": "确定要更改内容类型吗？",
         "CANCEL": "取消",
         "APPLY": "保存更改",
         "VIEW_DETAILS": "查看详细信息",

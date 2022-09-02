@@ -22,6 +22,17 @@
       "NO_LABEL": "Nein"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Versionen verwalten",
+      "CLOSE": "Schließen"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Neue Version hochladen",
+      "CANCEL": "Abbrechen",
+      "UPLOAD": "Hochladen"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "Aktuell",
     "NEW_VERSION": "Neu",
@@ -393,11 +404,11 @@
       "TITLE": "Berechtigung hinzufügen",
       "TYPE-MESSAGE": "Geben Sie etwas ein, um nach Gruppen oder Personen zu suchen",
       "NO-RESULT": "Für diese Suchanfrage wurden keine Ergebnisse gefunden",
-      "SELECT-ACTION": "AUSWÄHLEN",
-      "ADD-ACTION": "HINZUFÜGEN",
-      "CLOSE-ACTION": "ABBRECHEN",
+      "SELECT-ACTION": "Auswählen",
+      "ADD-ACTION": "Hinzufügen",
+      "CLOSE-ACTION": "Abbrechen",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
-      "EVERYONE": "JEDER"
+      "EVERYONE": "Jeder"
     },
     "COLUMN": {
       "NAME": "Benutzer und Gruppen ({{ count }})",

@@ -6,7 +6,7 @@
       "NONE": "لم يتم تحديد عامل تصفية مثيل العملية."
     },
     "PROPERTIES": {
-      "NAME": "الاسم",
+      "NAME": "اسم العملية",
       "CREATED": "تم الإنشاء",
       "STATUS": "الحالة",
       "START_DATE": "تاريخ البدء",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "الاسم",
+      "NAME": "اسم المهمة",
       "ASSIGNEE": "معين له",
       "ID": "المعرف",
       "STATUS": "الحالة",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "حفظ عامل التصفية",
       "SAVE_AS": "حفظ عامل التصفية باسم",
-      "DELETE": "حذف عامل التصفية"
+      "DELETE": "حذف عامل التصفية",
+      "RESTORE": "استعادة عامل التصفية"
     },
     "DIALOG": {
       "TITLE": "حفظ عامل التصفية باسم",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "نموذج الملء التلقائي"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "معين لي",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "معين لي",
+    "CURRENT_USER": "معين لي",
     "UNASSIGNED": "غير معين",
-    "LIST_OF_CANDIDATE_GROUPS": "قائمة المجموعات المرشحة",
+    "NONE": "بلا",
+    "CANDIDATE_GROUPS": "قائمة المجموعات المرشحة",
     "ASSIGNEE": "معين له",
     "ASSIGNMENT_TYPE": "نوع التعيين"
   }

@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Gruppesky-kompontent",
     "CONFIRM-DIALOG": "Bekreftelsesdialog",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Serviceoppgaveliste"
+    "SERVICE_TASK_LIST": "Serviceoppgaveliste",
+    "RICH_TEXT_EDITOR": "Åpne rik teksteditor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "erstatt kolonner",
     "LOAD_NODE": "Last node",
     "MULTISELECT": "Multivalg",
-    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer"
+    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
+    "USE_CUSTOM_COLUMN_HEADER": "Bruk egendefinert mal for toppteksten 'bruker'",
+    "CUSTOM_COLUMN_HEADER": "Egendefinert topptekst for bruker"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Ingen rapport valgt. Velg en rapport fra listen"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Alle forhåndsvalgte grupper",
     "INVALID_USERS": "Ugyldige brukere",
     "INVALID_GROUPS": "Ugyldige grupper",
-    "READONLY_MODE": "Skrivebeskyttet modus"
+    "READONLY_MODE": "Skrivebeskyttet modus",
+    "GROUPS_RESTRICTION": "Gruppebegrensning"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Flervalg",

@@ -175,7 +175,7 @@
       "REQUIRED": "هذا الحقل مطلوب",
       "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",
       "PS_URL_ERROR": "لا يتطابق عنوان Process Services مع تنسيق URL",
-      "TITLE": "إعدادات",
+      "TITLE": "الإعدادات",
       "CS-HOST": "عنوان URL لـ Content Services",
       "BP-HOST": "عنوان URL لـ Process Services",
       "BACK": "عودة",
@@ -186,7 +186,8 @@
       "SILENT": "دخول صامت",
       "SCOPE": "نطاق",
       "CLIENT": "معرف العميل",
-      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت"
+      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت",
+      "SECRET": "سر"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -252,7 +253,7 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "تبديل النتائج بين الترتيب الصاعدي والتنازلي",
-      "SORT_BY": "فرز حسب"
+      "SORT_BY": "صنف حسب"
     }
   },
   "COMMENTS": {
@@ -276,7 +277,7 @@
     "LOGO": "Alfresco, make business flow",
     "LABEL": {
       "LOGIN": "تسجيل دخول",
-      "USERNAME": "اسم مستخدم",
+      "USERNAME": "اسم المستخدم",
       "PASSWORD": "كلمة سر",
       "REMEMBER": "تذكرني"
     },
@@ -350,6 +351,11 @@
       "PRESENTATION": "عرض تقديمي",
       "SPREADSHEET": "جدول بيانات",
       "MISCELLANEOUS": "متنوع"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "الأعمدة",
+      "SEARCH": "بحث",
+      "APPLY": "تطبيق"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "مستأجر"
-      }
+      },
+      "MY_PROFILE": "ملف التعريف الخاص بي"
     },
     "TAB": {
       "CS": "Content Services",

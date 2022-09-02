@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Composant cloud des groupes",
     "CONFIRM-DIALOG": "Boîte de dialogue de confirmation",
     "COMMUNITY": "Communauté",
-    "SERVICE_TASK_LIST": "Liste des tâches de service"
+    "SERVICE_TASK_LIST": "Liste des tâches de service",
+    "RICH_TEXT_EDITOR": "Editeur de texte enrichi"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Remplacer les colonnes",
     "LOAD_NODE": "Charger le nœud",
     "MULTISELECT": "Sélection multiple",
-    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples"
+    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
+    "USE_CUSTOM_COLUMN_HEADER": "Utiliser un modèle personnalisé pour l'en-tête 'Utilisateur'",
+    "CUSTOM_COLUMN_HEADER": "Modèle d'en-tête Utilisateur personnalisé"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Aucun rapport sélectionné. Choisissez un rapport dans la liste"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Tous les groupes présélectionnés",
     "INVALID_USERS": "Utilisateurs non valides",
     "INVALID_GROUPS": "Groupes non valides",
-    "READONLY_MODE": "Mode lecture seule"
+    "READONLY_MODE": "Mode lecture seule",
+    "GROUPS_RESTRICTION": "Restriction de groupes"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multisélection",

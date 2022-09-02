@@ -38,7 +38,7 @@
       "LOCALSTORAGE": "Armazenamento local",
       "SOURCE": "Selecionar origem de ",
       "VIEW_FILE": "Visualizar",
-      "DOWNLOAD_FILE": "Download",
+      "DOWNLOAD_FILE": "Baixar",
       "REMOVE_FILE": "Remover",
       "UPLOAD": "Carregar",
       "REQUIRED": "Campo obrigatório",
@@ -186,7 +186,8 @@
       "SILENT": "Login silencioso",
       "SCOPE": "Escopo",
       "CLIENT": "ID de cliente",
-      "PUBLIC_URLS": "Login silencioso de URLs públicas"
+      "PUBLIC_URLS": "Login silencioso de URLs públicas",
+      "SECRET": "Segredo"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -325,14 +326,14 @@
       "ACTIONS": "Ações",
       "SELECT_ALL": "Selecionar tudo",
       "SELECT_FILE": "Selecionar um arquivo",
-      "SORT_ASCENDING": "Crescente",
-      "SORT_DESCENDING": "Decrescente",
+      "SORT_ASCENDING": "Ascendente",
+      "SORT_DESCENDING": "Descendente",
       "SORT_NONE": "Nenhum",
       "SORT_DEFAULT": "Classificável",
       "SORT_ASCENDING_BY": "Ordem crescente por {{ string }}",
       "SORT_DESCENDING_BY": "Ordem decrescente por {{ string }}",
       "ICON_TEXT": "Tipo de item {{ type }}",
-      "ICON_DISABLED": "Desativar",
+      "ICON_DISABLED": "Desativado",
       "ROW_OPTION_BUTTON": "Ações"
     },
     "FILE_TYPE": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Apresentação",
       "SPREADSHEET": "Planilha",
       "MISCELLANEOUS": "Miscelânea"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Colunas",
+      "SEARCH": "Pesquisar",
+      "APPLY": "Aplicar"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "Meu perfil"
     },
     "TAB": {
       "CS": "Content Services",
@@ -370,7 +377,7 @@
     "ACTIONS": {
       "BACK": "Voltar",
       "OPEN_WITH": "Abrir com",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Baixar",
       "PRINT": "Imprimir",
       "SHARE": "Compartilhar",
       "MORE_ACTIONS": "Mais ações",

@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Componente da Nuvem de Grupos",
     "CONFIRM-DIALOG": "Caixa de diálogo de confirmação",
     "COMMUNITY": "Comunidade",
-    "SERVICE_TASK_LIST": "Lista de tarefas de serviços"
+    "SERVICE_TASK_LIST": "Lista de tarefas de serviços",
+    "RICH_TEXT_EDITOR": "Editor de RTF"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -157,9 +158,9 @@
     "TOOLBAR": {
       "CARDVIEW": "Modo de visualização de cartão",
       "SHARE_EDIT": "Editar configurações",
-      "NEW_FOLDER": "Nova Pasta",
+      "NEW_FOLDER": "Nova pasta",
       "EDIT_FOLDER": "Editar pasta",
-      "DOWNLOAD": "Descarregar",
+      "DOWNLOAD": "Baixar",
       "DELETE": "Excluir",
       "FAVORITES": "Adicionar aos favoritos",
       "SHARE": "Compartilhar",
@@ -174,7 +175,7 @@
       "ASPECTS": "Atualizar aspectos",
       "LOCK": "Bloqueio",
       "METADATA": "Informações",
-      "DOWNLOAD": "Descarregar",
+      "DOWNLOAD": "Baixar",
       "PERMISSION": "Permissão",
       "FOLDER": {
         "COPY": "Copiar",
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Substituir colunas",
     "LOAD_NODE": "Carregar Nó",
     "MULTISELECT": "Seleção Múltipla",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) ou Ctrl (Windows) para alternar a seleção de vários itens"
+    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) ou Ctrl (Windows) para alternar a seleção de vários itens",
+    "USE_CUSTOM_COLUMN_HEADER": "Usar modelo personalizado para o cabeçalho 'Usuário'",
+    "CUSTOM_COLUMN_HEADER": "Modelo personalizado do cabeçalho Usuário"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Nenhum relatório selecionado. Escolha um relatório na lista"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Todos os grupos pré-selecionados",
     "INVALID_USERS": "Usuários inválidos",
     "INVALID_GROUPS": "Grupos inválidos",
-    "READONLY_MODE": "Modo somente leitura"
+    "READONLY_MODE": "Modo somente leitura",
+    "GROUPS_RESTRICTION": "Restrição de grupos"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Seleção Múltipla",

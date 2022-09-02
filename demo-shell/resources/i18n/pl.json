@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Składnik Chmura dla grup",
     "CONFIRM-DIALOG": "Okno dialogowe potwierdzenia",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Lista zadań serwisowych"
+    "SERVICE_TASK_LIST": "Lista zadań serwisowych",
+    "RICH_TEXT_EDITOR": "Edytor tekstu sformatowanego"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Zastąp kolumny",
     "LOAD_NODE": "Wczytaj węzeł",
     "MULTISELECT": "Wybór wielokrotny",
-    "MULTISELECT_DESCRIPTION": "Używaj klawiszy Cmd (system Mac) lub Ctrl (system Windows), aby przełączać wybieranie wielu elementów."
+    "MULTISELECT_DESCRIPTION": "Używaj klawiszy Cmd (system Mac) lub Ctrl (system Windows), aby przełączać wybieranie wielu elementów.",
+    "USE_CUSTOM_COLUMN_HEADER": "Użyj szablonu niestandardowego dla nagłówka 'Użytkownik'",
+    "CUSTOM_COLUMN_HEADER": "Szablon niestandardowy nagłówka Użytkownik"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Nie wybrano raportu. Wybierz raport z listy."
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Wszystkie wstępnie wybrane grupy",
     "INVALID_USERS": "Nieprawidłowi użytkownicy",
     "INVALID_GROUPS": "Nieprawidłowe grupy",
-    "READONLY_MODE": "Tryb tylko do odczytu"
+    "READONLY_MODE": "Tryb tylko do odczytu",
+    "GROUPS_RESTRICTION": "Ograniczenie grup"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Wybór wielokrotny",

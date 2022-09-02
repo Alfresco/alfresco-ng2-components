@@ -186,7 +186,8 @@
       "SILENT": "静默登录",
       "SCOPE": "范围",
       "CLIENT": "客户端 ID",
-      "PUBLIC_URLS": "用于静默登录的公共 URL"
+      "PUBLIC_URLS": "用于静默登录的公共 URL",
+      "SECRET": "机密"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -212,7 +213,7 @@
         "DESCRIPTION": "说明",
         "AUTHOR": "作者",
         "MIMETYPE": "MIME 类型",
-        "SIZE": "字号(&S)",
+        "SIZE": "尺寸",
         "CREATOR": "创建者",
         "CREATED_DATE": "创建日期",
         "MODIFIER": "修改者",
@@ -222,7 +223,7 @@
       "CONTENT_TYPE": {
         "DIALOG": {
           "TITLE": "更改内容类型",
-          "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据。",
+          "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据.",
           "CONFIRM": "确定要更改内容类型吗？",
           "CANCEL": "取消",
           "APPLY": "保存更改",
@@ -252,7 +253,7 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "在升序和降序之间切换结果",
-      "SORT_BY": "排序依据"
+      "SORT_BY": "排序方式"
     }
   },
   "COMMENTS": {
@@ -332,7 +333,7 @@
       "SORT_ASCENDING_BY": "按 {{ string }} 升序排列",
       "SORT_DESCENDING_BY": "按 {{ string }} 降序排列",
       "ICON_TEXT": "项目类型 {{ type }}",
-      "ICON_DISABLED": "禁用",
+      "ICON_DISABLED": "已禁用",
       "ROW_OPTION_BUTTON": "操作"
     },
     "FILE_TYPE": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "演示文稿",
       "SPREADSHEET": "电子表格",
       "MISCELLANEOUS": "其他"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "列",
+      "SEARCH": "搜索",
+      "APPLY": "应用"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "租户"
-      }
+      },
+      "MY_PROFILE": "我的个人档案"
     },
     "TAB": {
       "CS": "Content Services",
