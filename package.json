@@ -91,6 +91,8 @@
     "@mat-datetimepicker/moment": "^9.0.68",
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "6.4.22",
+    "angular-oauth2-oidc": "^13.0.1",
+    "angular-oauth2-oidc-jwks": "^13.0.1",
     "apollo-angular": "^4.0.1",
     "chart.js": "2.9.4",
     "cropperjs": "1.5.12",

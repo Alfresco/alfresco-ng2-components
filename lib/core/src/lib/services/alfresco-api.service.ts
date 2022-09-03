@@ -15,115 +15,69 @@
  * limitations under the License.
  */
 
+import { AlfrescoApi, AlfrescoApiConfig, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject, ReplaySubject } from 'rxjs';
-import { OauthConfigModel } from '../models/oauth-config.model';
-import { StorageService } from './storage.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { AppConfigService } from '../app-config/app-config.service';
 import { OpenidConfiguration } from './openid-configuration.interface';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-    /**
-     * Publish/subscribe to events related to node updates.
-     */
     nodeUpdated = new Subject<Node>();
-
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-
-    protected alfrescoApi: AlfrescoApi;
-
     lastConfig: AlfrescoApiConfig;
     currentAppConfig: AlfrescoApiConfig;
-
     idpConfig: OpenidConfiguration;
 
+    protected alfrescoApi: AlfrescoApi;
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
     }
 
-    constructor(
-        protected appConfig: AppConfigService,
-        protected storageService: StorageService) {
-    }
+    constructor(protected appConfig: AppConfigService, protected storageService: StorageService) {}
 
-    async load() {
-        try {
-            await this.appConfig.load();
-            this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-            this.getCurrentAppConfig();
+    async load(config: AlfrescoApiConfig): Promise<void> {
+        this.currentAppConfig = config;
 
-            if (this.currentAppConfig.authType === 'OAUTH') {
-                this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
-                this.mapAlfrescoApiOpenIdConfig();
-            }
-        } catch {
-            throw new Error('Something wrong happened when calling the app.config.json');
+        if (config.authType === 'OAUTH') {
+            this.updateOauth2Config();
         }
 
-        this.initAlfrescoApiWithConfig();
+        this.initAlfrescoApiWithConfig(config);
         this.alfrescoApiInitialized.next(true);
     }
 
     async reset() {
-        this.getCurrentAppConfig();
         if (this.currentAppConfig.authType === 'OAUTH') {
-            this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
-            this.mapAlfrescoApiOpenIdConfig();
+            this.updateOauth2Config();
         }
-        this.initAlfrescoApiWithConfig();
+        this.initAlfrescoApiWithConfig(this.currentAppConfig);
     }
 
-    private getAuthWithFixedOriginLocation(): OauthConfigModel {
-        const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        if (oauth) {
-            oauth.redirectUri = window.location.origin + window.location.pathname;
-            oauth.redirectUriLogout = window.location.origin + window.location.pathname;
-        }
-        return oauth;
-    }
-
-    private mapAlfrescoApiOpenIdConfig() {
+    private async updateOauth2Config() {
+        this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
         this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
         this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
         this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
         this.currentAppConfig.oauth2.userinfoEndpoint = this.idpConfig.userinfo_endpoint;
     }
 
-    private getCurrentAppConfig() {
-        const oauth = this.getAuthWithFixedOriginLocation();
-
-        this.currentAppConfig = new AlfrescoApiConfig({
-            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
-            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
-            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
-            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
-            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
-            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
-            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
-            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix : this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
-            oauth2: oauth
-        });
-    }
-
-    protected initAlfrescoApi() {
-        this.getCurrentAppConfig();
-        this.initAlfrescoApiWithConfig();
-    }
-
-    private initAlfrescoApiWithConfig() {
-        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
-            this.alfrescoApi.setConfig(this.currentAppConfig);
+    private initAlfrescoApiWithConfig(config: AlfrescoApiConfig) {
+        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
+            this.alfrescoApi.setConfig(config);
         } else {
-            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
+            this.alfrescoApi = this.createInstance(config);
         }
-        this.lastConfig = this.currentAppConfig;
+        this.lastConfig = config;
+    }
+
+    createInstance(config: AlfrescoApiConfig): AlfrescoApi {
+        return (this.alfrescoApi = new AlfrescoApi(config));
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
