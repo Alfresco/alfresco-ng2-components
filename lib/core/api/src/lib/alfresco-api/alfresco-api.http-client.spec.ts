@@ -42,7 +42,7 @@ const emitters: Emitters = {
     apiClientEmitter: emitter
 };
 
-const mockResponse =  {
+const mockResponse = {
     data: [
         {
             id: 14,
@@ -52,30 +52,24 @@ const mockResponse =  {
     ]
 };
 
-
 describe('JsApiHttpClient', () => {
     let angularHttpClient: AlfrescoApiHttpClient;
     let controller: HttpTestingController;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule
-            ]
+            imports: [HttpClientTestingModule]
         });
         angularHttpClient = TestBed.inject(AlfrescoApiHttpClient);
         controller = TestBed.inject(HttpTestingController);
     });
 
-
     describe('deserialize', () => {
-
         afterEach(() => {
             controller.verify();
         });
 
         it('should deserialize incoming request based on return type', (done) => {
-
             const options: RequestOptions = {
                 path: '',
                 httpMethod: 'POST',
@@ -86,21 +80,22 @@ describe('JsApiHttpClient', () => {
                 accepts: ['application/json']
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res: ResultListDataRepresentationTaskRepresentation) => {
-                expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
-                expect(res.data[0].created instanceof Date).toBeTruthy();
-                done();
-            });
+            angularHttpClient
+                .request('http://example.com', options, securityOptions, emitters)
+                .then((res: ResultListDataRepresentationTaskRepresentation) => {
+                    expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    expect(res.data![0].created instanceof Date).toBeTruthy();
+                    done();
+                });
 
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
             req.flush(mockResponse);
-
         });
 
         it('should return parsed json object when responseType is json', (done) => {
-
             const options: RequestOptions = {
                 path: '',
                 httpMethod: 'POST',
@@ -116,7 +111,6 @@ describe('JsApiHttpClient', () => {
             expect(req.request.method).toEqual('POST');
 
             req.flush(mockResponse);
-
         });
 
         it('should emit unauthorized message for 401 request', (done) => {
@@ -135,13 +129,11 @@ describe('JsApiHttpClient', () => {
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
-            req.flush('<div></div>', { status: 401, statusText: 'unauthorized'});
+            req.flush('<div></div>', { status: 401, statusText: 'unauthorized' });
         });
-
     });
 
     describe('upload', () => {
-
         afterEach(() => {
             controller.verify();
         });
@@ -249,17 +241,16 @@ describe('JsApiHttpClient', () => {
             httpMethod: 'POST',
             queryParams: {
                 skipCount: 0,
-                status: [
-                    'RUNNING',
-                    'SUSPENDED'
-                ],
+                status: ['RUNNING', 'SUSPENDED'],
                 sort: 'startDate,DESC'
             }
         };
 
         angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters);
 
-        const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC');
+        const req = controller.expectOne(
+            'http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC'
+        );
         expect(req.request.method).toEqual('POST');
 
         req.flush(null, { status: 200, statusText: 'Ok' });
@@ -312,5 +303,4 @@ describe('JsApiHttpClient', () => {
 
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
-
 });
