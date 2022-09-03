@@ -122,6 +122,12 @@
                                       formControlName="implicitFlow">
                     </mat-slide-toggle>
 
+                    <ng-container *ngIf="supportsCodeFlow">
+                        <label for="codeFlow">{{ 'CORE.HOST_SETTINGS.CODE-FLOW'| translate }}</label>
+                        <mat-slide-toggle class="adf-full-width" name="codeFlow" [color]="'primary'"
+                                          formControlName="codeFlow">
+                        </mat-slide-toggle>
+                    </ng-container>
 
                     <mat-form-field class="adf-full-width">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}</mat-label>
