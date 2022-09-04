@@ -158,7 +158,7 @@
     "eslint-plugin-unicorn": "^43.0.1",
     "github-api": "^3.4.0",
     "graphql": "^16.6.0",
-    "graphql-request": "^3.7.0",
+    "graphql-request": "^5.0.0",
     "husky": "^7.0.4",
     "jasmine-ajax": "4.0.0",
     "jasmine-core": "4.1.1",
