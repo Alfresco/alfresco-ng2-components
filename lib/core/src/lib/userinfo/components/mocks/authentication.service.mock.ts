@@ -16,13 +16,8 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
-import { from, ReplaySubject, forkJoin, Observable } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { AlfrescoApiService } from './../../../services/alfresco-api.service';
-import {
-    PeopleApi,
-    UserProfileApi,
-    UserRepresentation
-} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -32,31 +27,10 @@ export class AuthenticationServiceMock {
 
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-    _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi =
-            this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
-        return this._peopleApi;
-    }
-
-    _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi =
-            this._profileApi ??
-            new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
-    }
-
     constructor(
         private alfrescoApi: AlfrescoApiService,
         @Inject('MODE') public loginMode: string
-    ) {
-        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.onLogin.next();
-            });
-        });
-    }
+    ) {}
 
     isLoggedIn(): boolean {
         return true;
@@ -98,9 +72,5 @@ export class AuthenticationServiceMock {
 
     isBpmLoggedIn(): boolean {
         return this.loginMode === 'bpm';
-    }
-
-    getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.profileApi.getProfile());
     }
 }
