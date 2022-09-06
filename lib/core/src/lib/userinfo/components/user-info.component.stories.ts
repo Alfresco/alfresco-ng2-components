@@ -69,23 +69,70 @@ export default {
     ],
     argTypes: {
         menuPositionX: {
+            description:
+                'Material Angular menu horizontal position in regard to User Info',
             control: 'radio',
             options: ['before', 'after'],
-            defaultValue: 'after'
+            defaultValue: 'after',
+            table: {
+                type: { summary: 'MenuPositionX' },
+                defaultValue: { summary: 'after' }
+            }
         },
         menuPositionY: {
+            description:
+                'Material Angular menu vertical position in regard to User Info',
             control: 'radio',
             options: ['above', 'below'],
-            defaultValue: 'below'
+            defaultValue: 'below',
+            table: {
+                type: { summary: 'MenuPositionY' },
+                defaultValue: { summary: 'below' }
+            }
         },
         showName: {
+            description:
+                'Determines if name should be shown next to user avatar',
             control: 'boolean',
-            defaultValue: true
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
+            }
         },
         namePosition: {
+            description: 'User name position in regard to avatar',
             control: 'radio',
             options: ['left', 'right'],
-            defaultValue: 'right'
+            defaultValue: 'right',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'right' }
+            }
+        },
+        ecmBackgroundImage: {
+            description: 'Menu background banner image for ACS users',
+            control: {
+                disable: true
+            },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: './assets/images/ecm-background.png' }
+            }
+        },
+        bpmBackgroundImage: {
+            description: 'Menu background banner image for APS users',
+            control: {
+                disable: true
+            },
+            table: {
+                type: {
+                    summary: 'string'
+                },
+                defaultValue: {
+                    summary: './assets/images/bpm-background.png'
+                }
+            }
         }
     }
 } as Meta;
