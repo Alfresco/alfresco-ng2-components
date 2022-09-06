@@ -3,6 +3,10 @@
     flex-direction: column;
 
     .adf-facet-filter {
+        &.mat-checkbox {
+            display: block;
+        }
+
         .mat-checkbox-label {
             text-overflow: ellipsis;
             overflow: hidden;
