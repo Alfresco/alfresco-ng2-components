@@ -55,24 +55,7 @@ export class AuthenticationServiceMock {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
             });
-
-            if (this.isKerberosEnabled()) {
-                this.loadUserDetails();
-            }
         });
-    }
-
-    private loadUserDetails() {
-        const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
-        const bpmUser$ = this.getBpmLoggedUser();
-
-        if (this.isALLProvider()) {
-            forkJoin([ecmUser$, bpmUser$]).subscribe(() => this.onLogin.next());
-        } else if (this.isECMProvider()) {
-            ecmUser$.subscribe(() => this.onLogin.next());
-        } else {
-            bpmUser$.subscribe(() => this.onLogin.next());
-        }
     }
 
     isLoggedIn(): boolean {
