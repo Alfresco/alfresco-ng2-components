@@ -8,7 +8,7 @@ describe('OidcAuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MockProvider(AuthService)]
+      providers: [OidcAuthGuard, MockProvider(AuthService)]
     });
     guard = TestBed.inject(OidcAuthGuard);
   });

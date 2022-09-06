@@ -74,7 +74,7 @@ interface Config {
     readonly useAngularBasedHttpClientInAlfrescoJs: boolean;
 }
 
-const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: true };
+const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
 
 @NgModule({
     imports: [
@@ -189,7 +189,10 @@ export class CoreModule {
                     multi: true
                 },
                 { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
-                ...(config.useAngularBasedHttpClientInAlfrescoJs && [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceWithAngularBasedHttpClient }])
+                ...(config.useAngularBasedHttpClientInAlfrescoJs
+                    ? [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceWithAngularBasedHttpClient }]
+                    : []
+                )
             ]
         };
     }

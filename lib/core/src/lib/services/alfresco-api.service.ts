@@ -18,7 +18,8 @@
 import { AlfrescoApi, AlfrescoApiConfig, Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 import { OpenidConfiguration } from './openid-configuration.interface';
 import { StorageService } from './storage.service';
 
@@ -48,15 +49,29 @@ export class AlfrescoApiService {
             this.updateOauth2Config();
         }
 
-        this.initAlfrescoApiWithConfig(config);
+        this.initAlfrescoApiWithConfig();
         this.alfrescoApiInitialized.next(true);
     }
 
     async reset() {
+        this.getCurrentAppConfig();
         if (this.currentAppConfig.authType === 'OAUTH') {
-            this.updateOauth2Config();
+            this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
+            this.mapAlfrescoApiOpenIdConfig();
         }
-        this.initAlfrescoApiWithConfig(this.currentAppConfig);
+        this.initAlfrescoApiWithConfig();
+    }
+
+    protected initAlfrescoApi() {
+        this.getCurrentAppConfig();
+        this.initAlfrescoApiWithConfig();
+    }
+
+    private mapAlfrescoApiOpenIdConfig() {
+        this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
+        this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
+        this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
+        this.currentAppConfig.oauth2.userinfoEndpoint = this.idpConfig.userinfo_endpoint;
     }
 
     private async updateOauth2Config() {
@@ -67,13 +82,39 @@ export class AlfrescoApiService {
         this.currentAppConfig.oauth2.userinfoEndpoint = this.idpConfig.userinfo_endpoint;
     }
 
-    private initAlfrescoApiWithConfig(config: AlfrescoApiConfig) {
-        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
-            this.alfrescoApi.setConfig(config);
-        } else {
-            this.alfrescoApi = this.createInstance(config);
+    private getAuthWithFixedOriginLocation(): OauthConfigModel {
+        const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        if (oauth) {
+            oauth.redirectUri = window.location.origin + window.location.pathname;
+            oauth.redirectUriLogout = window.location.origin + window.location.pathname;
         }
-        this.lastConfig = config;
+        return oauth;
+    }
+
+    private getCurrentAppConfig() {
+        const oauth = this.getAuthWithFixedOriginLocation();
+
+        this.currentAppConfig = new AlfrescoApiConfig({
+            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
+            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
+            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
+            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
+            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
+            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
+            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
+            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
+            domainPrefix : this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
+            oauth2: oauth
+        });
+    }
+
+    protected initAlfrescoApiWithConfig() {
+        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
+            this.alfrescoApi.setConfig(this.currentAppConfig);
+        } else {
+            this.alfrescoApi = this.createInstance(this.currentAppConfig);
+        }
+        this.lastConfig = this.currentAppConfig;
     }
 
     createInstance(config: AlfrescoApiConfig): AlfrescoApi {

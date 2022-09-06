@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { AuthService } from '../../auth.service';
 import { AuthenticationConfirmationComponent } from './authentication-confirmation.component';
 
@@ -19,7 +18,7 @@ describe('AuthenticationConfirmationComponent', () => {
           }
         })
       ],
-      imports: [MockModule(MatIconModule), RouterTestingModule]
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

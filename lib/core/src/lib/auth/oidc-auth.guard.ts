@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class OidcAuthGuard implements CanActivate {
-  constructor(private _auth: AuthService) {}
+  constructor(private auth: AuthService) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -19,11 +19,11 @@ export class OidcAuthGuard implements CanActivate {
   }
 
   private _isAuthenticated(state: RouterStateSnapshot) {
-    if (this._auth.authenticated) {
+    if (this.auth.authenticated) {
       return true;
     }
 
-    const loginResult = this._auth.login(state.url);
+    const loginResult = this.auth.login(state.url);
 
     if (loginResult instanceof Promise) {
       return loginResult.then(() => true).catch(() => false);

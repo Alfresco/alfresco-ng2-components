@@ -3,7 +3,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth.module';
+import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 
 export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {
     return authConfigService.loadConfig();

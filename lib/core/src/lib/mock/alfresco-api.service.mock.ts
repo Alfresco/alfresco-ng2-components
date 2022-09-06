@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -27,8 +26,7 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
         super(appConfig, storageService);
 
         if (!this.alfrescoApi) {
-            const config = new AlfrescoApiConfig();
-            this.load(config);
+            this.initAlfrescoApi();
         }
     }
 
