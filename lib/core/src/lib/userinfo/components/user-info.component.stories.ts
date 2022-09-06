@@ -79,11 +79,11 @@ export default {
     }
 } as Meta;
 
-export const LoginWithOAuth: Story<UserInfoComponent> = (
-    args: UserInfoComponent
-) => ({
+const template: Story<UserInfoComponent> = (args: UserInfoComponent) => ({
     props: args
 });
+
+export const LoginWithOAuth = template.bind({});
 LoginWithOAuth.decorators = [
     moduleMetadata({
         providers: [
@@ -95,11 +95,7 @@ LoginWithOAuth.decorators = [
     })
 ];
 
-export const LoginWithOAuthAndECM: Story<UserInfoComponent> = (
-    args: UserInfoComponent
-) => ({
-    props: args
-});
+export const LoginWithOAuthAndECM = template.bind({});
 LoginWithOAuthAndECM.decorators = [
     moduleMetadata({
         providers: [
@@ -111,11 +107,7 @@ LoginWithOAuthAndECM.decorators = [
     })
 ];
 
-export const LoginWithBPMAndECM: Story<UserInfoComponent> = (
-    args: UserInfoComponent
-) => ({
-    props: args
-});
+export const LoginWithBPMAndECM = template.bind({});
 LoginWithBPMAndECM.decorators = [
     moduleMetadata({
         providers: [
@@ -127,11 +119,7 @@ LoginWithBPMAndECM.decorators = [
     })
 ];
 
-export const LoginWithECM: Story<UserInfoComponent> = (
-    args: UserInfoComponent
-) => ({
-    props: args
-});
+export const LoginWithECM = template.bind({});
 LoginWithECM.decorators = [
     moduleMetadata({
         providers: [
@@ -143,11 +131,7 @@ LoginWithECM.decorators = [
     })
 ];
 
-export const LoginWithBPM: Story<UserInfoComponent> = (
-    args: UserInfoComponent
-) => ({
-    props: args
-});
+export const LoginWithBPM = template.bind({});
 LoginWithBPM.decorators = [
     moduleMetadata({
         providers: [
