@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import {
+    Meta,
+    moduleMetadata,
+    Story,
+    componentWrapperDecorator
+} from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { UserInfoComponent } from './user-info.component';
 import { UserInfoModule } from '../userinfo.module';
@@ -54,7 +59,13 @@ export default {
                     useClass: AuthenticationServiceMock
                 }
             ]
-        })
+        }),
+        componentWrapperDecorator(
+            (story) =>
+                `<div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+                    ${story}
+                </div>`
+        )
     ],
     argTypes: {
         menuPositionX: {
