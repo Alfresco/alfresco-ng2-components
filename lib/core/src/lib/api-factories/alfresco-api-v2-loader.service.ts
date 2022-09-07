@@ -22,17 +22,17 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
-export function createAlfrescoApiV2Service(angularAlfrescoApiService: AlfrescoApiLoaderService) {
-    return () => angularAlfrescoApiService.load();
+export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApiLoaderService) {
+    return () => angularAlfrescoApiService.init();
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class AlfrescoApiLoaderService {
-    constructor(private appConfig: AppConfigService, private apiService: AlfrescoApiService) {}
+    constructor(private readonly appConfig: AppConfigService, private readonly apiService: AlfrescoApiService) {}
 
-    load(): Promise<any> {
+    init(): Promise<any> {
         return this.appConfig.onLoad.pipe(take(1)).toPromise().then(() => {
             this.initAngularAlfrescoApi();
         }).catch(() => {

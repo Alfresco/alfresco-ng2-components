@@ -67,7 +67,7 @@ import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './services/storage.service';
-import { AlfrescoApiLoaderService, createAlfrescoApiV2Service } from './api-factories/alfresco-api-v2-loader.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 import { AlfrescoApiServiceWithAngularBasedHttpClient } from './api-factories/alfresco-api-service-with-angular-based-http-client';
 
 interface Config {
@@ -184,7 +184,7 @@ export class CoreModule {
                 },
                 {
                     provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiV2Service,
+                    useFactory: createAlfrescoApiInstance,
                     deps: [ AlfrescoApiLoaderService ],
                     multi: true
                 },
