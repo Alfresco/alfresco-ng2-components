@@ -117,6 +117,13 @@
                                               (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
                                 </mat-checkbox>
                             </div>
+
+                            <div class="adf-login-action" *ngIf="forgotPasswordStatus">
+                                <div id="adf-login-action" class="adf-login-action adf-full-width">
+                                    <!-- <a [routerLink]=" '/recover-password' ">Forgot Password?</a> -->
+                                    <a style="cursor: pointer;" (click)="forgotPassword()">{{ 'LOGIN.FORGOT-PASSWORD.FORGOT-PASSWORD' | translate }}</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div *ngIf="implicitFlow">

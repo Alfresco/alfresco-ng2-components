@@ -27,6 +27,7 @@ import { LoginFooterDirective } from './directives/login-footer.directive';
 import { LoginHeaderDirective } from './directives/login-header.directive';
 import { LoginDialogComponent } from './components/login-dialog.component';
 import { LoginDialogPanelComponent } from './components/login-dialog-panel.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { LoginDialogPanelComponent } from './components/login-dialog-panel.compo
         LoginFooterDirective,
         LoginHeaderDirective,
         LoginDialogComponent,
-        LoginDialogPanelComponent
+        LoginDialogPanelComponent,
+        RecoverPasswordComponent
     ],
     exports: [
         LoginComponent,

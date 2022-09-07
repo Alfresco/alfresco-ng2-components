@@ -38,6 +38,8 @@ import { OauthConfigModel } from '../../models/oauth-config.model';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { RecoverPasswordDialogService } from './recover-password-dialog.service';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -52,11 +54,11 @@ interface ValidationMessage {
 }
 
 @Component({
-    selector: 'adf-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    selector: "adf-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-login' }
+    host: { class: "adf-login" },
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
@@ -75,23 +77,24 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** Sets the URL of the NEED HELP link in the footer. */
     @Input()
-    needHelpLink: string = '';
+    needHelpLink: string = "";
 
     /** Sets the URL of the REGISTER link in the footer. */
     @Input()
-    registerLink: string = '';
+    registerLink: string = "";
 
     /** Path to a custom logo image. */
     @Input()
-    logoImageUrl: string = './assets/images/alfresco-logo.svg';
+    logoImageUrl: string = "./assets/images/alfresco-logo.svg";
 
     /** Path to a custom background image. */
     @Input()
-    backgroundImageUrl: string = './assets/images/background.svg';
+    backgroundImageUrl: string = "./assets/images/background.svg";
 
     /** The copyright text below the login box. */
     @Input()
-    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText: string =
+        "\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.";
 
     /** Custom validation rules for the login form. */
     @Input()
@@ -121,6 +124,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     actualLoginStep: any = LoginSteps.Landing;
     LoginSteps = LoginSteps;
     rememberMe: boolean = true;
+    forgotPasswordStatus: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
@@ -140,23 +144,29 @@ export class LoginComponent implements OnInit, OnDestroy {
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private alfrescoApiService: AlfrescoApiService
-    ) {
-    }
+        private alfrescoApiService: AlfrescoApiService,
+        private dialogService: RecoverPasswordDialogService
+    ) {}
 
     ngOnInit() {
         this.initFormError();
         this.initFormFieldsDefault();
         this.initFormFieldsMessages();
 
-        this.successRoute = this.appConfig.get<string>('successRoute', this.successRoute);
+        this.successRoute = this.appConfig.get<string>(
+            "successRoute",
+            this.successRoute
+        );
 
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         } else {
-
             if (this.authService.isOauth()) {
-                const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+                const oauth: OauthConfigModel =
+                    this.appConfig.get<OauthConfigModel>(
+                        AppConfigValues.OAUTHCONFIG,
+                        null
+                    );
                 if (oauth && oauth.silentLogin) {
                     this.redirectToImplicitLogin();
                 } else if (oauth && oauth.implicitFlow) {
@@ -165,8 +175,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             }
 
             this.route.queryParams.subscribe((params: Params) => {
-                const url = params['redirectUrl'];
-                const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+                const url = params["redirectUrl"];
+                const provider = this.appConfig.get<string>(
+                    AppConfigValues.PROVIDERS
+                );
 
                 this.authService.setRedirect({ provider, url });
             });
@@ -178,7 +190,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(data => this.onValueChanged(data));
+            .subscribe((data) => this.onValueChanged(data));
     }
 
     ngOnDestroy() {
@@ -188,6 +200,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit() {
         this.onSubmit(this.form.value);
+    }
+
+    forgotPassword() {
+        this.dialogService
+            .showDialog(RecoverPasswordComponent, {
+                data: {
+                    title: "Recover",
+                },
+            })
+            .afterClosed();
+        //   .subscribe((result) => {
+        //       if (result) {
+
+        //       }
+        //   });
     }
 
     redirectToImplicitLogin() {
@@ -204,7 +231,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.disableError();
 
         const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
+            controls: { username: this.form.controls.username },
         });
         this.executeSubmit.emit(args);
 
@@ -229,9 +256,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.disableError();
         for (const field in this.formError) {
             if (field) {
-                this.formError[field] = '';
+                this.formError[field] = "";
                 const hasError =
-                    (this.form.controls[field].errors && data[field] !== '') ||
+                    (this.form.controls[field].errors && data[field] !== "") ||
                     (this.form.controls[field].dirty &&
                         !this.form.controls[field].valid);
                 if (hasError) {
@@ -239,7 +266,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                         if (key) {
                             const message = this._message[field][key];
                             if (message && message.value) {
-                                const translated = this.translateService.instant(message.value, message.params);
+                                const translated =
+                                    this.translateService.instant(
+                                        message.value,
+                                        message.params
+                                    );
                                 this.formError[field] += translated;
                             }
                         }
@@ -277,7 +308,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.isError = true;
                     this.error.emit(new LoginErrorEvent(err));
                 },
-                () => this.logService.info('Login done')
+                () => this.logService.info("Login done")
             );
     }
 
@@ -288,22 +319,22 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (
             err.error &&
             err.error.crossDomain &&
-            err.error.message.indexOf('Access-Control-Allow-Origin') !== -1
+            err.error.message.indexOf("Access-Control-Allow-Origin") !== -1
         ) {
             this.errorMsg = err.error.message;
         } else if (
             err.status === 403 &&
-            err.message.indexOf('Invalid CSRF-token') !== -1
+            err.message.indexOf("Invalid CSRF-token") !== -1
         ) {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
+            this.errorMsg = "LOGIN.MESSAGES.LOGIN-ERROR-CSRF";
         } else if (
             err.status === 403 &&
-            err.message.indexOf('The system is currently in read-only mode') !==
-            -1
+            err.message.indexOf("The system is currently in read-only mode") !==
+                -1
         ) {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
+            this.errorMsg = "LOGIN.MESSAGES.LOGIN-ECM-LICENSE";
         } else {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
+            this.errorMsg = "LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS";
         }
     }
 
@@ -332,7 +363,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {
         this._message[field][ruleId] = {
             value: msg,
-            params
+            params,
         };
     }
 
@@ -361,7 +392,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     getBackgroundUrlImageUrl(): SafeStyle {
-        return this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
+        return this.sanitizer.bypassSecurityTrustStyle(
+            `url(${this.backgroundImageUrl})`
+        );
     }
 
     /**
@@ -369,8 +402,8 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     private initFormError() {
         this.formError = {
-            username: '',
-            password: ''
+            username: "",
+            password: "",
         };
     }
 
@@ -381,28 +414,33 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._message = {
             username: {
                 required: {
-                    value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+                    value: "LOGIN.MESSAGES.USERNAME-REQUIRED",
                 },
                 minlength: {
-                    value: 'LOGIN.MESSAGES.USERNAME-MIN',
+                    value: "LOGIN.MESSAGES.USERNAME-MIN",
                     params: {
-                        minLength: this.minLength
-                    }
-                }
-
+                        minLength: this.minLength,
+                    },
+                },
             },
             password: {
                 required: {
-                    value: 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
-                }
-            }
+                    value: "LOGIN.MESSAGES.PASSWORD-REQUIRED",
+                },
+            },
         };
     }
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
-            password: ['', Validators.required]
+            username: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    Validators.minLength(this.minLength),
+                ]),
+            ],
+            password: ["", Validators.required],
         });
     }
 
