@@ -141,8 +141,8 @@ const template: Story<UserInfoComponent> = (args: UserInfoComponent) => ({
     props: args
 });
 
-export const LoginWithOAuth = template.bind({});
-LoginWithOAuth.decorators = [
+export const LoginWithSSO = template.bind({});
+LoginWithSSO.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -153,8 +153,8 @@ LoginWithOAuth.decorators = [
     })
 ];
 
-export const LoginWithOAuthAndECM = template.bind({});
-LoginWithOAuthAndECM.decorators = [
+export const LoginWithSSOAndACS = template.bind({});
+LoginWithSSOAndACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -165,8 +165,8 @@ LoginWithOAuthAndECM.decorators = [
     })
 ];
 
-export const LoginWithBPMAndECM = template.bind({});
-LoginWithBPMAndECM.decorators = [
+export const LoginWithAPSAndACS = template.bind({});
+LoginWithAPSAndACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -177,8 +177,8 @@ LoginWithBPMAndECM.decorators = [
     })
 ];
 
-export const LoginWithECM = template.bind({});
-LoginWithECM.decorators = [
+export const LoginWithACS = template.bind({});
+LoginWithACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -189,8 +189,8 @@ LoginWithECM.decorators = [
     })
 ];
 
-export const LoginWithBPM = template.bind({});
-LoginWithBPM.decorators = [
+export const LoginWithAPS = template.bind({});
+LoginWithAPS.decorators = [
     moduleMetadata({
         providers: [
             {
