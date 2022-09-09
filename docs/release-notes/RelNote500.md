@@ -57,8 +57,10 @@ A breaking change worth mentioning is related to style import. with ADF v5.0.0 a
 
 
 **example**:
- previous versions of ADF :  ```@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';```
- starting ADF 5.0.0 : @import ```'~@alfresco/adf-core/lib/prebuilt-themes/adf-blue-orange.css';```
+
+   previous versions of ADF :  ```@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';```
+    
+   starting ADF 5.0.0 : ```@import '~@alfresco/adf-core/lib/prebuilt-themes/adf-blue-orange.css';```
 
 ## Changelog
 
