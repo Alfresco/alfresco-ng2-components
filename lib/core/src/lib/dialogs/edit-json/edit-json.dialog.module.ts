@@ -15,22 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
 import { EditJsonDialogComponent } from './edit-json.dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DialogModule } from '../dialog.module';
 @NgModule({
     imports: [
-        CommonModule,
+        DialogModule,
         FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        MatDialogModule,
-        MatButtonModule
+        ReactiveFormsModule
     ],
     declarations: [
         EditJsonDialogComponent

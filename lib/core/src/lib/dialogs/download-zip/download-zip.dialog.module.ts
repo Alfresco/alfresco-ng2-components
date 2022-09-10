@@ -15,22 +15,14 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '../pipes/pipe.module';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatButtonModule } from '@angular/material/button';
+import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { PipeModule } from '../../pipes/pipe.module';
+import { DialogModule } from '../dialog.module';
 
 @NgModule({
-    exports: [
-        CommonModule,
-        MatDialogModule,
-        MatProgressBarModule,
-        MatButtonModule,
-        TranslateModule,
-        PipeModule
-    ]
+    imports: [DialogModule, PipeModule],
+    declarations: [DownloadZipDialogComponent],
+    exports: [DownloadZipDialogComponent]
 })
-export class DialogModule {}
+export class DownloadZipDialogModule {}

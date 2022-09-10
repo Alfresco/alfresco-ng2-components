@@ -17,7 +17,6 @@
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import { DialogModule } from '../dialog.module';
 import { MatButtonModule } from '@angular/material/button';
 import {
     AlfrescoApiService,
@@ -32,13 +31,18 @@ import {
     DownloadZipMockService,
     NodesApiMock
 } from '../../mock/download-zip-service.mock';
+import { DownloadZipDialogModule } from './download-zip.dialog.module';
 
 export default {
     component: DownloadZipDialogStorybookComponent,
     title: 'Core/Dialog/Download ZIP Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, DialogModule, MatButtonModule],
+            imports: [
+                CoreStoryModule,
+                DownloadZipDialogModule,
+                MatButtonModule
+            ],
             providers: [
                 {
                     provide: AlfrescoApiService,
@@ -48,8 +52,14 @@ export default {
                     provide: DownloadZipService,
                     useClass: DownloadZipMockService
                 },
-                { provide: ContentService, useClass: ContentApiMock },
-                { provide: NodesApiService, useClass: NodesApiMock }
+                {
+                    provide: ContentService,
+                    useClass: ContentApiMock
+                },
+                {
+                    provide: NodesApiService,
+                    useClass: NodesApiMock
+                }
             ]
         })
     ],
