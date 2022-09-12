@@ -35,11 +35,21 @@ export default {
             ]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays all the languages that are present in "app.config.json" and the default (EN).`
+            }
+        }
+    },
     argTypes: {
         changedLanguage: {
             action: 'changedLanguage',
             description: 'Emitted when the user clicks on one of the language buttons.',
-            table: { category: 'Actions' }
+            table: {
+                category: 'Actions',
+                type: { summary: 'EventEmitter <LanguageItem>' }
+            }
         }
     }
 } as Meta;

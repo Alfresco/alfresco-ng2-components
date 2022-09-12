@@ -29,6 +29,13 @@ export default {
             imports: [CoreStoryModule, InfoDrawerModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays a sidebar-style information panel in single layout or using tabs.`
+            }
+        }
+    },
     argTypes: {
         selectedIndex: {
             control: 'select',
@@ -184,8 +191,11 @@ export default {
         },
         currentTab: {
             action: 'currentTab',
-            description: 'Emitted when the currently active tab changes.',
-            table: { category: 'Actions' }
+            description: 'Emitted when the currently active tab changes',
+            table: {
+                type: { summary: 'EventEmitter <number>' },
+                category: 'Actions'
+            }
         }
     }
 } as Meta;

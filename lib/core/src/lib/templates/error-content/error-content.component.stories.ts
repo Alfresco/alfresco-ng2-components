@@ -32,6 +32,13 @@ export default {
             ]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays information about a specific error.`
+            }
+        }
+    },
     argTypes: {
         errorCode: {
             control: 'text',

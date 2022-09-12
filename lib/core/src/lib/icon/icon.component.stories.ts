@@ -28,6 +28,13 @@ export default {
             imports: [CoreStoryModule, IconModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Provides a universal way of rendering registered and named icons.`
+            }
+        }
+    },
     argTypes: {
         color: {
             control: 'radio',
