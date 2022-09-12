@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { Component, Input, SecurityContext } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';

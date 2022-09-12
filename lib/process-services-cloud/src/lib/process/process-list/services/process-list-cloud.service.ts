@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';

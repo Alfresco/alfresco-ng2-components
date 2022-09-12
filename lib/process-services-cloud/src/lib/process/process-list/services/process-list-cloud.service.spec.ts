@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';

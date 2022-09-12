@@ -30,7 +30,8 @@
       "plugins": [
         "eslint-plugin-unicorn",
         "eslint-plugin-rxjs",
-        "ban"
+        "ban",
+        "license-header"
       ],
       "rules": {
         "ban/ban": [
@@ -130,7 +131,8 @@
             "allowShortCircuit": true,
             "allowTernary": true
           }
-        ]
+        ],
+        "license-header/header": ["error", "./license-community.txt"]
       }
     },
     {
