@@ -184,7 +184,8 @@ export default {
         },
         currentTab: {
             action: 'currentTab',
-            table: { disable: true }
+            description: 'Emitted when the currently active tab changes.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;
@@ -242,10 +243,7 @@ tabLayoutWithTextLabels.args = {
 };
 
 tabLayoutWithTextLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
@@ -260,10 +258,7 @@ tabLayoutWithIconLabels.args = {
 };
 
 tabLayoutWithIconLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const singleLayout = singleLayoutTemplate.bind({});
@@ -273,8 +268,4 @@ singleLayout.args = {
     showHeader: true,
     showSecondTab: false,
     showThirdTab: false
-};
-
-singleLayout.parameters = {
-    controls: { expanded: true }
 };

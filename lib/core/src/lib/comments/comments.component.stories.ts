@@ -20,7 +20,6 @@ import { CommentContentService, CommentProcessService, EcmUserService } from '..
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { CommentsModule } from './comments.module';
-import { CommentModel } from '../models/comment.model';
 import { CommentContentServiceMock } from '../mock/comment-content-service.mock';
 import { CommentProcessServiceMock } from '../mock/comment-process-service.mock';
 import { commentsTaskData, commentsNodeData } from '../mock/comment-content.mock';
@@ -40,9 +39,9 @@ export default {
     ],
     argTypes: {
         comments: {
-            type: CommentModel,
+            control: 'object',
             description: 'CommentModel array',
-            table: { type: { summary: 'CommentModel' } }
+            table: { type: { summary: 'CommentModel[]' } }
         },
         readOnly: {
             control: 'boolean',
@@ -50,28 +49,29 @@ export default {
             defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: 'false'}
+                defaultValue: { summary: 'false' }
             }
         },
         nodeId: {
             control: 'text',
             description: 'Necessary in order to add a new Node comment',
-            defaultValue: undefined,
             table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+                type: { summary: 'string' }
             },
             if: { arg: 'taskId', exists: false }
         },
         taskId: {
             control: 'text',
             description: 'Necessary in order to add a new Task comment',
-            defaultValue: undefined,
             table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+                type: { summary: 'string' }
             },
             if: { arg: 'nodeId', exists: false }
+        },
+        error: {
+            action: 'error',
+            description: 'Emitted when an error occurs while displaying/adding a comment.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;

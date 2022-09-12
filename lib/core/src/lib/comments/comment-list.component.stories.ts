@@ -16,8 +16,6 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
-import { CommentModel } from '../models/comment.model';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsModule } from './comments.module';
@@ -37,20 +35,22 @@ export default {
     ],
     argTypes: {
         comments: {
-            type: CommentModel,
+            control: 'object',
             description: 'CommentModel array',
             table: {
-                type: { summary: 'CommentModel' }
+                type: { summary: 'CommentModel[]' }
             }
+        },
+        clickRow: {
+            action: 'clickRow',
+            description: 'Emitted when the user clicks on one of the comment rows.',
+            table: { category: 'Actions' }
         }
     }
 } as Meta;
 
 const template: Story<CommentListComponent> = (args: CommentListComponent) => ({
-    props: {
-        ...args,
-        clickRow: action('clickRow')
-    }
+    props: args
 });
 
 export const taskBased = template.bind({});

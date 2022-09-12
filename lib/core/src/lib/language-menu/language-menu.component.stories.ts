@@ -16,7 +16,6 @@
  */
 
 import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
 import { CoreStoryModule } from '../testing/core.story.module';
 
 import { LanguageMenuModule } from './language-menu.module';
@@ -27,7 +26,7 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
     component: LanguageMenuComponent,
-    title: 'Core/Components/Language Menu/Language Menu',
+    title: 'Core/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, LanguageMenuModule],
@@ -35,14 +34,18 @@ export default {
                 { provide: LanguageService, useClass: LanguageServiceMock }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        changedLanguage: {
+            action: 'changedLanguage',
+            description: 'Emitted when the user clicks on one of the language buttons.',
+            table: { category: 'Actions' }
+        }
+    }
 } as Meta;
 
 const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
-    props: {
-        ...args,
-        changedLanguage: action('changedLanguage')
-    }
+    props: args
 });
 
 export const asMainMenu = languageMenuComponentTemplate.bind({});

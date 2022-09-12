@@ -24,7 +24,7 @@ import { ProcessServicesCloudStoryModule } from '../../../testing/process-servic
 
 export default {
     component: TaskHeaderCloudComponent,
-    title: 'Process Services Cloud/Components/Task Header',
+    title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, TaskHeaderCloudModule],
@@ -34,8 +34,46 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } },
-        taskId: { table: { disable: true } }
+        appName: {
+            control: 'text',
+            description: '(Required) The name of the application.',
+            defaultValue: '',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' }
+            }
+        },
+        taskId: {
+            control: 'text',
+            description: '(Required) The id of the task.',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        showTitle: {
+            control: 'boolean',
+            description: 'Show/Hide the task title.',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
+        },
+        claim: {
+            action: 'claim',
+            description: 'Emitted when the task is claimed.',
+            table: { category: 'Actions' }
+        },
+        unclaim: {
+            action: 'unclaim',
+            description: 'Emitted when the task is unclaimed (ie, requeued).',
+            table: { category: 'Actions' }
+        },
+        error: {
+            action: 'error',
+            description: 'Emitted when the given task has errors.',
+            table: { category: 'Actions' }
+        }
     }
 } as Meta;
 
@@ -46,7 +84,6 @@ const template: Story<TaskHeaderCloudComponent> = (args: TaskHeaderCloudComponen
 export const assignedAndEditable = template.bind({});
 assignedAndEditable.args = {
     appName: 'app',
-    showTitle: true,
     taskId: 'mock-assigned-task'
 };
 
