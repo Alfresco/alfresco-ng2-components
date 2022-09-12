@@ -70,8 +70,11 @@ export default {
         },
         error: {
             action: 'error',
-            description: 'Emitted when an error occurs while displaying/adding a comment.',
-            table: { category: 'Actions' }
+            description: 'Emitted when an error occurs while displaying/adding a comment',
+            table: {
+                category: 'Actions',
+                type: { summary: 'EventEmitter <any>' }
+            }
         }
     }
 } as Meta;

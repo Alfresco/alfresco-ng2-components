@@ -39,7 +39,10 @@ export default {
         changedLanguage: {
             action: 'changedLanguage',
             description: 'Emitted when the user clicks on one of the language buttons.',
-            table: { category: 'Actions' }
+            table: {
+                category: 'Actions',
+                type: { summary: 'EventEmitter <LanguageItem>' }
+            }
         }
     }
 } as Meta;
