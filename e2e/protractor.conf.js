@@ -1,6 +1,6 @@
-const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
+const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
 const path = require('path');
-const {SpecReporter} = require('jasmine-spec-reporter');
+const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry-angular-cli').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
@@ -9,7 +9,7 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 const smartRunnerFactory = require('./smartrunner-factory');
 
-const {uploadScreenshot} = require('./protractor/save-remote');
+const { uploadScreenshot } = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
 const width = 1657, height = 1657;
@@ -18,11 +18,11 @@ const ENV_FILE = process.env.ENV_FILE;
 const GROUP_SUFFIX = process.env.PREFIX || process.env.TRAVIS_BUILD_NUMBER || 'adf';
 
 if (ENV_FILE) {
-    require('dotenv').config({path: ENV_FILE});
+    require('dotenv').config({ path: ENV_FILE });
 }
 
 const HOST = process.env.URL_HOST_ADF;
-const BROWSER_RUN = !!process.env.BROWSER_RUN;
+const BROWSER_RUN = ([true, 'true'].includes(process.env.BROWSER_RUN))
 const FOLDER = process.env.FOLDER || '';
 const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;

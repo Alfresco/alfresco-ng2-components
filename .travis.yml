@@ -28,7 +28,7 @@ env:
         #E2E VARIABLES
         - SAVE_SCREENSHOT=true
         - REDIRECT_URI=/
-        - BROWSER_RUN=true
+        - BROWSER_RUN=false
         - MAXINSTANCES=2
         - PROXY_HOST_ECM=$E2E_HOST
         - PROXY_HOST_BPM=$E2E_HOST
