@@ -40,6 +40,7 @@ import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { mockAppVersions } from '../mock/process-filters-cloud.mock';
+import { DATE_FORMAT_CLOUD } from '../../../models/date-format-cloud.model';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -500,8 +501,8 @@ describe('EditProcessFilterCloudComponent', () => {
             priority: '12',
             suspendedDateType: DateCloudFilterType.RANGE
         });
-        const oneYearAgoDate = moment().add(-1, 'years').format('YYYY-MM-DD');
-        const todayDate = moment().format('YYYY-MM-DD');
+        const oneYearAgoDate = moment().add(-1, 'years').format(DATE_FORMAT_CLOUD);
+        const todayDate = moment().format(DATE_FORMAT_CLOUD);
         filter.suspendedFrom = oneYearAgoDate.toString();
         filter.suspendedTo = todayDate.toString();
         getProcessFilterByIdSpy.and.returnValue(of(filter));

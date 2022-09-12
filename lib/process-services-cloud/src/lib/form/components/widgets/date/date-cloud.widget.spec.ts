@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DateCloudWidgetComponent, DATE_FORMAT_CLOUD } from './date-cloud.widget';
+import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 
 describe('DateWidgetComponent', () => {
 
