@@ -16,62 +16,32 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import {
-    CardViewModule,
-    CardViewTextItemModel
-} from '../../../../..';
+import { CardViewBoolItemModel, CardViewModule } from '../../../../..';
 
 export default {
-    component: CardViewTextItemComponent,
-    title: 'Core/Card View/Card View Text Item',
+    component: CardViewBoolItemComponent,
+    title: 'Core/Card View/Card View Bool Item',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, CardViewModule]
         })
-    ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        displayEmpty: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        copyToClipboardAction: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        multiValueSeparator: {
-            control: 'boolean',
-            defaultValue: true
-        }
-    }
+    ]
 } as Meta;
 
-const template: Story<CardViewTextItemComponent> = (
-    args: CardViewTextItemComponent
+export const template: Story<CardViewBoolItemComponent> = (
+    args: CardViewBoolItemComponent
 ) => ({
     props: args
 });
-
-export const TextItemCardView = template.bind({});
-
-TextItemCardView.args = {
-    property: new CardViewTextItemModel({
-        label: 'This is clickable ',
-        value: 'click here',
-        key: 'click',
-        default: 'click here',
-        editable: true,
-        clickable: true,
-        icon: 'close'
+template.args = {
+    property: new CardViewBoolItemModel({
+        label: 'Agree to all terms and conditions',
+        value: true,
+        key: 'boolean',
+        default: false,
+        editable: true
     })
 };
 
