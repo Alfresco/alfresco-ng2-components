@@ -146,7 +146,7 @@
     "commander": "6.2.1",
     "concurrently": "^7.0.0",
     "cspell": "^5.5.1",
-    "css-loader": "^5.2.6",
+    "css-loader": "^6.7.1",
     "dotenv": "10.0.0",
     "editorjs-text-color-plugin": "1.13.1",
     "eslint": "^8.20.0",
