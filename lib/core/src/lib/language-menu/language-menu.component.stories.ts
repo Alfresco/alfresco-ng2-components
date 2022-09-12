@@ -35,6 +35,13 @@ export default {
             ]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays all the languages that are present in "app.config.json" and the default (EN).`
+            }
+        }
+    },
     argTypes: {
         changedLanguage: {
             action: 'changedLanguage',

@@ -18,13 +18,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
 import { SortingPickerComponent } from './sorting-picker.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
         TranslateModule
     ],
     declarations: [

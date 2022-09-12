@@ -37,6 +37,14 @@ export default {
             ]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays comments from users involved in a specified task or node.
+                    Allows an involved user to add a comment to a task or a node.`
+            }
+        }
+    },
     argTypes: {
         comments: {
             control: 'object',

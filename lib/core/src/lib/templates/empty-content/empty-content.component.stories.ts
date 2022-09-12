@@ -28,6 +28,13 @@ export default {
             imports: [CoreStoryModule, TemplateModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Provides a generic "Empty Content" placeholder for components.`
+            }
+        }
+    },
     argTypes: {
         icon: {
             control: 'text',
