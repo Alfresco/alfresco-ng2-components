@@ -23,7 +23,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-    selector: 'adf-card-view-boolitem',
+    selector: 'adf-card-view-keyvaluepairsitem',
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None
