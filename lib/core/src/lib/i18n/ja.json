@@ -116,7 +116,7 @@
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "新規フォルダの作成",
+      "CREATE_FOLDER_TITLE": "新しいフォルダを作成します",
       "EDIT_FOLDER_TITLE": "フォルダの編集",
       "FOLDER_NAME": {
         "LABEL": "名前",
@@ -151,7 +151,7 @@
     },
     "RESTORE_NODE": {
       "VIEW": "表示",
-      "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります",
+      "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります。",
       "NODE_EXISTS": "復元できません。''{{ name }}'' アイテムは既に存在します",
       "LOCATION_MISSING": "''{{ name }}'' アイテムを復元できません。アイテムの元の場所が削除されています",
       "GENERIC": "''{{ name }}'' アイテムの復元中に問題が発生しました",
@@ -186,7 +186,8 @@
       "SILENT": "サイレントログイン",
       "SCOPE": "範囲",
       "CLIENT": "クライアント ID",
-      "PUBLIC_URLS": "サイレントログインのパブリック URL"
+      "PUBLIC_URLS": "サイレントログインのパブリック URL",
+      "SECRET": "シークレット"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -252,7 +253,7 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "検索結果の昇順と降順を切り替えます",
-      "SORT_BY": "表示順"
+      "SORT_BY": "並べ替え"
     }
   },
   "COMMENTS": {
@@ -282,7 +283,7 @@
     },
     "ARIA-LABEL": {
       "SHOW-PASSWORD": "パスワードを表示",
-      "HIDE-PASSWORD": "パスワードを非表示"
+      "HIDE-PASSWORD": "パスワードの非表示"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "必須",
@@ -322,7 +323,7 @@
       "TOOLTIP": "コンテンツの処理"
     },
     "ACCESSIBILITY": {
-      "ACTIONS": "処理",
+      "ACTIONS": "アクション",
       "SELECT_ALL": "すべて選択",
       "SELECT_FILE": "ファイルを選択してください",
       "SORT_ASCENDING": "昇順",
@@ -333,7 +334,7 @@
       "SORT_DESCENDING_BY": "{{ string }} (降順)",
       "ICON_TEXT": "アイテムタイプ {{ type }}",
       "ICON_DISABLED": "無効",
-      "ROW_OPTION_BUTTON": "処理"
+      "ROW_OPTION_BUTTON": "アクション"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文書",
@@ -350,6 +351,11 @@
       "PRESENTATION": "プレゼンテーション",
       "SPREADSHEET": "スプレッドシート",
       "MISCELLANEOUS": "その他"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "列",
+      "SEARCH": "検索",
+      "APPLY": "適用"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "テナント"
-      }
+      },
+      "MY_PROFILE": "あなたのプロフィール"
     },
     "TAB": {
       "CS": "Content Services",

@@ -6,7 +6,7 @@
       "NONE": "Ingen prosesstilfellefilter valgt."
     },
     "PROPERTIES": {
-      "NAME": "Navn",
+      "NAME": "Prosessnavn",
       "CREATED": "Opprettet",
       "STATUS": "Status",
       "START_DATE": "Startdato",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Navn",
+      "NAME": "Oppgavenavn",
       "ASSIGNEE": "Tilordnet",
       "ID": "ID",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Lagre filter",
       "SAVE_AS": "Lagre filter som",
-      "DELETE": "Slett filter"
+      "DELETE": "Slett filter",
+      "RESTORE": "Gjenopprett filter"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fyll ut skjema automatisk"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Tilordnet meg",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Tilordnet meg",
+    "CURRENT_USER": "Tilordnet meg",
     "UNASSIGNED": "Ikke tilordnet",
-    "LIST_OF_CANDIDATE_GROUPS": "Liste over kandidatgrupper",
+    "NONE": "Ingen",
+    "CANDIDATE_GROUPS": "Liste over kandidatgrupper",
     "ASSIGNEE": "Tilordnet",
     "ASSIGNMENT_TYPE": "Tilordningstype"
   }

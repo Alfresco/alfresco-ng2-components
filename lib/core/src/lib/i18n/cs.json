@@ -39,7 +39,7 @@
       "SOURCE": "Vybrat zdroj z ",
       "VIEW_FILE": "Zobrazit",
       "DOWNLOAD_FILE": "Stáhnout",
-      "REMOVE_FILE": "Odstranit",
+      "REMOVE_FILE": "Odebrat",
       "UPLOAD": "Odeslat",
       "REQUIRED": "Povinné pole",
       "REST_API_FAILED": "Server {{ hostname }} není dosažitelný",
@@ -186,7 +186,8 @@
       "SILENT": "Přihlášení na pozadí",
       "SCOPE": "Rozsah",
       "CLIENT": "ID klienta",
-      "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí"
+      "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí",
+      "SECRET": "Tajné"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -194,7 +195,7 @@
         "NAME": "Název",
         "VALUE": "Hodnota"
       },
-      "NONE": "Žádný",
+      "NONE": "Žádné",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
         "INT_VALIDATION_ERROR": "Použít formát celého čísla",
@@ -252,7 +253,7 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Přepnout řazení výsledků mezi vzestupným a sestupným",
-      "SORT_BY": "Třídit podle"
+      "SORT_BY": "Řadit podle"
     }
   },
   "COMMENTS": {
@@ -285,7 +286,7 @@
       "HIDE-PASSWORD": "Skrýt heslo"
     },
     "MESSAGES": {
-      "USERNAME-REQUIRED": "Požadováno",
+      "USERNAME-REQUIRED": "Povinné",
       "USERNAME-MIN": "Vaše uživatelské jméno musí obsahovat alespoň {{ minLength }} znaků.",
       "PASSWORD-REQUIRED": "Přihlaste se zadáním hesla",
       "LOGIN-ERROR-CREDENTIALS": "Zadali jste neznámé uživatelské jméno nebo heslo",
@@ -327,7 +328,7 @@
       "SELECT_FILE": "Vybrat soubor",
       "SORT_ASCENDING": "Vzestupně",
       "SORT_DESCENDING": "Sestupně",
-      "SORT_NONE": "Žádný",
+      "SORT_NONE": "Žádné",
       "SORT_DEFAULT": "Seřaditelné",
       "SORT_ASCENDING_BY": "Vzestupně podle {{ string }}",
       "SORT_DESCENDING_BY": "Sestupně podle {{ string }}",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Prezentace",
       "SPREADSHEET": "Tabulka",
       "MISCELLANEOUS": "Různé"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Sloupce",
+      "SEARCH": "Hledat",
+      "APPLY": "Použít"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "Můj profil"
     },
     "TAB": {
       "CS": "Content Services",

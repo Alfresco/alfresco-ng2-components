@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Component Groepencloud",
     "CONFIRM-DIALOG": "Bevestigingsdialoogvenster",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Lijst met servicetaken"
+    "SERVICE_TASK_LIST": "Lijst met servicetaken",
+    "RICH_TEXT_EDITOR": "RTF-editor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Kolommen vervangen",
     "LOAD_NODE": "Node laden",
     "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen"
+    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
+    "USE_CUSTOM_COLUMN_HEADER": "Aangepaste sjabloon voor 'User'-koptekst gebruiken",
+    "CUSTOM_COLUMN_HEADER": "Aangepaste sjabloon voor User-koptekst"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Geen rapport geselecteerd. Kies een rapport uit de lijst"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Alle voorgeselecteerde groepen",
     "INVALID_USERS": "Ongeldige gebruikers",
     "INVALID_GROUPS": "Ongeldige groepen",
-    "READONLY_MODE": "Alleen-lezenmodus"
+    "READONLY_MODE": "Alleen-lezenmodus",
+    "GROUPS_RESTRICTION": "Groepenbeperking"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multiselectie",
@@ -350,7 +354,7 @@
       "TITLE": "Titel",
       "ICON": "Pictogram",
       "TASK_ID": "Taak-id",
-      "PROCESS_ID": "Procesinstantie-id",
+      "PROCESS_ID": "Procesinstance-id",
       "ACTION_TYPE": "Actietype"
     }
   },

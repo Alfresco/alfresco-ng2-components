@@ -6,7 +6,7 @@
       "NONE": "Der er ikke valgt et filter for procesforekomster."
     },
     "PROPERTIES": {
-      "NAME": "Navn",
+      "NAME": "Procesnavn",
       "CREATED": "Oprettet",
       "STATUS": "Status",
       "START_DATE": "Startdato",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Navn",
+      "NAME": "Opgavenavn",
       "ASSIGNEE": "Modtager",
       "ID": "Id",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Gem filter",
       "SAVE_AS": "Gem filter som",
-      "DELETE": "Slet filter"
+      "DELETE": "Slet filter",
+      "RESTORE": "Gendan filter"
     },
     "DIALOG": {
       "TITLE": "Gem filter som",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Autofyld formular"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Tildelt mig",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Tildelt mig",
+    "CURRENT_USER": "Tildelt mig",
     "UNASSIGNED": "Ikke tildelt",
-    "LIST_OF_CANDIDATE_GROUPS": "Liste over kandidatgrupper",
+    "NONE": "Ingen",
+    "CANDIDATE_GROUPS": "Liste over kandidatgrupper",
     "ASSIGNEE": "Modtager",
     "ASSIGNMENT_TYPE": "Tildelingstype"
   }

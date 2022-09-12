@@ -6,7 +6,7 @@
       "NONE": "Nessun filtro di istanze di processo selezionato."
     },
     "PROPERTIES": {
-      "NAME": "Nome",
+      "NAME": "Nome processo",
       "CREATED": "Creato",
       "STATUS": "Stato",
       "START_DATE": "Data di inizio",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Nome",
+      "NAME": "Nome compito",
       "ASSIGNEE": "Assegnatario",
       "ID": "ID",
       "STATUS": "Stato",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Salva filtro",
       "SAVE_AS": "Salva filtro con nome",
-      "DELETE": "Elimina filtro"
+      "DELETE": "Elimina filtro",
+      "RESTORE": "Ripristina filtro"
     },
     "DIALOG": {
       "TITLE": "Salva filtro con nome",
@@ -308,7 +309,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Richiedi",
-      "RELEASE": "Restituisci"
+      "RELEASE": "Rifiuta"
     },
     "PROPERTIES": {
       "TASK_NAME": "Compito",
@@ -369,7 +370,7 @@
         "COMPLETE": "Completa",
         "CANCEL": "Annulla",
         "CLAIM": "Richiedi",
-        "UNCLAIM": "Restituisci"
+        "UNCLAIM": "Rifiuta"
       }
     },
     "ERROR": {
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Compilazione automatica modulo"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Assegnato a me",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Assegnato a",
+    "CURRENT_USER": "Assegnato a me",
     "UNASSIGNED": "Non assegnato",
-    "LIST_OF_CANDIDATE_GROUPS": "Elenco di gruppi candidati",
+    "NONE": "Nessuno",
+    "CANDIDATE_GROUPS": "Elenco di gruppi candidati",
     "ASSIGNEE": "Assegnatario",
     "ASSIGNMENT_TYPE": "Tipo di assegnazione"
   }

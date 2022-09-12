@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Gruppecloudkomponent",
     "CONFIRM-DIALOG": "Bekræftelsesdialogboks",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Opgaveliste for tjeneste"
+    "SERVICE_TASK_LIST": "Opgaveliste for tjeneste",
+    "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Erstat kolonner",
     "LOAD_NODE": "Indlæs node",
     "MULTISELECT": "Vælg flere",
-    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer"
+    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer",
+    "USE_CUSTOM_COLUMN_HEADER": "Brug tilpasset skabelon til overskrift 'Bruger'",
+    "CUSTOM_COLUMN_HEADER": "Tilpasset brugeroverskriftskabelon"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Du skal vælge en rapport på listen til venstre"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Alle forudvalgte grupper",
     "INVALID_USERS": "Ugyldige brugere",
     "INVALID_GROUPS": "Ugyldige grupper",
-    "READONLY_MODE": "Skrivebeskyttet tilstand"
+    "READONLY_MODE": "Skrivebeskyttet tilstand",
+    "GROUPS_RESTRICTION": "Gruppebegrænsning"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multivalg",

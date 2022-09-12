@@ -22,6 +22,17 @@
       "NO_LABEL": "No"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Gestione versioni",
+      "CLOSE": "Chiudi"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Caricare la nuova versione",
+      "CANCEL": "Annulla",
+      "UPLOAD": "Carica"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "Corrente",
     "NEW_VERSION": "Nuovo",

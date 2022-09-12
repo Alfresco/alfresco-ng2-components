@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Součást cloudu skupin",
     "CONFIRM-DIALOG": "Dialogové okno s potvrzením",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Seznam úloh služby"
+    "SERVICE_TASK_LIST": "Seznam úloh služby",
+    "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Nahradit sloupce",
     "LOAD_NODE": "Načíst uzel",
     "MULTISELECT": "Hromadný výběr",
-    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek"
+    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek",
+    "USE_CUSTOM_COLUMN_HEADER": "Použít vlastní šablonu pro záhlaví ,Uživatel‘",
+    "CUSTOM_COLUMN_HEADER": "Vlastní šablona záhlaví Uživatel"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Nebyly zvoleny žádné zprávy. Vyberte zprávu ze seznamu"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Všechny předvolené skupiny",
     "INVALID_USERS": "Neplatní uživatelé",
     "INVALID_GROUPS": "Neplatné skupiny",
-    "READONLY_MODE": "Režim jen pro čtení"
+    "READONLY_MODE": "Režim jen pro čtení",
+    "GROUPS_RESTRICTION": "Omezení skupin"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Hromadný výběr",

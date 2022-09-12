@@ -73,7 +73,7 @@
       "BUTTON": {
         "COMPLETE": "Completa",
         "CLAIM": "Richiedi",
-        "UNCLAIM": "Restituisci",
+        "UNCLAIM": "Rifiuta",
         "DRAG-ATTACHMENT": "Rilascia file da caricare",
         "UPLOAD-ATTACHMENT": "Carica allegato"
       },
@@ -348,7 +348,7 @@
         "COMPLETE": "Completa",
         "CANCEL": "Annulla",
         "CLAIM": "Richiedi",
-        "UNCLAIM": "Restituisci"
+        "UNCLAIM": "Rifiuta"
       }
     },
     "COMPLETED_TASK": {

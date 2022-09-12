@@ -6,7 +6,7 @@
       "NONE": "Aucun filtre d'instances de processus sélectionné."
     },
     "PROPERTIES": {
-      "NAME": "Nom",
+      "NAME": "Nom du processus",
       "CREATED": "Créé",
       "STATUS": "Statut",
       "START_DATE": "Date de début",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Nom",
+      "NAME": "Nom de la tâche",
       "ASSIGNEE": "Personne assignée",
       "ID": "ID",
       "STATUS": "Statut",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Enregistrer le filtre",
       "SAVE_AS": "Enregistrer le filtre sous",
-      "DELETE": "Supprimer le filtre"
+      "DELETE": "Supprimer le filtre",
+      "RESTORE": "Restaurer le filtre"
     },
     "DIALOG": {
       "TITLE": "Enregistrer le filtre sous",
@@ -331,7 +332,7 @@
       "END_DATE": "Date de fin",
       "ID": "ID",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
-      "PROCESS_INSTANCE_ID_DEFAULT": "Aucun ID de l'instance de processus",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Aucun ID d'instance de processus",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "Aucune description",
       "FORM_NAME": "Nom du formulaire",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Remplir le formulaire automatiquement"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Qui m'est assigné",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Assigné à",
+    "CURRENT_USER": "Qui m'est assigné",
     "UNASSIGNED": "Non assigné",
-    "LIST_OF_CANDIDATE_GROUPS": "Liste des groupes candidats",
+    "NONE": "Aucun",
+    "CANDIDATE_GROUPS": "Liste des groupes candidats",
     "ASSIGNEE": "Personne assignée",
     "ASSIGNMENT_TYPE": "Type d'affectation"
   }

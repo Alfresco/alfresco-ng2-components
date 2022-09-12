@@ -6,7 +6,7 @@
       "NONE": "Inget processinstansfilter valt"
     },
     "PROPERTIES": {
-      "NAME": "Namn",
+      "NAME": "Processnamn",
       "CREATED": "Skapad",
       "STATUS": "Status",
       "START_DATE": "Startdatum",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Namn",
+      "NAME": "Uppgiftsnamn",
       "ASSIGNEE": "Tilldelad användare",
       "ID": "ID",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Spara filter",
       "SAVE_AS": "Spara filter som",
-      "DELETE": "Radera filter"
+      "DELETE": "Radera filter",
+      "RESTORE": "Återställ filter"
     },
     "DIALOG": {
       "TITLE": "Spara filter som",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fyll i formuläret automatiskt"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Tilldelad till mig",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Tilldelad till",
+    "CURRENT_USER": "Tilldelad till mig",
     "UNASSIGNED": "Otilldelad",
-    "LIST_OF_CANDIDATE_GROUPS": "Lista över kandidatgrupper",
+    "NONE": "Ingen",
+    "CANDIDATE_GROUPS": "Lista över kandidatgrupper",
     "ASSIGNEE": "Tilldelad användare",
     "ASSIGNMENT_TYPE": "Uppgiftstyp"
   }

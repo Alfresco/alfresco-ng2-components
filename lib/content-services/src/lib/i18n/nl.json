@@ -22,6 +22,17 @@
       "NO_LABEL": "Nee"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Versies beheren",
+      "CLOSE": "Sluiten"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Nieuwe versie uploaden",
+      "CANCEL": "Annuleren",
+      "UPLOAD": "Uploaden"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "Huidige",
     "NEW_VERSION": "Nieuw",
@@ -270,7 +281,7 @@
       "ft_ic_website": "Webresource",
       "ft_ic_archive": "Archiefbestand",
       "ft_ic_presentation": "Presentatiebestand",
-      "ft_ic_spreadsheet": "Spreadsheetbestand"
+      "ft_ic_spreadsheet": "Werkbladbestand"
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {

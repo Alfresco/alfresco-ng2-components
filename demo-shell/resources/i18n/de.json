@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Gruppen-Cloud-Komponente",
     "CONFIRM-DIALOG": "Bestätigungsdialog",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Service-Aufgabenliste"
+    "SERVICE_TASK_LIST": "Service-Aufgabenliste",
+    "RICH_TEXT_EDITOR": "Rich-Text-Editor"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Spalten ersetzen",
     "LOAD_NODE": "Node laden",
     "MULTISELECT": "Mehrfachauswahl",
-    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten"
+    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
+    "USE_CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für 'Benutzer'-Kopfzeile verwenden",
+    "CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für Benutzer-Kopfzeile"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Kein Bericht ausgewählt. Wählen Sie einen Bericht aus der Liste"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Alle vorausgewählten Gruppen",
     "INVALID_USERS": "Unzulässige Benutzer",
     "INVALID_GROUPS": "Unzulässige Gruppen",
-    "READONLY_MODE": "Schreibgeschützter Modus"
+    "READONLY_MODE": "Schreibgeschützter Modus",
+    "GROUPS_RESTRICTION": "Gruppenbeschränkung"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Mehrfachauswahl",

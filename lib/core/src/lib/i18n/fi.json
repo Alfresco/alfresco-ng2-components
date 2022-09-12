@@ -186,7 +186,8 @@
       "SILENT": "Hiljainen kirjautuminen",
       "SCOPE": "Laajuus",
       "CLIENT": "Asiakastunnus",
-      "PUBLIC_URLS": "Yleisten url-osoitteiden hiljainen sisäänkirjaus"
+      "PUBLIC_URLS": "Yleisten url-osoitteiden hiljainen sisäänkirjaus",
+      "SECRET": "Salainen"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -194,7 +195,7 @@
         "NAME": "Nimi",
         "VALUE": "Arvo"
       },
-      "NONE": "Ei mitään",
+      "NONE": "Ei yhtään",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
@@ -252,7 +253,7 @@
     },
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä",
-      "SORT_BY": "Lajitteluperuste"
+      "SORT_BY": "Lajittele"
     }
   },
   "COMMENTS": {
@@ -327,7 +328,7 @@
       "SELECT_FILE": "Valitse tiedosto",
       "SORT_ASCENDING": "Nouseva",
       "SORT_DESCENDING": "Laskeva",
-      "SORT_NONE": "Ei mitään",
+      "SORT_NONE": "Ei yhtään",
       "SORT_DEFAULT": "Lajiteltavissa",
       "SORT_ASCENDING_BY": "Nouseva: {{ string }} ensin",
       "SORT_DESCENDING_BY": "Laskeva {{ string }} ensin",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Esitys",
       "SPREADSHEET": "Laskentataulukko",
       "MISCELLANEOUS": "Sekalainen"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Sarakkeet",
+      "SEARCH": "Hae",
+      "APPLY": "Käytä"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tilaaja"
-      }
+      },
+      "MY_PROFILE": "Oma profiili"
     },
     "TAB": {
       "CS": "Content Services",

@@ -6,7 +6,7 @@
       "NONE": "No se ha seleccionado ningún filtro de instancias."
     },
     "PROPERTIES": {
-      "NAME": "Nombre",
+      "NAME": "Nombre del proceso",
       "CREATED": "Creado",
       "STATUS": "Estado",
       "START_DATE": "Fecha de inicio",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Nombre",
+      "NAME": "Nombre de la tarea",
       "ASSIGNEE": "Usuario asignado",
       "ID": "ID",
       "STATUS": "Estado",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Guardar filtro",
       "SAVE_AS": "Guardar filtro como",
-      "DELETE": "Eliminar filtro"
+      "DELETE": "Eliminar filtro",
+      "RESTORE": "Restaurar filtro"
     },
     "DIALOG": {
       "TITLE": "Guardar filtro como",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Rellenar los campos del formulario"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Asignado a mí",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Asignado a mí",
+    "CURRENT_USER": "Asignado a mí",
     "UNASSIGNED": "No asignado",
-    "LIST_OF_CANDIDATE_GROUPS": "Lista de grupos de candidatos",
+    "NONE": "Ninguno",
+    "CANDIDATE_GROUPS": "Lista de grupos de candidatos",
     "ASSIGNEE": "Usuario asignado",
     "ASSIGNMENT_TYPE": "Tipo de asignación"
   }

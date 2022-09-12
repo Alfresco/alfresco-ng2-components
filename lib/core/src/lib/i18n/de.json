@@ -146,7 +146,7 @@
     "MESSAGES": {
       "ERRORS": {
         "GENERIC": "Die Aktion war nicht erfolgreich. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
-        "EXISTENT_FOLDER": "Es gibt bereits einen Ordner mit diesem Namen. Probieren Sie es mit einem anderen Namen."
+        "EXISTENT_FOLDER": "Es gibt bereits einen Ordner mit diesem Namen. Versuchen Sie es mit einem anderen Namen."
       }
     },
     "RESTORE_NODE": {
@@ -172,11 +172,11 @@
       "SSO": "SSO",
       "IMPLICIT-FLOW": "Impliziter Fluss",
       "PROVIDER": "Provider",
-      "REQUIRED": "Dies ist ein Pflichtfeld",
+      "REQUIRED": "Dieses Feld ist erforderlich",
       "CS_URL_ERROR": "Content Services-Adresse nicht im richtigen URL-Format",
       "PS_URL_ERROR": "Process Services-Adresse nicht im richtigen URL-Format",
       "TITLE": "Einstellungen",
-      "CS-HOST": "URL für Content Services",
+      "CS-HOST": "Content Services-URL",
       "BP-HOST": "URL für Process Services",
       "BACK": "Zurück",
       "APPLY": "Anwenden",
@@ -186,7 +186,8 @@
       "SILENT": "Automatische Anmeldung",
       "SCOPE": "Bereich",
       "CLIENT": "Client-ID",
-      "PUBLIC_URLS": "Öffentliche URLs für automatische Anmeldung"
+      "PUBLIC_URLS": "Öffentliche URLs für automatische Anmeldung",
+      "SECRET": "Geheimnis"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -257,14 +258,14 @@
   },
   "COMMENTS": {
     "NONE": "Keine Kommentare vorhanden",
-    "ADD": "Kommentar hinzufügen",
+    "ADD": "Hinzufügen",
     "HEADER": "Kommentare ({{ count }})",
     "CREATED_BY_HEADER": "Erstellt von",
-    "MESSAGE_HEADER": "Fehlermeldung",
+    "MESSAGE_HEADER": "Nachricht",
     "DIALOG": {
       "TITLE": "Neuer Kommentar",
       "LABELS": {
-        "MESSAGE": "Fehlermeldung"
+        "MESSAGE": "Nachricht"
       },
       "BUTTON": {
         "ADD": "Kommentar hinzufügen",
@@ -340,7 +341,7 @@
       "FOLDER": "Ordner",
       "PDF": "PDF",
       "IMAGE": "Bild",
-      "EXCEL": "Excel-Tabelle",
+      "EXCEL": "Excel-Arbeitsblatt",
       "WORD": "Word-Dokument",
       "POWERPOINT": "Powerpoint-Präsentation",
       "VIDEO": "Video",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Präsentation",
       "SPREADSHEET": "Tabelle",
       "MISCELLANEOUS": "Verschiedenes"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Spalten",
+      "SEARCH": "Suchen",
+      "APPLY": "Anwenden"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Mandant"
-      }
+      },
+      "MY_PROFILE": "Mein Profil"
     },
     "TAB": {
       "CS": "Content Services",
@@ -383,8 +390,8 @@
     "ARIA": {
       "PREVIOUS_PAGE": "Vorherige Seite",
       "NEXT_PAGE": "Nächste Seite",
-      "ZOOM_IN": "Hineinzoomen",
-      "ZOOM_OUT": "Herauszoomen",
+      "ZOOM_IN": "Vergrößern",
+      "ZOOM_OUT": "Verkleinern",
       "FIT_PAGE": "Seite anpassen",
       "ROTATE": "Drehen",
       "CROP": "Zuschneiden",
@@ -560,7 +567,7 @@
   },
   "SELECT_FILTER": {
     "INPUT": {
-      "PLACEHOLDER": "Suche",
+      "PLACEHOLDER": "Suchen",
       "ARIA_LABEL": "Suchoptionen"
     },
     "BUTTON": {

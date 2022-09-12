@@ -70,7 +70,7 @@
     },
     "FILE_SIZE": {
       "BYTES": "bytes",
-      "KB": "KB",
+      "KB": "kB",
       "MB": "MB",
       "GB": "GB",
       "TB": "TB",
@@ -186,7 +186,8 @@
       "SILENT": "Stille aanmelding",
       "SCOPE": "Bereik",
       "CLIENT": "Client-id",
-      "PUBLIC_URLS": "Openbare URL's voor stille aanmelding"
+      "PUBLIC_URLS": "Openbare URL's voor stille aanmelding",
+      "SECRET": "Geheim"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -324,7 +325,7 @@
     "ACCESSIBILITY": {
       "ACTIONS": "Acties",
       "SELECT_ALL": "Alles selecteren",
-      "SELECT_FILE": "een bestand selecteren",
+      "SELECT_FILE": "Bestand selecteren",
       "SORT_ASCENDING": "Oplopend",
       "SORT_DESCENDING": "Aflopend",
       "SORT_NONE": "Geen",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentatie",
       "SPREADSHEET": "Werkblad",
       "MISCELLANEOUS": "Overig"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Kolommen",
+      "SEARCH": "Zoeken",
+      "APPLY": "Toepassen"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "Mijn profiel"
     },
     "TAB": {
       "CS": "Content Services",

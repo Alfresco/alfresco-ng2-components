@@ -6,7 +6,7 @@
       "NONE": "Geen procesinstancefilter geselecteerd."
     },
     "PROPERTIES": {
-      "NAME": "Naam",
+      "NAME": "Procesnaam",
       "CREATED": "Gemaakt",
       "STATUS": "Status",
       "START_DATE": "Begindatum",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Naam",
+      "NAME": "Taaknaam",
       "ASSIGNEE": "Toegewezen persoon",
       "ID": "Id",
       "STATUS": "Status",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Filter opslaan",
       "SAVE_AS": "Filter opslaan als",
-      "DELETE": "Filter verwijderen"
+      "DELETE": "Filter verwijderen",
+      "RESTORE": "Filter herstellen"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",
@@ -330,8 +331,8 @@
       "CREATED": "Gemaakt",
       "END_DATE": "Einddatum",
       "ID": "Id",
-      "PROCESS_INSTANCE_ID": "Procesinstantie-id",
-      "PROCESS_INSTANCE_ID_DEFAULT": "Geen procesinstantie-id",
+      "PROCESS_INSTANCE_ID": "Procesinstance-id",
+      "PROCESS_INSTANCE_ID_DEFAULT": "Geen procesinstance-id",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "FORM_NAME": "Formuliernaam",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Formulier automatisch invullen"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Toegewezen aan mij",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Toegewezen aan",
+    "CURRENT_USER": "Toegewezen aan mij",
     "UNASSIGNED": "Niet toegewezen",
-    "LIST_OF_CANDIDATE_GROUPS": "Lijst met kandidaatgroepen",
+    "NONE": "Geen",
+    "CANDIDATE_GROUPS": "Lijst met kandidaatgroepen",
     "ASSIGNEE": "Toegewezen persoon",
     "ASSIGNMENT_TYPE": "Toewijzingstype"
   }

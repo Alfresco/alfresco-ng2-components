@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Componente Cloud gruppi",
     "CONFIRM-DIALOG": "Finestra di conferma",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Elenco compiti servizio"
+    "SERVICE_TASK_LIST": "Elenco compiti servizio",
+    "RICH_TEXT_EDITOR": "Editor di testo RTF"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Sostituisci colonne",
     "LOAD_NODE": "Carica nodo",
     "MULTISELECT": "Selezione multipla",
-    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi"
+    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
+    "USE_CUSTOM_COLUMN_HEADER": "Usa il modello personalizzato per l'intestazione \"Utente\"",
+    "CUSTOM_COLUMN_HEADER": "Modello personalizzato per intestazione Utente"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Nessun rapporto selezionato. Scegliere un rapporto dall'elenco"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Tutti i gruppi preselezionati",
     "INVALID_USERS": "Utenti non validi",
     "INVALID_GROUPS": "Gruppi non validi",
-    "READONLY_MODE": "Modalità sola lettura"
+    "READONLY_MODE": "Modalità sola lettura",
+    "GROUPS_RESTRICTION": "Limitazione gruppi"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Selezione multipla",
