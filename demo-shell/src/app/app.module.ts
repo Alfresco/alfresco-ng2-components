@@ -28,8 +28,8 @@ import {
     TRANSLATION_PROVIDER,
     DebugAppConfigService,
     CoreModule,
-    CoreAutomationService,
-    AuthModule
+    AuthModule,
+    CoreAutomationService
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';

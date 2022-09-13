@@ -44,8 +44,7 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         super(alfrescoApi, appConfig, cookie, logService);
     }
 
-    setRedirect(url?: RedirectionModel) {
-        console.log(url);
+    setRedirect(_url?: RedirectionModel) {
         // noop
     }
 
@@ -66,8 +65,7 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
     }
 
-    isLoggedInWith(provider?: string): boolean {
-        console.log(provider);
+    isLoggedInWith(_provider?: string): boolean {
         return this.isLoggedIn();
     }
 
