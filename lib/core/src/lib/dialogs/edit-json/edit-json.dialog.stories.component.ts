@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnChanges, Input } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
     EditJsonDialogComponent,
-    EditJsonDialogSettings,
-} from "./edit-json.dialog";
+    EditJsonDialogSettings
+} from './edit-json.dialog';
 
 @Component({
-    selector: "adf-edit-json-dialog-storybook",
+    selector: 'adf-edit-json-dialog-storybook',
     template: `<button mat-raised-button (click)="openDialog()">
         Open dialog
-    </button>`,
+    </button>`
 })
 export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
@@ -44,7 +44,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this._settings = {
             title: newSettings.title,
             editable: newSettings.editable,
-            value: JSON.stringify(newSettings.value, null, "  "),
+            value: JSON.stringify(newSettings.value, null, '  ')
         };
     }
 
@@ -54,7 +54,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this.settings = {
             title: this.title,
             editable: this.editable,
-            value: this.value,
+            value: this.value
         };
     }
 
@@ -62,7 +62,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this.settings = {
             title: this.title,
             editable: this.editable,
-            value: this.value,
+            value: this.value
         };
     }
 
@@ -70,7 +70,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         this.dialog
             .open(EditJsonDialogComponent, {
                 data: this._settings,
-                minWidth: `50%`,
+                minWidth: `50%`
             })
             .afterClosed()
             .subscribe((value: string) => {
@@ -78,7 +78,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
                     this._settings.value = JSON.stringify(
                         JSON.parse(value),
                         null,
-                        "  "
+                        '  '
                     );
                 }
             });
