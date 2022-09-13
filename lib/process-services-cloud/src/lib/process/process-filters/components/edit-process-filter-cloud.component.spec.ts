@@ -40,6 +40,7 @@ import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { mockAppVersions } from '../mock/process-filters-cloud.mock';
+import { DATE_FORMAT_CLOUD } from '../../../models/date-format-cloud.model';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -500,8 +501,10 @@ describe('EditProcessFilterCloudComponent', () => {
             priority: '12',
             suspendedDateType: DateCloudFilterType.RANGE
         });
-        filter.suspendedFrom = new Date(2021, 1, 1).toString();
-        filter.suspendedTo = new Date(2021, 1, 2).toString();
+        const oneYearAgoDate = moment().add(-1, 'years').format(DATE_FORMAT_CLOUD);
+        const todayDate = moment().format(DATE_FORMAT_CLOUD);
+        filter.suspendedFrom = oneYearAgoDate.toString();
+        filter.suspendedTo = todayDate.toString();
         getProcessFilterByIdSpy.and.returnValue(of(filter));
 
         fixture.detectChanges();
@@ -518,8 +521,8 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.editProcessFilterForm.get('_suspendedFrom').value).toEqual(new Date(2021, 1, 1).toString());
-        expect(component.editProcessFilterForm.get('_suspendedTo').value).toEqual(new Date(2021, 1, 2).toString());
+        expect(component.editProcessFilterForm.get('_suspendedFrom').value).toEqual(oneYearAgoDate.toString());
+        expect(component.editProcessFilterForm.get('_suspendedTo').value).toEqual(todayDate.toString());
         expect(component.editProcessFilterForm.get('suspendedDateType').value).toEqual(DateCloudFilterType.RANGE);
     });
 

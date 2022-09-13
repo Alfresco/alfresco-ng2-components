@@ -26,8 +26,7 @@ import {
     MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
     UserPreferencesService, UserPreferenceValues, FormService
 } from '@alfresco/adf-core';
-
-export const DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 
 @Component({
     selector: 'date-widget',
