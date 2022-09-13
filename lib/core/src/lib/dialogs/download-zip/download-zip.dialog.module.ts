@@ -18,11 +18,22 @@
 import { NgModule } from '@angular/core';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { PipeModule } from '../../pipes/pipe.module';
-import { DialogModule } from '../dialog.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [DialogModule, PipeModule],
     declarations: [DownloadZipDialogComponent],
+    imports: [
+        CommonModule,
+        PipeModule,
+        MatDialogModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        TranslateModule
+    ],
     exports: [DownloadZipDialogComponent]
 })
 export class DownloadZipDialogModule {}

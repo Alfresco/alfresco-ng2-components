@@ -45,7 +45,8 @@ import { NotificationHistoryModule } from './notifications/notification-history.
 import { BlankPageModule } from './blank-page/blank-page.module';
 
 import { DirectiveModule } from './directives/directive.module';
-import { DialogModule } from './dialogs/dialog.module';
+import { DownloadZipDialogModule } from './dialogs/download-zip/download-zip.dialog.module';
+import { EditJsonDialogModule } from './dialogs/edit-json/edit-json.dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
@@ -74,7 +75,8 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         PipeModule,
         CommonModule,
         DirectiveModule,
-        DialogModule,
+        DownloadZipDialogModule,
+        EditJsonDialogModule,
         FormsModule,
         ReactiveFormsModule,
         HostSettingsModule,
@@ -110,7 +112,8 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         PipeModule,
         CommonModule,
         DirectiveModule,
-        DialogModule,
+        DownloadZipDialogModule,
+        EditJsonDialogModule,
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
