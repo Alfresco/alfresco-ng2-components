@@ -16,22 +16,24 @@
  */
 
 import { NgModule } from '@angular/core';
-import { EditJsonDialogComponent } from './edit-json.dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { PipeModule } from '../../pipes/pipe.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+
 @NgModule({
-    declarations: [EditJsonDialogComponent],
+    declarations: [DownloadZipDialogComponent],
     imports: [
         CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
+        PipeModule,
         MatDialogModule,
-        MatButtonModule
+        MatProgressBarModule,
+        MatButtonModule,
+        TranslateModule
     ],
-    exports: [EditJsonDialogComponent]
+    exports: [DownloadZipDialogComponent]
 })
-export class EditJsonDialogModule {}
+export class DownloadZipDialogModule {}

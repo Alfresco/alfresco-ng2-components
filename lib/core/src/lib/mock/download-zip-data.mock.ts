@@ -15,26 +15,19 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { DownloadEntry } from '@alfresco/js-api';
 
-import { MaterialModule } from '../material.module';
-import { DownloadZipDialogComponent } from './download-zip/download-zip.dialog';
-import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '../pipes/pipe.module';
+export const zipNode = {
+    entry: {
+        name: 'files.zip',
+        contentUrl: './assets/files.zip',
+        id: 'files_in_zip'
+    }
+};
 
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule,
-        PipeModule
-    ],
-    declarations: [
-        DownloadZipDialogComponent
-    ],
-    exports: [
-        DownloadZipDialogComponent
-    ]
-})
-export class DialogModule {}
+export const downloadEntry: DownloadEntry = {
+    entry: {
+        id: 'entryId',
+        status: 'DONE'
+    }
+};
