@@ -25,8 +25,7 @@ export const getDataColumnMock = <T = unknown>(
 });
 
 export const dataText = new ObjectDataTableAdapter(
-    [{ id: '1 first' }, { id: '2 second' }, { id: '3 third' }],
-    []
+    [{ id: '1 first' }, { id: '2 second' }, { id: '3 third' }]
 );
 
 export const dateRows = [
@@ -59,11 +58,9 @@ export const locationColumns = [
 ];
 
 export const dataIcon = new ObjectDataTableAdapter(
-    [{ icon: 'alarm' }, { icon: 'folder_open' }, { icon: 'accessibility' }],
-    []
+    [{ icon: 'alarm' }, { icon: 'folder_open' }, { icon: 'accessibility' }]
 );
 
 export const dataSizeInBytes = new ObjectDataTableAdapter(
-    [{ size: 12313 }, { size: 23 }, { size: 42421412421 }],
-    []
+    [{ size: 12313 }, { size: 23 }, { size: 42421412421 }]
 );
