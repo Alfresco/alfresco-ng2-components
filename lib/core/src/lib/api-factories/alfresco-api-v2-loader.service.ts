@@ -17,7 +17,6 @@
 
 import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -32,12 +31,9 @@ export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApi
 export class AlfrescoApiLoaderService {
     constructor(private readonly appConfig: AppConfigService, private readonly apiService: AlfrescoApiService) {}
 
-    init(): Promise<any> {
-        return this.appConfig.onLoad.pipe(take(1)).toPromise().then(() => {
-            this.initAngularAlfrescoApi();
-        }).catch(() => {
-            throw new Error('Something wrong happened when calling the app.config.json');
-        });
+    async init(): Promise<any> {
+        await this.appConfig.load();
+        return this.initAngularAlfrescoApi();
     }
 
     private initAngularAlfrescoApi() {
