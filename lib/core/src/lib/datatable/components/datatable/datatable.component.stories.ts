@@ -63,12 +63,7 @@ export default {
       defaultValue: [
         {
           id: 1,
-          textCol: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Luis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+          textCol: 'This is a very long text inside the text column to check if the hidden text will be displayed on hover.',
           imageCol: 'material-icons://folder_open',
           iconCol: 'folder_open',
           dateCol: new Date(),
