@@ -46,11 +46,10 @@ describe('NodeCounterDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should display the counter component', () => {
-        fixture.whenStable().then(() => {
-            const counterElement = fixture.debugElement.query(By.css('adf-node-counter'));
-            expect(counterElement).not.toBeNull();
-            expect(counterElement.nativeElement.innerText).toBe('NODE_COUNTER.SELECTED_COUNT');
-        });
+    it('should display the counter component', async () => {
+        await fixture.whenStable();
+        const counterElement = fixture.debugElement.query(By.css('adf-node-counter'));
+        expect(counterElement).not.toBeNull();
+        expect(counterElement.nativeElement.innerText).toBe('NODE_COUNTER.SELECTED_COUNT');
     });
 });
