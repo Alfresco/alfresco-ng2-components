@@ -74,7 +74,7 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
         this.editorInstance.save().then((outputData) => {
             this._outputData.next(outputData);
         }).catch((error) => {
-            console.log('Saving failed: ', error);
+            console.error('Saving failed: ', error);
         });
     }
 
