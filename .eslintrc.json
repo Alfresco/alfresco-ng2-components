@@ -116,6 +116,31 @@
           }
         ],
         "no-bitwise": "off",
+        "no-console": [
+          "error",
+          {
+            "allow": [
+              "warn",
+              "dir",
+              "timeLog",
+              "assert",
+              "clear",
+              "count",
+              "countReset",
+              "group",
+              "groupEnd",
+              "table",
+              "dirxml",
+              "error",
+              "groupCollapsed",
+              "Console",
+              "profile",
+              "profileEnd",
+              "timeStamp",
+              "context"
+            ]
+          }
+        ],
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
         "no-redeclare": "error",
