@@ -102,8 +102,9 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         widget.field = field;
+        const mockDate = moment('1982-03-13T10:00:000Z', 'YYYY-MM-DDTHH:mm:ssZ');
+        widget.onDateChanged(mockDate);
 
-        widget.onDateChanged(moment('1982-03-13T10:00:000Z'));
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
