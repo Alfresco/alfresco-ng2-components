@@ -669,7 +669,7 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.highlight.mergeContiguous).toBe(true);
     });
 
-    it('should emit error event', (done) => {
+    it('should emit error event', () => {
         const config: SearchConfiguration = {
             categories: [
                 { id: 'cat1', enabled: true } as any
@@ -680,8 +680,8 @@ describe('SearchQueryBuilder', () => {
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
         spyOn(builder, 'buildQuery').and.throwError('some error');
 
-        builder.error.subscribe(() => {
-            done();
+        builder.error.subscribe((error) => {
+            expect(error).toEqual(new Error('some error'));
         });
 
         builder.execute();
