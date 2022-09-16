@@ -85,7 +85,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should set/update the active filter after the Apply button is clicked', async () => {
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -112,7 +112,7 @@ describe('SearchFilterContainerComponent', () => {
 
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('name', 'searchText');
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -132,7 +132,7 @@ describe('SearchFilterContainerComponent', () => {
         component.filterChange.subscribe(() => {
             eventRaised = true;
         });
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
         menuButton.click();
 
         fixture.detectChanges();
@@ -153,7 +153,7 @@ describe('SearchFilterContainerComponent', () => {
         it('should set up a focus trap on the filter when the menu is opened', async () => {
             expect(component.focusTrap).toBeUndefined();
 
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
             menuButton.click();
             fixture.detectChanges();
 
@@ -163,7 +163,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should focus the input element when the menu is opened', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
             menuButton.click();
 
             fixture.detectChanges();
@@ -175,7 +175,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should focus the menu trigger when the menu is closed', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
             menuButton.click();
 
             fixture.detectChanges();
@@ -187,7 +187,7 @@ describe('SearchFilterContainerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const matMenuButton = fixture.debugElement.query(By.css('#filter-menu-button'));
+            const matMenuButton = fixture.debugElement.query(By.css('[data-automation-id="filter-menu-button"]'));
             expect(document.activeElement).toBe(matMenuButton.nativeElement);
         });
     });

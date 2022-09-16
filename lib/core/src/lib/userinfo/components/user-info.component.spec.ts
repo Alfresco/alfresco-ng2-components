@@ -258,7 +258,7 @@ describe('User info component', () => {
                 });
 
                 it('should show N/A when the job title is null', () => {
-                    const imageButton = element.querySelector<HTMLButtonElement>('#user-initials-image');
+                    const imageButton = element.querySelector<HTMLButtonElement>('[data-automation-id="user-initials-image"]');
                     imageButton.click();
                     fixture.detectChanges();
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
@@ -269,7 +269,7 @@ describe('User info component', () => {
                 });
 
                 it('should not show the tabs', () => {
-                    const imageButton = element.querySelector<HTMLButtonElement>('#user-initials-image');
+                    const imageButton = element.querySelector<HTMLButtonElement>('[data-automation-id="user-initials-image"]');
                     imageButton.click();
                     fixture.detectChanges();
                     const tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
@@ -285,7 +285,7 @@ describe('User info component', () => {
                         lastName: 'Adams',
                         email: 'wilbur@app.com'
                     });
-                    expect(expected).toBe('<div id="user-initials-image" class="">WA</div>');
+                    expect(expected).toBe('<div data-automation-id="user-initials-image" class="">WA</div>');
                     component.ecmUser$.subscribe((response: EcmUserModel) => {
                         expect(response).toBeDefined();
                         expect(response.avatarId).toBeNull();
@@ -421,7 +421,7 @@ describe('User info component', () => {
                 await whenFixtureReady();
 
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
+                expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('ff');
             });
 
             it('should show the tabs for the env', async () => {
@@ -462,7 +462,7 @@ describe('User info component', () => {
             it('should show the identity user initials if is not ecm user', async () => {
                 await whenFixtureReady();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
+                expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('ff');
             });
 
             it('should able to fetch identity userInfo', (done) => {

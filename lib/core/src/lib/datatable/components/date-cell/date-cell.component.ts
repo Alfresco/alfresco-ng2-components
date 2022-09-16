@@ -31,7 +31,6 @@ import { takeUntil } from 'rxjs/operators';
     template: `
         <ng-container>
             <span
-                [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
                 title="{{ tooltip | adfLocalizedDate: 'medium' }}"
                 class="adf-datatable-cell-value"
                 *ngIf="format === 'timeAgo'; else standard_date">
@@ -41,8 +40,7 @@ import { takeUntil } from 'rxjs/operators';
         <ng-template #standard_date>
             <span
                 class="adf-datatable-cell-value"
-                title="{{ tooltip | adfLocalizedDate: tooltipDateFormat }}"
-                [attr.aria-label]="value$ | async | adfLocalizedDate: format">
+                title="{{ tooltip | adfLocalizedDate: tooltipDateFormat }}">
                 {{ value$ | async | adfLocalizedDate: format }}
             </span>
         </ng-template>

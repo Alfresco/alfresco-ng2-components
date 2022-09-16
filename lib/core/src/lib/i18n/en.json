@@ -25,7 +25,8 @@
     "TITLE": "Notifications",
     "MARK_AS_READ": "Mark all as read",
     "SYSTEM": "System",
-    "LOAD_MORE": "Load more"
+    "LOAD_MORE": "Load more",
+    "OPEN_HISTORY": "Open notification history"
   },
   "FORM": {
     "START_FORM": {

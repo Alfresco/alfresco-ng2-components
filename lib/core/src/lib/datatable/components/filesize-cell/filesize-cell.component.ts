@@ -25,7 +25,6 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
         <ng-container *ngIf="(value$ | async | adfFileSize) as fileSize">
             <span
                 [title]="tooltip"
-                [attr.aria-label]="fileSize"
                 >{{ fileSize }}</span
             >
         </ng-container>

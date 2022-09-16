@@ -2,7 +2,7 @@
      class="adf-filter">
     <button mat-icon-button
             [matMenuTriggerFor]="filter"
-            id="filter-menu-button"
+            data-automation-id="filter-menu-button"
             #menuTrigger="matMenuTrigger"
             (click)="$event.stopPropagation()"
             (menuOpened)="onMenuOpen()"
@@ -22,6 +22,7 @@
               class="adf-filter-menu"
               (closed)="onClosed()">
         <div #filterContainer
+              role="menuitem"
              (keydown.tab)="$event.stopPropagation();">
             <div (click)="$event.stopPropagation()"
                  class="adf-filter-container">
