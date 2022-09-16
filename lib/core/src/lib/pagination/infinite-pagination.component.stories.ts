@@ -19,76 +19,47 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { PaginationModule } from './pagination.module';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
-import { BehaviorSubject } from 'rxjs';
-import { PaginationModel } from '../../..';
-import { PaginatedComponent } from './paginated-component.interface';
-
-class TestPaginatedComponent implements PaginatedComponent {
-
-  private _pagination: BehaviorSubject<PaginationModel>;
-
-  get pagination(): BehaviorSubject<PaginationModel> {
-    if (!this._pagination) {
-      const defaultPagination = {
-        maxItems: 10,
-        skipCount: 0,
-        totalItems: 0,
-        hasMoreItems: false
-      };
-      this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
-    }
-    return this._pagination;
-  }
-
-  updatePagination(pagination: PaginationModel) {
-    this.pagination.next(pagination);
-  }
-}
-
-const paginatedComponent = new TestPaginatedComponent();
+import { DocumentListModule } from './../../../../content-services/src/lib/document-list/document-list.module';
+import { DataColumnModule } from './../data-column/data-column.module';
 
 export default {
-  component: InfinitePaginationComponent,
-  title: 'Core/Pagination/InfinitePagination',
-  decorators: [
-    moduleMetadata({
-      imports: [CoreStoryModule, PaginationModule]
-    })
-  ],
-  argTypes: {
-    target: {
-      control: 'object',
-      description: 'Component that provides custom pagination support.',
-      mapping: { def: paginatedComponent },
-      table: { type: { summary: 'PaginatedComponent' } }
-    },
-    pageSize: {
-      control: 'number',
-      description: 'Number of items that are added with each "load more" event.',
-      table: { type: { summary: 'number' } }
-    },
-    isLoading: {
-      control: 'boolean',
-      description: 'Is a new page loading?',
-      defaultValue: false,
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' }
-      }
-    },
-    loadMore: {
-      action: 'loadMore',
-      description: 'Emitted when the "Load More" button is clicked.',
-      table: { category: 'Actions' }
+    component: InfinitePaginationComponent,
+    title: 'Core/Pagination/InfinitePagination',
+    decorators: [
+        moduleMetadata({
+            imports: [CoreStoryModule, PaginationModule, DocumentListModule, DataColumnModule]
+        })
+    ],
+    argTypes: {
+        target: {
+            control: 'object',
+            description: 'Component that provides custom pagination support.',
+            table: { type: { summary: 'PaginatedComponent' } }
+        },
+        pageSize: {
+            control: 'number',
+            description: 'Number of items that are added with each "load more" event.',
+            table: { type: { summary: 'number' } }
+        },
+        isLoading: {
+            control: 'boolean',
+            description: 'Is a new page loading?',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        loadMore: {
+            action: 'loadMore',
+            description: 'Emitted when the "Load More" button is clicked.',
+            table: { category: 'Actions' }
+        }
     }
-  }
 } as Meta;
 
 const template: Story<InfinitePaginationComponent> = (args: InfinitePaginationComponent) => ({
-  props: {
-    ...args,
-    target: 'def'
-  }
+    props: args
 });
 
 export const infinitePagination = template.bind({});
