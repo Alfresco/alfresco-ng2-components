@@ -53,6 +53,7 @@
           }
         ],
         "no-bitwise": "off",
+        "no-console": "off",
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
         "no-redeclare": "error",
