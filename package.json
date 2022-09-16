@@ -29,9 +29,7 @@
     "print-affected:lint": "nx print-affected --target=lint --select=tasks.target.project",
     "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "03s": "",
-    "lint-demo": "tslint -p tsconfig.json -c tslint.json",
-    "lint-lib": "tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
-    "lint-e2e": "tsc -p tsconfig.e2e.json",
+    "affected:lint": "nx affected:lint",
     "validate-config": "ajv validate -s lib/core/src/lib/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
     "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
     "04s": "",
@@ -233,16 +231,5 @@
     "node": ">=6.0.0"
   },
   "module": "./index.js",
-  "typings": "./index.d.ts",
-  "lint-staged": {
-    "**/demo-shell/src/**/*.ts": "npm run lint-demo -- --fix",
-    "**/lib/**/*.ts": "npm run lint-lib -- --fix",
-    "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
-    "*.scss": "npm run stylelint --  --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  }
+  "typings": "./index.d.ts"
 }
