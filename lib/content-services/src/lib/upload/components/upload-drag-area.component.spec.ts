@@ -85,6 +85,18 @@ const getFakeFileShareRow = (allowableOperations = ['delete', 'update', 'create'
     }
 });
 
+const fakeItem = {
+    fullPath: '/folder-fake/file-fake.png',
+    isDirectory: false,
+    isFile: true,
+    relativeFolder: '/',
+    name: 'file-fake.png',
+    file: (callbackFile) => {
+        const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+        callbackFile(fileFake);
+    }
+};
+
 describe('UploadDragAreaComponent', () => {
 
     let component: UploadDragAreaComponent;
@@ -103,16 +115,19 @@ describe('UploadDragAreaComponent', () => {
         uploadService = TestBed.inject(UploadService);
 
         component = fixture.componentInstance;
-        fixture.detectChanges();
 
         uploadService.clearCache();
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     describe('When disabled', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         it('should NOT upload the list of files dropped', () => {
             component.disabled = true;
@@ -141,7 +156,7 @@ describe('UploadDragAreaComponent', () => {
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         });
 
-        it('should NOT upload the folder dropped', (done) => {
+        it('should NOT upload the folder dropped', () => {
             component.disabled = true;
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
@@ -156,12 +171,10 @@ describe('UploadDragAreaComponent', () => {
                 })
             };
             component.onFolderEntityDropped(itemEntity);
+            fixture.detectChanges();
 
-            setTimeout(() => {
-                expect(uploadService.addToQueue).not.toHaveBeenCalled();
-                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
-                done();
-            }, 0);
+            expect(uploadService.addToQueue).not.toHaveBeenCalled();
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         });
 
         it('should NOT upload the files', () => {
@@ -169,17 +182,6 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'addToQueue');
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
             fixture.detectChanges();
 
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
@@ -197,6 +199,11 @@ describe('UploadDragAreaComponent', () => {
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         it('should upload the list of files dropped', async () => {
@@ -251,17 +258,6 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should NOT upload the file if it is dropped on another file', () => {
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
 
             addToQueueSpy.and.callFake((fileList) => {
                 expect(fileList.name).toBe('file');
@@ -306,17 +302,6 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should upload a file when user has create permission on target folder', () => {
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
 
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
@@ -329,37 +314,38 @@ describe('UploadDragAreaComponent', () => {
             expect(uploadService.addToQueue).toHaveBeenCalled();
         });
 
-        it('should upload a file to a specific target folder when dropped onto one', (done) => {
-            const fakeItem = {
+        it('should upload a file to a specific target folder when dropped onto one', () => {
+            const fakePippoItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
-                name: 'file-fake.png',
                 relativeFolder: '/',
+                name: 'file-fake.png',
                 file: (callbackFile) => {
                     const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
                     callbackFile(fileFake);
                 }
             };
 
-            addToQueueSpy.and.callFake((fileList) => {
-                expect(fileList.name).toBe('file');
-                expect(fileList.options.path).toBe('pippo/');
-                done();
-            });
-
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                    files: [fakePippoItem]
                 }
             });
 
+            addToQueueSpy.and.callFake((fileList) => {
+                expect(fileList.name).toBe('file');
+                expect(fileList.options.path).toBe('pippo/');
+            });
+
             component.onUploadFiles(fakeCustomEvent);
+
+            fixture.detectChanges();
         });
 
-        it('should upload a folder to a specific target folder when dropped onto one', (done) => {
-            const fakeItem = {
+        it('should upload a folder to a specific target folder when dropped onto one', () => {
+            const fakeSuperItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
@@ -371,35 +357,25 @@ describe('UploadDragAreaComponent', () => {
                 }
             };
 
-            addToQueueSpy.and.callFake((fileList) => {
-                expect(fileList.name).toBe('file');
-                expect(fileList.options.path).toBe('pippo/super');
-                done();
-            });
-
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                    files: [fakeSuperItem]
                 }
             });
 
+            addToQueueSpy.and.callFake((fileList) => {
+                expect(fileList.name).toBe('file');
+                expect(fileList.options.path).toBe('pippo/super');
+            });
+
             component.onUploadFiles(fakeCustomEvent);
+
+            fixture.detectChanges();
         });
 
         it('should trigger updating the file version when we drop a file over another file', async () => {
             spyOn(component.updateFileVersion, 'emit');
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
 
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
@@ -418,26 +394,16 @@ describe('UploadDragAreaComponent', () => {
 
     describe('Events', () => {
 
+        beforeEach(() => {
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         it('should raise an error if upload a file goes wrong', async () => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
-
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
-
-            fixture.detectChanges();
-
-            await component.error.subscribe((error) => {
-                expect(error).not.toBeNull();
-            });
 
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
@@ -446,22 +412,17 @@ describe('UploadDragAreaComponent', () => {
                 }
             });
 
+            component.error.subscribe((error) => {
+                expect(error).not.toBeNull();
+            });
+
             component.onUploadFiles(fakeCustomEvent);
+            fixture.detectChanges();
+            await fixture.whenStable();
         });
 
         it('should emit success if successful of upload a file', async () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
 
             fixture.detectChanges();
 
@@ -481,17 +442,6 @@ describe('UploadDragAreaComponent', () => {
 
         it('should emit error if upload errored', async () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
-            const fakeItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
 
             fixture.detectChanges();
 
