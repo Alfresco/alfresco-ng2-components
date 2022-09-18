@@ -28,7 +28,6 @@ import {
     TRANSLATION_PROVIDER,
     DebugAppConfigService,
     CoreModule,
-    AuthModule,
     CoreAutomationService
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
@@ -139,7 +138,6 @@ registerLocaleData(localeSv);
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy'}),
-        AuthModule.forRoot({ useHash: true }),
         FormsModule,
         HttpClientModule,
         MaterialModule,
