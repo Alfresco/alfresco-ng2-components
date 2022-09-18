@@ -20,16 +20,12 @@ import { forkJoin, from, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { RedirectionModel } from '../models/redirection.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { BaseAuthenticationService } from './base-authentication.service';
 import { CookieService } from './cookie.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
-
-const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
-const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 
 @Injectable({
     providedIn: 'root'
@@ -129,30 +125,6 @@ export class AuthenticationService extends BaseAuthenticationService {
         this.alfrescoApi.getInstance().implicitLogin();
     }
 
-    /**
-     * Saves the "remember me" cookie as either a long-life cookie or a session cookie.
-     *
-     * @param rememberMe Enables a long-life cookie
-     */
-    private saveRememberMeCookie(rememberMe: boolean): void {
-        let expiration = null;
-
-        if (rememberMe) {
-            expiration = new Date();
-            const time = expiration.getTime();
-            const expireTime = time + REMEMBER_ME_UNTIL;
-            expiration.setTime(expireTime);
-        }
-        this.cookie.setItem(REMEMBER_ME_COOKIE_KEY, '1', expiration, null);
-    }
-    /**
-     * Checks whether the "remember me" cookie was set or not.
-     *
-     * @returns True if set, false otherwise
-     */
-    isRememberMeSet(): boolean {
-        return this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) !== null;
-    }
 
     /**
      * Logs the user out.
@@ -204,31 +176,6 @@ export class AuthenticationService extends BaseAuthenticationService {
             return this.alfrescoApi.getInstance().isBpmLoggedIn();
         }
         return false;
-    }
-
-    /** Sets the URL to redirect to after login.
-     *
-     * @param url URL to redirect to
-     */
-    setRedirect(url: RedirectionModel) {
-        this.redirectUrl = url;
-    }
-
-    /** Gets the URL to redirect to after login.
-     *
-     * @returns The redirect URL
-     */
-    getRedirect(): string {
-        const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
-        return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
-    }
-
-    private hasValidRedirection(provider: string): boolean {
-        return this.redirectUrl && (this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider));
-    }
-
-    private hasSelectedProviderAll(provider: string): boolean {
-        return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
     }
 
     isImplicitFlow(): boolean {

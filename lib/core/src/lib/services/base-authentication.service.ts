@@ -24,6 +24,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 
+const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
+const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
+
 export abstract class BaseAuthenticationService {
     protected bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
     protected redirectUrl: RedirectionModel = null;
@@ -62,9 +65,6 @@ export abstract class BaseAuthenticationService {
     abstract logout(): Observable<any>;
     abstract isEcmLoggedIn(): boolean;
     abstract isBpmLoggedIn(): boolean;
-    abstract setRedirect(url: any): void;
-    abstract getRedirect(): string;
-    abstract isRememberMeSet(): boolean;
     abstract reset(): void;
 
     getBearerExcludedUrls(): readonly string[] {
@@ -234,5 +234,52 @@ export abstract class BaseAuthenticationService {
      */
     isKerberosEnabled(): boolean {
         return this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false);
+    }
+
+    /**
+     * Saves the "remember me" cookie as either a long-life cookie or a session cookie.
+     *
+     * @param rememberMe Enables a long-life cookie
+     */
+    saveRememberMeCookie(rememberMe: boolean): void {
+        let expiration = null;
+
+        if (rememberMe) {
+            expiration = new Date();
+            const time = expiration.getTime();
+            const expireTime = time + REMEMBER_ME_UNTIL;
+            expiration.setTime(expireTime);
+        }
+        this.cookie.setItem(REMEMBER_ME_COOKIE_KEY, '1', expiration, null);
+    }
+
+    /**
+     * Checks whether the "remember me" cookie was set or not.
+     *
+     * @returns True if set, false otherwise
+     */
+    isRememberMeSet(): boolean {
+        return this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) !== null;
+    }
+
+    setRedirect(url?: RedirectionModel) {
+        this.redirectUrl = url;
+    }
+
+    /** Gets the URL to redirect to after login.
+     *
+     * @returns The redirect URL
+     */
+    getRedirect(): string {
+        const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+        return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
+    }
+
+    private hasValidRedirection(provider: string): boolean {
+        return this.redirectUrl && (this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider));
+    }
+
+    private hasSelectedProviderAll(provider: string): boolean {
+        return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
     }
 }

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { TokenResponse } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 
 /**
@@ -37,6 +38,8 @@ export abstract class AuthService {
    * Initiate the IdP login flow.
    */
   abstract login(currentUrl?: string): Promise<void> | void;
+
+  abstract baseAuthLogin(username: string, password: string): Observable<TokenResponse> ;
 
   /**
    * Disconnect from IdP.

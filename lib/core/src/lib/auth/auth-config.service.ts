@@ -50,6 +50,7 @@ export class AuthConfigService {
         const redirectUri = this.getRedirectUri();
 
         const authConfig: AuthConfig = {
+            oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
             issuer: oauth2.host,
             redirectUri,
             silentRefreshRedirectUri: `${origin}/silent-refresh.html`,

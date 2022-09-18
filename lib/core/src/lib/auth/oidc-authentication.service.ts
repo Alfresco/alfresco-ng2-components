@@ -17,10 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { RedirectionModel } from '../models/redirection.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { CookieService } from '../services/cookie.service';
@@ -46,15 +46,6 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         private readonly auth: AuthService
     ) {
         super(alfrescoApi, appConfig, cookie, logService);
-    }
-
-    setRedirect(_url?: RedirectionModel) {
-        // noop
-    }
-
-    getRedirect(): string {
-        // noop
-        return 'noop';
     }
 
     isEcmLoggedIn(): boolean {
@@ -87,8 +78,18 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         return !!oauth2?.codeFlow;
     }
 
-    login() {
-        return EMPTY;
+    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
+        return this.auth.baseAuthLogin(username, password).pipe(
+            map((response) => {
+                this.saveRememberMeCookie(rememberMe);
+                this.onLogin.next(response);
+                return {
+                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
+                    ticket: response
+                };
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     ssoImplicitLogin() {
