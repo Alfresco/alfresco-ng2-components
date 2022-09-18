@@ -65,6 +65,7 @@ export abstract class BaseAuthenticationService {
     abstract setRedirect(url: any): void;
     abstract getRedirect(): string;
     abstract isRememberMeSet(): boolean;
+    abstract reset(): void;
 
     getBearerExcludedUrls(): readonly string[] {
         return this.bearerExcludedUrls;

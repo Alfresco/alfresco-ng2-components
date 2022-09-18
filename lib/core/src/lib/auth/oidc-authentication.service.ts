@@ -26,6 +26,8 @@ import { BaseAuthenticationService } from '../services/base-authentication.servi
 import { CookieService } from '../services/cookie.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { LogService } from '../services/log.service';
+import { AuthConfigService } from './auth-config.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +41,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         cookie: CookieService,
         logService: LogService,
         private authStorage: OAuthStorage,
-        private oauthService: OAuthService
+        private oauthService: OAuthService,
+        private readonly authConfig: AuthConfigService,
+        private readonly auth: AuthService
     ) {
         super(alfrescoApi, appConfig, cookie, logService);
     }
@@ -106,5 +110,11 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
 
     getToken(): string {
         return this.authStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+    }
+
+    reset(): void {
+        const config = this.authConfig.loadAppConfig();
+        this.auth.updateIDPConfiguration(config);
+        this.auth.login();
     }
 }

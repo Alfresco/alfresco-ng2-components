@@ -248,4 +248,6 @@ export class AuthenticationService extends BaseAuthenticationService {
     getToken(): string {
         return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
+
+    reset() {}
 }
