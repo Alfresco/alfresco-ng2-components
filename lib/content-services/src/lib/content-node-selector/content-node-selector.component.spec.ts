@@ -177,43 +177,19 @@ describe('ContentNodeSelectorComponent', () => {
    });
 
     describe('Cancel button', () => {
-
-        it('should complete the data stream when user click "CANCEL"', () => {
-            let cancelButton;
-            data.select.subscribe(
-                () => {
-                },
-                () => {
-                },
-                () => {
-                    cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
-                    expect(cancelButton).not.toBeNull();
-                });
-
-            cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
-            cancelButton.triggerEventHandler('click', {});
-        });
-
         it('should not be shown if dialogRef is NOT injected', () => {
             const closeButton = fixture.debugElement.query(By.css('[content-node-selector-actions-cancel]'));
             expect(closeButton).toBeNull();
         });
 
         it('should close the dialog', () => {
-            let cancelButton;
-            data.select.subscribe(
-                () => {
-                },
-                () => {
-                },
-                () => {
-                    cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
-                    expect(cancelButton).not.toBeNull();
-                });
-
-            cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
+            let cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
             cancelButton.triggerEventHandler('click', {});
             expect(dialog.close).toHaveBeenCalled();
+
+            fixture.detectChanges();
+            cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
+            expect(cancelButton).not.toBeNull();
         });
     });
 
