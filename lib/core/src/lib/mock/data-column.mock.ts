@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ObjectDataTableAdapter } from '@alfresco/adf-core';
+import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
 import { DataColumn } from '../datatable/data/data-column.model';
 
 export const getDataColumnMock = <T = unknown>(
