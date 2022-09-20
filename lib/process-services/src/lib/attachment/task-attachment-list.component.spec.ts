@@ -23,6 +23,7 @@ import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
 
 describe('TaskAttachmentList', () => {
 
@@ -30,7 +31,6 @@ describe('TaskAttachmentList', () => {
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ProcessContentService;
     let getTaskRelatedContentSpy: jasmine.Spy;
-    let mockAttachment: any;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
     let getContentPreviewSpy: jasmine.Spy;
@@ -51,43 +51,7 @@ describe('TaskAttachmentList', () => {
 
         service = TestBed.inject(ProcessContentService);
 
-        mockAttachment = {
-            size: 2,
-            total: 2,
-            start: 0,
-            data: [
-                {
-                    id: 8,
-                    name: 'fake.zip',
-                    created: 1494595697381,
-                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                    relatedContent: true,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'application/zip',
-                    simpleType: 'content',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
-                },
-                {
-                    id: 9,
-                    name: 'fake.jpg',
-                    created: 1494595655381,
-                    createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                    relatedContent: true,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'image/jpeg',
-                    simpleType: 'image',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
-                }
-            ]
-        };
-
-        getTaskRelatedContentSpy = spyOn(service, 'getTaskRelatedContent').and.returnValue(of(
-            mockAttachment
-        ));
+        getTaskRelatedContentSpy = spyOn(service, 'getTaskRelatedContent').and.returnValue(of(mockTaskAttachments));
 
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
@@ -124,12 +88,10 @@ describe('TaskAttachmentList', () => {
 
     it('should emit a success event when the attachments are loaded', () => {
         const change = new SimpleChange(null, '123', true);
-        disposableSuccess = component.success.subscribe((attachments) => {
-            expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
-            expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
-        });
-
+        const spySuccessEmitter = spyOn(component.success, 'emit');
         component.ngOnChanges({ taskId: change });
+
+        expect(spySuccessEmitter).toHaveBeenCalledWith(mockEmittedTaskAttachments)
     });
 
     it('should not attach when no taskId is specified', () => {
@@ -146,13 +108,13 @@ describe('TaskAttachmentList', () => {
     });
 
     it('emit document when a user wants to view the document', () => {
-        component.emitDocumentContent(mockAttachment.data[1]);
+        component.emitDocumentContent(mockTaskAttachments.data[1]);
         fixture.detectChanges();
         expect(getContentPreviewSpy).toHaveBeenCalled();
     });
 
     it('download document when a user wants to view the document', () => {
-        component.downloadContent(mockAttachment.data[1]);
+        component.downloadContent(mockTaskAttachments.data[1]);
         fixture.detectChanges();
         expect(getFileRawContentSpy).toHaveBeenCalled();
     });
@@ -247,7 +209,7 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should not show the empty list component when the attachments list is not empty for completed task', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of(mockAttachment));
+        getTaskRelatedContentSpy.and.returnValue(of(mockTaskAttachments));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         component.disabled = true;
