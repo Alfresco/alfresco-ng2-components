@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {},
   "dependencies": {
-    "@alfresco/js-api": "5.1.0-322",
+    "@alfresco/js-api": "5.1.0-329",
     "ejs": "^3.1.6",
     "fast-levenshtein": "^3.0.0",
     "graphql": "^15.4.0",

@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-export * from './api-client.factory';
-export * from './api-clients.service';
-export * from './clients';
-export * from './types';
-export * from './alfresco-api/alfresco-api.http-client';
+export class AlfrescoApiResponseError extends Error {
+
+    public name = 'AlfrescoApiResponseError';
+
+    constructor(msg: string, public status: number, public error: { response: Record<string, any> }) {
+        super(msg);
+    }
+}
