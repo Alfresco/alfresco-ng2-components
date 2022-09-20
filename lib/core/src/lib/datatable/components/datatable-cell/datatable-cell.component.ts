@@ -41,6 +41,7 @@ import { takeUntil } from 'rxjs/operators';
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
+                role="cell"
                 >{{ value$ | async }}</span>
         </ng-container>
         <ng-template #defaultCell>
@@ -48,6 +49,7 @@ import { takeUntil } from 'rxjs/operators';
                 [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
+                role="cell"
             >{{ value$ | async }}</span>
         </ng-template>
     `,
