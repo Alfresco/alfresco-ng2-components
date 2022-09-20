@@ -35,15 +35,36 @@ export default {
     argTypes: {
         editable: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Defines if CardView item is editable',
+            defaultValue: false,
+            table: {
+                type: {summary: 'boolean'},
+                defaultValue: {summary: false}
+            }
         },
         displayEmpty: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Defines if it should display CardView item when data is empty',
+            defaultValue: true,
+            table: {
+                type: {summary: 'boolean'},
+                defaultValue: {summary: true}
+            }
         },
         displayClearAction: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Defines if it should display clear input action (only with SingleValued components)',
+            defaultValue: true,
+            table: {
+                type: {summary: 'boolean'},
+                defaultValue: {summary: true}
+            }
+        },
+        property: {
+            description: 'Card View Item Model with data',
+            table: {
+                type: { summary: 'CardViewDateItemModel | CardViewDatetimeItemModel' }
+            }
         }
     }
 } as Meta;
@@ -52,9 +73,22 @@ const template: Story = (args) => ({
     props: args
 });
 
-export const DateItemCardView = template.bind({});
+export const SingleValuedDateItemCardView = template.bind({});
 
-DateItemCardView.args = {
+SingleValuedDateItemCardView.args = {
+    property: new CardViewDateItemModel({
+        label: 'CardView Date Item',
+        value: [new Date(1983, 11, 24, 10, 0, 30)],
+        key: 'date',
+        default: new Date(1983, 11, 24, 10, 0, 30),
+        format: 'shortDate',
+        editable: true
+    })
+};
+
+export const MultiValuedDateItemCardView = template.bind({});
+
+MultiValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item - Multivalue (chips)',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
@@ -66,9 +100,22 @@ DateItemCardView.args = {
     })
 };
 
-export const DatetimeItemCardView = template.bind({});
+export const SingleValuedDatetimeItemCardView = template.bind({});
 
-DatetimeItemCardView.args = {
+SingleValuedDatetimeItemCardView.args = {
+    property: new CardViewDatetimeItemModel({
+        label: 'CardView Datetime Item',
+        value: undefined,
+        key: 'datetime',
+        default: undefined,
+        format: 'short',
+        editable: true
+    })
+};
+
+export const MultiValuedDatetimeItemCardView = template.bind({});
+
+MultiValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item - Multivalue (chips)',
         value: undefined,
@@ -79,14 +126,3 @@ DatetimeItemCardView.args = {
         multivalued: true
     })
 };
-
-// export const defaultStory = template.bind({});
-// defaultStory.args = {
-//     properties: dataSource
-// };
-
-// export const emptyStory = template.bind({})
-// emptyStory.args = {
-//     properties: valueAndDefaultUndefinedItems,
-//     editable: false
-// }
