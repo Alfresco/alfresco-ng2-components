@@ -30,43 +30,21 @@ export default {
         })
     ],
     argTypes: {
-        editable: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        displayEmpty: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        displayNoneOption: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        displayClearAction: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        copyToClipboardAction: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            defaultValue: true
-        },
-        multiValueSeparator: {
-            control: 'text',
-            defaultValue: ', '
+        property: {
+            description: 'Card View Item Model with data',
+            table: {
+                type: { summary: 'CardViewArrayItemModel' }
+            }
         }
     }
 } as Meta;
 
-export const template: Story<CardViewArrayItemComponent> = (
+export const CardViewArrayItem: Story<CardViewArrayItemComponent> = (
     args: CardViewArrayItemComponent
 ) => ({
     props: args
 });
-template.args = {
+CardViewArrayItem.args = {
     property: new CardViewArrayItemModel({
         label: 'CardView Array of items',
         value: of([
@@ -78,18 +56,6 @@ template.args = {
         key: 'array',
         icon: 'edit',
         default: 'Empty',
-        noOfItemsToDisplay: 2,
-        editable: true
+        noOfItemsToDisplay: 2
     })
 };
-
-// export const defaultStory = template.bind({});
-// defaultStory.args = {
-//     properties: dataSource
-// };
-
-// export const emptyStory = template.bind({})
-// emptyStory.args = {
-//     properties: valueAndDefaultUndefinedItems,
-//     editable: false
-// }
