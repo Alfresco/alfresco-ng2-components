@@ -63,6 +63,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 
 @NgModule({
     imports: [
@@ -170,7 +171,8 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                }
+                },
+                { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true }
             ]
         };
     }
