@@ -181,6 +181,9 @@ describe('AlfrescoApiHttpClient', () => {
             const req = controller.expectOne('http://example.com?autoRename=true&include=allowableOperations');
             expect(req.request.method).toEqual('POST');
 
+            // filedata: (binary)
+            // include: allowableOperations
+
             const body = req.request.body as HttpParams;
 
             expect(body.get('relativePath')).toBe('');

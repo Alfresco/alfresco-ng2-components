@@ -64,6 +64,7 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.module';
+import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
 
 @NgModule({
     imports: [
@@ -173,7 +174,8 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                }
+                },
+                { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true }
             ]
         };
     }
