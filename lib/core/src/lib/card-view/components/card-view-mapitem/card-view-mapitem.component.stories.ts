@@ -31,7 +31,19 @@ export default {
     argTypes: {
         displayEmpty: {
             control: 'boolean',
-            defaultValue: true
+            description:
+                'Defines if it should display CardView item when data is empty',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
+            }
+        },
+        property: {
+            description: 'Card View Item Model with data',
+            table: {
+                type: { summary: 'CardViewMapItemModel' }
+            }
         }
     }
 } as Meta;
@@ -42,9 +54,9 @@ const template: Story<CardViewMapItemComponent> = (
     props: args
 });
 
-export const MapItemCardView = template.bind({});
+export const CardViewMapItem = template.bind({});
 
-MapItemCardView.args = {
+CardViewMapItem.args = {
     property: new CardViewMapItemModel({
         label: 'My map',
         value: new Map([['999', 'My Value']]),
@@ -53,13 +65,13 @@ MapItemCardView.args = {
     })
 };
 
-// export const defaultStory = template.bind({});
-// defaultStory.args = {
-//     properties: dataSource
-// };
+export const EmptyCardViewMapItem = template.bind({});
 
-// export const emptyStory = template.bind({})
-// emptyStory.args = {
-//     properties: valueAndDefaultUndefinedItems,
-//     editable: false
-// }
+EmptyCardViewMapItem.args = {
+    property: new CardViewMapItemModel({
+        label: 'My map',
+        value: [],
+        key: 'map',
+        default: 'default map value'
+    })
+};
