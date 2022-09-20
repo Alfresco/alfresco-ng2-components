@@ -3,6 +3,7 @@
             [matMenuTriggerFor]="menu"
             class="adf-notification-history-menu_button"
             id="adf-notification-history-open-button"
+            aria-label="Notification Menu"
             (menuOpened)="onMenuOpened()">
         <mat-icon matBadge="&#8288;"
                   [matBadgeHidden]="!notifications.length"
