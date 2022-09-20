@@ -27,15 +27,31 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, CardViewModule]
         })
-    ]
+    ],
+    argTypes: {
+        editable: {
+            control: 'boolean',
+            description: 'Defines if CardView item is editable',
+            defaultValue: true,
+            table: {
+                type: {summary: 'boolean'}
+            }
+        },
+        property: {
+            description: 'Card View Item Model with data',
+            table: {
+                type: { summary: 'CardViewBoolItemModel' }
+            }
+        }
+    }
 } as Meta;
 
-export const template: Story<CardViewBoolItemComponent> = (
+export const CardViewBoolItem: Story<CardViewBoolItemComponent> = (
     args: CardViewBoolItemComponent
 ) => ({
     props: args
 });
-template.args = {
+CardViewBoolItem.args = {
     property: new CardViewBoolItemModel({
         label: 'Agree to all terms and conditions',
         value: true,
@@ -44,14 +60,3 @@ template.args = {
         editable: true
     })
 };
-
-// export const defaultStory = template.bind({});
-// defaultStory.args = {
-//     properties: dataSource
-// };
-
-// export const emptyStory = template.bind({})
-// emptyStory.args = {
-//     properties: valueAndDefaultUndefinedItems,
-//     editable: false
-// }
