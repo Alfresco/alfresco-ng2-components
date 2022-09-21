@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export interface OauthConfigModel {
-    host: string;
-    clientId: string;
-    scope: string;
-    implicitFlow: boolean;
-    codeFlow?: boolean;
-    redirectUri: string;
-    silentLogin?: boolean;
-    secret?: string;
-    redirectUriLogout?: string;
-    refreshTokenTimeout?: number;
-    publicUrls: string[];
+import { InjectionToken } from '@angular/core';
+
+export interface AuthModuleConfig {
+    readonly useHash: boolean;
 }
+
+export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');

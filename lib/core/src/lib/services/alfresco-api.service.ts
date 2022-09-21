@@ -47,23 +47,13 @@ export class AlfrescoApiService {
         return this.alfrescoApi;
     }
 
-    constructor(
-        protected appConfig: AppConfigService,
-        protected storageService: StorageService) {
-    }
+    constructor(protected appConfig: AppConfigService, protected storageService: StorageService) {}
 
-    async load() {
-        try {
-            await this.appConfig.load();
-            this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-            this.getCurrentAppConfig();
+    async load(config: AlfrescoApiConfig): Promise<void> {
+        this.currentAppConfig = config;
 
-            if (this.currentAppConfig.authType === 'OAUTH') {
-                this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
+        if (config.authType === 'OAUTH') {
                 this.mapAlfrescoApiOpenIdConfig();
-            }
-        } catch {
-            throw new Error('Something wrong happened when calling the app.config.json');
         }
 
         this.initAlfrescoApiWithConfig();
@@ -73,7 +63,6 @@ export class AlfrescoApiService {
     async reset() {
         this.getCurrentAppConfig();
         if (this.currentAppConfig.authType === 'OAUTH') {
-            this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
             this.mapAlfrescoApiOpenIdConfig();
         }
         this.initAlfrescoApiWithConfig();
@@ -88,7 +77,8 @@ export class AlfrescoApiService {
         return oauth;
     }
 
-    private mapAlfrescoApiOpenIdConfig() {
+    private async mapAlfrescoApiOpenIdConfig() {
+        this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
         this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
         this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
         this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
@@ -121,9 +111,13 @@ export class AlfrescoApiService {
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
             this.alfrescoApi.setConfig(this.currentAppConfig);
         } else {
-            this.alfrescoApi = new AlfrescoApi(this.currentAppConfig);
+            this.alfrescoApi = this.createInstance(this.currentAppConfig);
         }
         this.lastConfig = this.currentAppConfig;
+    }
+
+    createInstance(config: AlfrescoApiConfig): AlfrescoApi {
+        return (this.alfrescoApi = new AlfrescoApi(config));
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {

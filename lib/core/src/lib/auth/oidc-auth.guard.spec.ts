@@ -15,16 +15,22 @@
  * limitations under the License.
  */
 
-export interface OauthConfigModel {
-    host: string;
-    clientId: string;
-    scope: string;
-    implicitFlow: boolean;
-    codeFlow?: boolean;
-    redirectUri: string;
-    silentLogin?: boolean;
-    secret?: string;
-    redirectUriLogout?: string;
-    refreshTokenTimeout?: number;
-    publicUrls: string[];
-}
+import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
+import { AuthService } from './auth.service';
+import { OidcAuthGuard } from './oidc-auth.guard';
+
+describe('OidcAuthGuard', () => {
+  let guard: OidcAuthGuard;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [OidcAuthGuard, MockProvider(AuthService)]
+    });
+    guard = TestBed.inject(OidcAuthGuard);
+  });
+
+  it('should be created', () => {
+    expect(guard).toBeTruthy();
+  });
+});

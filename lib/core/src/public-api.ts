@@ -55,3 +55,4 @@ export * from './lib/testing';
 
 export * from './lib/material.module';
 export * from './lib/core.module';
+export { AuthModule } from './lib/auth/auth.module';
