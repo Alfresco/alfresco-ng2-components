@@ -69,6 +69,10 @@ export class RequiredFieldValidator implements FormFieldValidator {
                         return false;
                     }
                 }
+
+                if (field.required && typeof field.value === 'object' && field.value && !Object.keys(field.value).length) {
+                    return false;
+                }
             }
 
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
