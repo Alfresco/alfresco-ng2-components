@@ -19,44 +19,7 @@ import { RichTextEditorModule } from './rich-text-editor.module';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
-
-const exampleData = {
-    time: 1663761278752,
-    blocks: [
-        {
-            id: 'yOV_DfEQhC',
-            type: 'paragraph',
-            data: {
-                text: 'text value'
-            }
-        },
-        {
-            id: 'IZwymOWyds',
-            type: 'header',
-            data: {
-                text: 'Heading value',
-                level: 2
-            }
-        },
-        {
-            id: '3JJj6A8XFO',
-            type: 'list',
-            data: {
-                style: 'unordered',
-                items: ['unordered list item A', 'unordered list item B']
-            }
-        },
-        {
-            id: 'q98W4eK4Nj',
-            type: 'list',
-            data: {
-                style: 'ordered',
-                items: ['ordered list item 1', 'ordered list item 2']
-            }
-        }
-    ],
-    version: '2.25.0'
-};
+import { exampleData } from './mocks/rich-text-editor.mock';
 
 export default {
     component: RichTextEditorComponent,
