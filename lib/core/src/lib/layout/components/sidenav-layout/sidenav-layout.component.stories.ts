@@ -200,20 +200,19 @@ const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => (
                         <a href="https://material.angular.io/components/list/overview#navigation-lists"
                         target="_blank">Angular Material Navigation list</a> where items can contain routes to ADF components which then they will be rendered here, in content section.
                         <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis non massa dictum porttitor. Nam ac elit nulla. Morbi posuere odio at
-                        ornare venenatis. Etiam rhoncus suscipit purus, eu tincidunt ante vulputate at. Cras quis neque felis. Maecenas augue turpis, suscipit non
-                        aliquet sit amet, aliquet at turpis. Etiam feugiat mattis nisi imperdiet aliquet. Donec ornare ex non turpis ullamcorper, non lacinia elit
-                        volutpat. Integer congue nunc lacus, vel sagittis ipsum sagittis sit amet. Integer eu arcu rutrum, semper urna non, efficitur libero.
-                        Aliquam fringilla quis felis sit amet convallis. Aliquam non egestas urna. Proin consectetur lacinia tincidunt. Vestibulum et leo lacus.
-                        Nam efficitur nte mollis lobortis pharetra. Nullam elit ligula, ullamcorper sed orci id, pharetra commodo est.
-                        Vestibulum ac accumsan urna, sit amet pellentesque nunc. Sed non metus quis elit pretium varius et in eros.
-                        <br/>
-                        Maecenas pellentesque felis eu dolor facilisis, ut pellentesque quam condimentum. Morbi fermentum, tortor et feugiat tempus, nunc elit
-                        malesuada ligula, pretium dictum erat felis vitae odio. Donec eros ante, blandit a augue sed, aliquet imperdiet velit. Duis nibh justo,
-                        dignissim in sodales id, faucibus fermentum ante. Cras semper mauris ac velit iaculis, ac scelerisque ipsum mattis. Nunc vitae arcu gravida,
-                        mollis dui a, tempor dolor. Cras malesuada eleifend elementum. Fusce nisl velit, ultricies quis justo id, imperdiet venenatis magna. Cras
-                        hendrerit massa at mi varius finibus. Cras vitae nibh et nisl fermentum posuere nec ut libero. Nunc erat quam, tristique a mauris eget, dictum
-                        volutpat nisl.
+                        Bob Ross Lorem ipsum.. I'm gonna start with a little Alizarin crimson and a touch of Prussian blue No pressure. Just relax and watch it happen. In life you need colors.
+                        This is your world, whatever makes you happy you can put in it. Go crazy. Have fun with it.
+                        Just relax and let it flow. That easy. We might as well make some Almighty mountains today as well, what the heck. Each highlight must have it's own private shadow.
+                        It's so important to do something every day that will make you happy.
+                        Use your imagination, let it go. The very fact that you're aware of suffering is enough reason to be overjoyed that you're alive and can experience it.
+                        <br/><br/>
+                        Brown is such a nice color. Let your imagination be your guide. You need the dark in order to show the light.
+                        Don't be afraid to make these big decisions. Once you start, they sort of just make themselves.
+                        Don't kill all your dark areas - you need them to show the light. We artists are a different breed of people. We're a happy bunch.
+                        You can create the world you want to see and be a part of. You have that power. We'll have a super time. If these lines aren't straight, your water's going to run right out of your painting and get your floor wet.
+                        Nature is so fantastic, enjoy it. Let it make you happy. Didn't you know you had that much power?
+                        You can move mountains. You can do anything. If you do too much it's going to lose its effectiveness. Everything's not great in life, but we can still find beauty in it.
+                        And maybe, maybe, maybe... I like to beat the brush. And maybe a little bush lives there. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals.
                     </div>
                 </ng-template>
             </adf-sidenav-layout-content>
