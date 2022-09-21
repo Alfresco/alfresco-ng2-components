@@ -137,12 +137,12 @@ describe('TaskDetailsComponent', () => {
         component.onClaimAction('FAKE-TASK-CLAIM');
     });
 
-    it('should send a unclaim task event when a task is unclaimed', fakeAsync(() => {
-        component.claimedTask.subscribe((taskId) => {
-            expect(taskId).toBe('FAKE-TASK-UNCLAIM');
-        });
+    it('should send a unclaim task event when a task is unclaimed', async () => {
+        const taskClaimedSpy = spyOn(component.unClaimedTask, 'emit');
         component.onUnclaimAction('FAKE-TASK-UNCLAIM');
-    }));
+
+        expect(taskClaimedSpy).toHaveBeenCalledWith('FAKE-TASK-UNCLAIM');
+    });
 
     it('should set a placeholder message when taskId not initialised', () => {
         fixture.detectChanges();
@@ -163,25 +163,25 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.debugElement.query(By.css('.adf-readonly-form'))).not.toBeNull();
     }));
 
-    it('should not display a form when the task does not have an associated form', fakeAsync(() => {
+    it('should not display a form when the task does not have an associated form', async () => {
         component.taskId = '123';
         taskDetailsMock.formKey = undefined;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
-        });
-    }));
 
-    it('should display the claim message when the task is not assigned', fakeAsync(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
+    });
+
+    it('should display the claim message when the task is not assigned', async () => {
         component.taskDetails = taskDetailsWithOutAssigneeMock;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
-            expect(claimMessage).toBeDefined();
-            expect(claimMessage.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM');
-        });
-    }));
+        await fixture.whenStable();
+        const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
+
+        expect(claimMessage).toBeTruthy();
+        expect(claimMessage.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM');
+    });
 
     it('should not display the claim message when the task is assigned', fakeAsync(() => {
         fixture.detectChanges();
@@ -430,12 +430,12 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should log error message when search fails', async () => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(''));
+            const logServiceErrorSpy = spyOn(logService, 'error');
 
-            await component.peopleSearch.subscribe(() => {
-                expect(logService.error).toHaveBeenCalledWith('Could not load users');
-            });
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError('fake-error'));
             component.searchUser('fake-search');
+
+            expect(logServiceErrorSpy).toHaveBeenCalledWith('Could not load users');
         });
 
         it('should assign task to user', () => {
