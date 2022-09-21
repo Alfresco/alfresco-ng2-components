@@ -38,18 +38,14 @@ import { takeUntil } from 'rxjs/operators';
             <span *ngIf="copyContent; else defaultCell"
                 adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
                 [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-                role="cell"
                 >{{ value$ | async }}</span>
         </ng-container>
         <ng-template #defaultCell>
             <span
-                [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-                role="cell"
             >{{ value$ | async }}</span>
         </ng-template>
     `,
