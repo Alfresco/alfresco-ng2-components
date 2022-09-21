@@ -26,6 +26,7 @@
       "@alfresco/adf-core": ["lib/core"],
       "@alfresco/adf-core/*": ["lib/core/*/public-api.ts"],
       "@alfresco/adf-core/auth": ["lib/core/auth/src/index.ts"],
+      "@alfresco/adf-core/api": ["lib/core/api/src/index.ts"],
       "@alfresco/adf-extensions": ["lib/extensions"],
       "@alfresco/adf-insights": ["lib/insights"],
       "@alfresco/adf-process-services": ["lib/process-services"],
