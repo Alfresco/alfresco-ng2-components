@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from "@storybook/angular";
-import { CardViewComponent } from "./card-view.component";
-import { CoreStoryModule } from "./../../../testing/core.story.module";
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { CardViewComponent } from './card-view.component';
+import { CoreStoryModule } from './../../../testing/core.story.module';
 import {
     CardViewArrayItemModel,
     CardViewBoolItemModel,
@@ -28,17 +28,17 @@ import {
     CardViewMapItemModel,
     CardViewModule,
     CardViewSelectItemModel,
-} from "../../../../..";
-import { CardViewTextItemModel } from "../../../../..";
-import { of } from "rxjs";
+    CardViewTextItemModel
+} from '../../../../..';
+import { of } from 'rxjs';
 
 export default {
     component: CardViewComponent,
-    title: "Core/Card View/Card View",
+    title: 'Core/Card View/Card View',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule],
-        }),
+            imports: [CoreStoryModule, CardViewModule]
+        })
     ],
     argTypes: {
         editable: {
@@ -74,95 +74,95 @@ export default {
 
 const dataSource = [
     new CardViewTextItemModel({
-        label: "CardView Text Item - Multivalue (chips)",
+        label: 'CardView Text Item - Multivalue (chips)',
         value: [1, 2, 3, 4],
-        key: "name",
-        default: "default bar",
+        key: 'name',
+        default: 'default bar',
         multiline: true,
         multivalued: true,
-        icon: "icon",
+        icon: 'icon',
         editable: true
     }),
     new CardViewDateItemModel({
-        label: "CardView Date Item - Multivalue (chips)",
+        label: 'CardView Date Item - Multivalue (chips)',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
-        key: "date",
+        key: 'date',
         default: new Date(1983, 11, 24, 10, 0, 30),
-        format: "shortDate",
+        format: 'shortDate',
         editable: true,
-        multivalued: true,
+        multivalued: true
     }),
     new CardViewDatetimeItemModel({
-        label: "CardView Datetime Item - Multivalue (chips)",
+        label: 'CardView Datetime Item - Multivalue (chips)',
         value: [new Date(1983, 11, 24, 10, 0, 0)],
-        key: "datetime",
+        key: 'datetime',
         default: new Date(1983, 11, 24, 10, 0, 0),
-        format: "short",
+        format: 'short',
         editable: true,
-        multivalued: true,
+        multivalued: true
     }),
     new CardViewBoolItemModel({
-        label: "Agree to all terms and conditions",
+        label: 'Agree to all terms and conditions',
         value: true,
-        key: "boolean",
+        key: 'boolean',
         default: false,
-        editable: true,
+        editable: true
     }),
     new CardViewIntItemModel({
-        label: "CardView Int Item",
+        label: 'CardView Int Item',
         value: 213,
-        key: "int",
+        key: 'int',
         default: 1,
-        editable: true,
+        editable: true
     }),
     new CardViewKeyValuePairsItemModel({
-        label: "CardView Key-Value Pairs Item",
+        label: 'CardView Key-Value Pairs Item',
         value: [
-            { name: "hey", value: "you" },
-            { name: "hey", value: "you" },
+            { name: 'hey', value: 'you' },
+            { name: 'hey', value: 'you' }
         ],
-        key: "key-value-pairs",
-        editable: true,
+        key: 'key-value-pairs',
+        editable: true
     }),
     new CardViewSelectItemModel({
-        label: "CardView Select Item",
-        value: "one",
+        label: 'CardView Select Item',
+        value: 'one',
         options$: of([
-            { key: "one", label: "One" },
-            { key: "two", label: "Two" },
+            { key: 'one', label: 'One' },
+            { key: 'two', label: 'Two' }
         ]),
-        key: "select",
-        editable: true,
+        key: 'select',
+        editable: true
     }),
     new CardViewMapItemModel({
-        label: "My map",
-        value: new Map([["999", "My Value"]]),
-        key: "map",
-        default: "default map value",
+        label: 'My map',
+        value: new Map([['999', 'My Value']]),
+        key: 'map',
+        default: 'default map value'
     }),
     new CardViewTextItemModel({
-        label: "This is clickable ",
-        value: "click here",
-        key: "click",
-        default: "click here",
+        label: 'This is clickable ',
+        value: 'click here',
+        key: 'click',
+        default: 'click here',
         editable: true,
         clickable: true,
-        icon: "close",
+        icon: 'close'
     }),
     new CardViewArrayItemModel({
-        label: "CardView Array of items",
+        label: 'CardView Array of items',
         value: of([
-            { icon: "directions_bike", value: "Zlatan" },
-            { icon: "directions_bike", value: "Lionel Messi" },
-            { value: "Mohamed", directions_bike: "save" },
-            { value: "Ronaldo" },
+            { icon: 'directions_bike', value: 'Zlatan' },
+            { icon: 'directions_bike', value: 'Lionel Messi' },
+            { value: 'Mohamed', directions_bike: 'save' },
+            { value: 'Ronaldo' }
         ]),
-        key: "array",
-        icon: "edit",
-        default: "Empty",
+        key: 'array',
+        icon: 'edit',
+        default: 'Empty',
         noOfItemsToDisplay: 2,
-        editable: true,
-    }),
+        editable: true
+    })
 ];
 
 const valueAndDefaultUndefinedItems = [
@@ -229,7 +229,7 @@ const valueAndDefaultUndefinedItems = [
   ];
 
 const template: Story<CardViewComponent> = (args: CardViewComponent) => ({
-    props: args,
+    props: args
 });
 
 export const defaultStory = template.bind({});
@@ -237,8 +237,8 @@ defaultStory.args = {
     properties: dataSource
 };
 
-export const emptyStory = template.bind({})
+export const emptyStory = template.bind({});
 emptyStory.args = {
     properties: valueAndDefaultUndefinedItems,
     editable: false
-}
+};
