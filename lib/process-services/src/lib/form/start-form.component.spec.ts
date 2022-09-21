@@ -178,7 +178,7 @@ describe('StartFormComponent', () => {
             expect(textWidgetLabel.innerText).toBe('mockText');
         });
 
-        xit('should be able to display a radioButtonWidget from a process definition', async () => {
+        it('should be able to display a radioButtonWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormRadioButtonWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
@@ -190,7 +190,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const labelField = formFields.find((field) => field.id === 'radio-but');
             const radioButtonWidget = fixture.debugElement.nativeElement.querySelector('radio-buttons-widget');
-            const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
+            const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-radio-button-container .adf-label');
 
             expect(labelField.type).toBe('radio-buttons');
             expect(radioButtonWidget).toBeDefined();

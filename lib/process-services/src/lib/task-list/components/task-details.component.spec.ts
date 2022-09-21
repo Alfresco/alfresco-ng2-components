@@ -138,10 +138,10 @@ describe('TaskDetailsComponent', () => {
     });
 
     it('should send a unclaim task event when a task is unclaimed', async () => {
-        const taskClaimedSpy = spyOn(component.unClaimedTask, 'emit');
+        const taskUnclaimedSpy = spyOn(component.unClaimedTask, 'emit');
         component.onUnclaimAction('FAKE-TASK-UNCLAIM');
 
-        expect(taskClaimedSpy).toHaveBeenCalledWith('FAKE-TASK-UNCLAIM');
+        expect(taskUnclaimedSpy).toHaveBeenCalledWith('FAKE-TASK-UNCLAIM');
     });
 
     it('should set a placeholder message when taskId not initialised', () => {
