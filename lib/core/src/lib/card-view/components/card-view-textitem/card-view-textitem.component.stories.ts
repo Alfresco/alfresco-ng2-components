@@ -18,10 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import {
-    CardViewModule,
-    CardViewTextItemModel
-} from '../../../../..';
+import { CardViewModule, CardViewTextItemModel } from '../../../../..';
 
 export default {
     component: CardViewTextItemComponent,
@@ -34,23 +31,49 @@ export default {
     argTypes: {
         editable: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Defines if CardView item is editable',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false }
+            }
         },
         displayEmpty: {
             control: 'boolean',
-            defaultValue: true
+            description:
+                'Defines if it should display CardView item when data is empty',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
+            }
         },
         copyToClipboardAction: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Copy to clipboard action - default template in editable mode',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
+            }
         },
         useChipsForMultiValueProperty: {
             control: 'boolean',
-            defaultValue: true
+            description: 'Split text for chips using defined separator',
+            defaultValue: true,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
+            }
         },
         multiValueSeparator: {
-            control: 'boolean',
-            defaultValue: true
+            control: 'text',
+            description: 'Separator used for text splitting',
+            defaultValue: ', ',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: ', ' }
+            }
         }
     }
 } as Meta;
@@ -61,11 +84,11 @@ const template: Story<CardViewTextItemComponent> = (
     props: args
 });
 
-export const TextItemCardView = template.bind({});
+export const ClickableCardViewTextItem = template.bind({});
 
-TextItemCardView.args = {
+ClickableCardViewTextItem.args = {
     property: new CardViewTextItemModel({
-        label: 'This is clickable ',
+        label: 'CardView Text Item - Clickable template',
         value: 'click here',
         key: 'click',
         default: 'click here',
@@ -75,13 +98,47 @@ TextItemCardView.args = {
     })
 };
 
-// export const defaultStory = template.bind({});
-// defaultStory.args = {
-//     properties: dataSource
-// };
+export const ChipsCardViewTextItem = template.bind({});
 
-// export const emptyStory = template.bind({})
-// emptyStory.args = {
-//     properties: valueAndDefaultUndefinedItems,
-//     editable: false
-// }
+ChipsCardViewTextItem.args = {
+    property: new CardViewTextItemModel({
+        label: 'CardView Text Item - Chips template',
+        value: [1, 2, 3, 4],
+        key: 'name',
+        default: 'default bar',
+        multiline: true,
+        multivalued: true,
+        icon: 'icon',
+        editable: true
+    })
+};
+
+export const EmptyCardViewTextItem = template.bind({});
+
+EmptyCardViewTextItem.args = {
+    property: new CardViewTextItemModel({
+        label: 'CardView Text Item - Empty template',
+        value: undefined,
+        key: 'empty',
+        default: '',
+        icon: 'icon',
+        editable: false
+    }),
+    editable: false,
+    displayEmpty: false
+};
+
+export const DefaultCardViewTextItem = template.bind({});
+
+DefaultCardViewTextItem.args = {
+    property: new CardViewTextItemModel({
+        label: 'CardView Text Item - Default template',
+        value: 'input here',
+        key: 'default',
+        default: 'input here',
+        editable: true,
+        clickable: false,
+        icon: 'close',
+        multiline: false
+    })
+};
