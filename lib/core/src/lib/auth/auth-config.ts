@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-export * from './public-api';
-export * from './auth-routing.module';
-export * from './auth.module';
-export * from './auth.service';
-export * from './oidc-auth.guard';
-export * from './redirect-auth.service';
-export * from './view/authentication-confirmation/authentication-confirmation.component';
+import { InjectionToken } from '@angular/core';
+
+export interface AuthModuleConfig {
+    readonly useHash: boolean;
+}
+
+export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');

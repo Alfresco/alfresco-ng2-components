@@ -19,6 +19,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } fro
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, OauthConfigModel } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
+import { AuthenticationService } from '../services/authentication.service';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
 
@@ -57,11 +58,13 @@ export class HostSettingsComponent implements OnInit {
     // eslint-disable-next-line @angular-eslint/no-output-native
     success = new EventEmitter<boolean>();
 
-    constructor(private formBuilder: UntypedFormBuilder,
-                private storageService: StorageService,
-                private alfrescoApiService: AlfrescoApiService,
-                private appConfig: AppConfigService) {
-    }
+    constructor(
+        private formBuilder: UntypedFormBuilder,
+        private storageService: StorageService,
+        private alfrescoApiService: AlfrescoApiService,
+        private appConfig: AppConfigService,
+        private auth: AuthenticationService
+    ) {}
 
     ngOnInit() {
         if (this.providers.length === 1) {
@@ -146,6 +149,7 @@ export class HostSettingsComponent implements OnInit {
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
             implicitFlow: oauth.implicitFlow,
+            codeFlow: oauth.codeFlow,
             publicUrls: [oauth.publicUrls]
         });
     }
@@ -185,6 +189,7 @@ export class HostSettingsComponent implements OnInit {
         this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
 
         this.alfrescoApiService.reset();
+        this.auth.reset();
         this.alfrescoApiService.getInstance().invalidateSession();
         this.success.emit(true);
     }
@@ -228,6 +233,10 @@ export class HostSettingsComponent implements OnInit {
         return this.form.get('authType').value === 'OAUTH';
     }
 
+    get supportsCodeFlow(): boolean {
+        return this.auth.supportCodeFlow;
+    }
+
     get providersControl(): UntypedFormControl {
         return this.form.get('providersControl') as UntypedFormControl;
     }
@@ -262,6 +271,10 @@ export class HostSettingsComponent implements OnInit {
 
     get implicitFlow(): UntypedFormControl {
         return this.oauthConfig.get('implicitFlow') as UntypedFormControl;
+    }
+
+    get codeFlow(): UntypedFormControl {
+        return this.oauthConfig.get('codeFlow') as UntypedFormControl;
     }
 
     get silentLogin(): UntypedFormControl {
