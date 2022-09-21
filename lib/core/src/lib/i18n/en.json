@@ -172,6 +172,7 @@
       "BASIC": "Basic Authentication",
       "SSO": "SSO",
       "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
       "PROVIDER": "Provider",
       "REQUIRED": "This field is required",
       "CS_URL_ERROR": "Content Services address doesn't match the URL format",

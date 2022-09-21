@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-export interface OauthConfigModel {
-    host: string;
-    clientId: string;
-    scope: string;
-    implicitFlow: boolean;
-    codeFlow?: boolean;
-    redirectUri: string;
-    silentLogin?: boolean;
-    secret?: string;
-    redirectUriLogout?: string;
-    refreshTokenTimeout?: number;
-    publicUrls: string[];
-}
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+
+const routes: Routes = [
+  { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AuthRoutingModule {}
