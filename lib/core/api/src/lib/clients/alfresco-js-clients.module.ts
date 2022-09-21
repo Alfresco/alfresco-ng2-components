@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../api-clients.service';
 import { ActivitiClientModule } from './activiti/activiti-client.module';
@@ -22,6 +23,11 @@ import { DiscoveryClientModule } from './discovery/discovery-client.module';
 
 @NgModule({
     imports: [
+        HttpClientModule,
+        HttpClientXsrfModule.withOptions({
+            cookieName: 'CSRF-TOKEN',
+            headerName: 'X-CSRF-TOKEN'
+        }),
         ActivitiClientModule,
         DiscoveryClientModule
     ],
