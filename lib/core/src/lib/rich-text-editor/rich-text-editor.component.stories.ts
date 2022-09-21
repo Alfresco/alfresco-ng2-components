@@ -20,6 +20,44 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
 
+const exampleData = {
+    time: 1663761278752,
+    blocks: [
+        {
+            id: 'yOV_DfEQhC',
+            type: 'paragraph',
+            data: {
+                text: 'text value'
+            }
+        },
+        {
+            id: 'IZwymOWyds',
+            type: 'header',
+            data: {
+                text: 'Heading value',
+                level: 2
+            }
+        },
+        {
+            id: '3JJj6A8XFO',
+            type: 'list',
+            data: {
+                style: 'unordered',
+                items: ['unordered list item A', 'unordered list item B']
+            }
+        },
+        {
+            id: 'q98W4eK4Nj',
+            type: 'list',
+            data: {
+                style: 'ordered',
+                items: ['ordered list item 1', 'ordered list item 2']
+            }
+        }
+    ],
+    version: '2.25.0'
+};
+
 export default {
     component: RichTextEditorComponent,
     title: 'Core/Rich Text Editor/Rich Text Editor',
@@ -49,9 +87,37 @@ export default {
 
 const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent) => ({
     props: args,
-    template: `<adf-rich-text-editor [data]=data [readOnly]=readOnly #editor> </adf-rich-text-editor>
-    <hr/><h3>Output data from editor:</h3>
-    <pre>{{editor.outputData$ | async | json}}</pre>`
+    template: `
+    <adf-rich-text-editor
+        [data]=data
+        [readOnly]=readOnly
+        #editor >
+    </adf-rich-text-editor>
+    <hr/>
+    <h3>Output data from editor:</h3>
+    <pre>{{editor.outputData$ | async | json}}</pre>
+    `
 });
 
-export const richTextEditor = template.bind({});
+export const defaultRichTextEditor = template.bind({});
+defaultRichTextEditor.args = {
+    data: {
+        time: 1663761278752,
+        blocks: [
+            {
+                id: 'yOV_DfEQhC',
+                type: 'paragraph',
+                data: {
+                    text: 'text'
+                }
+            }
+        ],
+        version: '2.25.0'
+    }
+};
+
+export const readOnlyRichTextEditor = template.bind({});
+readOnlyRichTextEditor.args = {
+    readOnly: true,
+    data: exampleData
+};
