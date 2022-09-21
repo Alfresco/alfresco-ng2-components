@@ -155,15 +155,15 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     get headerTemplate(): TemplateRef<any> {
-        return this.headerDirective && this.headerDirective.template || this.emptyTemplate;
+        return this?.headerDirective?.template || this.emptyTemplate;
     }
 
     get navigationTemplate(): TemplateRef<any> {
-        return this.navigationDirective && this.navigationDirective.template || this.emptyTemplate;
+        return this?.navigationDirective?.template || this.emptyTemplate;
     }
 
     get contentTemplate(): TemplateRef<any> {
-        return this.contentDirective && this.contentDirective.template || this.emptyTemplate;
+        return this?.contentDirective?.template || this.emptyTemplate;
     }
 
     onMediaQueryChange() {
