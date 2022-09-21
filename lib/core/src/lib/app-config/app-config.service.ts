@@ -192,8 +192,9 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
-                        this.onDataLoaded(data);
                         resolve(this.config);
+                        // WARNING: Risky change! Despite the fact that this would be the right order, this is a breaking change...
+                        this.onDataLoaded(data);
                     },
                     () => {
                         resolve(this.config);

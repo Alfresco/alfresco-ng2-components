@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-export * from './public-api';
-export * from './auth-routing.module';
-export * from './auth.module';
-export * from './auth.service';
-export * from './oidc-auth.guard';
-export * from './redirect-auth.service';
-export * from './view/authentication-confirmation/authentication-confirmation.component';
+import { AppConfigService, AppConfigValues } from './app-config.service';
+import { StorageService } from '../services/storage.service';
+
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+    return () => appConfigService.load().then(() => {
+        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+    });
+}

@@ -31,9 +31,8 @@ export class AuthBearerInterceptor implements HttpInterceptor {
   constructor(private injector: Injector, private authService: AuthenticationService) { }
 
   private loadExcludedUrlsRegex() {
-    const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
-
-    this.excludedUrlsRegex = [...excludedUrls].map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
+    const excludedUrls = this.authService.getBearerExcludedUrls();
+    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):

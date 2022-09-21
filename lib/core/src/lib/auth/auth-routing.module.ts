@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 
-export * from './public-api';
-export * from './auth-routing.module';
-export * from './auth.module';
-export * from './auth.service';
-export * from './oidc-auth.guard';
-export * from './redirect-auth.service';
-export * from './view/authentication-confirmation/authentication-confirmation.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+
+const routes: Routes = [
+  { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AuthRoutingModule {}
