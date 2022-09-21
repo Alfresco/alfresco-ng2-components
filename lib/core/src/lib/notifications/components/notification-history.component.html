@@ -1,6 +1,8 @@
 <div (keyup)="onKeyPress($event)">
     <button mat-button
             [matMenuTriggerFor]="menu"
+            [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
+            title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
             class="adf-notification-history-menu_button"
             id="adf-notification-history-open-button"
             (menuOpened)="onMenuOpened()">
@@ -17,7 +19,7 @@
 
         <div class="adf-notification-history-list"
              (click)="$event.stopPropagation()">
-            <div mat-subheader>
+            <div mat-subheader role="menuitem">
                 <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
                 <button (click)="markAsRead()"
                         id="adf-notification-history-mark-as-read"
@@ -30,7 +32,7 @@
 
             <mat-divider></mat-divider>
 
-            <mat-list>
+            <mat-list role="menuitem">
                 <ng-container *ngIf="notifications.length; else empty_list_template">
                     <mat-list-item *ngFor="let notification of paginatedNotifications"
                                    class="adf-notification-history-menu-item"
@@ -54,7 +56,7 @@
                 <ng-template #empty_list_template>
                     <mat-list-item id="adf-notification-history-component-no-message"
                                    class="adf-notification-history-menu-no-message">
-                        <h4 mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</h4>
+                        <p mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
                     </mat-list-item>
                 </ng-template>
             </mat-list>
@@ -62,6 +64,7 @@
             <mat-divider></mat-divider>
 
             <div class="adf-notification-history-load-more"
+                 role="menuitem"
                  *ngIf="hasMoreNotifications()">
                 <button mat-button
                         (click)="loadMore()">

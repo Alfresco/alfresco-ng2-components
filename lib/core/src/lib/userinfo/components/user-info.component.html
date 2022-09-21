@@ -55,9 +55,9 @@
     </button>
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY"
               [overlapTrigger]="false" class="adf-userinfo-menu">
-        <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0"
+        <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0" role="menuitem"
                        class="adf-userinfo-tab" [class.adf-hide-tab]="!(bpmUser$ | async) || !(ecmUser$ | async)">
-            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}"
+            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode==='CONTENT' || mode==='ALL'">
                 <mat-card class="adf-userinfo-card" *ngIf="ecmUser$ | async as ecmUser">
                     <mat-card-header class="adf-userinfo-card-header"
@@ -94,7 +94,7 @@
                     </mat-card-content>
                 </mat-card>
             </mat-tab>
-            <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}"
+            <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" role="dialog"
                      *ngIf="mode==='PROCESS' || mode==='ALL'">
                 <mat-card class="adf-userinfo-card" *ngIf="bpmUser$ | async as bpmUser">
                     <mat-card-header class="adf-userinfo-card-header"
@@ -126,7 +126,7 @@
                     </mat-card-content>
                 </mat-card>
             </mat-tab>
-            <mat-tab id="identity-panel" *ngIf="mode==='SSO'">
+            <mat-tab id="identity-panel" role="dialog" *ngIf="mode==='SSO'">
                 <mat-card class="adf-userinfo-card" *ngIf="identityUser$ | async as identityUser">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
