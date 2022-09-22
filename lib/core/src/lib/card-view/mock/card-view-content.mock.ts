@@ -25,7 +25,7 @@ import {
     CardViewMapItemModel,
     CardViewSelectItemModel,
     CardViewTextItemModel
-} from 'lib/card-view/public-api';
+} from '../public-api';
 import { of } from 'rxjs';
 
 export const cardViewDataSource = [

@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewComponent } from './card-view.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule } from '../../public-api';
-import { cardViewDataSource, cardViewUndefinedValues } from 'lib/mock/card-view-content.mock';
+import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
 
 export default {
     component: CardViewComponent,
