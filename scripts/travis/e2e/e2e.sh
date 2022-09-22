@@ -25,7 +25,7 @@ if [ ${AFFECTED_LIB} == true ]; then
 
     if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]]; then
         echo "Run all e2e $FOLDER"
-        ./scripts/test-e2e-lib.sh --use-dist
+        ./scripts/test-e2e-lib.sh --use-dist || exit 1
     else if [[ $AFFECTED_E2E  == "e2e/$FOLDER" ]]; then
             echo "Run affected e2e"
 
@@ -35,12 +35,12 @@ if [ ${AFFECTED_LIB} == true ]; then
             echo "Run $FOLDER e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
 
             if [[ $LIST_SPECS != "" ]]; then
-                ./scripts/test-e2e-lib.sh --use-dist
+                ./scripts/test-e2e-lib.sh --use-dist || exit 1
             fi
         fi
     fi;
 
 else
     echo "Step2 - Lib $verifyLib NOT affected. No need to run e2e"
+    exit 0
 fi
-exit 0
