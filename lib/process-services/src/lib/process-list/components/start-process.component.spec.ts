@@ -515,12 +515,12 @@ describe('StartProcessComponent', () => {
         });
 
         it('should emit start event when start select a process and add a name', () => {
-            const startProcessSpy = spyOn(component.start, 'emit');
+            const startProcessEmitterSpy = spyOn(component.start, 'emit');
             component.processDefinitionSelectionChanged(testProcessDef);
             component.name = 'my:Process';
             component.startProcess();
 
-            expect(startProcessSpy).toHaveBeenCalledWith(newProcess);
+            expect(startProcessEmitterSpy).toHaveBeenCalledWith(newProcess);
         });
 
         it('should emit processDefinitionSelection event when a process definition is selected', () => {

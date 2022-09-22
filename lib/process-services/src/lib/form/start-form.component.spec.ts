@@ -242,7 +242,7 @@ describe('StartFormComponent', () => {
             const formFields = component.form.getFormFields();
             const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
             const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label')
+            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
             const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-select .mat-select-trigger');
             selectElement.click();
 
@@ -373,7 +373,7 @@ describe('StartFormComponent', () => {
             const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
             const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
 
-            expect(titleElement.innerText.trim()).toEqual('Mock Title')
+            expect(titleElement.innerText.trim()).toEqual('Mock Title');
             expect(actionButtons.length).toBe(4);
             expect(actionButtons[0].innerText.trim()).toBe('SAVE');
             expect(actionButtons[0].disabled).toBeFalsy();

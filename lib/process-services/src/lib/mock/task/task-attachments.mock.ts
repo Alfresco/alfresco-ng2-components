@@ -64,4 +64,4 @@ export const mockEmittedTaskAttachments = [
         createdBy: 'user2 last2',
         icon: './assets/images/ft_ic_raster_image.svg'
     }
-]
+];

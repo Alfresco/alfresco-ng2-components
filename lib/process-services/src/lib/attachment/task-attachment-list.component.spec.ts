@@ -91,7 +91,7 @@ describe('TaskAttachmentList', () => {
         const spySuccessEmitter = spyOn(component.success, 'emit');
         component.ngOnChanges({ taskId: change });
 
-        expect(spySuccessEmitter).toHaveBeenCalledWith(mockEmittedTaskAttachments)
+        expect(spySuccessEmitter).toHaveBeenCalledWith(mockEmittedTaskAttachments);
     });
 
     it('should not attach when no taskId is specified', () => {
