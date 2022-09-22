@@ -25,6 +25,7 @@
 
                     <mat-slide-toggle
                         class="adf-inherit-toggle"
+                        aria-label="Toggle Permission"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
                         (change)="permissionList.toggleInherited($event)">

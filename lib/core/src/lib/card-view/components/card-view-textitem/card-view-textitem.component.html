@@ -12,6 +12,7 @@
             <input matInput
                    *ngIf="!property.multiline"
                    class="adf-property-value"
+                   title={{property.displayValue}}
                    [placeholder]="property.default"
                    [formControl]="textInput"
                    (dblclick)="copyToClipboard(property.displayValue)"
@@ -72,6 +73,7 @@
                         [floatLabel]="'never'">
             <input matInput
                    class="adf-property-value"
+                   title={{property.displayValue}}
                    [placeholder]="editedValue ? '' : property.default | translate"
                    [matChipInputFor]="chipList"
                    [matChipInputAddOnBlur]="true"
@@ -95,6 +97,7 @@
             <input matInput
                    [type]=property.inputType
                    class="adf-property-value"
+                   title={{property.displayValue}}
                    [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
