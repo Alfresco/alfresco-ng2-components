@@ -42,7 +42,7 @@ export class DiscoveryApiService {
     ) {
         this.authenticationService.onLogin
             .pipe(
-                filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
+                filter(() => this.apiService.getInstance()?.isEcmLoggedIn() || this.authenticationService.isKerberosEnabled()),
                 take(1),
                 switchMap(() => this.getEcmProductInfo())
             )
