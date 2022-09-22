@@ -431,7 +431,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should unclaim a task', async() => {
+        it('should unclaim a task', async () => {
             const taskId = '111';
 
             await service.unclaimTask(taskId).subscribe((res) => {
@@ -445,7 +445,7 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should update a task', async() => {
+        it('should update a task', async () => {
             const taskId = '111';
             const updated: TaskUpdateRepresentation = {
                 name: 'someName'

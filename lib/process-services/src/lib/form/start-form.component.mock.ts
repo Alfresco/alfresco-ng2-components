@@ -149,14 +149,14 @@ export const startFormDropdownDefinitionMock = {
                         id: 'mockTypeDropDown',
                         name: 'mock DropDown',
                         type: 'dropdown',
-                        value: 'Chooseone...',
+                        value: 'Choose one...',
                         required: false,
                         readOnly: false,
                         overrideId: false,
                         options: [
                             {
                                 id: 'empty',
-                                name: 'Chooseone...'
+                                name: 'Choose one...'
                             },
                             {
                                 id: 'opt1',
@@ -471,7 +471,7 @@ export const startMockForm = {
                         id: 'claimtype',
                         name: 'ClaimType',
                         type: 'dropdown',
-                        value: 'Chooseone...',
+                        value: 'Choose one...',
                         required: false,
                         readOnly: false,
                         overrideId: false,
@@ -487,7 +487,7 @@ export const startMockForm = {
                         options: [
                             {
                                 id: 'empty',
-                                name: 'Chooseone...'
+                                name: 'Choose one...'
                             },
                             {
                                 id: 'cashless',

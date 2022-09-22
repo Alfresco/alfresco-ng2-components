@@ -182,12 +182,6 @@ describe('ProcessService', () => {
             expect(deleteProcessInstance).toHaveBeenCalledWith(processInstanceId);
         });
 
-        it('should run the success callback', (done) => {
-            service.cancelProcess(processInstanceId).subscribe(() => {
-                done();
-            });
-        });
-
         it('should pass on any error that is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(mockError));
             service.cancelProcess(null).subscribe(

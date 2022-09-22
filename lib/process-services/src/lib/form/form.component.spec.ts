@@ -945,18 +945,18 @@ describe('FormComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalsy();
     });
 
-    it('should raise [executeOutcome] event for formService', (done) => {
-        formService.executeOutcome.subscribe(() => {
-            done();
-        });
-
+    it('should raise [executeOutcome] event for formService', () => {
+        const executeOutcomeSpy = spyOn(formService.executeOutcome, 'next');
         const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
+        const expectedEmittedOutcome = new FormOutcomeEvent(outcome);
 
         formComponent.form = new FormModel();
         formComponent.onOutcomeClicked(outcome);
+
+        expect(executeOutcomeSpy).toHaveBeenCalledWith(expectedEmittedOutcome);
     });
 
     it('should refresh form values when data is changed', () => {

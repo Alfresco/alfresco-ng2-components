@@ -24,16 +24,16 @@ import { TranslateModule } from '@ngx-translate/core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'JohnDoe@fake.com'
 });
 
 const fakeSecondUser: UserProcessModel = new UserProcessModel({
     id: '2',
-    firstName: 'fake-involve-name',
-    lastName: 'fake-involve-last',
-    email: 'fake-involve@mail.com'
+    firstName: 'Jane',
+    lastName: 'Jackson',
+    email: 'JaneJackson@fake.com'
 });
 
 describe('PeopleSearchComponent', () => {
@@ -55,80 +55,40 @@ describe('PeopleSearchComponent', () => {
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        peopleSearchComponent.results = of([]);
+        peopleSearchComponent.results = of(userArray);
         fixture.detectChanges();
     });
+
+    function triggerSearch() {
+        searchInput = element.querySelector('#userSearchText');
+        searchInput.value = 'fake-search';
+        searchInput.dispatchEvent(new Event('input'));
+    }
 
     it('should show input search text', () => {
-        expect(element.querySelector('#userSearchText')).toBeDefined();
-        expect(element.querySelector('#userSearchText')).not.toBeNull();
+        expect(element.querySelector('#userSearchText')).toBeTruthy();
     });
 
-    it('should hide people-list container', () => {
+    it('should display user search results', async () => {
+        triggerSearch();
         fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#search-people-list')).toBeNull();
-            });
-   });
-
-    it('should show user which can be involved ', (done) => {
-        peopleSearchComponent.results = of(userArray);
-        peopleSearchComponent.ngOnInit();
+        await fixture.whenStable();
         fixture.detectChanges();
+        const datatableBodyElement = element.querySelector('adf-people-search-field .adf-datatable-body');
+        const peopleResultElements = element.querySelectorAll('.adf-people-full-name');
 
-        searchInput = element.querySelector('#userSearchText');
-        searchInput.value = 'fake-search';
-        searchInput.dispatchEvent(new Event('input'));
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
-            expect(gatewayElement).not.toBeNull();
-            expect(gatewayElement.children.length).toBe(2);
-            done();
-        });
+        expect(datatableBodyElement).not.toBeNull();
+        expect(peopleResultElements.length).toBe(2);
+        expect(peopleResultElements[0].textContent.trim()).toBe('John Doe');
+        expect(peopleResultElements[1].textContent.trim()).toBe('Jane Jackson');
     });
 
-    it('should send an event when an user is clicked', (done) => {
-        peopleSearchComponent.success.subscribe((user) => {
-            expect(user).toBeDefined();
-            expect(user.firstName).toBe('fake-name');
-            done();
-        });
-        peopleSearchComponent.results = of(userArray);
-        peopleSearchComponent.ngOnInit();
-        fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                peopleSearchComponent.onRowClick(fakeUser);
-                const addUserButton = element.querySelector<HTMLElement>('#add-people');
-                addUserButton.click();
-            });
-    });
-
-    it('should remove clicked user', (done) => {
-        peopleSearchComponent.results = of(userArray);
-        peopleSearchComponent.ngOnInit();
-        fixture.detectChanges();
-
-        searchInput = element.querySelector('#userSearchText');
-        searchInput.value = 'fake-search';
-        searchInput.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-
+    it('should emit a success event when a user is selected from the search results', () => {
+        const successEventSpy = spyOn(peopleSearchComponent.success, 'emit');
         peopleSearchComponent.onRowClick(fakeUser);
         const addUserButton = element.querySelector<HTMLElement>('#add-people');
         addUserButton.click();
-        fixture.detectChanges();
 
-        fixture.whenStable()
-            .then(() => {
-                fixture.detectChanges();
-                const gatewayElement: any = element.querySelector('#search-people-list .adf-datatable-body');
-                expect(gatewayElement).not.toBeNull();
-                expect(gatewayElement.children.length).toBe(1);
-                done();
-            });
+        expect(successEventSpy).toHaveBeenCalledWith(fakeUser);
     });
 });
