@@ -335,7 +335,8 @@
       "SORT_DESCENDING_BY": "Descending by {{ string }}",
       "ICON_TEXT": "Item type {{ type }}",
       "ICON_DISABLED": "Disabled",
-      "ROW_OPTION_BUTTON": "Actions"
+      "ROW_OPTION_BUTTON": "Actions",
+      "EMPTY_HEADER": "Empty header"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
