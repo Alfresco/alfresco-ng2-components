@@ -38,32 +38,37 @@ export default {
             description: 'Defines if CardView item is editable',
             defaultValue: false,
             table: {
-                type: {summary: 'boolean'},
-                defaultValue: {summary: false}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false }
             }
         },
         displayEmpty: {
             control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
+            description:
+                'Defines if it should display CardView item when data is empty',
             defaultValue: true,
             table: {
-                type: {summary: 'boolean'},
-                defaultValue: {summary: true}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
             }
         },
         displayClearAction: {
             control: 'boolean',
-            description: 'Defines if it should display clear input action (only with SingleValued components)',
+            description:
+                'Defines if it should display clear input action (only with SingleValued components)',
             defaultValue: true,
             table: {
-                type: {summary: 'boolean'},
-                defaultValue: {summary: true}
+                type: { summary: 'boolean' },
+                defaultValue: { summary: true }
             }
         },
         property: {
             description: 'Card View Item Model with data',
             table: {
-                type: { summary: 'CardViewDateItemModel | CardViewDatetimeItemModel' }
+                type: {
+                    summary:
+                        'CardViewDateItemModel | CardViewDatetimeItemModel'
+                }
             }
         }
     }

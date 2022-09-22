@@ -167,66 +167,66 @@ const dataSource = [
 
 const valueAndDefaultUndefinedItems = [
     new CardViewTextItemModel({
-      label: 'CardView Text Item - Multivalue (chips)',
-      value: undefined,
-      key: 'name',
-      default: undefined,
-      multiline: true,
-      multivalued: true,
-      icon: 'icon',
-      editable: true
+        label: 'CardView Text Item - Multivalue (chips)',
+        value: undefined,
+        key: 'name',
+        default: undefined,
+        multiline: true,
+        multivalued: true,
+        icon: 'icon',
+        editable: true
     }),
     new CardViewDateItemModel({
-      label: 'CardView Date Item - Multivalue (chips)',
-      value: undefined,
-      key: 'date',
-      default: undefined,
-      format: 'shortDate',
-      editable: true,
-      multivalued: true
+        label: 'CardView Date Item - Multivalue (chips)',
+        value: undefined,
+        key: 'date',
+        default: undefined,
+        format: 'shortDate',
+        editable: true,
+        multivalued: true
     }),
     new CardViewDatetimeItemModel({
-      label: 'CardView Datetime Item - Multivalue (chips)',
-      value: undefined,
-      key: 'datetime',
-      default: undefined,
-      format: 'short',
-      editable: true,
-      multivalued: true
+        label: 'CardView Datetime Item - Multivalue (chips)',
+        value: undefined,
+        key: 'datetime',
+        default: undefined,
+        format: 'short',
+        editable: true,
+        multivalued: true
     }),
     new CardViewIntItemModel({
-      label: 'CardView Int Item',
-      value: undefined,
-      key: 'int',
-      default: undefined,
-      editable: true
+        label: 'CardView Int Item',
+        value: undefined,
+        key: 'int',
+        default: undefined,
+        editable: true
     }),
     new CardViewSelectItemModel({
-      label: 'CardView Select Item',
-      value: undefined,
-      options$: of([
-        { key: 'one', label: 'One' },
-        { key: 'two', label: 'Two' }
-      ]),
-      key: 'select',
-      editable: true
+        label: 'CardView Select Item',
+        value: undefined,
+        options$: of([
+            { key: 'one', label: 'One' },
+            { key: 'two', label: 'Two' }
+        ]),
+        key: 'select',
+        editable: true
     }),
     new CardViewMapItemModel({
-      label: 'My map',
-      value: undefined,
-      key: 'map',
-      default: undefined
+        label: 'My map',
+        value: undefined,
+        key: 'map',
+        default: undefined
     }),
     new CardViewTextItemModel({
-      label: 'This is clickable ',
-      value: undefined,
-      key: 'click',
-      default: undefined,
-      editable: true,
-      clickable: true,
-      icon: 'close'
+        label: 'This is clickable ',
+        value: undefined,
+        key: 'click',
+        default: undefined,
+        editable: true,
+        clickable: true,
+        icon: 'close'
     })
-  ];
+];
 
 const template: Story<CardViewComponent> = (args: CardViewComponent) => ({
     props: args

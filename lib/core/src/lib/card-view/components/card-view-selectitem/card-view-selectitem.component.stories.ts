@@ -62,7 +62,10 @@ export default {
             control: { disable: true },
             description: 'Data displayed in select element',
             table: {
-                type: {summary: 'Observable<CardViewSelectItemOption<string | number>[]>'}
+                type: {
+                    summary:
+                        'Observable<CardViewSelectItemOption<string | number>[]>'
+                }
             }
         },
         property: {

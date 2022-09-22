@@ -34,7 +34,7 @@ export default {
             description: 'Defines if CardView item is editable',
             defaultValue: true,
             table: {
-                type: {summary: 'boolean'}
+                type: { summary: 'boolean' }
             }
         },
         property: {

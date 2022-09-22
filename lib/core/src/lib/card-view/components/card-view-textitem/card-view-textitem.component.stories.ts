@@ -50,7 +50,8 @@ export default {
         },
         copyToClipboardAction: {
             control: 'boolean',
-            description: 'Copy to clipboard action - default template in editable mode',
+            description:
+                'Copy to clipboard action - default template in editable mode',
             defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
