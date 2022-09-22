@@ -32,7 +32,7 @@ export class LoginPage {
     usernameField = $('#username');
     passwordField = $('#password');
     loginButton = $('input[type="submit"]');
-    userIcon = $(`[id*='user-initials']`);
+    userIcon = $(`[data-automation-id*='user-initials']`);
     loginError = $(`div[data-automation-id="login-error"]`);
     visibilityLabel = $('#v');
 
