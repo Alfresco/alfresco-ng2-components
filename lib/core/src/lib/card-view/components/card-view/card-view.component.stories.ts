@@ -29,7 +29,7 @@ import {
     CardViewModule,
     CardViewSelectItemModel,
     CardViewTextItemModel
-} from '../../../../..';
+} from '../../public-api';
 import { of } from 'rxjs';
 
 export default {

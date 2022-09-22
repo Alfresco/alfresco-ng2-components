@@ -18,7 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewModule, CardViewKeyValuePairsItemModel } from '../../../../..';
+import { CardViewModule, CardViewKeyValuePairsItemModel } from '../../public-api';
 
 export default {
     component: CardViewKeyValuePairsItemComponent,

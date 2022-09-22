@@ -18,7 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewArrayItemModel, CardViewModule } from '../../../../..';
+import { CardViewArrayItemModel, CardViewModule } from '../../public-api';
 import { of } from 'rxjs';
 
 export default {

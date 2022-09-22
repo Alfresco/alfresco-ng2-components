@@ -18,7 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewModule, CardViewTextItemModel } from '../../../../..';
+import { CardViewModule, CardViewTextItemModel } from '../../public-api';
 
 export default {
     component: CardViewTextItemComponent,

@@ -18,7 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewBoolItemModel, CardViewModule } from '../../../../..';
+import { CardViewBoolItemModel, CardViewModule } from '../../public-api';
 
 export default {
     component: CardViewBoolItemComponent,

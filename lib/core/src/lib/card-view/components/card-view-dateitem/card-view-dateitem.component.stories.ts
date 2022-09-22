@@ -22,7 +22,7 @@ import {
     CardViewDateItemModel,
     CardViewDatetimeItemModel,
     CardViewModule
-} from '../../../../..';
+} from '../../public-api';
 
 export default {
     component: CardViewDateItemComponent,
