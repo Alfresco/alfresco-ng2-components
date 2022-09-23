@@ -33,7 +33,7 @@ export class PeopleContentServiceMock {
 
     getCurrentUserInfo = () => of(this.fakeEcmUser);
 
-    getUserProfileImage = () => './assets/images/ecm-user-avatar.png';
+    getUserProfileImage = () => './assets/images/alfresco-logo.svg';
 }
 
 export class EcmUserServiceMock {
@@ -47,7 +47,7 @@ export class EcmUserServiceMock {
 
     getCurrentUserInfo = () => of(this.fakeEcmUser);
 
-    getUserProfileImage = () => './assets/images/ecm-user-avatar.png';
+    getUserProfileImage = () => './assets/images/alfresco-logo.svg';
 }
 
 export class BpmUserServiceMock {
@@ -61,7 +61,7 @@ export class BpmUserServiceMock {
 
     getCurrentUserInfo = () => of(this.fakeBpmUser);
 
-    getCurrentUserProfileImage = () => './assets/images/bpm-user-avatar.png';
+    getCurrentUserProfileImage = () => './assets/images/alfresco-logo.svg';
 }
 
 export class IdentityUserServiceMock {
