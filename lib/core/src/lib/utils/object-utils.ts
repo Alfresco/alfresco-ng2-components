@@ -82,7 +82,7 @@ export class ObjectUtils {
         return Object.values(target).every(value => typeof value === "boolean");
     }
 
-    static booleanPrettify(target: any): string {
+    static booleanPrettify(target: any, enhancer: any = null): string {
 
         if (!target) {
             return "";
@@ -102,10 +102,20 @@ export class ObjectUtils {
 
         target = Object.keys(target).map((key) => {
             if (target[key]) {
-                return `${greenBorderWhiteCheckSymbol} ${key}`;
+                if (enhancer) {
+                    return `${greenBorderWhiteCheckSymbol} ${enhancer(key)}`;
+                } else {
+                    return `${greenBorderWhiteCheckSymbol} ${key}`;
+                }
+                
             }
 
-            return `${redCrossSymbol} ${key}`;
+            if (enhancer) {
+                return `${redCrossSymbol} ${enhancer(key)}`;
+            } else {
+                return `${redCrossSymbol} ${key}`;
+            }
+     
         }).join("\n");
 
         return target;

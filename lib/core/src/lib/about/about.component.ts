@@ -25,7 +25,7 @@ import { BpmProductVersionModel } from '../models/product-version.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { LicenseData, PackageInfo, StatusData } from './interfaces';
-import { ObjectUtils } from '../../..';
+import { ObjectUtils, StringUtils } from '../../..';
 
 @Component({
     selector: 'adf-about',
@@ -106,7 +106,7 @@ export class AboutComponent implements OnInit {
                     if (ObjectUtils.isObject(repository.license[key])) {
                         return {
                             property: key,
-                            value: ObjectUtils.booleanPrettify(repository.license[key]),
+                            value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled),
                         };
                     };
 
