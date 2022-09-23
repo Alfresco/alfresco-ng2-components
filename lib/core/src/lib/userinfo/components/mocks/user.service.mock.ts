@@ -22,7 +22,7 @@ import {
 } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
-export class PeopleContentServiceStub {
+export class PeopleContentServiceMock {
     private fakeEcmUser = new EcmUserModel({
         firstName: 'John',
         lastName: 'Ecm',
@@ -36,7 +36,7 @@ export class PeopleContentServiceStub {
     getUserProfileImage = () => './assets/images/ecm-user-avatar.png';
 }
 
-export class EcmUserServiceStub {
+export class EcmUserServiceMock {
     private fakeEcmUser = new EcmUserModel({
         firstName: 'John',
         lastName: 'Ecm',
@@ -50,7 +50,7 @@ export class EcmUserServiceStub {
     getUserProfileImage = () => './assets/images/ecm-user-avatar.png';
 }
 
-export class BpmUserServiceStub {
+export class BpmUserServiceMock {
     private fakeBpmUser = new BpmUserModel({
         email: 'john.bpm@gmail.com',
         firstName: 'John',
@@ -64,7 +64,7 @@ export class BpmUserServiceStub {
     getCurrentUserProfileImage = () => './assets/images/bpm-user-avatar.png';
 }
 
-export class IdentityUserServiceStub {
+export class IdentityUserServiceMock {
     private fakeIdentityUser = {
         familyName: 'Identity',
         givenName: 'John',

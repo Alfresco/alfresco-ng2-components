@@ -30,9 +30,9 @@ import { IdentityUserService } from './../../services/identity-user.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { AuthenticationServiceMock } from './mocks/authentication.service.mock';
 import {
-    BpmUserServiceStub,
-    IdentityUserServiceStub,
-    PeopleContentServiceStub
+    BpmUserServiceMock,
+    IdentityUserServiceMock,
+    PeopleContentServiceMock
 } from './mocks/user.service.mock';
 
 export default {
@@ -44,15 +44,15 @@ export default {
             providers: [
                 {
                     provide: PeopleContentService,
-                    useClass: PeopleContentServiceStub
+                    useClass: PeopleContentServiceMock
                 },
                 {
                     provide: BpmUserService,
-                    useClass: BpmUserServiceStub
+                    useClass: BpmUserServiceMock
                 },
                 {
                     provide: IdentityUserService,
-                    useClass: IdentityUserServiceStub
+                    useClass: IdentityUserServiceMock
                 },
                 {
                     provide: AuthenticationService,
