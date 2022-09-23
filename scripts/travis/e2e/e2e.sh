@@ -42,5 +42,5 @@ if [ ${AFFECTED_LIB} == true ]; then
 
 else
     echo "Step2 - Lib $verifyLib NOT affected. No need to run e2e"
+    exit 0
 fi
-exit 0
