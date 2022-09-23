@@ -65,4 +65,49 @@ export class ObjectUtils {
 
         return result;
     }
+
+    static isObject(target: any): boolean {
+        return target === Object(target);
+    }
+
+    static isEmpty(target: any): boolean {
+        return target && Object.keys(target).length === 0 && Object.getPrototypeOf(target) === Object.prototype;
+    }
+
+    static hasKeys(target: any): boolean {
+        return target && Object.keys(target).length > 0;
+    }
+
+    static isBooleanObject(target: any): boolean {
+        return Object.values(target).every(value => typeof value === "boolean");
+    }
+
+    static booleanPrettify(target: any): string {
+
+        if (!target) {
+            return "";
+        }
+
+        if (
+            !ObjectUtils.isObject(target) || 
+            ObjectUtils.isEmpty(target) ||
+            !ObjectUtils.hasKeys(target) ||
+            !ObjectUtils.isBooleanObject(target)
+            ) {
+            return target.toString();
+        }
+
+        const greenBorderWhiteCheckSymbol = "&#9989";
+        const redCrossSymbol = "&#10060";
+
+        target = Object.keys(target).map((key) => {
+            if (target[key]) {
+                return `${greenBorderWhiteCheckSymbol} ${key}`;
+            }
+
+            return `${redCrossSymbol} ${key}`;
+        }).join("\n");
+
+        return target;
+    }
 }

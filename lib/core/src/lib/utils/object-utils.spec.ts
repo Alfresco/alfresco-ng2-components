@@ -130,4 +130,109 @@ describe('ObjectUtils', () => {
             });
         });
     });
+
+    describe('isObject', () => {
+        it('should return false for null and undefined types', () => {
+            expect(ObjectUtils.isObject(null)).toBe(false);
+            expect(ObjectUtils.isObject(undefined)).toBe(false);
+        });
+    
+        it('should return false for non object types', () => {
+            const number = 1;
+            const string = "test"
+            expect(ObjectUtils.isObject(string)).toBe(false);
+            expect(ObjectUtils.isObject(number)).toBe(false);
+        });
+    
+        it('should return true for object types', () => {
+            const obj = {
+                id: 1,
+            };
+            const date = new Date();
+            expect(ObjectUtils.isObject(obj)).toBe(true);
+            expect(ObjectUtils.isObject(date)).toBe(true);
+        });
+    });
+
+    describe('isEmpty', () => {
+        it('should return true for empty objects', () => {
+            const emptyObj = {};
+            expect(ObjectUtils.isEmpty(emptyObj)).toBe(true);
+        });
+    
+        it('should return false for non empty objects', () => {
+            const obj = {
+                id: 1,
+            };
+            const date = new Date();
+            expect(ObjectUtils.isEmpty(obj)).toBe(false);
+            expect(ObjectUtils.isEmpty(date)).toBe(false);
+        });
+    });
+
+    describe('isBooleanObject', () => {
+        it('should return true for objects with all bollean values', () => {
+            const obj = {
+                testOne: true,
+                testTwo: false,
+            };
+            expect(ObjectUtils.isBooleanObject(obj)).toBe(true);
+        });
+    
+        it('should return false for objects with at least one non boolean value', () => {
+            const objOne = {
+                testOne: true,
+                testTwo: 1,
+            };
+            const objTwo = {
+                testOne: 1,
+                testTwo: 2,
+            };
+            expect(ObjectUtils.isBooleanObject(objOne)).toBe(false);
+            expect(ObjectUtils.isBooleanObject(objTwo)).toBe(false);
+        });
+    });
+
+    describe('booleanPrettify', () => {
+        it('should return empty string for empty types', () => {
+            expect(ObjectUtils.booleanPrettify(null)).toBe("");
+            expect(ObjectUtils.booleanPrettify(undefined)).toBe("");
+        });
+    
+        it('should return string if not object', () => {
+            const number = 1;
+            expect(ObjectUtils.booleanPrettify(number)).toBe(number.toString());
+        });
+    
+        it('should return empty string for empty objects', () => {
+            const obj = {};
+            expect(ObjectUtils.booleanPrettify(obj)).toContain("");
+        });
+    
+        it('should return string for objects with no keys', () => {
+            const date = new Date();
+            expect(ObjectUtils.booleanPrettify(date)).toContain(date.toString());
+        });
+
+        it('should return string version of object for objects containing non boolean values', () => {
+            const nonBooleanObjOne = {
+                testOne: 1,
+                testTwo: 2,
+            };
+            const nonBooleanObjTwo = {
+                testOne: 1,
+                testTwo: false,
+            };
+            expect(ObjectUtils.booleanPrettify(nonBooleanObjOne)).toBe(nonBooleanObjOne.toString());
+            expect(ObjectUtils.booleanPrettify(nonBooleanObjTwo)).toBe(nonBooleanObjTwo.toString());
+        });
+    
+        it('should return string with either &#9989 or &#10060 symbols if object with boolean values', () => {
+            const obj = {
+                testOne: true,
+                testTwo: false,
+            };
+            expect(ObjectUtils.booleanPrettify(obj)).toContain("&#9989" || "&#10060");
+        });
+    });
 });

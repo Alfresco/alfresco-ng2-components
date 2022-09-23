@@ -21,6 +21,7 @@ import { LicenseData } from '../interfaces';
 @Component({
     selector: 'adf-about-license-list',
     templateUrl: './about-license-list.component.html',
+    styleUrls: ['./about-license-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
