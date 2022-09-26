@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2022 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import { ButtonsMenuModule } from './buttons-menu.module';
 
 export default {
     component: ButtonsMenuComponent,
-    title: 'Core/Components/ButtonsMenu',
+    title: 'Core/Buttons Menu/Buttons Menu',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, ButtonsMenuModule]
