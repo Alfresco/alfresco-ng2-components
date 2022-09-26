@@ -106,7 +106,7 @@ export class AboutComponent implements OnInit {
                     if (ObjectUtils.isObject(repository.license[key])) {
                         return {
                             property: key,
-                            value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled),
+                            value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled)
                         };
                     };
 

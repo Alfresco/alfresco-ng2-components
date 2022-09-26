@@ -41,9 +41,9 @@ describe('StringUtils', () => {
         it('should replace all instances provided in the delimiters obj', () => {
             const test = 'isClusterEnabled';
             const delimiters = {
-                'is': 'are',
-                'Enabled': 'Disabled',
-            }
+                is: 'are',
+                Enabled: 'Disabled'
+            };
 
             expect(StringUtils.replaceAll(test, delimiters)).toBe('areClusterDisabled');
         });
@@ -62,7 +62,7 @@ describe('StringUtils', () => {
             const delimiters = ['is', 'Enabled'];
 
             expect(StringUtils.removeAll(test, ...delimiters)).toBe('Cluster');
-        })
+        });
     });
 
     describe('prettifyBooleanEnabled', () => {

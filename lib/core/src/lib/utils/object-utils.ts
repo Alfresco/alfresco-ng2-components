@@ -79,17 +79,17 @@ export class ObjectUtils {
     }
 
     static isBooleanObject(target: any): boolean {
-        return Object.values(target).every(value => typeof value === "boolean");
+        return Object.values(target).every(value => typeof value === 'boolean');
     }
 
-    static booleanPrettify(target: any, enhancer: any = null): string {
+    static booleanPrettify(target: any, enhancer?: (param: string) => string): string {
 
         if (!target) {
-            return "";
+            return '';
         }
 
         if (
-            !ObjectUtils.isObject(target) || 
+            !ObjectUtils.isObject(target) ||
             ObjectUtils.isEmpty(target) ||
             !ObjectUtils.hasKeys(target) ||
             !ObjectUtils.isBooleanObject(target)
@@ -97,8 +97,8 @@ export class ObjectUtils {
             return target.toString();
         }
 
-        const greenBorderWhiteCheckSymbol = "&#9989";
-        const redCrossSymbol = "&#10060";
+        const greenBorderWhiteCheckSymbol = '&#9989';
+        const redCrossSymbol = '&#10060';
 
         target = Object.keys(target).map((key) => {
             if (target[key]) {
@@ -107,7 +107,7 @@ export class ObjectUtils {
                 } else {
                     return `${greenBorderWhiteCheckSymbol} ${key}`;
                 }
-                
+
             }
 
             if (enhancer) {
@@ -115,8 +115,8 @@ export class ObjectUtils {
             } else {
                 return `${redCrossSymbol} ${key}`;
             }
-     
-        }).join("\n");
+
+        }).join('\n');
 
         return target;
     }
