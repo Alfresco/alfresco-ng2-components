@@ -231,6 +231,21 @@ describe('ObjectDataTableAdapter', () => {
         expect(rows[1].getValue('id')).toBe(1);
     });
 
+    it('should sort by numbers', () => {
+        const adapter = new ObjectDataTableAdapter([
+            { id: 123 },
+            { id: 38 },
+            { id: 50 }
+        ],[{key: 'id'} as DataColumn]);
+
+        adapter.setSorting(new DataSorting('id', 'asc'));
+
+        const rowsAsc = adapter.getRows();
+        expect(rowsAsc[0].getValue('id')).toBe(38);
+        expect(rowsAsc[1].getValue('id')).toBe(50);
+        expect(rowsAsc[2].getValue('id')).toBe(123);
+    });
+
     it('should be sorting undefined if no sortable found', () => {
         const adapter = new ObjectDataTableAdapter(
             [
