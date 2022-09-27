@@ -22,7 +22,7 @@ if (ENV_FILE) {
 }
 
 const HOST = process.env.URL_HOST_ADF;
-const BROWSER_RUN = ([true, 'true'].includes(process.env.BROWSER_RUN))
+const BROWSER_RUN = !!process.env.BROWSER_RUN;
 const FOLDER = process.env.FOLDER || '';
 const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;
@@ -157,7 +157,8 @@ exports.config = {
                 '--no-sandbox',
                 '--disable-web-security',
                 '--disable-browser-side-navigation',
-                '--allow-running-insecure-content']
+                '--allow-running-insecure-content',
+                ...(BROWSER_RUN === true ? [] : ['--headless'])]
         }
     },
 

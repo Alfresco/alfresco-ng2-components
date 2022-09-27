@@ -28,7 +28,7 @@ env:
         #E2E VARIABLES
         - SAVE_SCREENSHOT=true
         - REDIRECT_URI=/
-        - BROWSER_RUN=true
+        - BROWSER_RUN=false
         - MAXINSTANCES=2
         - PROXY_HOST_ECM=$E2E_HOST
         - PROXY_HOST_BPM=$E2E_HOST
@@ -300,7 +300,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/e2e.sh "content-services"
+          script: ./scripts/travis/e2e/e2e.sh "content-services" "browser"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:
