@@ -34,7 +34,7 @@ export default {
             name: 'isMobile',
             description:
                 'Determines whether it is displayed on a mobile device',
-            defaultValue: false,
+            defaultValue: true,
             control: {
                 disable: false
             },
