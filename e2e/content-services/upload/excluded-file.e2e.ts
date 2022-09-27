@@ -125,7 +125,7 @@ describe('Upload component - Excluded Files', () => {
         await contentServicesPage.checkContentIsNotDisplayed(txtFileModel.name);
     });
 
-    it('[C260125] Should not upload excluded file when they are in a Folder', async () => {
+    fit('[C260125] Should not upload excluded file when they are in a Folder', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['*.cpio'],
             'match-options': { 'nocase': true }
@@ -144,7 +144,7 @@ describe('Upload component - Excluded Files', () => {
         await contentServicesPage.checkContentIsNotDisplayed(excludedFileInsideFolder.name);
     });
 
-    it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
+    fit('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['.DS_Store', 'desktop.ini', '*.png'],
             'match-options': { 'nocase': true }
