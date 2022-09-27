@@ -2,7 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR/../"
-BROWSER_RUN=false
+export BROWSER_RUN=false
 DEVELOPMENT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
@@ -69,7 +69,6 @@ set_specs(){
 }
 
 set_browser(){
-    echo "====== BROWSER RUN ====="
     BROWSER_RUN=true
     export BROWSER_RUN=$BROWSER_RUN
 }
@@ -141,7 +140,7 @@ done
 
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/
-
+echo "====== BROWSER_RUN: $BROWSER_RUN ======"
 echo "====== Update webdriver-manager ====="
 if [ "$CI" = "true" ]; then
     export chrome=$(google-chrome --product-version)

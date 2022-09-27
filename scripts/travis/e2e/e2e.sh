@@ -11,6 +11,8 @@ verifyLib=$1;
 # set test-e2e params
 if [ ! -z "$2" ]; then
       e2eParams="--$2"
+else
+      e2eParams=""
 fi
 
 echo "Step1 - Verify if affected libs contains $verifyLib"
