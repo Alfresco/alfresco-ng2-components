@@ -25,7 +25,8 @@ import { BpmProductVersionModel } from '../models/product-version.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { LicenseData, PackageInfo, StatusData } from './interfaces';
-import { ObjectUtils, StringUtils } from '../../..';
+import { ObjectUtils } from '../utils/object-utils';
+import { StringUtils } from '../utils/string-utils';
 
 @Component({
     selector: 'adf-about',
