@@ -206,15 +206,15 @@ describe('ObjectUtils', () => {
 
         it('should return empty string for empty objects', () => {
             const obj = {};
-            expect(ObjectUtils.booleanPrettify(obj)).toContain('');
+            expect(ObjectUtils.booleanPrettify(obj)).toBe('');
         });
 
         it('should return string for objects with no keys', () => {
             const date = new Date();
-            expect(ObjectUtils.booleanPrettify(date)).toContain(date.toString());
+            expect(ObjectUtils.booleanPrettify(date)).toBe(date.toString());
         });
 
-        it('should return string version of object for objects containing non boolean values', () => {
+        it('should return empty string for objects containing non boolean values', () => {
             const nonBooleanObjOne = {
                 testOne: 1,
                 testTwo: 2
@@ -223,8 +223,8 @@ describe('ObjectUtils', () => {
                 testOne: 1,
                 testTwo: false
             };
-            expect(ObjectUtils.booleanPrettify(nonBooleanObjOne)).toBe(nonBooleanObjOne.toString());
-            expect(ObjectUtils.booleanPrettify(nonBooleanObjTwo)).toBe(nonBooleanObjTwo.toString());
+            expect(ObjectUtils.booleanPrettify(nonBooleanObjOne)).toBe('');
+            expect(ObjectUtils.booleanPrettify(nonBooleanObjTwo)).toBe('');
         });
 
         it('should return string with either &#9989 or &#10060 symbols if object with boolean values', () => {
@@ -232,7 +232,7 @@ describe('ObjectUtils', () => {
                 testOne: true,
                 testTwo: false
             };
-            expect(ObjectUtils.booleanPrettify(obj)).toContain('&#9989' || '&#10060');
+            expect(ObjectUtils.booleanPrettify(obj)).toBe('&#9989 testOne\n&#10060 testTwo');
         });
 
         it('should return enhanced string with either &#9989 or &#10060 symbols if object with boolean values', () => {
@@ -243,7 +243,7 @@ describe('ObjectUtils', () => {
 
             const enhancer = (e: string) => e + 'test';
 
-            expect(ObjectUtils.booleanPrettify(obj, enhancer)).toContain(('&#9989' || '&#10060') && 'test');
+            expect(ObjectUtils.booleanPrettify(obj, enhancer)).toBe('&#9989 testOnetest\n&#10060 testTwotest');
         });
     });
 });

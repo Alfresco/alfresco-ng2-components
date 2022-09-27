@@ -84,15 +84,17 @@ export class ObjectUtils {
 
     static booleanPrettify(target: any, enhancer?: (param: string) => string): string {
 
-        if (!target) {
+        if (
+            !target ||
+            ObjectUtils.isEmpty(target) ||
+            !ObjectUtils.isBooleanObject(target)
+            ) {
             return '';
         }
 
         if (
             !ObjectUtils.isObject(target) ||
-            ObjectUtils.isEmpty(target) ||
-            !ObjectUtils.hasKeys(target) ||
-            !ObjectUtils.isBooleanObject(target)
+            !ObjectUtils.hasKeys(target)
             ) {
             return target.toString();
         }
