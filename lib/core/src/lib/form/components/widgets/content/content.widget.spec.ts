@@ -191,14 +191,13 @@ describe('ContentWidgetComponent', () => {
             const change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ id: change });
 
-            component.contentLoaded.subscribe(() => {
+            component.contentLoaded.subscribe(async () => {
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
-                        expect(thumbnailPreview).toBeDefined();
-                        expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
-                    });
+                await fixture.whenStable();
+
+                const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
+                expect(thumbnailPreview).toBeDefined();
+                expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
                 done();
             });
 
@@ -288,10 +287,7 @@ describe('ContentWidgetComponent', () => {
             const downloadButton: any = element.querySelector('#download');
             downloadButton.click();
 
-            fixture.whenStable()
-                .then(() => {
-                    expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
-                });
+            expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
         });
     });
 });
