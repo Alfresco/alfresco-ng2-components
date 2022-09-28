@@ -369,8 +369,9 @@ describe('FormComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        let saved = false;
         const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName});
+
+        let saved = false;
         formComponent.form = formModel;
         formComponent.formSaved.subscribe(() => saved = true);
         spyOn(formComponent, 'completeTaskForm').and.stub();

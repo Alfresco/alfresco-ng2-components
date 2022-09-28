@@ -401,7 +401,7 @@ describe('TaskFormCloudComponent', () => {
             expect(loadingTemplate).toBeNull();
         });
 
-        it('should emit a outcome execution event when form outcome executed', () => {
+        it('should emit an executeOutcome event when form outcome executed', () => {
             const executeOutcomeSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
 
             component.onFormExecuteOutcome(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
