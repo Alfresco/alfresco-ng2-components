@@ -369,7 +369,7 @@ describe('FormComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName});
+        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
