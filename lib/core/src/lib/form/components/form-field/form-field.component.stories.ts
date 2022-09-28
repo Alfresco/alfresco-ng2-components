@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { FormFieldComponent } from './form-field.component';
 import { FormBaseModule } from '../../form-base.module';
-import { FormFieldModel, FormModel } from '../widgets';
+import * as data from '../mock/form-field-content.mock';
 
 export default {
     component: FormFieldComponent,
@@ -31,384 +31,156 @@ export default {
     ]
 } as Meta;
 
-const fakeForm = new FormModel();
-
 const template: Story = (args) => ({
     props: args
 });
 
 export const BooleanField = template.bind({});
 BooleanField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'booleanField', name: 'Checkbox', type: 'boolean' })
+    field: data.booleanData
 };
 
 export const DateField = template.bind({});
 DateField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'dateField', value: Date.now(), type: 'date' })
+    field: data.dateData
 };
 
 export const ProcessCloudDateField = template.bind({});
 ProcessCloudDateField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'processCloudDateField', value: Date.now(), type: 'process-cloud-date' })
+    field: data.processCloudDateData
 };
 
 export const DateTimeField = template.bind({});
 DateTimeField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'dateField', value: Date.now(), type: 'datetime' })
+    field: data.datetimeData
 };
 
 export const ReadOnlyTextField = template.bind({});
 ReadOnlyTextField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'readOnlyTextField', value: 'Read only text field', type: 'readonly-text' })
+    field: data.readonlyTextData
 };
 
 export const ReadOnlyField = template.bind({});
 ReadOnlyField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'readOnlyField', value: 'Read only field', type: 'readonly' })
+    field: data.readonlyData
 };
 
 export const IntegerField = template.bind({});
 IntegerField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'integerField', value: 21, name: 'Type only integer', type: 'integer' })
+    field: data.integerData
 };
 
 export const PeopleField = template.bind({});
 PeopleField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'peopleField', value: 'Users', name: 'Users', type: 'people' })
+    field: data.peopleData
 };
 
-export const UploadField = template.bind({})
+export const UploadField = template.bind({});
 UploadField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'uploadField', type: 'upload' })
+    field: data.uploadData
 };
 
-export const ProcessUploadField = template.bind({})
+export const ProcessUploadField = template.bind({});
 ProcessUploadField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'processUploadField', type: 'process-upload' });
+    field: data.processUploadData
 };
 
-export const ProcessCloudUploadField = template.bind({})
+export const ProcessCloudUploadField = template.bind({});
 ProcessCloudUploadField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'processCloudUploadField',
-        type: 'process-cloud-upload',
-        params: {
-          existingColspan: 1,
-          maxColspan: 2,
-          fileSource: {
-            serviceId: 'alfresco-content',
-            name: 'Alfresco Content',
-            metadataAllowed: false
-          },
-          multiple: true,
-          menuOptions: {
-            show: false,
-            download: false,
-            retrieveMetadata: false,
-            remove: true
-          },
-          link: false
-        }
-      })
+    field: data.processCloudUploadData
 };
 
-export const ProcessCloudPeopleField = template.bind({})
+export const ProcessCloudPeopleField = template.bind({});
 ProcessCloudPeopleField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'processCloudPeopleField',
-        value: null,
-        name: 'Users',
-        type: 'process-cloud-people'
-      })
+    field: data.processCloudPeopleData
 };
 
-export const TextField = template.bind({})
+export const TextField = template.bind({});
 TextField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'textField', name: 'Text Field', value: 'Text field', type: 'text' })
+    field: data.textData
 };
 
-export const UnknownField = template.bind({})
+export const UnknownField = template.bind({});
 UnknownField.args = {
-    field: new FormFieldModel(fakeForm, { id: 'unknownType' })
+    field: data.unknownData
 };
 
-export const AmountField = template.bind({})
+export const AmountField = template.bind({});
 AmountField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'amountField',
-        value: 512,
-        type: 'amount',
-        name: 'Amount',
-        minValue: '0',
-        maxValue: '1024'
-      })
+    field: data.amountData
 };
 
-export const DropdownField = template.bind({})
+export const DropdownField = template.bind({});
 DropdownField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'dropdownField',
-        value: '1',
-        options: [
-          { id: '1', name: 'Item #1' },
-          { id: '2', name: 'Item #2' },
-          { id: '3', name: 'Item #3' }
-        ],
-        type: 'dropdown'
-      })
+    field: data.dropdownData
 };
 
-export const ProcessCloudDropdownField = template.bind({})
+export const ProcessCloudDropdownField = template.bind({});
 ProcessCloudDropdownField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'processCloudDropdownField',
-        value: '1',
-        options: [
-          { id: '1', name: 'Cloud Item #1' },
-          { id: '2', name: 'Cloud Item #2' },
-          { id: '3', name: 'Cloud Item #3' }
-        ],
-        type: 'process-cloud-dropdown'
-      })
+    field: data.processCloudDropdownData
 };
 
-export const MultilineTextField = template.bind({})
+export const MultilineTextField = template.bind({});
 MultilineTextField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'multiLineTextField',
-        value: 'Multi\nLine\nText\nField',
-        type: 'multi-line-text'
-      })
+    field: data.multiLineTextData
 };
 
-export const FunctionalGroupField = template.bind({})
+export const FunctionalGroupField = template.bind({});
 FunctionalGroupField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'functionalGroupField',
-        placeholder: 'Group name (Admins, Users)',
-        type: 'functional-group'
-      })
+    field: data.functionalGroupData
 };
 
-export const ProcessCloudFunctionalGroupField = template.bind({})
+export const ProcessCloudFunctionalGroupField = template.bind({});
 ProcessCloudFunctionalGroupField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'processCloudFunctionalGroupField',
-        placeholder: 'Group name',
-        type: 'process-cloud-functional-group'
-      })
+    field: data.processCloudFunctionalGroupData
 };
 
-export const HyperlinkField = template.bind({})
+export const HyperlinkField = template.bind({});
 HyperlinkField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'hyperlinkField',
-        value: 'https://www.alfresco.com/',
-        displayText: 'Alfresco hyperlink',
-        type: 'hyperlink'
-      })
+    field: data.hyperlinkData
 };
 
-export const RadioButtonsField = template.bind({})
+export const RadioButtonsField = template.bind({});
 RadioButtonsField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'radioButtonsField',
-        options: [
-          { id: '1', name: 'Item #1' },
-          { id: '2', name: 'Item #2' },
-          { id: '3', name: 'Item #3' }
-        ],
-        type: 'radio-buttons'
-      })
+    field: data.radioButtonsData
 };
 
-export const DynamicTableField = template.bind({})
+export const DynamicTableField = template.bind({});
 DynamicTableField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'dynamicTableField',
-        type: 'dynamic-table',
-        params: {
-          existingColspan: 1,
-          maxColspan: 1
-        },
-        layout: {
-          row: -1,
-          column: -1,
-          colspan: 2
-        },
-        sizeX: 2,
-        sizeY: 2,
-        row: -1,
-        col: -1,
-        columnDefinitions: [
-          {
-            id: 'id',
-            name: 'id',
-            type: 'String',
-            required: true,
-            editable: true,
-            sortable: true,
-            visible: true
-          },
-          {
-            id: 'name',
-            name: 'name',
-            type: 'String',
-            required: true,
-            editable: true,
-            sortable: true,
-            visible: true
-          }
-        ]
-      })
+    field: data.dynamicTableData
 };
 
-export const GroupField = template.bind({})
+export const GroupField = template.bind({});
 GroupField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'groupField',
-        name: 'Group (Header) section field',
-        value: 'users',
-        type: 'group',
-        fields: {
-          1: [new FormFieldModel(fakeForm, { id: 'textField', name: 'Text Field', value: 'Text field', type: 'text' }), new FormFieldModel(fakeForm, {
-            id: 'amountField',
-            value: 512,
-            type: 'amount',
-            name: 'Amount',
-            minValue: '0',
-            maxValue: '1024'
-          }), new FormFieldModel(fakeForm, { id: 'integerField', value: 21, name: 'Type only integer', type: 'integer' })]
-        }
-      })
+    field: data.groupData
 };
 
-export const SelectFolderField = template.bind({})
+export const SelectFolderField = template.bind({});
 SelectFolderField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'selectFolder',
-        name: 'Select Folder',
-        type: 'select-folder',
-        value: null,
-        params: {
-          folderSource: {
-            selectedFolder: {
-              pathId: '-my-'
-            }
-          }
-        }
-      })
+    field: data.selectFolderData
 };
 
-export const FileViewerField = template.bind({})
+export const FileViewerField = template.bind({});
 FileViewerField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'fileViewer',
-        name: 'File viewer',
-        type: 'file-viewer',
-        readOnly: false,
-        required: false,
-        colspan: 1,
-        value: 'loremIpsumPdfNode',
-        visibilityCondition: null
-      })
-}
+    field: data.fileViewerData
+};
 
-export const DocumentField = template.bind({})
+export const DocumentField = template.bind({});
 DocumentField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'document',
-        name: 'Document',
-        type: 'document',
-        readOnly: false,
-        required: false,
-        colspan: 1,
-        value: {
-          id: 'test'
-        }
-      })
-}
+    field: data.documentData
+};
 
-export const JsonField = template.bind({})
+export const JsonField = template.bind({});
 JsonField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'json',
-        name: 'json',
-        type: 'json',
-        readOnly: false,
-        required: false,
-        colspan: 1,
-        value: {
-          widget: {
-            debug: 'on',
-            window: {
-              title: 'Sample JSON Widget',
-              name: 'main_window',
-              width: 500,
-              height: 500
-            },
-            image: {
-              src: 'Images/Sun.png',
-              name: 'sun1',
-              hOffset: 250,
-              vOffset: 250,
-              alignment: 'center'
-            },
-            text: {
-              data: 'Click Here',
-              size: 36,
-              style: 'bold',
-              name: 'text1',
-              hOffset: 250,
-              vOffset: 100,
-              alignment: 'center',
-              onMouseUp: 'sun1.opacity = (sun1.opacity / 100) * 90;'
-            }
-          }
-        }
-      })
-}
+    field: data.jsonData
+};
 
-export const TypeaheadField = template.bind({})
+export const TypeaheadField = template.bind({});
 TypeaheadField.args = {
-    field: new FormFieldModel(
-        new FormModel({ processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }], taskId: 999 }),
-        {
-          id: 'typeahead-id',
-          name: 'Typeahead',
-          type: 'typeahead',
-          params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } },
-          restUrl: 'https://jsonplaceholder.typicode.com/users',
-          restResponsePath: null,
-          restIdProperty: 'typeahead-id',
-          restLabelProperty: 'typeahead-name'
-        }
-      )
-}
+    field: data.typeaheadData
+};
 
-export const ContainerField = template.bind({})
+export const ContainerField = template.bind({});
 ContainerField.args = {
-    field: new FormFieldModel(fakeForm, {
-        id: 'test',
-        name: 'test',
-        type: 'container',
-        tab: null,
-        fields: {
-          '1': [
-            { id: 'textField', name: 'Text field 1', value: 'Fields', type: 'text' },
-            { id: 'textField', value: 'inside', type: 'text' },
-            { id: 'textField', name: 'Text field 3', value: 'container field', type: 'text' }
-          ],
-          '2': [
-            { id: 'integerField', value: 123, name: 'Integer field 1', type: 'integer' },
-            { id: 'integerField', value: 321, type: 'integer' },
-            { id: 'integerField', value: 999, name: 'Integer field 3', type: 'integer' }
-          ],
-          '3': [
-            { id: 'readOnlyField', name: 'Readonly field 1', value: 'Fields', type: 'readonly' },
-            { id: 'readOnlyField', value: 'inside', type: 'readonly' },
-            { id: 'readOnlyField', name: 'Readonly field 3', value: 'field', type: 'readonly' }
-          ]
-        }
-      })
-}
+    field: data.containerData
+};
