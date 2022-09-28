@@ -14,7 +14,8 @@
                     (formCompleted)="onFormCompleted($event)"
                     (formError)="onError($event)"
                     (error)="onError($event)"
-                    (formContentClicked)="onFormContentClicked($event)">
+                    (formContentClicked)="onFormContentClicked($event)"
+                    (executeOutcome)="onFormExecuteOutcome($event)">
         <adf-cloud-form-custom-outcomes>
             <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
             </ng-template>
