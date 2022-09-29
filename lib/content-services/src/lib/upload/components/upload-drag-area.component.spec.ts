@@ -119,15 +119,11 @@ describe('UploadDragAreaComponent', () => {
         uploadService.clearCache();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('When disabled', () => {
-
-        beforeEach(() => {
-            fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-        });
 
         it('should NOT upload the list of files dropped', () => {
             component.disabled = true;
@@ -199,11 +195,6 @@ describe('UploadDragAreaComponent', () => {
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
-            fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
         });
 
         it('should upload the list of files dropped', async () => {
@@ -393,14 +384,6 @@ describe('UploadDragAreaComponent', () => {
     });
 
     describe('Events', () => {
-
-        beforeEach(() => {
-            fixture.detectChanges();
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-        });
 
         it('should raise an error if upload a file goes wrong', async () => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();

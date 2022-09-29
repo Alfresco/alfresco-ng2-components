@@ -22,6 +22,7 @@ import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockUploadSuccessPromise } from '../../../mock/upload.service.mock';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -129,25 +130,24 @@ describe('UploadBase', () => {
             expect(uploadFilesInTheQueue).toHaveBeenCalled();
         }));
 
-        it('should emit callback events on resume', fakeAsync((done) => {
-            spyOn(uploadService, 'addToQueue').and.stub();
-            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+        it('should emit callback events on resume', () => {
+            spyOn(uploadService, 'addToQueue').and.callThrough();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.callThrough();
+            spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
 
             let uploadEvent: UploadFilesEvent;
+
             component.beginUpload.subscribe((event) => {
                 uploadEvent = event;
-                event.preventDefault();
+            });
+
+            component.success.subscribe((success) => {
+                expect(success).toBeTruthy();
             });
 
             component.uploadFiles([file]);
-
-            tick();
             uploadEvent.resumeUpload();
-
-            component.success.subscribe(() => {
-                done();
-            });
-        }));
+        });
    });
 
     describe('fileSize', () => {
