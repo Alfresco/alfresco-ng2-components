@@ -31,7 +31,7 @@ export class InitialUsernamePipe implements PipeTransform {
         let safeHtml: SafeHtml = '';
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);
-            safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
+            safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div data-automation-id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return safeHtml;
     }

@@ -92,10 +92,9 @@ describe('DateWidgetComponent', () => {
             type: 'date',
             readOnly: 'false'
         });
-
         widget.field = field;
+        widget.onDateChanged({ value: moment('12/12/2012', widget.field.dateDisplayFormat) });
 
-        widget.onDateChanged({ value: moment('12/12/2012') });
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 

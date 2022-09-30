@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "Ryhmäpilvi-komponentti",
     "CONFIRM-DIALOG": "Vahvistusvalintaikkuna",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "Palvelutehtäväluettelo"
+    "SERVICE_TASK_LIST": "Palvelutehtäväluettelo",
+    "RICH_TEXT_EDITOR": "RTF-editori"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "Korvaa sarakkeita",
     "LOAD_NODE": "Lataa solmu",
     "MULTISELECT": "Monivalinta",
-    "MULTISELECT_DESCRIPTION": "Voit valita useita kohteita Cmd- (Mac) tai Ctrl-näppäimen (Windows) avulla"
+    "MULTISELECT_DESCRIPTION": "Voit valita useita kohteita Cmd- (Mac) tai Ctrl-näppäimen (Windows) avulla",
+    "USE_CUSTOM_COLUMN_HEADER": "Käytä mukautettua mallia \"Käyttäjä\"-otsikolle",
+    "CUSTOM_COLUMN_HEADER": "Mukautettu käyttäjäotsikon malli"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "Yhtään raporttia ei ole valittuna. Valitse raportti luettelosta."
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "Kaikki esivalitut ryhmät",
     "INVALID_USERS": "Kelpaamattomat käyttäjät",
     "INVALID_GROUPS": "Kelpaamattomat ryhmät",
-    "READONLY_MODE": "Vain luku -tila"
+    "READONLY_MODE": "Vain luku -tila",
+    "GROUPS_RESTRICTION": "Ryhmärajoitus"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Monivalinta",

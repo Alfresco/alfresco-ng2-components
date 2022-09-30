@@ -23,7 +23,7 @@ import { SocialModule } from './social.module';
 
 export default {
     component: LikeComponent,
-    title: 'Content Services/Components/Like',
+    title: 'Content Services/Social/Like',
     decorators: [
         moduleMetadata({
             imports: [SocialModule],
@@ -33,7 +33,19 @@ export default {
         })
     ],
     argTypes: {
-        nodeId: { table: { disable: true } }
+        nodeId: {
+            control: 'text',
+            description: 'Identifier of a node to apply likes to.',
+            defaultValue:'fake-like-node-id',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        changeVote: {
+            action: 'changeVote',
+            description: 'Emitted when the "vote" gets changed.',
+            table: { category: 'Actions' }
+        }
     }
 } as Meta;
 
@@ -41,7 +53,4 @@ const template: Story<LikeComponent> = (args: LikeComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    nodeId: 'fake-like-node-id'
-};
+export const like = template.bind({});

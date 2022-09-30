@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
 import { EditJsonDialogComponent } from './edit-json.dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
+    declarations: [EditJsonDialogComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -32,11 +32,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatDialogModule,
         MatButtonModule
     ],
-    declarations: [
-        EditJsonDialogComponent
-    ],
-    exports: [
-        EditJsonDialogComponent
-    ]
+    exports: [EditJsonDialogComponent]
 })
 export class EditJsonDialogModule {}

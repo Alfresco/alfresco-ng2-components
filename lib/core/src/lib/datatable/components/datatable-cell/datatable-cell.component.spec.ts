@@ -67,7 +67,6 @@ describe('DateCellComponent', () => {
         const tooltipValue = dateCellValue.attributes['title'].value;
 
         expect(dateCellValue.textContent.trim()).toEqual('Jul 14, 2022');
-        expect(dateCellValue.attributes['aria-label'].value).toEqual('Jul 14, 2022');
         expect(tooltipValue).toEqual('Jul 14, 2022, 11:50:45 AM');
     });
 });

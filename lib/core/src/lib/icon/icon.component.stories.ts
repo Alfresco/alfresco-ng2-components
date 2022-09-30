@@ -22,21 +22,28 @@ import { IconModule } from './icon.module';
 
 export default {
     component: IconComponent,
-    title: 'Core/Components/Icon',
+    title: 'Core/Icon/Icon',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, IconModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Provides a universal way of rendering registered and named icons.`
+            }
+        }
+    },
     argTypes: {
         color: {
             control: 'radio',
-            options: ['primary', 'accent', 'warn'],
+            options: ['primary', 'accent', 'warn', undefined],
             description: 'icon color',
-            defaultValue: 'primary',
+            defaultValue: undefined,
             table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'primary' }
+                type: { summary: 'ThemePalette' },
+                defaultValue: { summary: 'undefined' }
             }
         },
         value: {

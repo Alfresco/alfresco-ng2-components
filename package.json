@@ -2,7 +2,7 @@
   "name": "alfresco-ng2-components",
   "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
-  "version": "5.0.0-angular.14",
+  "version": "5.0.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
@@ -29,9 +29,7 @@
     "print-affected:lint": "nx print-affected --target=lint --select=tasks.target.project",
     "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "03s": "",
-    "lint-demo": "tslint -p tsconfig.json -c tslint.json",
-    "lint-lib": "tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
-    "lint-e2e": "tsc -p tsconfig.e2e.json",
+    "affected:lint": "nx affected:lint",
     "validate-config": "ajv validate -s lib/core/src/lib/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
     "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
     "04s": "",
@@ -69,7 +67,7 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/js-api": "4.12.0-244",
+    "@alfresco/js-api": "5.1.0-343",
     "@angular/animations": "14.1.3",
     "@angular/cdk": "14.1.2",
     "@angular/common": "14.1.3",
@@ -111,7 +109,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "14.1.3",
-    "@angular-eslint/eslint-plugin": "14.0.2",
+    "@angular-eslint/eslint-plugin": "14.0.4",
     "@angular-eslint/eslint-plugin-template": "14.0.2",
     "@angular-eslint/template-parser": "14.0.2",
     "@angular/cli": "~14.1.0",
@@ -126,7 +124,7 @@
     "@nrwl/storybook": "14.5.4",
     "@nrwl/workspace": "14.5.4",
     "@paperist/types-remark": "0.1.3",
-    "@playwright/test": "^1.25.0",
+    "@playwright/test": "^1.25.2",
     "@quanzo/change-font-size": "1.0.0",
     "@storybook/addon-essentials": "6.5.10",
     "@storybook/angular": "6.5.10",
@@ -146,19 +144,20 @@
     "commander": "6.2.1",
     "concurrently": "^7.0.0",
     "cspell": "^5.5.1",
-    "css-loader": "^5.2.6",
+    "css-loader": "^6.7.1",
     "dotenv": "10.0.0",
     "editorjs-text-color-plugin": "1.13.1",
     "eslint": "^8.20.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.3.3",
+    "eslint-plugin-license-header": "0.6.0",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-rxjs": "^5.0.2",
     "eslint-plugin-unicorn": "^43.0.1",
     "github-api": "^3.4.0",
     "graphql": "^16.6.0",
-    "graphql-request": "^3.7.0",
+    "graphql-request": "^5.0.0",
     "husky": "^7.0.4",
     "jasmine-ajax": "4.0.0",
     "jasmine-core": "4.1.1",
@@ -170,7 +169,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "5.0.1",
     "karma-jasmine-ajax": "0.1.13",
-    "karma-jasmine-html-reporter": "^1.5.0",
+    "karma-jasmine-html-reporter": "^2.0.0",
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
     "lint-staged": "^12.1.7",
@@ -232,16 +231,5 @@
     "node": ">=6.0.0"
   },
   "module": "./index.js",
-  "typings": "./index.d.ts",
-  "lint-staged": {
-    "**/demo-shell/src/**/*.ts": "npm run lint-demo -- --fix",
-    "**/lib/**/*.ts": "npm run lint-lib -- --fix",
-    "**/e2e/**/*.ts": "npm run lint-e2e -- --fix",
-    "*.scss": "npm run stylelint --  --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  }
+  "typings": "./index.d.ts"
 }

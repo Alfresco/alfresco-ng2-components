@@ -28,90 +28,64 @@ export default {
             imports: [CoreStoryModule, TemplateModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Provides a generic "Empty Content" placeholder for components.`
+            }
+        }
+    },
     argTypes: {
         icon: {
-            description: 'Angular Material icon',
+            control: 'text',
+            description: 'Material Icon to use.',
+            defaultValue: 'cake',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: 'cake'
-                }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'cake' }
             }
         },
         title: {
+            control: 'text',
+            description: 'String or Resource Key for the title.',
+            defaultValue: 'title',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: ''
-                }
+                type: { summary: 'string' }
             }
         },
         subtitle: {
+            control: 'text',
+            description: 'String or Resource Key for the subtitle.',
+            defaultValue: 'subtitle',
             table: {
-                category: 'Component Inputs',
-                type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: ''
-                }
+                type: { summary: 'string' }
             }
         },
-        lines: {
-            name: 'lines',
-            description: 'Content Projection Text',
-            control: {type: 'object'},
-            defaultValue: [
-                'Items you removed are moved to the Trash',
-                'Empty Trash to permanently delete items'
-            ],
+        anyContentProjection: {
+            name: 'with any component / selector',
+            control: 'boolean',
+            description: 'Showcase content projection with any component / selector',
+            defaultValue: false,
             table: {
-                category: 'Strories Controls',
+                category: 'Content Projection',
                 type: {
-                    summary: 'array'
-                }
+                    summary: 'code',
+                    detail: '<div style="color:red">\n  projected content\n</div>'
+                },
+                defaultValue: { summary: false }
             }
         }
     }
 } as Meta;
 
-const template: Story<EmptyContentComponent> = (
-    args: EmptyContentComponent
-) => ({
-    props: args
-});
-
-export const defaultStory = template.bind({});
-defaultStory.argTypes = {
-    lines: {
-        control: { disable: true }
-    }
-};
-defaultStory.args = {
-    icon: 'star_rate',
-    title: 'No favourite files or folders',
-    subtitle: 'Favourite items that you want to easily find later'
-};
-defaultStory.storyName = 'Default';
-
-export const multipleLines: Story<EmptyContentComponent> = (
-    args: EmptyContentComponent & { lines: string[] }
-) => ({
-    props: {
-        ...args
-    },
+const template: Story<EmptyContentComponent> = ( args: EmptyContentComponent & { anyContentProjection: boolean } ) => ({
+    props: args,
     template: `
-    <adf-empty-content icon="delete" title="Trash is empty">
-        <p class="adf-empty-content__text" *ngFor="let line of ${JSON.stringify(
-            args.lines
-        ).replace(/\"/g, '\'')}">
-            {{ line }}
-        </p>
+    <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
+        <div *ngIf="${args.anyContentProjection}" style="color:red">
+            projected content
+        </div>
     </adf-empty-content>`
 });
+
+export const emptyContent = template.bind({});

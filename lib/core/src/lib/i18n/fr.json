@@ -9,7 +9,7 @@
       "EDITOR": "Editeur",
       "CONSUMER": "Lecteur",
       "SITECOLLABORATOR": "Collaborateur du site",
-      "SITECONSUMER": "Visiteur du site",
+      "SITECONSUMER": "Utilisateur du site",
       "SITECONTRIBUTOR": "Contributeur du site",
       "SITEMANAGER": "Gestionnaire du site"
     }
@@ -100,7 +100,7 @@
       },
       "EDIT_JSON": {
         "CLOSE": "Fermer",
-        "UPDATE": "Mis à jour"
+        "UPDATE": "Mettre à jour"
       }
     },
     "FILE_DIALOG": {
@@ -137,7 +137,7 @@
         "LABEL": "Créer"
       },
       "UPDATE_BUTTON": {
-        "LABEL": "Mis à jour"
+        "LABEL": "Mettre à jour"
       },
       "CANCEL_BUTTON": {
         "LABEL": "Annuler"
@@ -176,8 +176,8 @@
       "CS_URL_ERROR": "L'adresse Content Services ne correspond pas au format d'URL",
       "PS_URL_ERROR": "L'adresse Process Services ne correspond pas au format d'URL",
       "TITLE": "Paramètres",
-      "CS-HOST": "URL Content Services",
-      "BP-HOST": "URL Process Services",
+      "CS-HOST": "URL de Content Services",
+      "BP-HOST": "URL de Process Services",
       "BACK": "Retour",
       "APPLY": "Appliquer",
       "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL.",
@@ -186,7 +186,8 @@
       "SILENT": "Connexion en mode silencieux",
       "SCOPE": "Etendue",
       "CLIENT": "ID client",
-      "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux"
+      "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux",
+      "SECRET": "Secret"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -325,8 +326,8 @@
       "ACTIONS": "Actions",
       "SELECT_ALL": "Tout sélectionner",
       "SELECT_FILE": "Sélectionner un fichier",
-      "SORT_ASCENDING": "Croissant",
-      "SORT_DESCENDING": "Décroissant",
+      "SORT_ASCENDING": "Ascendant",
+      "SORT_DESCENDING": "Descendant",
       "SORT_NONE": "Aucun",
       "SORT_DEFAULT": "Triable",
       "SORT_ASCENDING_BY": "Trié par {{ string }} dans l'ordre croissant",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Présentation",
       "SPREADSHEET": "Feuille de calcul",
       "MISCELLANEOUS": "Divers"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Colonnes",
+      "SEARCH": "Rechercher",
+      "APPLY": "Appliquer"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Client"
-      }
+      },
+      "MY_PROFILE": "Mon profil"
     },
     "TAB": {
       "CS": "Content Services",
@@ -503,7 +510,7 @@
       "MODELING_SERVICE": "Services de modélisation",
       "DEPLOYMENT_SERVICE": "Services de déploiement",
       "QUERY_SERVICE": "Services de déploiement",
-      "RB": "Runtime",
+      "RB": "Exécution",
       "LABELS": {
         "EDITION": "Edition",
         "VERSION": "Version",
@@ -529,7 +536,7 @@
         "VERSION": "Version",
         "VENDOR": "Fournisseur",
         "LICENSE": "Licence",
-        "RUNTIME": "Runtime",
+        "RUNTIME": "Exécution",
         "DESCRIPTION": "Description"
       }
     },

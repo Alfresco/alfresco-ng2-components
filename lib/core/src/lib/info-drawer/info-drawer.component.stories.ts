@@ -1,19 +1,19 @@
 /*!
-* @license
-* Copyright 2019 Alfresco Software, Ltd.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
@@ -29,6 +29,13 @@ export default {
             imports: [CoreStoryModule, InfoDrawerModule]
         })
     ],
+    parameters: {
+        docs: {
+            description: {
+                component: `Displays a sidebar-style information panel in single layout or using tabs.`
+            }
+        }
+    },
     argTypes: {
         selectedIndex: {
             control: 'select',
@@ -184,7 +191,11 @@ export default {
         },
         currentTab: {
             action: 'currentTab',
-            table: { disable: true }
+            description: 'Emitted when the currently active tab changes',
+            table: {
+                type: { summary: 'EventEmitter <number>' },
+                category: 'Actions'
+            }
         }
     }
 } as Meta;
@@ -242,10 +253,7 @@ tabLayoutWithTextLabels.args = {
 };
 
 tabLayoutWithTextLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
@@ -260,10 +268,7 @@ tabLayoutWithIconLabels.args = {
 };
 
 tabLayoutWithIconLabels.parameters = {
-    controls: {
-        exclude: ['cardText'],
-        expanded: true
-    }
+    controls: { exclude: ['cardText'] }
 };
 
 export const singleLayout = singleLayoutTemplate.bind({});
@@ -273,8 +278,4 @@ singleLayout.args = {
     showHeader: true,
     showSecondTab: false,
     showThirdTab: false
-};
-
-singleLayout.parameters = {
-    controls: { expanded: true }
 };

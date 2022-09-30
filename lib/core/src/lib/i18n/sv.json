@@ -116,7 +116,7 @@
       }
     },
     "FOLDER_DIALOG": {
-      "CREATE_FOLDER_TITLE": "Skapa en ny mapp",
+      "CREATE_FOLDER_TITLE": "Skapa ny mapp",
       "EDIT_FOLDER_TITLE": "Redigera mapp",
       "FOLDER_NAME": {
         "LABEL": "Namn",
@@ -172,7 +172,7 @@
       "SSO": "SSO",
       "IMPLICIT-FLOW": "Implicit flöde",
       "PROVIDER": "Leverantör",
-      "REQUIRED": "Det här fältet är obligatoriskt",
+      "REQUIRED": "Detta fält krävs",
       "CS_URL_ERROR": "Content Services-adressen matchar inte URL-formatet",
       "PS_URL_ERROR": "Process Services-adressen matchar inte URL-formatet",
       "TITLE": "Inställningar",
@@ -186,7 +186,8 @@
       "SILENT": "Tyst inloggning",
       "SCOPE": "Definitionsområde",
       "CLIENT": "Klient-ID",
-      "PUBLIC_URLS": "Offentliga url:er för tyst inloggning"
+      "PUBLIC_URLS": "Offentliga url:er för tyst inloggning",
+      "SECRET": "Hemlig"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -326,7 +327,7 @@
       "SELECT_ALL": "Välj alla",
       "SELECT_FILE": "Välj fil",
       "SORT_ASCENDING": "Stigande",
-      "SORT_DESCENDING": "Sjunkande",
+      "SORT_DESCENDING": "Nedåtgående",
       "SORT_NONE": "Ingen",
       "SORT_DEFAULT": "Sorterbar",
       "SORT_ASCENDING_BY": "Stigande efter {{ string }}",
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentation",
       "SPREADSHEET": "Kalkylblad",
       "MISCELLANEOUS": "Övrigt"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Kolonner",
+      "SEARCH": "Sök",
+      "APPLY": "Tillämpa"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Kund"
-      }
+      },
+      "MY_PROFILE": "Min profil"
     },
     "TAB": {
       "CS": "Content Services",

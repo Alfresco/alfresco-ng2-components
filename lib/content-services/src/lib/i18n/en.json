@@ -71,7 +71,8 @@
       "VIEW": "View",
       "REMOVE": "Remove",
       "DOWNLOAD": "Download"
-    }
+    },
+    "LOADER_LABEL": "Document list loader"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {

@@ -34,7 +34,7 @@ export class UserInfoPage {
     processTenant = $('.detail-profile');
     apsImage = $('img[id="bpm-user-detail-image"]');
     acsImage = $('img[id="ecm-user-detail-image"]');
-    initialImage = $$('div[id="user-initials-image"]').first();
+    initialImage = $$('div[data-automation-id="user-initials-image"]').first();
     userInfoSsoHeaderTitle = this.dialog.$('div[id="identity-username"]');
     userInfoSsoTitle = $('.adf-userinfo__detail-title');
     ssoEmail = $('#identity-email');

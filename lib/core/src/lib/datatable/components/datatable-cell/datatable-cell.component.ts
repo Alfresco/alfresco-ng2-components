@@ -45,7 +45,6 @@ import { takeUntil } from 'rxjs/operators';
         </ng-container>
         <ng-template #defaultCell>
             <span
-                [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
             >{{ value$ | async }}</span>

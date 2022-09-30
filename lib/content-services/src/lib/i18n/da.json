@@ -22,6 +22,17 @@
       "NO_LABEL": "Nej"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Administrer versioner",
+      "CLOSE": "Luk"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Upload ny version",
+      "CANCEL": "Annuller",
+      "UPLOAD": "Upload"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "Nuværende",
     "NEW_VERSION": "Ny(t)",

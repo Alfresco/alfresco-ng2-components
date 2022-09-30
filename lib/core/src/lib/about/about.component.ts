@@ -25,6 +25,8 @@ import { BpmProductVersionModel } from '../models/product-version.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { DiscoveryApiService } from '../services/discovery-api.service';
 import { LicenseData, PackageInfo, StatusData } from './interfaces';
+import { ObjectUtils } from '../utils/object-utils';
+import { StringUtils } from '../utils/string-utils';
 
 @Component({
     selector: 'adf-about',
@@ -101,10 +103,19 @@ export class AboutComponent implements OnInit {
             }));
 
             if (repository.license) {
-                this.licenseEntries = Object.keys(repository.license).map((key) => ({
-                    property: key,
-                    value: repository.license[key]
-                }));
+                this.licenseEntries = Object.keys(repository.license).map((key) => {
+                    if (ObjectUtils.isObject(repository.license[key])) {
+                        return {
+                            property: key,
+                            value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled)
+                        };
+                    };
+
+                    return {
+                        property: key,
+                        value: repository.license[key]
+                    };
+            });
             }
         });
     }

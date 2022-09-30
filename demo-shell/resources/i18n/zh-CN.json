@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "组云组件",
     "CONFIRM-DIALOG": "确认对话",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "服务任务列表"
+    "SERVICE_TASK_LIST": "服务任务列表",
+    "RICH_TEXT_EDITOR": "RTF 编辑器"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -150,7 +151,7 @@
       "CREATED_BY": "创建者",
       "CREATED_ON": "创建日期",
       "CREATED": "已创建",
-      "SIZE": "字号(&S)",
+      "SIZE": "尺寸",
       "DELETED_ON": "已删除",
       "DELETED_BY": "删除人"
     },
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "替换列",
     "LOAD_NODE": "加载节点",
     "MULTISELECT": "多选",
-    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择"
+    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
+    "USE_CUSTOM_COLUMN_HEADER": "为“用户”标题使用自定义模板",
+    "CUSTOM_COLUMN_HEADER": "自定义用户标题模板"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "未选择报告，请从列表中选择报告"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "所有预选组",
     "INVALID_USERS": "无效用户",
     "INVALID_GROUPS": "无效组",
-    "READONLY_MODE": "只读模式"
+    "READONLY_MODE": "只读模式",
+    "GROUPS_RESTRICTION": "组限制"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "多重选择",

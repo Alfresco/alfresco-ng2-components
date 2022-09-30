@@ -30,7 +30,8 @@
       "plugins": [
         "eslint-plugin-unicorn",
         "eslint-plugin-rxjs",
-        "ban"
+        "ban",
+        "license-header"
       ],
       "rules": {
         "ban/ban": [
@@ -115,6 +116,31 @@
           }
         ],
         "no-bitwise": "off",
+        "no-console": [
+          "error",
+          {
+            "allow": [
+              "warn",
+              "dir",
+              "timeLog",
+              "assert",
+              "clear",
+              "count",
+              "countReset",
+              "group",
+              "groupEnd",
+              "table",
+              "dirxml",
+              "error",
+              "groupCollapsed",
+              "Console",
+              "profile",
+              "profileEnd",
+              "timeStamp",
+              "context"
+            ]
+          }
+        ],
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
         "no-redeclare": "error",
@@ -130,7 +156,8 @@
             "allowShortCircuit": true,
             "allowTernary": true
           }
-        ]
+        ],
+        "license-header/header": ["error", "./license-community.txt"]
       }
     },
     {

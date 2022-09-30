@@ -23,6 +23,10 @@ if [ ${AFFECTED_LIB} == true ]; then
         echo "Affected e2e ${AFFECTED_E2E}"
     fi;
 
+    if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+        echo "CRON running everything "
+    fi;
+
     if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]]; then
         echo "Run all e2e $FOLDER"
         ./scripts/test-e2e-lib.sh --use-dist
@@ -42,5 +46,5 @@ if [ ${AFFECTED_LIB} == true ]; then
 
 else
     echo "Step2 - Lib $verifyLib NOT affected. No need to run e2e"
+    exit 0
 fi
-exit 0

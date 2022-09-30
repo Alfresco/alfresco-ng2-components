@@ -16,10 +16,11 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { LogService, setupTestBed, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, PeopleProcessService, setupTestBed, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { throwError } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -44,6 +45,7 @@ describe('PeopleComponent', () => {
     let element: HTMLElement;
     const userArray = [fakeUser, fakeSecondUser];
     let logService: LogService;
+    let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
         imports: [
@@ -54,6 +56,7 @@ describe('PeopleComponent', () => {
 
     beforeEach(() => {
         logService = TestBed.inject(LogService);
+        peopleProcessService = TestBed.inject(PeopleProcessService);
         fixture = TestBed.createComponent(PeopleComponent);
         activitiPeopleComponent = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -192,13 +195,13 @@ describe('PeopleComponent', () => {
         });
 
         it('should log error message when search fails', async () => {
-            await activitiPeopleComponent.peopleSearch$.subscribe(() => {
-                expect(logService.error).toHaveBeenCalledWith('Could not load users');
-            });
+            const logServiceErrorSpy = spyOn(logService, 'error');
+            const mockThrownError = { error: 'Could not load users'};
+
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(mockThrownError));
             activitiPeopleComponent.searchUser('fake-search');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
+
+            expect(logServiceErrorSpy).toHaveBeenCalledWith(mockThrownError);
         });
 
         it('should not remove user if remove involved user fail', async () => {

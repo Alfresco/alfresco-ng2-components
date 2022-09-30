@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DateCloudWidgetComponent, DATE_FORMAT_CLOUD } from './date-cloud.widget';
+import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 
 describe('DateWidgetComponent', () => {
 
@@ -90,8 +91,9 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
+        const todayDate = moment().format(DATE_FORMAT_CLOUD);
+        widget.onDateChanged({ value: todayDate });
 
-        widget.onDateChanged({ value: moment('12/12/2012') });
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
@@ -200,7 +202,7 @@ describe('DateWidgetComponent', () => {
         });
     });
 
-    it('should display always the json value', () => {
+    it('should display always the json value', async () => {
         const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
@@ -213,21 +215,19 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
         widget.ngOnInit();
         fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#date-field-id')).toBeDefined();
-                expect(element.querySelector('#date-field-id')).not.toBeNull();
-                const dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toContain('12-30-9999');
+        await fixture.whenStable();
 
-                widget.field.value = '03-02-2020';
+        expect(element.querySelector('#date-field-id')).toBeDefined();
+        expect(element.querySelector('#date-field-id')).not.toBeNull();
+        const dateElement: any = element.querySelector('#date-field-id');
+        expect(dateElement.value).toContain('12-30-9999');
 
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(dateElement.value).toContain('03-02-2020');
-                    });
-            });
+        widget.field.value = '03-02-2020';
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(dateElement.value).toContain('03-02-2020');
     });
 
     describe('when form model has left labels', () => {
@@ -491,8 +491,6 @@ describe('DateWidgetComponent', () => {
 
         });
 
-
     });
-
 
 });

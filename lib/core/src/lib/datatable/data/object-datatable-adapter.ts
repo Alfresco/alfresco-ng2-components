@@ -131,22 +131,27 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (sorting && sorting.key) {
             this._rows.sort((a: DataRow, b: DataRow) => {
                 let left = a.getValue(sorting.key);
-                if (left) {
-                    left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
-                } else {
-                    left = '';
-                }
-
                 let right = b.getValue(sorting.key);
-                if (right) {
-                    right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
-                } else {
-                    right = '';
-                }
 
-                return sorting.direction === 'asc'
-                    ? left.localeCompare(right)
-                    : right.localeCompare(left);
+                if (typeof left === 'number' && typeof right === 'number') {
+                    return sorting.direction === 'asc' ? left - right : right - left;
+                } else {
+                    if (left) {
+                        left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
+                    } else {
+                        left = '';
+                    }
+
+                    if (right) {
+                        right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
+                    } else {
+                        right = '';
+                    }
+
+                    return sorting.direction === 'asc'
+                        ? left.localeCompare(right)
+                        : right.localeCompare(left);
+                }
             });
         }
     }

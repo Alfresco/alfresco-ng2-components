@@ -23,19 +23,39 @@ import { DateRangeFilterComponent } from './date-range-filter.component';
 
 export default {
     component: DateRangeFilterComponent,
-    title: 'Process Services Cloud/Components/Date Range Filter',
+    title: 'Process Services Cloud/Process Common/Date Range Filter',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, ProcessCommonModule]
         })
-    ]
+    ],
+    argTypes: {
+        processFilterProperty: {
+            control: 'object',
+            defaultValue: mockFilterProperty,
+            table: {
+                type: { summary: 'ApplicationInstanceModel' }
+            }
+        },
+        options: {
+            control: 'object',
+            table: {
+                type: { summary: 'DateCloudFilterType[]' }
+            }
+        },
+        dateChanged: {
+            action: 'dateChanged',
+            table: { category: 'Actions' }
+        },
+        dateTypeChange: {
+            action: 'dateTypeChange',
+            table: { category: 'Actions' }
+        }
+    }
 } as Meta;
 
 const template: Story<DateRangeFilterComponent> = (args: DateRangeFilterComponent) => ({
     props: args
 });
 
-export const primary = template.bind({});
-primary.args = {
-    processFilterProperty: mockFilterProperty
-};
+export const dateRangeFilter = template.bind({});

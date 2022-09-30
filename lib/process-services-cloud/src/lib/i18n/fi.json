@@ -6,7 +6,7 @@
       "NONE": "Prosessiesiintymäsuodatinta ei ole valittu."
     },
     "PROPERTIES": {
-      "NAME": "Nimi",
+      "NAME": "Prosessin nimi",
       "CREATED": "Luotu",
       "STATUS": "Tila",
       "START_DATE": "Alkamispäivä",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "Nimi",
+      "NAME": "Tehtävän nimi",
       "ASSIGNEE": "Vastuuhenkilö",
       "ID": "Tunnus",
       "STATUS": "Tila",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "Tallenna suodatin",
       "SAVE_AS": "Tallenna suodatin nimellä",
-      "DELETE": "Poista suodatin"
+      "DELETE": "Poista suodatin",
+      "RESTORE": "Palauta suodatin"
     },
     "DIALOG": {
       "TITLE": "Tallenna suodatin nimellä",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Lomakkeen automaattinen täyttö"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "Määritetty minulle",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "Määritetty käyttäjälle",
+    "CURRENT_USER": "Määritetty minulle",
     "UNASSIGNED": "Määrittämätön",
-    "LIST_OF_CANDIDATE_GROUPS": "Kandidaattiryhmien lista",
+    "NONE": "Ei yhtään",
+    "CANDIDATE_GROUPS": "Kandidaattiryhmien lista",
     "ASSIGNEE": "Vastuuhenkilö",
     "ASSIGNMENT_TYPE": "Määrityksen tyyppi"
   }

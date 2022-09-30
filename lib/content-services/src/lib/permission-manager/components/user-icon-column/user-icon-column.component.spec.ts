@@ -63,7 +63,7 @@ describe('UserIconColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[id="user-initials-image"]').textContent).toContain('fu');
+            expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('fu');
         });
 
         it('should render person value from node', () => {
@@ -80,7 +80,7 @@ describe('UserIconColumnComponent', () => {
             } as NodeEntry;
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[id="user-initials-image"]').textContent).toContain('FU');
+            expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('FU');
         });
     });
 

@@ -186,7 +186,8 @@
       "SILENT": "Ciche logowanie",
       "SCOPE": "Zakres",
       "CLIENT": "Identyfikator klienta",
-      "PUBLIC_URLS": "Publiczne URL do cichego logowania"
+      "PUBLIC_URLS": "Publiczne URL do cichego logowania",
+      "SECRET": "Klucz tajny"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Prezentacja",
       "SPREADSHEET": "Arkusz kalkulacyjny",
       "MISCELLANEOUS": "Różne"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Kolumny",
+      "SEARCH": "Szukaj",
+      "APPLY": "Zastosuj"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Dzierżawca"
-      }
+      },
+      "MY_PROFILE": "Mój profil"
     },
     "TAB": {
       "CS": "Content Services",

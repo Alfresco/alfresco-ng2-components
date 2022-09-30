@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';

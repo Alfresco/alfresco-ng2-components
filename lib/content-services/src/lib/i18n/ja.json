@@ -22,6 +22,17 @@
       "NO_LABEL": "いいえ"
     }
   },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "バージョンの管理",
+      "CLOSE": "閉じる"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "新しいバージョンのアップロード",
+      "CANCEL": "キャンセル",
+      "UPLOAD": "アップロード"
+    }
+  },
   "ADF_VERSION_COMPARISON": {
     "CURRENT_VERSION": "現在",
     "NEW_VERSION": "新規",
@@ -345,7 +356,7 @@
       "DIALOG": {
         "TITLE": "コンテンツタイプを変更",
         "DESCRIPTION": "この変更をコンテンツタイプに加えると、いくつかのプロパティと保存されているメタデータがドキュメントに恒久的に追加されます。",
-        "CONFIRM": "コンテンツタイプを変更しますか？?",
+        "CONFIRM": "コンテンツタイプを変更しますか？",
         "CANCEL": "キャンセル",
         "APPLY": "変更を保存する",
         "VIEW_DETAILS": "詳細の表示",

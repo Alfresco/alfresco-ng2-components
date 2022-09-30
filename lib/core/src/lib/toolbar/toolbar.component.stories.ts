@@ -22,7 +22,7 @@ import { ToolbarModule } from './toolbar.module';
 
 export default {
     component: ToolbarComponent,
-    title: 'Core/Components/Toolbar',
+    title: 'Core/Toolbar/Toolbar',
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, ToolbarModule]
@@ -31,23 +31,78 @@ export default {
     argTypes: {
         color: {
             control: 'radio',
-            options: ['primary', 'accent', 'warn']
+            options: ['primary', 'accent', 'warn', undefined],
+            description: 'Toolbar color.',
+            defaultValue: undefined,
+            table: {
+                type: { summary: 'ThemePalette' },
+                defaultValue: { summary: 'undefined' }
+            }
+        },
+        title: {
+            control: 'text',
+            description: 'Toolbar title.',
+            defaultValue: '',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' }
+            }
+        },
+        toolbarTitle: {
+            name: 'with adf-toolbar-title component',
+            control: 'boolean',
+            description: 'Showcase content projection with <span style="color:red">adf-toolbar-title</span> component',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<adf-toolbar-title>Projected Title</adf-toolbar-title>'
+                },
+                defaultValue: { summary: false }
+            }
+        },
+        toolbarDivider: {
+            name: 'with adf-toolbar-divider component',
+            control: 'boolean',
+            description: 'Showcase content projection with <span style="color:red">adf-toolbar-divider</span> component',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: 'left<adf-toolbar-divider></adf-toolbar-divider>right'
+                },
+                defaultValue: { summary: false }
+            }
+        },
+        anyContentProjection: {
+            name: 'with any component / selector',
+            control: 'boolean',
+            description: 'Showcase content projection with any component / selector',
+            defaultValue: false,
+            table: {
+                category: 'Content Projection',
+                type: {
+                    summary: 'code',
+                    detail: '<span style="color:red">projected content</span>'
+                },
+                defaultValue: { summary: false }
+            }
         }
     }
 } as Meta;
 
-const template: Story<ToolbarComponent> = (args: ToolbarComponent) => ({
-    props: args
+const template: Story<ToolbarComponent> = (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean } ) => ({
+    props: args,
+    template: `
+    <adf-toolbar color="${args.color}" title="${args.title}">
+        <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
+        <ng-container *ngIf="${args.anyContentProjection}">
+            <span style="color:red">projected content</span>
+        </ng-container>
+        <ng-container *ngIf="${args.toolbarDivider}">left<adf-toolbar-divider></adf-toolbar-divider>right</ng-container>
+    </adf-toolbar>`
 });
 
-export const primary = template.bind({});
-primary.args = {
-    title: 'Alfresco Storybook App',
-    color: 'primary'
-};
-
-export const invalidOrMissingColor = template.bind({});
-invalidOrMissingColor.args = {
-    title: 'Alfresco Storybook App',
-    color: undefined
-};
+export const toolbar = template.bind({});

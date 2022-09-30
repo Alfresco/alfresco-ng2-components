@@ -6,7 +6,7 @@
       "NONE": "未选择进程实例筛选器。"
     },
     "PROPERTIES": {
-      "NAME": "名称",
+      "NAME": "流程名称",
       "CREATED": "已创建",
       "STATUS": "状态",
       "START_DATE": "启动日期",
@@ -83,7 +83,7 @@
       }
     },
     "PROPERTIES": {
-      "NAME": "名称",
+      "NAME": "任务名称",
       "ASSIGNEE": "被指派者",
       "ID": "ID",
       "STATUS": "状态",
@@ -277,7 +277,8 @@
     "TOOL_TIP": {
       "SAVE": "保存筛选器",
       "SAVE_AS": "另存筛选器为",
-      "DELETE": "删除筛选器"
+      "DELETE": "删除筛选器",
+      "RESTORE": "还原筛选器"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
@@ -380,10 +381,12 @@
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "自动填充表单"
   },
-  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
-    "ASSIGNED_TO_ME": "指派给我",
+  "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
+    "ASSIGNED_TO": "分配给",
+    "CURRENT_USER": "分配给我",
     "UNASSIGNED": "未指派",
-    "LIST_OF_CANDIDATE_GROUPS": "候选组列表",
+    "NONE": "无",
+    "CANDIDATE_GROUPS": "候选组列表",
     "ASSIGNEE": "被指派者",
     "ASSIGNMENT_TYPE": "指派类型"
   }

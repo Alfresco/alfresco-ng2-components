@@ -186,7 +186,8 @@
       "SILENT": "Uovervåget login",
       "SCOPE": "Omfang",
       "CLIENT": "Klient-id",
-      "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser"
+      "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser",
+      "SECRET": "Hemmelig"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Præsentation",
       "SPREADSHEET": "Regneark",
       "MISCELLANEOUS": "Diverse"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Kolonner",
+      "SEARCH": "Søg",
+      "APPLY": "Anvend"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Tenant"
-      }
+      },
+      "MY_PROFILE": "Min profil"
     },
     "TAB": {
       "CS": "Content Services",

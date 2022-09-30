@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "グループのクラウドコンポーネント",
     "CONFIRM-DIALOG": "確認ダイアログ",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "サービスタスクリスト"
+    "SERVICE_TASK_LIST": "サービスタスクリスト",
+    "RICH_TEXT_EDITOR": "リッチテキストエディタ"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "列の置換",
     "LOAD_NODE": "ノードの読み込み",
     "MULTISELECT": "複数選択",
-    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します"
+    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
+    "USE_CUSTOM_COLUMN_HEADER": "「ユーザー」ヘッダーにカスタムテンプレートを使用",
+    "CUSTOM_COLUMN_HEADER": "カスタムユーザーヘッダーテンプレート"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "レポートが選択されていません。リストからレポートを選択してください。"
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "選択されている全グループ",
     "INVALID_USERS": "無効なユーザー",
     "INVALID_GROUPS": "無効なグループ",
-    "READONLY_MODE": "読み取り専用モード"
+    "READONLY_MODE": "読み取り専用モード",
+    "GROUPS_RESTRICTION": "グループ制限"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "複数選択",

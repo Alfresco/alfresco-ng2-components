@@ -58,9 +58,9 @@
   },
   "APP_LAYOUT": {
     "APP": "تطبيق",
-    "HEADER_TEXT_COLOR": "لون نص العنوان",
+    "HEADER_TEXT_COLOR": "لون نص الرأس",
     "APP_NAME": "تطبيق ADF التوضيحي",
-    "FILTERED_SEARCH": "عنوان عامل التصفية",
+    "FILTERED_SEARCH": "رأس عامل التصفية",
     "HOME": "رئيسية",
     "NODE-SELECTOR": "محدد العقدة",
     "SITES": "المواقع",
@@ -96,13 +96,13 @@
     "WORD_TO_SEARCH": "بحث عن كلمة",
     "SEARCH_CREATED_BY": "تم الإنشاء بواسطة",
     "SEARCH_SERVICE_APPROACH": "حدد هذا لتعطيل خاصية الإدخال والتكوين باستخدام الخدمة",
-    "HEADER_DATA": "بيانات العنوان",
+    "HEADER_DATA": "بيانات الرأس",
     "TREE_VIEW": "طريقة عرض الشجرة",
     "EXPAND_LIST": "قائمة العناصر القابلة للتوسيع",
     "ICONS": "أيقونات",
     "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
     "TASK_HEADER_CLOUD": {
-      "COMPONENT_NAME": "عنوان مهمة السحابة",
+      "COMPONENT_NAME": "رأس مهمة السحابة",
       "APP_NAME_INPUT": "اسم التطبيق",
       "TASK_ID_INPUT": "معرف المهمة",
       "FIND_TASK_BUTTON": "بحث عن المهمة"
@@ -111,7 +111,8 @@
     "GROUPS_CLOUD": "مكون سحابة المجموعة",
     "CONFIRM-DIALOG": "مربع حوار التأكيد",
     "COMMUNITY": "Community",
-    "SERVICE_TASK_LIST": "قائمة مهام الخدمات"
+    "SERVICE_TASK_LIST": "قائمة مهام الخدمات",
+    "RICH_TEXT_EDITOR": "افتح محرر النص المنسق"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -196,7 +197,9 @@
     "REPLACE_COLUMNS": "استبدال أعمدة",
     "LOAD_NODE": "تحميل عقدة",
     "MULTISELECT": "تحديد متعدد",
-    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة"
+    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة",
+    "USE_CUSTOM_COLUMN_HEADER": "استخدم نموذج مخصص للرأس 'المستخدم'",
+    "CUSTOM_COLUMN_HEADER": "قالب رأس المستخدم المخصص"
   },
   "ANALYTICS_REPORT": {
     "NO_REPORT_MESSAGE": "لم يتم تحديد تقرير. اختر تقريرًا من القائمة"
@@ -210,7 +213,7 @@
     "START-PROCESS": "بدء العملية",
     "PROCESS-AUDIT-LOG": "سجل تدقيق العملية",
     "TASK-AUDIT-LOG": "سجل تدقيق المهمة",
-    "TASK-SHOW-HEADER": "إظهار تفاصيل العنوان"
+    "TASK-SHOW-HEADER": "إظهار تفاصيل الرأس"
   },
   "PS_CLOUD_TAB": {
     "APPS_TAB": "تطبيق",
@@ -330,7 +333,8 @@
     "ALL_PRESELECTED_GROUPS": "كل المجموعات المحددة مسبقًا",
     "INVALID_USERS": "المستخدمون غير الصالحين",
     "INVALID_GROUPS": "مجموعات غير صالحة",
-    "READONLY_MODE": "وضع القراءة فقط"
+    "READONLY_MODE": "وضع القراءة فقط",
+    "GROUPS_RESTRICTION": "قيود المجموعات"
   },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "تحديد متعدد",

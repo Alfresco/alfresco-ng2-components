@@ -186,7 +186,8 @@
       "SILENT": "Stille pålogging",
       "SCOPE": "Område",
       "CLIENT": "Klient-ID",
-      "PUBLIC_URLS": "Offentlige URL-er for stille pålogging"
+      "PUBLIC_URLS": "Offentlige URL-er for stille pålogging",
+      "SECRET": "Hemmelig"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -350,6 +351,11 @@
       "PRESENTATION": "Presentasjon",
       "SPREADSHEET": "Regneark",
       "MISCELLANEOUS": "Diverse"
+    },
+    "COLUMNS_SELECTOR": {
+      "COLUMNS": "Rader",
+      "SEARCH": "Søk",
+      "APPLY": "Bruk"
     }
   },
   "USER_PROFILE": {
@@ -359,7 +365,8 @@
       },
       "BPM": {
         "TENANT": "Leietaker"
-      }
+      },
+      "MY_PROFILE": "Min profil"
     },
     "TAB": {
       "CS": "Content Services",
