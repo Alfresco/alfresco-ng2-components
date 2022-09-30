@@ -377,7 +377,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
         const result = formComponent.onOutcomeClicked(outcome);
-        
+
         expect(result).toBeTruthy();
         expect(saved).toBeFalse();
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);

@@ -99,8 +99,8 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
 
     /** Emitted when any outcome is executed. Default behaviour can be prevented
-    * via `event.preventDefault()`.
-    */
+     * via `event.preventDefault()`.
+     */
     @Output()
     executeOutcome = new EventEmitter<FormOutcomeEvent>();
 

@@ -405,7 +405,7 @@ describe('TaskFormCloudComponent', () => {
             const executeOutcomeSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
 
             component.onFormExecuteOutcome(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
-            
+
             expect(executeOutcomeSpy).toHaveBeenCalled();
         });
     });
