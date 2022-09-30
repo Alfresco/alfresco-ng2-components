@@ -22,25 +22,27 @@ import { ContentTestingModule } from '../../../../testing/content.testing.module
 import { setupTestBed } from '@alfresco/adf-core';
 
 describe('SearchFilterMenuComponent', () => {
-  let component: SearchFilterMenuCardComponent;
-  let fixture: ComponentFixture<SearchFilterMenuCardComponent>;
+    let component: SearchFilterMenuCardComponent;
+    let fixture: ComponentFixture<SearchFilterMenuCardComponent>;
 
-  setupTestBed({
+    setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should emit on close click', (done) => {
-      component.close.subscribe(() => done());
-      const closButton = fixture.debugElement.nativeElement.querySelector('.adf-search-filter-title-action');
-      closButton.click();
-  });
+    it('should emit on close click', () => {
+        const spyCloseEvent = spyOn(component.close, 'emit');
+        const closeButton = fixture.debugElement.nativeElement.querySelector('.adf-search-filter-title-action');
+
+        closeButton.click();
+        expect(spyCloseEvent).toHaveBeenCalled();
+    });
 });

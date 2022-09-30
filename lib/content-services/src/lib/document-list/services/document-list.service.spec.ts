@@ -17,7 +17,7 @@
 
 import { setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -77,7 +77,7 @@ describe('DocumentListService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('should return the folder info', () => {
+    it('should return the folder info', fakeAsync(() => {
         service.getFolder('/fake-root/fake-name').subscribe(
             (res) => {
                 expect(res).toBeDefined();
@@ -94,7 +94,7 @@ describe('DocumentListService', () => {
             contentType: 'json',
             responseText: fakeFolder
         });
-    });
+    }));
 
     it('should add the includeTypes in the request Node Children if required', () => {
         const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
@@ -143,7 +143,7 @@ describe('DocumentListService', () => {
         );
     });
 
-    it('should delete the folder', () => {
+    it('should delete the folder', fakeAsync(() => {
         service.deleteNode('fake-id').subscribe(
             (res) => {
                 expect(res).toBe('');
@@ -154,7 +154,7 @@ describe('DocumentListService', () => {
             status: 204,
             contentType: 'json'
         });
-    });
+    }));
 
     it('should copy a node', (done) => {
         service.copyNode('node-id', 'parent-id').subscribe(() => done());

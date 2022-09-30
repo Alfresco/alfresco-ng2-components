@@ -468,32 +468,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     component.isSelectionValid = returnHasPermission;
                 });
 
-                it('should NOT be null after selecting node with the necessary permissions', async () => {
-                    hasAllowableOperations = true;
-                    component.documentList.folderNode = entry;
-
-                    component.select.subscribe((nodes) => {
-                        expect(nodes).toBeDefined();
-                        expect(nodes).not.toBeNull();
-                        expect(component.chosenNode[0]).toBe(entry);
-                    });
-
-                    component.documentList.ready.emit(nodePage);
-                });
-
-                it('should be null after selecting node without the necessary permissions', async () => {
-                    hasAllowableOperations = false;
-                    component.documentList.folderNode = entry;
-
-                    component.select.subscribe((nodes) => {
-                        expect(nodes).toBeDefined();
-                        expect(nodes).toBeNull();
-                        expect(component.chosenNode).toBeNull();
-                    });
-
-                    component.documentList.ready.emit(nodePage);
-                });
-
                 it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async () => {
                     hasAllowableOperations = true;
 

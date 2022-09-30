@@ -26,6 +26,19 @@ import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 
+const fakeNode: Node = {
+    name: 'Node',
+    id: 'fake-id',
+    isFile: true,
+    aspectNames: ['exif:exif'],
+    nodeType: 'fn:fakenode',
+    createdByUser: {displayName: 'test-user'},
+    modifiedByUser: {displayName: 'test-user-modified'},
+    properties: []
+} as Node;
+
+const fakeContentNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
+
 describe('ContentMetaDataService', () => {
 
     let service: ContentMetadataService;
@@ -74,15 +87,6 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return all the properties of the node', () => {
-        const fakeNode: Node = {
-            name: 'Node',
-            id: 'fake-id',
-            isFile: true,
-            aspectNames: ['exif:exif'],
-            createdByUser: {displayName: 'test-user'},
-            modifiedByUser: {displayName: 'test-user-modified'}
-        } as Node;
-
         service.getBasicProperties(fakeNode).subscribe(
             (res) => {
                 expect(res.length).toEqual(10);
@@ -94,16 +98,6 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return the content type property', () => {
-        const fakeNode: Node = {
-            name: 'Node',
-            id: 'fake-id',
-            isFile: true,
-            aspectNames: ['exif:exif'],
-            nodeType: 'fn:fakenode',
-            createdByUser: {displayName: 'test-user'},
-            modifiedByUser: {displayName: 'test-user-modified'},
-            properties: []
-        } as Node;
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'} as any));
 
         service.getContentTypeProperty(fakeNode).subscribe(
@@ -116,9 +110,9 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should trigger the opening of the content type dialog', () => {
-        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of());
+        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of(true));
 
-        service.openConfirmDialog('fn:fakenode').subscribe(
+        service.openConfirmDialog(fakeNode).subscribe(
             () => {
                 expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
             }
@@ -128,7 +122,6 @@ describe('ContentMetaDataService', () => {
     describe('AspectOriented preset', () => {
 
         it('should return response with exif property', (done) => {
-            const fakeNode: Node = { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } as Node;
             setConfig('default', { 'exif:exif': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
@@ -146,7 +139,6 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should filter the record options for node ', (done) => {
-            const fakeNode: Node = { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } as Node;
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
@@ -167,8 +159,6 @@ describe('ContentMetaDataService', () => {
     describe('LayoutOriented preset', () => {
 
         it('should return the node property', (done) => {
-            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
-
             const customLayoutOrientedScheme = [
                 {
                     id: 'app.content.metadata.customGroup2',
@@ -186,7 +176,7 @@ describe('ContentMetaDataService', () => {
             setConfig('custom', customLayoutOrientedScheme);
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service.getGroupedProperties(fakeNode, 'custom').subscribe(
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
                 (res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
@@ -199,8 +189,6 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should filter the exif property', (done) => {
-            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
-
             const customLayoutOrientedScheme = [
                 {
                     id: 'app.content.metadata.customGroup',
@@ -229,7 +217,7 @@ describe('ContentMetaDataService', () => {
             setConfig('custom', customLayoutOrientedScheme);
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service.getGroupedProperties(fakeNode, 'custom').subscribe(
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
                 (res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
@@ -242,8 +230,6 @@ describe('ContentMetaDataService', () => {
         });
 
         it('should exclude the property if this property is excluded from config', (done) => {
-            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
-
             const customLayoutOrientedScheme = [
                 {
                     id: 'app.content.metadata.customGroup',
@@ -263,7 +249,7 @@ describe('ContentMetaDataService', () => {
             setConfig('custom', customLayoutOrientedScheme);
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service.getGroupedProperties(fakeNode, 'custom').subscribe(
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
                 (res) => {
                     expect(res.length).toEqual(0);
                     done();
@@ -277,8 +263,6 @@ describe('ContentMetaDataService', () => {
 
     describe('Provided preset config', () => {
        it('should create the metadata config on the fly when preset config is provided', (done) => {
-            const fakeNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
-
             const customLayoutOrientedScheme = [
                 {
                     id: 'app.content.metadata.customGroup',
@@ -306,7 +290,7 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service.getGroupedProperties(fakeNode, customLayoutOrientedScheme).subscribe(
+            service.getGroupedProperties(fakeContentNode, customLayoutOrientedScheme).subscribe(
                 (res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');

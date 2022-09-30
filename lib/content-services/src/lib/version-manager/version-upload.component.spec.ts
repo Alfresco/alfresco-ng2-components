@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { VersionUploadComponent } from './version-upload.component';
 import { ContentService, setupTestBed, UploadService } from '@alfresco/adf-core';
@@ -62,32 +62,35 @@ describe('VersionUploadComponent', () => {
         contentService = TestBed.inject(ContentService);
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
         component.node = node;
+
+        fixture.detectChanges();
     });
 
-    it('should disabled upload button on upload starts',  fakeAsync(() => {
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should disabled upload button on upload starts', () => {
         component.uploadStarted.subscribe(() => {
             expect(component.disabled).toEqual(true);
         });
-        uploadService.fileUploadStarting.next();
-        tick(500);
-        fixture.detectChanges();
-    }));
 
-    it('should enable upload button on error', (done) => {
+        uploadService.fileUploadStarting.next();
+    });
+
+    it('should enable upload button on error', () => {
         spyOn(component, 'canUpload').and.returnValue(true);
         component.error.subscribe(() => {
             expect(component.disabled).toEqual(false);
-            done();
         });
         component.onError({} as any);
         fixture.detectChanges();
     });
 
-    it('should enable upload button on success', (done) => {
+    it('should enable upload button on success', () => {
         spyOn(component, 'canUpload').and.returnValue(true);
         component.success.subscribe(() => {
             expect(component.disabled).toEqual(false);
-            done();
         });
         component.onSuccess(true);
         fixture.detectChanges();
