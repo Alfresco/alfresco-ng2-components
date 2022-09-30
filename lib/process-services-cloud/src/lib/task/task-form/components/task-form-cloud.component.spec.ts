@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import {
@@ -399,6 +399,14 @@ describe('TaskFormCloudComponent', () => {
             const loadingTemplate = debugElement.query(By.css('mat-progress-spinner'));
 
             expect(loadingTemplate).toBeNull();
+        });
+
+        it('should emit an executeOutcome event when form outcome executed', () => {
+            const executeOutcomeSpy: jasmine.Spy = spyOn(component.executeOutcome, 'emit');
+
+            component.onFormExecuteOutcome(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
+
+            expect(executeOutcomeSpy).toHaveBeenCalled();
         });
     });
 

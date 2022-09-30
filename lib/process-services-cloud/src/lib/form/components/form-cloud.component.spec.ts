@@ -480,7 +480,7 @@ describe('FormCloudComponent', () => {
 
         const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
-        expect(saved).toBeTruthy();
+        expect(saved).toBeFalse();
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);
     });
 
