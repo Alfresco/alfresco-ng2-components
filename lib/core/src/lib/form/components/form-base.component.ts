@@ -191,7 +191,6 @@ export abstract class FormBaseComponent {
             } else {
                 // Note: Activiti is using NAME field rather than ID for outcomes
                 if (outcome.name) {
-                    this.onTaskSaved(this.form);
                     this.completeTaskForm(outcome.name);
                     return true;
                 }
