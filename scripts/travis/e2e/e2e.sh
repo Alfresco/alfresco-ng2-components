@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 echo "Start e2e"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -8,6 +7,14 @@ cd $DIR/../../../
 
 BASE_DIRECTORY=$(echo "$FOLDER" | cut -d "/" -f1)
 verifyLib=$1;
+
+# set test-e2e params
+if [ ! -z "$2" ]; then
+      e2eParams="--$2"
+else
+      e2eParams=""
+fi
+
 echo "Step1 - Verify if affected libs contains $verifyLib"
 
 AFFECTED_LIB="$(./scripts/travis/affected-contains.sh $verifyLib )";
@@ -29,7 +36,7 @@ if [ ${AFFECTED_LIB} == true ]; then
 
     if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]]; then
         echo "Run all e2e $FOLDER"
-        ./scripts/test-e2e-lib.sh --use-dist
+        ./scripts/test-e2e-lib.sh --use-dist $e2eParams
     else if [[ $AFFECTED_E2E  == "e2e/$FOLDER" ]]; then
             echo "Run affected e2e"
 
@@ -39,7 +46,7 @@ if [ ${AFFECTED_LIB} == true ]; then
             echo "Run $FOLDER e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
 
             if [[ $LIST_SPECS != "" ]]; then
-                ./scripts/test-e2e-lib.sh --use-dist
+                ./scripts/test-e2e-lib.sh --use-dist $e2eParams
             fi
         fi
     fi;
