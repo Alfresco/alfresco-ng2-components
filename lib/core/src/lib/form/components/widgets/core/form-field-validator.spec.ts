@@ -581,6 +581,16 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
+        it('should allow empty string values', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: '',
+                regexPattern: 'pattern'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
         it('should succeed validating regex', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
