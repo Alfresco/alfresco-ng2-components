@@ -66,6 +66,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     @Input()
     readOnly = false;
 
+    /** Task details to fetch corresponding task details. */
+    @Input()
+    taskDetails: TaskDetailsCloudModel;
+
     /** Emitted when the form is saved. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -104,8 +108,6 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     @Output()
     executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
-    taskDetails: TaskDetailsCloudModel;
-
     candidateUsers: string[] = [];
     candidateGroups: string[] = [];
 
@@ -140,14 +142,15 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     }
 
     private loadTask() {
-        this.loading = true;
-
-        this.taskCloudService
-            .getTaskById(this.appName, this.taskId)
-            .subscribe(details => {
-                this.taskDetails = details;
-                this.loading = false;
-            });
+        if (!this.taskDetails) {
+            this.loading = true;
+            this.taskCloudService
+                .getTaskById(this.appName, this.taskId)
+                .subscribe(details => {
+                    this.taskDetails = details;
+                    this.loading = false;
+                });
+        }
 
         this.taskCloudService
             .getCandidateUsers(this.appName, this.taskId)
