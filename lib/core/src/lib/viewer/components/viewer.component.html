@@ -224,7 +224,7 @@
 
                         <ng-container *ngSwitchCase="'image'">
                             <adf-img-viewer [urlFile]="urlFileContent"
-                                            [nameFile]="displayName ? displayName : fileName"
+                                            [nameFile]="displayName || fileName"
                                             [blobFile]="blobFile"
                                             [readOnly]="readOnly"
                                             (error)="onUnsupportedFile()"
