@@ -471,7 +471,7 @@ async function main() {
         .option('--clientId [type]', 'sso client')
         .option('--secret [type]', 'sso secret', '')
         .option('--scope [type]', 'sso scope', 'openid')
-        .option('--tokenEndpoint [type]', 'discovery token Endpoint', 'openid')
+        .option('--tokenEndpoint [type]', 'discovery token Endpoint', '')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
