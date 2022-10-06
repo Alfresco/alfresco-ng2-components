@@ -20,7 +20,8 @@
       "MESSAGE": "Deleted file versions cannot be restored. Continue?",
       "YES_LABEL": "Yes",
       "NO_LABEL": "No"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Manage version options"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
