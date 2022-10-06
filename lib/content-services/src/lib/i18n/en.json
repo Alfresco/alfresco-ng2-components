@@ -269,6 +269,9 @@
         "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
         "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Search Filter List"
       }
     },
     "ICONS": {
