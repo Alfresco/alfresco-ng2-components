@@ -12,7 +12,8 @@
             <input matInput
                    *ngIf="!property.multiline"
                    class="adf-property-value"
-                   title={{property.displayValue}}
+                   title="{{property.label | translate }}"
+                   [attr.aria-label]="property.label | translate"
                    [placeholder]="property.default"
                    [formControl]="textInput"
                    (dblclick)="copyToClipboard(property.displayValue)"
@@ -22,6 +23,8 @@
                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <textarea matInput
                       *ngIf="property.multiline"
+                       title="{{property.label | translate }}"
+                       [attr.aria-label]="property.label | translate"
                       [cdkTextareaAutosize]="true"
                       [cdkAutosizeMaxRows]="1"
                       [cdkAutosizeMaxRows]="5"
@@ -41,6 +44,7 @@
             <mat-icon matSuffix
                       *ngIf="isEditable"
                       [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                      [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                       class="adf-textitem-edit-icon">mode_edit</mat-icon>
 
         </mat-form-field>
@@ -73,7 +77,8 @@
                         [floatLabel]="'never'">
             <input matInput
                    class="adf-property-value"
-                   title={{property.displayValue}}
+                   title="{{property.label | translate }}"
+                   [attr.aria-label]="property.label | translate"
                    [placeholder]="editedValue ? '' : property.default | translate"
                    [matChipInputFor]="chipList"
                    [matChipInputAddOnBlur]="true"
@@ -97,7 +102,8 @@
             <input matInput
                    [type]=property.inputType
                    class="adf-property-value"
-                   title={{property.displayValue}}
+                   title="{{property.label | translate }}"
+                   [attr.aria-label]="property.label | translate"
                    [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
@@ -111,6 +117,7 @@
                     *ngIf="showClickableIcon"
                     class="adf-textitem-action"
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
                 <mat-icon class="adf-textitem-icon">{{ property?.icon }}</mat-icon>
             </button>
