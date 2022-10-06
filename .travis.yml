@@ -300,7 +300,7 @@ jobs:
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/e2e.sh "content-services"
+          script: ./scripts/travis/e2e/e2e.sh "content-services" "browser"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
               create:

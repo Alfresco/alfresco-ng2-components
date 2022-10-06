@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
@@ -24,9 +24,9 @@ import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-p
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('AddPermissionPanelComponent', () => {
-
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
     let component: AddPermissionPanelComponent;
     let element: HTMLElement;
@@ -36,7 +36,8 @@ describe('AddPermissionPanelComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ContentTestingModule
+            ContentTestingModule,
+            MatIconTestingModule
         ]
     });
 
@@ -60,6 +61,7 @@ describe('AddPermissionPanelComponent', () => {
         inputDebugElement.nativeElement.value = word;
         inputDebugElement.nativeElement.focus();
         inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
     };
 
     it('should be able to render the component', () => {
@@ -67,20 +69,20 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#searchInput')).not.toBeNull();
     });
 
-    it('should show search results when user types something', fakeAsync(() => {
+    it('should show search results when user types something', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
-        typeWordIntoSearchInput('a');
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
-            expect(element.querySelector('#result_option_0')).not.toBeNull();
-        });
-    }));
 
-    it('should emit a select event with the selected items when an item is clicked', fakeAsync(() => {
+        typeWordIntoSearchInput('a');
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
+        expect(element.querySelector('#result_option_0')).not.toBeNull();
+    });
+
+    it('should emit a select event with the selected items when an item is clicked', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.select.subscribe((items) => {
             expect(items).not.toBeNull();
@@ -90,120 +92,116 @@ describe('AddPermissionPanelComponent', () => {
         });
 
         typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
-            expect(listElement).not.toBeNull();
-            listElement.triggerEventHandler('click', {});
-        });
-    }));
 
-    it('should show the icon related on the nodeType', fakeAsync(() => {
+        const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
+        expect(listElement).toBeTruthy();
+        listElement.triggerEventHandler('click', {});
+    });
+
+    it('should show the icon related on the nodeType', async () => {
+        spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
+        expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
+        expect(element.querySelector('#searchInput')).not.toBeNull();
+
+        typeWordIntoSearchInput('a');
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(element.querySelector('#adf-add-permission-authority-results')).toBeTruthy();
+        expect(element.querySelector('#result_option_0')).toBeTruthy();
+        expect(element.querySelector('#result_option_1')).toBeTruthy();
+        expect(element.querySelector('#result_option_2')).toBeTruthy();
+    });
+
+    it('should clear the search when user delete the search input field', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
         typeWordIntoSearchInput('a');
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
-            expect(element.querySelector('#result_option_0 #add-person-icon')).toBeDefined();
-            expect(element.querySelector('#result_option_0 #add-person-icon')).not.toBeNull();
-            expect(element.querySelector('#result_option_2 #add-group-icon')).toBeDefined();
-            expect(element.querySelector('#result_option_2 #add-group-icon')).not.toBeNull();
-        });
-    }));
 
-    it('should clear the search when user delete the search input field', fakeAsync(() => {
-        spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
-        expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
-        expect(element.querySelector('#searchInput')).not.toBeNull();
-        typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
-            expect(element.querySelector('#result_option_0')).not.toBeNull();
-            const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
-            expect(clearButton).not.toBeNull();
-            clearButton.triggerEventHandler('click', {});
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#adf-add-permission-authority-results')).toBeNull();
-            });
-        });
-    }));
+        expect(element.querySelector('#result_option_0')).toBeTruthy();
 
-    it('should remove element from selection when is clicked and already selected', fakeAsync(() => {
+        const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
+        expect(clearButton).toBeTruthy();
+        clearButton.triggerEventHandler('click', {});
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(element.querySelector('#result_option_0')).toBeNull();
+    });
+
+    it('should remove element from selection on click when is already selected', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
-        component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
-        component.select.subscribe((items) => {
-            expect(items).not.toBeNull();
-            expect(items[0]).toBeUndefined();
-            expect(component.selectedItems.length).toBe(0);
-        });
 
         typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
-            expect(listElement).not.toBeNull();
-            listElement.triggerEventHandler('click', {});
-        });
-    }));
 
-    it('should always show as extra result the everyone group', fakeAsync(() => {
+        let selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
+        const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
+        expect(listElement).toBeTruthy();
+        expect(selectedUserIcon).toBeFalsy();
+
+        listElement.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
+        expect(selectedUserIcon).toBeTruthy();
+
+        listElement.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
+        expect(selectedUserIcon).toBeFalsy();
+    });
+
+    it('should always show as extra result the everyone group', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
         typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
-            expect(element.querySelector('#result_option_0 #add-person-icon')).toBeDefined();
-            expect(element.querySelector('#result_option_0 #add-person-icon')).not.toBeNull();
-            expect(element.querySelector('#result_option_2 #add-group-icon')).toBeDefined();
-            expect(element.querySelector('#result_option_2 #add-group-icon')).not.toBeNull();
-            expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
-            expect(element.querySelector('#adf-add-permission-group-everyone')).not.toBeNull();
-        });
-    }));
 
-    it('should show everyone group when search return no result', fakeAsync(() => {
+        expect(element.querySelector('#adf-add-permission-authority-results')).toBeTruthy();
+        expect(element.querySelector('#adf-add-permission-group-everyone')).toBeTruthy();
+        expect(element.querySelector('#result_option_0')).toBeTruthy();
+        expect(element.querySelector('#result_option_1')).toBeTruthy();
+        expect(element.querySelector('#result_option_2')).toBeTruthy();
+    });
+
+    it('should show everyone group when search return no result', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of({ list: { entries: [] } }));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
         typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
-            expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
-            expect(element.querySelector('#adf-add-permission-group-everyone')).not.toBeNull();
-        });
-    }));
 
-    it('should show first and last name of users', fakeAsync(() => {
+        expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
+        expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
+        expect(element.querySelector('#adf-add-permission-group-everyone')).not.toBeNull();
+    });
+
+    it('should show first and last name of users', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeNameListResult));
         component.selectedItems.push(fakeNameListResult.list.entries[0]);
         component.selectedItems.push(fakeNameListResult.list.entries[1]);
 
         typeWordIntoSearchInput('a');
+        await fixture.whenStable();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#result_option_0 .mat-list-text')).not.toBeNull();
-            expect(element.querySelector('#result_option_0 .mat-list-text')).toBeDefined();
-            expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
-            expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
-            expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
-        });
-    }));
 
-    it('should emit unique element in between multiple search', fakeAsync(() => {
+        expect(element.querySelector('#result_option_0 .mat-list-text')).toBeTruthy();
+        expect(element.querySelector('#result_option_1 .mat-list-text')).toBeTruthy();
+        expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
+    });
+
+    it('should emit unique element in between multiple search', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         let searchAttempt = 0;
 
@@ -216,26 +214,27 @@ describe('AddPermissionPanelComponent', () => {
         });
 
         typeWordIntoSearchInput('a');
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
-            expect(listElement).not.toBeNull();
-            listElement.triggerEventHandler('click', {});
+        await fixture.whenStable();
+        fixture.detectChanges();
 
-            const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
-            expect(clearButton).not.toBeNull();
-            clearButton.triggerEventHandler('click', {});
-            fixture.detectChanges();
+        let listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
+        expect(listElement).not.toBeNull();
+        listElement.triggerEventHandler('click', {});
+        fixture.detectChanges();
 
-            typeWordIntoSearchInput('abc');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                listElement = fixture.debugElement.query(By.css('#result_option_0'));
-                expect(listElement).not.toBeNull();
-                listElement.triggerEventHandler('click', {});
-                expect(searchAttempt).toBe(2);
-            });
-        });
-    }));
+        const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
+        expect(clearButton).not.toBeNull();
+        clearButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        typeWordIntoSearchInput('abc');
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        listElement = fixture.debugElement.query(By.css('#result_option_0'));
+        expect(listElement).not.toBeNull();
+
+        listElement.triggerEventHandler('click', {});
+        expect(searchAttempt).toBe(2);
+    });
 });

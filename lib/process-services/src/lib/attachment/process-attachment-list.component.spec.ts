@@ -23,6 +23,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockEmittedProcessAttachments, mockProcessAttachments } from '../mock/process/process-attachments.mock';
 
 describe('ProcessAttachmentListComponent', () => {
 
@@ -30,7 +31,6 @@ describe('ProcessAttachmentListComponent', () => {
     let component: ProcessAttachmentListComponent;
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
     let getProcessRelatedContentSpy: jasmine.Spy;
-    let mockAttachment: any;
 
     setupTestBed({
         imports: [
@@ -45,53 +45,7 @@ describe('ProcessAttachmentListComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessContentService);
 
-        mockAttachment = {
-            size: 2,
-            total: 2,
-            start: 0,
-            data: [{
-                id: 4001,
-                name: 'Invoice01.pdf',
-                created: '2017-05-12T12:50:05.522+0000',
-                createdBy: {
-                    id: 1,
-                    firstName: 'Apps',
-                    lastName: 'Administrator',
-                    email: 'admin@app.activiti.com',
-                    company: 'Alfresco.com',
-                    pictureId: 3003
-                },
-                relatedContent: true,
-                contentAvailable: true,
-                link: false,
-                mimeType: 'application/pdf',
-                simpleType: 'pdf',
-                previewStatus: 'created',
-                thumbnailStatus: 'created'
-            },
-                {
-                    id: 4002,
-                    name: 'Invoice02.pdf',
-                    created: '2017-05-12T12:50:05.522+0000',
-                    createdBy: {
-                        id: 1,
-                        firstName: 'Apps',
-                        lastName: 'Administrator',
-                        email: 'admin@app.activiti.com',
-                        company: 'Alfresco.com',
-                        pictureId: 3003
-                    },
-                    relatedContent: true,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'application/pdf',
-                    simpleType: 'pdf',
-                    previewStatus: 'created',
-                    thumbnailStatus: 'created'
-                }]
-        };
-
-        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(of(mockAttachment));
+        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(of(mockProcessAttachments));
         spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
         const blobObj = new Blob();
@@ -123,12 +77,10 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should emit a success event when the attachments are loaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.success.subscribe((attachments) => {
-            expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
-            expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
-        });
+        const spySuccessEmitter = spyOn(component.success, 'emit');
+        component.ngOnChanges({ processInstanceId: change });
 
-        component.ngOnChanges({ taskId: change });
+        expect(spySuccessEmitter).toHaveBeenCalledWith(mockEmittedProcessAttachments);
     });
 
     it('should not attach when no processInstanceId is specified', () => {
@@ -234,7 +186,7 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     it('should not show the empty list component when the attachments list is not empty for completed process', async () => {
-        getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
+        getProcessRelatedContentSpy.and.returnValue(of(mockProcessAttachments));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
@@ -245,7 +197,7 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     it('should call getProcessRelatedContent with opt isRelatedContent=true', () => {
-        getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
+        getProcessRelatedContentSpy.and.returnValue(of(mockProcessAttachments));
         const change = new SimpleChange(null, '123', true);
         const isRelatedContent = 'true';
         component.ngOnChanges({ processInstanceId: change });

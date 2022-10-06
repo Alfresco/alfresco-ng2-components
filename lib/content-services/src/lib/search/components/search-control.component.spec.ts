@@ -132,7 +132,7 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should still fire an event when user inputs a search term less than 3 characters', (done) => {
+        it('should still fire an event when user inputs a search term less than 3 characters', async () => {
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
 
             const searchDisposable = component.searchChange.subscribe((value) => {
@@ -140,11 +140,9 @@ describe('SearchControlComponent', () => {
                 searchDisposable.unsubscribe();
             });
 
+            typeWordIntoSearchInput('cu');
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                typeWordIntoSearchInput('cu');
-                done();
-            });
+            await fixture.whenStable();
         });
     });
 

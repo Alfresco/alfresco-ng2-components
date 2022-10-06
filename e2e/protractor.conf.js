@@ -22,7 +22,7 @@ if (ENV_FILE) {
 }
 
 const HOST = process.env.URL_HOST_ADF;
-const BROWSER_RUN = ([true, 'true'].includes(process.env.BROWSER_RUN))
+const BROWSER_RUN = [true, 'true'].includes(process.env.BROWSER_RUN);
 const FOLDER = process.env.FOLDER || '';
 const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;

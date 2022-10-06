@@ -16,8 +16,8 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import {
     startFormDateWidgetMock, startFormDropdownDefinitionMock,
     startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
@@ -114,12 +114,6 @@ describe('StartFormComponent', () => {
         expect(component.form.getFieldById('fake-multiple-upload').value).toBe(preselectedMultipleeNode['fake-multiple-upload']);
     });
 
-    it('should consume errors encountered when loading start form', () => {
-        getStartFormSpy.and.returnValue(throwError({}));
-        component.processDefinitionId = exampleId1;
-        component.ngOnInit();
-    });
-
     it('should show outcome buttons by default', () => {
         getStartFormSpy.and.returnValue(of({
             id: '1',
@@ -164,115 +158,120 @@ describe('StartFormComponent', () => {
 
     describe('Display widgets', () => {
 
-        it('should be able to display a textWidget from a process definition', () => {
+        it('should be able to display a textWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'mocktext');
-                const textWidget = fixture.debugElement.nativeElement.querySelector('text-widget');
-                const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-label');
-                expect(labelField.type).toBe('text');
-                expect(textWidget).toBeDefined();
-                expect(textWidgetLabel.innerText).toBe('mockText');
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const formFields = component.form.getFormFields();
+            const labelField = formFields.find((field) => field.id === 'mocktext');
+            const textWidget = fixture.debugElement.nativeElement.querySelector('text-widget');
+            const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-label');
+
+            expect(labelField.type).toBe('text');
+            expect(textWidget).toBeTruthy();
+            expect(textWidgetLabel.innerText).toBe('mockText');
         });
 
-        it('should be able to display a radioButtonWidget from a process definition', () => {
+        it('should be able to display a radioButtonWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormRadioButtonWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'radio-but');
-                const radioButtonWidget = fixture.debugElement.nativeElement.querySelector('radio-buttons-widget');
-                const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                expect(labelField.type).toBe('radio-buttons');
-                expect(radioButtonWidget).toBeDefined();
-                expect(radioButtonWidgetLabel.innerText).toBe('radio-buttons');
-            });
+            await fixture.whenStable();
+
+            const formFields = component.form.getFormFields();
+            const labelField = formFields.find((field) => field.id === 'radio-but');
+            const radioButtonWidget = fixture.debugElement.nativeElement.querySelector('radio-buttons-widget');
+            const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-radio-button-container .adf-label');
+
+            expect(labelField.type).toBe('radio-buttons');
+            expect(radioButtonWidget).toBeDefined();
+            expect(radioButtonWidgetLabel.innerText).toBe('radio-buttons');
         });
 
-        it('should be able to display a amountWidget from a process definition', () => {
+        it('should be able to display a amountWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormAmountWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'amount');
-                const amountWidget = fixture.debugElement.nativeElement.querySelector('amount-widget');
-                const amountWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                expect(labelField.type).toBe('amount');
-                expect(amountWidget).toBeDefined();
-                expect(amountWidgetLabel.innerText).toBe('amount');
-            });
+            await fixture.whenStable();
+
+            const formFields = component.form.getFormFields();
+            const labelField = formFields.find((field) => field.id === 'amount');
+            const amountWidget = fixture.debugElement.nativeElement.querySelector('amount-widget');
+
+            expect(labelField.type).toBe('amount');
+            expect(amountWidget).toBeTruthy();
         });
 
-        it('should be able to display a numberWidget from a process definition', () => {
+        it('should be able to display a numberWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormNumberWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'number');
-                const numberWidget = fixture.debugElement.nativeElement.querySelector('number-widget');
-                expect(labelField.type).toBe('integer');
-                expect(numberWidget).toBeDefined();
-            });
+            await fixture.whenStable();
+
+            const formFields = component.form.getFormFields();
+            const labelField = formFields.find((field) => field.id === 'number');
+            const numberWidget = fixture.debugElement.nativeElement.querySelector('number-widget');
+
+            expect(labelField.type).toBe('integer');
+            expect(numberWidget).toBeTruthy();
         });
 
-        it('should be able to display a dropDown Widget from a process definition', () => {
+        it('should be able to display a dropdown Widget for selecting a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormDropdownDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'mockTypeDropDown');
-                const dropDownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-                const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget>mat-select .mat-select-trigger');
-                selectElement.click();
-                expect(selectElement).toBeDefined();
-                expect(dropDownWidget).toBeDefined();
-                expect(selectElement.innerText).toBe('Choose one...');
-                expect(labelField.type).toBe('dropdown');
-                expect(labelField.options[0].name).toBe('Chooseone...');
-                expect(labelField.options[1].name).toBe('Option-1');
-                expect(labelField.options[2].name).toBe('Option-2');
-            });
+            await fixture.whenStable();
+
+            const formFields = component.form.getFormFields();
+            const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
+            const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
+            const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
+            const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-select .mat-select-trigger');
+            selectElement.click();
+
+            expect(selectElement).toBeTruthy();
+            expect(dropdownWidget).toBeTruthy();
+            expect(dropdownLabel.innerText).toEqual('mock DropDown');
+            expect(dropdownField.type).toBe('dropdown');
+            expect(dropdownField.options[0].name).toBe('Choose one...');
+            expect(dropdownField.options[1].name).toBe('Option-1');
+            expect(dropdownField.options[2].name).toBe('Option-2');
         });
 
-        it('should be able to display a date Widget from a process definition', () => {
+        it('should be able to display a date Widget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormDateWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'date');
-                const dateWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
-                expect(dateWidget).toBeDefined();
-                expect(labelField.type).toBe('date');
-                expect(dateLabelElement.innerText).toBe('date (D-M-YYYY)');
-            });
+            await fixture.whenStable();
+
+            const formFields = component.form.getFormFields();
+            const labelField = formFields.find((field) => field.id === 'date');
+            const dateWidget = fixture.debugElement.nativeElement.querySelector('date-widget');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
+
+            expect(dateWidget).toBeTruthy();
+            expect(labelField.type).toBe('date');
+            expect(dateLabelElement.innerText).toBe('date (D-M-YYYY)');
         });
 
         it('should fetch and define form fields with proper type', () => {
@@ -288,22 +287,6 @@ describe('StartFormComponent', () => {
             const formFields1 = component.form.getFormFields();
             const labelField1 = formFields1.find((field) => field.id === 'claimtype');
             expect(labelField1.type).toBe('dropdown');
-        });
-
-        it('should show dropdown options', () => {
-            getStartFormSpy.and.returnValue(of(startMockForm));
-            component.processDefinitionId = exampleId1;
-            component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const formFields = component.form.getFormFields();
-                const labelField = formFields.find((field) => field.id === 'claimtype');
-                expect(labelField.type).toBe('dropdown');
-                expect(labelField.options[0].name).toBe('Chooseone...');
-                expect(labelField.options[1].name).toBe('Cashless');
-                expect(labelField.options[2].name).toBe('Reimbursement');
-            });
         });
 
         it('should display start form with fields ', async () => {
@@ -356,46 +339,49 @@ describe('StartFormComponent', () => {
             expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');
         });
 
-        it('should define custom-tabs ', fakeAsync(() => {
+        it('should define custom-tabs ', async () => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const formTabs = component.form.tabs;
-                const tabField1 = formTabs.find((tab) => tab.id === 'form1');
-                const tabField2 = formTabs.find((tab) => tab.id === 'form2');
-                const tabsWidgetElement = fixture.debugElement.nativeElement.querySelector('tabs-widget');
-                expect(tabField1.name).toBe('Tab 1');
-                expect(tabField2.name).toBe('Tab 2');
-                expect(tabsWidgetElement).toBeDefined();
-            });
-        }));
 
-        it('should define title and [custom-action-buttons]', fakeAsync(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const formTabs = component.form.tabs;
+            const tabField1 = formTabs.find((tab) => tab.id === 'form1');
+            const tabField2 = formTabs.find((tab) => tab.id === 'form2');
+            const tabsWidgetElement = fixture.debugElement.nativeElement.querySelector('.alfresco-tabs-widget');
+
+            expect(tabField1.name).toBe('Tab 1');
+            expect(tabField2.name).toBe('Tab 2');
+            expect(tabsWidgetElement).toBeTruthy();
+        });
+
+        it('should define title and [custom-action-buttons]', async () => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
+            component.showTitle = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const titleIcon = fixture.debugElement.nativeElement.querySelector('mat-card-title>mat-icon');
-                const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
-                const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
-                expect(titleIcon).toBeDefined();
-                expect(titleElement).toBeDefined();
-                expect(actionButtons.length).toBe(4);
-                expect(actionButtons[0].innerText).toBe('Save');
-                expect(actionButtons[0].disabled).toBeFalsy();
-                expect(actionButtons[1].innerText).toBe('Approve');
-                expect(actionButtons[1].disabled).toBeTruthy();
-                expect(actionButtons[2].innerText).toBe('Complete');
-                expect(actionButtons[2].disabled).toBeTruthy();
-            });
-        }));
+            await fixture.whenStable();
+
+            const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
+            const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
+
+            expect(titleElement.innerText.trim()).toEqual('Mock Title');
+            expect(actionButtons.length).toBe(4);
+            expect(actionButtons[0].innerText.trim()).toBe('SAVE');
+            expect(actionButtons[0].disabled).toBeFalsy();
+            expect(actionButtons[1].innerText.trim()).toBe('APPROVE');
+            expect(actionButtons[1].disabled).toBeTruthy();
+            expect(actionButtons[2].innerText.trim()).toBe('COMPLETE');
+            expect(actionButtons[2].disabled).toBeTruthy();
+        });
     });
 
     describe('OutCome Actions', () => {

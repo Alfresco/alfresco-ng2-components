@@ -45,7 +45,7 @@ Inside the `my-js-app` folder, create the `index.html` file with the following c
         <script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
         <script >
 
-            this.alfrescoJsApi = new AlfrescoApi({ provider:'ECM', hostEcm: 'http://localhost:8082/' });
+            this.alfrescoJsApi = new AlfrescoApi({ provider:'ECM', hostEcm: 'http://localhost:8082' });
 
             this.alfrescoJsApi.login('admin', 'admin').then(function (data) {
                 alert('API called successfully to login into Alfresco Content Services.');

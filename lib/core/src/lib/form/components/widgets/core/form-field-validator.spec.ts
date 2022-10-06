@@ -113,6 +113,18 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
         });
 
+        it('should fail for dropdown with empty object', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                value: {},
+                required: true,
+                options: [{ id: 'one', name: 'one' }],
+                selectionType: 'multiple'
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
+
         it('should fail for radio buttons', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -563,6 +575,16 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: null,
+                regexPattern: 'pattern'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should allow empty string values', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT,
+                value: '',
                 regexPattern: 'pattern'
             });
 

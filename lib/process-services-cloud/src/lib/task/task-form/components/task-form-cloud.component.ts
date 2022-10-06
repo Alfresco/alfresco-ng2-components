@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, FormModel, ContentLinkModel } from '@alfresco/adf-core';
+import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
@@ -97,6 +97,12 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     /** Emitted when form content is clicked. */
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
+
+    /** Emitted when any outcome is executed. Default behaviour can be prevented
+     * via `event.preventDefault()`.
+     */
+    @Output()
+    executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
     taskDetails: TaskDetailsCloudModel;
 
@@ -218,5 +224,9 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
 
     onFormContentClicked(content: ContentLinkModel) {
         this.formContentClicked.emit(content);
+    }
+
+    onFormExecuteOutcome(outcome: FormOutcomeEvent) {
+        this.executeOutcome.emit(outcome);
     }
 }

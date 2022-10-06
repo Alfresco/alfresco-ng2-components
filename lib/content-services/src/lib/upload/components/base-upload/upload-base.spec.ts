@@ -17,11 +17,12 @@
 
 import { Component, NgZone } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslationService, UploadService, setupTestBed, FileModel } from '@alfresco/adf-core';
+import { TranslationService, UploadService, setupTestBed, FileModel, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockUploadSuccessPromise } from '../../../mock/upload.service.mock';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -35,6 +36,8 @@ export class UploadTestComponent extends UploadBase {
         super(uploadService, translationService, ngZone);
     }
 }
+
+const file = { name: 'bigFile.png', size: 1000 } as File;
 
 describe('UploadBase', () => {
 
@@ -67,12 +70,16 @@ describe('UploadBase', () => {
 
     describe('beginUpload', () => {
 
-        it('should raise event', (done) => {
+        it('should raise event', () => {
             spyOn(uploadService, 'addToQueue').and.stub();
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
-            component.beginUpload.subscribe(() => done());
-            const file = { name: 'bigFile.png', size: 1000 } as File;
+            component.beginUpload.subscribe(
+                (uploadFilesEvent: UploadFilesEvent) => {
+                    expect(uploadFilesEvent.files[0].file).toEqual(file);
+                }
+            );
+
             component.uploadFiles([file]);
             fixture.detectChanges();
         });
@@ -86,7 +93,7 @@ describe('UploadBase', () => {
                 event.preventDefault();
                 prevented = true;
             });
-            const file = { name: 'bigFile.png', size: 1000 } as File;
+
             component.uploadFiles([file]);
 
             tick();
@@ -106,7 +113,7 @@ describe('UploadBase', () => {
                 event.preventDefault();
                 prevented = true;
             });
-            const file = { name: 'bigFile.png', size: 1000 } as File;
+
             component.uploadFiles([file]);
 
             tick();
@@ -123,25 +130,24 @@ describe('UploadBase', () => {
             expect(uploadFilesInTheQueue).toHaveBeenCalled();
         }));
 
-        it('should emit callback events on resume', fakeAsync((done) => {
-            spyOn(uploadService, 'addToQueue').and.stub();
-            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+        it('should emit callback events on resume', () => {
+            spyOn(uploadService, 'addToQueue').and.callThrough();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.callThrough();
+            spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
 
             let uploadEvent: UploadFilesEvent;
+
             component.beginUpload.subscribe((event) => {
                 uploadEvent = event;
-                event.preventDefault();
             });
-            const file = { name: 'bigFile.png', size: 1000 } as File;
+
+            component.success.subscribe((success) => {
+                expect(success).toBeTruthy();
+            });
+
             component.uploadFiles([file]);
-
-            tick();
             uploadEvent.resumeUpload();
-
-            component.success.subscribe(() => {
-                done();
-            });
-        }));
+        });
    });
 
     describe('fileSize', () => {
@@ -194,11 +200,11 @@ describe('UploadBase', () => {
             expect(addToQueueSpy.calls.mostRecent()).toBeUndefined();
         });
 
-        it('should output an error when you try to upload a file too big', (done) => {
+        it('should output an error when you try to upload a file too big', () => {
             component.maxFilesSize = 100;
 
-            component.error.subscribe(() => {
-                done();
+            component.error.subscribe((error: FileUploadErrorEvent) => {
+                expect(error).toBe('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE');
             });
 
             component.uploadFiles(files);

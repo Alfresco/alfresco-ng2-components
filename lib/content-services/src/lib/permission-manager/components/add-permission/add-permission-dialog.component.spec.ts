@@ -250,14 +250,20 @@ describe('AddPermissionDialog', () => {
     it('should stream the confirmed selection on the confirm subject', async () => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        data.confirm.subscribe((selection) => {
-            expect(selection[0]).not.toBeNull();
-            expect(fakeAuthorityResults[0].entry.id).toBe(selection[0].authorityId);
-        });
 
         fixture.detectChanges();
         await fixture.whenStable();
+
+        let authorityResult = fixture.debugElement.query(By.css('[data-automation-id="datatable-row-0"]'));
+        expect(authorityResult).toBeNull();
+
         const confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         confirmButton.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        authorityResult = fixture.debugElement.query(By.css('[data-automation-id="datatable-row-0"]'));
+        expect(authorityResult).toBeTruthy();
     });
 });
