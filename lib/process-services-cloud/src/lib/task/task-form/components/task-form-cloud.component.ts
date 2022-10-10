@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnInit, ViewEncapsulation
+    Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -25,6 +25,8 @@ import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } f
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -32,7 +34,7 @@ import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFormCloudComponent implements OnInit, OnChanges {
+export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** App id to fetch corresponding form and values. */
     @Input()
@@ -113,6 +115,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     candidateGroups: string[] = [];
 
     loading: boolean = false;
+    onDestroy$ = new Subject<boolean>();
 
     constructor(
         private taskCloudService: TaskCloudService,
@@ -145,7 +148,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     private loadTask() {
         this.loading = true;
         this.taskCloudService
-            .getTaskById(this.appName, this.taskId)
+            .getTaskById(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$))
             .subscribe(details => {
                 this.taskDetails = details;
                 this.loading = false;
@@ -231,5 +234,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
 
     onFormExecuteOutcome(outcome: FormOutcomeEvent) {
         this.executeOutcome.emit(outcome);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

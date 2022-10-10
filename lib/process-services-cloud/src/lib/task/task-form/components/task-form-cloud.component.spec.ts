@@ -408,6 +408,14 @@ describe('TaskFormCloudComponent', () => {
 
             expect(executeOutcomeSpy).toHaveBeenCalled();
         });
+
+        it('should emit onTaskLoaded on initial load of component', () => {
+            spyOn(component.onTaskLoaded, 'emit');
+
+            component.ngOnInit();
+            fixture.detectChanges();
+            expect(component.onTaskLoaded.emit).toHaveBeenCalledWith(taskDetails);
+        });
     });
 
     it('should display task name as title on no form template if showTitle is true', () => {
