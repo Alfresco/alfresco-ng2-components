@@ -27,14 +27,13 @@ import { catchError, mergeMap } from 'rxjs/operators';
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
   private excludedUrlsRegex: RegExp[];
-  private authService: AuthenticationService;
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector, private authService: AuthenticationService) { }
 
   private loadExcludedUrlsRegex() {
     const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
-    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'gi')) || [];
 
+    this.excludedUrlsRegex = [...excludedUrls].map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
@@ -51,7 +50,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     }
 
     const urlRequest = req.url;
-    const shallPass: boolean = !!this.excludedUrlsRegex.find((regex) => regex.test(urlRequest));
+    const shallPass: boolean = this.excludedUrlsRegex.some((regex) => regex.test(urlRequest));
     if (shallPass) {
       return next.handle(req)
         .pipe(
@@ -73,7 +72,19 @@ export class AuthBearerInterceptor implements HttpInterceptor {
   }
 
   private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
-    return headers.set('Content-Type', 'application/json;charset=UTF-8');
+
+    // prevent adding any content type, to properly handle formData with boundary browser generated value,
+    // as adding any Content-Type its going to break the upload functionality
+
+    if (headers.get('Content-Type') === 'multipart/form-data') {
+        return headers.delete('Content-Type');
+    }
+
+    if (!headers.get('Content-Type')) {
+        return headers.set('Content-Type', 'application/json;charset=UTF-8');
+    }
+
+    return headers;
   }
 
 }
