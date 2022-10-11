@@ -806,6 +806,16 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/pathBasedOnStringvariablevalue');
         });
 
+        it('should be able to fetch the destinationFolderPath from the default value of a form variable', () => {
+            form.processVariables = [];
+            form.variables = formVariables;
+
+            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithStringVariablePathType)
+            fixture.detectChanges();
+
+            expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock destination folder path');
+        });
+
         it('it should get a destination folder path value from a folder variable', () => {
             createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithFolderVariablePathType);
             fixture.detectChanges();
