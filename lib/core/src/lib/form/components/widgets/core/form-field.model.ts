@@ -201,25 +201,7 @@ export class FormFieldModel extends FormWidgetModel {
 
             if (FormFieldTypes.isReadOnlyType(this.type)) {
                 if (this.params && this.params.field) {
-                    let valueFound = false;
-
-                    if (form.processVariables) {
-                        const processVariable = this.getProcessVariableValue(this.params.field, form);
-
-                        if (processVariable) {
-                            valueFound = true;
-                            this.value = processVariable;
-                        }
-                    }
-
-                    if (!valueFound && this.params.responseVariable) {
-                        const defaultValue = form.getFormVariableValue(this.params.field.name);
-
-                        if (defaultValue) {
-                            valueFound = true;
-                            this.value = defaultValue;
-                        }
-                    }
+                    this.setValueForReadonlyType(form);
                 }
             }
 
@@ -242,6 +224,13 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.updateForm();
+    }
+
+    private setValueForReadonlyType(form: any) {
+        const value = this.getProcessVariableValue(this.params.field, form);
+        if (value) {
+            this.value = value;
+        }
     }
 
     private getDefaultDateFormat(jsonField: any): string {
