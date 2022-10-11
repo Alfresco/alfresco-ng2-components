@@ -810,7 +810,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             form.processVariables = [];
             form.variables = formVariables;
 
-            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithStringVariablePathType)
+            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithStringVariablePathType);
             fixture.detectChanges();
 
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock destination folder path');
