@@ -330,8 +330,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('should be able to use mapped string variable value if the destinationFolderPath set to string type variable', async () => {
             const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
 
-            const variables = formVariables;
-            const form = new FormModel({ variables, formVariables, processVariables });
+            const form = new FormModel({ formVariables, processVariables });
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithStringVariablePathType);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -791,10 +790,9 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('Upload widget with destination folder path params', () => {
         let form: FormModel;
-        const variables = formVariables;
+
         beforeEach(() => {
             form = new FormModel({
-                variables,
                 formVariables,
                 processVariables
             });
@@ -806,6 +804,14 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('string');
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/pathBasedOnStringvariablevalue');
+        });
+
+        it('it should get a destination folder path value from a folder variable', () => {
+            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithFolderVariablePathType);
+            fixture.detectChanges();
+
+            expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('folder');
+            expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock-folder-id');
         });
 
         it('it should get a destination folder path value from a folder variable', () => {

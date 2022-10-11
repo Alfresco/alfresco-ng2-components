@@ -397,13 +397,12 @@ export const formVariables = [
         id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
         name: 'name1',
         type: 'string',
-        value: '-root-/pathBasedOnStringvariablevalue'
+        value: 'mock name value'
     },
     {
         id: '3ed9f28a-dbae-463f-b991-47ef06658bb6',
         name: 'name2',
-        type: 'folder',
-        value: [{ id: 'mock-folder-id'}]
+        type: 'folder'
     },
     {
         id: 'booleanVar',
