@@ -4,6 +4,7 @@
         [checked]="option.checked"
         (keydown.enter)="option.checked = !option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
+        [attr.aria-label]="option.name | translate"
         (change)="changeHandler($event, option)"
         class="adf-facet-filter">
         <div matTooltip="{{ option.name | translate }}"

@@ -64,4 +64,8 @@ export class SearchFacetChipComponent {
         this.facetFieldComponent.submitValues();
         this.menuTrigger.closeMenu();
     }
+
+    onEnterKeydown(): void {
+        this.menuTrigger.openMenu();
+    }
 }
