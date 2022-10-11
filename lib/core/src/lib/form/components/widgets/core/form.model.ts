@@ -294,7 +294,7 @@ export class FormModel implements ProcessFormModel {
                 value = this.parseValue(processVariable.type, processVariable.value);
             }
         }
-        
+
         if (!value) {
             value = this.getDefaultFormVariableValue(name);
         }
