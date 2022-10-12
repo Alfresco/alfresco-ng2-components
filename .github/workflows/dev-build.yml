@@ -33,6 +33,7 @@ jobs:
     steps:
       - name: Setup share node_modules
         run: | 
+          pwd
           echo "Only here for setting up the shared node_modules"
           ls
       # - name: Build::lib
