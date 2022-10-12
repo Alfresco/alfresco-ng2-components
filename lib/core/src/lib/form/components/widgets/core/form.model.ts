@@ -264,7 +264,7 @@ export class FormModel implements ProcessFormModel {
      *
      * @param identifier The `name` or `id` value
      */
-    getFormVariableValue(identifier: string): any {
+    getDefaultFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
         if (variable && variable.hasOwnProperty('value')) {
@@ -276,23 +276,30 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Returns a process variable value.
+     * When mapping a process variable with a form variable the mapping
+     * is already resolved by the rest API with the name of variables.formVariableName
      *
      * @param name Variable name
      */
     getProcessVariableValue(name: string): any {
-        if (this.processVariables) {
-            const names = [`variables.${name}`, name];
+        let value;
+        if (this.processVariables?.length) {
+            const names = [`variables.${ name }`, name];
 
-            const variable = this.processVariables.find(
+            const processVariable = this.processVariables.find(
                 entry => names.includes(entry.name)
             );
 
-            if (variable) {
-                return this.parseValue(variable.type, variable.value);
+            if (processVariable) {
+                value = this.parseValue(processVariable.type, processVariable.value);
             }
         }
 
-        return undefined;
+        if (!value) {
+            value = this.getDefaultFormVariableValue(name);
+        }
+
+        return value;
     }
 
     protected parseValue(type: string, value: any): any {
