@@ -33,7 +33,7 @@
                     class="adf-property-clear-value"
                     *ngIf="isEditable"
                     mat-icon-button
-                    aria-label="Clear"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
                     (click)="clearValue()">
                 <mat-icon>cancel</mat-icon>
             </button>

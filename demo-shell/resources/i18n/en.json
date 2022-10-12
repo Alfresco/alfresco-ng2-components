@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Action Type"
     }
   },
-  "DEFAULT_SEARCH": "Default"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Create a new folder button",
+    "EDIT_NODE_LABEL": "Edit node button",
+    "DELETE_NODE_LABEL": "Delete node icon button"
+  },
+  "DEFAULT_SEARCH": "Default",
+  "OPEN_DIALOG": "Open dialog",
+  "SHOW_LIST_LABEL": "Click to show the list"
 }
