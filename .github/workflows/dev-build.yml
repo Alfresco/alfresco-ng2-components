@@ -2,8 +2,8 @@ name: "dev-build"
 
 on:
   push:
-    # branches: 
-      # - AAE-7986.*
+    branches: 
+      - AAE-7986-dev-act
       #
       #   - /^master(-patch.*)?$/
       #   - /^develop(-patch.*)?$/
@@ -14,6 +14,9 @@ on:
       #   - /.*old-env.*/
       #   - /.*next-release.*/
       #   - /.*beta.*/
+
+env:
+  NODE_MODULES_DIR: "./node_modules"
 
 jobs:
   prerequisite:
@@ -26,17 +29,22 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
 
-  setup:
-    name: "Node modules cache preparation"
+  build-lib:
+    name: "Lib::Build"
     needs: prerequisite
     runs-on: ubuntu-18.04
     steps:
-      - name: Setup share node_modules
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Build::lib
         run: | 
-          pwd
-          echo "Only here for setting up the shared node_modules"
-          ls
-      # - name: Build::lib
-      #   run: | 
-      #     ./scripts/travis/build/build-libs.sh || exit 1
-      #     ./scripts/travis/release/release-npm.sh || exit 1
+          echo $GITHUB_WORKSPACE
+          echo $PWD
+      # ./scripts/travis/build/build-libs.sh || exit 1
+      # ./scripts/travis/release/release-npm.sh || exit 1
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: $NODE_MODULES_DIR
+      #     key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: v1-npm-deps-
