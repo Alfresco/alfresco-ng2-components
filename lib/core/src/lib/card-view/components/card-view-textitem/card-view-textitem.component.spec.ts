@@ -735,21 +735,15 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should show validation error for empty string', fakeAsync((done) => {
+        it('should show validation error for only spaces string', async () => {
+            updateTextField(component.property.key, ' ');
+            await fixture.whenStable();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
 
-                updateTextField(component.property.key, ' ');
-                tick(600);
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const error = getTextFieldError(component.property.key);
-                    expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-                    expect(component.property.value).toBe(10);
-                    done();
-                });
-            });
-        }));
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
+        });
 
         it('should show validation error for float number', fakeAsync((done) => {
             fixture.detectChanges();
