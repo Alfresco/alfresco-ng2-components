@@ -740,9 +740,29 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const error = getTextFieldError(component.property.key);
-            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-            expect(component.property.value).toBe(10);
+            const errorMessage = getTextFieldError(component.property.key);
+            expect(errorMessage).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+        });
+
+        it('should NOT show validation error for empty string', async () => {
+            updateTextField(component.property.key, '');
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
+            expect(errorElement).toBeNull();
+        });
+
+        it('should NOT show validation error for null', async () => {
+            updateTextField(component.property.key, null);
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
+            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
+
+            expect(inputElement.nativeElement.value).toBe('');
+            expect(errorElement).toBeNull();
         });
 
         it('should show validation error for float number', fakeAsync((done) => {
