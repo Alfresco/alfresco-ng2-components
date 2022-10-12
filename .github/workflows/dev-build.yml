@@ -28,6 +28,7 @@ jobs:
 
   setup:
     name: "Node modules cache preparation"
+    needs: prerequisite
     runs-on: ubuntu-18.04
     steps:
       - name: Setup share node_modules
