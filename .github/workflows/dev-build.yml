@@ -2,8 +2,8 @@ name: "dev-build"
 
 on:
   push:
-    branches: 
-      - AAE-7986.*
+    # branches: 
+      # - AAE-7986.*
       #
       #   - /^master(-patch.*)?$/
       #   - /^develop(-patch.*)?$/
@@ -35,3 +35,7 @@ jobs:
         run: | 
           echo "Only here for setting up the shared node_modules"
           ls
+      # - name: Build::lib
+      #   run: | 
+      #     ./scripts/travis/build/build-libs.sh || exit 1
+      #     ./scripts/travis/release/release-npm.sh || exit 1
