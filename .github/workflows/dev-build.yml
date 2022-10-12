@@ -39,6 +39,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
       - name: Build::lib
         run: | 
           echo $GITHUB_WORKSPACE
