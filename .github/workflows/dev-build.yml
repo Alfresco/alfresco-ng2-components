@@ -1,0 +1,37 @@
+name: "dev-build"
+
+on:
+  push:
+    branches: 
+      - AAE-7986.*
+      #
+      #   - /^master(-patch.*)?$/
+      #   - /^develop(-patch.*)?$/
+      #   - master
+      #   - develop
+      # #remove after upgrade
+      #   - angular-14-rebase
+      #   - /.*old-env.*/
+      #   - /.*next-release.*/
+      #   - /.*beta.*/
+
+jobs:
+  prerequisite:
+    name: "Before anything unnece$$ary happens..."
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    # - name: build guard check
+    #   if: ${{ github.event_name == 'pull_request' }}
+    #   run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+      - name: ls
+        run: ls
+  setup:
+    name: "Node modules cache preparation"
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Setup share node_modules
+        run: | 
+          echo "Only here for setting up the shared node_modules"
+          ls
