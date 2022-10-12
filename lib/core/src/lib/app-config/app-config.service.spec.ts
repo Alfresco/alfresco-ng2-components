@@ -111,14 +111,14 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
-    it('should stream only the selected attribute changes when using select',  fakeAsync(() => {
+    it('should stream only the selected attribute when using select', fakeAsync(() => {
         appConfigService.config.testProp = true;
         appConfigService.select('testProp').subscribe((property) => {
             expect(property).toBeTruthy();
         });
     }));
 
-    it('should stream the page size value when is set', fakeAsync(() => {
+    it('should stream the value when is set', fakeAsync(() => {
         appConfigService.config.testProp = true;
         appConfigService.onLoad.subscribe((config) => {
             expect(config.testProp).toBeTruthy();
@@ -164,24 +164,23 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('testUrl')).toBe('ftp://localhost:9090');
     });
 
-    it('should load external settings', () => {
-        appConfigService.load().then((config) => {
+    it('should load external settings', async () => {
+        const config = await appConfigService.load();
 
-            expect(config).toEqual(mockResponse);
-        });
+        expect(config).toEqual(mockResponse);
     });
 
-    it('should retrieve settings', () => {
-        appConfigService.load().then(() => {
-            expect(appConfigService.get('ecmHost')).toBe(mockResponse.ecmHost);
-            expect(appConfigService.get('bpmHost')).toBe(mockResponse.bpmHost);
-            expect(appConfigService.get('application.name')).toBe(mockResponse.application.name);
-        });
+    it('should retrieve settings', async () => {
+        await appConfigService.load();
+
+        expect(appConfigService.get('ecmHost')).toBe(mockResponse.ecmHost);
+        expect(appConfigService.get('bpmHost')).toBe(mockResponse.bpmHost);
+        expect(appConfigService.get('application.name')).toBe(mockResponse.application.name);
     });
 
-    it('should take excluded file list', () => {
-        appConfigService.load().then(() => {
-            expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
-        });
+    it('should take excluded file list', async () => {
+        await appConfigService.load();
+
+        expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
     });
 });

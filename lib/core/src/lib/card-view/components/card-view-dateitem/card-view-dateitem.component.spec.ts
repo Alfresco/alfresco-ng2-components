@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import moment from 'moment';
@@ -189,7 +189,7 @@ describe('CardViewDateItemComponent', () => {
         expect(component.datepicker.open).toHaveBeenCalled();
     });
 
-    it('should trigger an update event on the CardViewUpdateService', (done) => {
+    it('should trigger an update event on the CardViewUpdateService', () => {
         component.editable = true;
         component.property.editable = true;
         const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
@@ -202,14 +202,13 @@ describe('CardViewDateItemComponent', () => {
                 expect(updateNotification.target).toEqual(property);
                 expect(updateNotification.changed).toEqual({ dateKey: expectedDate.toDate() });
                 disposableUpdate.unsubscribe();
-                done();
             }
         );
 
         component.onDateChanged({ value: expectedDate });
     });
 
-    it('should update the property value after a successful update attempt', fakeAsync(() => {
+    it('should update the property value after a successful update attempt', async () => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = null;
@@ -218,12 +217,9 @@ describe('CardViewDateItemComponent', () => {
 
         component.onDateChanged({ value: expectedDate });
 
-        fixture.whenStable().then(
-            () => {
-                expect(component.property.value).toEqual(expectedDate.toDate());
-            }
-        );
-    }));
+        await fixture.whenStable();
+        expect(component.property.value).toEqual(expectedDate.toDate());
+    });
 
     it('should copy value to clipboard on double click', () => {
         const clipboardService = TestBed.inject(ClipboardService);
@@ -271,7 +267,7 @@ describe('CardViewDateItemComponent', () => {
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
-        it('should remove the property value after a successful clear attempt', fakeAsync(() => {
+        it('should remove the property value after a successful clear attempt', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = 'Jul 10 2017';
@@ -279,14 +275,11 @@ describe('CardViewDateItemComponent', () => {
 
             component.onDateClear();
 
-            fixture.whenStable().then(
-                () => {
-                    expect(component.property.value).toBeNull();
-                }
-            );
-        }));
+            await fixture.whenStable();
+            expect(component.property.value).toBeNull();
+        });
 
-        it('should remove the property default value after a successful clear attempt', fakeAsync(() => {
+        it('should remove the property default value after a successful clear attempt', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
@@ -294,14 +287,11 @@ describe('CardViewDateItemComponent', () => {
 
             component.onDateClear();
 
-            fixture.whenStable().then(
-                () => {
-                    expect(component.property.default).toBeNull();
-                }
-            );
-        }));
+            await fixture.whenStable();
+            expect(component.property.default).toBeNull();
+        });
 
-        it('should remove actual and default value after a successful clear attempt', fakeAsync(() => {
+        it('should remove actual and default value after a successful clear attempt', async () => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
@@ -320,11 +310,10 @@ describe('CardViewDateItemComponent', () => {
 
             component.onDateClear();
 
-            fixture.whenStable().then(() => {
-                expect(component.property.value).toBeNull();
-                expect(component.property.default).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+            expect(component.property.value).toBeNull();
+            expect(component.property.default).toBeNull();
+        });
     });
 
     it('should be possible update a date-time', async () => {
