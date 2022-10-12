@@ -17,6 +17,9 @@ on:
 
 env:
   NODE_MODULES_DIR: "./node_modules"
+  TRAVIS_BRANCH: ${{ github.ref_name }}
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  TRAVIS_COMMIT: ${{ github.sha }}
 
 jobs:
   prerequisite:
@@ -40,7 +43,10 @@ jobs:
         run: | 
           echo $GITHUB_WORKSPACE
           echo $PWD
-      # ./scripts/travis/build/build-libs.sh || exit 1
+          echo $TRAVIS_BRANCH
+          echo $TRAVIS_BUILD_DIR
+          echo $TRAVIS_COMMIT
+          ./scripts/travis/build/build-libs.sh || exit 1
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
       #   uses: actions/cache@v3
