@@ -15,31 +15,46 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ExtensionRef } from '@alfresco/adf-extensions';
+import {
+    Component,
+    ChangeDetectionStrategy,
+    Input,
+} from "@angular/core";
+import { ExtensionRef } from "@alfresco/adf-extensions";
 
 @Component({
-  selector: 'adf-about-extension-list',
-  templateUrl: './about-extension-list.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'adf-about-extension-list',
+    templateUrl: './about-extension-list.component.htm',
+    styleUrls: ['./about-extention-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutExtensionListComponent {
-  columns = [
-    {
-      columnDef: 'name',
-      header: 'ABOUT.PLUGINS.NAME',
-      cell: (row: ExtensionRef) => `${row.$name}`
-    },
-    {
-      columnDef: 'version',
-      header: 'ABOUT.PLUGINS.VERSION',
-      cell: (row: ExtensionRef) => `${row.$version}`
+    columns = [
+        {
+            columnDef: "name",
+            header: "ABOUT.PLUGINS.NAME",
+            cell: (row: ExtensionRef) => `${row.$name}`,
+        },
+        {
+            columnDef: "version",
+            header: "ABOUT.PLUGINS.VERSION",
+            cell: (row: ExtensionRef) => `${row.$version}`,
+        },
+    ];
+
+    displayedColumns = this.columns.map((x) => x.columnDef);
+
+    @Input()
+    data: Array<ExtensionRef> = [];
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
-  ];
-
-  displayedColumns = this.columns.map((x) => x.columnDef);
-
-  @Input()
-  data: Array<ExtensionRef> = [];
 }

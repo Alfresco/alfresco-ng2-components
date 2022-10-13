@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { StatusData } from '../interfaces';
 
 @Component({
     selector: 'adf-about-status-list',
     templateUrl: './about-status-list.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./about-status-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutStatusListComponent {
@@ -42,4 +42,15 @@ export class AboutStatusListComponent {
 
     @Input()
     data: StatusData[] = [];
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
+    }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 
@@ -26,7 +26,8 @@ import { AppConfigService } from '../../app-config/app-config.service';
 @Component({
     selector: 'adf-about-platform-version',
     templateUrl: './about-platform-version.component.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./about-platform-version.component.scss'],
+
 })
 export class AboutPlatformVersionComponent {
 
@@ -43,10 +44,21 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
     constructor(private aaeInfoService: AaeInfoService, private appConfigService: AppConfigService) {
         this.modelingInfo();
         this.deploymentInfo();
         this.rbInfo();
+    }
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
 
     modelingInfo() {
@@ -64,4 +76,5 @@ export class AboutPlatformVersionComponent {
     queryInfo() {
         this.query$ = this.aaeInfoService.getServiceVersion(`${this.appConfigService.get('oauth2.clientId')}/query`);
     }
+
 }

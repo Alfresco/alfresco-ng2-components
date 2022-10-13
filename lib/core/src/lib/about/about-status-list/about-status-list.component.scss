@@ -27,27 +27,27 @@ mat-cell {
 
 }
 
-.app-license-list-container {
+.app-extension-list-container {
     margin: 0px 0px -24px 0px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-license-list-row {
+.app-extension-list-row {
     margin: 24px 24px 24px 24px;
     width: 95%;
     border: 1px solid rgba(33, 33, 33, 0.12);
     border-radius: 12px;
 }
 
-.app-license-list-heading {
+.app-extension-list-heading {
     display: flex;
     padding-left: 1rem;
 
 }
 
-.app-license-list-div {
+.app-extension-list-div {
     display: flex;
     width: 60%;
     cursor: pointer;
@@ -55,13 +55,13 @@ mat-cell {
     padding: 24px 0px;
 }
 
-.app-license-list-icon {
+.app-extension-list-icon {
     padding-top: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
 }
 
-.app-license-list-title {
+.app-extension-list-title {
     margin-left: 0.6rem;
     margin-top: 4px;
     letter-spacing: .15px;
@@ -71,17 +71,17 @@ mat-cell {
     line-height: 24px;
 }
 
-.app-license-list-divider {
-    color: rgba(33, 33, 33, 0.12);
+.app-extension-list-divider {
+    border: 1px solid rgba(33, 33, 33, 0.12);
     padding-left: -1px;
     padding-right: 1px;
 }
 
-.app-license-list-dropdown {
+.app-extension-list-dropdown {
     padding: 0rem 1rem;
 }
 
-.app-license-list-dropdown-heading {
+.app-extension-list-dropdown-heading {
     display: flex;
     color: var(--theme-heading-color);
     width: 100%;
@@ -92,7 +92,7 @@ mat-cell {
     letter-spacing: .25px;
 }
 
-.app-license-list-dropdown-details {
+.app-extension-list-dropdown-details {
     color: var(--theme-heading-color);
     width: 100%;
     font-style: normal;

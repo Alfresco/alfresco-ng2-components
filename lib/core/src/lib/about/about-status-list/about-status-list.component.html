@@ -1,11 +1,44 @@
-<mat-table [dataSource]="data">
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <mat-header-cell *matHeaderCellDef>
-      {{ column.header | translate }}
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
-  </ng-container>
+<div class="app-status-list-container">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-</mat-table>
+    <div class="app-status-list-row">
+
+        <div class="app-status-list-heading">
+            <div class="app-status-list-div">
+                <mat-icon class="app-status-list-icon" (click)="togglesDropdown()">
+                    {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                <span class="app-status-list-title">{{ 'ABOUT.STATUS.TITLE' | translate }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <mat-divider class="app-status-list-divider" *ngIf="serverSettingsDropdown"></mat-divider>
+
+
+        <div *ngIf="serverSettingsDropdown">
+            <div class="app-status-list-dropdown">
+
+                <div class="app-status-list-dropdown-details">
+                    <mat-table [dataSource]="data">
+                        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                            <mat-header-cell *matHeaderCellDef>
+                                {{ column.header | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    </mat-table>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

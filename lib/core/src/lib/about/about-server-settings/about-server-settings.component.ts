@@ -15,22 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-about-server-settings',
     templateUrl: './about-server-settings.component.html',
-    encapsulation: ViewEncapsulation.None
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';
     bpmHost = '';
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
 
     constructor(private appConfig: AppConfigService) {}
 
     ngOnInit() {
         this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
         this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
+    }
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
 }

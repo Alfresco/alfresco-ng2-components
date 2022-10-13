@@ -1,53 +1,23 @@
-mat-cell {
-    white-space: pre-line;
-    line-height: 48px;
-}
-
-mat-table {
-    width: 100%;
-    font-family: "Open Sans";
-}
-
-mat-row {
-    border: none;
-}
-
-mat-header-row {
-    height: 32px;
-    padding: 8px 0px;
-}
-
-mat-header-cell {
-    flex: 0 1 40%;
-
-}
-
-mat-cell {
-    flex: 0 1 40%;
-
-}
-
-.app-license-list-container {
+.app-platform-version-container {
     margin: 0px 0px -24px 0px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-license-list-row {
+.app-platform-version-row {
     margin: 24px 24px 24px 24px;
     width: 95%;
     border: 1px solid rgba(33, 33, 33, 0.12);
     border-radius: 12px;
 }
 
-.app-license-list-heading {
+.app-platform-version-heading {
     display: flex;
     padding-left: 1rem;
-
 }
 
-.app-license-list-div {
+.app-platform-version-div {
     display: flex;
     width: 60%;
     cursor: pointer;
@@ -55,13 +25,13 @@ mat-cell {
     padding: 24px 0px;
 }
 
-.app-license-list-icon {
+.app-platform-version-icon {
     padding-top: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
 }
 
-.app-license-list-title {
+.app-platform-version-title {
     margin-left: 0.6rem;
     margin-top: 4px;
     letter-spacing: .15px;
@@ -71,17 +41,17 @@ mat-cell {
     line-height: 24px;
 }
 
-.app-license-list-divider {
+.app-platform-version-divider {
     color: rgba(33, 33, 33, 0.12);
     padding-left: -1px;
     padding-right: 1px;
 }
 
-.app-license-list-dropdown {
+.app-platform-version-dropdown {
     padding: 0rem 1rem;
 }
 
-.app-license-list-dropdown-heading {
+.app-platform-version-dropdown-heading {
     display: flex;
     color: var(--theme-heading-color);
     width: 100%;
@@ -92,7 +62,7 @@ mat-cell {
     letter-spacing: .25px;
 }
 
-.app-license-list-dropdown-details {
+.app-platform-version-dropdown-details {
     color: var(--theme-heading-color);
     width: 100%;
     font-style: normal;

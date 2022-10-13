@@ -1,3 +1,78 @@
-.adf-github-link-container {
-    padding: 10px;
+.app-github-link-container {
+    margin: 0px 0px -24px 0px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.app-github-link-row {
+    margin: 24px 24px 24px 24px;
+    width: 95%;
+    border: 1px solid rgba(33, 33, 33, 0.12);
+    border-radius: 12px;
+}
+
+.app-github-link-heading {
+    display: flex;
+    padding-left: 1rem;
+
+}
+
+.app-github-link-div {
+    display: flex;
+    width: 60%;
+    cursor: pointer;
+    height: 32px;
+    padding: 24px 0px;
+}
+
+.app-github-link-icon {
+    padding-top: 4px;
+    cursor: pointer;
+    color: var(--theme-grey-color);
+}
+
+.app-github-link-title {
+    margin-left: 0.6rem;
+    margin-top: 4px;
+    letter-spacing: .15px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.app-github-link-divider {
+    color: rgba(33, 33, 33, 0.12);
+    padding-left: -1px;
+    padding-right: 1px;
+}
+
+.app-github-link-dropdown {
+    padding: 0rem 1rem;
+}
+
+.app-github-link-dropdown-heading {
+    display: flex;
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-github-link-dropdown-details {
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-mat-divider {
+    color: rgba(33, 33, 33, 0.12);
 }
