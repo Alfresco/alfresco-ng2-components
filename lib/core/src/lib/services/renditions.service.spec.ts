@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { fakeRendition, fakeRenditionCreated, fakeRenditionsList, fakeRenditionsListWithACreated } from '../mock/renditions-service.mock';
 import { RenditionsService } from './renditions.service';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -24,6 +24,8 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
+
+const errorResponse = { error: new Error('Parser is unable to parse the response') };
 
 describe('RenditionsService', () => {
     let service: RenditionsService;
@@ -110,10 +112,10 @@ describe('RenditionsService', () => {
         });
     });
 
-    it('Get rendition service should catch the error', (done) => {
+    it('Get rendition service should catch the error', fakeAsync(() => {
         service.getRenditionsListByNodeId('fake-node-id').subscribe(() => {
-            }, () => {
-                done();
+            }, (error) => {
+                expect(error).toEqual(errorResponse);
             }
         );
 
@@ -122,7 +124,7 @@ describe('RenditionsService', () => {
             contentType: 'application/json',
             responseText: 'error'
         });
-    });
+    }));
 
     it('isConversionPossible should return true if is possible convert', (done) => {
         service.isConversionPossible('fake-node-id', 'pdf').subscribe((res) => {

@@ -1162,20 +1162,20 @@ describe('ViewerComponent', () => {
 
             });
 
-            it('should raise an event when the shared link is invalid', (done) => {
+            it('should raise an event when the shared link is invalid', fakeAsync(() => {
                 spyOn(component['sharedLinksApi'], 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
-
-                component.invalidSharedLink.subscribe(() => {
-                    done();
-                });
 
                 component.sharedLinkId = 'the-Shared-Link-id';
                 component.urlFile = null;
                 component.mimeType = null;
 
+                component.invalidSharedLink.subscribe((emittedValue) => {
+                    expect(emittedValue).toBeUndefined();
+                });
+
                 component.ngOnChanges();
-            });
+            }));
 
             it('should swicth to the unkwown template if the type specific viewers throw an error', (done) => {
                 component.urlFile = 'fake-url-file.icns';

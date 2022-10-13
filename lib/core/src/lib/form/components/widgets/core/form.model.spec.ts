@@ -284,18 +284,22 @@ describe('FormModel', () => {
         expect(form.outcomes[1].isSystem).toBeFalsy();
     });
 
-    it('should raise validation event when validating form', (done) => {
+    it('should raise validation event when validating form', () => {
         const form = new FormModel({}, null, false, formService);
 
-        formService.validateForm.subscribe(() => done());
+        formService.validateForm.subscribe((validateFormEvent) =>
+            expect(validateFormEvent).toBeTruthy()
+        );
         form.validateForm();
     });
 
-    it('should raise validation event when validating field', (done) => {
+    it('should raise validation event when validating field', () => {
         const form = new FormModel({}, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
-        formService.validateFormField.subscribe(() => done());
+        formService.validateFormField.subscribe((validateFormFieldEvent) =>
+            expect(validateFormFieldEvent).toBeTruthy()
+        );
         form.validateField(field);
     });
 

@@ -173,7 +173,7 @@ describe('LoginComponent', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('some-route');
     }));
 
-    it('should update user preferences upon login', fakeAsync(() => {
+    it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
@@ -182,7 +182,7 @@ describe('LoginComponent', () => {
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-    }));
+    });
 
     describe('Login button', () => {
 

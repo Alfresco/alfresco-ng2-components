@@ -271,16 +271,16 @@ describe('NodeDeleteDirective', () => {
             });
         });
 
-        it('should emit event when delete is done', (done) => {
+        it('should emit event when delete is done', async () => {
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
             fixture.detectChanges();
 
+            disposableDelete = component.deleteDirective.delete.subscribe((node) => {
+                expect(node).toEqual('CORE.DELETE_NODE.SINGULAR');
+            });
+
             element.nativeElement.click();
             fixture.detectChanges();
-
-            disposableDelete = component.deleteDirective.delete.subscribe(() => {
-                done();
-            });
         });
 
         it('should disable the button if no node are selected', (done) => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
 import { WidgetComponent } from './widget.component';
@@ -48,19 +48,21 @@ describe('WidgetComponent', () => {
 
     describe('Events', () => {
 
-        it('should click event be redirect on the form event service', async() => {
-            await widget.formService.formEvents.subscribe(() => {
+        it('should click event be redirect on the form event service', fakeAsync(() => {
+            widget.formService.formEvents.subscribe((event) => {
+                expect(event).toBeTruthy();
             });
 
             element.click();
-        });
+        }));
 
-        it('should click event be redirect on the form rules event service', async() => {
-            await widget.formService.formRulesEvent.pipe(filter(event => event.type === 'click')).subscribe(() => {
+        it('should click event be redirect on the form rules event service', fakeAsync(() => {
+            widget.formService.formRulesEvent.pipe(filter(event => event.type === 'click')).subscribe((event) => {
+                expect(event).toBeTruthy();
             });
 
             element.click();
-        });
+        }));
     });
 
     it('should check field', () => {
@@ -69,7 +71,7 @@ describe('WidgetComponent', () => {
         expect(widget.hasField()).toBeTruthy();
     });
 
-    it('should send an event after view init', async() => {
+    it('should send an event after view init', async () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;
@@ -83,7 +85,7 @@ describe('WidgetComponent', () => {
         widget.ngAfterViewInit();
     });
 
-    it('should send an event when a field is changed', async() => {
+    it('should send an event when a field is changed', async () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         await widget.fieldChanged.subscribe((field) => {
@@ -95,7 +97,7 @@ describe('WidgetComponent', () => {
         widget.onFieldChanged(fakeField);
     });
 
-    it('should send a rule event when a field is changed', async() => {
+    it('should send a rule event when a field is changed', async () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         await widget.formService.formRulesEvent.subscribe((event) => {

@@ -25,12 +25,12 @@ describe('DownloadService', () => {
     });
 
     describe('Download blob', () => {
-        it('Should use native msSaveOrOpenBlob if the browser is IE', (done) => {
+        it('Should use native msSaveOrOpenBlob if the browser is IE', () => {
             const navigatorAny: any = window.navigator;
 
             // eslint-disable-next-line no-underscore-dangle
-            navigatorAny.__defineGetter__('msSaveOrOpenBlob', () => {
-                done();
+            navigatorAny.__defineGetter__('msSaveOrOpenBlob', (result) => {
+                expect(result).toBeUndefined();
             });
 
             const blob = new Blob([''], { type: 'text/html' });

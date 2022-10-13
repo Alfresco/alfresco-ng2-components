@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { BpmUserService } from './bpm-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -76,15 +76,15 @@ describe('Bpm user service', () => {
             expect(path).toContain('/app/rest/admin/profile-picture');
         });
 
-        it('should catch errors on call for profile', (done) => {
+        it('should catch errors on call for profile', fakeAsync(() => {
             service.getCurrentUserInfo().subscribe(() => {
-            }, () => {
-                done();
+            }, (error) => {
+                expect(error).toEqual({ error: new Error('Unsuccessful HTTP response') });
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        });
+        }));
     });
 });

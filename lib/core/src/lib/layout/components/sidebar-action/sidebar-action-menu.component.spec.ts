@@ -118,18 +118,19 @@ describe('Custom SidebarActionMenuComponent', () => {
         expect(title.textContent).toBe('FakeTitle');
     });
 
-    it('should render the adf-sidebar-menu-options', () => {
+    it('should render the adf-sidebar-menu-options', async () => {
         fixture.detectChanges();
         const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-button');
         const options = fixture.nativeElement.querySelectorAll('.adf-sidebar-action-menu-options');
         actionButton.click();
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(actionButton).not.toBeNull();
-            expect(actionButton).toBeDefined();
-            expect(options).toBeDefined();
-            expect(actionButton.innerText.trim()).toBe('Fake titlearrow_drop_down');
-        });
+        await fixture.whenStable();
+
+        expect(actionButton).not.toBeNull();
+        expect(actionButton).toBeDefined();
+        expect(options).toBeDefined();
+        expect(actionButton.innerText.trim()).toBe('Fake titlearrow_drop_down');
     });
 
     it('should show icon on icon menu', () => {
