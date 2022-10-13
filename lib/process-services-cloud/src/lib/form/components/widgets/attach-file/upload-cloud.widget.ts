@@ -204,6 +204,6 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private getDestinationFolderPathValue(): any {
-        return this.field.form.getFormVariableValue(this.field.params.fileSource?.destinationFolderPath?.name);
+        return this.field.form.getProcessVariableValue(this.field.params.fileSource?.destinationFolderPath?.name);
     }
 }
