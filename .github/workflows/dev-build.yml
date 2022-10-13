@@ -2,7 +2,7 @@ name: "dev-build"
 
 on:
   push:
-    branches: 
+    branches:
       - AAE-7986-dev-act
       #
       #   - /^master(-patch.*)?$/
@@ -43,13 +43,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+      - name: install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: create .travis folder
+        run: mkdir -p .travis
+      - name: create travis env file
+        uses: mikefarah/yq@v4.28.1
+        with:
+          cmd: |
+            yq eval '.env | {"env" : .}' .travis.yml > .travis/env.yml
+      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load
+        with:
+          # ignore_regex: ^BRANCH_NAME=.*
+          yml_path: .travis/env.yml
+      - run: python my_script.py
+      - name: before install
+        run: bash ./scripts/ci/job_hooks/before_install.sh
+      - name: install
+        run: bash ./scripts/ci/job_hooks/install.sh
       - name: Build::lib
-        run: | 
-          echo $GITHUB_WORKSPACE
-          echo $PWD
-          echo $TRAVIS_BRANCH
-          echo $TRAVIS_BUILD_DIR
-          echo $TRAVIS_COMMIT
+        run: |
           ./scripts/travis/build/build-libs.sh || exit 1
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
