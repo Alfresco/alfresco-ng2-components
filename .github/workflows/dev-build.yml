@@ -51,6 +51,7 @@ jobs:
         run: | 
           npm i -g nx
           npm i -g @nrwl/cli
+          nx --help
       - name: install Python
         uses: actions/setup-python@v4
         with:
