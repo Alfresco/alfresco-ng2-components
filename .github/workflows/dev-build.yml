@@ -48,7 +48,9 @@ jobs:
         with:
           node-version: 14
       - name: install nx
-        run: npm i -g nx
+        run: | 
+          npm i -g nx
+          npm i -g @nrwl/cli
       - name: install Python
         uses: actions/setup-python@v4
         with:
