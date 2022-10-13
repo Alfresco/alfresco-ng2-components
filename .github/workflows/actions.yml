@@ -1,0 +1,76 @@
+name: "dev-build"
+
+on:
+  push:
+    branches:
+      - AAE-7986-dev-act-maurizio
+      #
+      #   - /^master(-patch.*)?$/
+      #   - /^develop(-patch.*)?$/
+      #   - master
+      #   - develop
+      # #remove after upgrade
+      #   - angular-14-rebase
+      #   - /.*old-env.*/
+      #   - /.*next-release.*/
+      #   - /.*beta.*/
+
+env:
+  NODE_MODULES_DIR: "./node_modules"
+  TRAVIS_BRANCH: ${{ github.ref_name }}
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  TRAVIS_COMMIT: ${{ github.sha }}
+
+jobs:
+  prerequisite:
+    name: "Before anything unnece$$ary happens..."
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: build guard check
+        if: ${{ github.event_name == 'pull_request' }}
+        run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+
+  build-lib:
+    name: "Lib::Build"
+    needs: prerequisite
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: create .travis folder
+        run: mkdir -p .travis
+      - name: create travis env file
+        uses: mikefarah/yq@v4.28.1
+        with:
+          cmd: |
+            yq eval '.env | {"env" : .}' .travis.yml > .travis/env.yml
+      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
+        with:
+          # ignore_regex: ^BRANCH_NAME=.*
+          yml_path: .travis/env.yml
+      - name: debug
+        run: ls -la | grep .travis
+      - name: before install
+        run: bash ./scripts/ci/job_hooks/before_install.sh
+      - name: install
+        run: bash ./scripts/ci/job_hooks/install.sh
+      - name: Build::lib
+        run: |
+          ./scripts/travis/build/build-libs.sh || exit 1
+      # ./scripts/travis/release/release-npm.sh || exit 1
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: $NODE_MODULES_DIR
+      #     key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: v1-npm-deps-
