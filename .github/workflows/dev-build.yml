@@ -54,11 +54,10 @@ jobs:
         with:
           cmd: |
             yq eval '.env | {"env" : .}' .travis.yml > .travis/env.yml
-      # - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load
-      #   with:
-      #     # ignore_regex: ^BRANCH_NAME=.*
-      #     yml_path: .travis/env.yml
-      - run: python my_script.py
+      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
+        with:
+          # ignore_regex: ^BRANCH_NAME=.*
+          yml_path: .travis/env.yml
       - name: before install
         run: bash ./scripts/ci/job_hooks/before_install.sh
       - name: install
