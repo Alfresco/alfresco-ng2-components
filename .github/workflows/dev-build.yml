@@ -16,7 +16,6 @@ on:
       #   - /.*beta.*/
 
 env:
-  NODE_MODULES_DIR: "./node_modules"
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
@@ -35,9 +34,10 @@ jobs:
   build-lib:
     name: "Build Lib"
     needs: prerequisite
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-18.04
     env:
       TRAVIS_BRANCH: develop
+      TRAVIS_EVENT_TYPE: push
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -46,24 +46,25 @@ jobs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 14
       - name: install nx
         run: | 
           npm i -g @nrwl/cli
-          nx --help
       - name: install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '2.7'
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
           yml_path: .travis.yml
       - name: before install
-        run: bash ./scripts/ci/job_hooks/before_install.sh
+        run: bash -u ./scripts/ci/job_hooks/before_install.sh
       - name: install
-        run: bash ./scripts/ci/job_hooks/install.sh
+        run: bash -u ./scripts/ci/job_hooks/install.sh
       - name: Lib::Build
-        run: bash ./scripts/travis/build/build-libs.sh
+        run: |
+          bash -u ./scripts/travis/build/build-libs.sh
+        # bash ./scripts/travis/release/release-npm.sh # launch npm-publish
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
       #   uses: actions/cache@v3
