@@ -20,6 +20,7 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
+  NX_CALCULATION_FLAGS: "--all"
 
 jobs:
   prerequisite:
