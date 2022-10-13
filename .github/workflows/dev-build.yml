@@ -47,6 +47,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+      - name: install nx
+        run: npm i -g nx
       - name: install Python
         uses: actions/setup-python@v4
         with:
@@ -59,8 +61,7 @@ jobs:
       - name: install
         run: bash ./scripts/ci/job_hooks/install.sh
       - name: Lib::Build
-        run: |
-          ./scripts/travis/build/build-libs.sh || exit 1
+        run: bash ./scripts/travis/build/build-libs.sh
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
       #   uses: actions/cache@v3
