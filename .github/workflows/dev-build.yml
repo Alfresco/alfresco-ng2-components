@@ -33,9 +33,11 @@ jobs:
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
 
   build-lib:
-    name: "Lib::Build"
+    name: "Build Lib"
     needs: prerequisite
     runs-on: ubuntu-18.04
+    env:
+      TRAVIS_BRANCH: develop
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -47,24 +49,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: create .travis folder
-        run: mkdir -p .travis
-      - name: create travis env file
-        uses: mikefarah/yq@v4.28.1
-        with:
-          cmd: |
-            yq eval '.env | {"env" : .}' .travis.yml > .travis/env.yml
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
-          # ignore_regex: ^BRANCH_NAME=.*
-          yml_path: .travis/env.yml
-      - name: debug
-        run: ls -la | grep .travis
+          yml_path: .travis.yml
       - name: before install
         run: bash ./scripts/ci/job_hooks/before_install.sh
       - name: install
         run: bash ./scripts/ci/job_hooks/install.sh
-      - name: Build::lib
+      - name: Lib::Build
         run: |
           ./scripts/travis/build/build-libs.sh || exit 1
       # ./scripts/travis/release/release-npm.sh || exit 1
