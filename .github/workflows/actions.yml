@@ -21,6 +21,7 @@ env:
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
   NX_CALCULATION_FLAGS: "--all"
+  #NX_CALCULATION_FLAGS: "--base=$(git describe --tags `git rev-list --tags --max-count=1`) --head=$HEAD_HASH"
 
 jobs:
   prerequisite:
@@ -45,7 +46,7 @@ jobs:
         with:
           node-version: 14
       - name: install NX
-        run : npm install nx
+        run : npm install -g @nrwl/cli
       - name: install Python
         uses: actions/setup-python@v4
         with:
