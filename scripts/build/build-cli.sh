@@ -11,6 +11,6 @@ cp -R ./lib/cli/dist dist/libs/cli/
 cp ./lib/cli/README.md dist/libs/cli/README.md
 
 echo "====== Cli Move to node_modules ======"
-npx nx build cli
-npx nx run cli:copydist
+nx build cli
+nx run cli:copydist
 

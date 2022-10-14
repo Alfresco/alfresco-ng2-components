@@ -7,5 +7,5 @@ cd $DIR/../..
 echo "====== Testing ======"
 
 echo "====== Move to node_modules ======"
-npx nx build testing
-npx nx run testing:copydist
+nx build testing
+nx run testing:copydist

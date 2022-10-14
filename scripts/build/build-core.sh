@@ -7,4 +7,4 @@ cd $DIR/../..
 echo "====== Core ======"
 
 echo "====== Prebuilt Themes ====="
-npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
+nx affected $NX_CALCULATION_FLAGS --target=pretheme
