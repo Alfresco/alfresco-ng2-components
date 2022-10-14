@@ -93,8 +93,9 @@ jobs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14
-        run: npm ci
+          node-version: 14 
+      - name: install
+        run: bash ./scripts/ci/job_hooks/install.sh       
       - name: content::unit
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
