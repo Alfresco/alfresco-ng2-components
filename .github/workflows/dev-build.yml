@@ -78,9 +78,9 @@ jobs:
         with:
           yml_path: .travis.yml
       - name: before install
-        run: bash -euo pipefail ./scripts/ci/job_hooks/before_install.sh
+        run: bash -x ./scripts/ci/job_hooks/before_install.sh
       - name: install
-        run: bash -euo pipefail ./scripts/ci/job_hooks/install.sh
+        run: bash -x ./scripts/ci/job_hooks/install.sh
       - name: Update NX settings to use DEV branch
         uses: mikefarah/yq@v4.28.1
         with:
