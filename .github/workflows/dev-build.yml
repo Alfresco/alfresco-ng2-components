@@ -27,11 +27,11 @@ jobs:
     name: "Before anything unnece$$ary happens..."
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
       - name: build guard check
         if: ${{ github.event_name == 'pull_request' }}
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
   build-lib:
     name: "Build Lib"
