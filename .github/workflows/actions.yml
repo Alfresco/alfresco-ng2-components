@@ -41,7 +41,19 @@ jobs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14      
+          node-version: 14 
+      - name: node_modules_cache
+        id: cache-npm 
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with: 
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: install Python
         uses: actions/setup-python@v4
         with:
@@ -67,20 +79,16 @@ jobs:
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           ./scripts/travis/build/build-libs.sh || exit 1
-       #   ./scripts/travis/release/release-npm.sh || exit 1
-      - name: node_modules_cache
-        id: cache-npm 
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with: 
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-  
+       #   ./scripts/travis/release/release-npm.sh || exit 1        
       - name: Lint
         run : nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
-        with:
-          id: cache-npm
+      # skip Build Demo shell on this stage  
+  unit-test-lib:
+    name: "content::unit"
+    needs: build-lib
+    runs-on: ubuntu-18.04
+    steps: 
+      - name: content::unit
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
+
+        
