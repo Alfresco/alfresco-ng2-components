@@ -70,7 +70,7 @@ jobs:
         run: bash ./scripts/ci/job_hooks/install.sh
       - name: Build::lib
         run: |
-          sudo ln -s /tmp/ng2dev/node_modules/.bin/nx /usr/bin/nx
+          sudo ln -s $(npm bin)/nx /usr/bin/nx
           ./scripts/travis/build/build-libs.sh || exit 1
       #   ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
