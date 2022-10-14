@@ -1,0 +1,107 @@
+mat-cell {
+    white-space: pre-line;
+    line-height: 48px;
+}
+
+mat-table {
+    width: 100%;
+    font-family: "Open Sans";
+}
+
+mat-row {
+    border: none;
+}
+
+mat-header-row {
+    height: 32px;
+    padding: 8px 0px;
+}
+
+mat-header-cell {
+    flex: 0 1 40%;
+
+}
+
+mat-cell {
+    flex: 0 1 40%;
+
+}
+
+.app-extension-list-container {
+    margin: 0px 0px -24px 0px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.app-extension-list-row {
+    margin: 24px 24px 24px 24px;
+    width: 95%;
+    border: 1px solid rgba(33, 33, 33, 0.12);
+    border-radius: 12px;
+}
+
+.app-extension-list-heading {
+    display: flex;
+    padding-left: 1rem;
+
+}
+
+.app-extension-list-div {
+    display: flex;
+    width: 60%;
+    cursor: pointer;
+    height: 32px;
+    padding: 24px 0px;
+}
+
+.app-extension-list-icon {
+    padding-top: 4px;
+    cursor: pointer;
+    color: var(--theme-grey-color);
+}
+
+.app-extension-list-title {
+    margin-left: 0.6rem;
+    margin-top: 4px;
+    letter-spacing: .15px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.app-extension-list-divider {
+    color: rgba(33, 33, 33, 0.12);
+    padding-left: -1px;
+    padding-right: 1px;
+}
+
+.app-extension-list-dropdown {
+    padding: 0rem 1rem;
+}
+
+.app-extension-list-dropdown-heading {
+    display: flex;
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-extension-list-dropdown-details {
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-mat-divider {
+    color: rgba(33, 33, 33, 0.12);
+}
