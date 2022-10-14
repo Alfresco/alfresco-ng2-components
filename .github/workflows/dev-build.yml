@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       TRAVIS_BRANCH: develop
-      # TRAVIS_EVENT_TYPE: push
+      TRAVIS_EVENT_TYPE: push
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -50,13 +50,30 @@ jobs:
         with:
           node-version: 14
           cache-dependency-path: subdir/package-lock.json
-      - name: debug nx
-        run: | 
-          npm bin
+
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '2.7'
+          python-version: '3,9'
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
           yml_path: .travis.yml
