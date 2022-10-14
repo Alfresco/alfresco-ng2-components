@@ -73,7 +73,7 @@ jobs:
       - name: install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3,9'
+          python-version: '3.9'
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
           yml_path: .travis.yml
