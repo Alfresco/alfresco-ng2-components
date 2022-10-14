@@ -1,7 +1,6 @@
 adf-about {
     .adf-about-container {
-        background-color: white;
-        border-top: 1px solid rgba(33, 33, 33, 0.12) !important;
+        background-color: var(--theme-white-color);
     }
 
     header {

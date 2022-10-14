@@ -5,7 +5,6 @@ mat-cell {
 
 mat-table {
     width: 100%;
-    font-family: "Open Sans";
 }
 
 mat-row {
@@ -37,7 +36,7 @@ mat-cell {
 .app-license-list-row {
     margin: 24px 24px 24px 24px;
     width: 95%;
-    border: 1px solid rgba(33, 33, 33, 0.12);
+    border: 1px solid var(--theme-header-vertical-color);
     border-radius: 12px;
 }
 
@@ -72,7 +71,7 @@ mat-cell {
 }
 
 .app-license-list-divider {
-    color: rgba(33, 33, 33, 0.12);
+    color: var(--theme-grey-border-color);
     padding-left: -1px;
     padding-right: 1px;
 }
@@ -103,5 +102,5 @@ mat-cell {
 }
 
 .app-mat-divider {
-    color: rgba(33, 33, 33, 0.12);
+    color: var(--theme-grey-border-color);
 }

@@ -8,7 +8,7 @@
 .app-platform-version-row {
     margin: 24px 24px 24px 24px;
     width: 95%;
-    border: 1px solid rgba(33, 33, 33, 0.12);
+    border: 1px solid var(--theme-header-vertical-color);
     border-radius: 12px;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .app-platform-version-divider {
-    color: rgba(33, 33, 33, 0.12);
+    color: var(--theme-header-vertical-color);
     padding-left: -1px;
     padding-right: 1px;
 }
@@ -73,5 +73,5 @@
 }
 
 .app-mat-divider {
-    color: rgba(33, 33, 33, 0.12);
+    color: var(--theme-header-vertical-color);
 }
