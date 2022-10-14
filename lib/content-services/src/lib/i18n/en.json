@@ -410,7 +410,8 @@
       "ADD-ACTION": "ADD",
       "CLOSE-ACTION": "CANCEL",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
-      "EVERYONE": "EVERYONE"
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List"
     },
     "COLUMN": {
       "NAME": "Users and Groups ({{ count }})",

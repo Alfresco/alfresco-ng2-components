@@ -34,6 +34,7 @@
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                  [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
+                 [attr.aria-label]="col.title | translate"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
