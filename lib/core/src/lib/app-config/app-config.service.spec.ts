@@ -16,7 +16,7 @@
  */
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
@@ -68,7 +68,6 @@ describe('AppConfigService', () => {
 
         extensionService = TestBed.inject(ExtensionService);
         appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.load();
     });
 
     it('should merge the configs from extensions', () => {
@@ -111,19 +110,23 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
-    it('should stream only the selected attribute when using select', fakeAsync(() => {
-        appConfigService.config.testProp = true;
+    it('should stream only the selected attribute when using select', async () => {
         appConfigService.select('testProp').subscribe((property) => {
-            expect(property).toBeTruthy();
+            expect(property).toEqual(true);
         });
-    }));
 
-    it('should stream the value when is set', fakeAsync(() => {
         appConfigService.config.testProp = true;
+        await appConfigService.load();
+    });
+
+    it('should stream the value when is set', async () => {
         appConfigService.onLoad.subscribe((config) => {
-            expect(config.testProp).toBeTruthy();
+            expect(config.testProp).toBe(true);
         });
-    }));
+
+        appConfigService.config.testProp = true;
+        await appConfigService.load();
+    });
 
     it('should skip the optional port number', () => {
         appConfigService.config.testUrl = 'http://{hostname}{:port}';
