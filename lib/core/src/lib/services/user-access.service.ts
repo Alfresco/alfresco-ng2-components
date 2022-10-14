@@ -21,6 +21,8 @@ import { ApplicationAccessModel } from '../models/application-access.model';
 import { UserAccessModel } from '../models/user-access.model';
 import { AppConfigService } from '../app-config/app-config.service';
 import { OAuth2Service } from './oauth2.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 
@@ -54,6 +56,14 @@ export class UserAccessService {
     private async fetchAccessFromApi() {
         const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/roles`;
         await this.oAuth2Service.get({ url })
+            .pipe(
+                catchError(() => of({
+                    globalAccess: {
+                        roles: []
+                    },
+                    applicationAccess: []
+                }))
+            )
             .toPromise()
             .then((response: UserAccessModel) => {
                 this.globalAccess = response.globalAccess.roles;
