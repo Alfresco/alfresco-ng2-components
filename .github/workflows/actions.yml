@@ -20,8 +20,6 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  #NX_CALCULATION_FLAGS: "--all"
-  #NX_CALCULATION_FLAGS: "--base=$(git describe --tags `git rev-list --tags --max-count=1`) --head=$HEAD_HASH"
 
 jobs:
   prerequisite:
@@ -81,4 +79,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
-            ${{ runner.os }}-      
+            ${{ runner.os }}-  
+      - name: Lint
+        run : nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
+        with:
+          id: cache-npm
