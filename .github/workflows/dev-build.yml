@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       TRAVIS_BRANCH: develop
-      TRAVIS_EVENT_TYPE: push
+      # TRAVIS_EVENT_TYPE: push
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
