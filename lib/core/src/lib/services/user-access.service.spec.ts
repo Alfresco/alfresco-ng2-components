@@ -20,7 +20,7 @@ import { TestBed } from '@angular/core/testing';
 import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { userAccessMock } from '../mock/user-access.mock';
 import { AppConfigService } from '../app-config';
 
@@ -160,6 +160,13 @@ describe('UserAccessService', () => {
             await userAccessService.fetchUserAccess();
 
             expect(getAccessFromApiSpy).not.toHaveBeenCalled();
+        });
+
+        it('should set empty access list on fething roles error', async () => {
+            getAccessFromApiSpy.and.returnValue(throwError({ status: 503 }));
+            await userAccessService.fetchUserAccess();
+
+            expect(userAccessService.hasGlobalAccess(['MOCKED_ROLES'])).toBe(false);
         });
     });
 });
