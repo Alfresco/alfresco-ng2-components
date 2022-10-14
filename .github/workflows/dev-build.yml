@@ -89,6 +89,7 @@ jobs:
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           bash -xeo pipefail ./scripts/travis/build/build-libs.sh
+        # bump
         # bash ./scripts/travis/release/release-npm.sh # launch npm-publish
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
