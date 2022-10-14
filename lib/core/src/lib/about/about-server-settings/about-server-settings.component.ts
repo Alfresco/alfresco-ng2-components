@@ -21,6 +21,7 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 @Component({
     selector: 'adf-about-server-settings',
     templateUrl: './about-server-settings.component.html',
+    styleUrls: ['./about-server-settings.component.scss'],
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';

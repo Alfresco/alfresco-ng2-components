@@ -4,7 +4,7 @@
 
         <div class="app-package-list-heading">
             <div class="app-package-list-div">
-                <mat-icon class="app-package-list-icon" (click)="togglesDropdown()">
+                <mat-icon class="app-package-list-icon" (click)="toggleDropdown()">
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-package-list-title">{{ 'ABOUT.PACKAGES.TITLE' | translate }}
                 </span>
@@ -13,10 +13,10 @@
         </div>
 
 
-        <mat-divider class="app-package-list-divider" *ngIf="serverSettingsDropdown"></mat-divider>
+        <mat-divider class="app-package-list-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
 
-        <div *ngIf="serverSettingsDropdown">
+        <div *ngIf="dropdownExpandedStatus">
             <div class="app-package-list-dropdown">
 
                 <div class="app-package-list-dropdown-details">

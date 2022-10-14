@@ -4,7 +4,7 @@
 
         <div class="app-github-link-heading">
             <div class="app-github-link-div">
-                <mat-icon class="app-github-link-icon" (click)="togglesDropdown()">
+                <mat-icon class="app-github-link-icon" (click)="toggleDropdown()">
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-github-link-title">{{ 'ABOUT.SOURCE_CODE.TITLE' | translate }}</span>
             </div>
@@ -12,10 +12,10 @@
         </div>
 
 
-        <mat-divider class="app-github-link-divider" *ngIf="serverSettingsDropdown"></mat-divider>
+        <mat-divider class="app-github-link-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
 
-        <div *ngIf="serverSettingsDropdown">
+        <div *ngIf="dropdownExpandedStatus">
             <div class="app-github-link-dropdown">
 
                 <div class="app-github-link-dropdown-details">

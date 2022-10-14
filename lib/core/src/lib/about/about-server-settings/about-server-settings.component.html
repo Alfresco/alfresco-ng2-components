@@ -3,7 +3,7 @@
     <div class="app-server-settings-row">
         <div class="app-server-settings-heading">
             <div class="app-server-settings-div">
-                <mat-icon class="app-server-settings-icon" (click)="togglesDropdown()">
+                <mat-icon class="app-server-settings-icon" (click)="toggleDropdown()">
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-server-settings-title">{{ 'ABOUT.SERVER_SETTINGS.TITLE' | translate }}</span>
             </div>
@@ -11,10 +11,10 @@
         </div>
 
 
-        <mat-divider class="app-server-settings-divider" *ngIf="serverSettingsDropdown"></mat-divider>
+        <mat-divider class="app-server-settings-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
 
-        <div *ngIf="serverSettingsDropdown">
+        <div *ngIf="dropdownExpandedStatus">
             <div class="app-server-settings-dropdown">
 
                 <div class="app-server-settings-dropdown-details">

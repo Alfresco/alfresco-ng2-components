@@ -20,6 +20,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'adf-about-github-link',
     templateUrl: './about-github-link.component.html',
+    styleUrls: ['./about-github-link.component.scss'],
 })
 export class AboutGithubLinkComponent {
     /** Commit corresponding to the version of ADF to be used. */

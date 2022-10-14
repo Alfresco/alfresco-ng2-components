@@ -24,8 +24,8 @@ import { ExtensionRef } from "@alfresco/adf-extensions";
 
 @Component({
     selector: 'adf-about-extension-list',
-    templateUrl: './about-extension-list.component.htm',
-    styleUrls: ['./about-extention-list.component.scss'],
+    templateUrl: './about-extension-list.component.html',
+    styleUrls: ['./about-extension-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutExtensionListComponent {

@@ -4,7 +4,7 @@
 
         <div class="app-platform-version-heading">
             <div class="app-platform-version-div">
-                <mat-icon class="app-platform-version-icon" (click)="togglesDropdown()">
+                <mat-icon class="app-platform-version-icon" (click)="toggleDropdown()">
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-platform-version-title">{{ 'ABOUT.VERSIONS.TITLE' | translate }}</span>
             </div>
@@ -12,10 +12,10 @@
         </div>
 
 
-        <mat-divider class="app-platform-version-divider" *ngIf="serverSettingsDropdown"></mat-divider>
+        <mat-divider class="app-platform-version-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
 
-        <div *ngIf="serverSettingsDropdown">
+        <div *ngIf="dropdownExpandedStatus">
             <div class="app-platform-version-dropdown" data-automation-id="adf-about-bpm-service">
 
                 <div class="app-platform-version-dropdown-details" *ngIf="process">
