@@ -27,9 +27,9 @@ import {
 import { AppConfigService } from "../../app-config/app-config.service";
 
 @Component({
-    selector: "adf-about-platform-version",
-    templateUrl: "./about-platform-version.component.html",
-    styleUrls: ["./about-platform-version.component.scss"],
+    selector: 'adf-about-platform-version',
+    templateUrl: './about-platform-version.component.html',
+    styleUrls: ['./about-platform-version.component.scss'],
 })
 export class AboutPlatformVersionComponent {
     /** repository info. */

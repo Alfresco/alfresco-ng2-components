@@ -8,12 +8,9 @@
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-platform-version-title">{{ 'ABOUT.VERSIONS.TITLE' | translate }}</span>
             </div>
-
         </div>
 
-
         <mat-divider class="app-platform-version-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
-
 
         <div *ngIf="dropdownExpandedStatus">
             <div class="app-platform-version-dropdown" data-automation-id="adf-about-bpm-service">
@@ -21,8 +18,8 @@
                 <div class="app-platform-version-dropdown-details" *ngIf="process">
                     <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate
                         }}</div>
-                    <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
-                        }}: 1</div>
+                    <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ process.majorVersion }}.{{
+                        process.minorVersion }}.{{ process.revisionVersion }}</div>
                 </div>
 
                 <mat-divider class="app-mat-divider" *ngIf="process"></mat-divider>
@@ -35,11 +32,9 @@
                         }}: {{ repository.edition }}</div>
                     <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
                         }}: {{ repository.version.display }}</div>
-
                 </div>
 
                 <mat-divider class="app-mat-divider" *ngIf="modeling$ | async as modeling"></mat-divider>
-
 
                 <div class="app-platform-version-dropdown-details" *ngIf="modeling$ | async as modeling"
                     data-automation-id="adf-about-ecm-service">
@@ -47,11 +42,9 @@
                         }}</div>
                     <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
                         }}: {{ modeling.version }}</div>
-
                 </div>
 
                 <mat-divider class="app-mat-divider" *ngIf="deployment$ | async as deployment"></mat-divider>
-
 
                 <div class="app-platform-version-dropdown-details" *ngIf="deployment$ | async as deployment"
                     data-automation-id="adf-about-ecm-service">
@@ -74,7 +67,6 @@
 
                 <mat-divider class="app-mat-divider" *ngIf="query$ | async as query"></mat-divider>
 
-
                 <div class="app-platform-version-dropdown-details" *ngIf="query$ | async as query"
                     data-automation-id="adf-about-ecm-service">
                     <div class="app-platform-version-dropdown-heading">{{ 'ABOUT.VERSIONS.QUERY_SERVICE' | translate }}
@@ -85,7 +77,6 @@
 
             </div>
         </div>
-
 
     </div>
 

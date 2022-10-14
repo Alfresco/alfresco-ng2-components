@@ -19,9 +19,9 @@ import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 import { PackageInfo } from "../interfaces";
 
 @Component({
-    selector: "adf-about-package-list",
-    templateUrl: "./package-list.component.html",
-    styleUrls: ["./package-list.component.scss"],
+    selector: 'adf-about-package-list',
+    templateUrl: './package-list.component.html',
+    styleUrls: ['./package-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PackageListComponent {

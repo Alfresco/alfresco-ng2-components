@@ -16,7 +16,6 @@
 
         <div *ngIf="dropdownExpandedStatus">
             <div class="app-license-list-dropdown">
-
                 <div class="app-license-list-dropdown-details">
                     <mat-table [dataSource]="data">
                         <ng-container *ngFor="let column of columns" class="cols" [matColumnDef]="column.columnDef">
@@ -30,7 +29,6 @@
                         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
                     </mat-table>
                 </div>
-
             </div>
         </div>
 

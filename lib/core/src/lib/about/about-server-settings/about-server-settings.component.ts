@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({

@@ -7,16 +7,12 @@
                     {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
                 <span class="app-server-settings-title">{{ 'ABOUT.SERVER_SETTINGS.TITLE' | translate }}</span>
             </div>
-
         </div>
-
 
         <mat-divider class="app-server-settings-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
-
         <div *ngIf="dropdownExpandedStatus">
             <div class="app-server-settings-dropdown">
-
                 <div class="app-server-settings-dropdown-details">
                     <div class="app-server-settings-dropdown-heading">{{ 'ABOUT.SERVER_SETTINGS.PROCESS_SERVICE_HOST' |
                         translate: {value: bpmHost} }}</div>
@@ -28,7 +24,6 @@
                     <div class="app-server-settings-dropdown-heading">{{ 'ABOUT.SERVER_SETTINGS.CONTENT_SERVICE_HOST' |
                         translate: {value: ecmHost} }}</div>
                 </div>
-
             </div>
         </div>
 

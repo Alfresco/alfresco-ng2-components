@@ -15,7 +15,6 @@
 
         <div *ngIf="dropdownExpandedStatus">
             <div class="app-extension-list-dropdown">
-
                 <div class="app-extension-list-dropdown-details">
                     <mat-table [dataSource]="data">
                         <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">

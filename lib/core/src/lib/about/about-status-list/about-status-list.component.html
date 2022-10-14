@@ -9,16 +9,12 @@
                 <span class="app-status-list-title">{{ 'ABOUT.STATUS.TITLE' | translate }}
                 </span>
             </div>
-
         </div>
-
 
         <mat-divider class="app-status-list-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
 
-
         <div *ngIf="dropdownExpandedStatus">
             <div class="app-status-list-dropdown">
-
                 <div class="app-status-list-dropdown-details">
                     <mat-table [dataSource]="data">
                         <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
@@ -32,12 +28,8 @@
                         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
                     </mat-table>
                 </div>
-
-
-
             </div>
         </div>
-
 
     </div>
 

@@ -17,16 +17,15 @@
 
 import {
     Component,
-    ViewEncapsulation,
     ChangeDetectionStrategy,
     Input,
 } from "@angular/core";
 import { ModuleInfo } from "@alfresco/js-api";
 
 @Component({
-    selector: "adf-about-module-list",
-    templateUrl: "./module-list.component.html",
-    encapsulation: ViewEncapsulation.None,
+    selector: 'adf-about-module-list',
+    templateUrl: './module-list.component.html',
+    styleUrls: ['./module-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleListComponent {
