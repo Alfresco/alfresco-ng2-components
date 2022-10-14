@@ -29,23 +29,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: node_modules_cache
-        id: cache-npm 
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with: 
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+        uses: actions/checkout@v3      
       - name: build guard check
         if: ${{ github.event_name == 'pull_request' }}
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
-
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
@@ -82,7 +69,16 @@ jobs:
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           ./scripts/travis/build/build-libs.sh || exit 1
-          ./scripts/travis/release/release-npm.sh || exit 1
-      - name: Cache node modules
-        uses: node_modules_cache
-      
+       #   ./scripts/travis/release/release-npm.sh || exit 1
+      - name: node_modules_cache
+        id: cache-npm 
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with: 
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-      
