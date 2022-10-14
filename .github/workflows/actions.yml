@@ -88,9 +88,15 @@ jobs:
     needs: build-lib
     runs-on: ubuntu-latest
     steps: 
-      - name: install NX
-        run: sudo ln -s $(npm bin)/nx /usr/bin/nx
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14 
       - name: content::unit
-        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
+        run: |
+          sudo ln -s $(npm bin)/nx /usr/bin/nx
+          nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
 
         
