@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'adf-about-github-link',
     templateUrl: './about-github-link.component.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./about-github-link.component.scss'],
 })
 export class AboutGithubLinkComponent {
     /** Commit corresponding to the version of ADF to be used. */
@@ -35,5 +35,16 @@ export class AboutGithubLinkComponent {
     @Input()
     application: string = '';
 
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
     constructor() {}
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
+    }
 }

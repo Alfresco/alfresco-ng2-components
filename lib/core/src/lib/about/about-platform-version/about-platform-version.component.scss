@@ -1,23 +1,23 @@
-.app-server-settings-container {
+.app-platform-version-container {
     margin: 0px 0px -24px 0px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-server-settings-row {
+.app-platform-version-row {
     margin: 24px 24px 24px 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
     border-radius: 12px;
 }
 
-.app-server-settings-heading {
+.app-platform-version-heading {
     display: flex;
     padding-left: 1rem;
 }
 
-.app-server-settings-div {
+.app-platform-version-div {
     display: flex;
     width: 60%;
     cursor: pointer;
@@ -25,13 +25,13 @@
     padding: 24px 0px;
 }
 
-.app-server-settings-icon {
+.app-platform-version-icon {
     padding-top: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
 }
 
-.app-server-settings-title {
+.app-platform-version-title {
     margin-left: 0.6rem;
     margin-top: 4px;
     letter-spacing: .15px;
@@ -41,17 +41,17 @@
     line-height: 24px;
 }
 
-.app-server-settings-divider {
+.app-platform-version-divider {
     color: var(--theme-header-vertical-color);
     padding-left: -1px;
     padding-right: 1px;
 }
 
-.app-server-settings-dropdown {
+.app-platform-version-dropdown {
     padding: 0rem 1rem;
 }
 
-.app-server-settings-dropdown-heading {
+.app-platform-version-dropdown-heading {
     display: flex;
     color: var(--theme-heading-color);
     width: 100%;
@@ -62,7 +62,7 @@
     letter-spacing: .25px;
 }
 
-.app-server-settings-dropdown-details {
+.app-platform-version-dropdown-details {
     color: var(--theme-heading-color);
     width: 100%;
     font-style: normal;

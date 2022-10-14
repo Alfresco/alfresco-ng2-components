@@ -1,4 +1,106 @@
 mat-cell {
     white-space: pre-line;
-    line-height: 30px;
+    line-height: 48px;
+}
+
+mat-table {
+    width: 100%;
+}
+
+mat-row {
+    border: none;
+}
+
+mat-header-row {
+    height: 32px;
+    padding: 8px 0px;
+}
+
+mat-header-cell {
+    flex: 0 1 40%;
+
+}
+
+mat-cell {
+    flex: 0 1 40%;
+
+}
+
+.app-license-list-container {
+    margin: 0px 0px -24px 0px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.app-license-list-row {
+    margin: 24px 24px 24px 24px;
+    width: 95%;
+    border: 1px solid var(--theme-header-vertical-color);
+    border-radius: 12px;
+}
+
+.app-license-list-heading {
+    display: flex;
+    padding-left: 1rem;
+
+}
+
+.app-license-list-div {
+    display: flex;
+    width: 60%;
+    cursor: pointer;
+    height: 32px;
+    padding: 24px 0px;
+}
+
+.app-license-list-icon {
+    padding-top: 4px;
+    cursor: pointer;
+    color: var(--theme-grey-color);
+}
+
+.app-license-list-title {
+    margin-left: 0.6rem;
+    margin-top: 4px;
+    letter-spacing: .15px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.app-license-list-divider {
+    color: var(--theme-grey-border-color);
+    padding-left: -1px;
+    padding-right: 1px;
+}
+
+.app-license-list-dropdown {
+    padding: 0rem 1rem;
+}
+
+.app-license-list-dropdown-heading {
+    display: flex;
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-license-list-dropdown-details {
+    color: var(--theme-heading-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 48px;
+    letter-spacing: .25px;
+}
+
+.app-mat-divider {
+    color: var(--theme-grey-border-color);
 }

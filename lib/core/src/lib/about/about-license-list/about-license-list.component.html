@@ -1,11 +1,39 @@
-<mat-table [dataSource]="data">
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <mat-header-cell *matHeaderCellDef>
-      {{ column.header | translate }}
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row" [innerHTML]="column.cell(row)"></mat-cell>
-  </ng-container>
+<div class="app-license-list-container">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-</mat-table>
+    <div class="app-license-list-row">
+
+        <div class="app-license-list-heading">
+            <div class="app-license-list-div">
+                <mat-icon class="app-license-list-icon" (click)="toggleDropdown()">
+                    {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                <span class="app-license-list-title">{{ 'ABOUT.LICENSE.TITLE' | translate }}
+                </span>
+            </div>
+
+        </div>
+
+        <mat-divider class="app-license-list-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
+
+        <div *ngIf="dropdownExpandedStatus">
+            <div class="app-license-list-dropdown">
+
+                <div class="app-license-list-dropdown-details">
+                    <mat-table [dataSource]="data">
+                        <ng-container *ngFor="let column of columns" class="cols" [matColumnDef]="column.columnDef">
+                            <mat-header-cell *matHeaderCellDef>
+                                {{ column.header | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row" [innerHTML]="column.cell(row)"></mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    </mat-table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

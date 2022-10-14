@@ -15,31 +15,47 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ModuleInfo } from '@alfresco/js-api';
+import {
+    Component,
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Input,
+} from "@angular/core";
+import { ModuleInfo } from "@alfresco/js-api";
 
 @Component({
-  selector: 'adf-about-module-list',
-  templateUrl: './module-list.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "adf-about-module-list",
+    templateUrl: "./module-list.component.html",
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleListComponent {
-  columns = [
-    {
-      columnDef: 'title',
-      header: 'ABOUT.MODULES.NAME',
-      cell: (row: ModuleInfo) => `${row.title}`
-    },
-    {
-      columnDef: 'version',
-      header: 'ABOUT.MODULES.VERSION',
-      cell: (row: ModuleInfo) => `${row.version}`
+    columns = [
+        {
+            columnDef: "title",
+            header: "ABOUT.MODULES.NAME",
+            cell: (row: ModuleInfo) => `${row.title}`,
+        },
+        {
+            columnDef: "version",
+            header: "ABOUT.MODULES.VERSION",
+            cell: (row: ModuleInfo) => `${row.version}`,
+        },
+    ];
+
+    displayedColumns = this.columns.map((x) => x.columnDef);
+
+    @Input()
+    data: Array<ModuleInfo> = [];
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
-  ];
-
-  displayedColumns = this.columns.map((x) => x.columnDef);
-
-  @Input()
-  data: Array<ModuleInfo> = [];
 }

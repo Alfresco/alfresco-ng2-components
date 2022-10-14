@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { RepositoryInfo } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
+import { Component, Input } from "@angular/core";
+import { RepositoryInfo } from "@alfresco/js-api";
+import { Observable } from "rxjs";
 
-import { BpmProductVersionModel } from '../../models/product-version.model';
-import { AaeInfoService, ActivitiDependencyInfo } from '../services/aae-info.service';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { BpmProductVersionModel } from "../../models/product-version.model";
+import {
+    AaeInfoService,
+    ActivitiDependencyInfo,
+} from "../services/aae-info.service";
+import { AppConfigService } from "../../app-config/app-config.service";
 
 @Component({
-    selector: 'adf-about-platform-version',
-    templateUrl: './about-platform-version.component.html',
-    encapsulation: ViewEncapsulation.None
+    selector: "adf-about-platform-version",
+    templateUrl: "./about-platform-version.component.html",
+    styleUrls: ["./about-platform-version.component.scss"],
 })
 export class AboutPlatformVersionComponent {
-
     /** repository info. */
     @Input()
     repository: RepositoryInfo = null;
@@ -43,25 +45,45 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
-    constructor(private aaeInfoService: AaeInfoService, private appConfigService: AppConfigService) {
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
+    constructor(
+        private aaeInfoService: AaeInfoService,
+        private appConfigService: AppConfigService
+    ) {
         this.modelingInfo();
         this.deploymentInfo();
         this.rbInfo();
     }
 
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
+    }
+
     modelingInfo() {
-        this.modeling$ = this.aaeInfoService.getServiceVersion('modeling-service');
+        this.modeling$ =
+            this.aaeInfoService.getServiceVersion("modeling-service");
     }
 
     deploymentInfo() {
-        this.deployment$ = this.aaeInfoService.getServiceVersion('deployment-service');
+        this.deployment$ =
+            this.aaeInfoService.getServiceVersion("deployment-service");
     }
 
     rbInfo() {
-        this.rb$ = this.aaeInfoService.getServiceVersion(`${this.appConfigService.get('oauth2.clientId')}/rb`);
+        this.rb$ = this.aaeInfoService.getServiceVersion(
+            `${this.appConfigService.get("oauth2.clientId")}/rb`
+        );
     }
 
     queryInfo() {
-        this.query$ = this.aaeInfoService.getServiceVersion(`${this.appConfigService.get('oauth2.clientId')}/query`);
+        this.query$ = this.aaeInfoService.getServiceVersion(
+            `${this.appConfigService.get("oauth2.clientId")}/query`
+        );
     }
 }

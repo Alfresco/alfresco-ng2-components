@@ -15,31 +15,42 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { PackageInfo } from '../interfaces';
+import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
+import { PackageInfo } from "../interfaces";
 
 @Component({
-  selector: 'adf-about-package-list',
-  templateUrl: './package-list.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "adf-about-package-list",
+    templateUrl: "./package-list.component.html",
+    styleUrls: ["./package-list.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PackageListComponent {
-  columns = [
-    {
-      columnDef: 'title',
-      header: 'ABOUT.PACKAGES.NAME',
-      cell: (row: PackageInfo) => `${row.name}`
-    },
-    {
-      columnDef: 'version',
-      header: 'ABOUT.PACKAGES.VERSION',
-      cell: (row: PackageInfo) => `${row.version}`
+    columns = [
+        {
+            columnDef: "title",
+            header: "ABOUT.PACKAGES.NAME",
+            cell: (row: PackageInfo) => `${row.name}`,
+        },
+        {
+            columnDef: "version",
+            header: "ABOUT.PACKAGES.VERSION",
+            cell: (row: PackageInfo) => `${row.version}`,
+        },
+    ];
+
+    displayedColumns = this.columns.map((x) => x.columnDef);
+
+    @Input()
+    data: Array<PackageInfo> = [];
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
-  ];
-
-  displayedColumns = this.columns.map((x) => x.columnDef);
-
-  @Input()
-  data: Array<PackageInfo> = [];
 }

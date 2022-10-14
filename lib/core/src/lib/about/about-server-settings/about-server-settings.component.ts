@@ -21,16 +21,27 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 @Component({
     selector: 'adf-about-server-settings',
     templateUrl: './about-server-settings.component.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./about-server-settings.component.scss'],
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';
     bpmHost = '';
+
+    dropdownExpandedStatus = false;
+    dropdownToggle = true;
 
     constructor(private appConfig: AppConfigService) {}
 
     ngOnInit() {
         this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
         this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
+    }
+
+    toggleDropdown() {
+        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+
+        if (!this.dropdownExpandedStatus) {
+            this.dropdownToggle = true;
+        }
     }
 }
