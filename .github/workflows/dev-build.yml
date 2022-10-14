@@ -64,7 +64,7 @@ jobs:
         run: bash -u ./scripts/ci/job_hooks/install.sh
       - name: Lib::Build
         run: |
-          sudo ln -s /tmp/ng2dev/node_modules/.bin/nx /usr/bin/nx
+          sudo ln -s $(npm bin)/nx /usr/bin/nx
           bash -u ./scripts/travis/build/build-libs.sh
         # bash ./scripts/travis/release/release-npm.sh # launch npm-publish
       # ./scripts/travis/release/release-npm.sh || exit 1
