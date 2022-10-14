@@ -49,6 +49,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+          cache-dependency-path: subdir/package-lock.json
       - name: debug nx
         run: | 
           npm bin
@@ -60,9 +61,9 @@ jobs:
         with:
           yml_path: .travis.yml
       - name: before install
-        run: bash -u ./scripts/ci/job_hooks/before_install.sh
+        run: bash -euo pipefail ./scripts/ci/job_hooks/before_install.sh
       - name: install
-        run: bash -u ./scripts/ci/job_hooks/install.sh
+        run: bash -euo pipefail ./scripts/ci/job_hooks/install.sh
       - name: Update NX settings to use DEV branch
         uses: mikefarah/yq@v4.28.1
         with:
@@ -70,7 +71,7 @@ jobs:
       - name: Lib::Build
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
-          bash -u ./scripts/travis/build/build-libs.sh
+          bash -euo pipefail ./scripts/travis/build/build-libs.sh
         # bash ./scripts/travis/release/release-npm.sh # launch npm-publish
       # ./scripts/travis/release/release-npm.sh || exit 1
       # - name: Cache node modules
