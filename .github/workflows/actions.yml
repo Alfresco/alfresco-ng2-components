@@ -24,7 +24,7 @@ env:
 jobs:
   prerequisite:
     name: "Before anything unnece$$ary happens..."
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3      
@@ -34,7 +34,7 @@ jobs:
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -86,7 +86,7 @@ jobs:
   unit-test-lib:
     name: "content::unit"
     needs: build-lib
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps: 
       - name: content::unit
         run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
