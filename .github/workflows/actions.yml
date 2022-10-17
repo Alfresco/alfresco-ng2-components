@@ -94,11 +94,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14 
-      - name: install
-        run: bash ./scripts/ci/job_hooks/install.sh       
-      - name: content::unit
-        run: |
+      - name: install ci
+        run: | 
           sudo ln -s $(npm bin)/nx /usr/bin/nx
-          nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-
-        
+          bash ./scripts/ci/job_hooks/install.sh       
+      - name: content::unit
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
+      - name: "core-extension::unit"
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
+      - name: "process-insights::unit"
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
+      - name: "process-cloud::unit"
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
