@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -90,7 +89,6 @@ describe('NodeDeleteDirective', () => {
 
     setupTestBed({
         imports: [
-            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [
@@ -136,85 +134,77 @@ describe('NodeDeleteDirective', () => {
             expect(deleteNodeSpy).not.toHaveBeenCalled();
         });
 
-        it('should process node successfully', (done) => {
+        it('should process node successfully', async () => {
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.SINGULAR'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
-        it('should notify failed node deletion', (done) => {
+        it('should notify failed node deletion', async () => {
             deleteNodeSpy.and.returnValue(Promise.reject('error'));
 
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.ERROR_SINGULAR'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
-        it('should notify nodes deletion', (done) => {
+        it('should notify nodes deletion', async () => {
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } }
             ];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PLURAL'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
-        it('should notify failed nodes deletion', (done) => {
+        it('should notify failed nodes deletion', async () => {
             deleteNodeSpy.and.returnValue(Promise.reject('error'));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } }
             ];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.ERROR_PLURAL'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
-        it('should notify partial deletion when only one node is successful', (done) => {
+        it('should notify partial deletion when only one node is successful', async () => {
             deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
                     return Promise.reject('error');
@@ -227,22 +217,20 @@ describe('NodeDeleteDirective', () => {
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } }
             ];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PARTIAL_SINGULAR'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
-        it('should notify partial deletion when some nodes are successful', (done) => {
+        it('should notify partial deletion when some nodes are successful', async () => {
             deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
                     return Promise.reject(null);
@@ -256,19 +244,17 @@ describe('NodeDeleteDirective', () => {
                 { entry: { id: '2', name: 'name2' } },
                 { entry: { id: '3', name: 'name3' } }
             ];
+            fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
                 expect(message).toBe(
                     'CORE.DELETE_NODE.PARTIAL_PLURAL'
                 );
-                done();
             });
 
+            element.nativeElement.click();
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
+            await fixture.whenStable();
         });
 
         it('should emit event when delete is done', async () => {
@@ -281,30 +267,24 @@ describe('NodeDeleteDirective', () => {
 
             element.nativeElement.click();
             fixture.detectChanges();
+            await fixture.whenStable();
         });
 
-        it('should disable the button if no node are selected', (done) => {
+        it('should disable the button if no node are selected', () => {
             component.selection = [];
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.nativeElement.disabled).toEqual(true);
-                done();
-            });
+            expect(element.nativeElement.disabled).toEqual(true);
         });
 
-        it('should disable the button if selected node is null', (done) => {
+        it('should disable the button if selected node is null', () => {
             component.selection = null;
 
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(element.nativeElement.disabled).toEqual(true);
-                done();
-            });
+            expect(element.nativeElement.disabled).toEqual(true);
         });
 
-        it('should enable the button if nodes are selected', (done) => {
+        it('should enable the button if nodes are selected', () => {
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
                 { entry: { id: '2', name: 'name2' } },
@@ -312,14 +292,10 @@ describe('NodeDeleteDirective', () => {
             ];
 
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(element.nativeElement.disabled).toEqual(false);
-                done();
-            });
+            expect(element.nativeElement.disabled).toEqual(false);
         });
 
-        it('should not enable the button if adf-check-allowable-operation is present', (done) => {
+        it('should not enable the button if adf-check-allowable-operation is present', () => {
             const elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
             const componentWithPermissions = fixtureWithPermissions.componentInstance;
 
@@ -335,16 +311,12 @@ describe('NodeDeleteDirective', () => {
             ];
 
             fixtureWithPermissions.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
-                done();
-            });
+            expect(elementWithPermissions.nativeElement.disabled).toEqual(false);
         });
 
         describe('Permanent', () => {
 
-            it('should call the api with permanent delete option if permanent directive input is true', (done) => {
+            it('should call the api with permanent delete option if permanent directive input is true', () => {
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
@@ -352,16 +324,12 @@ describe('NodeDeleteDirective', () => {
                 ];
 
                 fixtureWithPermanentComponent.detectChanges();
-
                 elementWithPermanentDelete.nativeElement.click();
 
-                fixture.whenStable().then(() => {
-                    expect(deleteNodePermanentSpy).toHaveBeenCalledWith('1', { permanent: true });
-                    done();
-                });
+                expect(deleteNodePermanentSpy).toHaveBeenCalledWith('1', { permanent: true });
             });
 
-            it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', (done) => {
+            it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', () => {
                 fixtureWithPermanentComponent.detectChanges();
 
                 componentWithPermanentDelete.selection = [
@@ -369,15 +337,10 @@ describe('NodeDeleteDirective', () => {
                 ];
 
                 fixtureWithPermanentComponent.detectChanges();
-
                 elementWithPermanentDelete.nativeElement.click();
 
-                fixture.whenStable().then(() => {
-                    expect(purgeDeletedNodePermanentSpy).toHaveBeenCalledWith('1');
-                    done();
-                });
+                expect(purgeDeletedNodePermanentSpy).toHaveBeenCalledWith('1');
             });
-
         });
     });
 });

@@ -30,7 +30,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -60,7 +59,6 @@ describe('LoginComponent', () => {
 
     setupTestBed({
         imports: [
-            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });
@@ -182,6 +180,8 @@ describe('LoginComponent', () => {
         });
 
         loginWithCredentials('fake-username', 'fake-password');
+        fixture.detectChanges();
+        await fixture.whenStable();
     });
 
     describe('Login button', () => {

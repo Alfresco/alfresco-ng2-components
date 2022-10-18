@@ -67,7 +67,7 @@ describe('PeopleProcessService', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should be able to retrieve people to involve in the task', async () => {
+        it('should be able to retrieve people to involve in the task', fakeAsync(() => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
                 (users: UserProcessModel[]) => {
                     expect(users).toBeDefined();
@@ -78,12 +78,12 @@ describe('PeopleProcessService', () => {
                     expect(users[0].lastName).toEqual('fakeLast1');
                 });
 
-            await jasmine.Ajax.requests.mostRecent().respondWith({
+            jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
                 responseText: {data: fakeInvolveUserList}
             });
-        });
+        }));
 
         it('should be able to get people images for people retrieved', fakeAsync(() => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
