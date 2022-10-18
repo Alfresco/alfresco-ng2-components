@@ -405,7 +405,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
-      "OF": "of"
+      "OF": "of",
+      "PAGE_SELECTOR_LABEL": "Page selector"
     },
     "LOADING": "Loading",
     "UNKNOWN_FORMAT": "Couldn't load preview. Unknown format.",
