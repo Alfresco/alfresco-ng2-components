@@ -100,11 +100,16 @@ jobs:
           bash ./scripts/ci/job_hooks/install.sh 
           ./scripts/travis/build/build-libs.sh || exit 1 
       - name: install chrome
-        uses: nanasess/setup-chromedriver@v1
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &     
+      #   uses: nanasess/setup-chromedriver@v1
+      # - run: |
+      #     export DISPLAY=:99
+      #     chromedriver --url-base=/wd/hub &
+      #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &   
+        run: | 
+          sudo apt-get install -y xvfb
+          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf
+          sudo apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable
+          Xvfb -ac :99 -screen 0 1280x1024x16 & export DISPLAY=:99
       - name: content::unit
         run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
       - name: "core-extension::unit"
