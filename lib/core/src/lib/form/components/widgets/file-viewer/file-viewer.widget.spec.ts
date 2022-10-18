@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { FormModel } from "../core/form.model";
-import { TranslateModule } from "@ngx-translate/core";
-import { FormFieldModel } from "../core/form-field.model";
-import { FormService } from "../../../services/form.service";
-import { FileViewerWidgetComponent } from "./file-viewer.widget";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormModel } from '../core/form.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormService } from '../../../services/form.service';
+import { FileViewerWidgetComponent } from './file-viewer.widget';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -56,11 +56,11 @@ describe('FileViewerWidgetComponent', () => {
         fixture = TestBed.createComponent(FileViewerWidgetComponent);
         widget = fixture.componentInstance;
     });
-    
+
     it('should set the file id corretly when the field value is an array', (done) => {
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: [fakePngAnswer] });
         widget.field = fakeField;
-    
+
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
