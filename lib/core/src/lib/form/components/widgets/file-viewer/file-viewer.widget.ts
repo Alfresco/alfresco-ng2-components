@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -38,9 +38,18 @@ import { WidgetComponent } from '../widget.component';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class FileViewerWidgetComponent extends WidgetComponent {
-
+export class FileViewerWidgetComponent extends WidgetComponent implements OnInit {
     constructor(formService: FormService) {
         super(formService);
+    }
+
+    ngOnInit(): void {
+        if (this.field &&
+            this.field.value &&
+            Array.isArray(this.field.value) &&
+            this.field.value.length) {
+            const file = this.field.value[0];
+            this.field.value = file.id;
+        }
     }
 }
