@@ -101,8 +101,6 @@ jobs:
           ./scripts/travis/build/build-libs.sh || exit 1 
       - name: install chrome
         uses: nanasess/setup-chromedriver@v1
-        with: 
-          chromedriver-version: '88.0.4324.96'
       - run: |
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
