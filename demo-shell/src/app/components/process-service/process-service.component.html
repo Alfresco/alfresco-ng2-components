@@ -21,10 +21,12 @@
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <mat-icon>assignment</mat-icon>
-                                    <div class="app-accordion-title-padding">Tasks</div>
+                                    <div id="tasks-accordion-title" class="app-accordion-title-padding">Tasks</div>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <adf-task-filters [filterParam]="filterSelected"
+                                              role="group"
+                                              aria-labelledby="tasks-accordion-title"
                                               [appId]="appId"
                                               [showIcon]="showTaskFilterIcon"
                                               (filterClicked)="onTaskFilterClick($event)"
@@ -138,11 +140,13 @@
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <mat-icon>assessment</mat-icon>
-                                    <div class="app-accordion-title-padding">Processes</div>
+                                    <div id="process-accordion-title" class="app-accordion-title-padding">Processes</div>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <adf-process-instance-filters
                                     #activitiProcessFilter
+                                    role="group"
+                                    aria-labelledby="process-accordion-title"
                                     [appId]="appId"
                                     [filterParam]="filterSelected"
                                     [showIcon]="showProcessFilterIcon"

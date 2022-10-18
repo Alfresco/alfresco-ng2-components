@@ -65,4 +65,8 @@ export class SearchWidgetChipComponent  {
         this.widgetContainerComponent.applyInnerWidget();
         this.menuTrigger.closeMenu();
     }
+
+    onEnterKeydown(): void {
+        this.menuTrigger.openMenu();
+    }
 }

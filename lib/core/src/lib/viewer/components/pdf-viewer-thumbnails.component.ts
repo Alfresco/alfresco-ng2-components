@@ -19,7 +19,7 @@ import {
     Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
     AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, EventEmitter, Output, Inject, ViewChildren, QueryList
 } from '@angular/core';
-import { ESCAPE, UP_ARROW, DOWN_ARROW } from '@angular/cdk/keycodes';
+import { ESCAPE, UP_ARROW, DOWN_ARROW, TAB } from '@angular/cdk/keycodes';
 import { DOCUMENT } from '@angular/common';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
@@ -66,6 +66,14 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (keyCode === DOWN_ARROW && this.canSelectNextItem()) {
             this.pdfViewer.currentPageNumber += 1;
+        }
+
+        if (keyCode ===  TAB) {
+            if (this.canSelectNextItem()) {
+                this.pdfViewer.currentPageNumber += 1;
+            } else {
+                this.close.emit();
+            }
         }
 
         if (keyCode === ESCAPE) {
