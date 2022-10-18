@@ -98,7 +98,15 @@ jobs:
         run: | 
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           bash ./scripts/ci/job_hooks/install.sh 
-          ./scripts/travis/build/build-libs.sh || exit 1      
+          ./scripts/travis/build/build-libs.sh || exit 1 
+      - name: install chrome
+        uses: nanasess/setup-chromedriver@v1
+        with: 
+          chromedriver-version: '88.0.4324.96'
+        run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &     
       - name: content::unit
         run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
       - name: "core-extension::unit"
