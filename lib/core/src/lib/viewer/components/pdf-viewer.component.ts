@@ -109,7 +109,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private eventBus = new pdfjsViewer.EventBus();
     private pdfjsDefaultOptions = {
         disableAutoFetch: true,
-        disableStream: true
+        disableStream: true,
+        cMapUrl: './cmaps/',
+        cMapPacked: true
     };
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
     private onDestroy$ = new Subject<boolean>();
