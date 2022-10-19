@@ -108,8 +108,10 @@ jobs:
         uses: nanasess/setup-chromedriver@v1
       - name: install xorg    
         run: | 
+          apt-get install x11-xserver-utils
           DISPLAY=:99 xset q
           Xvfb :1 -screen 0 '1280x1024x16' -ac &> /dev/null &
+          ls -l /tmp/.X11-unix/X1
           export DISPLAY=:99
           xset q             
       - name: content::unit
