@@ -33,7 +33,7 @@ export class UserModel {
     id: number;
 
     constructor(details: any = {}) {
-        const EMAIL_DOMAIN = browser.params?.testConfig?.emailDomain ? browser.params.testConfig.emailDomain : 'alfresco.com';
+        const EMAIL_DOMAIN = browser.params?.testConfig?.emailDomain ? browser.params.testConfig.emailDomain : 'example.net';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
 
