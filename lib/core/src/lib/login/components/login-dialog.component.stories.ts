@@ -80,3 +80,4 @@ const template: Story<LoginDialogStorybookComponent> = (args: LoginDialogStorybo
 });
 
 export const loginDialog = template.bind({});
+loginDialog.parameters = { layout: 'centered' };
