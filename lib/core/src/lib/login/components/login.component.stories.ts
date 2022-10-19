@@ -42,6 +42,11 @@ export default {
         }
     },
     argTypes: {
+        storybookInfo: {
+            control: 'none',
+            description: 'Use `fake-username` and `fake-password` to test functionality.',
+            name: 'Story-only information:'
+        },
         showRememberMe: {
             control: 'boolean',
             description: 'Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly.',

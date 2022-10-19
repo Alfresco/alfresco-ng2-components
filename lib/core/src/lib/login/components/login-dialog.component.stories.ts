@@ -43,6 +43,11 @@ export default {
         }
     },
     argTypes: {
+        storybookInfo: {
+            control: 'none',
+            description: 'Use `fake-username` and `fake-password` to test functionality.',
+            name: 'Story-only information:'
+        },
         closed: {
             action: 'closed',
             description: 'Emitted when the dialog is closed.',

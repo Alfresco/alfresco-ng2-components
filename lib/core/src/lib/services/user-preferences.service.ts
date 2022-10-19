@@ -122,7 +122,6 @@ export class UserPreferencesService {
             value
         );
         this.userPreferenceStatus[property] = value;
-        debugger;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
@@ -137,7 +136,6 @@ export class UserPreferencesService {
             return;
         }
         this.userPreferenceStatus[property] = value;
-        debugger;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
