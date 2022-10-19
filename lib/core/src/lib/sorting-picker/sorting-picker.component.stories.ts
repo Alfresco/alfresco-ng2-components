@@ -89,7 +89,8 @@ const template: Story<SortingPickerModule> = (args: SortingPickerComponent) => (
     props: args
 });
 
-export const SortingPicker = template.bind({});
-SortingPicker.args = {
+export const sortingPicker = template.bind({});
+sortingPicker.args = {
     options: initialSortingTypes
 };
+sortingPicker.parameters = { layout: 'centered' };

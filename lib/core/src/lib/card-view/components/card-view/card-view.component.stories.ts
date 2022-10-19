@@ -65,13 +65,15 @@ const template: Story<CardViewComponent> = (args: CardViewComponent) => ({
     props: args
 });
 
-export const defaultStory = template.bind({});
-defaultStory.args = {
+export const defaultCardView = template.bind({});
+defaultCardView.args = {
     properties: cardViewDataSource
 };
+defaultCardView.parameters = { layout: 'centered' };
 
-export const emptyStory = template.bind({});
-emptyStory.args = {
+export const emptyCardView = template.bind({});
+emptyCardView.args = {
     properties: cardViewUndefinedValues,
     editable: false
 };
+emptyCardView.parameters = { layout: 'centered' };

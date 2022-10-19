@@ -59,13 +59,7 @@ export default {
                     useClass: AuthenticationServiceMock
                 }
             ]
-        }),
-        componentWrapperDecorator(
-            (story) =>
-                `<div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
-                    ${story}
-                </div>`
-        )
+        })
     ],
     argTypes: {
         menuPositionX: {
@@ -141,8 +135,8 @@ const template: Story<UserInfoComponent> = (args: UserInfoComponent) => ({
     props: args
 });
 
-export const LoginWithSSO = template.bind({});
-LoginWithSSO.decorators = [
+export const loginWithSSO = template.bind({});
+loginWithSSO.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -152,9 +146,10 @@ LoginWithSSO.decorators = [
         ]
     })
 ];
+loginWithSSO.parameters = { layout: 'centered' };
 
-export const LoginWithSSOAndACS = template.bind({});
-LoginWithSSOAndACS.decorators = [
+export const loginWithSSOAndACS = template.bind({});
+loginWithSSOAndACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -164,9 +159,10 @@ LoginWithSSOAndACS.decorators = [
         ]
     })
 ];
+loginWithSSOAndACS.parameters = { layout: 'centered' };
 
-export const LoginWithAPSAndACS = template.bind({});
-LoginWithAPSAndACS.decorators = [
+export const loginWithAPSAndACS = template.bind({});
+loginWithAPSAndACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -176,9 +172,10 @@ LoginWithAPSAndACS.decorators = [
         ]
     })
 ];
+loginWithAPSAndACS.parameters = { layout: 'centered' };
 
-export const LoginWithACS = template.bind({});
-LoginWithACS.decorators = [
+export const loginWithACS = template.bind({});
+loginWithACS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -188,9 +185,10 @@ LoginWithACS.decorators = [
         ]
     })
 ];
+loginWithACS.parameters = { layout: 'centered' };
 
-export const LoginWithAPS = template.bind({});
-LoginWithAPS.decorators = [
+export const loginWithAPS = template.bind({});
+loginWithAPS.decorators = [
     moduleMetadata({
         providers: [
             {
@@ -200,3 +198,4 @@ LoginWithAPS.decorators = [
         ]
     })
 ];
+loginWithAPS.parameters = { layout: 'centered' };

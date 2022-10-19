@@ -93,3 +93,4 @@ const template: Story<EditJsonDialogStorybookComponent> = (args: EditJsonDialogS
 });
 
 export const editJSONDialog = template.bind({});
+editJSONDialog.parameters = { layout: 'centered' };

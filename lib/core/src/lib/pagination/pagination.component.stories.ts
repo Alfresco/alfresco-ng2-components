@@ -89,3 +89,4 @@ const template: Story<PaginationComponent> = (args: PaginationComponent) => ({
 });
 
 export const pagination = template.bind({});
+pagination.parameters = { layout: 'centered' };

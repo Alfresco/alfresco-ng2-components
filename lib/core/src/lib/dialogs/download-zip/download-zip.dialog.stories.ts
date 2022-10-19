@@ -84,3 +84,4 @@ export const downloadZIPDialog: Story<DownloadZipDialogStorybookComponent> = (
 ) => ({
     props: args
 });
+downloadZIPDialog.parameters = { layout: 'centered' };
