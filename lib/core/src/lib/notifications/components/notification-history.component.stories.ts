@@ -69,7 +69,18 @@ export default {
 } as Meta;
 
 const template: Story<NotificationHistoryComponent> = (args: NotificationHistoryComponent) => ({
-    props: args
+    props: args,
+    template: `
+    <div style="display:flex;flex-direction:column;align-items:center;">
+        <adf-notification-history
+            [menuPositionX]=menuPositionX
+            [menuPositionY]=menuPositionY
+            [maxNotifications]=maxNotifications>
+        </adf-notification-history>
+        <adf-add-notification-storybook>
+        </adf-add-notification-storybook>
+    </div>`
 });
 
 export const notificationHistory = template.bind({});
+notificationHistory.parameters = { layout: 'centered' };
