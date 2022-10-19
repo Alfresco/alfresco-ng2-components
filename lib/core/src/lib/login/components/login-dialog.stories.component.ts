@@ -38,7 +38,7 @@ export class LoginDialogStorybookComponent {
     openLoginDialog() {
         const data: LoginDialogComponentData = {
             title: 'Perform a Login',
-            actionName: 'Access',
+            actionName: 'LOGIN',
             logged: new Subject<any>()
         };
 

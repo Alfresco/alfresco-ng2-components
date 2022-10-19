@@ -309,7 +309,8 @@
     },
     "DIALOG": {
       "CANCEL": "Cancel",
-      "CHOOSE": "Choose"
+      "CHOOSE": "Choose",
+      "LOGIN": "Sign in"
     }
   },
   "ADF-DATATABLE": {

@@ -17,41 +17,20 @@
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import { RouterTestingModule } from '@angular/router/testing';
 import { LoginModule } from '../login.module';
 import { LoginComponent } from './login.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-
-import { AuthenticationService } from '../../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { CookieService } from '../../services/cookie.service';
-import { LogService } from '../../services/log.service';
-import { TranslationService } from '../../services/translation.service';
-import { UserPreferencesService } from '../../services/user-preferences.service';
-import { StorageService } from '../../services/storage.service';
-
-import { AuthenticationMock } from '../../mock/authentication.service.mock';
-import { AppConfigServiceMock } from '../../mock/app-config.service.mock';
-import { AlfrescoApiMock } from '../../mock/alfresco-api.mock';
-import { CookieServiceMock } from '../../mock/cookie.service.mock';
-import { TranslationMock } from '../../mock/translation.service.mock';
+import { RouterModule } from '@angular/router';
+import { AuthenticationService } from './../../services/authentication.service';
+import { AuthenticationMock } from './../../mock/authentication.service.mock';
 
 export default {
     component: LoginComponent,
     title: 'Core/Login/Login',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LoginModule, RouterTestingModule, CoreTestingModule],
+            imports: [CoreStoryModule, LoginModule, RouterModule.forRoot([], { useHash: true })],
             providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: AlfrescoApiService, useClass: AlfrescoApiMock },
-                { provide: CookieService, useClass: CookieServiceMock },
-                { provide: StorageService, useClass: StorageService },
-                { provide: LogService, useClass: LogService },
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: UserPreferencesService, useClass: UserPreferencesService }
+                { provide: AuthenticationService, useClass: AuthenticationMock }
             ]
         })
     ],
@@ -137,6 +116,7 @@ export default {
         successRoute: {
             control: 'text',
             description: 'Route to redirect to on successful login.',
+            defaultValue: '.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'null' }

@@ -49,9 +49,9 @@ export class UserPreferencesService {
     onChange: Observable<any>;
 
     constructor(public translate: TranslateService,
-                private appConfig: AppConfigService,
-                private storage: StorageService,
-                private alfrescoApiService: AlfrescoApiService) {
+        private appConfig: AppConfigService,
+        private storage: StorageService,
+        private alfrescoApiService: AlfrescoApiService) {
         this.alfrescoApiService.alfrescoApiInitialized.pipe(filter(status => status)).subscribe(this.initUserPreferenceStatus.bind(this));
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
@@ -122,6 +122,7 @@ export class UserPreferencesService {
             value
         );
         this.userPreferenceStatus[property] = value;
+        debugger;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 
@@ -136,6 +137,7 @@ export class UserPreferencesService {
             return;
         }
         this.userPreferenceStatus[property] = value;
+        debugger;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
 

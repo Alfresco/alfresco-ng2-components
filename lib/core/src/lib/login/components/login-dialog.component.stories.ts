@@ -21,14 +21,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LoginModule } from './../login.module';
 import { LoginDialogStorybookComponent } from './login-dialog.stories.component';
 import { MatButtonModule } from '@angular/material/button';
-import { CoreTestingModule } from './../../testing/core.testing.module';
+import { AuthenticationService } from './../../services/authentication.service';
+import { AuthenticationMock } from './../../mock/authentication.service.mock';
 
 export default {
     component: LoginDialogStorybookComponent,
     title: 'Core/Login/Login Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule, CoreTestingModule]
+            imports: [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule],
+            providers: [
+                { provide: AuthenticationService, useClass: AuthenticationMock }
+            ]
         })
     ],
     parameters: {

@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 
 export class AuthenticationMock {
     private redirectUrl: RedirectionModel = null;
+    onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
+    private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
 
     setRedirectUrl(url: RedirectionModel) {
         this.redirectUrl = url;
@@ -64,5 +66,25 @@ export class AuthenticationMock {
         }
 
         return throwError('Fake server error');
+    }
+
+    isLoggedIn(): boolean {
+        return false;
+    }
+
+    isOauth(): boolean {
+        return false;
+    }
+
+    setRedirect(url: RedirectionModel) {
+        this.redirectUrl = url;
+    }
+
+    getRedirect(): string {
+        return '';
+    }
+
+    getBearerExcludedUrls(): string[] {
+        return this.bearerExcludedUrls;
     }
 }
