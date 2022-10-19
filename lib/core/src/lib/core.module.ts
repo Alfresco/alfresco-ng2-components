@@ -60,11 +60,11 @@ import { DirectionalityConfigService } from './services/directionality-config.se
 import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
-import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
+import { AlfrescoJsClientsModule } from '../../api/clients/alfresco-js-clients.module';
 
 @NgModule({
     imports: [

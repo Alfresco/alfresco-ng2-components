@@ -26,7 +26,7 @@ import { TRANSLATION_PROVIDER } from '../services/translation.service';
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         BrowserAnimationsModule
-    ]/* ,
+    ],
     providers: [
         {
             provide: TRANSLATION_PROVIDER,
@@ -36,6 +36,6 @@ import { TRANSLATION_PROVIDER } from '../services/translation.service';
                 source: 'assets/adf-core'
             }
         }
-    ] */
+    ]
 })
 export class CoreStoryModule { }

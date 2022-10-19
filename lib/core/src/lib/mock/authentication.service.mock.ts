@@ -15,31 +15,24 @@
  * limitations under the License.
  */
 
-import { Observable, of, ReplaySubject, throwError } from 'rxjs';
-import { RedirectionModel } from '../models/redirection.model';
+import { Observable, of, throwError } from 'rxjs';
+import { AlfrescoApiService, AppConfigService, AuthenticationService, CookieService, LogService, StorageService } from '../../../index';
+import { Injectable } from '@angular/core';
 
-export class AuthenticationMock {
-    private redirectUrl: RedirectionModel = null;
-    onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
-    private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
-
-    setRedirectUrl(url: RedirectionModel) {
-        this.redirectUrl = url;
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthenticationMock extends AuthenticationService {
+    constructor(
+        appConfig: AppConfigService,
+        storageService: StorageService,
+        alfrescoApi: AlfrescoApiService,
+        cookie: CookieService,
+        logService: LogService
+    ) {
+        super(appConfig, storageService, alfrescoApi, cookie, logService);
     }
 
-    isEcmLoggedIn(): boolean {
-        return true;
-    }
-
-    isBpmLoggedIn(): boolean {
-        return true;
-    }
-
-    getRedirectUrl(): string | null {
-        return this.redirectUrl ? this.redirectUrl.url : null;
-    }
-
-    // TODO: real auth service returns Observable<string>
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
             return of({ type: 'type', ticket: 'ticket' });
@@ -67,24 +60,80 @@ export class AuthenticationMock {
 
         return throwError('Fake server error');
     }
-
-    isLoggedIn(): boolean {
-        return false;
-    }
-
-    isOauth(): boolean {
-        return false;
-    }
-
-    setRedirect(url: RedirectionModel) {
-        this.redirectUrl = url;
-    }
-
-    getRedirect(): string {
-        return '';
-    }
-
-    getBearerExcludedUrls(): string[] {
-        return this.bearerExcludedUrls;
-    }
 }
+
+// export class AuthenticationMock {
+//     private redirectUrl: RedirectionModel = null;
+//     onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
+//     private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
+
+//     setRedirectUrl(url: RedirectionModel) {
+//         this.redirectUrl = url;
+//     }
+
+//     isEcmLoggedIn(): boolean {
+//         return true;
+//     }
+
+//     isBpmLoggedIn(): boolean {
+//         return true;
+//     }
+
+//     getRedirectUrl(): string | null {
+//         return this.redirectUrl ? this.redirectUrl.url : null;
+//     }
+
+//     addTokenToHeader() {
+//         debugger;
+//         return of({});
+//     }
+
+//     // TODO: real auth service returns Observable<string>
+//     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
+//         if (username === 'fake-username' && password === 'fake-password') {
+//             return of({ type: 'type', ticket: 'ticket' });
+//         }
+
+//         if (username === 'fake-username-CORS-error' && password === 'fake-password') {
+//             return throwError({
+//                 error: {
+//                     crossDomain: true,
+//                     message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
+//                 }
+//             });
+//         }
+
+//         if (username === 'fake-username-CSRF-error' && password === 'fake-password') {
+//             return throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 });
+//         }
+
+//         if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
+//             return throwError({
+//                 message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
+//                 status: 403
+//             });
+//         }
+
+//         return throwError('Fake server error');
+//     }
+
+//     isLoggedIn(): boolean {
+//         return false;
+//     }
+
+//     isOauth(): boolean {
+//         return false;
+//     }
+
+//     setRedirect(url: RedirectionModel) {
+//         this.redirectUrl = url;
+//     }
+
+//     getRedirect(): string {
+//         return '';
+//     }
+
+//     getBearerExcludedUrls(): string[] {
+//         return this.bearerExcludedUrls;
+//     }
+// }
