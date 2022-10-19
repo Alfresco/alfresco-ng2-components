@@ -180,8 +180,9 @@ export class UploadService {
             if (promise) {
                 if (this.isSaveToAbortFile(file)) {
                     promise.abort();
+                } else {
+                    this.abortedFile = file.name;
                 }
-                this.abortedFile = file.name;
                 delete this.cache[file.name];
                 promise.next();
             } else {

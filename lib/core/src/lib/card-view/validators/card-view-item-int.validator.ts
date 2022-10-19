@@ -26,11 +26,15 @@ export class CardViewItemIntValidator implements CardViewItemValidator {
             return value.every(this.isIntegerNumber);
         }
 
-        return value === '' || !isNaN(value) && this.isIntegerNumber(value);
+        return value === '' || !isNaN(value) && this.isIntegerNumber(value) && this.isNotOnlySpace(value);
     }
 
     isIntegerNumber(value: any): boolean {
         const parsedNumber = Number(value);
         return (parsedNumber | 0) === parsedNumber;
+    }
+
+    isNotOnlySpace(value: any): boolean {
+        return String(value).trim() !== '';
     }
 }

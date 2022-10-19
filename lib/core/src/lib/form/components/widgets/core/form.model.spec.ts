@@ -540,25 +540,25 @@ describe('FormModel', () => {
         });
 
         it('should find a form variable value', () => {
-            const result1 = form.getFormVariableValue('name1');
-            const result2 = form.getFormVariableValue('bfca9766-7bc1-45cc-8ecf-cdad551e36e2');
+            const result1 = form.getDefaultFormVariableValue('name1');
+            const result2 = form.getDefaultFormVariableValue('bfca9766-7bc1-45cc-8ecf-cdad551e36e2');
 
             expect(result1).toEqual(result2);
             expect(result1).toEqual('hello');
         });
 
         it('should convert the date variable value', () => {
-            const value = form.getFormVariableValue('name2');
+            const value = form.getDefaultFormVariableValue('name2');
             expect(value).toBe('29.09.2019T00:00:00.000Z');
         });
 
         it('should convert the boolean variable value', () => {
-            const value = form.getFormVariableValue('bool');
+            const value = form.getDefaultFormVariableValue('bool');
             expect(value).toEqual(true);
         });
 
         it('should not find variable value', () => {
-            const value = form.getFormVariableValue('missing');
+            const value = form.getDefaultFormVariableValue('missing');
             expect(value).toBeUndefined();
         });
 

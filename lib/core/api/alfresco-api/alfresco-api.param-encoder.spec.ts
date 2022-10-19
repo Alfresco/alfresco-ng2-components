@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-export * from './api-client.factory';
-export * from './api-clients.service';
-export * from './clients';
-export * from './types';
-export * from './alfresco-api/alfresco-api.http-client';
+import { AlfrescoApiParamEncoder } from './alfresco-api.param-encoder';
+
+describe('AlfrescoApiParamEncoder', () => {
+    it('should propely encode special "+" character', () => {
+        const encoder = new AlfrescoApiParamEncoder();
+        const value = '2022-08-17T00:00:00.000+02:00';
+        const encodeValue = '2022-08-17T00%3A00%3A00.000%2B02%3A00';
+
+        expect(encoder.encodeValue(value)).toBe(encodeValue);
+        expect(encoder.decodeValue(encodeValue)).toBe(value);
+    });
+});

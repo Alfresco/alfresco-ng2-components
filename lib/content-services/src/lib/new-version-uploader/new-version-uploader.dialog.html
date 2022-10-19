@@ -1,4 +1,4 @@
-<header mat-dialog-title>{{ title | translate }}</header>
+<h1 mat-dialog-title>{{ title | translate }}</h1>
 <section mat-dialog-content *ngIf="!data.showVersionsOnly">
   <adf-version-comparison id="adf-version-comparison" [newFileVersion]="data.file" [node]="data.node"></adf-version-comparison>
   <adf-version-upload
@@ -26,8 +26,8 @@
         ></adf-version-list>
       </div>
     </div>
-  </section>
-  <footer mat-dialog-actions>
-    <button mat-button color="primary" [mat-dialog-close]="true">{{ 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.CLOSE' | translate }}</button>
-  </footer>
+  </section>  
 </ng-container>
+<div mat-dialog-actions>
+    <button mat-button color="primary" [mat-dialog-close]="true">{{ 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.CLOSE' | translate }}</button>
+</div>

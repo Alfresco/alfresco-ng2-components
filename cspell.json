@@ -132,7 +132,8 @@
     "webm",
     "webscript",
     "Whitespaces",
-    "xdescribe"
+    "xdescribe",
+    "xsrf"
   ],
   "dictionaries": [
     "html",
