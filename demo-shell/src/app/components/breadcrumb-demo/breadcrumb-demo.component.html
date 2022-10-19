@@ -64,13 +64,13 @@
         </adf-toolbar-title>
         <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
         <div fxFlex="0 0 auto">
-            <button mat-icon-button aria-label="Create a new folder button">
+            <button mat-icon-button [attr.aria-label]="'BREADCRUMB_DEMO.NEW_FOLDER_LABEL' | translate">
                 <mat-icon>create_new_folder</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Edit node button">
+            <button mat-icon-button [attr.aria-label]="'BREADCRUMB_DEMO.EDIT_NODE_LABEL' | translate">
                 <mat-icon>create</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Delete node icon button">
+            <button mat-icon-button [attr.aria-label]="'BREADCRUMB_DEMO.DELETE_NODE_LABEL' | translate">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>
