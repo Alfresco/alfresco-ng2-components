@@ -105,14 +105,9 @@ jobs:
       #     export DISPLAY=:99
       #     chromedriver --url-base=/wd/hub &
       #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-        uses: nanasess/setup-chromedriver@v1
-      - name: install xorg    
-        run: |           
-          sudo apt-get install x11-xserver-utils
-          sudo apt-get install -y xvfb         
-          Xvfb :99 -screen 0 '1280x1024x16' -ac &> /dev/null &          
-          export DISPLAY=:99
-          xset q             
+        uses: browser-actions/setup-chrome@latest
+      - name: run chrome 
+        run: chrome --version         
       - name: content::unit
         run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
       - name: "core-extension::unit"
