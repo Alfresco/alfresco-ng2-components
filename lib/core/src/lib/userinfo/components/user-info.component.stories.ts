@@ -18,8 +18,7 @@
 import {
     Meta,
     moduleMetadata,
-    Story,
-    componentWrapperDecorator
+    Story
 } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { UserInfoComponent } from './user-info.component';
