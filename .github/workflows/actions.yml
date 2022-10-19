@@ -107,12 +107,10 @@ jobs:
       #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
         uses: nanasess/setup-chromedriver@v1
       - name: install xorg    
-        run: | 
-          sudo apt-get install xset
+        run: |           
           sudo apt-get install x11-xserver-utils
           sudo apt-get install -y xvfb         
-          Xvfb :99 -screen 0 '1280x1024x16' -ac &> /dev/null &
-          ls -l /tmp/.X11-unix/X1
+          Xvfb :99 -screen 0 '1280x1024x16' -ac &> /dev/null &          
           export DISPLAY=:99
           DISPLAY=:99 xset q
           xset q             
