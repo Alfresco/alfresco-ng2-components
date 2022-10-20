@@ -16,8 +16,13 @@
  */
 
 import { Observable, of, throwError } from 'rxjs';
-import { AlfrescoApiService, AppConfigService, AuthenticationService, CookieService, LogService, StorageService } from '../../../index';
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { CookieService } from '../services/cookie.service';
+import { LogService } from '../services/log.service';
+import { StorageService } from '../services/storage.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
