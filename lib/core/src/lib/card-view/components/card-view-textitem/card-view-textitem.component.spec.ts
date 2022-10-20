@@ -411,20 +411,22 @@ describe('CardViewTextItemComponent', () => {
 
         it('should update input the value on input updated', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             component.property.editable = true;
             component.editable = true;
             component.property.isValid = () => true;
             const expectedText = 'changed text';
 
-            const itemUpdateSubscription = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toEqual({ ...component.property });
-                expect(updateNotification.changed).toEqual({ textkey: expectedText });
-                expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
-                itemUpdateSubscription.unsubscribe();
-            });
-
             updateTextField(component.property.key, expectedText);
             await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property },
+                changed: {
+                    textkey: expectedText
+                }
+            });
+            expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
         });
 
         it('should copy value to clipboard on double click', async () => {
@@ -557,19 +559,19 @@ describe('CardViewTextItemComponent', () => {
 
         it('should trigger an update event on the CardViewUpdateService [integration]', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             component.property.isValid = () => true;
             const expectedText = 'changed text';
 
-            const itemUpdateSubscription = cardViewUpdateService.itemUpdated$.subscribe(
-                (updateNotification) => {
-                    expect(updateNotification.target).toEqual({ ...component.property });
-                    expect(updateNotification.changed).toEqual({ textkey: expectedText });
-                    itemUpdateSubscription.unsubscribe();
-                }
-            );
-
             updateTextField(component.property.key, expectedText);
             await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property },
+                changed: {
+                    textkey: expectedText
+                }
+            });
         });
 
         it('should update the value using the updateItem$ subject', () => {
@@ -604,19 +606,21 @@ describe('CardViewTextItemComponent', () => {
 
         it('should update multiline input the value on input updated', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
             component.property.isValid = () => true;
             component.property.multiline = true;
             const expectedText = 'changed text';
 
-            const itemUpdateSubscription = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toEqual({ ...component.property });
-                expect(updateNotification.changed).toEqual({ textkey: expectedText });
-                itemUpdateSubscription.unsubscribe();
-            });
-
             updateTextField(component.property.key, expectedText);
             await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property },
+                changed: {
+                    textkey: expectedText
+                }
+            });
 
             expect(component.update).toHaveBeenCalled();
             expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
@@ -734,16 +738,18 @@ describe('CardViewTextItemComponent', () => {
 
         it('should update input the value on input updated', async () => {
             const expectedNumber = 2020;
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
-
-            const itemUpdateSubscription = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toEqual({ ...component.property });
-                expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
-                itemUpdateSubscription.unsubscribe();
-            });
 
             updateTextField(component.property.key, expectedNumber);
             await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property },
+                changed: {
+                    textkey: expectedNumber.toString()
+                }
+            });
 
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
@@ -793,16 +799,18 @@ describe('CardViewTextItemComponent', () => {
 
         it('should update input the value on input updated', async () => {
             const expectedNumber = 88.44;
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             spyOn(component, 'update').and.callThrough();
-
-            const itemUpdateSubscription = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toEqual({ ...component.property });
-                expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
-                itemUpdateSubscription.unsubscribe();
-            });
 
             updateTextField(component.property.key, expectedNumber);
             await fixture.whenStable();
+
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: { ...component.property },
+                changed: {
+                    textkey: expectedNumber.toString()
+                }
+            });
 
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();

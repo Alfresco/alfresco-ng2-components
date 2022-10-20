@@ -190,22 +190,21 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should trigger an update event on the CardViewUpdateService', () => {
+        const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+        const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
         component.editable = true;
         component.property.editable = true;
-        const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         const expectedDate = moment('Jul 10 2017', 'MMM DD YYYY');
         fixture.detectChanges();
         const property = { ...component.property };
 
-        const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
-            (updateNotification) => {
-                expect(updateNotification.target).toEqual(property);
-                expect(updateNotification.changed).toEqual({ dateKey: expectedDate.toDate() });
-                disposableUpdate.unsubscribe();
-            }
-        );
-
         component.onDateChanged({ value: expectedDate });
+        expect(itemUpdatedSpy).toHaveBeenCalledWith({
+            target: property,
+            changed: {
+                dateKey: expectedDate.toDate()
+            }
+        });
     });
 
     it('should update the property value after a successful update attempt', async () => {
@@ -292,25 +291,26 @@ describe('CardViewDateItemComponent', () => {
         });
 
         it('should remove actual and default value after a successful clear attempt', async () => {
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
             component.property.value = 'Jul 10 2017';
             fixture.detectChanges();
-            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const property = { ...component.property };
-
-            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
-                (updateNotification) => {
-                    expect(updateNotification.target).toEqual(property);
-                    expect(updateNotification.changed).toEqual({ dateKey: null });
-                    disposableUpdate.unsubscribe();
-                }
-            );
 
             component.onDateClear();
 
+            expect(itemUpdatedSpy).toHaveBeenCalledWith({
+                target: property,
+                changed: {
+                    dateKey: null
+                }
+            });
+
             await fixture.whenStable();
+
             expect(component.property.value).toBeNull();
             expect(component.property.default).toBeNull();
         });
