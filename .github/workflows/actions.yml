@@ -110,7 +110,8 @@ jobs:
         run : |
           sudo apt-get install x11-xserver-utils
           sudo apt-get install -y xvfb
-          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf         
+          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf 
+          /etc/init.d/xserver start        
           Xvfb :99.0 -screen 0 '1280x1024x16' -ac &> /dev/null &          
           export DISPLAY=:99.0
           DISPLAY=:99.0 xset q         
