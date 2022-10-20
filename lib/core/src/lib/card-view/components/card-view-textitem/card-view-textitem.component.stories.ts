@@ -85,9 +85,8 @@ const template: Story<CardViewTextItemComponent> = (
     props: args
 });
 
-export const ClickableCardViewTextItem = template.bind({});
-
-ClickableCardViewTextItem.args = {
+export const clickableCardViewTextItem = template.bind({});
+clickableCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Clickable template',
         value: 'click here',
@@ -98,10 +97,10 @@ ClickableCardViewTextItem.args = {
         icon: 'close'
     })
 };
+clickableCardViewTextItem.parameters = { layout: 'centered' };
 
-export const ChipsCardViewTextItem = template.bind({});
-
-ChipsCardViewTextItem.args = {
+export const chipsCardViewTextItem = template.bind({});
+chipsCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Chips template',
         value: [1, 2, 3, 4],
@@ -113,10 +112,10 @@ ChipsCardViewTextItem.args = {
         editable: true
     })
 };
+chipsCardViewTextItem.parameters = { layout: 'centered' };
 
-export const EmptyCardViewTextItem = template.bind({});
-
-EmptyCardViewTextItem.args = {
+export const emptyCardViewTextItem = template.bind({});
+emptyCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Empty template',
         value: undefined,
@@ -128,10 +127,10 @@ EmptyCardViewTextItem.args = {
     editable: false,
     displayEmpty: false
 };
+emptyCardViewTextItem.parameters = { layout: 'centered' };
 
-export const DefaultCardViewTextItem = template.bind({});
-
-DefaultCardViewTextItem.args = {
+export const defaultCardViewTextItem = template.bind({});
+defaultCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Default template',
         value: 'input here',
@@ -143,3 +142,4 @@ DefaultCardViewTextItem.args = {
         multiline: false
     })
 };
+defaultCardViewTextItem.parameters = { layout: 'centered' };

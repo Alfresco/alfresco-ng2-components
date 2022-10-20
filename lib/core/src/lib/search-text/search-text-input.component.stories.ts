@@ -193,3 +193,4 @@ const template: Story<SearchTextInputComponent> = (args: SearchTextInputComponen
 });
 
 export const searchTextInput = template.bind({});
+searchTextInput.parameters = { layout: 'centered' };

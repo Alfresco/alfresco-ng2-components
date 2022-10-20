@@ -46,12 +46,12 @@ export default {
     }
 } as Meta;
 
-export const CardViewBoolItem: Story<CardViewBoolItemComponent> = (
+export const cardViewBoolItem: Story<CardViewBoolItemComponent> = (
     args: CardViewBoolItemComponent
 ) => ({
     props: args
 });
-CardViewBoolItem.args = {
+cardViewBoolItem.args = {
     property: new CardViewBoolItemModel({
         label: 'Agree to all terms and conditions',
         value: true,
@@ -60,3 +60,4 @@ CardViewBoolItem.args = {
         editable: true
     })
 };
+cardViewBoolItem.parameters = { layout: 'centered' };

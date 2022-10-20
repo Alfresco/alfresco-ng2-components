@@ -39,12 +39,12 @@ export default {
     }
 } as Meta;
 
-export const CardViewArrayItem: Story<CardViewArrayItemComponent> = (
+export const cardViewArrayItem: Story<CardViewArrayItemComponent> = (
     args: CardViewArrayItemComponent
 ) => ({
     props: args
 });
-CardViewArrayItem.args = {
+cardViewArrayItem.args = {
     property: new CardViewArrayItemModel({
         label: 'CardView Array of items',
         value: of([
@@ -59,3 +59,4 @@ CardViewArrayItem.args = {
         noOfItemsToDisplay: 2
     })
 };
+cardViewArrayItem.parameters = { layout: 'centered' };

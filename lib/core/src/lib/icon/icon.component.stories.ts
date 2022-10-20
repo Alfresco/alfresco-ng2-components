@@ -64,8 +64,10 @@ export const defaultIcon = template.bind({});
 defaultIcon.args = {
     value: ''
 };
+defaultIcon.parameters = { layout: 'centered' };
 
 export const customIcon = template.bind({});
 customIcon.args = {
     value: 'cloud_download'
 };
+customIcon.parameters = { layout: 'centered' };
