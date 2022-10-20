@@ -16,28 +16,28 @@
  */
 
 import { Observable, of, throwError } from 'rxjs';
-import { RedirectionModel } from '../models/redirection.model';
+import { Injectable } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { CookieService } from '../services/cookie.service';
+import { LogService } from '../services/log.service';
+import { StorageService } from '../services/storage.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
-export class AuthenticationMock {
-    private redirectUrl: RedirectionModel = null;
-
-    setRedirectUrl(url: RedirectionModel) {
-        this.redirectUrl = url;
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthenticationMock extends AuthenticationService {
+    constructor(
+        appConfig: AppConfigService,
+        storageService: StorageService,
+        alfrescoApi: AlfrescoApiService,
+        cookie: CookieService,
+        logService: LogService
+    ) {
+        super(appConfig, storageService, alfrescoApi, cookie, logService);
     }
 
-    isEcmLoggedIn(): boolean {
-        return true;
-    }
-
-    isBpmLoggedIn(): boolean {
-        return true;
-    }
-
-    getRedirectUrl(): string | null {
-        return this.redirectUrl ? this.redirectUrl.url : null;
-    }
-
-    // TODO: real auth service returns Observable<string>
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
             return of({ type: 'type', ticket: 'ticket' });
