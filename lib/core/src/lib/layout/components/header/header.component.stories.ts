@@ -129,8 +129,8 @@ const template: Story<SidenavLayoutModule> = (args: HeaderLayoutComponent) => ({
     props: args
 });
 
-export const Header = template.bind({});
-Header.args = {
+export const header = template.bind({});
+header.args = {
     title: 'Hello from Header!',
     tooltip: 'Default Tooltip text'
 };

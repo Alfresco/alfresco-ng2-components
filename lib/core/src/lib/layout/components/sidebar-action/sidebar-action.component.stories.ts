@@ -70,7 +70,7 @@ const template: Story<SidenavLayoutModule> = (args: SidebarActionMenuComponent) 
     props: args
 });
 
-export const SidebarActionMenu = template.bind({});
-SidebarActionMenu.args = {
+export const sidebarActionMenu = template.bind({});
+sidebarActionMenu.args = {
     title: 'Hello from Sidebar Action Menu!'
 };

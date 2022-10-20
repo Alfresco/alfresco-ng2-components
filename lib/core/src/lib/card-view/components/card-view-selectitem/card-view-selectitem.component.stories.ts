@@ -83,9 +83,8 @@ const template: Story<CardViewSelectItemComponent> = (
     props: args
 });
 
-export const CardViewSelectItem = template.bind({});
-
-CardViewSelectItem.args = {
+export const cardViewSelectItem = template.bind({});
+cardViewSelectItem.args = {
     property: new CardViewSelectItemModel({
         label: 'CardView Select Item',
         value: 'one',
@@ -97,3 +96,4 @@ CardViewSelectItem.args = {
         editable: true
     })
 };
+cardViewSelectItem.parameters = { layout: 'centered' };

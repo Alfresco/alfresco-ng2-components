@@ -15,9 +15,21 @@
  * limitations under the License.
  */
 
-export * from './components/notification-history.component';
-export * from './components/add-notification.stories.component';
-export * from './helpers/notification.factory';
-export * from './models/notification.model';
-export * from './services/notification.service';
-export * from './notification-history.module';
+import { Component } from '@angular/core';
+import { NotificationService } from '../services/notification.service';
+
+@Component({
+    selector: 'adf-add-notification-storybook',
+    template: `<button mat-raised-button (click)="showInfo()">Add Notification</button>`
+})
+export class AddNotificationStorybookComponent {
+
+    infoCounter: number = 1;
+
+    constructor(private notificationService: NotificationService) { }
+
+    showInfo() {
+        this.notificationService.showInfo(`Example notification ${this.infoCounter}`);
+        this.infoCounter++;
+    }
+}

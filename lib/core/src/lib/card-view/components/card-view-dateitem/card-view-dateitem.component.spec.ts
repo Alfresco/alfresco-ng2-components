@@ -24,9 +24,9 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { AppConfigService } from '@alfresco/adf-core';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from '@alfresco/adf-core';
 
 describe('CardViewDateItemComponent', () => {
 

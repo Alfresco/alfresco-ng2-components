@@ -52,6 +52,7 @@ const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: L
 });
 
 export const primary = languagePickerComponentTemplate.bind({});
+primary.parameters = { layout: 'centered' };
 
 export const asNestedMenu = languagePickerComponentTemplate.bind({});
 asNestedMenu.decorators = [
@@ -64,3 +65,4 @@ asNestedMenu.decorators = [
       </mat-menu>
     `)
 ];
+asNestedMenu.parameters = { layout: 'centered' };
