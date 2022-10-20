@@ -74,6 +74,7 @@ if (LOG) {
 module.exports = {
 
     projectName: 'adf',
+    emailDomain: 'example.net',
 
     appConfig: appConfig,
 
