@@ -29,9 +29,9 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
 })
 export class LoginDialogStorybookComponent {
 
-    @Output() executeSubmit = new EventEmitter<any>();
-    @Output() error = new EventEmitter<any>();
-    @Output() closed = new EventEmitter<any>();
+    @Output() executeSubmit = new EventEmitter<string>();
+    @Output() error = new EventEmitter<string>();
+    @Output() closed = new EventEmitter<string>();
 
     constructor(private dialog: MatDialog) { }
 
@@ -45,20 +45,23 @@ export class LoginDialogStorybookComponent {
         this.dialog.open(
             LoginDialogComponent,
             {
-                data, panelClass: 'adf-login-dialog',
+                data,
+                panelClass: 'adf-login-dialog',
                 width: '630px'
             }
         );
 
-        data.logged.subscribe(() => {
-            this.executeSubmit.emit('executeSubmit');
-        },
+        data.logged.subscribe(
+            () => {
+                this.executeSubmit.emit('executeSubmit');
+            },
             (error) => {
                 this.error.emit(error);
             },
             () => {
                 this.closed.emit('closed');
                 this.dialog.closeAll();
-            });
+            }
+        );
     }
 }

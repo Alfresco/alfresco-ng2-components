@@ -43,10 +43,29 @@ export default {
         }
     },
     argTypes: {
-        storybookInfo: {
+        correct: {
             control: 'none',
-            description: 'Use `fake-username` and `fake-password` to test functionality.',
-            name: 'Story-only information:'
+            name: 'To test correct functionality:',
+            description: 'Use `fake-username` and `fake-password`.',
+            table: { category: 'Storybook Info' }
+        },
+        corsError: {
+            control: 'none',
+            name: 'To test CORS error:',
+            description: 'Use `fake-username-CORS-error` and `fake-password`.',
+            table: { category: 'Storybook Info' }
+        },
+        csrfError: {
+            control: 'none',
+            name: 'To test CSRF error:',
+            description: 'Use `fake-username-CSRF-error` and `fake-password`.',
+            table: { category: 'Storybook Info' }
+        },
+        ecmAccessError: {
+            control: 'none',
+            name: 'To test ECM access error:',
+            description: 'Use `fake-username-ECM-access-error` and `fake-password`.',
+            table: { category: 'Storybook Info' }
         },
         closed: {
             action: 'closed',
