@@ -37,7 +37,13 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 export class AuthenticationService {
     private redirectUrl: RedirectionModel = null;
 
-    private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
+    private bearerExcludedUrls: string[] = [
+        'auth/realms',
+        'resources/',
+        'assets/',
+        'templates.github.io'
+    ];
+
     /**
      * Emits login event
      */
