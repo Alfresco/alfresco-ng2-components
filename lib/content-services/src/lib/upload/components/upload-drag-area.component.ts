@@ -76,7 +76,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
         const messageTranslate = this.translationService.instant('FILE_UPLOAD.MESSAGES.PROGRESS');
         const actionTranslate = this.translationService.instant('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate, actionTranslate, 3000).onAction().subscribe(() => {
+        this.notificationService.openSnackMessageAction(messageTranslate, actionTranslate).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }

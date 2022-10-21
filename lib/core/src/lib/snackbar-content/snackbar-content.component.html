@@ -1,0 +1,4 @@
+<p class="snackbar-message">{{ data.message }}</p>
+<button mat-button (click)="snackBarRef.dismissWithAction()">
+    {{data.actionLabel}}<mat-icon *ngIf="data.actionIcon">{{ data.actionIcon }}</mat-icon>
+</button>

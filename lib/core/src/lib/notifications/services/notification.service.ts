@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslationService } from '../../services/translation.service';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { NotificationModel } from '../models/notification.model';
 import { info, warning, error } from '../helpers/notification.factory';
+import {SnackbarContentComponent} from "../../snackbar-content";
 
 const INFO_SNACK_CLASS = 'adf-info-snackbar';
 const WARN_SNACK_CLASS = 'adf-warning-snackbar';
@@ -31,15 +31,10 @@ const ERROR_SNACK_CLASS = 'adf-error-snackbar';
     providedIn: 'root'
 })
 export class NotificationService {
-
-    DEFAULT_DURATION_MESSAGE: number = 5000;
-
     notifications$: Subject<NotificationModel> = new Subject();
 
     constructor(private snackBar: MatSnackBar,
-                private translationService: TranslationService,
-                private appConfigService: AppConfigService) {
-        this.DEFAULT_DURATION_MESSAGE = this.appConfigService.get<number>(AppConfigValues.NOTIFY_DURATION) || this.DEFAULT_DURATION_MESSAGE;
+                private translationService: TranslationService) {
     }
 
     /**
@@ -121,10 +116,14 @@ export class NotificationService {
             const translatedAction: string = this.translationService.instant(action, interpolateArgs);
             const createNotification = this.getNotificationCreator(config);
             this.notifications$.next(createNotification(translatedMessage));
-
-            return this.snackBar.open(translatedMessage, translatedAction, {
-                duration: (typeof config === 'number') ? config : this.DEFAULT_DURATION_MESSAGE,
+            return this.snackBar.openFromComponent(SnackbarContentComponent, {
+                ...(typeof config === 'number' && {duration: config}),
                 panelClass: INFO_SNACK_CLASS,
+                data: {
+                  actionLabel: translatedAction,
+                  actionIcon: translatedAction ? null : 'close',
+                  message: translatedMessage
+                },
                 ...( (typeof config === 'object') ? config : {} )
             });
     }
