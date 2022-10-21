@@ -99,12 +99,7 @@ jobs:
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           bash ./scripts/ci/job_hooks/install.sh 
           ./scripts/travis/build/build-libs.sh || exit 1 
-      - name: install chrome
-      #   uses: nanasess/setup-chromedriver@v1
-      # - run: |
-      #     export DISPLAY=:99
-      #     chromedriver --url-base=/wd/hub &
-      #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+      - name: install chrome      
         uses: browser-actions/setup-chrome@latest        
       - name: setup variables
         run : |          
@@ -112,9 +107,9 @@ jobs:
           sudo apt-get install -y xvfb                           
       - name: content::unit
         run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-      - name: "core-extension::unit"
-        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
-      - name: "process-insights::unit"
-        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
-      - name: "process-cloud::unit"
-        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
+      - name: core-extension::unit
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
+      - name: process-insights::unit
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
+      - name: process-cloud::unit
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
