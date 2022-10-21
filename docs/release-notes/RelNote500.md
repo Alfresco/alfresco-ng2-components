@@ -31,7 +31,8 @@ You can find release artifacts on [GitHub](https://github.com/Alfresco/alfresco-
 ## Features
 
 This is a major release of the Alfresco Application Development Framework containing upgrade to Angular 14.
-With the current upgrade of the Angular framework, the suggested stack has also being updated: 
+With the current upgrade of the Angular framework, the suggested stack has also being updated:
+
 | Name | Version | 
 | --- | --- | 
 | Node | 14.15.0 |
@@ -40,6 +41,7 @@ With the current upgrade of the Angular framework, the suggested stack has also 
 | Typescript | 4.6 |
 
 For a complete list of changes, supported browsers and new feature please refer to the official documentation
+
 | Angular version | link |
 | --- | --- |
 | v11 | [Changes & Deprecations](https://v11.angular.io/guide/updating-to-version-11)|
