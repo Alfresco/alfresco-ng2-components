@@ -42,8 +42,7 @@ export class CommunityStartTaskCloudDemoComponent {
 
     openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
-            event.response.body.message,
-            4000
+            event.response.body.message
         );
     }
 }

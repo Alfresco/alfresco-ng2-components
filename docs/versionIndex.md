@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v5.0.0](#v500)
 -   [v4.7.0](#v470)
 -   [v4.6.0](#v460)
 -   [v4.5.0](#v450)
@@ -39,6 +40,12 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v5.0.0
+<!--v500 start-->
+
+-   [Sorting picker component](core/components/sorting-picker.component.md)
+
+<!--v500 end-->
 ## v4.7.0
 
 <!--v470 start-->

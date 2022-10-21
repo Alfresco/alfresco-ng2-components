@@ -17,8 +17,14 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
-import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService, FileUploadErrorEvent } from '@alfresco/adf-core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+    ContentService,
+    AllowableOperationsEnum,
+    PermissionsEnum,
+    NodesApiService,
+    FileUploadErrorEvent,
+    NotificationService
+} from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
@@ -64,10 +70,10 @@ export class FileViewComponent implements OnInit {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
-                private snackBar: MatSnackBar,
                 private nodeApiService: NodesApiService,
                 private contentServices: ContentService,
-                private preview: PreviewService) {
+                private preview: PreviewService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -105,7 +111,7 @@ export class FileViewComponent implements OnInit {
 
     onUploadError(event: FileUploadErrorEvent) {
         const errorMessage = event.error;
-        this.snackBar.open(errorMessage, '', { duration: 4000 });
+        this.notificationService.showError(errorMessage);
     }
 
     toggleEmptyMetadata() {

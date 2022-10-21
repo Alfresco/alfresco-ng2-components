@@ -66,6 +66,7 @@ import { LegacyApiClientModule } from './api-factories/legacy-api-client.module'
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 
 @NgModule({
     imports: [
@@ -177,7 +178,13 @@ export class CoreModule {
                     multi: true
                 },
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-                { provide: Authentication, useClass: AuthenticationService }
+                { provide: Authentication, useClass: AuthenticationService },
+                {
+                    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                    useValue: {
+                        duration: 10000
+                    }
+                }
             ]
         };
     }
