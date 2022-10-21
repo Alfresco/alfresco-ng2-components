@@ -41,7 +41,7 @@ export class AuthenticationService {
         'auth/realms',
         'resources/',
         'assets/',
-        'templates.github.io'
+        'templates\\.github\\.io'
     ];
 
     /**
