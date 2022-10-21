@@ -124,7 +124,7 @@ export class CustomResourcesService {
                         const username = person.entry.id;
                         const filterQueries = [
                             { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                            { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                            { query: `cm:modifier:'${username}' OR cm:creator:'${username}'` },
                             { query: defaultFilter.join(' AND ') }
                         ];
 
