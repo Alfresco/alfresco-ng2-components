@@ -108,13 +108,12 @@ jobs:
         uses: browser-actions/setup-chrome@latest        
       - name: setup variables
         run : |
+          printenv DISPLAY
           sudo apt-get install x11-xserver-utils
           sudo apt-get install -y xvfb
-          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf 
-          /etc/init.d/xserver start        
-          Xvfb :99.0 -screen 0 '1280x1024x16' -ac &> /dev/null &          
-          export DISPLAY=:99.0
-          DISPLAY=:99.0 xset q         
+          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf          
+          Xvfb :99.0 -screen 0 '1280x1024x16' -ac &> /dev/null &       
+          export DISPLAY=:99.0                  
       - name: content::unit
         run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
       - name: "core-extension::unit"
