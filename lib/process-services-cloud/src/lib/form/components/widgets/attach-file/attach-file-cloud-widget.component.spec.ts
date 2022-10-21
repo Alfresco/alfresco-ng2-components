@@ -670,7 +670,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
         });
 
-        it('should not be called onInit when widget has no value', async() => {
+        it('should not be called onInit when widget has no value', async () => {
             widget.ngOnInit();
 
             fixture.detectChanges();
@@ -678,7 +678,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should have been called onInit when widget only one file', async() => {
+        it('should have been called onInit when widget only one file', async () => {
             widget.field.value = [fakeNodeWithProperties];
             widget.ngOnInit();
 
@@ -689,7 +689,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called onInit when widget has more than one file', async() => {
+        it('should not be called onInit when widget has more than one file', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
 
             fixture.detectChanges();
@@ -697,7 +697,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should not be called on remove node if node removed is not the selected one', async() => {
+        it('should not be called on remove node if node removed is not the selected one', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
             widget.selectedNode = fakeNodeWithProperties;
 
@@ -709,7 +709,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should have been called on remove node if node removed is the selected one', async() => {
+        it('should have been called on remove node if node removed is the selected one', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
             widget.selectedNode = fakeNodeWithProperties;
             fixture.detectChanges();
@@ -722,7 +722,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(undefined, widget.field.id));
         });
 
-        it('should have been called on attach file when value was empty', async() => {
+        it('should have been called on attach file when value was empty', async () => {
             clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
@@ -732,7 +732,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called on attach file when has a file previously', async() => {
+        it('should not be called on attach file when has a file previously', async () => {
             widget.field.value = [fakeMinimalNode];
 
             clickOnAttachFileWidget('attach-file-alfresco');

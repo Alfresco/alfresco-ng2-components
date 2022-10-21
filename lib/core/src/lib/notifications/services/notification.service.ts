@@ -21,7 +21,7 @@ import { TranslationService } from '../../services/translation.service';
 import { Subject } from 'rxjs';
 import { NotificationModel } from '../models/notification.model';
 import { info, warning, error } from '../helpers/notification.factory';
-import {SnackbarContentComponent} from "../../snackbar-content";
+import {SnackbarContentComponent} from '../../snackbar-content';
 
 const INFO_SNACK_CLASS = 'adf-info-snackbar';
 const WARN_SNACK_CLASS = 'adf-warning-snackbar';
