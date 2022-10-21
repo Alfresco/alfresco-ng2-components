@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2022 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {SnackbarContentComponent} from '@alfresco/adf-core';
-import {MatIcon, MatIconModule} from "@angular/material/icon";
-import {MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef} from "@angular/material/snack-bar";
-import {MatButton, MatButtonModule} from "@angular/material/button";
-import {By} from "@angular/platform-browser";
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef} from '@angular/material/snack-bar';
+import {MatButton, MatButtonModule} from '@angular/material/button';
+import {By} from '@angular/platform-browser';
 
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;

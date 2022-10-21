@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2022 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,21 @@
  */
 
 import {Component, Inject} from '@angular/core';
-import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
-import {SnackBarData} from "./snack-bar-data";
+import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
+import {SnackBarData} from './snack-bar-data';
 
 @Component({
     selector: 'adf-snackbar-content',
     templateUrl: './snackbar-content.component.html',
     styleUrls: ['./snackbar-content.component.scss'],
     host: {
-        'class': 'mat-simple-snackbar'
+        class: 'mat-simple-snackbar'
     }
 })
 export class SnackbarContentComponent {
     constructor(
         public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData,
+        @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
     ) {
         if (!data) {
             this.data = {message: ''};
