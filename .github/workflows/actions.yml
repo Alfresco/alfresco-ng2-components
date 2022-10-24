@@ -20,7 +20,11 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-
+  CONTENT::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" "
+  CORE-EXTENSION::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud" "
+  PROCESS-INSIGHT::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud" "
+  PROCESS-CLOUD::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services" "
+  
 jobs:
   prerequisite:
     name: "Before anything unnece$$ary happens..."
@@ -97,12 +101,7 @@ jobs:
           - core-extension::unit
           - process-insights::unit
           - process-cloud::unit        
-    steps: 
-        env:          
-          CONTENT::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
-          CORE-EXTENSION::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud" }}
-          PROCESS-INSIGHT::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud" }}
-          PROCESS-CLOUD::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services" }}
+    steps:       
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: install NPM
