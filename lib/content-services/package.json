@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-content-services",
   "description": "Alfresco ADF content services",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@alfresco/js-api": "5.1.0",
     "@ngx-translate/core": ">=13.0.0",
     "moment": ">=2.22.2",
-    "@alfresco/adf-core": "5.0.0"
+    "@alfresco/adf-core": "5.1.0"
   },
   "keywords": [
     "content-services",
