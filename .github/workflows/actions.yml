@@ -95,9 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy: 
       fail-fast: false
-      matrix:
-        ci_index: [4,4,4,4]
-        ci_total: [4]
+      matrix:        
         components: 
           - content::unit
           - core-extension::unit
@@ -120,10 +118,8 @@ jobs:
       - name: setup variables
         run: |          
           sudo apt-get install x11-xserver-utils
-          sudo apt-get install -y xvfb 
-        env:
-          CI_TOTAL: ${{ matrix.ci_total }}
-          CI_INDEX: ${{ matrix.ci_index }}
+          sudo apt-get install -y xvfb
+          echo  ${{ matrix.components }}       
         if: matrix.components == 'content::unit'                        
       - name: ${{ matrix.components }}
         run: ${{ env.CONTENT_UNIT }}
