@@ -20,10 +20,10 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  CONTENT::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud""
-  CORE-EXTENSION::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud""
-  PROCESS-INSIGHT::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud""
-  PROCESS-CLOUD::UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services""
+  CONTENT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud""
+  CORE-EXTENSION_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud""
+  PROCESS-INSIGHT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud""
+  PROCESS-CLOUD_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services""
   
 jobs:
   prerequisite:
@@ -121,13 +121,13 @@ jobs:
           sudo apt-get install -y xvfb   
         if: matrix.components == 'content::unit'                        
       - name: ${{ matrix.components }}
-        run: ${{ env.CONTENT::UNIT }}
+        run: ${{ env.CONTENT_UNIT }}
         if: matrix.components == 'core-extension::unit'
       - name: ${{ matrix.components }}
-        run: ${{ env.CORE-EXTENSION::UNIT }}
+        run: ${{ env.CORE-EXTENSION_UNIT }}
         if: matrix.components == 'process-insights::unit'
       - name: ${{ matrix.components }}
-        run: ${{ env.PROCESS-INSIGHT::UNIT }}
+        run: ${{ env.PROCESS-INSIGHT_UNIT }}
         if: matrix.components == 'process-cloud::unit'
       - name: ${{ matrix.components }}
-        run: ${{ env.PROCESS-CLOUD::UNIT }}
+        run: ${{ env.PROCESS-CLOUD_UNIT }}
