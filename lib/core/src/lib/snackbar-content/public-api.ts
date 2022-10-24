@@ -17,3 +17,4 @@
 
 export * from './snackbar-content.component';
 export * from './snackbar-content.module';
+export * from './snack-bar-data';

@@ -7,10 +7,20 @@
         margin: 0;
     }
 
-    .mat-button {
-        //padding: 0;
-        min-width: 0;
-        margin: -8px;
+    .action {
         margin-left: 24px;
+
+        .mat-button {
+            min-width: 0;
+            margin: -8px;
+
+            &.action-label {
+                margin-right: 8px;
+            }
+
+            &.action-icon {
+                padding: 0;
+            }
+        }
     }
 }

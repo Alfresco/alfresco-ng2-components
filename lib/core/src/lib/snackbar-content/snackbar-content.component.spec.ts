@@ -19,7 +19,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {SnackbarContentComponent} from '@alfresco/adf-core';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef} from '@angular/material/snack-bar';
-import {MatButton, MatButtonModule} from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import {By} from '@angular/platform-browser';
 
 describe('SnackbarContentComponent', () => {
@@ -56,72 +56,65 @@ describe('SnackbarContentComponent', () => {
     });
 
     it('should display message if message in data is set', () => {
-        // given
         component.data = {
             message: 'Some message'
         };
-
-        // when
         fixture.detectChanges();
-
-        // then
         expect(fixture.nativeElement.querySelector('.snackbar-message').innerText).toBe(component.data.message);
     });
 
     it('should not display message if message in data is not set', () => {
-        // when
         fixture.detectChanges();
-
-        // then
         expect(fixture.nativeElement.querySelector('.snackbar-message').innerText).toBe('');
     });
 
     it('should call snackBarRef.dismissWithAction() when button is clicked', () => {
-        // given
+        component.data = {
+            message: '',
+            showAction: true,
+            actionLabel: 'Some action'
+        };
         spyOn(component.snackBarRef, 'dismissWithAction');
-
-        // when
-        fixture.debugElement.query(By.directive(MatButton)).nativeElement.click();
-
-        // then
+        fixture.detectChanges();
+        fixture.nativeElement.querySelector('.action-label').click();
         expect(component.snackBarRef.dismissWithAction).toHaveBeenCalled();
     });
 
     it('should display actionLabel if actionLabel in data is set', () => {
-        // given
-        component.data.actionLabel = 'Some action label';
-
-        // when
+        component.data = {
+            message: '',
+            showAction: true,
+            actionLabel: 'Some action action'
+        };
         fixture.detectChanges();
-
-        // then
-        expect(fixture.debugElement.query(By.directive(MatButton)).nativeElement.innerText).toBe(component.data.actionLabel);
+        expect(fixture.nativeElement.querySelector('.action-label').innerText).toBe(component.data.actionLabel);
     });
 
     it('should not display actionLabel if actionLabel in data is not set', () => {
-        // when
+        component.data = {
+            message: '',
+            showAction: true
+        };
         fixture.detectChanges();
-
-        // then
-        expect(fixture.debugElement.query(By.directive(MatButton)).nativeElement.innerText).toBe('');
+        expect(fixture.nativeElement.querySelector('.action-label')).toBeNull();
     });
 
     it('should render icon if actionIcon in data is set', () => {
-        // given
-        component.data.actionIcon = 'close';
-
-        // when
+        component.data = {
+            message: '',
+            showAction: true,
+            actionIcon: 'close'
+        };
         fixture.detectChanges();
-
-        // then
         expect(fixture.debugElement.query(By.directive(MatIcon))).toBeDefined();
     });
 
     it('should not render icon if actionIcon in data is not set', () => {
-        // when
+        component.data = {
+            message: '',
+            showAction: true
+        };
         fixture.detectChanges();
-
-        // then
         expect(fixture.debugElement.query(By.directive(MatIcon))).toBeNull();
     });
 });
