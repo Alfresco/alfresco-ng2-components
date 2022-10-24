@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, RequestOptions, SecurityOptions, isBrowser } from '@alfresco/js-api';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
@@ -37,11 +38,13 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
         const headers = AlfrescoApiHttpClient.getHeaders(options);
         const responseType = AlfrescoApiHttpClient.getResponseType(options);
+        const context = new HttpContext().set(SHOULD_ADD_AUTH_TOKEN, true);
 
         const request = this.httpClient.request(
             options.httpMethod,
             url,
             {
+                context,
                 ...(body && { body }),
                 ...(responseType && { responseType }),
                 ...(sc.withCredentials && { withCredentials: true }),

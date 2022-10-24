@@ -61,10 +61,11 @@ import { SearchTextModule } from './search-text/search-text-input.module';
 import { versionCompatibilityFactory } from './services/version-compatibility-factory';
 import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
     imports: [
@@ -175,7 +176,8 @@ export class CoreModule {
                     deps: [VersionCompatibilityService],
                     multi: true
                 },
-                { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true }
+                { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+                { provide: Authentication, useClass: AuthenticationService }
             ]
         };
     }
