@@ -84,9 +84,19 @@ jobs:
         run : nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
       # skip Build Demo shell on this stage  
   unit-test-lib:
-    name: "content::unit"
-    needs: build-lib
+    name: "Unit Test Lib"
+    needs: 
+      - prerequisite
+      - build-lib
     runs-on: ubuntu-latest
+    strategy: 
+      fail-fast: false
+      matrix:
+        components: 
+          - content::unit
+          - core-extension::unit
+          - process-insights::unit
+          - process-cloud::unit
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -105,11 +115,11 @@ jobs:
         run : |          
           sudo apt-get install x11-xserver-utils
           sudo apt-get install -y xvfb                           
-      - name: content::unit
+      - name: ${{ matrix.components }}
         run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-      - name: core-extension::unit
+      - name: ${{ matrix.components }}
         run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
-      - name: process-insights::unit
+      - name: ${{ matrix.components }}
         run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
-      - name: process-cloud::unit
+      - name: ${{ matrix.components }}
         run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
