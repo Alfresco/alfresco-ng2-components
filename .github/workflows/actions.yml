@@ -22,7 +22,7 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}  
   CONTENT_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
   CORE-EXTENSION_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
-  PROCESS-INSIGHT_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud""
+  PROCESS-INSIGHT_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
   PROCESS-CLOUD_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
   
 jobs:
@@ -96,6 +96,8 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:
+        ci_index: [4,4,4,4]
+        ci_total: [4]
         components: 
           - content::unit
           - core-extension::unit
@@ -118,7 +120,10 @@ jobs:
       - name: setup variables
         run: |          
           sudo apt-get install x11-xserver-utils
-          sudo apt-get install -y xvfb   
+          sudo apt-get install -y xvfb 
+        env:
+          CI_TOTAL: ${{ matrix.ci_total }}
+          CI_INDEX: ${{ matrix.ci_index }}
         if: matrix.components == 'content::unit'                        
       - name: ${{ matrix.components }}
         run: ${{ env.CONTENT_UNIT }}
