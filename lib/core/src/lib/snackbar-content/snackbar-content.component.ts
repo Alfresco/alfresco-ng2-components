@@ -36,4 +36,8 @@ export class SnackbarContentComponent {
             this.data = {message: ''};
         }
     }
+
+    onIconClicked(): void {
+        this.data.callActionOnIconClick ? this.snackBarRef.dismissWithAction() : this.snackBarRef.dismiss();
+    }
 }

@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 import { NotificationModel } from '../models/notification.model';
 import { info, warning, error } from '../helpers/notification.factory';
 import {SnackbarContentComponent} from '../../snackbar-content';
+import {SnackBarData} from "../../snackbar-content/snack-bar-data";
 
 const INFO_SNACK_CLASS = 'adf-info-snackbar';
 const WARN_SNACK_CLASS = 'adf-warning-snackbar';
@@ -45,7 +46,7 @@ export class NotificationService {
      * @param interpolateArgs The interpolation parameters to add for the translation
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessage(message: string, config?: number | MatSnackBarConfig, interpolateArgs?: any): MatSnackBarRef<any> {
+    openSnackMessage(message: string, config?: number | MatSnackBarConfig<Omit<SnackBarData, 'actionLabel' | 'message'>>, interpolateArgs?: any): MatSnackBarRef<any> {
         return this.dispatchNotification(message, null, config, interpolateArgs);
     }
 
@@ -58,7 +59,7 @@ export class NotificationService {
      * @param interpolateArgs The interpolation parameters to add for the translation
      * @returns Information/control object for the SnackBar
      */
-    openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig, interpolateArgs?: any): MatSnackBarRef<any> {
+    openSnackMessageAction(message: string, action: string, config?: number | MatSnackBarConfig<Omit<SnackBarData, 'actionLabel' | 'message'>>, interpolateArgs?: any): MatSnackBarRef<any> {
         return this.dispatchNotification(message, action, config, interpolateArgs);
     }
 
@@ -111,24 +112,27 @@ export class NotificationService {
         this.notifications$.next(notification);
     }
 
-    private dispatchNotification(message: string, action?: string, config?: number | MatSnackBarConfig, interpolateArgs?: any):  MatSnackBarRef<any> {
+    private dispatchNotification(message: string, action?: string, config?: number | MatSnackBarConfig<Omit<SnackBarData, 'actionLabel' | 'message'>>, interpolateArgs?: any):  MatSnackBarRef<any> {
             const translatedMessage: string = this.translationService.instant(message, interpolateArgs);
             const translatedAction: string = this.translationService.instant(action, interpolateArgs);
             const createNotification = this.getNotificationCreator(config);
             this.notifications$.next(createNotification(translatedMessage));
-            return this.snackBar.openFromComponent(SnackbarContentComponent, {
+            return this.snackBar.openFromComponent<SnackbarContentComponent, SnackBarData>(SnackbarContentComponent, {
                 ...(typeof config === 'number' && {duration: config}),
                 panelClass: INFO_SNACK_CLASS,
+                ...( (typeof config === 'object') ? config : {} ),
                 data: {
                   actionLabel: translatedAction,
-                  actionIcon: translatedAction ? null : 'close',
-                  message: translatedMessage
+                  actionIcon: 'close',
+                  message: translatedMessage,
+                  showAction: true,
+                  callActionOnIconClick: false,
+                  ...( (typeof config === 'object') ? config.data : {} )
                 },
-                ...( (typeof config === 'object') ? config : {} )
             });
     }
 
-    private getNotificationCreator(config?: number | MatSnackBarConfig) {
+    private getNotificationCreator(config?: number | MatSnackBarConfig<Omit<SnackBarData, 'actionLabel' | 'message'>>) {
         let panelClass: string = null;
         if (typeof config === 'object') {
             panelClass = Array.isArray(config.panelClass) ? config.panelClass[0] : config.panelClass;

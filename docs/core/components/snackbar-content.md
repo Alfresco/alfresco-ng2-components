@@ -15,7 +15,8 @@ Custom content for Snackbar which allows use icon as action.
 snackBar.openFromComponent(SnackbarContentComponent, {
     data: {
         message: 'Some message',
-        actionLabel: "Some action label"
+        actionLabel: "Some action label",
+        showAction: true
     }
 });
 ```
@@ -30,11 +31,13 @@ snackBar.openFromComponent(SnackbarContentComponent, {
 
 ### Snackbar Data
 
-| Name        | Type           | Default value | Description                           |
-|-------------|----------------|---------------|---------------------------------------|
-| actionLabel | `string`       | false         | Displayed action as a text.           |
-| actionIcon  | `string` | false         | Displayed action as an material icon. |
-| message     | `string` | false         | Visible snackbar's message for user.  |
+| Name        | Type      | Default value | Description                                                             |
+|-------------|-----------|---------------|-------------------------------------------------------------------------|
+| actionLabel | `string`  | false         | Displayed action as a text.                                             |
+| actionIcon  | `string`  | false         | Displayed action as an material icon.                                   |
+| message     | `string`  | false         | Visible snackbar's message for user.                                    |
+| showAction     | `boolean` | false         | True if action should be visible, false in other case.                  |
+| callActionOnIconClick     | `boolean` | false         | True if clicking on icon should to trigger action, false in other case. |
 
 ## Details
 
