@@ -20,10 +20,17 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  CONTENT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud""
-  CORE-EXTENSION_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud""
-  PROCESS-INSIGHT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud""
-  PROCESS-CLOUD_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services""
+  CONTENT_UNIT: "prova"
+  CORE-EXTENSION_UNIT: "prova2"
+  PROCESS-INSIGHT_UNIT: "prova3"
+  PROCESS-CLOUD_UNIT: "prova4"
+  
+  
+  
+  # CONTENT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud""
+  # CORE-EXTENSION_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud""
+  # PROCESS-INSIGHT_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud""
+  # PROCESS-CLOUD_UNIT: "/usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services""
   
 jobs:
   prerequisite:
