@@ -97,6 +97,11 @@ jobs:
           - core-extension::unit
           - process-insights::unit
           - process-cloud::unit
+        commands:
+          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
+          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
+          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
+          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -112,18 +117,18 @@ jobs:
       - name: install chrome      
         uses: browser-actions/setup-chrome@latest        
       - name: setup variables
-        run : |          
+        run: |          
           sudo apt-get install x11-xserver-utils
           sudo apt-get install -y xvfb   
-        if : matrix.components == 'content::unit'                        
+        if: matrix.components == 'content::unit'                        
       - name: ${{ matrix.components }}
-        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-        if : matrix.components == 'core-extension::unit'
+        run: ${{ matrix.commands }}
+        if: matrix.components == 'core-extension::unit'
       - name: ${{ matrix.components }}
-        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
+        run: ${{ matrix.commands }}
         if: matrix.components == 'process-insights::unit'
       - name: ${{ matrix.components }}
-        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
+        run: ${{ matrix.commands }}
         if: matrix.components == 'process-cloud::unit'
       - name: ${{ matrix.components }}
-        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
+        run: ${{ matrix.commands }}
