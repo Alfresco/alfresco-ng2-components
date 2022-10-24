@@ -96,13 +96,13 @@ jobs:
           - content::unit
           - core-extension::unit
           - process-insights::unit
-          - process-cloud::unit
-        commands:
-          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
-          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
-          - /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
+          - process-cloud::unit        
     steps: 
+        env:          
+          CONTENT::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+          CORE-EXTENSION::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud" }}
+          PROCESS-INSIGHT::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud" }}
+          PROCESS-CLOUD::UNIT: ${{ /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services" }}
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: install NPM
@@ -122,13 +122,13 @@ jobs:
           sudo apt-get install -y xvfb   
         if: matrix.components == 'content::unit'                        
       - name: ${{ matrix.components }}
-        run: ${{ matrix.commands }}
+        run: ${{ env.CONTENT::UNIT }}
         if: matrix.components == 'core-extension::unit'
       - name: ${{ matrix.components }}
-        run: ${{ matrix.commands }}
+        run: ${{ env.CORE-EXTENSION::UNIT }}
         if: matrix.components == 'process-insights::unit'
       - name: ${{ matrix.components }}
-        run: ${{ matrix.commands }}
+        run: ${{ env.PROCESS-INSIGHT::UNIT }}
         if: matrix.components == 'process-cloud::unit'
       - name: ${{ matrix.components }}
-        run: ${{ matrix.commands }}
+        run: ${{ env.PROCESS-CLOUD::UNIT }}
