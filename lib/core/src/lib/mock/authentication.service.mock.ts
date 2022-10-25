@@ -35,7 +35,7 @@ export class AuthenticationMock extends AuthenticationService {
         cookie: CookieService,
         logService: LogService
     ) {
-        super(appConfig, storageService, alfrescoApi, cookie, logService);
+        super(alfrescoApi, appConfig, cookie, logService, storageService);
     }
 
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
