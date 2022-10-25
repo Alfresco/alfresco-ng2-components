@@ -427,7 +427,7 @@
       "INHERITED-PERMISSIONS": "Inherited Permission",
       "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
       "SELECT-ROLE": "Select role",
-      "INHERITED_PERMISSION_TOGGLE": "Inherited Permission Toggle"
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "No users/groups",
