@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-export * from './content-directive.module';
-export * from './node-lock.directive';
-export * from './node-counter.directive';
-export * from './auto-focus.directive';
+import { AfterContentInit, Directive, ElementRef } from "@angular/core";
+
+@Directive({
+  selector: "[adf-auto-focus]"
+})
+export class AutoFocusDirective implements AfterContentInit {
+  public constructor(private el: ElementRef) {}
+
+  public ngAfterContentInit() {
+    setTimeout(() => {
+      this.el.nativeElement.focus();
+    }, 100);
+  }
+}
