@@ -197,4 +197,6 @@ export class AuthenticationService extends BaseAuthenticationService {
     }
 
     reset() {}
+
+    updateOidcConfigurationAndLogin(): void {}
 }

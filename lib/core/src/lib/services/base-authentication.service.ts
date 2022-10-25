@@ -66,6 +66,7 @@ export abstract class BaseAuthenticationService {
     abstract isEcmLoggedIn(): boolean;
     abstract isBpmLoggedIn(): boolean;
     abstract reset(): void;
+    abstract updateOidcConfigurationAndLogin(): void;
 
     getBearerExcludedUrls(): readonly string[] {
         return this.bearerExcludedUrls;

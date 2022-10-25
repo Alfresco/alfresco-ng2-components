@@ -118,7 +118,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         return this.authStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
-    reset(): void {
+    reset(): void {}
+
+    updateOidcConfigurationAndLogin(): void {
         const config = this.authConfig.loadAppConfig();
         this.auth.updateIDPConfiguration(config);
         const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));

@@ -175,6 +175,7 @@ export class HostSettingsComponent implements OnInit {
 
     onSubmit(values: any) {
         this.storageService.setItem(AppConfigValues.PROVIDERS, values.providersControl);
+        this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
 
         if (this.isBPM()) {
             this.saveBPMValues(values);
@@ -187,12 +188,10 @@ export class HostSettingsComponent implements OnInit {
 
         if (this.isOAUTH()) {
             this.saveOAuthValues(values);
+            this.auth.updateOidcConfigurationAndLogin();
         }
 
-        this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
-
         this.alfrescoApiService.reset();
-        this.auth.reset();
         this.alfrescoApiService.getInstance().invalidateSession();
         this.success.emit(true);
     }
