@@ -187,10 +187,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('#comment-message');
+        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
         expect(elements.length).toBe(1);
         expect(elements[0].innerText).toBe(processCommentOne.message);
-        expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should show comment user when input is given', async () => {
@@ -199,10 +199,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('#comment-user');
+        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-name');
         expect(elements.length).toBe(1);
         expect(elements[0].innerText).toBe(processCommentOne.createdBy.firstName + ' ' + processCommentOne.createdBy.lastName);
-        expect(fixture.nativeElement.querySelector('#comment-user:empty')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-comment-user-name:empty')).toBeNull();
     });
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async () => {
@@ -214,7 +214,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('#comment-time');
+        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
         expect(element.innerText).toContain('a few seconds ago');
     });
 
@@ -226,7 +226,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('#comment-time');
+        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
         expect(element.innerText).toContain('a day ago');
     });
 
@@ -238,7 +238,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        element = fixture.nativeElement.querySelector('#comment-time');
+        element = fixture.nativeElement.querySelector('.adf-comment-message-time');
         expect(element.innerText).not.toContain('Today');
         expect(element.innerText).not.toContain('Yesterday');
     });
@@ -249,10 +249,10 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
+        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-img-container');
         expect(elements.length).toBe(1);
         expect(elements[0].innerText).toContain(commentList.getUserShortName(processCommentOne.createdBy));
-        expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-comment-img-container:empty')).toBeNull();
     });
 
     it('should return content picture when is a content user with a picture', async () => {

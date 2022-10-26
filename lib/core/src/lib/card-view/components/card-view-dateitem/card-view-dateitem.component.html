@@ -1,8 +1,9 @@
 <label class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-     *ngIf="showProperty() || isEditable()">
+     *ngIf="showProperty() || isEditable()"
+     [attr.for]="'card-view-dateitem-' + property.key">
     {{ property.label | translate }}
-
+</label>
     <div class="adf-property-value adf-property-value-padding-top">
         <span *ngIf="!isEditable() && !property.multivalued"
               [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
@@ -42,7 +43,9 @@
                    [attr.tabIndex]="-1"
                    [matDatetimepicker]="datetimePicker"
                    [value]="valueDate"
-                   (dateChange)="onDateChanged($event)">
+                   (dateChange)="onDateChanged($event)"
+                   [attr.id]="'card-view-dateitem-' + property.key"
+            >
 
             <mat-datetimepicker #datetimePicker
                                 [type]="$any(property).type"
@@ -76,7 +79,9 @@
                        class="adf-invisible-date-input"
                        [attr.tabIndex]="-1"
                        [matDatetimepicker]="datetimePicker"
-                       (dateChange)="addDateToList($event)">
+                       (dateChange)="addDateToList($event)"
+                       [attr.id]="'card-view-dateitem-' + property.key"
+                >
                 <mat-datetimepicker-toggle [attr.tabindex]="-1"
                                            matSuffix
                                            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -93,4 +98,3 @@
             </mat-form-field>
         </div>
     </div>
-</label>
