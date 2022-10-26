@@ -58,8 +58,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
-        this.initFilterCounterNotifications();
         this.getFilters(this.appName);
+        this.initFilterCounterNotifications();
     }
 
     ngOnChanges(changes: SimpleChanges) {
