@@ -7,6 +7,11 @@
 
         mat-expansion-panel-header {
             height: 64px;
+
+            .adf-metadata-properties-title {
+                font-weight: normal;
+                font-size: 15px;
+            }
         }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
