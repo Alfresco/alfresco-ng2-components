@@ -105,16 +105,14 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     initFilterCounterNotifications() {
         if (this.appName && this.enableNotifications) {
             this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
-                .pipe(debounceTime(3000))
+                .pipe(debounceTime(1000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
                     result.map((taskEvent: TaskCloudEngineEvent) => {
                         this.checkFilterCounter(taskEvent.entity);
                     });
 
-                    if (this.updatedCounters.length) {
-                        this.updateFilterCounters();
-                        this.filterCounterUpdated.emit(result);
-                    }
+                    this.updateFilterCounters();
+                    this.filterCounterUpdated.emit(result);
                 });
         }
     }
