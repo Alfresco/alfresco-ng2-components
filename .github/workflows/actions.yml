@@ -135,6 +135,8 @@ jobs:
       - unit-test-lib
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Release Tag
         run: echo "git-tag.sh" #./scripts/travis/release/git-tag.sh
       - name: Deprecate develop builds
