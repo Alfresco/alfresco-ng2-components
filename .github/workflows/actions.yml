@@ -133,6 +133,7 @@ jobs:
       - prerequisite
       - build-lib
       - unit-test-lib
+    runs-on: ubuntu-latest
     steps:
       - name: Release Tag
         run: echo "git-tag.sh" #./scripts/travis/release/git-tag.sh
@@ -147,6 +148,7 @@ jobs:
       - build-lib
       - unit-test-lib
       - postUnitTest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
