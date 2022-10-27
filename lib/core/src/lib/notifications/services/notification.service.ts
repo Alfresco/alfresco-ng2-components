@@ -69,9 +69,15 @@ export class NotificationService {
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
+     * @param showAction True if action should be visible, false if not. Default: true.
      */
-    showError(message: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
-        return this.dispatchNotification(message, action, { panelClass: ERROR_SNACK_CLASS }, interpolateArgs);
+    showError(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
+        return this.dispatchNotification(message, action, {
+            panelClass: ERROR_SNACK_CLASS,
+            data: {
+                showAction
+            }
+        }, interpolateArgs);
     }
 
     /**
@@ -80,9 +86,15 @@ export class NotificationService {
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
+     * @param showAction True if action should be visible, false if not. Default: true.
      */
-    showInfo(message: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
-        return this.dispatchNotification(message, action, { panelClass: INFO_SNACK_CLASS }, interpolateArgs);
+    showInfo(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
+        return this.dispatchNotification(message, action, {
+            panelClass: INFO_SNACK_CLASS,
+            data: {
+                showAction
+            }
+        }, interpolateArgs);
     }
 
     /**
@@ -91,9 +103,15 @@ export class NotificationService {
      * @param message Text message or translation key for the message.
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
+     * @param showAction True if action should be visible, false if not. Default: true.
      */
-    showWarning(message: string, action?: string, interpolateArgs?: any): MatSnackBarRef<any> {
-        return this.dispatchNotification(message, action, { panelClass: WARN_SNACK_CLASS }, interpolateArgs);
+    showWarning(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
+        return this.dispatchNotification(message, action, {
+            panelClass: WARN_SNACK_CLASS,
+            data: {
+                showAction
+            }
+        }, interpolateArgs);
     }
 
     /**
