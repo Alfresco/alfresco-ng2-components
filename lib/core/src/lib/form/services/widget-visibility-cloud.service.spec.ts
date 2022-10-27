@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import {
     ContainerModel,
     FormFieldModel,
@@ -298,16 +298,16 @@ describe('WidgetVisibilityCloudService', () => {
             });
         });
 
-        it('should catch error on 403 response', (done) => {
+        it('should catch error on 403 response', fakeAsync(() => {
             service.getTaskProcessVariable('9999').subscribe(() => {
-            }, () => {
-                done();
+            }, (errorMessage) => {
+                expect(errorMessage).toEqual('Error while performing a call - Server error');
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        });
+        }));
     });
 
     describe('should return the value of the field', () => {

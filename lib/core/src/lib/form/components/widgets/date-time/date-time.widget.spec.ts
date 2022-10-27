@@ -117,21 +117,19 @@ describe('DateTimeWidgetComponent', () => {
             });
         });
 
-        it('should be marked as invalid after interaction', async () => {
+        it('should be marked as invalid after interaction', () => {
             const dateTimeInput = fixture.nativeElement.querySelector('input');
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
 
             dateTimeInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
         });
 
-        it('should be able to display label with asterisk', async () => {
+        it('should be able to display label with asterisk', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
 
@@ -142,7 +140,7 @@ describe('DateTimeWidgetComponent', () => {
 
     describe('template check', () => {
 
-        it('should show visible date widget', async () => {
+        it('should show visible date widget', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -152,15 +150,15 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('#date-field-id')).toBeDefined();
             expect(element.querySelector('#date-field-id')).not.toBeNull();
+
             const dateElement: any = element.querySelector('#date-field-id');
             expect(dateElement.value).toBe('30-11-9999 10:30 AM');
         });
 
-        it('should show the correct format type', async () => {
+        it('should show the correct format type', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -171,15 +169,15 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('#date-field-id')).toBeDefined();
             expect(element.querySelector('#date-field-id')).not.toBeNull();
+
             const dateElement: any = element.querySelector('#date-field-id');
             expect(dateElement.value).toContain('12-30-9999 10:30 AM');
         });
 
-        it('should disable date button when is readonly', async () => {
+        it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -189,20 +187,18 @@ describe('DateTimeWidgetComponent', () => {
                 readOnly: 'false'
             });
             fixture.detectChanges();
-            await fixture.whenStable();
 
             let dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeTruthy();
         });
 
-        it('should display tooltip when tooltip is set', async () => {
+        it('should display tooltip when tooltip is set', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -214,7 +210,6 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const dateElement: any = element.querySelector('#date-field-id');
             const tooltip = dateElement.getAttribute('ng-reflect-message');
@@ -234,27 +229,23 @@ describe('DateTimeWidgetComponent', () => {
         field.isVisible = true;
         field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A';
         widget.field = field;
-        widget.ngOnInit();
         fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#date-field-id')).toBeDefined();
-                expect(element.querySelector('#date-field-id')).not.toBeNull();
-                const dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toContain('12-30-9999 10:30 AM');
 
-                widget.field.value = '03-02-2020 12:00 AM';
+        expect(element.querySelector('#date-field-id')).toBeDefined();
+        expect(element.querySelector('#date-field-id')).not.toBeNull();
 
-                fixture.whenStable()
-                    .then(() => {
-                        expect(dateElement.value).toContain('03-02-2020 12:00 AM');
-                    });
-            });
+        const dateElement: any = element.querySelector('#date-field-id');
+        expect(dateElement.value).toContain('12-30-9999 10:30 AM');
+
+        widget.field.value = '03-02-2020 12:00 AM';
+        fixture.detectChanges();
+
+        expect(dateElement.value).toContain('03-02-2020 12:00 AM');
     });
 
     describe('when form model has left labels', () => {
 
-        it('should have left labels classes on leftLabels true', async () => {
+        it('should have left labels classes on leftLabels true', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'datetime-id',
                 name: 'datetime-name',
@@ -265,7 +256,6 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
@@ -277,7 +267,7 @@ describe('DateTimeWidgetComponent', () => {
             expect(adfLeftLabel).not.toBeNull();
         });
 
-        it('should not have left labels classes on leftLabels false', async () => {
+        it('should not have left labels classes on leftLabels false', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
                 id: 'datetime-id',
                 name: 'datetime-name',
@@ -288,7 +278,6 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
@@ -300,7 +289,7 @@ describe('DateTimeWidgetComponent', () => {
             expect(adfLeftLabel).toBeNull();
         });
 
-        it('should not have left labels classes on leftLabels not present', async () => {
+        it('should not have left labels classes on leftLabels not present', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'datetime-id',
                 name: 'datetime-name',
@@ -311,7 +300,6 @@ describe('DateTimeWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();

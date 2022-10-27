@@ -149,10 +149,11 @@ describe('PeopleWidgetComponent', () => {
         widget.ngOnInit();
 
         const involvedUser = fixture.debugElement.nativeElement.querySelector('input[data-automation-id="adf-people-search-input"]');
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(involvedUser.value).toBe('John Doe');
-        });
+        await fixture.whenStable();
+
+        expect(involvedUser.value).toBe('John Doe');
     });
 
     describe('when is required', () => {

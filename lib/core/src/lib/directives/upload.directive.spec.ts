@@ -16,6 +16,7 @@
  */
 
 import { ElementRef } from '@angular/core';
+import { fakeAsync, tick } from '@angular/core/testing';
 import { UploadDirective } from './upload.directive';
 
 describe('UploadDirective', () => {
@@ -106,18 +107,19 @@ describe('UploadDirective', () => {
         expect(event.preventDefault).not.toHaveBeenCalled();
     });
 
-    it('should raise upload-files event on files drop', (done) => {
+    it('should raise upload-files event on files drop', fakeAsync(() => {
         directive.enabled = true;
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         spyOn(directive, 'getDataTransfer').and.returnValue({} as any);
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([{}, {}]));
-        spyOn(nativeElement, 'dispatchEvent').and.callFake((_) => {
-            done();
+        spyOn(nativeElement, 'dispatchEvent').and.callFake((customEvent) => {
+            expect(customEvent).toBeTruthy();
         });
         directive.onDrop(event);
-    });
+        tick();
+    }));
 
-    it('should provide dropped files in upload-files event', (done) => {
+    it('should provide dropped files in upload-files event', fakeAsync(() => {
         directive.enabled = true;
         const files = [{}];
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
@@ -127,10 +129,11 @@ describe('UploadDirective', () => {
         spyOn(nativeElement, 'dispatchEvent').and.callFake((e) => {
             expect(e.detail.files.length).toBe(1);
             expect(e.detail.files[0]).toBe(files[0]);
-            done();
         });
+
         directive.onDrop(event);
-    });
+        tick();
+    }));
 
     it('should reset input value after file upload', () => {
         directive.enabled = true;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -248,14 +248,14 @@ describe('TextWidgetComponent', () => {
                 inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
-            it('should be disabled on readonly forms', fakeAsync(() => {
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(inputElement).toBeDefined();
-                    expect(inputElement).not.toBeNull();
-                    expect(inputElement.disabled).toBeTruthy();
-                });
-            }));
+            it('should be disabled on readonly forms', async () => {
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.disabled).toBeTruthy();
+            });
 
         });
 
