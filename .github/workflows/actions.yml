@@ -135,7 +135,7 @@ jobs:
       - unit-test-lib
     steps:
       - name: Release Tag
-        #run: ./scripts/travis/release/git-tag.sh
+        run: echo "git-tag.sh" #./scripts/travis/release/git-tag.sh
       - name: Deprecate develop builds
         run: |
           ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
