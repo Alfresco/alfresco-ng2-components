@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -82,6 +82,8 @@ describe('AuthenticationService', () => {
 
     describe('when the setting is ECM', () => {
 
+        const fakeECMLoginResponse = { type: 'ECM', ticket: 'fake-post-ticket' };
+
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
@@ -131,10 +133,10 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should login in the ECM if no provider are defined calling the login', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+        it('[ECM] should login in the ECM if no provider are defined calling the login', fakeAsync(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe((loginResponse) => {
+                expect(loginResponse).toEqual(fakeECMLoginResponse);
                 disposableLogin.unsubscribe();
-                done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -142,9 +144,9 @@ describe('AuthenticationService', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
-        });
+        }));
 
-        it('[ECM] should return a ticket undefined after logout', (done) => {
+        it('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
@@ -152,7 +154,6 @@ describe('AuthenticationService', () => {
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     disposableLogout.unsubscribe();
-                    done();
                 });
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -165,7 +166,7 @@ describe('AuthenticationService', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
-        });
+        }));
 
         it('[ECM] should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);

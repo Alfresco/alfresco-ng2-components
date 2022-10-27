@@ -30,7 +30,6 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -60,7 +59,6 @@ describe('LoginComponent', () => {
 
     setupTestBed({
         imports: [
-            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });
@@ -173,7 +171,7 @@ describe('LoginComponent', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('some-route');
     }));
 
-    it('should update user preferences upon login', fakeAsync(() => {
+    it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
@@ -182,7 +180,9 @@ describe('LoginComponent', () => {
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
 
     describe('Login button', () => {
 

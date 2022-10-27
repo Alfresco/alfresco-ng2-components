@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentService } from '../../../../services';
 import { of } from 'rxjs';
@@ -99,7 +99,7 @@ describe('ContentWidgetComponent', () => {
             expect(content).toBeDefined();
         });
 
-        it('should load the thumbnail preview of the png image', (done) => {
+        it('should load the thumbnail preview of the png image', fakeAsync(() => {
             const blob = createFakeImageBlob();
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
@@ -108,12 +108,9 @@ describe('ContentWidgetComponent', () => {
                 expect(res).toBeDefined();
                 expect(res.changingThisBreaksApplicationSecurity).toBeDefined();
                 expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
-                fixture.whenStable()
-                    .then(() => {
-                        const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
-                        expect(thumbnailPreview.src).toContain('blob');
-                    });
-                done();
+
+                const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                expect(thumbnailPreview.src).toContain('blob');
             });
 
             const contentId = 1;
@@ -140,9 +137,9 @@ describe('ContentWidgetComponent', () => {
                     thumbnailStatus: 'unsupported'
                 }
             });
-        });
+        }));
 
-        it('should load the thumbnail preview of a pdf', (done) => {
+        it('should load the thumbnail preview of a pdf', fakeAsync(() => {
             const blob = createFakePdfBlob();
             spyOn(processContentService, 'getContentThumbnail').and.returnValue(of(blob));
 
@@ -151,12 +148,9 @@ describe('ContentWidgetComponent', () => {
                 expect(res).toBeDefined();
                 expect(res.changingThisBreaksApplicationSecurity).toBeDefined();
                 expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
-                fixture.whenStable()
-                    .then(() => {
-                        const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
-                        expect(thumbnailPreview.src).toContain('blob');
-                    });
-                done();
+
+                const thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                expect(thumbnailPreview.src).toContain('blob');
             });
 
             const contentId = 1;
@@ -183,9 +177,9 @@ describe('ContentWidgetComponent', () => {
                     thumbnailStatus: 'created'
                 }
             });
-        });
+        }));
 
-        it('should show unsupported preview with unsupported file', (done) => {
+        it('should show unsupported preview with unsupported file', fakeAsync(() => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
@@ -193,13 +187,9 @@ describe('ContentWidgetComponent', () => {
 
             component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
-                        expect(thumbnailPreview).toBeDefined();
-                        expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
-                    });
-                done();
+                const thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
+                expect(thumbnailPreview).toBeDefined();
+                expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -222,9 +212,9 @@ describe('ContentWidgetComponent', () => {
                     thumbnailStatus: 'unsupported'
                 }
             });
-        });
+        }));
 
-        it('should open the viewer when the view button is clicked', (done) => {
+        it('should open the viewer when the view button is clicked', () => {
             const blob = createFakePdfBlob();
             spyOn(processContentService, 'getContentPreview').and.returnValue(of(blob));
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
@@ -252,7 +242,6 @@ describe('ContentWidgetComponent', () => {
                 expect(content.contentBlob).toBe(blob);
                 expect(content.mimeType).toBe('application/pdf');
                 expect(content.name).toBe('FakeBlob.pdf');
-                done();
             });
 
             fixture.detectChanges();
@@ -288,10 +277,7 @@ describe('ContentWidgetComponent', () => {
             const downloadButton: any = element.querySelector('#download');
             downloadButton.click();
 
-            fixture.whenStable()
-                .then(() => {
-                    expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
-                });
+            expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
         });
     });
 });
