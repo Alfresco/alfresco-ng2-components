@@ -19,12 +19,8 @@ env:
   NODE_MODULES_DIR: "./node_modules"
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
-  TRAVIS_COMMIT: ${{ github.sha }}  
-  CONTENT_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
-  CORE-EXTENSION_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
-  PROCESS-INSIGHT_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
-  PROCESS-CLOUD_UNIT: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
-  
+  TRAVIS_COMMIT: ${{ github.sha }}
+    
 jobs:
   prerequisite:
     name: "Before anything unnece$$ary happens..."
@@ -117,17 +113,52 @@ jobs:
         uses: browser-actions/setup-chrome@latest        
       - name: setup variables
         run: |          
-          sudo apt-get install x11-xserver-utils
+          sudo apt-get install -y x11-xserver-utils
           sudo apt-get install -y xvfb             
       - name: ${{ matrix.components }}
         if: matrix.components == 'content::unit'
-        run: ${{ env.CONTENT_UNIT }}
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
       - name: ${{ matrix.components }}
         if: matrix.components == 'core-extension::unit'
-        run: ${{ env.CORE-EXTENSION_UNIT }}
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
       - name: ${{ matrix.components }}
         if: matrix.components == 'process-insights::unit'
-        run: ${{ env.PROCESS-INSIGHT_UNIT }}
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
       - name: ${{ matrix.components }}
         if: matrix.components == 'process-cloud::unit'
-        run: ${{ env.PROCESS-CLOUD_UNIT }}
+        run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
+  postUnitTest:
+    name: "Post Unit Test"
+    needs: 
+      - prerequisite
+      - build-lib
+      - unit-test-lib
+    steps:
+      - name: Release Tag
+        #run: ./scripts/travis/release/git-tag.sh
+      - name: Deprecate develop builds
+        run: |
+          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
+  e2e_test:
+    name: "e2e Test"
+    needs: 
+      - prerequisite
+      - build-lib
+      - unit-test-lib
+      - postUnitTest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14 
+      - name: "Process Cloud: Storybook Playwright"
+        run: | 
+          npx playwright install chromium
+          ./scripts/travis/storybook-testing/storybook-test.sh
+
+      
+    
+
