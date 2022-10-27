@@ -410,6 +410,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should emit onTaskLoaded on initial load of component', () => {
+            component.appName = '';
             spyOn(component.onTaskLoaded, 'emit');
 
             component.ngOnInit();
