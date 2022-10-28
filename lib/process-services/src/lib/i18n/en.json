@@ -218,7 +218,8 @@
         "START_FORM": "Start Form",
         "TASKS_ACTIVE": "Active Tasks",
         "TASKS_COMPLETED": "Completed Tasks",
-        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
+        "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}",
+        "REFRESH": "Refresh"
       },
       "BUTTON": {
         "CANCEL": "Cancel Process",

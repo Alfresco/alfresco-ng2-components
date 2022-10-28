@@ -37,6 +37,8 @@ const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "#/logout";
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 const E2E_LOG_LEVEL = process.env.E2E_LOG_LEVEL || 'ERROR';
 
+const E2E_EMAIL_DOMAIN = process.env.E2E_EMAIL_DOMAIN || "example.com";
+
 const appConfig = {
     "log": E2E_LOG_LEVEL,
     "ecmHost": HOST_ECM,
@@ -74,6 +76,7 @@ if (LOG) {
 module.exports = {
 
     projectName: 'adf',
+    emailDomain: E2E_EMAIL_DOMAIN,
 
     appConfig: appConfig,
 

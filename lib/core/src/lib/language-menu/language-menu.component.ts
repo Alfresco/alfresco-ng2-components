@@ -26,6 +26,7 @@ import { LanguageItem } from '../services/language-item.interface';
         <button
             mat-menu-item
             *ngFor="let language of languages$ | async"
+            [attr.lang]="language.key"
             (click)="changeLanguage(language)">{{language.label}}</button>
     `
 })

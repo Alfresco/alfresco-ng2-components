@@ -1,6 +1,6 @@
 <div  *ngIf="showRefreshButton" class="process-tasks-refresh" >
     <button mat-icon-button (click)="onRefreshClicked()">
-        <mat-icon class="md-24" aria-label="Refresh">refresh</mat-icon>
+        <mat-icon class="md-24" [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.LABELS.REFRESH' | translate">refresh</mat-icon>
     </button>
 </div>
 

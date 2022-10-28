@@ -13,6 +13,7 @@
                    *ngIf="!property.multiline"
                    class="adf-property-value"
                    [placeholder]="property.default"
+                   [attr.aria-label]="property.label | translate"
                    [formControl]="textInput"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
@@ -26,6 +27,7 @@
                       [cdkAutosizeMaxRows]="5"
                       class="adf-property-value"
                       [placeholder]="property.default"
+                      [attr.aria-label]="property.label | translate"
                       [formControl]="textInput"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button
@@ -33,7 +35,7 @@
                     class="adf-property-clear-value"
                     *ngIf="isEditable"
                     mat-icon-button
-                    aria-label="Clear"
+                    [attr.aria-label]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
                     (click)="clearValue()">
                 <mat-icon>cancel</mat-icon>
             </button>
@@ -73,6 +75,7 @@
             <input matInput
                    class="adf-property-value"
                    [placeholder]="editedValue ? '' : property.default | translate"
+                   [attr.aria-label]="property.label | translate"
                    [matChipInputFor]="chipList"
                    [matChipInputAddOnBlur]="true"
                    (matChipInputTokenEnd)="addValueToList($event)"
@@ -97,6 +100,7 @@
                    class="adf-property-value"
                    [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                    [placeholder]="property.default"
+                   [attr.aria-label]="property.label | translate"
                    [(ngModel)]="editedValue"
                    (blur)="update()"
                    (keydown.enter)="update()"

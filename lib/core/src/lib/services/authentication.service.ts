@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { Authentication } from '@alfresco/adf-core/auth';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, Observer, ReplaySubject, forkJoin } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -34,7 +35,7 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService extends Authentication {
     private redirectUrl: RedirectionModel = null;
 
     private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
@@ -66,6 +67,7 @@ export class AuthenticationService {
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
         private logService: LogService) {
+        super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
@@ -78,14 +80,18 @@ export class AuthenticationService {
     }
 
     private loadUserDetails() {
-        const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
-        const bpmUser$ = this.getBpmLoggedUser();
-
         if (this.isALLProvider()) {
+            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
+            const bpmUser$ = this.getBpmLoggedUser();
+
             forkJoin([ecmUser$, bpmUser$]).subscribe(() => this.onLogin.next());
         } else if (this.isECMProvider()) {
+            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
+
             ecmUser$.subscribe(() => this.onLogin.next());
         } else {
+            const bpmUser$ = this.getBpmLoggedUser();
+
             bpmUser$.subscribe(() => this.onLogin.next());
         }
     }

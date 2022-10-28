@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
 import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -352,7 +352,7 @@ describe('Form service', () => {
             expect(formParsed).toBeDefined();
         });
 
-        it('should create a Form form a Node', async() => {
+        it('should create a Form form a Node', fakeAsync(() => {
             const nameForm = 'testNode';
             const formId = 100;
 
@@ -403,9 +403,9 @@ describe('Form service', () => {
             stubGetEcmModel();
             stubAddFieldsToAForm();
 
-            await service.createFormFromANode(nameForm).subscribe((result) => {
+            service.createFormFromANode(nameForm).subscribe((result) => {
                 expect(result.id).toEqual(formId);
             });
-        });
+        }));
     });
 });

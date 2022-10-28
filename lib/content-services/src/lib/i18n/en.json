@@ -270,6 +270,9 @@
         "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
         "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Search Filter List"
       }
     },
     "ICONS": {
@@ -384,6 +387,7 @@
     "EXPIRATION-LABEL" : "Expiration Date",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CLOSE": "Close",
+    "COPY_BUTTON_LABEL": "Copy link",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Remove this shared link",
       "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",

@@ -109,9 +109,7 @@ export class FormModel implements ProcessFormModel {
             this.enableFixedSpace = enableFixedSpace ? true : false;
             this.confirmMessage = json.confirmMessage || {};
 
-            this.tabs = (json.tabs || []).map((tabJson) => {
-                return new TabModel(this, tabJson);
-            });
+            this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 
             this.fields = this.parseRootFields(json);
             this.fieldsCache = this.getFormFields();

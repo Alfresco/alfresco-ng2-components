@@ -23,6 +23,7 @@ import { NotificationHistoryComponent } from './components/notification-history.
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationIconPipe } from './pipes/notification-icon.pipe';
 import { PaginationModule } from '../pagination/pagination.module';
+import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
 @NgModule({
     imports: [
@@ -34,10 +35,12 @@ import { PaginationModule } from '../pagination/pagination.module';
     ],
     declarations: [
         NotificationHistoryComponent,
+        AddNotificationStorybookComponent,
         NotificationIconPipe
     ],
     exports: [
-        NotificationHistoryComponent
+        NotificationHistoryComponent,
+        AddNotificationStorybookComponent
     ]
 })
-export class NotificationHistoryModule {}
+export class NotificationHistoryModule { }

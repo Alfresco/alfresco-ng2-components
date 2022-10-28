@@ -78,9 +78,8 @@ const template: Story = (args) => ({
     props: args
 });
 
-export const SingleValuedDateItemCardView = template.bind({});
-
-SingleValuedDateItemCardView.args = {
+export const singleValuedDateItemCardView = template.bind({});
+singleValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
@@ -90,10 +89,10 @@ SingleValuedDateItemCardView.args = {
         editable: true
     })
 };
+singleValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const MultiValuedDateItemCardView = template.bind({});
-
-MultiValuedDateItemCardView.args = {
+export const multiValuedDateItemCardView = template.bind({});
+multiValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item - Multivalue (chips)',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
@@ -104,10 +103,10 @@ MultiValuedDateItemCardView.args = {
         multivalued: true
     })
 };
+multiValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const SingleValuedDatetimeItemCardView = template.bind({});
-
-SingleValuedDatetimeItemCardView.args = {
+export const singleValuedDatetimeItemCardView = template.bind({});
+singleValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item',
         value: undefined,
@@ -117,10 +116,10 @@ SingleValuedDatetimeItemCardView.args = {
         editable: true
     })
 };
+singleValuedDatetimeItemCardView.parameters = { layout: 'centered' };
 
-export const MultiValuedDatetimeItemCardView = template.bind({});
-
-MultiValuedDatetimeItemCardView.args = {
+export const multiValuedDatetimeItemCardView = template.bind({});
+multiValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item - Multivalue (chips)',
         value: undefined,
@@ -131,3 +130,4 @@ MultiValuedDatetimeItemCardView.args = {
         multivalued: true
     })
 };
+multiValuedDatetimeItemCardView.parameters = { layout: 'centered' };

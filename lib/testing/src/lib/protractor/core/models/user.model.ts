@@ -33,14 +33,14 @@ export class UserModel {
     id: number;
 
     constructor(details: any = {}) {
-        const EMAIL_DOMAIN = browser.params?.testConfig?.projectName ? browser.params.testConfig.projectName : 'alfresco';
+        const EMAIL_DOMAIN = browser.params?.testConfig?.emailDomain ? browser.params.testConfig.emailDomain : 'example.com';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
 
         const USER_IDENTIFY = `${this.firstName}${this.lastName}.${StringUtil.generateRandomLowercaseString(5)}`;
 
         this.password = details.password ? details.password : this.password;
-        this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;
+        this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}`;
         this.username = details.username ? details.username : USER_IDENTIFY;
         this.idIdentityService = details.idIdentityService ? details.idIdentityService : this.idIdentityService;
         this.type = details.type ? details.type : this.type;

@@ -57,6 +57,7 @@ export default {
 const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
     props: args
 });
+languageMenuComponentTemplate.parameters = { layout: 'centered' };
 
 export const asMainMenu = languageMenuComponentTemplate.bind({});
 asMainMenu.decorators = [
@@ -71,6 +72,7 @@ asMainMenu.decorators = [
       </mat-menu>
     `)
 ];
+asMainMenu.parameters = { layout: 'centered' };
 
 export const asNestedMenu = languageMenuComponentTemplate.bind({});
 asNestedMenu.decorators = [
@@ -93,3 +95,4 @@ asNestedMenu.decorators = [
       </mat-menu>
     `)
 ];
+asNestedMenu.parameters = { layout: 'centered' };

@@ -2,8 +2,10 @@
           disableRipple
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
+          tabIndex="0"
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
+          (keydown.enter)="onEnterKeydown()"
           [attr.title]="widget.getDisplayValue() | async"
           #menuTrigger="matMenuTrigger">
     <span class="adf-search-filter-placeholder">

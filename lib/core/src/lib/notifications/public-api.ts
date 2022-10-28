@@ -16,6 +16,7 @@
  */
 
 export * from './components/notification-history.component';
+export * from './components/add-notification.stories.component';
 export * from './helpers/notification.factory';
 export * from './models/notification.model';
 export * from './services/notification.service';

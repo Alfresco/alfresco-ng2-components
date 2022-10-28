@@ -29,7 +29,7 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, TemplateModule],
             providers: [
-                { provide: ActivatedRoute, useValue: { params: of({}) }}
+                { provide: ActivatedRoute, useValue: { params: of({}) } }
             ]
         })
     ],
@@ -67,7 +67,7 @@ export default {
     }
 } as Meta;
 
-const template: Story<ErrorContentComponent> = ( args: ErrorContentComponent & { errorContentActions: boolean } ) => ({
+const template: Story<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
     props: args,
     template: `
     <adf-error-content errorCode="${args.errorCode}">
@@ -78,3 +78,4 @@ const template: Story<ErrorContentComponent> = ( args: ErrorContentComponent & {
 });
 
 export const errorContent = template.bind({});
+errorContent.parameters = { layout: 'centered' };

@@ -752,7 +752,8 @@ describe('DataTable', () => {
         dataTable.onRowClick(row, null);
     });
 
-    it('should emit double click if there are two single click in 250ms', (done) => {
+    it('should emit double click if there are two single click in 250ms', fakeAsync(() => {
+        let doubleClickCount = 0;
 
         const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
@@ -760,7 +761,7 @@ describe('DataTable', () => {
         fixture.detectChanges();
 
         dataTable.rowDblClick.subscribe(() => {
-            done();
+            doubleClickCount += 1;
         });
 
         dataTable.onRowClick(row, null);
@@ -768,16 +769,22 @@ describe('DataTable', () => {
             dataTable.onRowClick(row, null);
         }
             , 240);
-   });
 
-    it('should emit double click if there are more than two single click in 250ms', (done) => {
+        tick(490);
+
+
+        expect(doubleClickCount).toBe(1);
+   }));
+
+    it('should emit double click if there are more than two single click in 250ms', fakeAsync(() => {
+        let doubleClickCount = 0;
         const row = {} as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
         dataTable.ngOnChanges({});
         fixture.detectChanges();
 
         dataTable.rowDblClick.subscribe(() => {
-            done();
+            doubleClickCount += 1;
         });
 
         dataTable.onRowClick(row, null);
@@ -787,9 +794,13 @@ describe('DataTable', () => {
             dataTable.onRowClick(row, null);
         }
             , 240);
-   });
 
-    it('should emit single click if there are two single click in more than 250ms', (done) => {
+        tick(740);
+
+        expect(doubleClickCount).toBe(1);
+   }));
+
+    it('should emit single click if there are two single click in more than 250ms',  fakeAsync(() => {
         const row = {} as DataRow;
         let clickCount = 0;
 
@@ -799,17 +810,19 @@ describe('DataTable', () => {
 
         dataTable.rowClick.subscribe(() => {
             clickCount += 1;
-            if (clickCount === 2) {
-                done();
-            }
         });
 
         dataTable.onRowClick(row, null);
+
         setTimeout(() => {
             dataTable.onRowClick(row, null);
         }
             , 260);
-    });
+
+        tick(510);
+
+        expect(clickCount).toBe(2);
+    }));
 
     it('should emit row-click dom event', (done) => {
         const row = {} as DataRow;
@@ -975,22 +988,6 @@ describe('DataTable', () => {
         expect(dataTable.isSelectAllChecked).toBeTruthy();
         dataTable.onSelectAllClick({ checked: false } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBeFalsy();
-    });
-
-    it('should reset selection upon data rows change', () => {
-        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
-
-        dataTable.data = data;
-        dataTable.multiselect = true;
-        dataTable.ngAfterContentInit();
-        dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
-
-        expect(dataTable.selection.every((entry) => entry.isSelected));
-
-        data.setRows([]);
-        fixture.detectChanges();
-
-        expect(dataTable.selection.every((entry) => !entry.isSelected));
     });
 
     it('should update rows on "select all" click', () => {

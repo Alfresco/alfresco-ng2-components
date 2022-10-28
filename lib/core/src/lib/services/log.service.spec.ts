@@ -19,7 +19,7 @@
 
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogService } from './log.service';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -165,15 +165,15 @@ describe('LogService', () => {
         expect(console.error).toHaveBeenCalled();
     });
 
-    it('message Observable', done => {
+    it('message Observable', fakeAsync(() => {
         appConfigService.config['logLevel'] = 'trace';
 
         providesLogComponent.componentInstance.logService.onMessage.subscribe(
-            () => {
-                done();
+            (message) => {
+                expect(message).toEqual({ text: 'Test message', type: 'LOG' });
             }
         );
 
         providesLogComponent.componentInstance.log();
-    });
+    }));
 });

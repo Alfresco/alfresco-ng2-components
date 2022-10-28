@@ -47,11 +47,11 @@ export default {
     }
 } as Meta;
 
-export const CardViewKeyValuePairsItem: Story<CardViewKeyValuePairsItemComponent> =
+export const cardViewKeyValuePairsItem: Story<CardViewKeyValuePairsItemComponent> =
     (args: CardViewKeyValuePairsItemComponent) => ({
         props: args
     });
-CardViewKeyValuePairsItem.args = {
+cardViewKeyValuePairsItem.args = {
     property: new CardViewKeyValuePairsItemModel({
         label: 'CardView Key-Value Pairs Item',
         value: [

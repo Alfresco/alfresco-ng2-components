@@ -78,7 +78,7 @@ export default {
     }
 } as Meta;
 
-const template: Story<EmptyContentComponent> = ( args: EmptyContentComponent & { anyContentProjection: boolean } ) => ({
+const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
     props: args,
     template: `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
@@ -89,3 +89,4 @@ const template: Story<EmptyContentComponent> = ( args: EmptyContentComponent & {
 });
 
 export const emptyContent = template.bind({});
+emptyContent.parameters = { layout: 'centered' };
