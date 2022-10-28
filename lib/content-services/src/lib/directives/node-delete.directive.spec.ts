@@ -19,8 +19,9 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
     template: `
@@ -89,7 +90,9 @@ describe('NodeDeleteDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreTestingModule
+            TranslateModule.forRoot(),
+            CoreTestingModule,
+            ContentDirectiveModule
         ],
         declarations: [
             TestComponent,

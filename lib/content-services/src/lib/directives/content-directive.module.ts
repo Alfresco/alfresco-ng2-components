@@ -26,6 +26,7 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { LibraryMembershipDirective } from './library-membership.directive';
+import { NodeDeleteDirective } from './node-delete.directive';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         AutoFocusDirective,
         CheckAllowableOperationDirective,
         LibraryFavoriteDirective,
-        LibraryMembershipDirective
+        LibraryMembershipDirective,
+        NodeDeleteDirective
     ],
     exports: [
         NodeLockDirective,
@@ -48,7 +50,8 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         AutoFocusDirective,
         CheckAllowableOperationDirective,
         LibraryFavoriteDirective,
-        LibraryMembershipDirective
+        LibraryMembershipDirective,
+        NodeDeleteDirective
     ]
 })
 export class ContentDirectiveModule {

@@ -2,5 +2,6 @@
 - CheckAllowableOperationDirective: Moved from ADF Core to ADF content services
 - LibraryFavoriteDirective: Moved from ADF Core to ADF content services
 - LibraryMembershipDirective: Moved from ADF Core to ADF content services
+- NodeDeleteDirective: Moved from ADF Core to ADF content services
 
 
