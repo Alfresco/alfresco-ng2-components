@@ -15,17 +15,4 @@
  * limitations under the License.
  */
 
-export * from './highlight.directive';
-export * from './logout.directive';
-export * from './node-delete.directive';
-export * from './node-favorite.directive';
-export * from './node-restore.directive';
-export * from './node-download.directive';
-export * from './upload.directive';
-export * from './version-compatibility.directive';
-export * from './tooltip-card/tooltip-card.directive';
-export * from './infinite-select-scroll.directive';
-export * from './library-favorite.directive';
-export * from './library-membership.directive';
-
-export * from './directive.module';
+export * from './node-allowable-operation-subject.interface';

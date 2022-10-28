@@ -23,7 +23,6 @@ import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
@@ -46,7 +45,6 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         LogoutDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
@@ -62,7 +60,6 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         LogoutDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,

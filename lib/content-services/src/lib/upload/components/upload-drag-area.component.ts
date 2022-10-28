@@ -16,10 +16,11 @@
  */
 
 import {
-    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodeAllowableOperationSubject,
+    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils,
     NotificationService, TranslationService, UploadService, ContentService, AllowableOperationsEnum
 } from '@alfresco/adf-core';
 import { Component, forwardRef, ViewEncapsulation, NgZone } from '@angular/core';
+import { NodeAllowableOperationSubject } from '../../interfaces';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({

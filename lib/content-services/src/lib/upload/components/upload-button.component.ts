@@ -17,7 +17,7 @@
 
 import {
     ContentService, EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, NodeAllowableOperationSubject, TranslationService, UploadService, AllowableOperationsEnum
+    LogService, TranslationService, UploadService, AllowableOperationsEnum
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
@@ -27,6 +27,7 @@ import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';
+import { NodeAllowableOperationSubject } from '../../interfaces';
 
 @Component({
     selector: 'adf-upload-button',

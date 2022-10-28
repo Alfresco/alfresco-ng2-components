@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
 @NgModule({
     imports: [
@@ -34,12 +35,14 @@ import { AutoFocusDirective } from './auto-focus.directive';
         NodeLockDirective,
         NodeCounterDirective,
         NodeCounterComponent,
-        AutoFocusDirective
+        AutoFocusDirective,
+        CheckAllowableOperationDirective
     ],
     exports: [
         NodeLockDirective,
         NodeCounterDirective,
-        AutoFocusDirective
+        AutoFocusDirective,
+        CheckAllowableOperationDirective
     ]
 })
 export class ContentDirectiveModule {
