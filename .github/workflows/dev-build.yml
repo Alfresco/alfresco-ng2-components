@@ -82,18 +82,21 @@ jobs:
       - name: get NX cache folder
         uses: actions/download-artifact@v3
         with:
+          if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
           path: nxcache/
           name: nxcache-${{ github.ref_name }}
 ## DIST
       - name: get Dist folder
         uses: actions/download-artifact@v3
         with:
+          if-no-files-found: ignore
           path: dist/
           name: dist-${{ github.ref_name }}
 ## SMARTRUNNER
       - name: Get Smartrunner folder
         uses: actions/download-artifact@v3
         with:
+          if-no-files-found: ignore
           path: .protractor-smartrunner/
           name: smartrunner-${{ github.ref_name }}
 
