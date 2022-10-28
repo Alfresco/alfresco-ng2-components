@@ -268,7 +268,7 @@ export class TaskDetailsPage {
     }
 
     async checkCommentIsDisplayed(comment: string): Promise<void> {
-        const row = element(by.cssContainingText('div[id="comment-message"]', comment));
+        const row = element(by.cssContainingText('div[class="adf-comment-message"]', comment));
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
