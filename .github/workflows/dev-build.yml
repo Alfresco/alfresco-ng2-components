@@ -41,6 +41,7 @@ jobs:
       TRAVIS_BRANCH: develop
       # TRAVIS_EVENT_TYPE: push
     steps:
+# PREPARATION
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -50,45 +51,88 @@ jobs:
         with:
           node-version: 14
           cache-dependency-path: subdir/package-lock.json
-
-
-      - name: Cache node modules
-        id: cache-npm
+# CACHE
+## MODULES
+      - name: Node modules cache
+        id: cache-node-modules
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: node-modules-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
+            node-modules-${{ runner.os }}-build-${{ env.cache-name }}-
+            node-modules-${{ runner.os }}-build-
+            node-modules-${{ runner.os }}-
+## .NPM
+      - name: Node cache
+        id: cache-npm 
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with: 
+          path: ~/.npm
+          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
+            .npm-${{ runner.os }}-build-
+            .npm-${{ runner.os }}-
+## NXCACHE
+      - name: get NX cache folder
+        uses: actions/download-artifact@v3
+        with:
+          path: nxcache/
+          name: nxcache-${{ github.ref_name }}
+## DIST
+      - name: get Dist folder
+        uses: actions/download-artifact@v3
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+## SMARTRUNNER
+      - name: Get Smartrunner folder
+        uses: actions/download-artifact@v3
+        with:
+          path: .protractor-smartrunner/
+          name: smartrunner-${{ github.ref_name }}
 
+
+
+
+
+
+# PREREQUISITES
       - name: install Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+# ENV LOAD
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
           yml_path: .travis.yml
+      # - uses: Alfresco/alfresco-ng2-components/.github/actions/travis-event-type-load@AAE-7986-dev-act
+      - uses: .github/actions/travis-event-type-load
+      - uses: nrwl/nx-set-shas@v3
+# BUILD
+
+      - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+
       - name: before install
-        run: bash -x ./scripts/ci/job_hooks/before_install.sh
-      - name: install
-        run: bash -x ./scripts/ci/job_hooks/install.sh
-      - name: Update NX settings to use DEV branch
-        uses: mikefarah/yq@v4.28.1
-        with:
-          cmd: yq -i '.affected.defaultBase = env(GITHUB_BRANCH)' nx.json
-      - name: Lib::Build
         run: |
-          sudo ln -s $(npm bin)/nx /usr/bin/nx
-          bash -xeo pipefail ./scripts/travis/build/build-libs.sh
+          set -a
+          ./scripts/ci/job_hooks/before_install.sh
+          set +a
+      - name: npm ci
+        run: npm ci
+      # - name: Update NX settings to use DEV branch
+      #   uses: mikefarah/yq@v4.28.1
+      #   with:
+      #     cmd: yq -i '.affected.defaultBase = env(GITHUB_BRANCH)' nx.json
+      # - name: Lib::Build
+      #   run: |
+      #     sudo ln -s $(npm bin)/nx /usr/bin/nx
+      #     bash -xeo pipefail ./scripts/travis/build/build-libs.sh
         # bump
         # bash ./scripts/travis/release/release-npm.sh # launch npm-publish
       # ./scripts/travis/release/release-npm.sh || exit 1
@@ -98,3 +142,25 @@ jobs:
       #     path: $NODE_MODULES_DIR
       #     key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
       #     restore-keys: v1-npm-deps-
+
+
+# UPDATE BUILD CACHE
+## NXCACHE
+      - name: get NX cache folder
+        uses: actions/upload-artifact@v3
+        with:
+          path: nxcache/
+          name: nxcache-${{ github.ref_name }}
+## DIST
+      - name: get Dist folder
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+## SMARTRUNNER
+      - name: Get Smartrunner folder
+        uses: actions/upload-artifact@v3
+        with:
+          path: .protractor-smartrunner/
+          name: smartrunner-${{ github.ref_name }}
+
