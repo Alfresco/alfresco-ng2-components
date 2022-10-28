@@ -78,27 +78,27 @@ jobs:
             .npm-${{ runner.os }}-build-${{ env.cache-name }}-
             .npm-${{ runner.os }}-build-
             .npm-${{ runner.os }}-
-## NXCACHE
-      - name: get NX cache folder
-        uses: actions/download-artifact@v3
-        with:
-          if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: get Dist folder
-        uses: actions/download-artifact@v3
-        with:
-          if-no-files-found: ignore
-          path: dist/
-          name: dist-${{ github.ref_name }}
-## SMARTRUNNER
-      - name: Get Smartrunner folder
-        uses: actions/download-artifact@v3
-        with:
-          if-no-files-found: ignore
-          path: .protractor-smartrunner/
-          name: smartrunner-${{ github.ref_name }}
+# ## NXCACHE
+#       - name: get NX cache folder
+#         uses: actions/download-artifact@v3
+#         with:
+#           if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
+#           path: nxcache/
+#           name: nxcache-${{ github.ref_name }}
+# ## DIST
+#       - name: get Dist folder
+#         uses: actions/download-artifact@v3
+#         with:
+#           if-no-files-found: ignore
+#           path: dist/
+#           name: dist-${{ github.ref_name }}
+# ## SMARTRUNNER
+#       - name: Get Smartrunner folder
+#         uses: actions/download-artifact@v3
+#         with:
+#           if-no-files-found: ignore
+#           path: .protractor-smartrunner/
+#           name: smartrunner-${{ github.ref_name }}
 
 
 
@@ -147,23 +147,23 @@ jobs:
       #     restore-keys: v1-npm-deps-
 
 
-# UPDATE BUILD CACHE
-## NXCACHE
-      - name: get NX cache folder
-        uses: actions/upload-artifact@v3
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: get Dist folder
-        uses: actions/upload-artifact@v3
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-## SMARTRUNNER
-      - name: Get Smartrunner folder
-        uses: actions/upload-artifact@v3
-        with:
-          path: .protractor-smartrunner/
-          name: smartrunner-${{ github.ref_name }}
+# # UPDATE BUILD CACHE
+# ## NXCACHE
+#       - name: get NX cache folder
+#         uses: actions/upload-artifact@v3
+#         with:
+#           path: nxcache/
+#           name: nxcache-${{ github.ref_name }}
+# ## DIST
+#       - name: get Dist folder
+#         uses: actions/upload-artifact@v3
+#         with:
+#           path: dist/
+#           name: dist-${{ github.ref_name }}
+# ## SMARTRUNNER
+#       - name: Get Smartrunner folder
+#         uses: actions/upload-artifact@v3
+#         with:
+#           path: .protractor-smartrunner/
+#           name: smartrunner-${{ github.ref_name }}
 
