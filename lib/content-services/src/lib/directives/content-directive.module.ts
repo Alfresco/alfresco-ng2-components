@@ -25,6 +25,7 @@ import { NodeCounterComponent, NodeCounterDirective } from './node-counter.direc
 import { AutoFocusDirective } from './auto-focus.directive';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
+import { LibraryMembershipDirective } from './library-membership.directive';
 
 @NgModule({
     imports: [
@@ -38,14 +39,16 @@ import { LibraryFavoriteDirective } from './library-favorite.directive';
         NodeCounterComponent,
         AutoFocusDirective,
         CheckAllowableOperationDirective,
-        LibraryFavoriteDirective
+        LibraryFavoriteDirective,
+        LibraryMembershipDirective
     ],
     exports: [
         NodeLockDirective,
         NodeCounterDirective,
         AutoFocusDirective,
         CheckAllowableOperationDirective,
-        LibraryFavoriteDirective
+        LibraryFavoriteDirective,
+        LibraryMembershipDirective
     ]
 })
 export class ContentDirectiveModule {

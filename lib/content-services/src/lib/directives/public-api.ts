@@ -21,3 +21,4 @@ export * from './node-counter.directive';
 export * from './auto-focus.directive';
 export * from './check-allowable-operation.directive';
 export * from './library-favorite.directive';
+export * from './library-membership.directive';
