@@ -112,7 +112,7 @@ jobs:
         with:
           yml_path: .travis.yml
       # - uses: Alfresco/alfresco-ng2-components/.github/actions/travis-event-type-load@AAE-7986-dev-act
-      - uses: .github/actions/travis-event-type-load
+      - uses: ./.github/actions/travis-event-type-load
       - uses: nrwl/nx-set-shas@v3
 # BUILD
 
