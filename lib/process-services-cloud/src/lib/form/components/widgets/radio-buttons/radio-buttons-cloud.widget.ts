@@ -43,6 +43,8 @@ import { takeUntil } from 'rxjs/operators';
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     typeId = 'RadioButtonsCloudWidgetComponent';
+    isRestApiFailed = false;
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
@@ -61,9 +63,13 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((result: FormFieldOption[]) => {
+                this.resetRestApiErrorMessage();
                 this.field.options = result;
                 this.field.updateForm();
-            }, (err) => this.handleError(err));
+            }, (err) => {
+                this.resetRestApiOptions();
+                this.handleError(err);
+            });
     }
 
     onOptionClick(optionSelected: any) {
@@ -72,6 +78,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     handleError(error: any) {
+        this.isRestApiFailed = true;
         this.logService.error(error);
     }
 
@@ -86,5 +93,17 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
             return this.field.value[id] === option.id || this.field.value[name] === option.name;
         }
         return this.field.value === option.id;
+    }
+
+    resetRestApiErrorMessage() {
+        this.isRestApiFailed = false;
+    }
+
+    resetRestApiOptions() {
+        this.field.options = [];
+    }
+
+    getRestUrlHostName(): string {
+        return new URL(this.field?.restUrl).hostname ?? this.field?.restUrl;
     }
 }
