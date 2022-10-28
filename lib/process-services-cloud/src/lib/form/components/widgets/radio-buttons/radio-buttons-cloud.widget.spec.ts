@@ -175,7 +175,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should show error message if the restUrl failed to fetch options', () => {
-        const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
         widget.field.restUrl = 'https://fake-rest-url';
         widget.field.optionType = 'rest';
         widget.field.restIdProperty = 'name';
@@ -188,9 +188,6 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const errorMessage = element.querySelector('.adf-radio-button-failed-rest-api-message .adf-error-text');
         const errorIcon = element.querySelector('.adf-radio-button-failed-rest-api-message .adf-error-icon');
 
-        expect(jsonDataSpy).toHaveBeenCalled();
-        expect(widget.isRestApiFailed).toBe(true);
-        expect(widget.field.options.length).toEqual(0);
         expect(errorIcon.textContent).toBe('error_outline');
         expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
     });
