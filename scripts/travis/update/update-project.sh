@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-git config user.name "alfresco-build"
-git config user.email "alfresco-build@hyland.com"
+git config --global user.name "alfresco-build"
+git config --global user.email "alfresco-build@hyland.com"
 
 BUILD_PIPELINE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$BUILD_PIPELINE_DIR/../.."
