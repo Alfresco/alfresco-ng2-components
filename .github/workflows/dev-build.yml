@@ -124,6 +124,20 @@ jobs:
           set -a
           ./scripts/ci/job_hooks/before_install.sh
           set +a
+          echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
+          echo "GIT_HASH=${GIT_HASH} >> $GITHUB_ENV
+          echo "NODE_OPTIONS=${NODE_OPTIONS} >> $GITHUB_ENV
+          echo "BASE_HASH=${BASE_HASH} >> $GITHUB_ENV
+          echo "HEAD_HASH=${HEAD_HASH} >> $GITHUB_ENV
+          echo "HEAD_COMMIT_HASH=${HEAD_COMMIT_HASH} >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=${COMMIT_MESSAGE} >> $GITHUB_ENV
+          echo "NX_CALCULATION_FLAGS=${NX_CALCULATION_FLAGS} >> $GITHUB_ENV
+          echo "BUILD_OPTS=${BUILD_OPTS} >> $GITHUB_ENV
+          echo "S3_SMART_RUNNER_PATH=${S3_SMART_RUNNER_PATH} >> $GITHUB_ENV
+          echo "NODE_VERSION=${NODE_VERSION} >> $GITHUB_ENV
+          echo "PACKAGE_LOCK_SHASUM=${PACKAGE_LOCK_SHASUM} >> $GITHUB_ENV
+          echo "S3_NODE_MODULES_CACHE_ID=${S3_NODE_MODULES_CACHE_ID} >> $GITHUB_ENV
+          echo "S3_NODE_MODULES_CACHE_PATH=${S3_NODE_MODULES_CACHE_PATH} >> $GITHUB_ENV
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - name: npm ci
         run: npm ci
