@@ -25,7 +25,6 @@ export * from './upload.directive';
 export * from './version-compatibility.directive';
 export * from './tooltip-card/tooltip-card.directive';
 export * from './infinite-select-scroll.directive';
-export * from './library-favorite.directive';
 export * from './library-membership.directive';
 
 export * from './directive.module';

@@ -24,6 +24,7 @@ import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
+import { LibraryFavoriteDirective } from './library-favorite.directive';
 
 @NgModule({
     imports: [
@@ -36,13 +37,15 @@ import { CheckAllowableOperationDirective } from './check-allowable-operation.di
         NodeCounterDirective,
         NodeCounterComponent,
         AutoFocusDirective,
-        CheckAllowableOperationDirective
+        CheckAllowableOperationDirective,
+        LibraryFavoriteDirective
     ],
     exports: [
         NodeLockDirective,
         NodeCounterDirective,
         AutoFocusDirective,
-        CheckAllowableOperationDirective
+        CheckAllowableOperationDirective,
+        LibraryFavoriteDirective
     ]
 })
 export class ContentDirectiveModule {

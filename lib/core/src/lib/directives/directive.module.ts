@@ -31,7 +31,6 @@ import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { LibraryMembershipDirective } from './library-membership.directive';
 
 @NgModule({
@@ -52,7 +51,6 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         TooltipCardDirective,
         TooltipCardComponent,
         InfiniteSelectScrollDirective,
-        LibraryFavoriteDirective,
         LibraryMembershipDirective
     ],
     exports: [
@@ -66,7 +64,6 @@ import { LibraryMembershipDirective } from './library-membership.directive';
         VersionCompatibilityDirective,
         TooltipCardDirective,
         InfiniteSelectScrollDirective,
-        LibraryFavoriteDirective,
         LibraryMembershipDirective
     ]
 })

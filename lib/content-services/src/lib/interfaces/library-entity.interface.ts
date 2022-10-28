@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-export * from './content-directive.module';
-export * from './node-lock.directive';
-export * from './node-counter.directive';
-export * from './auto-focus.directive';
-export * from './check-allowable-operation.directive';
-export * from './library-favorite.directive';
+import { Site } from '@alfresco/js-api';
+
+export interface LibraryEntity {
+    entry: Site;
+    isLibrary: boolean;
+    isFavorite: boolean;
+}

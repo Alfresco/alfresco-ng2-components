@@ -16,3 +16,4 @@
  */
 
 export * from './node-allowable-operation-subject.interface';
+export * from './library-entity.interface';

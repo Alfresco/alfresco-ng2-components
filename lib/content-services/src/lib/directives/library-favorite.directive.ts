@@ -16,14 +16,9 @@
  */
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { SiteBody, FavoriteBody, FavoriteEntry, Site, FavoritesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-
-export interface LibraryEntity {
-    entry: Site;
-    isLibrary: boolean;
-    isFavorite: boolean;
-}
+import { SiteBody, FavoriteBody, FavoriteEntry, FavoritesApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { LibraryEntity } from '../interfaces';
 
 @Directive({
     selector: '[adf-favorite-library]',
