@@ -110,22 +110,24 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
-    it('should stream only the selected attribute when using select', async () => {
+    it('should stream only the selected attribute when using select', (done) => {
         appConfigService.select('testProp').subscribe((property) => {
             expect(property).toEqual(true);
+            done();
         });
 
         appConfigService.config.testProp = true;
-        await appConfigService.load();
+        appConfigService.load();
     });
 
-    it('should stream the value when is set', async () => {
+    it('should stream the value when is set', (done) => {
         appConfigService.onLoad.subscribe((config) => {
             expect(config.testProp).toBe(true);
+            done();
         });
 
         appConfigService.config.testProp = true;
-        await appConfigService.load();
+        appConfigService.load();
     });
 
     it('should skip the optional port number', () => {
