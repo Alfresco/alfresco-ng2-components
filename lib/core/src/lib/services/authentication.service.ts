@@ -80,14 +80,18 @@ export class AuthenticationService extends Authentication {
     }
 
     private loadUserDetails() {
-        const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
-        const bpmUser$ = this.getBpmLoggedUser();
-
         if (this.isALLProvider()) {
+            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
+            const bpmUser$ = this.getBpmLoggedUser();
+
             forkJoin([ecmUser$, bpmUser$]).subscribe(() => this.onLogin.next());
         } else if (this.isECMProvider()) {
+            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
+
             ecmUser$.subscribe(() => this.onLogin.next());
         } else {
+            const bpmUser$ = this.getBpmLoggedUser();
+
             bpmUser$.subscribe(() => this.onLogin.next());
         }
     }
