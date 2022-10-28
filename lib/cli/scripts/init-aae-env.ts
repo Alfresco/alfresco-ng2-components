@@ -36,7 +36,7 @@ export interface ConfigArgs {
     devopsUsername: string;
     devopsPassword: string;
     oauth: string;
-    tokenEndpoint: string,
+    tokenEndpoint: string;
     clientId: string;
     secret: string;
     scope: string;
