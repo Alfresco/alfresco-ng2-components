@@ -16,7 +16,7 @@
  */
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
@@ -68,7 +68,6 @@ describe('AppConfigService', () => {
 
         extensionService = TestBed.inject(ExtensionService);
         appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.load();
     });
 
     it('should merge the configs from extensions', () => {
@@ -111,19 +110,25 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
-    it('should stream only the selected attribute changes when using select',  fakeAsync(() => {
-        appConfigService.config.testProp = true;
+    it('should stream only the selected attribute when using select', (done) => {
         appConfigService.select('testProp').subscribe((property) => {
-            expect(property).toBeTruthy();
+            expect(property).toEqual(true);
+            done();
         });
-    }));
 
-    it('should stream the page size value when is set', fakeAsync(() => {
         appConfigService.config.testProp = true;
+        appConfigService.load();
+    });
+
+    it('should stream the value when is set', (done) => {
         appConfigService.onLoad.subscribe((config) => {
-            expect(config.testProp).toBeTruthy();
+            expect(config.testProp).toBe(true);
+            done();
         });
-    }));
+
+        appConfigService.config.testProp = true;
+        appConfigService.load();
+    });
 
     it('should skip the optional port number', () => {
         appConfigService.config.testUrl = 'http://{hostname}{:port}';
@@ -164,24 +169,23 @@ describe('AppConfigService', () => {
         expect(appConfigService.get('testUrl')).toBe('ftp://localhost:9090');
     });
 
-    it('should load external settings', () => {
-        appConfigService.load().then((config) => {
+    it('should load external settings', async () => {
+        const config = await appConfigService.load();
 
-            expect(config).toEqual(mockResponse);
-        });
+        expect(config).toEqual(mockResponse);
     });
 
-    it('should retrieve settings', () => {
-        appConfigService.load().then(() => {
-            expect(appConfigService.get('ecmHost')).toBe(mockResponse.ecmHost);
-            expect(appConfigService.get('bpmHost')).toBe(mockResponse.bpmHost);
-            expect(appConfigService.get('application.name')).toBe(mockResponse.application.name);
-        });
+    it('should retrieve settings', async () => {
+        await appConfigService.load();
+
+        expect(appConfigService.get('ecmHost')).toBe(mockResponse.ecmHost);
+        expect(appConfigService.get('bpmHost')).toBe(mockResponse.bpmHost);
+        expect(appConfigService.get('application.name')).toBe(mockResponse.application.name);
     });
 
-    it('should take excluded file list', () => {
-        appConfigService.load().then(() => {
-            expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
-        });
+    it('should take excluded file list', async () => {
+        await appConfigService.load();
+
+        expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
     });
 });
