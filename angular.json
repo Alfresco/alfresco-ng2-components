@@ -306,7 +306,7 @@
             "tsConfig": "lib/core/tsconfig.lib.json",
             "project": "lib/core/ng-package.json"
           },
-          "dependsOn": ["^build", "license"],
+          "dependsOn": ["^build", "pretheme", "license"],
           "configurations": {
             "production": {
               "project": "lib/core/ng-package.json",
