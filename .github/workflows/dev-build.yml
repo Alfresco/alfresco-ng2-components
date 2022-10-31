@@ -15,6 +15,11 @@ on:
       #   - /.*next-release.*/
       #   - /.*beta.*/
 
+
+# on:
+#   pull_request:
+#     types: [opened, reopened]
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   GITHUB_BRANCH: ${{ github.ref_name }}
@@ -116,6 +121,10 @@ jobs:
       # - uses: Alfresco/alfresco-ng2-components/.github/actions/travis-event-type-load@AAE-7986-dev-act
       - uses: ./.github/actions/travis-event-type-load
       - uses: nrwl/nx-set-shas@v3
+      - name: debug nx-set-sha
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
 # BUILD
 
       # - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
@@ -130,6 +139,7 @@ jobs:
 
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
+      - run: echo $NX_CALCULATION_FLAGS
       - name: npm ci
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
