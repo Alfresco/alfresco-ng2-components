@@ -10,16 +10,16 @@ PARENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 ENV_FILE=${1:-"/tmp/github_vars.env"}
 
 # Settings for protractor-smartrunner -------------------------------------------------
-export GIT_HASH=`git rev-parse HEAD`
+export GIT_HASH=$(git rev-parse HEAD)
 
 # Node settings
 export NODE_OPTIONS="--max_old_space_size=30000"
 
 # Settings for Nx ---------------------------------------------------------------------
-export BASE_HASH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
+export BASE_HASH="$(git merge-base origin/"$TRAVIS_BRANCH" HEAD)"
 export HEAD_HASH="HEAD"
 export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
-export COMMIT_MESSAGE=`git log --format=%B -n 1 $HEAD_COMMIT_HASH`
+export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
 
 #########################################################################################
 # Settings based of Travis event type
@@ -64,7 +64,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "pull_request"
     export BASE_HASH="origin/$TRAVIS_BRANCH"
-    source $PARENT_DIR/partials/_ci-flags-parser.sh
+    source "$PARENT_DIR/partials/_ci-flags-parser.sh"
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     echo "cron"
 else
@@ -75,10 +75,10 @@ fi
 export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$TRAVIS_BUILD_ID"
 
 # Cache for node_modules
-export NODE_VERSION=`node -v`
-export PACKAGE_LOCK_SHASUM=`shasum ./package-lock.json | cut -f 1 -d " "`
+export NODE_VERSION=$(node -v)
+export PACKAGE_LOCK_SHASUM=$(shasum ./package-lock.json | cut -f 1 -d " ")
 # This can change regardless of package-lock.json, so we need to calculate with this one as well
-export S3_NODE_MODULES_CACHE_ID=`echo $NODE_VERSION-$PACKAGE_LOCK_SHASUM | shasum  | cut -f 1 -d " "`
+export S3_NODE_MODULES_CACHE_ID=$(echo "$NODE_VERSION-$PACKAGE_LOCK_SHASUM" | shasum  | cut -f 1 -d " ")
 export S3_NODE_MODULES_CACHE_PATH="$S3_DBP_PATH/cache/node_modules/$S3_NODE_MODULES_CACHE_ID.tar.bz2"
 
 echo "========== Caching settings =========="
