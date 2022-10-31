@@ -104,11 +104,6 @@ jobs:
           path: .protractor-smartrunner/
           name: smartrunner-${{ github.ref_name }}
 
-
-
-
-
-
 # PREREQUISITES
       - name: install Python
         uses: actions/setup-python@v4
@@ -140,7 +135,7 @@ jobs:
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
-      - name: npm ci
+      - run: npm ci
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
       #   with:
