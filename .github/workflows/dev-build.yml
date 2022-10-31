@@ -30,8 +30,6 @@ jobs:
       - name: build guard check
         if: ${{ github.event_name == 'pull_request' }}
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
   build-lib:
     name: "Build Lib"
@@ -50,7 +48,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
-          cache-dependency-path: subdir/package-lock.json
+          cache-dependency-path: package-lock.json
 # CACHE
 ## MODULES
       - name: Node modules cache
@@ -70,9 +68,10 @@ jobs:
         id: cache-npm 
         uses: actions/cache@v3
         env:
-          cache-name: cache-node-modules
+          cache-name: npm-node-modules
         with: 
           path: ~/.npm
+          # TODO find a more suitable key
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             .npm-${{ runner.os }}-build-${{ env.cache-name }}-
@@ -85,18 +84,20 @@ jobs:
         with:
           path: nxcache/
           name: nxcache-${{ github.ref_name }}
-# ## DIST
-#       - name: get Dist folder
-#         uses: actions/download-artifact@v3
-#         with:
-#           path: dist/
-#           name: dist-${{ github.ref_name }}
-# ## SMARTRUNNER
-#       - name: Get Smartrunner folder
-#         uses: actions/download-artifact@v3
-#         with:
-#           path: .protractor-smartrunner/
-#           name: smartrunner-${{ github.ref_name }}
+## DIST
+      - name: get Dist folder
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+## SMARTRUNNER
+      - name: Get Smartrunner folder
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          path: .protractor-smartrunner/
+          name: smartrunner-${{ github.ref_name }}
 
 
 
@@ -121,26 +122,15 @@ jobs:
 
       - name: before install
         run: |
-          set -a
-          ./scripts/ci/job_hooks/before_install.sh
-          set +a
-          echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
-          echo "GIT_HASH=${GIT_HASH} >> $GITHUB_ENV
-          echo "NODE_OPTIONS=${NODE_OPTIONS} >> $GITHUB_ENV
-          echo "BASE_HASH=${BASE_HASH} >> $GITHUB_ENV
-          echo "HEAD_HASH=${HEAD_HASH} >> $GITHUB_ENV
-          echo "HEAD_COMMIT_HASH=${HEAD_COMMIT_HASH} >> $GITHUB_ENV
-          echo "COMMIT_MESSAGE=${COMMIT_MESSAGE} >> $GITHUB_ENV
-          echo "NX_CALCULATION_FLAGS=${NX_CALCULATION_FLAGS} >> $GITHUB_ENV
-          echo "BUILD_OPTS=${BUILD_OPTS} >> $GITHUB_ENV
-          echo "S3_SMART_RUNNER_PATH=${S3_SMART_RUNNER_PATH} >> $GITHUB_ENV
-          echo "NODE_VERSION=${NODE_VERSION} >> $GITHUB_ENV
-          echo "PACKAGE_LOCK_SHASUM=${PACKAGE_LOCK_SHASUM} >> $GITHUB_ENV
-          echo "S3_NODE_MODULES_CACHE_ID=${S3_NODE_MODULES_CACHE_ID} >> $GITHUB_ENV
-          echo "S3_NODE_MODULES_CACHE_PATH=${S3_NODE_MODULES_CACHE_PATH} >> $GITHUB_ENV
+          ./scripts/ci/job_hooks/before_install.sh /tmp/github_vars.env
+          while read ENVVAR; do
+            echo $ENVVAR" >> $GITHUB_ENV
+          done < /tmp/github_vars.env
+
+
       - run: echo $S3_NODE_MODULES_CACHE_ID
+      - run: echo $HEAD_COMMIT_HASH
       - name: npm ci
-        run: npm ci
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
       #   with:
