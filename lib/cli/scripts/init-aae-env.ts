@@ -270,7 +270,7 @@ function deploy(model: any) {
 }
 
 function initializeDefaultToken(options) {
-    options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId)
+    options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId);
     return options;
 }
 
