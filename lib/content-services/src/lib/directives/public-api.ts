@@ -23,3 +23,4 @@ export * from './check-allowable-operation.directive';
 export * from './library-favorite.directive';
 export * from './library-membership.directive';
 export * from './node-delete.directive';
+export * from './node-favorite.directive';

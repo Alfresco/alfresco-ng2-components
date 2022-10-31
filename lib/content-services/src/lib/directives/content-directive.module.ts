@@ -27,6 +27,7 @@ import { CheckAllowableOperationDirective } from './check-allowable-operation.di
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
+import { NodeFavoriteDirective } from './node-favorite.directive';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { NodeDeleteDirective } from './node-delete.directive';
         CheckAllowableOperationDirective,
         LibraryFavoriteDirective,
         LibraryMembershipDirective,
-        NodeDeleteDirective
+        NodeDeleteDirective,
+        NodeFavoriteDirective
     ],
     exports: [
         NodeLockDirective,
@@ -51,7 +53,8 @@ import { NodeDeleteDirective } from './node-delete.directive';
         CheckAllowableOperationDirective,
         LibraryFavoriteDirective,
         LibraryMembershipDirective,
-        NodeDeleteDirective
+        NodeDeleteDirective,
+        NodeFavoriteDirective
     ]
 })
 export class ContentDirectiveModule {

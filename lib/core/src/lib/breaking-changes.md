@@ -3,5 +3,6 @@
 - LibraryFavoriteDirective: Moved from ADF Core to ADF content services
 - LibraryMembershipDirective: Moved from ADF Core to ADF content services
 - NodeDeleteDirective: Moved from ADF Core to ADF content services
+- NodeFavoriteDirective: Moved from ADF Core to ADF content services
 
 
