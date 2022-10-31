@@ -16,12 +16,11 @@
  */
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlfrescoApiService, SitesService } from '../../../../core/src/lib/services';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, CoreTestingModule, SitesService } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
 
 describe('LibraryMembershipDirective', () => {
