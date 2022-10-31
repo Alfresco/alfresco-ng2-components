@@ -5,13 +5,8 @@
 
 # TODO: This one needs to be cleaned up... Only fixing it like this, because for the current PR it is out of scope
 # =======================================
-rm -rf ./node_modules/@alfresco/adf-cli/ && \
-mkdir -p ./node_modules/@alfresco/adf-cli/ && \
-cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/
-
-rm -rf ./node_modules/@alfresco/adf-testing/ && \
-mkdir -p ./node_modules/@alfresco/adf-testing/ && \
-cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/
+nx run cli:copydist
+nx run testing:copydist
 # =======================================
 
 exit 0
