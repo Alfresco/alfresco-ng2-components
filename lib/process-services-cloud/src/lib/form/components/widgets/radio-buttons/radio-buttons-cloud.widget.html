@@ -18,9 +18,5 @@
             </mat-radio-button>
         </mat-radio-group>
     </div>
-    <error-widget [error]="field.validationSummary" ></error-widget>
-    <error-widget
-        class="adf-radio-button-failed-rest-api-message" *ngIf="isRestApiFailed"
-        required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: getRestUrlHostName() } }}">
-    </error-widget>
+    <error-widget class="adf-radio-group-error-message" [error]="restApiError || field.validationSummary"></error-widget>
 </div>

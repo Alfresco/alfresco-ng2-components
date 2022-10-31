@@ -18,10 +18,11 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, LogService, FormFieldOption, ErrorMessageModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
@@ -43,13 +44,14 @@ import { takeUntil } from 'rxjs/operators';
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     typeId = 'RadioButtonsCloudWidgetComponent';
-    isRestApiFailed = false;
+    restApiError: ErrorMessageModel;
 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
-                private logService: LogService) {
+                private logService: LogService,
+                private translateService: TranslateService) {
         super(formService);
     }
 
@@ -63,7 +65,6 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((result: FormFieldOption[]) => {
-                this.resetRestApiErrorMessage();
                 this.field.options = result;
                 this.field.updateForm();
             }, (err) => {
@@ -78,7 +79,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     handleError(error: any) {
-        this.isRestApiFailed = true;
+        this.restApiError = new ErrorMessageModel({ message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() }) });
         this.logService.error(error);
     }
 
@@ -93,10 +94,6 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
             return this.field.value[id] === option.id || this.field.value[name] === option.name;
         }
         return this.field.value === option.id;
-    }
-
-    resetRestApiErrorMessage() {
-        this.isRestApiFailed = false;
     }
 
     resetRestApiOptions() {
