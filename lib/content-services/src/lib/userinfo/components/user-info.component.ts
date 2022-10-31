@@ -16,15 +16,17 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
-import { BpmUserModel } from '../../models/bpm-user.model';
-import { EcmUserModel } from '../../models/ecm-user.model';
-import { IdentityUserModel } from '../../models/identity-user.model';
-import { BpmUserService } from '../../services/bpm-user.service';
-import { IdentityUserService } from '../../services/identity-user.service';
+import {
+    AuthenticationService,
+    BpmUserModel,
+    EcmUserModel,
+    IdentityUserModel,
+    BpmUserService,
+    IdentityUserService,
+    PeopleContentService
+} from '@alfresco/adf-core';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { PeopleContentService } from '../../services/people-content.service';
 
 @Component({
     selector: 'adf-userinfo',

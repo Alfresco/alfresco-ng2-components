@@ -19,7 +19,7 @@ import {
     BpmUserModel,
     EcmUserModel,
     IdentityUserModel
-} from './../../../models';
+} from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 export class PeopleContentServiceMock {

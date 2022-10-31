@@ -17,20 +17,27 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { AuthenticationService, ContentService, PeopleContentService } from '../../services';
-import { InitialUsernamePipe } from '../../pipes';
-import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
-import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
-import { BpmUserService } from '../../services/bpm-user.service';
-import { IdentityUserService } from '../../services/identity-user.service';
-import { BpmUserModel } from '../../models/bpm-user.model';
-import { EcmUserModel } from '../../models/ecm-user.model';
+import {
+    AuthenticationService,
+    ContentService,
+    PeopleContentService,
+    InitialUsernamePipe ,
+    fakeBpmUser,
+    fakeEcmEditedUser,
+    fakeEcmUser,
+    fakeEcmUserNoImage,
+    BpmUserService,
+    IdentityUserService,
+    BpmUserModel,
+    EcmUserModel,
+    setupTestBed,
+    CoreTestingModule
+} from '@alfresco/adf-core';
 import { UserInfoComponent } from './user-info.component';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { ContentModule } from '../../content.module';
 
 class FakeSanitizer extends DomSanitizer {
 
@@ -95,7 +102,8 @@ describe('User info component', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule,
-            MatMenuModule
+            MatMenuModule,
+            ContentModule
         ]
     });
 
