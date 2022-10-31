@@ -141,8 +141,9 @@ jobs:
         run: echo "git-tag.sh" #./scripts/travis/release/git-tag.sh
       - name: Deprecate develop builds
         run: |
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          bash ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
+          echo "only when merged"
+#         ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+#         bash ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
   e2e_test:
     name: "e2e Test"
     needs: 
@@ -162,7 +163,13 @@ jobs:
         run: | 
           npx playwright install chromium
           bash ./scripts/travis/storybook-testing/storybook-test.sh
-
+      - name: "Core"
+        run: |
+          bash ./scripts/ci/job_hooks/before_e2e.sh
+          bash ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+          bash ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+          bash ./scripts/travis/e2e/e2e.sh "core"
+          bash ./scripts/ci/job_hooks/after_e2e.sh
       
     
 
