@@ -3,7 +3,7 @@
     <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="action-label">
         {{data.actionLabel}}
     </button>
-    <button mat-button *ngIf="data.actionIcon" (click)="onIconClicked()" class="action-icon">
+    <button mat-button *ngIf="data.actionIcon" (click)="onIconClicked()" class="action-icon" [attr.aria-label]="data.actionIconAriaLabel | translate">
         <mat-icon>{{ data.actionIcon }}</mat-icon>
     </button>
 </div>

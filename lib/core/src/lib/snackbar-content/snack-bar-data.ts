@@ -18,6 +18,7 @@
 export interface SnackBarData {
     actionLabel?: string;
     actionIcon?: string;
+    actionIconAriaLabel?: string;
     message: string;
     showAction?: boolean;
     callActionOnIconClick?: boolean;

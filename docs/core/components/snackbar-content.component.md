@@ -1,8 +1,8 @@
 ---
 Title: Sorting Picker Component
-Added: v5.0.0
+Added: v5.1.0
 Status: Active
-Last reviewed: 2022-10-21
+Last reviewed: 2022-10-31
 ---
 
 # [Snackbar Content Component](lib/core/src/lib/snackbar-content/snackbar-content.component.ts "Defined in snackbar-content.component.ts")
@@ -35,6 +35,7 @@ snackBar.openFromComponent(SnackbarContentComponent, {
 |-------------|-----------|---------------|-------------------------------------------------------------------------|
 | actionLabel | `string`  | false         | Displayed action as a text.                                             |
 | actionIcon  | `string`  | false         | Displayed action as an material icon.                                   |
+| actionIconAriaLabel  | `string`  | false         | Sets aria-label attribute for button with icon action.                  |
 | message     | `string`  | false         | Visible snackbar's message for user.                                    |
 | showAction     | `boolean` | false         | True if action should be visible, false in other case.                  |
 | callActionOnIconClick     | `boolean` | false         | True if clicking on icon should to trigger action, false in other case. |
