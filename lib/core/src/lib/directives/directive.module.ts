@@ -21,7 +21,6 @@ import { MaterialModule } from '../material.module';
 
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
-import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
@@ -39,7 +38,6 @@ import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directiv
     declarations: [
         HighlightDirective,
         LogoutDirective,
-        NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,
@@ -50,7 +48,6 @@ import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directiv
     exports: [
         HighlightDirective,
         LogoutDirective,
-        NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,

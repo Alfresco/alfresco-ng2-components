@@ -17,7 +17,6 @@
 
 export * from './highlight.directive';
 export * from './logout.directive';
-export * from './node-restore.directive';
 export * from './node-download.directive';
 export * from './upload.directive';
 export * from './version-compatibility.directive';

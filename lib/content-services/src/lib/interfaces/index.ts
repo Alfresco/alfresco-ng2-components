@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './node-allowable-operation-subject.interface';
-export * from './library-entity.interface';
-export * from './library-membership.interface';
+export * from './public-api';

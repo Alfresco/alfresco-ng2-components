@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-export * from './content-directive.module';
-export * from './node-lock.directive';
-export * from './node-counter.directive';
-export * from './auto-focus.directive';
-export * from './check-allowable-operation.directive';
-export * from './library-favorite.directive';
-export * from './library-membership.directive';
-export * from './node-delete.directive';
-export * from './node-favorite.directive';
-export * from './node-restore.directive';
+import { PathInfoEntity } from '@alfresco/js-api';
+
+export class RestoreMessageModel {
+    message: string;
+    path: PathInfoEntity;
+    action: string;
+}

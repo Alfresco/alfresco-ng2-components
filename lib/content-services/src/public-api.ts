@@ -36,5 +36,6 @@ export * from './lib/group/index';
 export * from './lib/aspect-list/index';
 export * from './lib/content-type/index';
 export * from './lib/new-version-uploader';
+export * from './lib/interfaces/index';
 
 export * from './lib/content.module';
