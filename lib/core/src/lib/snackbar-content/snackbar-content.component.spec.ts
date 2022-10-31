@@ -21,6 +21,7 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {By} from '@angular/platform-browser';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;
@@ -32,7 +33,8 @@ describe('SnackbarContentComponent', () => {
             imports: [
                 MatIconModule,
                 MatSnackBarModule,
-                MatButtonModule
+                MatButtonModule,
+                TranslateModule.forRoot()
             ],
             providers: [{
                 provide: MatSnackBarRef,

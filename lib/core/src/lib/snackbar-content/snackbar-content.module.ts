@@ -18,16 +18,18 @@
 import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import {SnackbarContentComponent} from './snackbar-content.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
+import { SnackbarContentComponent } from './snackbar-content.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
         MatIconModule,
         MatSnackBarModule,
-        MatButtonModule
+        MatButtonModule,
+        TranslateModule
     ],
     declarations: [
         SnackbarContentComponent

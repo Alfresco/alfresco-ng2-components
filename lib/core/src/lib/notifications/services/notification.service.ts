@@ -142,6 +142,7 @@ export class NotificationService {
                 data: {
                   actionLabel: translatedAction,
                   actionIcon: 'close',
+                  actionIconAriaLabel: 'CLOSE',
                   message: translatedMessage,
                   showAction: true,
                   callActionOnIconClick: false,
