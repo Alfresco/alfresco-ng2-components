@@ -35,10 +35,12 @@ export interface ConfigArgs {
     modelerPassword: string;
     devopsUsername: string;
     devopsPassword: string;
-    clientId: string;
-    host: string;
     oauth: string;
-    identityHost: boolean;
+    tokenEndpoint: string;
+    clientId: string;
+    secret: string;
+    scope: string;
+    host: string;
     tag: string;
 }
 
@@ -267,6 +269,11 @@ function deploy(model: any) {
     }
 }
 
+function initializeDefaultToken(options) {
+    options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId);
+    return options;
+}
+
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     let ssoHost = configArgs.oauth;
     ssoHost =  ssoHost ?? configArgs.host;
@@ -275,11 +282,12 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
         provider: 'BPM',
         hostBpm: `${configArgs.host}`,
         authType: 'OAUTH',
-        oauth2: {
-            host: `${ssoHost}/auth/realms/alfresco`,
+        oauth2  : {
+            host: `${ssoHost}`,
+            tokenUrl: `${ssoHost}/${configArgs.tokenEndpoint}`,
             clientId: `${configArgs.clientId}`,
-            scope: 'openid',
-            secret: '',
+            scope: `${configArgs.scope}`,
+            secret: `${configArgs.secret}`,
             implicitFlow: false,
             silentLogin: false,
             redirectUri: '/'
@@ -454,13 +462,11 @@ async function sleep(time: number) {
     return;
 }
 
-export default async function(configArgs: ConfigArgs) {
-    await main(configArgs);
+export default async function() {
+    await main();
 }
 
-async function main(configArgs: ConfigArgs) {
-    args = configArgs;
-
+async function main() {
     program
         .version('0.1.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
@@ -468,6 +474,9 @@ async function main(configArgs: ConfigArgs) {
         .option('-h, --host [type]', 'Host gateway')
         .option('--oauth [type]', 'SSO host')
         .option('--clientId [type]', 'sso client')
+        .option('--secret [type]', 'sso secret', '')
+        .option('--scope [type]', 'sso scope', 'openid')
+        .option('--tokenEndpoint [type]', 'discovery token Endpoint', 'auth/realms/${clientId}/protocol/openid-connect/token')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
@@ -479,6 +488,22 @@ async function main(configArgs: ConfigArgs) {
         program.outputHelp();
         return;
     }
+
+    const options = initializeDefaultToken(program.opts());
+
+    args = {
+        host: options.host,
+        clientId: options.clientId,
+        devopsUsername: options.devopsUsername,
+        devopsPassword: options.devopsPassword,
+        modelerUsername: options.modelerUsername,
+        modelerPassword: options.modelerPassword,
+        oauth: options.oauth,
+        tokenEndpoint: options.tokenEndpoint,
+        scope: options.scope,
+        secret:  options.secret,
+        tag: options.tag
+    };
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
 
