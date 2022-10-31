@@ -115,7 +115,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         fixture.detectChanges();
 
         await fixture.whenStable();
-            
+
         expect(widget.field.value).toBe('1933');
     });
 });
