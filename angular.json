@@ -868,7 +868,7 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "cd lib/cli && npm i && npm run dist"
+              "cd lib/cli && npm i && npm run dist && nx run cli:copydist"
             ]
           },
           "configurations": {
