@@ -180,11 +180,12 @@ jobs:
           node-version: 14 
       - name: Install playRight
         run: |
-          npm install -D @playwright/test
-          npx playwright install chromium
+          npm install -D @playwright/test 
+          npx playwright install         
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
-        run: |          
+        run: | 
+          bash ./scripts/ci/jobs/dbpci-before-playwright         
           bash ./scripts/travis/storybook-testing/storybook-test.sh
       - name: ${{ matrix.components }}
         if: matrix.components == 'Core'
