@@ -32,6 +32,10 @@ jobs:
     name: "Before anything unnece$$ary happens..."
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2    
       - uses: ./.github/actions/travis-event-type-load    
       - name: before install
         run: |
