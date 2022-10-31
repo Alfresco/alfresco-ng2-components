@@ -882,7 +882,7 @@
           "options": {
             "commands": [
               {
-                "command": "mkdir -p ./dist/libs/cli && cp -R ./lib/cli/dist dist/libs/cli/"
+                "command": "mkdir -p ./dist/libs/cli && cp -R ./lib/cli/dist/* dist/libs/cli/"
               }
             ]
           }
