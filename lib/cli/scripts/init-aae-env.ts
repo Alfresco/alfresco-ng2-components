@@ -269,6 +269,11 @@ function deploy(model: any) {
     }
 }
 
+function initializeDefaultToken(options) {
+    options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId)
+    return options;
+}
+
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     let ssoHost = configArgs.oauth;
     ssoHost =  ssoHost ?? configArgs.host;
@@ -471,7 +476,7 @@ async function main() {
         .option('--clientId [type]', 'sso client')
         .option('--secret [type]', 'sso secret', '')
         .option('--scope [type]', 'sso scope', 'openid')
-        .option('--tokenEndpoint [type]', 'discovery token Endpoint', '')
+        .option('--tokenEndpoint [type]', 'discovery token Endpoint', 'auth/realms/${clientId}/protocol/openid-connect/token')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
@@ -483,7 +488,9 @@ async function main() {
         program.outputHelp();
         return;
     }
-    const options = program.opts();
+
+    const options = initializeDefaultToken(program.opts());
+
     args = {
         host: options.host,
         clientId: options.clientId,
