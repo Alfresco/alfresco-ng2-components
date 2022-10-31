@@ -868,13 +868,23 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "cd lib/cli && npm i && npm run dist"
+              "cd lib/cli && npm i && npm run dist && nx run cli:copydist"
             ]
           },
           "configurations": {
             "production": {
               "tsConfig": "lib/cli/tsconfig.json"
             }
+          }
+        },
+        "copydist": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "mkdir -p ./dist/libs/cli && cp -R ./lib/cli/dist dist/libs/cli/"
+              }
+            ]
           }
         },
         "lint": {
