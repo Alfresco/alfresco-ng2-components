@@ -152,6 +152,25 @@ jobs:
       - unit-test-lib
       - postUnitTest
     runs-on: ubuntu-latest
+    strategy: 
+      fail-fast: false
+      matrix:        
+        components: 
+          - process Cloud::Storybook Playwright
+          - Core
+          - Content::Components
+          - Content::Directives
+          - Content::Document List
+          - Content::Metadata
+          - Content::Upload and Versioning
+          - Search
+          - Process::Form
+          - Process::Process
+          - Process::Tasks
+          - Process::Widgets
+          - Process Cloud::Form
+          - Process Cloud::People
+          - Process Cloud::Process
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -159,11 +178,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14 
-      - name: "Process Cloud: Storybook Playwright"
-        run: | 
+      - name: Install playRight
+        run: |
+          npm install -D @playwright/test
           npx playwright install chromium
+      - name: ${{ matrix.components }}
+        if: matrix.components == 'process Cloud::Storybook Playwright'
+        run: |          
           bash ./scripts/travis/storybook-testing/storybook-test.sh
-      - name: "Core"
+      - name: ${{ matrix.components }}
+        if: matrix.components == 'Core'
         run: |
           bash ./scripts/ci/job_hooks/before_e2e.sh
           bash ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
