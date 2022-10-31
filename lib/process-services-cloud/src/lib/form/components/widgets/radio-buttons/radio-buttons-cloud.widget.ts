@@ -103,4 +103,8 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     getRestUrlHostName(): string {
         return new URL(this.field?.restUrl).hostname ?? this.field?.restUrl;
     }
+
+    hasError(): ErrorMessageModel {
+        return this.restApiError || this.field.validationSummary;
+    }
 }
