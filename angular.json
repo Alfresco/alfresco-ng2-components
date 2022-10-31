@@ -868,7 +868,7 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "cd lib/cli && npm i && npm run dist && nx run cli:copydist"
+              "cd lib/cli && npm i && npm run dist"
             ]
           },
           "configurations": {
@@ -884,16 +884,6 @@
               "lib/cli/**/*.ts",
               "lib/cli/**/*.html"
             ]
-          }
-        },
-        "copydist": {
-          "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "cp -R ./lib/cli/dist dist/libs/cli/ && rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
-                  }
-              ]
           }
         }
       }
