@@ -812,7 +812,7 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build": {
+        "build-local": {
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
@@ -846,15 +846,34 @@
             ]
           }
         },
-        "copydist": {
+        "bundle": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
-                  }
-              ]
-          }
+          "options": {
+            "commands": [
+              {
+                "command": "echo testing bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build-local"
+            }
+          ]
         }
       }
     },
@@ -864,11 +883,11 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build": {
+        "build-local": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "cd lib/cli && npm i && npm run dist && nx run cli:copydist"
+              "cd lib/cli && npm i && npm run dist"
             ]
           },
           "configurations": {
@@ -877,6 +896,48 @@
             }
           }
         },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo cli bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "moveToDist": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "mkdir -p ./dist/libs/cli && cp -R ./lib/cli/dist/* dist/libs/cli/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build-local"
+            }
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
+              }
+            ]
+          },
+          "dependsOn": [
+            "moveToDist"
+          ]
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
@@ -884,16 +945,6 @@
               "lib/cli/**/*.ts",
               "lib/cli/**/*.html"
             ]
-          }
-        },
-        "copydist": {
-          "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "cp -R ./lib/cli/dist dist/libs/cli/ && rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
-                  }
-              ]
           }
         }
       }
