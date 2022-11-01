@@ -812,7 +812,7 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build-local": {
+        "build": {
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
@@ -871,7 +871,7 @@
           "dependsOn": [
             {
               "projects": "self",
-              "target": "build-local"
+              "target": "build"
             }
           ]
         }
@@ -883,7 +883,7 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build-local": {
+        "build": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
@@ -909,22 +909,6 @@
             "copyToNodeModules"
           ]
         },
-        "moveToDist": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "mkdir -p ./dist/libs/cli && cp -R ./lib/cli/dist/* dist/libs/cli/"
-              }
-            ]
-          },
-          "dependsOn": [
-            {
-              "projects": "self",
-              "target": "build-local"
-            }
-          ]
-        },
         "copyToNodeModules": {
           "executor": "nx:run-commands",
           "options": {
@@ -935,7 +919,10 @@
             ]
           },
           "dependsOn": [
-            "moveToDist"
+            {
+              "projects": "self",
+              "target": "build"
+            }
           ]
         },
         "lint": {
