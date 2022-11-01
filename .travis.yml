@@ -60,6 +60,8 @@ stages:
   - name: Setup
   - name: "Build lib"
     if: tag IS blank
+  - name: "Release NPM"
+    if: type = push OR type = cron || type = api
   - name: "Check bundle"
     if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Trigger Alpha ADF child build"
@@ -108,8 +110,8 @@ jobs:
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - ./scripts/travis/build/build-libs.sh || travis_terminate 1
-            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
+            - npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
+            - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           workspaces:
             create:
               name: built_libs_cache
@@ -170,6 +172,19 @@ jobs:
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
           workspaces:
             use: built_libs_cache
+
+        - stage: "Release NPM"
+          name:  "release::npm"
+          script:
+            - ./scripts/travis/release/prepublish.sh || travis_terminate 1
+            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
+          workspaces:
+            create:
+              name: built_libs_cache
+              paths:
+                - "$BUILT_LIBS_DIR"
+                - "$NODE_MODULES_DIR"
+            use: node_modules_cache
 
         - stage: "Release tag"
           script: ./scripts/travis/release/git-tag.sh
