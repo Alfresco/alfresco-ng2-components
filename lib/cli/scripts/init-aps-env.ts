@@ -321,7 +321,7 @@ async function getDefaultApsUsersFromRealm() {
             ['application/json'],
             ['application/json']
         );
-        const usernamesOfApsDefaultUsers = ["hruser", "salesuser", "superadminuser"];
+        const usernamesOfApsDefaultUsers = ['hruser', 'salesuser', 'superadminuser'];
         const apsDefaultUsers = users.filter(user => usernamesOfApsDefaultUsers.includes(user.username));
         logger.info(`Keycloak found ${apsDefaultUsers.length} users`);
         return apsDefaultUsers;
