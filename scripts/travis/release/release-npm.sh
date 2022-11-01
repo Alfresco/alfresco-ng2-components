@@ -14,9 +14,9 @@ then
     TAG_NPM=alpha
 fi
 
-if [[ $TRAVIS_BRANCH =~ angular-14-rebase ]]
+if [[ $TRAVIS_BRANCH =~ AAE-11259-decouple-build-release ]]
 then
-    TAG_NPM=a14
+    TAG_NPM=test
 fi
 
 echo "Publishing on npm with tag $TAG_NPM"

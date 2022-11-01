@@ -11,7 +11,7 @@ fi;
 
 echo "ℹ️ Check Docker Image release for $COMMIT_MESSAGE type $TRAVIS_EVENT_TYPE on branch $TRAVIS_PULL_REQUEST_BRANCH"
 
-if [[ $TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE == "cron"  || ( $TRAVIS_EVENT_TYPE == "pull_request" && $COMMIT_MESSAGE == *"[create docker image]"* )]];
+if [[ $TRAVIS_EVENT_TYPE == "pull_request" && $COMMIT_MESSAGE == *"[create docker image]"* ]];
 then
 
     if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ || $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]];
@@ -30,6 +30,10 @@ then
             fi;
 
         fi;
+
+        if [[ $TRAVIS_BRANCH =~ AAE-11259-decouple-build-release ]]; then
+            TAGS=test
+        fi
 
         echo "ℹ️ demo-shell: Running the docker with tag" $TAGS
 

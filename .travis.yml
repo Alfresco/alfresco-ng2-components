@@ -49,8 +49,6 @@ branches:
   - /^develop(-patch.*)?$/
   - master
   - develop
-#remove after upgrade
-  - angular-14-rebase
   - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
@@ -60,14 +58,14 @@ stages:
   - name: Setup
   - name: "Build lib"
     if: tag IS blank
-  - name: "Release NPM"
-    if: type = push OR type = cron || type = api
   - name: "Check bundle"
     if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Trigger Alpha ADF child build"
     if: (branch = develop AND (type = cron || type = api)) OR  commit_message =~ /\[trigger adf\]/
   - name: "Build Demo shell"
     if: tag IS blank
+  - name: "Release"
+    if: (type = pull_request) OR type = push OR type = cron || type = api
   - name: "Unit test Lib"
     if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
@@ -106,11 +104,9 @@ jobs:
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
-        # Run Only for any PR
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
             - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           workspaces:
             create:
@@ -127,14 +123,13 @@ jobs:
               use: node_modules_cache
 
         - stage: "Build Demo shell"
-          name:  "Demo Shell & Storybook :Build && dockerize"
+          name:  "Demo Shell & Storybook :Build"
           before_script:
             - NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx run cli:build --prod
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
               - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci
-              - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:
                   name: built_demo_shell_cache
@@ -173,18 +168,19 @@ jobs:
           workspaces:
             use: built_libs_cache
 
-        - stage: "Release NPM"
+        - stage: "Release"
           name:  "release::npm"
           script:
             - ./scripts/travis/release/prepublish.sh || travis_terminate 1
             - ./scripts/travis/release/release-npm.sh || travis_terminate 1
           workspaces:
-            create:
-              name: built_libs_cache
-              paths:
-                - "$BUILT_LIBS_DIR"
-                - "$NODE_MODULES_DIR"
-            use: node_modules_cache
+            use: built_libs_cache
+
+        - stage: "Release"
+          name:  "release::docker"
+          script: ./scripts/travis/release/release-docker.sh
+          workspaces:
+            use: built_demo_shell_cache
 
         - stage: "Release tag"
           script: ./scripts/travis/release/git-tag.sh
