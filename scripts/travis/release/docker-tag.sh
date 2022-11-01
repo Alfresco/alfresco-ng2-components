@@ -14,8 +14,3 @@ else
     fi;
 
 fi;
-
-export TAGS="test-123"
-
-echo $TAGS
-
