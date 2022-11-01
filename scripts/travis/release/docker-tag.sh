@@ -15,9 +15,7 @@ else
 
 fi;
 
-if [[ $TRAVIS_BRANCH =~ AAE-11259-decouple-build-release ]]; then
-    export TAGS=test
-fi
+export TAGS="test-123"
 
 echo $TAGS
 

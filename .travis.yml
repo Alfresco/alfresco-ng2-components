@@ -22,6 +22,7 @@ env:
 
         - S3_DBP_PATH="s3://alfresco-travis-builds/adf"
         - DEMO_SHELL_DIR="./dist/demo-shell"
+        - STORYBOOK_DIR="./dist/storybook/stories"
         - BUILT_LIBS_DIR="./dist/libs"
         - NODE_MODULES_DIR="./node_modules"
         - SMART_RUNNER_DIRECTORY=".protractor-smartrunner"
@@ -135,6 +136,7 @@ jobs:
                   name: built_demo_shell_cache
                   paths:
                       - "$DEMO_SHELL_DIR"
+                      - "$STORYBOOK_DIR"
               use:
                   - built_libs_cache
 
