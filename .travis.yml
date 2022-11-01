@@ -178,7 +178,9 @@ jobs:
 
         - stage: "Release"
           name:  "release::docker"
-          script: ./scripts/travis/release/release-docker.sh
+          script:
+            - ./scripts/travis/release/docker-tag.sh
+            - ./scripts/travis/release/release-docker.sh
           workspaces:
             use: built_demo_shell_cache
 
