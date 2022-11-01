@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "develop": "tsc -p tsconfig.json --watch",
-    "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./resources ./dist && cp -R ./templates ./dist && cp ./package.json ./dist/"
+    "dist": "rm -rf ../../dist/libs/cli && npm run build && cp -R ./bin ../../dist/libs/cli && cp -R ./resources ../../dist/libs/cli && cp -R ./templates ../../dist/libs/cli && cp ./package.json ../../dist/libs/cli"
   },
   "dependencies": {
     "@alfresco/js-api": "5.1.0",
