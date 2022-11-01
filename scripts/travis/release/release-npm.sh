@@ -23,7 +23,7 @@ then
     fi
 
     echo "Publishing on npm with tag $TAG_NPM"
-    ./dist/libs/cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
+    ./node_modules/@alfresco/adf-cli/bin/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
 else
     echo "PR No need to release in NPM"
 fi;

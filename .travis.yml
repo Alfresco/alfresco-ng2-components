@@ -101,7 +101,6 @@ jobs:
             create:
               name: node_modules_cache
               paths:
-                - "$BUILT_LIBS_DIR"
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
