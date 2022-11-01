@@ -812,7 +812,7 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build": {
+        "build-local": {
           "builder": "@nrwl/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
@@ -871,7 +871,7 @@
           "dependsOn": [
             {
               "projects": "self",
-              "target": "build"
+              "target": "build-local"
             }
           ]
         }
@@ -883,7 +883,7 @@
       "projectType": "library",
       "prefix": "adf",
       "architect": {
-        "build": {
+        "build-local": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
@@ -921,7 +921,7 @@
           "dependsOn": [
             {
               "projects": "self",
-              "target": "build"
+              "target": "build-local"
             }
           ]
         },
