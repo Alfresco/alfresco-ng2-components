@@ -26,13 +26,13 @@ export class CardDateItemPage {
     dateTimePickerPage: DateTimePickerPage;
     datePickerPage = new DatePickerPage();
 
-    labelLocator = 'div[data-automation-id*="card-dateitem-label"]';
+    labelLocator = 'label[data-automation-id*="card-dateitem-label"]';
     valueLocator = 'span[data-automation-id*="card-date"]';
     dateTimePicker = $$('.mat-datetimepicker-toggle').first();
     saveButton = 'button[data-automation-id*="card-dateitem-update"]';
 
     constructor(label: string = 'minDate') {
-        this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-dateitem`));
+        this.rootElement = element(by.xpath(`//label[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-dateitem`));
         this.dateTimePickerPage = new DateTimePickerPage(this.rootElement);
     }
 

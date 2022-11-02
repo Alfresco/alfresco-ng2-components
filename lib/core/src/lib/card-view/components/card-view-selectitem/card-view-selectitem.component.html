@@ -11,7 +11,8 @@
                 <mat-select [(value)]="value"
                             panelClass="adf-select-filter"
                             (selectionChange)="onChange($event)"
-                            data-automation-class="select-box">
+                            data-automation-class="select-box"
+                            [aria-label]="property.label | translate">
 
                     <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)"></adf-select-filter-input>
 
