@@ -21,7 +21,7 @@ import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel, setupTestBe
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
@@ -48,7 +48,6 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     beforeEach(() => {
         formCloudService = TestBed.inject(FormCloudService);
-        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -56,6 +55,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should update form on values fetched', () => {
+        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
@@ -70,7 +70,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
-        widget.ngOnInit();
+        fixture.detectChanges();
         expect(field.updateForm).toHaveBeenCalled();
     });
 
@@ -155,6 +155,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should be able to set a Radio Button widget when rest option enabled', () => {
+        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
@@ -171,5 +172,23 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
+    });
+
+    it('should show error message if the restUrl failed to fetch options', () => {
+        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+        widget.field.restUrl = 'https://fake-rest-url';
+        widget.field.optionType = 'rest';
+        widget.field.restIdProperty = 'name';
+        fixture.detectChanges();
+
+        const radioButtons = element.querySelector<HTMLInputElement>('mat-radio-group');
+        radioButtons.click();
+        fixture.detectChanges();
+
+        const errorMessage = element.querySelector('.adf-radio-group-error-message .adf-error-text');
+        const errorIcon = element.querySelector('.adf-radio-group-error-message .adf-error-icon');
+
+        expect(errorIcon.textContent).toBe('error_outline');
+        expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
     });
 });
