@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ]] || [[ $TRAVIS_EVENT_TYPE == "cron" ]] || [[ $TRAVIS_EVENT_TYPE == "api" ]]
+if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ]]
 then
     isSameADFSha=$(node ./scripts/travis/update/adf-same-commit-verify.js --token=$TOKEN --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT )
     if [ "$isSameADFSha" = 'true' ]; then
