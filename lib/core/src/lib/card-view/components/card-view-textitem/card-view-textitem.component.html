@@ -12,6 +12,7 @@
             <input matInput
                    *ngIf="!property.multiline"
                    class="adf-property-value"
+                   title="{{property.label | translate }}"
                    [placeholder]="property.default"
                    [attr.aria-label]="property.label | translate"
                    [formControl]="textInput"
@@ -22,6 +23,7 @@
                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <textarea matInput
                       *ngIf="property.multiline"
+                      title="{{property.label | translate }}"
                       [cdkTextareaAutosize]="true"
                       [cdkAutosizeMaxRows]="1"
                       [cdkAutosizeMaxRows]="5"
@@ -74,6 +76,7 @@
                         [floatLabel]="'never'">
             <input matInput
                    class="adf-property-value"
+                   title="{{property.label | translate }}"
                    [placeholder]="editedValue ? '' : property.default | translate"
                    [attr.aria-label]="property.label | translate"
                    [matChipInputFor]="chipList"
@@ -98,6 +101,7 @@
             <input matInput
                    [type]=property.inputType
                    class="adf-property-value"
+                   title="{{property.label | translate }}"
                    [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                    [placeholder]="property.default"
                    [attr.aria-label]="property.label | translate"
