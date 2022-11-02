@@ -127,7 +127,8 @@ jobs:
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=test --parallel=3
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-
+      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production 
+      - run: nx run stories:build-storybook --configuration ci
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
       #   with:
