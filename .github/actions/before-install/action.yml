@@ -5,7 +5,7 @@ runs:
   steps:
     - name: Before install
       run: |
-        bash -x ./scripts/ci/job_hooks/before_install.sh "/tmp/github_vars.env"
+        bash -xv ./scripts/ci/job_hooks/before_install.sh "/tmp/github_vars.env"
         while read ENVVAR; do
           echo "$ENVVAR" >> $GITHUB_ENV
         done < "/tmp/github_vars.env"
