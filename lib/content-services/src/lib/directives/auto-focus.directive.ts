@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Directive, ElementRef } from "@angular/core";
+import { AfterContentInit, Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[adf-auto-focus]'
