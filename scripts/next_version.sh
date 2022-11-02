@@ -83,6 +83,7 @@ fi
 if [[ "${EXEC_ALPHA}" == true ]]
 then
     NEXT_VERSION=${NEXT_VERSION}-${TRAVIS_BUILD_NUMBER}
+    echo "version "$NEXT_VERSION
 fi
 
 if [[ "${EXEC_BETA}" == true ]]
