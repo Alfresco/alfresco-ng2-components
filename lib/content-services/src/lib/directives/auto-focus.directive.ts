@@ -18,7 +18,7 @@
 import { AfterContentInit, Directive, ElementRef } from "@angular/core";
 
 @Directive({
-  selector: "[adf-auto-focus]"
+  selector: '[adf-auto-focus]'
 })
 export class AutoFocusDirective implements AfterContentInit {
   public constructor(private el: ElementRef) {}
