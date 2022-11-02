@@ -14,3 +14,5 @@ else
     fi;
 
 fi;
+
+echo $TAGS
