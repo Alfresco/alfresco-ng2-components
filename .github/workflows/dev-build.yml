@@ -75,32 +75,21 @@ jobs:
           cache-dependency-path: package-lock.json
 # CACHE
 ## MODULES
-      - name: Node modules cache
-        id: cache-node-modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-build-${{ env.cache-name }}-
-            node-modules-${{ runner.os }}-build-
-            node-modules-${{ runner.os }}-
-## .NPM
       - name: Node cache
-        id: cache-npm 
+        id: node-modules
         uses: actions/cache@v3
         env:
-          cache-name: npm-node-modules
-        with: 
-          path: ~/.npm
+          cache-name: node-modules
+        with:
+          path: |
+            node_modules
+            ~/.npm
           # TODO find a more suitable key
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            .npm-${{ runner.os }}-build-${{ env.cache-name }}-
-            .npm-${{ runner.os }}-build-
-            .npm-${{ runner.os }}-
+            node-${{ runner.os }}-build-${{ env.cache-name }}-
+            node-${{ runner.os }}-build-
+            node-${{ runner.os }}-
 ## PIP
       - name: pip cache
         uses: actions/cache@v3
@@ -109,34 +98,7 @@ jobs:
           key: ${{ runner.os }}-pip-
           restore-keys: |
             ${{ runner.os }}   
-## NXCACHE
-      - name: get NX cache folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: get Dist folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-## SMARTRUNNER
-      - name: Get Smartrunner folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: .protractor-smartrunner/
-          name: smartrunner-${{ github.ref_name }}
 
-# PREREQUISITES
-      # - name: install Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.9'
-      #     cache: 'pip'
 # ENV LOAD
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
@@ -164,7 +126,7 @@ jobs:
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=test --parallel=3
-      # - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
 
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
@@ -183,28 +145,3 @@ jobs:
       #     path: $NODE_MODULES_DIR
       #     key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
       #     restore-keys: v1-npm-deps-
-
-
-# UPDATE BUILD CACHE
-## NXCACHE
-      - name: update NX cache folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: update Dist folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-## SMARTRUNNER
-      - name: update Smartrunner folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: .protractor-smartrunner/
-          name: smartrunner-${{ github.ref_name }}
-
