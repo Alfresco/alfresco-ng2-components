@@ -182,7 +182,11 @@ jobs:
         run: |
           npm install -D @playwright/test 
           npx playwright install
-          npm config ls -l
+      - name: echos some npm config
+        run: |
+          npm config rm proxy
+          npm config rm https-proxy
+          npm config ls -l          
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
