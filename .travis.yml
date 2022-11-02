@@ -109,6 +109,8 @@ jobs:
           name:  "Lib::Build"
           script:
             - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+            - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
+
           workspaces:
             create:
               name: built_libs_cache
@@ -173,7 +175,6 @@ jobs:
         - stage: "Release"
           name:  "release::npm"
           script:
-            - ./scripts/travis/release/prepublish.sh || travis_terminate 1
             - ./scripts/travis/release/release-npm.sh || travis_terminate 1
           workspaces:
             use: built_libs_cache
