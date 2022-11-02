@@ -108,8 +108,8 @@ jobs:
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
             - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
+            - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
 
           workspaces:
             create:
@@ -182,7 +182,7 @@ jobs:
         - stage: "Release"
           name:  "release::docker"
           script:
-            - ./scripts/travis/release/docker-tag.sh
+            - . ./scripts/travis/release/docker-tag.sh
             - ./scripts/travis/release/release-docker.sh
           workspaces:
             use: built_demo_shell_cache
