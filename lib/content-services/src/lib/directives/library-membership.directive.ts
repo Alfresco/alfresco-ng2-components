@@ -25,7 +25,17 @@ import {
 } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { VersionCompatibilityService, SitesService, AlfrescoApiService } from '@alfresco/adf-core';
-import { LibraryMembershipErrorEvent, LibraryMembershipToggleEvent } from '../interfaces';
+
+interface LibraryMembershipErrorEvent {
+    error: any;
+    i18nKey: string;
+}
+
+interface LibraryMembershipToggleEvent {
+    updatedEntry?: any;
+    shouldReload: boolean;
+    i18nKey: string;
+}
 
 
 @Directive({

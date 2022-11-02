@@ -23,7 +23,7 @@ import {
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
-import { RestoreMessageModel } from '../interfaces';
+import { RestoreMessageModel } from '../interfaces/restore-message-model.interface';
 
 @Directive({
     selector: '[adf-restore]'

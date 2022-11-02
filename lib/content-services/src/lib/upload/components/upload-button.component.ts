@@ -27,7 +27,7 @@ import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';
-import { NodeAllowableOperationSubject } from '../../interfaces';
+import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 
 @Component({
     selector: 'adf-upload-button',

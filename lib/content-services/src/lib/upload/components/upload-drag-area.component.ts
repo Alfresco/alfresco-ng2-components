@@ -20,7 +20,7 @@ import {
     NotificationService, TranslationService, UploadService, ContentService, AllowableOperationsEnum
 } from '@alfresco/adf-core';
 import { Component, forwardRef, ViewEncapsulation, NgZone } from '@angular/core';
-import { NodeAllowableOperationSubject } from '../../interfaces';
+import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 import { UploadBase } from './base-upload/upload-base';
 
 @Component({
