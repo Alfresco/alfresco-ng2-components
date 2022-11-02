@@ -34,6 +34,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+## PIP CACHE
+      - name: pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-
+          restore-keys: |
+            ${{ runner.os }}           
       - name: load "TRAVIS_EVENT_TYPE"
         uses: ./.github/actions/travis-event-type-load    
       - name: before install
@@ -91,6 +99,14 @@ jobs:
             .npm-${{ runner.os }}-build-${{ env.cache-name }}-
             .npm-${{ runner.os }}-build-
             .npm-${{ runner.os }}-
+## PIP
+      - name: pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-
+          restore-keys: |
+            ${{ runner.os }}   
 ## NXCACHE
       - name: get NX cache folder
         uses: actions/download-artifact@v3
