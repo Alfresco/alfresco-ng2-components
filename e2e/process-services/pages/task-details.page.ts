@@ -268,12 +268,12 @@ export class TaskDetailsPage {
     }
 
     async checkCommentIsDisplayed(comment: string): Promise<void> {
-        const row = element(by.cssContainingText('div[class="adf-comment-message"]', comment));
+        const row = element(by.cssContainingText('div.adf-comment-message', comment));
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
     async checkIsEmptyCommentListDisplayed(): Promise<void> {
-        const emptyList = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
+        const emptyList = element(by.cssContainingText('h1[id="comment-header"]', '(0)'));
         await BrowserVisibility.waitUntilElementIsVisible(emptyList);
     }
 

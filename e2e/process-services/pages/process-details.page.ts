@@ -92,6 +92,6 @@ export class ProcessDetailsPage {
     }
 
     checkCommentIsDisplayed(comment: string): Promise<void> {
-        return TestElement.byText('div[class="adf-comment-message"]', comment).waitVisible();
+        return TestElement.byText('div.adf-comment-message', comment).waitVisible();
     }
 }
