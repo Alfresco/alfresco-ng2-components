@@ -59,8 +59,6 @@ stages:
   - name: Setup
   - name: "Build lib"
     if: tag IS blank
-  - name: "Check bundle"
-    if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Trigger Alpha ADF child build"
     if: (branch = develop AND (type = cron || type = api)) OR  commit_message =~ /\[trigger adf\]/
   - name: "Build Demo shell"
@@ -73,6 +71,8 @@ stages:
     if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch =~ /^master(-patch.*)?$/
+  - name: "Check bundle"
+    if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Deprecate develop builds"
     if: branch =~ /^master(-patch.*)?$/
 
