@@ -79,8 +79,8 @@ describe('ProcessCommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
-        expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.adf-comment-message').length).toBe(3);
+        expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should display comments count when the process has comments', async () => {

@@ -5,8 +5,8 @@
                              [expanded]="canExpandProperties()"
                              [attr.data-automation-id]="'adf-metadata-group-properties'">
             <mat-expansion-panel-header>
-                <mat-panel-title role="heading">
-                    {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
+                <mat-panel-title>
+                    <h1 class="adf-metadata-properties-title">{{ 'CORE.METADATA.BASIC.HEADER' | translate }}</h1>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <adf-card-view
@@ -47,7 +47,8 @@
                 </div>
             </ng-container>
             <ng-template #loading>
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <mat-progress-bar mode="indeterminate" [attr.aria-label]="'CORE.METADATA.BASIC.DATA_LOADING' | translate">
+                </mat-progress-bar>
             </ng-template>
         </ng-container>
     </mat-accordion>

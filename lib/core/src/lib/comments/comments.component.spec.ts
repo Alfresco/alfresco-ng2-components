@@ -115,8 +115,8 @@ describe('CommentsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
-        expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.adf-comment-message').length).toBe(3);
+        expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should display comments count when the task has comments', async () => {
@@ -259,7 +259,7 @@ describe('CommentsComponent', () => {
             await fixture.whenStable();
 
             expect(addProcessCommentSpy).toHaveBeenCalled();
-            const elements = fixture.nativeElement.querySelectorAll('#comment-message');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toBe('Test Comment');
         });
@@ -313,7 +313,7 @@ describe('CommentsComponent', () => {
             await fixture.whenStable();
 
             expect(addContentCommentSpy).toHaveBeenCalled();
-            const elements = fixture.nativeElement.querySelectorAll('#comment-message');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toBe('Test Comment');
         });

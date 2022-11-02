@@ -70,6 +70,7 @@ export class StartProcessPage {
         try {
             await this.clickProcessDropdownArrow();
             await this.selectProcessOption(name);
+            await browser.sleep(500);
         } catch (error) {
             if (retry < 3) {
                 retry++;
