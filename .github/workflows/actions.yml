@@ -181,10 +181,11 @@ jobs:
       - name: Install playRight
         run: |
           npm install -D @playwright/test 
-          npx playwright install         
+          npx playwright install
+          npm config ls -l
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
-        run: | 
+        run: |
           bash ./scripts/ci/jobs/dbpci-before-playwright         
           bash ./scripts/travis/storybook-testing/storybook-test.sh
       - name: ${{ matrix.components }}
