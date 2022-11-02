@@ -205,7 +205,7 @@ jobs:
       # - name: install xvfb
       #   run: |          
       #     sudo apt-get install -y x11-xserver-utils xvfb
-      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - run: /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
 
 
             
