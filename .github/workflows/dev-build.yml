@@ -205,6 +205,12 @@ jobs:
       # - name: install xvfb
       #   run: |          
       #     sudo apt-get install -y x11-xserver-utils xvfb
+      - name: override NX_CALCULATION_FLAGS
+        run: echo 'NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD' >> $GITHUB_ENV
+      - run: echo $TRAVIS_EVENT_TYPE
+      - run: echo $S3_NODE_MODULES_CACHE_ID
+      - run: echo $HEAD_COMMIT_HASH
+      - run: echo $NX_CALCULATION_FLAGS      
       - run: /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
 
 
