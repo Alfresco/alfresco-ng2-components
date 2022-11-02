@@ -36,6 +36,21 @@ describe('PropertiesViewerWidgetComponent', () => {
     let element: HTMLElement;
     let nodesApiService: NodesApiService;
 
+    const fakePngAnswer: any = {
+        id: '1933',
+        link: false,
+        isExternal: false,
+        relatedContent: false,
+        contentAvailable: true,
+        name: 'a_png_file.png',
+        simpleType: 'image',
+        mimeType: 'image/png',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued',
+        created: '2022-10-14T17:17:37.099Z',
+        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin@example.com' }
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -91,5 +106,16 @@ describe('PropertiesViewerWidgetComponent', () => {
         await fixture.whenStable();
 
         expect(nodeContentLoadedSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+    });
+
+    it('should set NodeId crrectly when field value is array of file instead of string', async () => {
+        const fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: [fakePngAnswer] });
+        widget.field = fakeField;
+
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+
+        expect(widget.field.value).toBe('1933');
     });
 });
