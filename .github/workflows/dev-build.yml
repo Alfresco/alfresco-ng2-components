@@ -160,7 +160,7 @@ jobs:
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
       - run: npm ci
-      - run: npx nx affected --target=lint --parallel=3
+      - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
       # - name: Update NX settings to use DEV branch
       #   uses: mikefarah/yq@v4.28.1
       #   with:
@@ -182,21 +182,24 @@ jobs:
 
 # UPDATE BUILD CACHE
 ## NXCACHE
-      - name: get NX cache folder
+      - name: update NX cache folder
         uses: actions/upload-artifact@v3
+        continue-on-error: true
         with:
           path: nxcache/
           name: nxcache-${{ github.ref_name }}
-# ## DIST
-#       - name: get Dist folder
-#         uses: actions/upload-artifact@v3
-#         with:
-#           path: dist/
-#           name: dist-${{ github.ref_name }}
-# ## SMARTRUNNER
-#       - name: Get Smartrunner folder
-#         uses: actions/upload-artifact@v3
-#         with:
-#           path: .protractor-smartrunner/
-#           name: smartrunner-${{ github.ref_name }}
+## DIST
+      - name: update Dist folder
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+## SMARTRUNNER
+      - name: update Smartrunner folder
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          path: .protractor-smartrunner/
+          name: smartrunner-${{ github.ref_name }}
 
