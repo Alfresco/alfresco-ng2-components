@@ -36,13 +36,7 @@ jobs:
         uses: actions/checkout@v3
       - uses: ./.github/actions/travis-event-type-load    
       - name: before install
-        run: |
-          ./scripts/ci/job_hooks/before_install.sh "/tmp/github_vars.env"
-          while read ENVVAR; do
-            echo "$ENVVAR" >> $GITHUB_ENV
-          done < "/tmp/github_vars.env"
-
-
+        uses: ./.github/actions/before-install
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS    
@@ -127,8 +121,9 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
         with:
           yml_path: .travis.yml
-      # - uses: Alfresco/alfresco-ng2-components/.github/actions/travis-event-type-load@AAE-7986-dev-act
       - uses: ./.github/actions/travis-event-type-load
+      - name: before install
+        uses: ./.github/actions/before-install          
       - uses: nrwl/nx-set-shas@v3
       - name: debug nx-set-sha
         run: |
