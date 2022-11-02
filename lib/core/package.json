@@ -10,6 +10,10 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
+  "scripts": {
+    "build": "npx nx run core:build-lib",
+    "postbuild": "npx nx run core:pretheme"
+  },
   "exports": {
     "./theming": {
       "sass": "./lib/theming/_index.scss"

@@ -83,7 +83,7 @@ async function main() {
                 await addContentRepoWithBasic(TENANT_DEFAULT_ID, CONTENT_DEFAULT_NAME);
             }
             logger.info(`***** Step 4 - Create users *****`);
-            const users = await getUserFromRealm();
+            const users = await getDefaultApsUsersFromRealm();
             if (tenantId && users && users.length > 0) {
                 for (let i = 0; i < users.length; i++) {
                     await createUsers(tenantId, users[i]);
@@ -307,7 +307,7 @@ async function hasLicense() {
     }
 }
 
-async function getUserFromRealm() {
+async function getDefaultApsUsersFromRealm() {
 
     try {
         const users = await alfrescoJsApi.oauth2Auth.callCustomApi(
@@ -321,10 +321,10 @@ async function getUserFromRealm() {
             ['application/json'],
             ['application/json']
         );
-        const usersExample = users.filter(user => user.email.includes('@example.com'));
-        const usersWithoutAdmin = usersExample.filter(user => (user.username !== program.username && user.username !== 'client'));
-        logger.info(`Keycloak found ${usersWithoutAdmin.length} users`);
-        return usersWithoutAdmin;
+        const usernamesOfApsDefaultUsers = ['hruser', 'salesuser', 'superadminuser'];
+        const apsDefaultUsers = users.filter(user => usernamesOfApsDefaultUsers.includes(user.username));
+        logger.info(`Keycloak found ${apsDefaultUsers.length} users`);
+        return apsDefaultUsers;
     } catch (error) {
         logger.error(`APS: not able to fetch user: ${error.message}` );
     }

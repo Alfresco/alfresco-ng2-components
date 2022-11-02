@@ -43,7 +43,6 @@ export class AboutComponent implements OnInit {
     licenseEntries: LicenseData[];
 
     dependencyEntries: PackageInfo[] = [];
-    url: string;
     version: string;
     dependencies: string;
     application: string;
@@ -70,7 +69,6 @@ export class AboutComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.url = `https://github.com/Alfresco/${this.pkg?.name}/commits/${this.pkg?.commit}`;
         this.version = this.pkg?.version;
         this.dependencies = this.pkg?.dependencies;
 

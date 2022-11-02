@@ -22,6 +22,7 @@ env:
 
         - S3_DBP_PATH="s3://alfresco-travis-builds/adf"
         - DEMO_SHELL_DIR="./dist/demo-shell"
+        - STORYBOOK_DIR="./dist/storybook/stories"
         - BUILT_LIBS_DIR="./dist/libs"
         - NODE_MODULES_DIR="./node_modules"
         - SMART_RUNNER_DIRECTORY=".protractor-smartrunner"
@@ -49,8 +50,6 @@ branches:
   - /^develop(-patch.*)?$/
   - master
   - develop
-#remove after upgrade
-  - angular-14-rebase
   - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
@@ -60,18 +59,20 @@ stages:
   - name: Setup
   - name: "Build lib"
     if: tag IS blank
-  - name: "Check bundle"
-    if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Trigger Alpha ADF child build"
     if: (branch = develop AND (type = cron || type = api)) OR  commit_message =~ /\[trigger adf\]/
   - name: "Build Demo shell"
     if: tag IS blank
+  - name: "Release"
+    if: type = push OR type = cron || type = api
   - name: "Unit test Lib"
     if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
     if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch =~ /^master(-patch.*)?$/
+  - name: "Check bundle"
+    if: type = push AND tag IS blank OR (type = cron || type = api)
   - name: "Deprecate develop builds"
     if: branch =~ /^master(-patch.*)?$/
 
@@ -104,12 +105,12 @@ jobs:
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
-        # Run Only for any PR
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - ./scripts/travis/build/build-libs.sh || travis_terminate 1
-            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
+            - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+            - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
+
           workspaces:
             create:
               name: built_libs_cache
@@ -125,20 +126,19 @@ jobs:
               use: node_modules_cache
 
         - stage: "Build Demo shell"
-          name:  "Demo Shell & Storybook :Build && dockerize"
+          name:  "Demo Shell & Storybook :Build"
           before_script:
             - NODE_OPTIONS="--max-old-space-size=8192" $(npm bin)/nx run cli:build --prod
-            - ./scripts/build/build-cli.sh
           script:
               # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
               - NODE_OPTIONS=--max_old_space_size=8192 nx run stories:build-storybook --configuration ci
-              - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:
                   name: built_demo_shell_cache
                   paths:
                       - "$DEMO_SHELL_DIR"
+                      - "$STORYBOOK_DIR"
               use:
                   - built_libs_cache
 
@@ -171,6 +171,21 @@ jobs:
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
           workspaces:
             use: built_libs_cache
+
+        - stage: "Release"
+          name:  "release::npm"
+          script:
+            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
+          workspaces:
+            use: built_libs_cache
+
+        - stage: "Release"
+          name:  "release::docker"
+          script:
+            - ./scripts/travis/release/docker-tag.sh
+            - ./scripts/travis/release/release-docker.sh
+          workspaces:
+            use: built_demo_shell_cache
 
         - stage: "Release tag"
           script: ./scripts/travis/release/git-tag.sh

@@ -300,7 +300,7 @@
       "sourceRoot": "lib/core/src",
       "prefix": "adf",
       "architect": {
-        "build": {
+        "build-lib": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",
@@ -846,15 +846,34 @@
             ]
           }
         },
-        "copydist": {
+        "bundle": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
-                  }
-              ]
-          }
+          "options": {
+            "commands": [
+              {
+                "command": "echo testing bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
         }
       }
     },
@@ -877,6 +896,35 @@
             }
           }
         },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo cli bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
+        },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
@@ -884,16 +932,6 @@
               "lib/cli/**/*.ts",
               "lib/cli/**/*.html"
             ]
-          }
-        },
-        "copydist": {
-          "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "cp -R ./lib/cli/dist dist/libs/cli/ && rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
-                  }
-              ]
           }
         }
       }
