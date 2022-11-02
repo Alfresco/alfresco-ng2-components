@@ -19,7 +19,6 @@
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "01s": "",
     "unit-test": "concurrently \"nx test content-services --watch=false\" \"nx test process-services --watch=false\" \"nx test core --watch=false\" \"nx test extensions --watch=false\" \"nx test insights --watch=false\" \"nx test process-services-cloud --watch=false\" ",
-    "build-lib": "./scripts/build/build-all-lib.sh",
     "affected:libs": "nx affected:libs",
     "inspect.bundle": "nx build demoshell --configuration production --stats-json && npx webpack-bundle-analyzer dist/demo-shell/stats.json",
     "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
