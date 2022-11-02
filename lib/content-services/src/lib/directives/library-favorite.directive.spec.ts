@@ -20,7 +20,7 @@ import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiServiceMock, CoreModule, AlfrescoApiService } from '@alfresco/adf-core';
-import { LibraryEntity } from '../interfaces';
+import { LibraryEntity } from '../interfaces/library-entity.interface';
 
 @Component({
     selector: 'app-test-component',

@@ -20,7 +20,7 @@ import { ContentService, CoreTestingModule, setupTestBed } from '@alfresco/adf-c
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodeAllowableOperationSubject } from '../interfaces';
+import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Component({
     selector: 'adf-text-subject',
