@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
     imports: [
@@ -32,11 +33,13 @@ import { NodeCounterComponent, NodeCounterDirective } from './node-counter.direc
     declarations: [
         NodeLockDirective,
         NodeCounterDirective,
-        NodeCounterComponent
+        NodeCounterComponent,
+        AutoFocusDirective
     ],
     exports: [
         NodeLockDirective,
-        NodeCounterDirective
+        NodeCounterDirective,
+        AutoFocusDirective
     ]
 })
 export class ContentDirectiveModule {
