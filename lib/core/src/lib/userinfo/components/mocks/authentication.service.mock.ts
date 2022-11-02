@@ -17,7 +17,7 @@
 
 import { Inject, Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from './../../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

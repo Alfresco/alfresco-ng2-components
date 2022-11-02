@@ -41,7 +41,6 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
 import { TreeViewModule } from './tree-view/tree-view.module';
 import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
-import { UserInfoModule } from './userinfo/userinfo.module';
 
 @NgModule({
     imports: [
@@ -68,8 +67,7 @@ import { UserInfoModule } from './userinfo/userinfo.module';
         VersionManagerModule,
         TreeViewModule,
         ContentTypeModule,
-        AspectListModule,
-        UserInfoModule
+        AspectListModule
     ],
     providers: [
         {
@@ -100,8 +98,7 @@ import { UserInfoModule } from './userinfo/userinfo.module';
         VersionManagerModule,
         TreeViewModule,
         AspectListModule,
-        ContentTypeModule,
-        UserInfoModule
+        ContentTypeModule
     ]
 })
 export class ContentModule {

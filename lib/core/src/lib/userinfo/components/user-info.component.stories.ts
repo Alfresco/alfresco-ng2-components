@@ -20,15 +20,13 @@ import {
     moduleMetadata,
     Story
 } from '@storybook/angular';
+import { CoreStoryModule } from '../../testing/core.story.module';
 import { UserInfoComponent } from './user-info.component';
 import { UserInfoModule } from '../userinfo.module';
-import {
-    PeopleContentService,
-    BpmUserService,
-    IdentityUserService,
-    AuthenticationService,
-    CoreStoryModule
-} from '@alfresco/adf-core';
+import { PeopleContentService } from './../../services/people-content.service';
+import { BpmUserService } from './../../services/bpm-user.service';
+import { IdentityUserService } from './../../services/identity-user.service';
+import { AuthenticationService } from './../../services/authentication.service';
 import { AuthenticationServiceMock } from './mocks/authentication.service.mock';
 import {
     BpmUserServiceMock,

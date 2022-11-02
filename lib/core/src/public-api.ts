@@ -17,6 +17,7 @@
 
 export * from './lib/about/index';
 export * from './lib/viewer/index';
+export * from './lib/userinfo/index';
 export * from './lib/toolbar/index';
 export * from './lib/settings/index';
 export * from './lib/pagination/index';

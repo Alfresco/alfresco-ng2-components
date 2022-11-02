@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '@alfresco/adf-core';
+import { PipeModule } from '../pipes/pipe.module';
 import { UserInfoComponent } from './components/user-info.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';

@@ -33,6 +33,7 @@ import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { HostSettingsModule } from './settings/host-settings.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
+import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
@@ -80,6 +81,7 @@ import { AuthenticationService } from './services/authentication.service';
         FormsModule,
         ReactiveFormsModule,
         HostSettingsModule,
+        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -121,6 +123,7 @@ import { AuthenticationService } from './services/authentication.service';
         FormsModule,
         ReactiveFormsModule,
         HostSettingsModule,
+        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
