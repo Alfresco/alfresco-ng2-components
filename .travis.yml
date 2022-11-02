@@ -110,6 +110,7 @@ jobs:
           script:
             - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
             - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+            - nx affected $NX_CALCULATION_FLAGS --target=pretheme
 
           workspaces:
             create:
