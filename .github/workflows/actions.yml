@@ -20,8 +20,6 @@ env:
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-
-env:
   global:  
       - PLAYWRIGHT_WORKERS=2
       - PLAYWRIGHT_STORYBOOK_E2E_HOST=http://localhost
