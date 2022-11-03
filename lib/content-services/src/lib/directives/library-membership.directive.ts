@@ -25,18 +25,8 @@ import {
 } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { VersionCompatibilityService, SitesService, AlfrescoApiService } from '@alfresco/adf-core';
-
-interface LibraryMembershipErrorEvent {
-    error: any;
-    i18nKey: string;
-}
-
-interface LibraryMembershipToggleEvent {
-    updatedEntry?: any;
-    shouldReload: boolean;
-    i18nKey: string;
-}
-
+import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
+import { LibraryMembershipErrorEvent} from '../interfaces/library-membership-error-event.interface';
 
 @Directive({
     selector: '[adf-library-membership]',

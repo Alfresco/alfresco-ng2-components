@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-export * from './node-allowable-operation-subject.interface';
-export * from './library-entity.interface';
-export * from './restore-message-model.interface';
-export * from './library-membership-error-event.interface';
-export * from './library-membership-toggle-event.interface';
-
+export interface LibraryMembershipToggleEvent {
+    updatedEntry?: any;
+    shouldReload: boolean;
+    i18nKey: string;
+}
