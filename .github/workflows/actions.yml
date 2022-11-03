@@ -23,6 +23,7 @@ env:
   PLAYWRIGHT_WORKERS: 2
   PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
   PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
+  SMART_RUNNER_DIRECTORY: .protractor-smartrunner
     
 jobs:
   prerequisite:
@@ -188,8 +189,7 @@ jobs:
       - name: echos some npm config
         run: |
           npm config rm proxy
-          npm config rm https-proxy
-          npm config ls -l          
+          npm config rm https-proxy                   
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
