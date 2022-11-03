@@ -76,6 +76,12 @@ export class StartProcessPage {
                 await this.selectFromProcessDropdown(name, retry);
             }
         }
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible($('.mat-card-content'), 2000);
+        } catch (error) {
+            Logger.log(`No start form on process`);
+        }
+
     }
 
     async selectFromApplicationDropdown(name): Promise<void> {

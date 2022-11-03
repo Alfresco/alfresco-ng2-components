@@ -219,7 +219,8 @@
         "CREATED_DATE": "Created Date",
         "MODIFIER": "Modifier",
         "MODIFIED_DATE": "Modified Date",
-        "CONTENT_TYPE": "Content Type"
+        "CONTENT_TYPE": "Content Type",
+        "DATA_LOADING": "Data is loading"
       },
       "CONTENT_TYPE": {
         "DIALOG": {

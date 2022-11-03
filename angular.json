@@ -300,7 +300,7 @@
       "sourceRoot": "lib/core/src",
       "prefix": "adf",
       "architect": {
-        "build-lib": {
+        "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",

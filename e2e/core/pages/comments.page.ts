@@ -22,10 +22,10 @@ export class CommentsPage {
 
     tabsPage = new TabsPage();
     numberOfComments = $('#comment-header');
-    commentUserIcon = $$('#comment-user-icon');
-    commentUserName = $$('#comment-user');
-    commentMessage = $$('#comment-message');
-    commentTime = $$('#comment-time');
+    commentUserIcon = $$('.adf-comment-img-container');
+    commentUserName = $$('.adf-comment-user-name');
+    commentMessage = $$('.adf-comment-message');
+    commentTime = $$('.adf-comment-message-time');
     commentInput = $('#comment-input');
     addCommentButton = $("[data-automation-id='comments-input-add']");
 
