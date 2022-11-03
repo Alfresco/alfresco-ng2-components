@@ -15,6 +15,18 @@ on:
       #   - /.*next-release.*/
       #   - /.*beta.*/
 
+# on:
+#   pull_request:
+#     types:
+#       - closed
+
+# jobs:
+#   if_merged:
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-latest
+#     steps:
+#     - run: |
+#         echo The PR was merged
 
 # on:
 #   pull_request:
@@ -28,42 +40,15 @@ env:
   TRAVIS_BUILD_ID: ${{ github.run_id }}
 
 jobs:
-  prerequisite:
-    name: "Before anything unnece$$ary happens..."
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-## PIP CACHE
-      - name: pip cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}           
-      - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-event-type-load    
-      - name: before install
-        uses: ./.github/actions/before-install
-      - run: echo $S3_NODE_MODULES_CACHE_ID
-      - run: echo $HEAD_COMMIT_HASH
-      - run: echo $NX_CALCULATION_FLAGS    
-      - name: build guard check
-        if: ${{ github.event_name == 'pull_request' }}
-        run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
-
-  build-lib:
+  main:
     name: "Build Lib"
-    needs: prerequisite
     runs-on: ubuntu-22.04
+    # TODO : pull request not merged
+    # if: github.event.pull_request.merged == true
     env:
       TRAVIS_BRANCH: develop
       # TRAVIS_EVENT_TYPE: push
     steps:
-# PREPARATION
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -73,24 +58,20 @@ jobs:
         with:
           node-version: 14
           cache-dependency-path: package-lock.json
-# CACHE
-## MODULES
       - name: Node cache
-        id: node-modules
+        id: node-cache
         uses: actions/cache@v3
         env:
-          cache-name: node-modules
+          cache-name: node-cache
         with:
           path: |
             node_modules
             ~/.npm
-          # TODO find a more suitable key
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             node-${{ runner.os }}-build-${{ env.cache-name }}-
             node-${{ runner.os }}-build-
             node-${{ runner.os }}-
-## PIP
       - name: pip cache
         uses: actions/cache@v3
         with:
@@ -106,7 +87,7 @@ jobs:
       - name: load "TRAVIS_EVENT_TYPE"
         uses: ./.github/actions/travis-event-type-load
       - name: before install
-        uses: ./.github/actions/before-install          
+        uses: ./.github/actions/before-install
       - uses: nrwl/nx-set-shas@v3
         with:
           main-branch-name: 'develop'
@@ -125,98 +106,12 @@ jobs:
       - run: echo $NX_CALCULATION_FLAGS
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
-
-# UPDATE BUILD CACHE
-## NXCACHE
-      - name: update NX cache folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: update Dist folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-
-  unit-test-lib:
-    name: "Unit Test Lib"
-    needs: 
-      - prerequisite
-      - build-lib
-    runs-on: ubuntu-latest
-    steps:       
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - name: Node cache
-        id: node-modules
-        uses: actions/cache@v3
-        env:
-          cache-name: node-modules
-        with:
-          path: |
-            node_modules
-            ~/.npm
-          # TODO find a more suitable key
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-${{ runner.os }}-build-${{ env.cache-name }}-
-            node-${{ runner.os }}-build-
-            node-${{ runner.os }}-        
-## NXCACHE
-      - name: get NX cache folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: get Dist folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-
-      - name: install NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
-        with:
-          yml_path: .travis.yml
-      - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-event-type-load
-      - name: before install
-        uses: ./.github/actions/before-install          
-      - uses: nrwl/nx-set-shas@v3
-        with:
-          main-branch-name: 'develop'
-      - name: debug nx-set-sha
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-
       - name: install chrome      
-        uses: browser-actions/setup-chrome@latest        
-      # - name: install xvfb
-      #   run: |          
-      #     sudo apt-get install -y x11-xserver-utils xvfb
-      - name: override NX_CALCULATION_FLAGS
-        run: echo 'NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD' >> $GITHUB_ENV
-      - run: echo $TRAVIS_EVENT_TYPE
-      - run: echo $S3_NODE_MODULES_CACHE_ID
-      - run: echo $HEAD_COMMIT_HASH
-      - run: echo $NX_CALCULATION_FLAGS      
-      - run: /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
-
-
-            
-      # - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      # - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production 
-      # - run: nx run stories:build-storybook --configuration ci
+        uses: browser-actions/setup-chrome@latest
+      - name: Run headless test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production 
+      - run: nx run stories:build-storybook --configuration ci
