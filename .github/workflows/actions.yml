@@ -19,11 +19,10 @@ env:
   NODE_MODULES_DIR: "./node_modules"
   TRAVIS_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
-  TRAVIS_COMMIT: ${{ github.sha }}
-  global:  
-      - PLAYWRIGHT_WORKERS=2
-      - PLAYWRIGHT_STORYBOOK_E2E_HOST=http://localhost
-      - PLAYWRIGHT_STORYBOOK_E2E_PORT=4400
+  TRAVIS_COMMIT: ${{ github.sha }}   
+  PLAYWRIGHT_WORKERS: 2
+  PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
+  PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
     
 jobs:
   prerequisite:
