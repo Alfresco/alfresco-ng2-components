@@ -62,7 +62,7 @@ stages:
   - name: "Trigger Alpha ADF child build"
     if: (branch = develop AND (type = cron || type = api)) OR  commit_message =~ /\[trigger adf\]/
   - name: "Build Demo shell"
-    if: tag IS blank
+    if: tag IS blank AND type = pull_request
   - name: "Release"
     if: type = push OR type = cron || type = api
   - name: "Unit test Lib"
@@ -171,7 +171,7 @@ jobs:
             use: built_libs_cache
 
         - stage: "Release"
-          name:  "release::npm"
+          name:  "release libs::npm"
           script:
             - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
             - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" || travis_terminate 1
