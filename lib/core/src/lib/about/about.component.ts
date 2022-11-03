@@ -19,7 +19,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
 import { Observable } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
-import { RepositoryInfo } from '@alfresco/js-api';
 
 import { BpmProductVersionModel } from '../models/product-version.model';
 import { AuthenticationService } from '../services/authentication.service';
@@ -27,6 +26,46 @@ import { DiscoveryApiService } from '../services/discovery-api.service';
 import { LicenseData, PackageInfo, StatusData } from './interfaces';
 import { ObjectUtils } from '../utils/object-utils';
 import { StringUtils } from '../utils/string-utils';
+
+interface VersionInfo {
+    display: string;
+}
+
+interface StatusInfo {
+    isReadOnly: boolean;
+    isAuditEnabled: boolean;
+    isQuickShareEnabled: boolean;
+    isThumbnailGenerationEnabled: boolean;
+    isDirectAccessUrlEnabled: boolean;
+}
+
+interface LicenseInfo {
+    issuedAt: Date;
+    expiresAt: Date;
+    remainingDays: number;
+    holder: string;
+    mode: string;
+    entitlements?: EntitlementsInfo;
+}
+
+interface EntitlementsInfo {
+    maxUsers?: number;
+    maxDocs?: number;
+    isClusterEnabled?: boolean;
+    isCryptodocEnabled?: boolean;
+}
+
+interface ModuleInfo {
+    title: string;
+    version: string;
+}
+interface RepositoryInfo {
+    status: StatusInfo;
+    edition: string;
+    version: VersionInfo;
+    license?: LicenseInfo;
+    modules?: ModuleInfo[];
+}
 
 @Component({
     selector: 'adf-about',
@@ -92,7 +131,7 @@ export class AboutComponent implements OnInit {
 
     setECMInfo() {
         this.discovery.getEcmProductInfo().subscribe((repository) => {
-            this.repository = repository;
+            this.repository = repository as RepositoryInfo;
 
             this.statusEntries = Object.keys(repository.status).map((key) => ({
                 property: key,

@@ -16,12 +16,20 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { RepositoryInfo } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 
 import { BpmProductVersionModel } from '../../models/product-version.model';
 import { AaeInfoService, ActivitiDependencyInfo } from '../services/aae-info.service';
 import { AppConfigService } from '../../app-config/app-config.service';
+
+interface VersionInfo {
+    display: string;
+}
+
+interface RepositoryInfo {
+    edition: string;
+    version: VersionInfo;
+}
 
 @Component({
     selector: 'adf-about-platform-version',
@@ -43,7 +51,10 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
-    constructor(private aaeInfoService: AaeInfoService, private appConfigService: AppConfigService) {
+    constructor(
+        private aaeInfoService: AaeInfoService,
+        private appConfigService: AppConfigService
+    ) {
         this.modelingInfo();
         this.deploymentInfo();
         this.rbInfo();
