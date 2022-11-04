@@ -1,0 +1,61 @@
+name: 'Setup'
+description: 'Build setup'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: false
+    default: 'World'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache-dependency-path: package-lock.json
+      - name: Node cache
+        id: node-cache
+        uses: actions/cache@v3
+        env:
+          cache-name: node-cache
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node-${{ runner.os }}-build-${{ env.cache-name }}-
+            node-${{ runner.os }}-build-
+            node-${{ runner.os }}-
+      - name: pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-
+          restore-keys: |
+            ${{ runner.os }}   
+# ENV LOAD
+      - name: load .travis.yml env.global variables
+        uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
+        with:
+          yml_path: .travis.yml
+      - name: load "TRAVIS_EVENT_TYPE"
+        uses: ./.github/actions/travis-event-type-load
+      - name: before install script
+        uses: ./.github/actions/before-install
+      - name: setup nx shas
+        uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'develop'
+      - name: debug nx-set-sha
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+      - name: link nx executable
+        run: sudo ln -s $(npm bin)/nx /usr/bin/nx
+      # - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+# BUILD

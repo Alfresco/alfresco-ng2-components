@@ -53,52 +53,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
-      - name: install NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          cache-dependency-path: package-lock.json
-      - name: Node cache
-        id: node-cache
-        uses: actions/cache@v3
-        env:
-          cache-name: node-cache
-        with:
-          path: |
-            node_modules
-            ~/.npm
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-${{ runner.os }}-build-${{ env.cache-name }}-
-            node-${{ runner.os }}-build-
-            node-${{ runner.os }}-
-      - name: pip cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}   
-
-# ENV LOAD
-      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
-        with:
-          yml_path: .travis.yml
-      - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-event-type-load
-      - name: before install
-        uses: ./.github/actions/before-install
-      - uses: nrwl/nx-set-shas@v3
-        with:
-          main-branch-name: 'develop'
-      - name: debug nx-set-sha
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-      - name: link nx
-        run: sudo ln -s $(npm bin)/nx /usr/bin/nx
-      # - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-# BUILD
+      - uses: .github/actions/setup
       - name: override NX_CALCULATION_FLAGS
         run: echo 'NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD' >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
@@ -109,7 +64,6 @@ jobs:
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
       - name: install chrome      
         uses: browser-actions/setup-chrome@latest
-
       - name: install xvfb
         run: sudo apt-get install -y x11-xserver-utils xvfb
       - run: /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
@@ -126,21 +80,8 @@ jobs:
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production 
       - run: nx run stories:build-storybook --configuration ci
 # UPDATE BUILD CACHE
-## NXCACHE
-      - name: update NX cache folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: update Dist folder
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-
+      - uses: .github/actions/update-cache
+      
   e2e-test:
     name: "e2e Test"
     needs: 
@@ -168,33 +109,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: install NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14 
-## NXCACHE
-      - name: get NX cache folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: nxcache/
-          name: nxcache-${{ github.ref_name }}
-## DIST
-      - name: get Dist folder
-        uses: actions/download-artifact@v3
-        continue-on-error: true
-        with:
-          path: dist/
-          name: dist-${{ github.ref_name }}
-# ENV LOAD
-      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
-        with:
-          yml_path: .travis.yml
-      - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-event-type-load
-      - name: before install
-        uses: ./.github/actions/before-install
-        
+      - uses: .github/actions/get-cache
+      - uses: .github/actions/setup
+
       - name: Install playRight
         run: |
           npm install -D @playwright/test
@@ -228,3 +145,18 @@ jobs:
       # - name: after e2e
       #   run: ./scripts/ci/utils/artifact-to-s3.sh -a "$SMART_RUNNER_DIRECTORY" -o "$S3_SMART_RUNNER_PATH/$TRAVIS_JOB_ID.tar.bz2"      
     
+
+
+
+
+jobs:
+  job0:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      image_name: pippo
+      tag: pippo1
+  job1:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      image_name: pluto
+      tag: pluto1
