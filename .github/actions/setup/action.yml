@@ -17,6 +17,7 @@ runs:
         id: tag-sha
         uses: ./.github/actions/get-latest-tag-sha
       - name: DEBUG latest-tag-sha
+        shell: bash
         run: echo "'${{ steps.tag-sha.outputs.tag_sha }}'"
 # CACHE
       - name: Node cache
