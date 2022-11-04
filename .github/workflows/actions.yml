@@ -193,6 +193,8 @@ jobs:
         run: |
           npm config rm proxy
           npm config rm https-proxy
+      - name: before install
+        uses: ./.github/actions/before-install
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
@@ -200,8 +202,7 @@ jobs:
           bash ./scripts/travis/storybook-testing/storybook-test.sh
       - name: ${{ matrix.components }}
         if: matrix.components == 'Core'
-        run: |
-          bash ./scripts/ci/job_hooks/before_install.sh 
+        run: |          
           bash ./scripts/ci/job_hooks/install.sh
           bash ./scripts/ci/job_hooks/before_e2e.sh
           bash ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
