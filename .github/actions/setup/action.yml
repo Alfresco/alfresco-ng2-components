@@ -32,7 +32,7 @@ runs:
             ~/.npm
             nxcache
             dist
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json')-${{ steps.tag-sha.outputs.tag_sha }} }}
+          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
             node-${{ runner.os }}-build-${{ env.cache-name }}-
             node-${{ runner.os }}-build-
