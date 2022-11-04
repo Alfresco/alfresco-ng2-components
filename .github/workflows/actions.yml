@@ -85,8 +85,7 @@ jobs:
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           bash ./scripts/ci/job_hooks/install.sh     
       - name: Build::lib
-        run: |
-          sudo ln -s $(npm bin)/nx /usr/bin/nx
+        run: |          
           ./scripts/travis/build/build-libs.sh || exit 1
        #   ./scripts/travis/release/release-npm.sh || exit 1              
       - name: Lint
