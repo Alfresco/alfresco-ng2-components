@@ -1,10 +1,10 @@
 name: 'Get tag sha'
 description: 'get the sha of the latest or a specific tag'
-inputs:
-  tag-to-get:  # id of input
-    description: 'tag to get'
-    required: false
-    default: 'latest'
+# inputs:
+#   tag-to-get:  # id of input
+#     description: 'tag to get'
+#     required: false
+#     default: 'latest'
 outputs:
   tag_sha:
     description: "long sha of the tag"
@@ -19,10 +19,11 @@ runs:
       id: sha_out
       run: |
           tag_sha=""
-          if [[ '${{ inputs.tag-to-get }}' == "latest" ]]; then
-            tag_sha=$(git rev-list -n 1 $(git tag --sort=-creatordate | head -n 1))
-          else
-            tag_sha=$(git rev-list -n 1 '${{ inputs.tag-to-get }}')
-          fi
+          # if [[ '${{ inputs.tag-to-get }}' == "latest" ]]; then
+          #   tag_sha=$(git rev-list -n 1 $(git tag --sort=-creatordate | head -n 1))
+          # else
+          #   tag_sha=$(git rev-list -n 1 '${{ inputs.tag-to-get }}')
+          # fi
+          tag_sha=$(git rev-list -n 1 $(git tag --sort=-creatordate | head -n 1))
           echo "tag_sha=$tag_sha" >> $GITHUB_OUTPUT
           echo $tag_sha
