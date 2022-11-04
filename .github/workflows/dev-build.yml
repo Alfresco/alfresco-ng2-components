@@ -125,3 +125,98 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production 
       - run: nx run stories:build-storybook --configuration ci
+# UPDATE BUILD CACHE
+## NXCACHE
+      - name: update NX cache folder
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          path: nxcache/
+          name: nxcache-${{ github.ref_name }}
+## DIST
+      - name: update Dist folder
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+
+  e2e-test:
+    name: "e2e Test"
+    needs: 
+      - main
+    runs-on: ubuntu-22.04
+    strategy: 
+      fail-fast: false
+      matrix:        
+        components: 
+          - process Cloud::Storybook Playwright
+          - Core
+          # - Content::Components
+          # - Content::Directives
+          # - Content::Document List
+          # - Content::Metadata
+          # - Content::Upload and Versioning
+          # - Search
+          # - Process::Form
+          # - Process::Process
+          # - Process::Tasks
+          # - Process::Widgets
+          # - Process Cloud::Form
+          # - Process Cloud::People
+          # - Process Cloud::Process
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: install NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14 
+## NXCACHE
+      - name: get NX cache folder
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          path: nxcache/
+          name: nxcache-${{ github.ref_name }}
+## DIST
+      - name: get Dist folder
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          path: dist/
+          name: dist-${{ github.ref_name }}
+      
+      - name: Install playRight
+        run: |
+          npm install -D @playwright/test
+          npx playwright install
+      - name: echos some npm config
+        run: |
+          npm config rm proxy
+          npm config rm https-proxy
+          npm config ls -l
+      - name: Process Cloud Storybook Playwright
+        # if: matrix.components == 'process Cloud::Storybook Playwright'
+        run: |
+          npx playwright install chromium
+          sudo sysctl -w fs.inotify.max_user_watches=524288
+          npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
+
+      # # before e2e script
+      # - name: e2e test
+      #   run: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_SMART_RUNNER_PATH/$TRAVIS_JOB_ID.tar.bz2" -o "$SMART_RUNNER_DIRECTORY"
+      #   #check cs env
+      - run: |
+          echo "====== Check content UP ====="
+          ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
+        # check ps env
+      - run: |
+          echo "====== Check PS UP ====="
+          ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
+      - run:
+          bash ./scripts/travis/e2e/e2e.sh "core"
+      # # after e2e
+      # - name: after e2e
+      #   run: ./scripts/ci/utils/artifact-to-s3.sh -a "$SMART_RUNNER_DIRECTORY" -o "$S3_SMART_RUNNER_PATH/$TRAVIS_JOB_ID.tar.bz2"      
+    
