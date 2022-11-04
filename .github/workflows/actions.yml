@@ -112,6 +112,8 @@ jobs:
     steps:       
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: install NPM
         uses: actions/setup-node@v3
         with:
@@ -207,7 +209,8 @@ jobs:
           bash ./scripts/travis/storybook-testing/storybook-test.sh
       - name: ${{ matrix.components }}
         if: matrix.components == 'Core'
-        run: |          
+        run: |  
+          sudo ln -s $(npm bin)/nx /usr/bin/nx        
           bash ./scripts/ci/job_hooks/install.sh
           bash ./scripts/ci/job_hooks/before_e2e.sh
           bash ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
