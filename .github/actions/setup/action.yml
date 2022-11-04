@@ -17,6 +17,10 @@ runs:
         with:
           node-version: 14
           cache-dependency-path: package-lock.json
+      - name: get latest tag sha
+        id: tag-sha
+        uses: ./.github/actions/get-latest-tag-sha
+# CACHE
       - name: Node cache
         id: node-cache
         uses: actions/cache@v3
@@ -26,7 +30,9 @@ runs:
           path: |
             node_modules
             ~/.npm
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+            nxcache
+            dist
+          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json')-${{ steps.tag-sha.outputs.tag_sha }} }}
           restore-keys: |
             node-${{ runner.os }}-build-${{ env.cache-name }}-
             node-${{ runner.os }}-build-
