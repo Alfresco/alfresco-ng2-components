@@ -83,7 +83,9 @@ jobs:
       - name: install
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
-          bash ./scripts/ci/job_hooks/install.sh     
+          bash ./scripts/ci/job_hooks/install.sh
+      - name: override NX_CALCULATION_FLAGS
+        run: echo 'NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD' >> $GITHUB_ENV     
       - name: Build::lib
         run: |          
           ./scripts/travis/build/build-libs.sh || exit 1
