@@ -57,36 +57,6 @@ interface RepositoryInfo {
         version: string;
     }>;
 }
-    title: string;
-    version: string;
-}
-interface RepositoryInfo {
-    status: {
-        isReadOnly: boolean;
-        isAuditEnabled: boolean;
-        isQuickShareEnabled: boolean;
-        isThumbnailGenerationEnabled: boolean;
-        isDirectAccessUrlEnabled: boolean;
-    };
-    edition: string;
-    version: {
-        display: string;
-    };
-    license?: {
-        issuedAt: Date;
-        expiresAt: Date;
-        remainingDays: number;
-        holder: string;
-        mode: string;
-        entitlements?: {
-            maxUsers?: number;
-            maxDocs?: number;
-            isClusterEnabled?: boolean;
-            isCryptodocEnabled?: boolean;
-        };
-    };
-    modules?: ModuleInfo[];
-}
 
 @Component({
     selector: 'adf-about',
