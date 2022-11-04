@@ -19,10 +19,10 @@ runs:
       id: sha_out
       run: |
           tag_sha=""
-          if [[ "'${{ inputs.tag-to-get }}'" == "latest" ]]; then
+          if [[ '${{ inputs.tag-to-get }}' == "latest" ]]; then
             tag_sha=$(git rev-list -n 1 $(git tag --sort=-creatordate | head -n 1))
           else
             tag_sha=$(git rev-list -n 1 '${{ inputs.tag-to-get }}')
           fi
-            echo "tag_sha=$tag_sha" >> $GITHUB_OUTPUT
-            echo $tag_sha        
+          echo "tag_sha=$tag_sha" >> $GITHUB_OUTPUT
+          echo $tag_sha
