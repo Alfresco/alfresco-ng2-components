@@ -113,7 +113,7 @@
 
     // propagates SCSS variables into the CSS variables scope
     :root {
-            @each $name, $value in $defaults {
+        @each $name, $value in $defaults {
             #{$name}: #{$value};
         }
     }
