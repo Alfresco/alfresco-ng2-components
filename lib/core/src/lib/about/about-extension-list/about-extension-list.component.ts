@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
   selector: 'adf-about-extension-list',
   templateUrl: './about-extension-list.component.html',
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./about-extension-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutExtensionListComponent {
@@ -42,4 +42,15 @@ export class AboutExtensionListComponent {
 
   @Input()
   data: Array<ExtensionRef> = [];
+
+    panelExpandedStatus = false;
+    panelToggle = true;
+
+    togglePanel() {
+        this.panelExpandedStatus = !this.panelExpandedStatus;
+
+        if (!this.panelExpandedStatus) {
+            this.panelToggle = true;
+        }
+    }
 }

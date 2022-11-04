@@ -1,4 +1,123 @@
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.app-license-list-container {
+    margin: 0 -24px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.app-license-list-panel {
+    margin: 24px;
+    width: 95%;
+    border: 1px solid var(--theme-header-vertical-color);
+    background-color: var(--theme-white-color);
+    border-radius: 12px;
+}
+
+.app-license-list-header {
+    display: flex;
+}
+
+.app-license-list-heading {
+    display: flex;
+    width: 60%;
+    cursor: pointer;
+    height: 32px;
+    padding: 24px 0;
+}
+
+.app-license-list-icon {
+    padding: 4px;
+    cursor: pointer;
+    color: var(--theme-grey-color);
+    margin-right: 12px;
+}
+
+.app-license-list-title {
+    padding: 4px 0;
+    letter-spacing: 0.15px;;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.app-license-list-divider {
+    color: var(--theme-header-vertical-color);
+    width: 100%;
+}
+
+.app-license-list-body {
+    padding: 0 24px;
+    margin: 0;
+}
+
+.app-license-list-body-heading {
+    display: flex;
+    color: var(--theme-dark-header-toolbar-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    height: 32px;
+    letter-spacing: 0.25px;;
+}
+
+.app-license-list-body-details {
+    color: var(--theme-dark-header-toolbar-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.25px;;
+}
+
+.app-mat-divider {
+    color: var(--theme-header-vertical-color);
+}
+
+mat-table {
+    width: 100%;
+}
+
+mat-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+.adf-table-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+.adf-table-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-header-cell {
+    flex: 0 1 40%;
+}
+
 mat-cell {
     white-space: pre-line;
-    line-height: 30px;
+    flex: 0 1 40%;
 }

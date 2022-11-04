@@ -6,14 +6,14 @@ mat-expansion-panel {
     padding: 0 !important;
 }
 
-.app-github-link-container {
+.app-package-list-container {
     margin: 0 -24px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-github-link-panel {
+.app-package-list-panel {
     margin: 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
@@ -21,11 +21,11 @@ mat-expansion-panel {
     border-radius: 12px;
 }
 
-.app-github-link-header {
+.app-package-list-header {
     display: flex;
 }
 
-.app-github-link-heading {
+.app-package-list-heading {
     display: flex;
     width: 60%;
     cursor: pointer;
@@ -33,14 +33,14 @@ mat-expansion-panel {
     padding: 24px 0;
 }
 
-.app-github-link-icon {
+.app-package-list-icon {
     padding: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
     margin-right: 12px;
 }
 
-.app-github-link-title {
+.app-package-list-title {
     padding: 4px 0;
     letter-spacing: 0.15px;;
     font-style: normal;
@@ -49,17 +49,17 @@ mat-expansion-panel {
     line-height: 24px;
 }
 
-.app-github-link-divider {
+.app-package-list-divider {
     color: var(--theme-header-vertical-color);
     width: 100%;
 }
 
-.app-github-link-body {
+.app-package-list-body {
     padding: 0 24px;
     margin: 0;
 }
 
-.app-github-link-body-heading {
+.app-package-list-body-heading {
     display: flex;
     color: var(--theme-dark-header-toolbar-color);
     width: 100%;
@@ -67,20 +67,57 @@ mat-expansion-panel {
     font-weight: 400;
     font-size: 14px;
     height: 32px;
-    line-height: 32px;
     letter-spacing: 0.25px;;
 }
 
-.app-github-link-body-details {
+.app-package-list-body-details {
     color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     letter-spacing: 0.25px;;
-    padding: 8px 0;
 }
 
 .app-mat-divider {
     color: var(--theme-header-vertical-color);
+}
+
+mat-table {
+    width: 100%;
+}
+
+mat-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+.adf-table-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+.adf-table-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-header-cell {
+    flex: 0 1 40%;
+}
+
+mat-cell {
+    white-space: pre-line;
+    flex: 0 1 40%;
 }

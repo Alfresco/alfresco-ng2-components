@@ -1,11 +1,33 @@
-<mat-table [dataSource]="data">
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <mat-header-cell *matHeaderCellDef>
-      {{ column.header | translate }}
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
-  </ng-container>
+<mat-expansion-panel hideToggle class="app-extension-list-container app-extension-list-panel">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-</mat-table>
+    <mat-expansion-panel-header class="app-extension-list-header" (click)="togglePanel()" [collapsedHeight]="'80px'"
+        [expandedHeight]="'80px'">
+        <mat-panel-title class="app-extension-list-heading">
+            <mat-icon class="app-extension-list-icon">
+                {{ panelExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+            <span class="app-extension-list-title">{{ 'ABOUT.PLUGINS.TITLE' | translate }}</span>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="mat-expansion-panel-body" *ngIf="panelExpandedStatus">
+        <mat-divider class="app-extension-list-divider"></mat-divider>
+
+        <div class="app-extension-list-body">
+            <div class="app-extension-list-body-details">
+                <mat-table [dataSource]="data">
+                    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{ column.header | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns" class="adf-table-header-row"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns" class="adf-table-row"></mat-row>
+                </mat-table>
+            </div>
+        </div>
+
+    </div>
+
+</mat-expansion-panel>

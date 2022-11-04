@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ModuleInfo } from '@alfresco/js-api';
 
 @Component({
   selector: 'adf-about-module-list',
   templateUrl: './module-list.component.html',
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./module-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModuleListComponent {
@@ -42,4 +42,15 @@ export class ModuleListComponent {
 
   @Input()
   data: Array<ModuleInfo> = [];
+
+  panelExpandedStatus = false;
+  panelToggle = true;
+
+  togglePanel() {
+      this.panelExpandedStatus = !this.panelExpandedStatus;
+
+      if (!this.panelExpandedStatus) {
+          this.panelToggle = true;
+      }
+  }
 }

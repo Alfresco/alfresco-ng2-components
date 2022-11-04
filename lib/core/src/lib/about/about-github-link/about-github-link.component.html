@@ -1,14 +1,35 @@
-<div class="adf-github-link-container">
-    <header data-automation-id="adf-github-source-code-title">{{ 'ABOUT.SOURCE_CODE.TITLE' | translate }}</header>
-    <mat-card class="mat-elevation-z0">
-        <h3 data-automation-id="adf-github-app-title">{{application}}</h3>
-        <p *ngIf="version" data-automation-id="adf-github-version">{{ 'ABOUT.VERSION' | translate }}: {{ version }}</p>
+<mat-expansion-panel hideToggle class="app-github-link-container app-github-link-panel">
 
-        <div *ngIf="url">
-            <small>{{ 'ABOUT.SOURCE_CODE.DESCRIPTION' | translate }}</small>
-            <div data-automation-id="adf-github-url">
-                <a [href]="url" target="_blank">{{url}}</a>
+    <mat-expansion-panel-header class="app-github-link-header" (click)="togglePanel()" [collapsedHeight]="'80px'"
+        [expandedHeight]="'80px'">
+        <mat-panel-title class="app-github-link-heading">
+            <mat-icon class="app-github-link-icon">
+                {{ panelExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+            <span class="app-github-link-title" data-automation-id="adf-github-source-code-title">{{ 'ABOUT.SOURCE_CODE.TITLE' | translate }}</span>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="mat-expansion-panel-body" *ngIf="panelExpandedStatus">
+        <mat-divider class="app-github-link-divider" *ngIf="application || version || url"></mat-divider>
+
+        <div class="app-github-link-body">
+            <div class="app-github-link-body-details" *ngIf="application">
+                <div class="app-github-link-body-heading" data-automation-id="adf-github-app-title">{{application}}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="application && (version || url)"></mat-divider>
+
+            <div class="app-github-link-body-details" *ngIf="version">
+                <div class="app-github-link-body-heading" data-automation-id="adf-github-version">{{ 'ABOUT.VERSION' | translate }}: {{version}} </div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="version && url "></mat-divider>
+
+            <div class="app-github-link-body-details" *ngIf="url">
+                <div class="app-github-link-body-heading">{{ 'ABOUT.SOURCE_CODE.DESCRIPTION' | translate }}</div>
+                <div class="app-github-link-body-details" data-automation-id="adf-github-url">{{url}}</div>
             </div>
         </div>
-    </mat-card>
-</div>
+    </div>
+
+</mat-expansion-panel>

@@ -165,6 +165,7 @@
               },
               "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
+              "demo-shell/src/assets/fonts/OpenSans/OpenSans.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css"

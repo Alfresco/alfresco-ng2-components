@@ -1,3 +1,86 @@
-.adf-github-link-container {
-    padding: 10px;
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.app-server-settings-container {
+    margin: 0 -24px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.app-server-settings-panel {
+    margin: 24px;
+    width: 95%;
+    border: 1px solid var(--theme-header-vertical-color);
+    background-color: var(--theme-white-color);
+    border-radius: 12px;
+}
+
+.app-server-settings-header {
+    display: flex;
+}
+
+.app-server-settings-heading {
+    display: flex;
+    width: 60%;
+    cursor: pointer;
+    height: 32px;
+    padding: 24px 0;
+}
+
+.app-server-settings-icon {
+    padding: 4px;
+    cursor: pointer;
+    color: var(--theme-grey-color);
+    margin-right: 12px;
+}
+
+.app-server-settings-title {
+    padding: 4px 0;
+    letter-spacing: 0.15px;;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.app-server-settings-divider {
+    color: var(--theme-header-vertical-color);
+    width: 100%;
+}
+
+.app-server-settings-body {
+    padding: 0 24px;
+    margin: 0;
+}
+
+.app-server-settings-body-heading {
+    display: flex;
+    color: var(--theme-dark-header-toolbar-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+    letter-spacing: 0.25px;;
+}
+
+.app-server-settings-body-details {
+    color: var(--theme-dark-header-toolbar-color);
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.25px;;
+    padding: 8px 0;
+}
+
+.app-mat-divider {
+    color: var(--theme-header-vertical-color);
 }

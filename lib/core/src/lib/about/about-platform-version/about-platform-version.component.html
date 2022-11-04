@@ -1,67 +1,83 @@
-<header data-automation-id="adf-about-product-version-title">{{ 'ABOUT.VERSIONS.TITLE' | translate }}</header>
-<mat-card class="mat-elevation-z0">
+<mat-expansion-panel hideToggle class="app-platform-version-container app-platform-version-panel"
+    *ngIf=" (process) || (repository) ">
 
-    <ng-container *ngIf="process" data-automation-id="adf-about-bpm-service">
-        <article>
-        <div>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</div>
-        <p data-automation-id="adf-about-bpm-version">
-            {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ process.majorVersion }}.{{
-            process.minorVersion }}.{{ process.revisionVersion }}
-        </p>
-        </article>
-    </ng-container>
-    <br>
-    <ng-container *ngIf="repository" data-automation-id="adf-about-ecm-service">
-        <article>
-            <div>{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate }}</div>
-            <p data-automation-id="adf-about-ecm-edition">
-                {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ repository.edition }}
-            </p>
-            <p data-automation-id="adf-about-ecm-version">
-                {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ repository.version.display }}
-            </p>
-        </article>
-    </ng-container>
-    <br>
-    <ng-container *ngIf="modeling$ | async as modeling" data-automation-id="adf-about-ecm-service">
-        <article>
-            <div>{{ 'ABOUT.VERSIONS.MODELING_SERVICE' | translate }}</div>
-            <p>
-                {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ modeling.version }}
-            </p>
-        </article>
-    </ng-container>
-    <br>
-    <ng-container *ngIf="deployment$| async as deployment" data-automation-id="adf-about-ecm-service">
-        <article>
-            <div>{{ 'ABOUT.VERSIONS.DEPLOYMENT_SERVICE' | translate }}</div>
-            <p>
-                {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ deployment.version }}
-            </p>
-        </article>
-    </ng-container>
-    <br>
-    <ng-container *ngIf="rb$ | async as rb"  data-automation-id="adf-about-ecm-service">
-        <article>
-            <div>{{ 'ABOUT.VERSIONS.RB' | translate }}</div>
-            <p>
-                {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }}: {{ rb.artifact }}
-            </p>
-            <p>
-                {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ rb.version }}
-            </p>
-        </article>
-    </ng-container>
-    <br>
-    <ng-container *ngIf="query$ | async as query" data-automation-id="adf-about-ecm-service">
-        <article>
-            <div>{{ 'ABOUT.VERSIONS.QUERY_SERVICE' | translate }}</div>
-            <p>
-                {{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{ query.version }}
-            </p>
-        </article>
-    </ng-container>
-</mat-card>
+    <mat-expansion-panel-header class="app-platform-version-header" (click)="togglePanel()" [collapsedHeight]="'80px'"
+        [expandedHeight]="'80px'">
+        <mat-panel-title class="app-platform-version-heading">
+            <mat-icon class="app-platform-version-icon">
+                {{ panelExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+            <span class="app-platform-version-title" data-automation-id="adf-about-product-version-title" >{{ 'ABOUT.VERSIONS.TITLE' | translate }}</span>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
 
+    <div class="mat-expansion-panel-body" *ngIf="panelExpandedStatus">
+        <mat-divider class="app-platform-version-divider" *ngIf=" (process) || (repository) "></mat-divider>
 
+        <div class="app-platform-version-body">
 
+            <div class="app-platform-version-body-details" *ngIf="process" data-automation-id="adf-about-bpm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate
+                    }}</div>
+                <div class="app-platform-version-body-heading" data-automation-id="adf-about-bpm-version" >{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate }}: {{
+                    process.majorVersion }}.{{
+                    process.minorVersion }}.{{ process.revisionVersion }}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="process"></mat-divider>
+
+            <div class="app-platform-version-body-details" *ngIf="repository"
+                data-automation-id="adf-about-ecm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.CONTENT_SERVICE' | translate
+                    }}</div>
+                <div class="app-platform-version-body-heading" data-automation-id="adf-about-ecm-edition" >{{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate
+                    }}: {{ repository.edition }}</div>
+                <div class="app-platform-version-body-heading" data-automation-id="adf-about-ecm-version" >{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
+                    }}: {{ repository.version.display }}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="modeling$ | async as modeling"></mat-divider>
+
+            <div class="app-platform-version-body-details" *ngIf="modeling$ | async as modeling"
+                data-automation-id="adf-about-ecm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.MODELING_SERVICE' | translate
+                    }}</div>
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
+                    }}: {{ modeling.version }}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="deployment$ | async as deployment"></mat-divider>
+
+            <div class="app-platform-version-body-details" *ngIf="deployment$ | async as deployment"
+                data-automation-id="adf-about-ecm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.DEPLOYMENT_SERVICE' |
+                    translate }}</div>
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
+                    }}: {{ deployment.version }}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="rb$ | async as rb"></mat-divider>
+
+            <div class="app-platform-version-body-details" *ngIf="rb$ | async as rb"
+                data-automation-id="adf-about-ecm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.RB' | translate }}</div>
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate
+                    }}: {{ rb.artifact }}</div>
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
+                    }}: {{ rb.version }}</div>
+            </div>
+
+            <mat-divider class="app-mat-divider" *ngIf="query$ | async as query"></mat-divider>
+
+            <div class="app-platform-version-body-details" *ngIf="query$ | async as query"
+                data-automation-id="adf-about-ecm-service">
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.QUERY_SERVICE' | translate }}
+                </div>
+                <div class="app-platform-version-body-heading">{{ 'ABOUT.VERSIONS.LABELS.VERSION' | translate
+                    }}: {{ query.version }}</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</mat-expansion-panel>

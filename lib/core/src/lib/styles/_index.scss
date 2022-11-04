@@ -105,11 +105,15 @@
         --theme-colors-mat-grey: mat.get-color-from-palette(mat.$grey-palette, A200),
         --theme-colors-mat-grey-dark: mat.get-color-from-palette(mat.$grey-palette, A400),
         --theme-colors-mag-grey-light: mat.get-color-from-palette(mat.$grey-palette, 50),
+        --theme-header-vertical-color: rgba(33, 33, 33, 0.12),
+        --theme-white-color: #fff,
+        --theme-grey-color: rgba(33, 35, 40, 0.6),
+        --theme-dark-header-toolbar-color: #212121,
     );
 
     // propagates SCSS variables into the CSS variables scope
     :root {
-        @each $name, $value in $defaults {
+            @each $name, $value in $defaults {
             #{$name}: #{$value};
         }
     }

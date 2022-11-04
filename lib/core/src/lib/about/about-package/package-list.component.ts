@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { PackageInfo } from '../interfaces';
 
 @Component({
   selector: 'adf-about-package-list',
   templateUrl: './package-list.component.html',
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./package-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PackageListComponent {
@@ -42,4 +42,15 @@ export class PackageListComponent {
 
   @Input()
   data: Array<PackageInfo> = [];
+
+  panelExpandedStatus = false;
+  panelToggle = true;
+
+  togglePanel() {
+      this.panelExpandedStatus = !this.panelExpandedStatus;
+
+      if (!this.panelExpandedStatus) {
+          this.panelToggle = true;
+      }
+  }
 }

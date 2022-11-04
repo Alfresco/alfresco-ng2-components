@@ -6,14 +6,14 @@ mat-expansion-panel {
     padding: 0 !important;
 }
 
-.app-github-link-container {
+.app-platform-version-container {
     margin: 0 -24px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-github-link-panel {
+.app-platform-version-panel {
     margin: 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
@@ -21,11 +21,11 @@ mat-expansion-panel {
     border-radius: 12px;
 }
 
-.app-github-link-header {
+.app-platform-version-header {
     display: flex;
 }
 
-.app-github-link-heading {
+.app-platform-version-heading {
     display: flex;
     width: 60%;
     cursor: pointer;
@@ -33,14 +33,14 @@ mat-expansion-panel {
     padding: 24px 0;
 }
 
-.app-github-link-icon {
+.app-platform-version-icon {
     padding: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
     margin-right: 12px;
 }
 
-.app-github-link-title {
+.app-platform-version-title {
     padding: 4px 0;
     letter-spacing: 0.15px;;
     font-style: normal;
@@ -49,17 +49,17 @@ mat-expansion-panel {
     line-height: 24px;
 }
 
-.app-github-link-divider {
+.app-platform-version-divider {
     color: var(--theme-header-vertical-color);
     width: 100%;
 }
 
-.app-github-link-body {
+.app-platform-version-body {
     padding: 0 24px;
     margin: 0;
 }
 
-.app-github-link-body-heading {
+.app-platform-version-body-heading {
     display: flex;
     color: var(--theme-dark-header-toolbar-color);
     width: 100%;
@@ -71,7 +71,7 @@ mat-expansion-panel {
     letter-spacing: 0.25px;;
 }
 
-.app-github-link-body-details {
+.app-platform-version-body-details {
     color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;

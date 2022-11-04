@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { LicenseData } from '../interfaces';
 
 @Component({
     selector: 'adf-about-license-list',
     templateUrl: './about-license-list.component.html',
     styleUrls: ['./about-license-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutLicenseListComponent {
@@ -43,4 +42,15 @@ export class AboutLicenseListComponent {
 
     @Input()
     data: LicenseData[] = [];
+
+    panelExpandedStatus = false;
+    panelToggle = true;
+
+    togglePanel() {
+        this.panelExpandedStatus = !this.panelExpandedStatus;
+
+        if (!this.panelExpandedStatus) {
+            this.panelToggle = true;
+        }
+    }
 }
