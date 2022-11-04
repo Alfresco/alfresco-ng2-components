@@ -43,14 +43,14 @@ export class PackageListComponent {
     @Input()
     data: Array<PackageInfo> = [];
 
-    dropdownExpandedStatus = false;
-    dropdownToggle = true;
+    panelExpandedStatus = false;
+    panelToggle = true;
 
-    toggleDropdown() {
-        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+    togglePanel() {
+        this.panelExpandedStatus = !this.panelExpandedStatus;
 
-        if (!this.dropdownExpandedStatus) {
-            this.dropdownToggle = true;
+        if (!this.panelExpandedStatus) {
+            this.panelToggle = true;
         }
     }
 }

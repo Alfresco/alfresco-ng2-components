@@ -1,6 +1,10 @@
 @use '@angular/material' as mat;
 @import '~@alfresco/adf-core/theming';
+
 @include mat.core($alfresco-typography);
+
+$app-typography: mat.define-typography-config($font-family: 'Open Sans'
+  );
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
@@ -23,7 +27,7 @@ html {
     height: 100%;
     overflow: hidden;
     font-size: mat.font-size($alfresco-typography, body-1);
-    font-family: mat.font-family($alfresco-typography);
+    font-family: mat.font-family($app-typography);
     line-height: mat.line-height($alfresco-typography, body-1);
 }
 

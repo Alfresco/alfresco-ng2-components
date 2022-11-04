@@ -20,7 +20,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'adf-about-github-link',
     templateUrl: './about-github-link.component.html',
-    styleUrls: ['./about-github-link.component.scss'],
+    styleUrls: ['./about-github-link.component.scss']
 })
 export class AboutGithubLinkComponent {
     /** Commit corresponding to the version of ADF to be used. */
@@ -35,16 +35,16 @@ export class AboutGithubLinkComponent {
     @Input()
     application: string = '';
 
-    dropdownExpandedStatus = false;
-    dropdownToggle = true;
+    panelExpandedStatus = false;
+    panelToggle = true;
 
     constructor() {}
 
-    toggleDropdown() {
-        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+    togglePanel() {
+        this.panelExpandedStatus = !this.panelExpandedStatus;
 
-        if (!this.dropdownExpandedStatus) {
-            this.dropdownToggle = true;
+        if (!this.panelExpandedStatus) {
+            this.panelToggle = true;
         }
     }
 }

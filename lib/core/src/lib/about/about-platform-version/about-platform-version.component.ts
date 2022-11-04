@@ -45,8 +45,8 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
-    dropdownExpandedStatus = false;
-    dropdownToggle = true;
+    panelExpandedStatus = false;
+    panelToggle = true;
 
     constructor(
         private aaeInfoService: AaeInfoService,
@@ -57,11 +57,11 @@ export class AboutPlatformVersionComponent {
         this.rbInfo();
     }
 
-    toggleDropdown() {
-        this.dropdownExpandedStatus = !this.dropdownExpandedStatus;
+    togglePanel() {
+        this.panelExpandedStatus = !this.panelExpandedStatus;
 
-        if (!this.dropdownExpandedStatus) {
-            this.dropdownToggle = true;
+        if (!this.panelExpandedStatus) {
+            this.panelToggle = true;
         }
     }
 

@@ -1,40 +1,48 @@
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
 .app-platform-version-container {
-    margin: 0px 0px -24px 0px;
+    margin: 0 -24px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-platform-version-row {
-    margin: 24px 24px 24px 24px;
+.app-platform-version-panel {
+    margin: 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
+    background-color: var(--theme-white-color);
     border-radius: 12px;
+}
+
+.app-platform-version-header {
+    display: flex;
 }
 
 .app-platform-version-heading {
     display: flex;
-    padding-left: 1rem;
-}
-
-.app-platform-version-div {
-    display: flex;
     width: 60%;
     cursor: pointer;
     height: 32px;
-    padding: 24px 0px;
+    padding: 24px 0;
 }
 
 .app-platform-version-icon {
-    padding-top: 4px;
+    padding: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
+    margin-right: 12px;
 }
 
 .app-platform-version-title {
-    margin-left: 0.6rem;
-    margin-top: 4px;
-    letter-spacing: .15px;
+    padding: 4px 0;
+    letter-spacing: 0.15px;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -43,33 +51,34 @@
 
 .app-platform-version-divider {
     color: var(--theme-header-vertical-color);
-    padding-left: -1px;
-    padding-right: 1px;
+    width: 100%;
 }
 
-.app-platform-version-dropdown {
-    padding: 0rem 1rem;
+.app-platform-version-body {
+    padding: 0 24px;
+    margin: 0;
 }
 
-.app-platform-version-dropdown-heading {
+.app-platform-version-body-heading {
     display: flex;
-    color: var(--theme-heading-color);
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    height: 32px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
 }
 
-.app-platform-version-dropdown-details {
-    color: var(--theme-heading-color);
+.app-platform-version-body-details {
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    letter-spacing: 0.25px;
+    padding: 8px 0;
 }
 
 .app-mat-divider {

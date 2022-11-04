@@ -1,69 +1,48 @@
-mat-cell {
-    white-space: pre-line;
-    line-height: 48px;
+mat-expansion-panel {
+    box-shadow: none !important;
 }
 
-mat-table {
-    width: 100%;
-}
-
-mat-row {
-    border: none;
-}
-
-mat-header-row {
-    height: 32px;
-    padding: 8px 0px;
-}
-
-mat-header-cell {
-    flex: 0 1 40%;
-
-}
-
-mat-cell {
-    flex: 0 1 40%;
-
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
 }
 
 .app-license-list-container {
-    margin: 0px 0px -24px 0px;
+    margin: 0 -24px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-license-list-row {
-    margin: 24px 24px 24px 24px;
+.app-license-list-panel {
+    margin: 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
+    background-color: var(--theme-white-color);
     border-radius: 12px;
+}
+
+.app-license-list-header {
+    display: flex;
 }
 
 .app-license-list-heading {
     display: flex;
-    padding-left: 1rem;
-
-}
-
-.app-license-list-div {
-    display: flex;
     width: 60%;
     cursor: pointer;
     height: 32px;
-    padding: 24px 0px;
+    padding: 24px 0;
 }
 
 .app-license-list-icon {
-    padding-top: 4px;
+    padding: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
+    margin-right: 12px;
 }
 
 .app-license-list-title {
-    margin-left: 0.6rem;
-    margin-top: 4px;
-    letter-spacing: .15px;
+    padding: 4px 0;
+    letter-spacing: 0.15px;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -71,36 +50,74 @@ mat-cell {
 }
 
 .app-license-list-divider {
-    color: var(--theme-grey-border-color);
-    padding-left: -1px;
-    padding-right: 1px;
+    color: var(--theme-header-vertical-color);
+    width: 100%;
 }
 
-.app-license-list-dropdown {
-    padding: 0rem 1rem;
+.app-license-list-body {
+    padding: 0 24px;
+    margin: 0;
 }
 
-.app-license-list-dropdown-heading {
+.app-license-list-body-heading {
     display: flex;
-    color: var(--theme-heading-color);
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    height: 32px;
+    letter-spacing: 0.25px;
 }
 
-.app-license-list-dropdown-details {
-    color: var(--theme-heading-color);
+.app-license-list-body-details {
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    letter-spacing: 0.25px;
 }
 
 .app-mat-divider {
-    color: var(--theme-grey-border-color);
+    color: var(--theme-header-vertical-color);
+}
+
+mat-table {
+    width: 100%;
+}
+
+mat-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0 !important;
+}
+
+.adf-table-row {
+    border: none;
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0 !important;
+}
+
+.adf-table-header-row {
+    min-height: 32px;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+mat-header-cell {
+    flex: 0 1 40%;
+}
+
+mat-cell {
+    white-space: pre-line;
+    flex: 0 1 40%;
 }

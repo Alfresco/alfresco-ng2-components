@@ -1,37 +1,33 @@
-<div class="app-module-list-container">
+<mat-expansion-panel hideToggle class="app-module-list-container app-module-list-panel">
 
-    <div class="app-module-list-row">
+    <mat-expansion-panel-header class="app-module-list-header" (click)="togglePanel()" [collapsedHeight]="'80px'"
+        [expandedHeight]="'80px'">
+        <mat-panel-title class="app-module-list-heading">
+            <mat-icon class="app-module-list-icon">
+                {{ panelExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
+            <span class="app-module-list-title">{{ 'ABOUT.MODULES.TITLE' | translate }}</span>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
 
-        <div class="app-module-list-heading">
-            <div class="app-module-list-div">
-                <mat-icon class="app-module-list-icon" (click)="toggleDropdown()">
-                    {{ dropdownExpandedStatus ? 'expand_more' : 'chevron_right'}}</mat-icon>
-                <span class="app-module-list-title">{{ 'ABOUT.MODULES.TITLE' | translate }}
-                </span>
-            </div>
+    <div class="mat-expansion-panel-body" *ngIf="panelExpandedStatus">
+        <mat-divider class="app-module-list-divider"></mat-divider>
 
-        </div>
+        <div class="app-module-list-body">
+            <div class="app-module-list-body-details">
+                <mat-table [dataSource]="data">
+                    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                        <mat-header-cell *matHeaderCellDef>
+                            {{ column.header | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+                    </ng-container>
 
-        <mat-divider class="app-module-list-divider" *ngIf="dropdownExpandedStatus"></mat-divider>
-
-        <div *ngIf="dropdownExpandedStatus">
-            <div class="app-module-list-dropdown">
-                <div class="app-module-list-dropdown-details">
-                    <mat-table [dataSource]="data">
-                        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-                            <mat-header-cell *matHeaderCellDef>
-                                {{ column.header | translate }}
-                            </mat-header-cell>
-                            <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-                    </mat-table>
-                </div>
+                    <mat-header-row *matHeaderRowDef="displayedColumns" class="adf-table-header-row"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns" class="adf-table-row"></mat-row>
+                </mat-table>
             </div>
         </div>
 
     </div>
 
-</div>
+</mat-expansion-panel>

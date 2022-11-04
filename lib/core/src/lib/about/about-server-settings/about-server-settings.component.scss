@@ -1,40 +1,48 @@
+mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
 .app-server-settings-container {
-    margin: 0px 0px -24px 0px;
+    margin: 0 -24px;
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.app-server-settings-row {
-    margin: 24px 24px 24px 24px;
+.app-server-settings-panel {
+    margin: 24px;
     width: 95%;
     border: 1px solid var(--theme-header-vertical-color);
+    background-color: var(--theme-white-color);
     border-radius: 12px;
+}
+
+.app-server-settings-header {
+    display: flex;
 }
 
 .app-server-settings-heading {
     display: flex;
-    padding-left: 1rem;
-}
-
-.app-server-settings-div {
-    display: flex;
     width: 60%;
     cursor: pointer;
     height: 32px;
-    padding: 24px 0px;
+    padding: 24px 0;
 }
 
 .app-server-settings-icon {
-    padding-top: 4px;
+    padding: 4px;
     cursor: pointer;
     color: var(--theme-grey-color);
+    margin-right: 12px;
 }
 
 .app-server-settings-title {
-    margin-left: 0.6rem;
-    margin-top: 4px;
-    letter-spacing: .15px;
+    padding: 4px 0;
+    letter-spacing: 0.15px;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -43,33 +51,34 @@
 
 .app-server-settings-divider {
     color: var(--theme-header-vertical-color);
-    padding-left: -1px;
-    padding-right: 1px;
+    width: 100%;
 }
 
-.app-server-settings-dropdown {
-    padding: 0rem 1rem;
+.app-server-settings-body {
+    padding: 0 24px;
+    margin: 0;
 }
 
-.app-server-settings-dropdown-heading {
+.app-server-settings-body-heading {
     display: flex;
-    color: var(--theme-heading-color);
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    height: 32px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
 }
 
-.app-server-settings-dropdown-details {
-    color: var(--theme-heading-color);
+.app-server-settings-body-details {
+    color: var(--theme-dark-header-toolbar-color);
     width: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 48px;
-    letter-spacing: .25px;
+    letter-spacing: 0.25px;
+    padding: 8px 0;
 }
 
 .app-mat-divider {
