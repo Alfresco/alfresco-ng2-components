@@ -72,7 +72,8 @@ else
 fi
 
 # Cache for protractor smart-runner
-export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$TRAVIS_BUILD_ID"
+#export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$TRAVIS_BUILD_ID"
+export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$GITHUB_RUN_ID/$GITHUB_JOB
 
 # Cache for node_modules
 export NODE_VERSION=$(node -v)
@@ -82,7 +83,7 @@ export S3_NODE_MODULES_CACHE_ID=$(echo "$NODE_VERSION-$PACKAGE_LOCK_SHASUM" | sh
 export S3_NODE_MODULES_CACHE_PATH="$S3_DBP_PATH/cache/node_modules/$S3_NODE_MODULES_CACHE_ID.tar.bz2"
 
 echo "========== Caching settings =========="
-echo "S3_SMART_RUNNER_PATH='$S3_SMART_RUNNER_PATH'" | tee -a $ENV_FILE
+echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH" | tee -a $ENV_FILE
 echo "PACKAGE_LOCK_SHASUM='$PACKAGE_LOCK_SHASUM'" | tee -a $ENV_FILE
 echo "NODE_VERSION='$NODE_VERSION'" | tee -a $ENV_FILE
 echo "S3_NODE_MODULES_CACHE_ID='$S3_NODE_MODULES_CACHE_ID'" | tee -a $ENV_FILE
