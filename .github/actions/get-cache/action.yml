@@ -12,3 +12,17 @@ outputs:
 runs:
   using: "composite"
   steps:
+    ## NXCACHE
+    - name: update NX cache folder
+      uses: actions/download-artifact@v3
+      continue-on-error: true
+      with:
+        path: nxcache/
+        name: nxcache-${{ github.ref_name }}
+    ## DIST
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      continue-on-error: true
+      with:
+        path: dist/
+        name: dist-${{ github.ref_name }}

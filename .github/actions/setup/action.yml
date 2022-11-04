@@ -51,11 +51,8 @@ runs:
         uses: nrwl/nx-set-shas@v3
         with:
           main-branch-name: 'develop'
-      - name: debug nx-set-sha
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
       - name: link nx executable
         run: sudo ln -s $(npm bin)/nx /usr/bin/nx
+        shell: bash
       # - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
 # BUILD
