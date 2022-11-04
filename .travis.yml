@@ -58,17 +58,15 @@ stages:
   - name: Prerequisite
   - name: Setup
   - name: "Build"
-    if: tag IS blank AND type = pull_request
+    if: tag IS blank AND (type = pull_request OR type = cron OR type = api)
   - name: "Trigger Alpha ADF child build"
-    if: (branch = develop AND (type = cron || type = api)) OR  commit_message =~ /\[trigger adf\]/
-  - name: "Build Demo shell"
-    if: tag IS blank AND type = pull_request
+    if: type = cron OR (type = api AND commit_message =~ /\[trigger adf\]/)
   - name: "Release"
-    if: type = push OR type = cron || type = api
+    if: type = push
   - name: "Unit test Lib"
-    if: type = pull_request || (type = cron || type = api)
+    if: type = pull_request OR type = cron OR type = api
   - name: "e2e Test"
-    if: type = pull_request || (type = cron || type = api)
+    if: type = pull_request OR type = cron OR type = api
   - name: "Release tag"
     if: branch =~ /^master(-patch.*)?$/
   - name: "Check bundle"
