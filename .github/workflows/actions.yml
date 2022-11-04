@@ -192,11 +192,7 @@ jobs:
       - name: echos some npm config
         run: |
           npm config rm proxy
-          npm config rm https-proxy 
-      - name: before install
-        run : |
-          bash ./scripts/ci/job_hooks/before_install.sh 
-          bash ./scripts/ci/job_hooks/install.sh
+          npm config rm https-proxy
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
@@ -205,6 +201,8 @@ jobs:
       - name: ${{ matrix.components }}
         if: matrix.components == 'Core'
         run: |
+          bash ./scripts/ci/job_hooks/before_install.sh 
+          bash ./scripts/ci/job_hooks/install.sh
           bash ./scripts/ci/job_hooks/before_e2e.sh
           bash ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           bash ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
