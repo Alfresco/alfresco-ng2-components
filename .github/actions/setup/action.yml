@@ -5,10 +5,6 @@ inputs:
     description: 'Who to greet'
     required: false
     default: 'World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: "composite"
   steps:
@@ -20,6 +16,8 @@ runs:
       - name: get latest tag sha
         id: tag-sha
         uses: ./.github/actions/get-latest-tag-sha
+      - name: DEBUG latest-tag-sha
+        run: echo "'${{ steps.tag-sha.outputs.tag_sha }}'"
 # CACHE
       - name: Node cache
         id: node-cache
