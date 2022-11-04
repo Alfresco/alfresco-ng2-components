@@ -108,7 +108,7 @@ jobs:
         - stage: "Build"
           name:  "Lib::Build"
           install: echo "no install"
-          script: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+          script: $(npm bin)/nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
 
           workspaces:
             create:
@@ -121,14 +121,14 @@ jobs:
         - stage: "Build"
           name: "Lint"
           install: echo "no install"
-          script: nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
+          script: $(npm bin)/nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
           workspaces:
               use: node_modules_cache
 
         - stage: "Build"
           name:  "Demo Shell::Build"
           install: echo "no install"
-          script: nx build demoshell --configuration production
+          script: $(npm bin)/nx build demoshell --configuration production
           workspaces:
               create:
                   name: built_demo_shell_cache
@@ -140,7 +140,7 @@ jobs:
         - stage: "Build"
           name:  "Storybook::Build"
           install: echo "no install"
-          script: nx run stories:build-storybook --configuration ci
+          script: $(npm bin)/nx run stories:build-storybook --configuration ci
           workspaces:
               create:
                   name: built_storybook_cache
@@ -152,28 +152,28 @@ jobs:
         - stage: "Unit test Lib"
           name: "content::unit"
           install: echo "no install"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
+          script: $(npm bin)/nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "core-extension::unit"
           install: echo "no install"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
+          script: $(npm bin)/nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,content-services,process-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "process-insights::unit"
           install: echo "no install"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
+          script: $(npm bin)/nx affected:test $NX_CALCULATION_FLAGS --exclude="core,extensions,content-services,process-services-cloud"
           workspaces:
             use: built_libs_cache
 
         - stage: "Unit test Lib"
           name: "process-cloud::unit"
           install: echo "no install"
-          script: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
+          script: $(npm bin)/nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,content-services,process-services"
           workspaces:
             use: built_libs_cache
 
@@ -188,8 +188,8 @@ jobs:
           install: echo "no install"
           script:
             - ./scripts/travis/build/bumpversion.sh || travis_terminate 1
-            - nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" || travis_terminate 1
-            - nx affected $NX_CALCULATION_FLAGS --target=pretheme || travis_terminate 1
+            - $(npm bin)/nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" || travis_terminate 1
+            - $(npm bin)/nx affected $NX_CALCULATION_FLAGS --target=pretheme || travis_terminate 1
             - ./scripts/travis/release/release-npm.sh || travis_terminate 1
           workspaces:
             use: node_modules_cache
@@ -198,7 +198,7 @@ jobs:
           name:  "release demoshell::docker"
           install: echo "no install"
           script:
-            - nx build demoshell --configuration production || travis_terminate 1
+            - $(npm bin)/nx build demoshell --configuration production || travis_terminate 1
             - . ./scripts/travis/release/docker-tag.sh || travis_terminate 1
             - ./scripts/travis/release/release-demoshell-docker.sh
           workspaces:
@@ -208,7 +208,7 @@ jobs:
           name:  "release storybook::docker"
           install: echo "no install"
           script:
-            - nx run stories:build-storybook --configuration ci || travis_terminate 1
+            - $(npm bin)/nx run stories:build-storybook --configuration ci || travis_terminate 1
             - . ./scripts/travis/release/docker-tag.sh || travis_terminate 1
             - ./scripts/travis/release/release-storybook-docker.sh || travis_terminate 1
           workspaces:
