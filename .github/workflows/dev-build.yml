@@ -186,7 +186,15 @@ jobs:
         with:
           path: dist/
           name: dist-${{ github.ref_name }}
-      
+# ENV LOAD
+      - uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
+        with:
+          yml_path: .travis.yml
+      - name: load "TRAVIS_EVENT_TYPE"
+        uses: ./.github/actions/travis-event-type-load
+      - name: before install
+        uses: ./.github/actions/before-install
+        
       - name: Install playRight
         run: |
           npm install -D @playwright/test
