@@ -27,43 +27,35 @@ import { LicenseData, PackageInfo, StatusData } from './interfaces';
 import { ObjectUtils } from '../utils/object-utils';
 import { StringUtils } from '../utils/string-utils';
 
-interface VersionInfo {
-    display: string;
-}
-
-interface StatusInfo {
-    isReadOnly: boolean;
-    isAuditEnabled: boolean;
-    isQuickShareEnabled: boolean;
-    isThumbnailGenerationEnabled: boolean;
-    isDirectAccessUrlEnabled: boolean;
-}
-
-interface LicenseInfo {
-    issuedAt: Date;
-    expiresAt: Date;
-    remainingDays: number;
-    holder: string;
-    mode: string;
-    entitlements?: EntitlementsInfo;
-}
-
-interface EntitlementsInfo {
-    maxUsers?: number;
-    maxDocs?: number;
-    isClusterEnabled?: boolean;
-    isCryptodocEnabled?: boolean;
-}
-
 interface ModuleInfo {
     title: string;
     version: string;
 }
 interface RepositoryInfo {
-    status: StatusInfo;
+    status: {
+        isReadOnly: boolean;
+        isAuditEnabled: boolean;
+        isQuickShareEnabled: boolean;
+        isThumbnailGenerationEnabled: boolean;
+        isDirectAccessUrlEnabled: boolean;
+    };
     edition: string;
-    version: VersionInfo;
-    license?: LicenseInfo;
+    version: {
+        display: string;
+    };
+    license?: {
+        issuedAt: Date;
+        expiresAt: Date;
+        remainingDays: number;
+        holder: string;
+        mode: string;
+        entitlements?: {
+            maxUsers?: number;
+            maxDocs?: number;
+            isClusterEnabled?: boolean;
+            isCryptodocEnabled?: boolean;
+        };
+    };
     modules?: ModuleInfo[];
 }
 
