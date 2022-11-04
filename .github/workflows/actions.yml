@@ -24,6 +24,10 @@ env:
   PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
   PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
   SMART_RUNNER_DIRECTORY: .protractor-smartrunner
+  S3_DBP_PATH: s3://alfresco-travis-builds/adf
+  DEMO_SHELL_DIR: ./dist/demo-shell
+  BUILT_LIBS_DIR: ./dist/libs
+  NODE_MODULES_DIR: ./node_modules
     
 jobs:
   prerequisite:
@@ -191,7 +195,9 @@ jobs:
           npm config rm proxy
           npm config rm https-proxy 
       - name: before install
-        run : bash ./scripts/ci/job_hooks/before_install.sh                  
+        run : |
+          bash ./scripts/ci/job_hooks/before_install.sh 
+          bash ./scripts/ci/job_hooks/install.sh
       - name: ${{ matrix.components }}
         if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
