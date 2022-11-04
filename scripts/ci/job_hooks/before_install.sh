@@ -73,7 +73,7 @@ fi
 
 # Cache for protractor smart-runner
 #export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$TRAVIS_BUILD_ID"
-export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$GITHUB_RUN_ID/$GITHUB_JOB
+export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$GITHUB_RUN_ID/$GITHUB_JOB"
 
 # Cache for node_modules
 export NODE_VERSION=$(node -v)
