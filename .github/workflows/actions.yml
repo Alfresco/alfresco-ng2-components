@@ -79,14 +79,14 @@ jobs:
       - name: debug
         run: ls -la | grep .travis
       - name: before install
-        run: bash ./scripts/ci/job_hooks/before_install.sh
-      - name: install
-        run: bash ./scripts/ci/job_hooks/install.sh
+      - uses: ./.github/actions/before-install     
       - name: Build::lib
         run: |
           sudo ln -s $(npm bin)/nx /usr/bin/nx
           ./scripts/travis/build/build-libs.sh || exit 1
-       #   ./scripts/travis/release/release-npm.sh || exit 1        
+       #   ./scripts/travis/release/release-npm.sh || exit 1
+      - name: install
+        run: bash ./scripts/ci/job_hooks/install.sh        
       - name: Lint
         run : nx affected:lint $NX_CALCULATION_FLAGS --parallel=5
       # skip Build Demo shell on this stage  
