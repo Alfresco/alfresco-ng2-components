@@ -34,7 +34,7 @@
     "@angular/cdk": ">=10.0.1",
     "@angular/common": ">=10.0.2",
     "@angular/core": ">=10.0.2",
-    "@angular/flex-layout": ">=10.0.0-beta.32",
+    "@angular/flex-layout": ">=10.0.0-beta || >=11.0.0-beta || >=12.0.0-beta || >=13.0.0-beta || >=14.0.0-beta",
     "@angular/forms": ">=10.0.2",
     "@angular/material": ">=10.0.1",
     "@angular/material-moment-adapter": ">=10.0.1",

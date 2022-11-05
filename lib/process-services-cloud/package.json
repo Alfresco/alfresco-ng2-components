@@ -16,7 +16,7 @@
     "@angular/common": ">=14.0.5",
     "@angular/compiler": ">=14.0.5",
     "@angular/core": ">=14.0.5",
-    "@angular/flex-layout": ">=13.0.0-beta.38",
+    "@angular/flex-layout": ">=13.0.0-beta || >=14.0.0-beta",
     "@angular/forms": ">=14.0.5",
     "@angular/material": ">=13.3.9",
     "@angular/material-moment-adapter": ">=13.3.9",
