@@ -1,0 +1,53 @@
+name: "s3/download"
+description: "s3/download"
+inputs:
+  test-id:
+    description: "Test id"
+    required: true
+  upload-to-s3:
+    description: "enable upload to s3 before e2e"
+    required: true
+  download-from-s3:
+    description: "enable download from s3 after e2e"
+    required: true
+  output:
+    description: "Output path"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: get artifacts from S3
+      if: ${{ inputs.download-from-s3 == 'true' }}
+      shell: bash
+      uses: ./.github/actions/s3/download
+      with:
+        artifact-id: '$S3_SMART_RUNNER_PATH/${{ github.run_id }}-${{ github.sha }}.tar.bz2'
+        output: "$SMART_RUNNER_DIRECTORY"
+    - name: Check Content is UP
+      shell: bash      
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli 
+          check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
+      # check ps env
+    - name: check PS is UP
+      shell: bash        
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli
+          init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" 
+          --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
+    - name: copy adf into node modules
+      shell: bash      
+      run: |
+        rm -rf ./node_modules/@alfresco/adf-testing/ && 
+        mkdir -p ./node_modules/@alfresco/adf-testing/ && 
+        cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+    - name: run test
+      shell: bash        
+      run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
+    - name: after e2e - upload artifacts to S3
+      shell: bash
+      if: ${{ inputs.upload-to-s3 == 'true' }}
+      uses: ./.github/actions/s3/upload
+      with:
+        artifact-id: '$S3_SMART_RUNNER_PATH/${{ github.run_id }}-${{ github.sha }}.tar.bz2'
+        output: "$SMART_RUNNER_DIRECTORY"

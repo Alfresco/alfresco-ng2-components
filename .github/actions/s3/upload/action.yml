@@ -1,0 +1,22 @@
+name: "s3/download"
+description: "s3/download"
+inputs:
+  artifact-id:
+    description: "Artifact id"
+    required: true
+  output:
+    description: "Output path"
+    required: true
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - name: s3 download
+      shell: bash
+      run: |
+        tar cfj ./s3-artifact.tmp -C '${{ inputs.artifact-id}}' `ls -A '${{ inputs.artifact-id}}'`
+        aws s3 cp ./s3-artifact.tmp ${{ inputs.output }}
+        rm ./s3-artifact.tmp
