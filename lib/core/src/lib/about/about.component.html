@@ -1,39 +1,51 @@
-<div class="adf-about-container">
+<mat-accordion [togglePosition]="'before'">
+    <mat-expansion-panel *ngIf="dev">
+        <mat-expansion-panel-header>
+            <mat-panel-title>{{ 'ABOUT.SERVER_SETTINGS.TITLE' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <adf-about-server-settings></adf-about-server-settings>
+    </mat-expansion-panel>
 
-    <adf-about-server-settings *ngIf="dev" ></adf-about-server-settings>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <adf-about-platform-version [repository]="repository" [process]="bpmVersion"></adf-about-platform-version>
+    </mat-expansion-panel>
 
-    <adf-about-platform-version [repository]="repository"
-                                [process]="bpmVersion">
-    </adf-about-platform-version>
+    <mat-expansion-panel *ngIf="repository">
+        <mat-expansion-panel-header>
+            <mat-panel-title>{{ 'ABOUT.REPOSITORY' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+            <article *ngIf="licenseEntries">
+                <header>{{ 'ABOUT.LICENSE.TITLE' | translate }}</header>
+                <adf-about-license-list [data]="licenseEntries"></adf-about-license-list>
+            </article>
 
-    <ng-container *ngIf="repository">
+            <article *ngIf="statusEntries">
+                <header>{{ 'ABOUT.STATUS.TITLE' | translate }}</header>
+                <adf-about-status-list [data]="statusEntries"></adf-about-status-list>
+            </article>
 
-        <article *ngIf="licenseEntries">
-            <header>{{ 'ABOUT.LICENSE.TITLE' | translate }}</header>
-            <adf-about-license-list [data]="licenseEntries"></adf-about-license-list>
-        </article>
+            <article *ngIf="repository?.modules">
+                <header>{{ 'ABOUT.MODULES.TITLE' | translate }}</header>
+                <adf-about-module-list [data]="repository.modules"></adf-about-module-list>
+            </article>
+        </div>
+    </mat-expansion-panel>
 
-        <article *ngIf="statusEntries">
-            <header>{{ 'ABOUT.STATUS.TITLE' | translate }}</header>
-            <adf-about-status-list [data]="statusEntries"></adf-about-status-list>
-        </article>
-
-        <article *ngIf="repository?.modules">
-            <header>{{ 'ABOUT.MODULES.TITLE' | translate }}</header>
-            <adf-about-module-list [data]="repository.modules"></adf-about-module-list>
-        </article>
-    </ng-container>
-
-    <article *ngIf="dependencyEntries && dev" >
-        <header>{{ 'ABOUT.PACKAGES.TITLE' | translate }}</header>
+    <mat-expansion-panel *ngIf="dependencyEntries && dev">
+        <mat-expansion-panel-header>
+            <mat-panel-title>{{ 'ABOUT.PACKAGES.TITLE' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
         <adf-about-package-list [data]="dependencyEntries"></adf-about-package-list>
-    </article>
+    </mat-expansion-panel>
 
-    <ng-container *ngIf="extensions$ | async as extensions">
-        <article *ngIf="extensions.length > 0">
-            <header>{{ 'ABOUT.PLUGINS.TITLE' | translate }}</header>
-            <adf-about-extension-list [data]="extensions"></adf-about-extension-list>
-        </article>
-    </ng-container>
-
-</div>
+    <mat-expansion-panel *ngIf="extensions$ | async as extensions">
+        <mat-expansion-panel-header>
+            <mat-panel-title>{{ 'ABOUT.PLUGINS.TITLE' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <adf-about-extension-list [data]="extensions"></adf-about-extension-list>
+    </mat-expansion-panel>
+</mat-accordion>
