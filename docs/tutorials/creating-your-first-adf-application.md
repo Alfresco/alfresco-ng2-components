@@ -11,7 +11,7 @@ The first thing to do is to check the prerequisites and the requirements to run 
 
 More in particular check that you have:
 -   Alfresco Content Services (alias ACS) Enterprise edition up and running (identify the URL that will be required as configuration).
--   The latest lts version of [NodeJs](https://nodejs.org/en/ "https://nodejs.org/en/").
+-   The latest lts version of [NodeJs](https://nodejs.org/en/ "https://nodejs.org/en/"). For more convenient Node.js version management please check out [Node Version Management](./docs/tutorials/nvm.md).
 -   A recent (and supported) version of a browser (see [here](https://github.com/Alfresco/alfresco-ng2-components#browser-support "https://github.com/Alfresco/alfresco-ng2-components#browser-support") for further details).
 
 All the Angular development is done using the [Typescript](https://www.typescriptlang.org/ "https://www.typescriptlang.org/") language. With this in mind, it is highly suggested to adopt a good text editor to help you in this task. We recommend [Visual Studio Code](http://code.visualstudio.com/ "http://code.visualstudio.com/") a free, lightweight, and _very_ powerful tool from Microsoft that works well with Angular development and has a [big ecosystem of plugins](https://marketplace.visualstudio.com/VSCode "https://marketplace.visualstudio.com/VSCode") to make the developer experience even better.
