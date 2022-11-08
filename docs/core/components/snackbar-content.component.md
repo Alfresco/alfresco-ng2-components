@@ -1,8 +1,8 @@
 ---
-Title: Sorting Picker Component
+Title: Snackbar Content Component
 Added: v5.1.0
 Status: Active
-Last reviewed: 2022-10-31
+Last reviewed: 2022-11-08
 ---
 
 # [Snackbar Content Component](lib/core/src/lib/snackbar-content/snackbar-content.component.ts "Defined in snackbar-content.component.ts")

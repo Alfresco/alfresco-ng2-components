@@ -53,10 +53,6 @@ describe('SnackbarContentComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     it('should display message if message in data is set', () => {
         component.data = {
             message: 'Some message'
