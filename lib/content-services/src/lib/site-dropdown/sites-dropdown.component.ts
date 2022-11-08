@@ -19,6 +19,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { SitesService, LogService, InfiniteSelectScrollDirective } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {TranslateService} from '@ngx-translate/core';
 
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -74,18 +76,26 @@ export class DropdownSitesComponent implements OnInit {
 
     private loading = true;
     private skipCount = 0;
+    private _ariaLabel = '';
 
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
 
     constructor(private sitesService: SitesService,
-                private logService: LogService) {
+                private logService: LogService,
+                private liveAnnouncer: LiveAnnouncer,
+                private translateService: TranslateService) {
     }
 
     ngOnInit() {
+        this.updateAriaLabel(this.selected);
         if (!this.siteList) {
             this.loadSiteList();
         }
+    }
+
+    get ariaLabel(): string {
+        return this._ariaLabel;
     }
 
     loadAllOnScroll() {
@@ -96,6 +106,11 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     selectedSite(event: MatSelectChange) {
+        this.updateAriaLabel(event.value);
+        this.liveAnnouncer.announce(this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
+            placeholder: this.translateService.instant(this.placeholder),
+            selectedOption: this.translateService.instant(event.value.entry.title)
+        }));
         this.change.emit(event.value);
     }
 
@@ -140,6 +155,7 @@ export class DropdownSitesComponent implements OnInit {
                 }
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
+                this.updateAriaLabel(this.selected);
 
                 if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
@@ -173,5 +189,9 @@ export class DropdownSitesComponent implements OnInit {
     private isCurrentUserMember(site, loggedUserName): boolean {
         return site.entry.visibility === 'PUBLIC' ||
             !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase());
+    }
+
+    private updateAriaLabel(site: SiteEntry): void {
+        this._ariaLabel = `${this.translateService.instant(this.placeholder)} ${site ? this.translateService.instant(site.entry.title) : ''}`;
     }
 }

@@ -45,7 +45,7 @@
     <adf-toolbar>
         <adf-toolbar-title>
             <ng-container *ngIf="!showBreadcrumbs()">
-                <span role="heading" aria-level="3" class="adf-search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</span>
+                <h2 class="adf-search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</h2>
             </ng-container>
             <adf-dropdown-breadcrumb *ngIf="showBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
@@ -86,10 +86,11 @@
             (folderChange)="onFolderChange($event)"
             (ready)="onFolderLoaded($event)"
             (nodeSelected)="onCurrentSelection($event)"
+            [class.adf-content-node-selector-content-list-empty]="emptyList"
             data-automation-id="content-node-selector-document-list">
 
             <adf-custom-empty-content-template>
-                <div>{{ 'NODE_SELECTOR.NO_RESULTS' | translate }}</div>
+                <div aria-live="polite">{{ 'NODE_SELECTOR.NO_RESULTS' | translate }}</div>
             </adf-custom-empty-content-template>
 
             <data-columns>
