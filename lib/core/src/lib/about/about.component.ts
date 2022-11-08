@@ -31,7 +31,6 @@ import { StringUtils } from '../utils/string-utils';
 @Component({
     selector: 'adf-about',
     templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AboutComponent implements OnInit {

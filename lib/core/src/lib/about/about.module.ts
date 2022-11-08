@@ -29,12 +29,14 @@ import { AboutStatusListComponent } from './about-status-list/about-status-list.
 import { ModuleListComponent } from './about-module-list/module-list.component';
 import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
 import { AboutComponent } from './about.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule,
+        MatExpansionModule
     ],
     declarations: [
         AboutComponent,
