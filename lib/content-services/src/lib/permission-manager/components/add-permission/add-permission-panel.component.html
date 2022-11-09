@@ -37,7 +37,6 @@
     <ng-template let-data>
         <mat-selection-list class="adf-permission-result-list-elements"
                             title="{{'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate}}"
-                            (keydown.control.a)="onSelectionChange()"
                             (selectionChange)="onSelectionChange()">
             <mat-list-option id="adf-add-permission-group-everyone"
                              class="adf-list-option-item"

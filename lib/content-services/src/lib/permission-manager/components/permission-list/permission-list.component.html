@@ -73,7 +73,6 @@
 
                 <button
                     mat-button
-                    [matTooltip]="'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate"
                     title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
                     (click)="openAddPermissionDialog()"
                     data-automation-id="adf-add-permission-button">
@@ -82,7 +81,6 @@
 
                 <button
                     mat-button
-                    [matTooltip]="'PERMISSION_MANAGER.ACTION.DELETE' | translate"
                     title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
                     [disabled]="!selectedPermissions?.length"
                     (click)="deleteSelection()"
