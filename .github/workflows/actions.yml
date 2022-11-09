@@ -39,6 +39,14 @@ jobs:
       - name: build guard check
         if: ${{ github.event_name == 'pull_request' }}
         run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+      - name: Get Current Job Log URL
+        uses: Tiryoh/gha-jobid-action@v0
+        id: jobs
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          job_name: ${{ github.job }}
+      - name: Output Current Job Log URL
+        run: echo ${{ steps.jobs.outputs.html_url }}
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
@@ -70,9 +78,7 @@ jobs:
           python-version: '3.10'
       - name: create .travis folder
         run: |
-            mkdir -p .travis
-            job_id=${{ github.job }}
-            echo "$job_id"
+            mkdir -p .travis            
       - name: create travis env file
         uses: mikefarah/yq@v4.28.1
         with:
