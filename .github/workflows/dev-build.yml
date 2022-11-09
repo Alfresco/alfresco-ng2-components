@@ -122,11 +122,9 @@ jobs:
         run: |
           npm install -D @playwright/test
           npx playwright install
-      - name: echos some npm config
+      - name: build adf cli
         run: |
-          npm config rm proxy
-          npm config rm https-proxy
-          npm config ls -l
+          nx build cli
       - name: Process Cloud Storybook Playwright
         # if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
