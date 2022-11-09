@@ -134,7 +134,6 @@ jobs:
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: e2e
-        shell: bash
         uses: ./.github/actions/e2e
         with:
           test-id: core
