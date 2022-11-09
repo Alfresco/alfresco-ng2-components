@@ -89,8 +89,7 @@ jobs:
 
   e2e-test:
     name: "e2e Test"
-    needs:
-      - main
+    needs: [ main ]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -134,11 +133,10 @@ jobs:
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
-
-    - name: e2e
-      shell: bash
-      uses: ./.github/actions/e2e
-      with:
-        test-id: core
-        upload-to-s3: false
-        download-from-s3: false
+      - name: e2e
+        shell: bash
+        uses: ./.github/actions/e2e
+        with:
+          test-id: core
+          upload-to-s3: false
+          download-from-s3: false
