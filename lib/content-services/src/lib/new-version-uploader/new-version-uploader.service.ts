@@ -23,6 +23,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
 import { Observable } from 'rxjs';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,8 @@ export class NewVersionUploaderService {
     constructor(
         private contentService: ContentService,
         private apiService: AlfrescoApiService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private overlayContainer: OverlayContainer
     ) { }
 
     /**
@@ -72,6 +74,10 @@ export class NewVersionUploaderService {
                     dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
                         observer.error(error);
                     });
+                    dialogRef.afterClosed().subscribe(() => {
+                        this.overlayContainer.getContainerElement().setAttribute('role', 'region');
+                    });
+                    this.overlayContainer.getContainerElement().setAttribute('role', 'main');
                 });
             } else {
                 observer.error({ value: 'OPERATION.ERROR.PERMISSION' });
