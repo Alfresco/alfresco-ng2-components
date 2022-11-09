@@ -95,6 +95,13 @@ h2.adf-search-results-label {
             overflow: auto;
             border: 1px solid var(--theme-border-color);
             border-top: 0;
+            position: relative;
+
+            &-empty + adf-infinite-pagination {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
 
             .adf-highlight {
                 color: var(--theme-primary-color);
@@ -192,16 +199,5 @@ h2.adf-search-results-label {
                 }
             }
         }
-    }
-}
-
-
-.adf-content-node-selector-content-list {
-    position: relative;
-
-    &-empty + adf-infinite-pagination {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
     }
 }
