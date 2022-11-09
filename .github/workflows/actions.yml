@@ -38,7 +38,10 @@ jobs:
         uses: actions/checkout@v3      
       - name: build guard check
         if: ${{ github.event_name == 'pull_request' }}
-        run: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+        run: |
+          job_id=${{ github.job }}
+          echo "$job_id"
+          ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
