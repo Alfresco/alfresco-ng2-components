@@ -199,11 +199,9 @@ h2.adf-search-results-label {
 .adf-content-node-selector-content-list {
     position: relative;
 
-    .adf-content-node-selector-content-list-empty {
-        & + adf-infinite-pagination {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
+    &-empty + adf-infinite-pagination {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 }
