@@ -18,7 +18,6 @@ runs:
   steps:
     - name: get artifacts from S3
       if: ${{ inputs.download-from-s3 == 'true' }}
-      shell: bash
       uses: ./.github/actions/s3/download
       with:
         artifact-id: '$S3_SMART_RUNNER_PATH/${{ github.run_id }}-${{ github.sha }}.tar.bz2'
@@ -45,7 +44,6 @@ runs:
       shell: bash        
       run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
     - name: after e2e - upload artifacts to S3
-      shell: bash
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
       with:
