@@ -58,12 +58,12 @@ describe('SnackbarContentComponent', () => {
             message: 'Some message'
         };
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.snackbar-message').innerText).toBe(component.data.message);
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content').innerText).toBe(component.data.message);
     });
 
     it('should not display message if message in data is not set', () => {
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.snackbar-message').innerText).toBe('');
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content').innerText).toBe('');
     });
 
     it('should call snackBarRef.dismissWithAction() when button is clicked', () => {
@@ -74,7 +74,7 @@ describe('SnackbarContentComponent', () => {
         };
         spyOn(component.snackBarRef, 'dismissWithAction');
         fixture.detectChanges();
-        fixture.nativeElement.querySelector('.action-label').click();
+        fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label').click();
         expect(component.snackBarRef.dismissWithAction).toHaveBeenCalled();
     });
 
@@ -85,7 +85,7 @@ describe('SnackbarContentComponent', () => {
             actionLabel: 'Some action action'
         };
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.action-label').innerText).toBe(component.data.actionLabel);
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label').innerText).toBe(component.data.actionLabel);
     });
 
     it('should not display actionLabel if actionLabel in data is not set', () => {
@@ -94,7 +94,7 @@ describe('SnackbarContentComponent', () => {
             showAction: true
         };
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.action-label')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label')).toBeNull();
     });
 
     it('should render icon if actionIcon in data is set', () => {
