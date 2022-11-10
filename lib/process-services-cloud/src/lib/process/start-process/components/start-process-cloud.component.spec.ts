@@ -600,8 +600,6 @@ describe('StartProcessCloudComponent', () => {
                 const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
                 expect(selectElement).not.toBeNull();
             });
-
-            it('should show the loading spinner before process definitions loaded',()=>{});
         });
     });
 
