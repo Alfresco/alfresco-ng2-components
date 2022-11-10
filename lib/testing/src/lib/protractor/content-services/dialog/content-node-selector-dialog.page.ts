@@ -29,7 +29,7 @@ import { TestElement } from '../../core/public-api';
 
 export class ContentNodeSelectorDialogPage {
     dialog = $(`adf-content-node-selector`);
-    header = this.dialog.$(`header[data-automation-id='content-node-selector-title']`);
+    header = this.dialog.$(`h1[data-automation-id='content-node-selector-title']`);
     searchInputElement = this.dialog.$(`input[data-automation-id='content-node-selector-search-input']`);
     searchLabel = this.dialog.$('.adf-content-node-selector-content-input .mat-form-field-label');
     selectedRow = this.dialog.$(`adf-datatable-row[class*="adf-is-selected"]`);
