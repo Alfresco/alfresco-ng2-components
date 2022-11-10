@@ -3,22 +3,22 @@
     align-items: center;
     justify-content: space-between;
 
-    .snackbar-message {
+    .adf-snackbar-message-content {
         margin: 0;
     }
 
-    .action {
+    .adf-snackbar-message-content-action {
         margin-left: 24px;
 
         .mat-button {
             min-width: 0;
             margin: -8px;
 
-            &.action-label {
+            &.adf-snackbar-message-content-action-label {
                 margin-right: 8px;
             }
 
-            &.action-icon {
+            &.adf-snackbar-message-content-action-icon {
                 padding: 0;
             }
         }
