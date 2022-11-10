@@ -14,4 +14,8 @@
     &-item-comment {
         opacity: 0.5;
     }
+
+    &-item-name, &-item-date {
+        white-space: normal !important;
+    }
 }
