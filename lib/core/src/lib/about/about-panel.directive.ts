@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
-import { AboutPanelDirective } from './about-panel.directive';
+import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 
-@Component({
-    selector: 'adf-about',
-    templateUrl: './about.component.html',
-    encapsulation: ViewEncapsulation.None
+@Directive({
+    selector: 'adf-about-panel'
 })
-export class AboutComponent {
-    @ContentChildren(AboutPanelDirective)
-    panels: QueryList<AboutPanelDirective>;
+export class AboutPanelDirective {
+    @Input() label!: string;
+
+    @ContentChild(TemplateRef)
+    layoutTemplate!: TemplateRef<any>;
 }

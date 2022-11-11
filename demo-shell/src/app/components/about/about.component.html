@@ -1,4 +1,34 @@
 <mat-slide-toggle [(ngModel)]="dev">{{'APP.ABOUT.DEVELOPMENT' | translate }}</mat-slide-toggle>
 
-<adf-about [dev]="dev" [pkg]="pkg"> </adf-about>
+<adf-about>
+    <adf-about-panel *ngIf="dev" [label]="'ABOUT.SERVER_SETTINGS.TITLE' | translate">
+        <ng-template>
+            <adf-about-server-settings></adf-about-server-settings>
+        </ng-template>
+    </adf-about-panel>
+
+    <adf-about-panel *ngIf="dev" [label]="'ABOUT.PACKAGES.TITLE' | translate">
+        <ng-template>
+            <adf-about-package-list [dependencies]="pkg?.dependencies"></adf-about-package-list>
+        </ng-template>
+    </adf-about-panel>
+
+    <adf-about-panel [label]="'ABOUT.REPOSITORY' | translate" *ngIf="repository">
+        <ng-template>
+            <adf-about-repository-info [data]="repository"></adf-about-repository-info>
+        </ng-template>
+    </adf-about-panel>
+
+    <adf-about-panel [label]="'ABOUT.VERSIONS.TITLE' | translate">
+        <ng-template>
+            <adf-about-platform-version [repository]="repository" [process]="bpmVersion"></adf-about-platform-version>
+        </ng-template>
+    </adf-about-panel>
+
+    <adf-about-panel *ngIf="extensions$ | async as extensions" [label]="'ABOUT.PLUGINS.TITLE' | translate">
+        <ng-template>
+            <adf-about-extension-list [data]="extensions"></adf-about-extension-list>
+        </ng-template>
+    </adf-about-panel>
+</adf-about>
 
