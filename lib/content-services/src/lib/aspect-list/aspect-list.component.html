@@ -6,10 +6,9 @@
                     <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
                                   [checked]="nodeAspects?.includes(aspect?.entry?.id)"
                                   (click)="onCheckBoxClick($event)"
-                                  (change)="onChange($event, aspect?.entry?.id)"
-                                  [aria-label]="'aspect-list-'+colIndex+'-check'">
-                    </mat-checkbox>
-                    <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
+                                  (change)="onChange($event, aspect?.entry?.id)">
+                                  <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
+                    </mat-checkbox>                    
                 </mat-panel-title>
                 <mat-panel-description [id]="'aspect-list-'+colIndex+'-title'"
                                         [matTooltip]="getTitle(aspect)">
