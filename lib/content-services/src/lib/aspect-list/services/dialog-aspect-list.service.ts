@@ -44,16 +44,16 @@ export class DialogAspectListService {
             nodeId
         };
 
-        this.openDialog(data, 'adf-aspect-list-dialog', '750px', 'dialog');
+        this.openDialog(data, 'adf-aspect-list-dialog', '750px');
         return select;
     }
 
-    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string, role) {
+    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string) {
         this.dialog.open(AspectListDialogComponent, {
             data,
             panelClass,
             width,
-            role,
+            role: 'dialog',
             disableClose: true
         });
         this.overlayContainer.getContainerElement().setAttribute('role', 'main');
