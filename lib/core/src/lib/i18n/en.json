@@ -20,6 +20,7 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
     "TITLE": "Notifications",
@@ -219,8 +220,7 @@
         "CREATED_DATE": "Created Date",
         "MODIFIER": "Modifier",
         "MODIFIED_DATE": "Modified Date",
-        "CONTENT_TYPE": "Content Type",
-        "DATA_LOADING": "Data is loading"
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
@@ -581,6 +581,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Loading..."
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} listbox {{selectedOption}}"
   }
 }

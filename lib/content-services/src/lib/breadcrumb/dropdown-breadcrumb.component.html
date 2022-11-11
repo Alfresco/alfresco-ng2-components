@@ -3,6 +3,7 @@
      [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.BREADCRUMB' | translate">
 
     <button
+        id="dropdown-breadcrumb-button"
         [tabindex]="hasPreviousNodes() ? 0 : -1"
         class="adf-dropdown-breadcrumb-trigger"
         (click)="open()"
@@ -18,7 +19,8 @@
             #dropdown
             *ngIf="hasPreviousNodes()"
             tabindex="-1"
-            data-automation-id="dropdown-breadcrumb-path">
+            data-automation-id="dropdown-breadcrumb-path"
+            aria-labelledby="dropdown-breadcrumb-button">
 
             <mat-option
                 *ngFor="let node of previousNodes;"
