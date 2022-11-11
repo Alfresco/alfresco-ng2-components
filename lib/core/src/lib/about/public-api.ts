@@ -24,5 +24,8 @@ export * from './about-platform-version/about-platform-version.component';
 export * from './about-server-settings/about-server-settings.component';
 export * from './about-status-list/about-status-list.component';
 export * from './about.component';
+export * from './about-panel.directive';
+export * from './about-repository-info/about-repository-info.component';
+export * from './about-repository-info/repository-info.interface';
 
 export * from './about.module';

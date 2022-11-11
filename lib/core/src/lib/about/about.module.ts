@@ -30,6 +30,8 @@ import { ModuleListComponent } from './about-module-list/module-list.component';
 import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
 import { AboutComponent } from './about.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AboutPanelDirective } from './about-panel.directive';
+import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
 @NgModule({
     imports: [
@@ -40,6 +42,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ],
     declarations: [
         AboutComponent,
+        AboutPanelDirective,
+        AboutRepositoryInfoComponent,
         AboutPlatformVersionComponent,
         AboutGithubLinkComponent,
         AboutServerSettingsComponent,
@@ -51,6 +55,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ],
     exports: [
         AboutComponent,
+        AboutPanelDirective,
+        AboutRepositoryInfoComponent,
         AboutPlatformVersionComponent,
         AboutGithubLinkComponent,
         AboutServerSettingsComponent,

@@ -15,20 +15,52 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
+import { AuthenticationService, BpmProductVersionModel, DiscoveryApiService, RepositoryInfo } from '@alfresco/adf-core';
 import pkg from '../../../../../package.json';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-about-page',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss']
+    templateUrl: './about.component.html'
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
     pkg: any;
     dev: true;
 
-    constructor() {
+    extensions$: Observable<ExtensionRef[]>;
+    repository: RepositoryInfo = null;
+    bpmVersion: BpmProductVersionModel = null;
+
+    constructor(
+        private authService: AuthenticationService,
+        private appExtensions: AppExtensionService,
+        private discovery: DiscoveryApiService
+    ) {
         this.pkg = pkg;
+        this.extensions$ = this.appExtensions.references$;
     }
 
+    ngOnInit(): void {
+        if (this.authService.isEcmLoggedIn()) {
+            this.setECMInfo();
+        }
+
+        if (this.authService.isBpmLoggedIn()) {
+            this.setBPMInfo();
+        }
+    }
+
+    setECMInfo() {
+        this.discovery.getEcmProductInfo().subscribe((repository) => {
+            this.repository = repository as RepositoryInfo;
+        });
+    }
+
+    setBPMInfo() {
+        this.discovery.getBpmProductInfo().subscribe((bpmVersion) => {
+            this.bpmVersion = bpmVersion;
+        });
+    }
 }
