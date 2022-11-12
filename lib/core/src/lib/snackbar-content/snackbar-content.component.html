@@ -1,0 +1,10 @@
+<p class="adf-snackbar-message-content">{{ data.message }}</p>
+<div *ngIf="data.showAction" class="adf-snackbar-message-content-action">
+    <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-label">
+        {{data.actionLabel}}
+    </button>
+    <button mat-button *ngIf="data.actionIcon" (click)="onIconClicked()" class="adf-snackbar-message-content-action-icon"
+            [attr.aria-label]="data.actionIconAriaLabel | translate">
+        <mat-icon>{{ data.actionIcon }}</mat-icon>
+    </button>
+</div>

@@ -180,7 +180,7 @@ describe('PermissionListComponent', () => {
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON');
             expect(element.querySelector('span[title="total"]').textContent.trim())
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
-            expect(document.querySelector('simple-snack-bar').textContent)
+            expect(document.querySelector('.adf-snackbar-message-content').textContent)
                 .toContain('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
         });
 
