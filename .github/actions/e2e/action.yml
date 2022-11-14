@@ -34,12 +34,15 @@ runs:
         ./node_modules/@alfresco/adf-cli/bin/adf-cli
           init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" 
           --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
-    - name: copy adf into node modules
-      shell: bash      
-      run: |
-        rm -rf ./node_modules/@alfresco/adf-testing/ && 
-        mkdir -p ./node_modules/@alfresco/adf-testing/ && 
-        cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+    - name: copy cli into node modules
+      run: nx run cli:bundle
+      shell: bash
+    # - name: copy adf into node modules
+    #   shell: bash      
+    #   run: |
+    #     rm -rf ./node_modules/@alfresco/adf-testing/ && 
+    #     mkdir -p ./node_modules/@alfresco/adf-testing/ && 
+    #     cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
     - name: run test
       shell: bash        
       run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
