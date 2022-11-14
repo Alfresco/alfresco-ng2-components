@@ -42,6 +42,7 @@
                 data-automation-id="permission-info-button"
                 [adf-pop-over]="inheritedPermission"
                 [target]="target"
+                autofocusedElementSelector=".adf-sortable"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}

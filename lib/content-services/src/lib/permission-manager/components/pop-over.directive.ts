@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    HostListener,
+    Input,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewContainerRef
+} from '@angular/core';
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { takeUntil } from 'rxjs/operators';
@@ -34,6 +44,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     @Input('adf-pop-over') popOver!: TemplateRef<any>;
     @Input() target!: HTMLElement;
     @Input() panelClass = 'adf-permission-pop-over';
+    @Input() autofocusedElementSelector: string;
 
     private _open = false;
     private destroy$ = new Subject();
@@ -51,6 +62,11 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.element.nativeElement.addEventListener('click', () => this.attachOverlay());
+        this.element.nativeElement.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        })
     }
 
     ngOnDestroy(): void {
@@ -82,23 +98,30 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
             .backdropClick()
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-                this._open = false;
                 this.detachOverlay();
             });
+
+        this.overlayRef.attachments().subscribe(() => {
+
+        });
     }
 
+    @HostListener('keyup.enter')
     private attachOverlay(): void {
         if (!this.overlayRef.hasAttached()) {
             const periodSelectorPortal = new TemplatePortal(this.popOver, this.vcr);
 
             this.overlayRef.attach(periodSelectorPortal);
             this._open = true;
+            this.overlayRef.overlayElement.querySelector<HTMLElement>(this.autofocusedElementSelector).focus();
         }
     }
 
+    @HostListener('document:keyup.esc')
     private detachOverlay(): void {
         if (this.overlayRef.hasAttached()) {
             this.overlayRef.detach();
+            this._open = false;
         }
     }
 }
