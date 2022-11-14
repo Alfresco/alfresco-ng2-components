@@ -40,6 +40,7 @@ import { AttachFormComponent } from './components/attach-form.component';
 import { FormModule } from '../form/form.module';
 import { ClaimTaskDirective } from './components/task-form/claim-task.directive';
 import { UnclaimTaskDirective } from './components/task-form/unclaim-task.directive';
+import { TaskCommentsModule } from '../task-comments/task-comments.module';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
         CoreModule,
         PeopleModule,
         ProcessCommentsModule,
-        ContentWidgetModule
+        ContentWidgetModule,
+        TaskCommentsModule
     ],
     declarations: [
         NoTaskDetailsTemplateDirective,
