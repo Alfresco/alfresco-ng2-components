@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-export * from './comment-list.component';
-export * from './comments.component';
+import { Observable } from 'rxjs';
+import { CommentModel } from '../../models/comment.model';
 
-export * from './interfaces/index';
-
-export * from './comments.module';
+export interface CommentsService {
+    get(id: string): Observable<CommentModel[]>;
+    add(id: string, message: string): Observable<CommentModel>;
+}
