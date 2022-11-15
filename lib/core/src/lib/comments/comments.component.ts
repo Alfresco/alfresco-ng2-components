@@ -86,6 +86,10 @@ export class CommentsComponent implements OnChanges {
     getComments() {
         this.resetComments();
 
+        if (!this.hasId()) {
+            return;
+        }
+
         this.commentsService.get(this.id).subscribe(
             (comments: CommentModel[]) => {
                 if (!this.isArrayInstance(comments)) {
@@ -140,7 +144,11 @@ export class CommentsComponent implements OnChanges {
     }
 
     private canAddComment(): boolean {
-        return this.message && this.message.trim() && !this.beingAdded;
+        return this.hasId() && this.message && this.message.trim() && !this.beingAdded;
+    }
+
+    private hasId(): boolean {
+        return !!this.id;
     }
 
     private isArrayInstance(entity: any): boolean {
