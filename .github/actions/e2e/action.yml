@@ -36,9 +36,14 @@ runs:
       shell: bash        
       run: |
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
+    - name: debug from action 
+      shell: bash
+      run: | 
+        cd node_modules
+        ls -lath        
     - name: run test
       shell: bash        
-      run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
+      run: nx run testing:bundle && bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
