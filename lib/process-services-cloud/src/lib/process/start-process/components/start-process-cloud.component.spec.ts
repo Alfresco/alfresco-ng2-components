@@ -891,7 +891,7 @@ describe('StartProcessCloudComponent', () => {
             expect(title).toBeFalsy();
         });
 
-        it('should show title', async () => {
+        it('should show title', () => {
             component.loading$.next(false);
             fixture.detectChanges();
 
@@ -921,7 +921,7 @@ describe('StartProcessCloudComponent', () => {
             expect(processDropdown).toBeFalsy();
         });
 
-        it('should show the loading spinner before process definitions loaded',()=>{
+        it('should show the loading spinner before process definitions loaded', () => {
             component.loading$.next(true);
             fixture.detectChanges();
 
@@ -930,7 +930,7 @@ describe('StartProcessCloudComponent', () => {
             expect(spinner).toBeTruthy();
         });
 
-        it('should show the process card after process definitions loaded',()=>{
+        it('should show the process card after process definitions loaded', () => {
             component.loading$.next(false);
             fixture.detectChanges();
 
