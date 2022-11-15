@@ -88,42 +88,9 @@ jobs:
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
       - run: nx build demoshell --configuration production
-      - run: nx run cli:bundle
       - run: nx run testing:bundle
       # UPDATE BUILD CACHE
       - uses: ./.github/actions/upload-artifacts
-
-  # e2e-test:
-  #   name: "e2e Test"
-  #   needs: [ main ]
-  #   runs-on: ubuntu-22.04
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       components:
-  #         - process Cloud::Storybook Playwright
-  #         - Core
-  #         # - Content::Components
-  #         # - Content::Directives
-  #         # - Content::Document List
-  #         # - Content::Metadata
-  #         # - Content::Upload and Versioning
-  #         # - Search
-  #         # - Process::Form
-  #         # - Process::Process
-  #         # - Process::Tasks
-  #         # - Process::Widgets
-  #         # - Process Cloud::Form
-  #         # - Process Cloud::People
-  #         # - Process Cloud::Process
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all
-  #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/download-artifacts
-
       - name: Install playRight
         run: |
           npm install -D @playwright/test
@@ -137,7 +104,10 @@ jobs:
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
-
+      - name: debug
+        run: | 
+          cd node_modules
+          ls -lath
       - name: e2e
         uses: ./.github/actions/e2e
         with:
