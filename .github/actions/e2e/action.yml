@@ -39,7 +39,7 @@ runs:
     - name: debug from action 
       shell: bash
       run: | 
-        cd node_modules
+        cd node_modules/@alfresco
         ls -lath        
     - name: run test
       shell: bash        

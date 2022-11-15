@@ -106,7 +106,7 @@ jobs:
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: debug
         run: | 
-          cd node_modules
+          cd node_modules/@alfresco
           ls -lath
       - name: e2e
         uses: ./.github/actions/e2e
