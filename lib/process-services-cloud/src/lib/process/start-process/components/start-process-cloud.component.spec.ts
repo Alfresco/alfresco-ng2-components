@@ -882,6 +882,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should hide title', () => {
+            component.loading$.next(false);
             component.showTitle = false;
             fixture.detectChanges();
 
@@ -891,12 +892,16 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show title', () => {
+            component.loading$.next(false);
+            fixture.detectChanges();
+
             const title = fixture.debugElement.query(By.css('.adf-title'));
 
             expect(title).toBeTruthy();
         });
 
         it('should show process definition dropdown', () => {
+            component.loading$.next(false);
             component.processDefinitionList = fakeProcessDefinitions;
             fixture.detectChanges();
 
@@ -906,6 +911,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should hide process definition dropdown', () => {
+            component.loading$.next(false);
             component.processDefinitionList = fakeProcessDefinitions;
             component.showSelectProcessDropdown = false;
             fixture.detectChanges();
@@ -913,6 +919,24 @@ describe('StartProcessCloudComponent', () => {
             const processDropdown = fixture.debugElement.query(By.css('#processDefinitionName'));
 
             expect(processDropdown).toBeFalsy();
+        });
+
+        it('should show the loading spinner before process definitions loaded', () => {
+            component.loading$.next(true);
+            fixture.detectChanges();
+
+            const spinner = fixture.debugElement.query(By.css('.adf-loading'));
+
+            expect(spinner).toBeTruthy();
+        });
+
+        it('should show the process card after process definitions loaded', () => {
+            component.loading$.next(false);
+            fixture.detectChanges();
+
+            const card = fixture.debugElement.query(By.css('.adf-start-process'));
+
+            expect(card).toBeTruthy();
         });
     });
 });
