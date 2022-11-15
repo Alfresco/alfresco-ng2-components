@@ -13,21 +13,21 @@ runs:
   using: "composite"
   steps:
     ## NXCACHE
-    - name: tar cache
-      run: |
-        tar czf ${{ context.workspace }}/nxcache nxcache.tar.gz
-        tar czf ${{ context.workspace }}/dist dist.tar.gz
-      shell: bash
     - name: update NX cache folder
-      uses: actions/upload-artifact@v3
+      uses: actions/download-artifact@v3
       continue-on-error: true
       with:
         path: nxcache.tar.gz
         name: nxcache-${{ github.ref_name }}
     ## DIST
     - name: update Dist folder
-      uses: actions/upload-artifact@v3
+      uses: actions/download-artifact@v3
       continue-on-error: true
       with:
         path: dist.tar.gz
         name: dist-${{ github.ref_name }}
+    - name: extract cache
+      run: |
+        tar xzf nxcache.tar.gz ${{ github.workspace }}
+        tar xzf dist.tar.gz ${{ github.workspace }}
+      shell: bash
