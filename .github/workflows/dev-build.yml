@@ -85,6 +85,7 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
+      - run: nx build demoshell --configuration production
       # UPDATE BUILD CACHE
       - uses: ./.github/actions/upload-artifacts
 
