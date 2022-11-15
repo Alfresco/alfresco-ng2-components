@@ -26,12 +26,6 @@ runs:
     - name: copy cli into node modules
       run: nx run cli:bundle
       shell: bash
-
-    - name: debug
-      shell: bash
-      run: | 
-        echo "$E2E_HOST"
-        echo "$E2E_USERNAME" 
   
     # - name: Check Content is UP
     #   shell: bash      

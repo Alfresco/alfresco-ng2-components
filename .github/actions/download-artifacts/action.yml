@@ -17,6 +17,10 @@ runs:
       with:
         path: dist.tar.gz
         name: dist-${{ github.ref_name }}
+    - shell: bash
+      run: |
+        pwd
+        ls -lha
     - name: extract cache
       run: |
         time tar xzf nxcache.tar.gz
