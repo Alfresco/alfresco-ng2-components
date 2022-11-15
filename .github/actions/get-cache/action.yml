@@ -17,12 +17,17 @@ runs:
       uses: actions/download-artifact@v3
       continue-on-error: true
       with:
-        path: nxcache/
+        path: nxcache.tar.gz
         name: nxcache-${{ github.ref_name }}
     ## DIST
     - name: update Dist folder
       uses: actions/download-artifact@v3
       continue-on-error: true
       with:
-        path: dist/
+        path: dist.tar.gz
         name: dist-${{ github.ref_name }}
+    - name: extract cache
+      run: |
+        tar xzf nxcache.tar.gz
+        tar xzf dist.tar.gz
+      shell: bash

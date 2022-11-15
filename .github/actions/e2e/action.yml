@@ -16,24 +16,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+
     - name: get artifacts from S3
       if: ${{ inputs.download-from-s3 == 'true' }}
       uses: ./.github/actions/s3/download
       with:
         artifact-id: '$S3_SMART_RUNNER_PATH/${{ github.run_id }}-${{ github.sha }}.tar.bz2'
         output: "$SMART_RUNNER_DIRECTORY"
-    - name: Check Content is UP
-      shell: bash      
-      run: |
-        ./node_modules/@alfresco/adf-cli/bin/adf-cli 
-          check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
-      # check ps env
-    - name: check PS is UP
-      shell: bash        
-      run: |
-        ./node_modules/@alfresco/adf-cli/bin/adf-cli
-          init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" 
-          --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
     - name: copy cli into node modules
       run: nx run cli:bundle
       shell: bash
@@ -46,6 +35,18 @@ runs:
     - name: debug
       shell: bash
       run: ls -lhR ./node_modules/@alfresco/adf-cli
+    - name: Check Content is UP
+      shell: bash      
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli 
+          check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
+      # check ps env
+    - name: check PS is UP
+      shell: bash        
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli
+          init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" 
+          --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
     - name: run test
       shell: bash        
       run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
