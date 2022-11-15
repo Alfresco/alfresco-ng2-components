@@ -1,14 +1,5 @@
-name: "Setup"
-description: "Build setup"
-inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
-    required: false
-    default: "World"
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+name: "Download artifacts"
+description: "Download artifacts"
 runs:
   using: "composite"
   steps:
@@ -28,6 +19,6 @@ runs:
         name: dist-${{ github.ref_name }}
     - name: extract cache
       run: |
-        tar xzf nxcache.tar.gz -C ${{ github.workspace }}
-        tar xzf dist.tar.gz -C ${{ github.workspace }}
+        time tar xzf nxcache.tar.gz
+        time tar xzf dist.tar.gz
       shell: bash
