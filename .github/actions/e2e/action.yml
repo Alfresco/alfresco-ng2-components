@@ -43,6 +43,9 @@ runs:
     #     rm -rf ./node_modules/@alfresco/adf-testing/ && 
     #     mkdir -p ./node_modules/@alfresco/adf-testing/ && 
     #     cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+    - name: debug
+      shell: bash
+      run: ls -lhR ./node_modules/@alfresco/adf-cli
     - name: run test
       shell: bash        
       run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
