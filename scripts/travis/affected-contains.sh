@@ -9,7 +9,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
   echo true
   exit 0
 fi
-AFFECTED_LIBS="$(nx print-affected --type=lib --select=projects --base=$BASE_HASH --head=$HEAD_HASH --plain)"
+AFFECTED_LIBS="$(nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain)"
 #echo "Verify if affected build contains $1"
 
 
