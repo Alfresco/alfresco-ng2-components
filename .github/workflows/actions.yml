@@ -43,6 +43,7 @@ jobs:
         id: output_job_id       
         run: |
             echo "${{ github.job }}"
+            echo ${{ steps.output_job_id.outputs }}"
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
