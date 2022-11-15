@@ -19,10 +19,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 
 import { ProcessCommentsComponent } from './process-comments.component';
-import { ProcessInstanceCommentsService } from './services/process-instance-comments.service';
 
 @NgModule({
     imports: [
@@ -37,12 +36,6 @@ import { ProcessInstanceCommentsService } from './services/process-instance-comm
     ],
     exports: [
         ProcessCommentsComponent
-    ],
-    providers: [
-        {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: ProcessInstanceCommentsService
-        }
     ]
 })
 export class ProcessCommentsModule {
