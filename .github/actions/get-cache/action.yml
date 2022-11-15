@@ -28,6 +28,6 @@ runs:
         name: dist-${{ github.ref_name }}
     - name: extract cache
       run: |
-        tar xzf nxcache.tar.gz
-        tar xzf dist.tar.gz
+        tar xzf nxcache.tar.gz ${{ context.workspace }}
+        tar xzf dist.tar.gz ${{ context.workspace }}
       shell: bash
