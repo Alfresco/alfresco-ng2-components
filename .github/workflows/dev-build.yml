@@ -85,7 +85,7 @@ jobs:
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
       # UPDATE BUILD CACHE
-      # - uses: ./.github/actions/update-cache
+      # - uses: ./.github/actions/upload-artifacts
 
   # e2e-test:
   #   name: "e2e Test"
@@ -116,7 +116,7 @@ jobs:
   #       with:
   #         fetch-depth: 0 # Fetch all history for all
   #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/get-cache
+  #     - uses: ./.github/actions/download-artifacts
 
       - name: Install playRight
         run: |
