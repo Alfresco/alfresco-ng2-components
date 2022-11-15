@@ -15,8 +15,8 @@ runs:
     ## NXCACHE
     - name: tar artifacts
       run: |
-        tar czf nxcache.tar.gz ${{ github.workspace }}/nxcache
-        tar czf  dist.tar.gz ${{ github.workspace }}/dist
+        time tar czf dist.tar.gz ${{ github.workspace }}/dist
+        time tar czf nxcache.tar.gz ${{ github.workspace }}/nxcache
       shell: bash
     - name: update NX cache folder
       uses: actions/upload-artifact@v3

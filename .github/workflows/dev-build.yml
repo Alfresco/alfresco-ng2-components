@@ -137,3 +137,34 @@ jobs:
           test-id: core
           upload-to-s3: false
           download-from-s3: false
+
+  e2e-test:
+    name: "e2e Test"
+    needs: [ main ]
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        components:
+          - process Cloud::Storybook Playwright
+          - Core
+          # - Content::Components
+          # - Content::Directives
+          # - Content::Document List
+          # - Content::Metadata
+          # - Content::Upload and Versioning
+          # - Search
+          # - Process::Form
+          # - Process::Process
+          # - Process::Tasks
+          # - Process::Widgets
+          # - Process Cloud::Form
+          # - Process Cloud::People
+          # - Process Cloud::Process
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-artifacts
