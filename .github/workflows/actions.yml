@@ -44,8 +44,7 @@ jobs:
         run: |
             job_id= ${{ github.job}}
             echo "job_id=$job_id" >> $GITHUB_OUTPUT
-      - name: Use run_id from previous step
-        uses: username/repo@tag
+      - name: Use run_id from previous step        
         with:
           job_id: ${{ steps.output_job_id.outputs.job_id }}
   build-lib:
