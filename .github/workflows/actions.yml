@@ -43,7 +43,7 @@ jobs:
         id: output_job_id       
         run: |
             echo "${{ github.job }}"
-            echo "${{ $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs }}"
+            echo ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
