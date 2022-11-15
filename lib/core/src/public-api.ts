@@ -45,7 +45,6 @@ export * from './lib/notifications/index';
 export * from './lib/search-text/index';
 export * from './lib/blank-page/index';
 export * from './lib/rich-text-editor/index';
-export * from './lib/snackbar-content/index';
 
 export * from './lib/utils/index';
 export * from './lib/interface/index';

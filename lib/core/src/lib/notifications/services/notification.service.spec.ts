@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {OverlayModule} from '@angular/cdk/overlay';
-import {Component} from '@angular/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MatSnackBar, MatSnackBarConfig, MatSnackBarModule} from '@angular/material/snack-bar';
-import {NotificationService} from './notification.service';
-import {TranslationService} from '../../services/translation.service';
-import {setupTestBed} from '../../testing/setup-test-bed';
-import {CoreTestingModule} from '../../testing/core.testing.module';
-import {TranslateModule} from '@ngx-translate/core';
+import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { NotificationService } from './notification.service';
+import { TranslationService } from '../../services/translation.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: '',

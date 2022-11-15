@@ -129,7 +129,7 @@ describe('Notification History Component', () => {
                 expect(callBackSpy).toHaveBeenCalled();
                 done();
             });
-        }, 10000);
+        });
 
         it('should show load more button when there are more notifications', (done) => {
             fixture.detectChanges();
@@ -164,7 +164,7 @@ describe('Notification History Component', () => {
                 expect(notification).toBeDefined();
                 done();
             });
-        }, 10000);
+        });
 
         it('should be able to change the maximum number of notifications displayed', (done) => {
             component.maxNotifications = 10;

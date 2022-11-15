@@ -21,7 +21,6 @@
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
   "DATA_LOADING": "Data is loading",
-  "CLOSE": "CLOSE",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
     "TITLE": "Notifications",

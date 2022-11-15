@@ -12,7 +12,6 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
--   [v5.1.0](#v510)
 -   [v4.7.0](#v470)
 -   [v4.6.0](#v460)
 -   [v4.5.0](#v450)
@@ -40,12 +39,6 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v5.1.0
-<!--v510 start-->
-
--   [Snackbar Content](core/components/snackbar-content.component.md)
-
-<!--v510 end-->
 ## v4.7.0
 
 <!--v470 start-->
