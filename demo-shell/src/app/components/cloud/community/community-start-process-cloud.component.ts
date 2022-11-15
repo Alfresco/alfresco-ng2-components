@@ -49,7 +49,8 @@ export class CommunityStartProcessCloudDemoComponent implements OnInit {
 
     openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
-            event.response.body.message
+            event.response.body.message,
+            4000
         );
     }
 }

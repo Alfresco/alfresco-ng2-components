@@ -21,7 +21,7 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class SnackbarPage {
 
-    notificationSnackBar = $$('.adf-snackbar-message-content').first();
+    notificationSnackBar = $$('simple-snack-bar span').first();
     snackBarAction = $('simple-snack-bar button span');
     snackBarContainerCss = $$('.mat-snack-bar-container');
 
