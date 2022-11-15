@@ -43,7 +43,7 @@ jobs:
         id: output_job_id       
         run: |
             echo "${{ github.job }}"
-            echo "${{ steps.output_job_id.outputs }}"
+            echo "${{ $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs }}"
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
