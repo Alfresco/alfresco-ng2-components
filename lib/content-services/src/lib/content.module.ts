@@ -45,6 +45,7 @@ import { VersionCompatibilityModule } from './version-compatibility/version-comp
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { ContentPipeModule } from './pipes/content-pipe.module';
+import { NodeCommentsModule } from './node-comments/node-comments.module';
 
 @NgModule({
     imports: [
@@ -73,7 +74,8 @@ import { ContentPipeModule } from './pipes/content-pipe.module';
         TreeViewModule,
         ContentTypeModule,
         AspectListModule,
-        VersionCompatibilityModule
+        VersionCompatibilityModule,
+        NodeCommentsModule
     ],
     providers: [
         {
@@ -106,7 +108,8 @@ import { ContentPipeModule } from './pipes/content-pipe.module';
         TreeViewModule,
         AspectListModule,
         ContentTypeModule,
-        VersionCompatibilityModule
+        VersionCompatibilityModule,
+        NodeCommentsModule
     ]
 })
 export class ContentModule {

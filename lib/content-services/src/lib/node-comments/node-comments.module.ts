@@ -17,32 +17,22 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { CoreModule, InfoDrawerModule } from '@alfresco/adf-core';
-import { ContentModule, ContentDirectiveModule, VersionManagerModule, ContentMetadataModule } from '@alfresco/adf-content-services';
-import { FileViewComponent } from './file-view.component';
-
-const routes: Routes = [
-    {
-        path: '',
-        component: FileViewComponent
-    }
-];
+import { NodeCommentsComponent } from './node-comments.component';
+import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
+import { NodeCommentsService } from './services/node-comments.service';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
-        CoreModule,
-        InfoDrawerModule,
-        ContentModule,
-        ContentDirectiveModule,
-        ContentMetadataModule,
-        VersionManagerModule
+        CoreModule
     ],
-    declarations: [FileViewComponent],
-    exports: [FileViewComponent]
+    declarations: [NodeCommentsComponent],
+    exports: [NodeCommentsComponent],
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: NodeCommentsService
+        }
+    ]
 })
-export class FileViewModule {
-
-}
+export class NodeCommentsModule {}
