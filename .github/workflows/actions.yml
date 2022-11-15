@@ -42,10 +42,7 @@ jobs:
       - name: Get Current Job Log URL
         id: output_job_id       
         run: |
-            job_id= ${{ github.job}}
-            echo "job_id=$job_id" >> $GITHUB_OUTPUT
-      - name: Use run_id from previous step
-        run: echo ${{ steps.output_job_id.outputs.job_id }}
+            echo "${{ github.job }}"
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
