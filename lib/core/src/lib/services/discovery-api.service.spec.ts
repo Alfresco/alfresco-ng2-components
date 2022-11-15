@@ -25,7 +25,7 @@ import { ApiClientsService } from '../../../api/api-clients.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 
-fdescribe('DiscoveryApiService', () => {
+describe('DiscoveryApiService', () => {
 
     let service: DiscoveryApiService;
     let authService: AuthenticationService;
