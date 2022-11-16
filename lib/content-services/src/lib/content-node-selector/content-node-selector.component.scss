@@ -102,4 +102,9 @@ adf-content-node-selector {
             }
         }
     }
+    @media screen and (max-width: 768px){
+        .mat-dialog-container{
+            height: 100vh;
+        }
+    }
 }
