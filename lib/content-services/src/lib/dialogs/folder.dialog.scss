@@ -33,10 +33,10 @@
     color: var(--theme-text-color);
 }
 @media screen and (max-width: 380px){
-    .adf-full-width{
+    .adf-font-size-input{
         font-size: 6px;
     }
-    #title{
+    .title{
         margin: 0 0 0px;
     }
     .adf-dialog-buttons{
