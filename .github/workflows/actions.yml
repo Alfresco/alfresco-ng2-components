@@ -42,7 +42,8 @@ jobs:
       - name: Get Current Job Log URL
         id: output_job_id       
         run: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/${{ github.repository }}/actions/runs/$GITHUB_RUN_ID/jobs
+            echo $GITHUB_TOKEN
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs 
 #           echo ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}/checks/${{ github.run_id }}
 #           echo ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs            
   build-lib:
