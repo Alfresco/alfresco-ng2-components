@@ -38,11 +38,16 @@ runs:
       shell: bash        
       run: |
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
-       
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+      with:
+        timeout-minutes: ${{ inputs.ssh_debug_timeout }}
+        limit-access-to-actor: true
     - name: run test
       shell: bash        
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
-      run: bash ./scripts/travis/e2e/e2e.sh core
+      run: nx run testing:bundle && bash ./scripts/travis/e2e/e2e.sh core
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
