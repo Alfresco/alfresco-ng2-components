@@ -21,8 +21,8 @@ import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { CommentsModule } from './comments.module';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
-import { commentsData } from './mocks/comments.mock';
-import { CommentsServiceStoryMock } from './mocks/comments.service.stories.mock';
+import { commentsStoriesData } from './mocks/comments.stories.mock';
+import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
 
 export default {
     component: CommentsComponent,
@@ -32,7 +32,7 @@ export default {
             imports: [CoreStoryModule, CommentsModule],
             providers: [
                 { provide: EcmUserService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
-                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoryMock }
+                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
         })
     ],
@@ -83,13 +83,13 @@ const template: Story<CommentsComponent> = (args: CommentsComponent) => ({
 
 export const singleCommentWithAvatar = template.bind({});
 singleCommentWithAvatar.args = {
-    comments: [commentsData[0]],
+    comments: [commentsStoriesData[0]],
     readOnly: true
 };
 
 export const singleCommentWithoutAvatar = template.bind({});
 singleCommentWithoutAvatar.args = {
-    comments: [commentsData[1]],
+    comments: [commentsStoriesData[1]],
     readOnly: true
 };
 
@@ -101,7 +101,7 @@ noComments.args = {
 
 export const comments = template.bind({});
 comments.args = {
-    comments: commentsData,
+    comments: commentsStoriesData,
     id: '-fake-'
 };
 
