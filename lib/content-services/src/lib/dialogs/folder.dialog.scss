@@ -32,3 +32,14 @@
 .adf-dialog-action-button:disabled > span {
     color: var(--theme-text-color);
 }
+@media screen and (max-width: 380px){
+    .adf-full-width{
+        font-size: 6px;
+    }
+    #title{
+        margin: 0 0 0px;
+    }
+    .adf-dialog-buttons{
+        padding: 0px;
+    }
+}
