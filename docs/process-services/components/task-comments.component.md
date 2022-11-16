@@ -1,22 +1,22 @@
 ---
-Title: Comments Component
-Added: v2.0.0
+Title: Task Comments Component
+Added: v5.1.0
 Status: Active
 ---
 
-# [Comments Component](../../../lib/core/src/lib/comments/comments.component.ts "Defined in comments.component.ts")
+# [Task Comments Component](../../../lib/process-services/src/lib/task-comments/task-comments.component.ts "Defined in task-comments.component.md")
 
-Displays comments from users involved in a specified environment and allows an involved user to add a comment to a environment.
+Displays comments from users involved in a specified task and allows an involved user to add a comment to a task.
 
 ![adf-comments](../../docassets/images/adf-comments.png)
 
 ## Basic Usage Task
 
 ```html
-<adf-comments
-    [id]="YOUR_TASK_ID"
+<adf-task-comments
+    [taskId]="YOUR_TASK_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
-</adf-comments>
+</adf-task-comments>
 ```
 
 ## Class members
@@ -25,7 +25,7 @@ Displays comments from users involved in a specified environment and allows an i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | The numeric ID of the entity. |
+| taskId | `string` |  | The numeric ID of the task. |
 | readOnly | `boolean` | false | Are the comments read only? |
 
 ### Events

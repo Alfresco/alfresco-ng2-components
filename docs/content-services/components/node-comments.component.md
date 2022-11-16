@@ -1,22 +1,22 @@
 ---
-Title: Comments Component
-Added: v2.0.0
+Title: Node Comments Component
+Added: v5.1.0
 Status: Active
 ---
 
-# [Comments Component](../../../lib/core/src/lib/comments/comments.component.ts "Defined in comments.component.ts")
+# [Node Comments Component](../../../lib/content-services/src/lib/node-comments/node-comments.component.ts "Defined in node-comments.component.ts")
 
-Displays comments from users involved in a specified environment and allows an involved user to add a comment to a environment.
+Displays comments from users involved in a specified content and allows an involved user to add a comment to a content.
 
 ![adf-comments](../../docassets/images/adf-comments.png)
 
 ## Basic Usage Task
 
 ```html
-<adf-comments
-    [id]="YOUR_TASK_ID"
+<adf-node-comments
+    [nodeId]="YOUR_NODE_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
-</adf-comments>
+</adf-node-comments>
 ```
 
 ## Class members
@@ -25,7 +25,7 @@ Displays comments from users involved in a specified environment and allows an i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | The numeric ID of the entity. |
+| nodeId | `string` |  | The numeric ID of the node. |
 | readOnly | `boolean` | false | Are the comments read only? |
 
 ### Events
