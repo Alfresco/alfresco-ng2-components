@@ -314,7 +314,7 @@ async function getDefaultApsUsersFromRealm() {
             `${program.host}/auth/admin/realms/alfresco/users`,
             'GET',
             {},
-            {},
+            { max: 1000 },
             {},
             {},
             {},
