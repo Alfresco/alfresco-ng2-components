@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     ## NXCACHE
-    - nampe: update NX cache folder
+    - name: update NX cache folder
       uses: actions/download-artifact@v3
       continue-on-error: true
       with:
