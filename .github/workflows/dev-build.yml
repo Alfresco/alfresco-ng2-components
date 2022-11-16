@@ -14,6 +14,18 @@ on:
       #   - /.*old-env.*/
       #   - /.*next-release.*/
       #   - /.*beta.*/
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: Enable SSH debug
+        type: boolean
+        required: false
+        default: false
+    ssh_debug_timeout:
+      debug_enabled:
+        description: SSH debug timeout, in minutes
+        required: false
+        default: "40"
 
 # on:
 #   pull_request:
@@ -107,13 +119,19 @@ jobs:
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: debug
-        run: | 
-          cd node_modules/@alfresco
-          ls -lath
+        run: ls -lath node_modules/@alfresco || true
       - uses: ./.github/actions/upload-artifacts  
       - name: copy cli into node modules
         run: nx run cli:bundle
-        shell: bash              
+        shell: bash
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        with:
+          timeout-minutes: ${{ inputs.ssh_debug_timeout }}
+          limit-access-to-actor: true
+      - run: sleep 300
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
       - name: e2e
         uses: ./.github/actions/e2e
         with:

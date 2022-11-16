@@ -41,7 +41,8 @@ runs:
        
     - name: run test
       shell: bash        
-      run: nx run testing:bundle && bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
+      # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
+      run: bash ./scripts/travis/e2e/e2e.sh core
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
