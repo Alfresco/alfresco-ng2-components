@@ -39,9 +39,10 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}
   TRAVIS_BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
-  E2E_HOST: "http://localhost:3000"
+  E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_USERNAME }}
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+  AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
 jobs:
   main:
     timeout-minutes: 30
