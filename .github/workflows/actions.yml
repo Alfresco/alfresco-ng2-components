@@ -43,9 +43,9 @@ jobs:
         id: output_job_id       
         run: |
             echo $GITHUB_TOKEN
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }} " https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs 
-#           echo ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}/checks/${{ github.run_id }}
-#           echo ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs            
+            str = ${curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }} " https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs | jq -r '.jobs[0].html_url'}
+            job_id=${echo "${str: -10}"}
+            echo "Job ID: $job_id"         
   build-lib:
     name: "Lib::Build"
     needs: prerequisite
