@@ -62,14 +62,11 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.element.nativeElement.addEventListener('click', () => this.attachOverlay());
-        this.element.nativeElement.addEventListener('keydown', (event: KeyboardEvent) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-            }
-        })
+        this.element.nativeElement.addEventListener('keydown', this.preventDefaultForEnter);
     }
 
     ngOnDestroy(): void {
+        this.element.nativeElement.removeEventListener('keydown', this.preventDefaultForEnter);
         this.detachOverlay();
         this.destroy$.next();
         this.destroy$.complete();
@@ -100,10 +97,6 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(() => {
                 this.detachOverlay();
             });
-
-        this.overlayRef.attachments().subscribe(() => {
-
-        });
     }
 
     @HostListener('keyup.enter')
@@ -122,6 +115,13 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         if (this.overlayRef.hasAttached()) {
             this.overlayRef.detach();
             this._open = false;
+            this.element.nativeElement.focus();
+        }
+    }
+
+    private preventDefaultForEnter(event: KeyboardEvent): void {
+        if (event.key === 'Enter') {
+            event.preventDefault();
         }
     }
 }
