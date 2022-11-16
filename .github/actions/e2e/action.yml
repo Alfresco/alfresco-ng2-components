@@ -29,15 +29,15 @@ runs:
       run: | 
         cd node_modules/@alfresco
         ls -lath 
-    # - name: Check Content is UP
-    #   shell: bash      
-    #   run: |
-    #     ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
-    #   # check ps env
-    # - name: check PS is UP
-    #   shell: bash        
-    #   run: |
-    #     ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
+    - name: Check Content is UP
+      shell: bash      
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
+      # check ps env
+    - name: check PS is UP
+      shell: bash        
+      run: |
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}"
        
     - name: run test
       shell: bash        
