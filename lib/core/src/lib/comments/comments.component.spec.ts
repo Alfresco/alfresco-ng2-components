@@ -152,8 +152,8 @@ describe('CommentsComponent', () => {
             expect(getCommentSpy).not.toHaveBeenCalled();
         });
 
-        it('should not fetch new comments when taskId changed to null', () => {
-            component.ngOnChanges({taskId: nullChange});
+        it('should not fetch new comments when id changed to null', () => {
+            component.ngOnChanges({id: nullChange});
             expect(getCommentSpy).not.toHaveBeenCalled();
         });
     });

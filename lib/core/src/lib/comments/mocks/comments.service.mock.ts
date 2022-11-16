@@ -26,7 +26,7 @@ export class CommentsServiceMock implements CommentsService {
     get(_id: string): Observable<CommentModel[]> {
         return commentsResponseMock.getComments();
     }
-    add(_id: string, _message: string): Observable<CommentModel> {
+    add(_id: string): Observable<CommentModel> {
         return commentsResponseMock.addComment();
     }
 }
@@ -115,9 +115,9 @@ export const commentsResponseMock = {
             isSelected: false
         } as CommentModel
     ]),
-    addComment: (message?: string) => of({
+    addComment: (message = 'test comment') => of({
         id: 1,
-        message: message || 'test comment',
+        message,
         created: new Date(),
         createdBy: {
             enabled: true,
