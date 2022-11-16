@@ -16,13 +16,13 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CommentContentService, CommentProcessService, EcmUserService } from '../services';
+import { EcmUserService } from '../services';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { CommentsModule } from './comments.module';
-import { CommentContentServiceMock } from '../mock/comment-content-service.mock';
-import { CommentProcessServiceMock } from '../mock/comment-process-service.mock';
-import { commentsTaskData, commentsNodeData } from '../mock/comment-content.mock';
+import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
+import { commentsData } from './mocks/comments.mock';
+import { CommentsServiceStoryMock } from './mocks/comments.service.stories.mock';
 
 export default {
     component: CommentsComponent,
@@ -31,17 +31,16 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
             providers: [
-                { provide: CommentContentService, useClass: CommentContentServiceMock },
-                { provide: CommentProcessService, useClass: CommentProcessServiceMock },
-                { provide: EcmUserService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } }
+                { provide: EcmUserService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
+                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoryMock }
             ]
         })
     ],
     parameters: {
         docs: {
             description: {
-                component: `Displays comments from users involved in a specified task or node.
-                    Allows an involved user to add a comment to a task or a node.`
+                component: `Displays comments from users involved in a specified environment.
+                    Allows an involved user to add a comment to a environment.`
             }
         }
     },
@@ -60,21 +59,12 @@ export default {
                 defaultValue: { summary: 'false' }
             }
         },
-        nodeId: {
+        id: {
             control: 'text',
-            description: 'Necessary in order to add a new Node comment',
+            description: 'Necessary in order to add a new comment',
             table: {
                 type: { summary: 'string' }
-            },
-            if: { arg: 'taskId', exists: false }
-        },
-        taskId: {
-            control: 'text',
-            description: 'Necessary in order to add a new Task comment',
-            table: {
-                type: { summary: 'string' }
-            },
-            if: { arg: 'nodeId', exists: false }
+            }
         },
         error: {
             action: 'error',
@@ -93,13 +83,13 @@ const template: Story<CommentsComponent> = (args: CommentsComponent) => ({
 
 export const singleCommentWithAvatar = template.bind({});
 singleCommentWithAvatar.args = {
-    comments: [commentsNodeData[0]],
+    comments: [commentsData[0]],
     readOnly: true
 };
 
 export const singleCommentWithoutAvatar = template.bind({});
 singleCommentWithoutAvatar.args = {
-    comments: [commentsTaskData[1]],
+    comments: [commentsData[1]],
     readOnly: true
 };
 
@@ -109,14 +99,9 @@ noComments.args = {
     readOnly: true
 };
 
-export const nodeComments = template.bind({});
-nodeComments.args = {
-    comments: commentsNodeData,
-    nodeId: '-fake-'
+export const comments = template.bind({});
+comments.args = {
+    comments: commentsData,
+    id: '-fake-'
 };
 
-export const taskComments = template.bind({});
-taskComments.args = {
-    comments: commentsTaskData,
-    taskId: '-fake-'
-};
