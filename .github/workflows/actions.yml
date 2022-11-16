@@ -43,7 +43,7 @@ jobs:
         id: output_job_id       
         run: |
             echo $GITHUB_TOKEN
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs 
+            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer " https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs 
 #           echo ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}/checks/${{ github.run_id }}
 #           echo ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs            
   build-lib:
