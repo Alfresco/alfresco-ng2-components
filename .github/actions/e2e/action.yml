@@ -42,7 +42,7 @@ runs:
         FOLDER: "core"
         PROVIDER: 'ALL'
         AUTH_TYPE: 'OAUTH'
-      # if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
       with:
         timeout-minutes: ${{ inputs.ssh_debug_timeout }}
         limit-access-to-actor: true
@@ -55,7 +55,6 @@ runs:
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
       run: |
         echo "AUTH TYPE: $AUTH_TYPE"
-        nx run testing:bundle
         bash ./scripts/travis/e2e/e2e.sh core
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}

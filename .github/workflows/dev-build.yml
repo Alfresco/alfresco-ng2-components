@@ -25,7 +25,7 @@ on:
       debug_enabled:
         description: SSH debug timeout, in minutes
         required: false
-        default: "40"
+        default: "60"
 
 # on:
 #   pull_request:
@@ -55,9 +55,10 @@ env:
   E2E_USERNAME: ${{ secrets.E2E_USERNAME }}
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
+  HOST_SSO: ${{ secrets.HOST_SSO }}
 jobs:
   main:
-    timeout-minutes: 60
+    timeout-minutes: 80
     name: "Build Components"
     runs-on: ubuntu-22.04
     # TODO : pull request not merged
@@ -140,7 +141,7 @@ jobs:
           download-from-s3: false
 
   get-artifacts:
-    timeout-minutes: 60
+    timeout-minutes: 80
     name: "get artifacts"
     needs: [ main ]
     runs-on: ubuntu-22.04
