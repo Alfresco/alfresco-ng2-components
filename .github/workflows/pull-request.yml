@@ -1,4 +1,4 @@
-name: "dev-build"
+name: "pull-request"
 
 on:
   push:
