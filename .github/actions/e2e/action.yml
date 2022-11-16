@@ -45,9 +45,16 @@ runs:
         timeout-minutes: ${{ inputs.ssh_debug_timeout }}
         limit-access-to-actor: true
     - name: run test
-      shell: bash        
+      env:
+        FOLDER: "core"
+        PROVIDER: 'ALL'
+        AUTH_TYPE: 'OAUTH'
+      shell: bash    
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
-      run: nx run testing:bundle && bash ./scripts/travis/e2e/e2e.sh core
+      run: |
+        echo "AUTH TYPE: $AUTH_TYPE"
+        nx run testing:bundle
+        bash ./scripts/travis/e2e/e2e.sh core
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
