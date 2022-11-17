@@ -246,5 +246,29 @@ describe('CommentsComponent', () => {
             component.addComment();
             expect(emitSpy).toHaveBeenCalled();
         });
+
+        it('should set beingAdded variable back to false when an error occurs adding the comment', () => {
+            addCommentSpy.and.returnValue(throwError({}));
+            component.addComment();
+            expect(component.beingAdded).toBeFalse();
+        });
+
+        it('should set beingAdded variable back to false on successful response when adding the comment', () => {
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment());
+            component.addComment();
+            expect(component.beingAdded).toBeFalse();
+        });
+
+        it('should not add comment if id is not provided', () => {
+            component.id = '';
+            component.addComment();
+            expect(addCommentSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not add comment if message is empty', () => {
+            component.message = '';
+            component.addComment();
+            expect(addCommentSpy).not.toHaveBeenCalled();
+        });
    });
 });

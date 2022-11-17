@@ -77,13 +77,13 @@ export class CommentsComponent implements OnChanges {
         this.id = changes['id'] ? changes['id'].currentValue : null;
 
         if (this.id) {
-            this.getComments();
+            this.loadComments();
         } else {
             this.resetComments();
         }
     }
 
-    getComments() {
+    loadComments() {
         this.resetComments();
 
         if (!this.hasId()) {
