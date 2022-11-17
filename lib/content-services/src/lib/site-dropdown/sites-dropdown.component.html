@@ -8,11 +8,9 @@
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
             placeholder="{{placeholder | translate}}"
-            [aria-label]="ariaLabel"
             floatPlaceholder="never"
             [(value)]="selected"
-            (selectionChange)="selectedSite($event)"
-            role="listbox">
+            (selectionChange)="selectedSite($event)">
             <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
                 {{ site.entry.title | translate}}
             </mat-option>

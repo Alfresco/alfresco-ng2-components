@@ -76,7 +76,6 @@ export class DropdownSitesComponent implements OnInit {
 
     private loading = true;
     private skipCount = 0;
-    private _ariaLabel = '';
 
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
@@ -88,14 +87,9 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.updateAriaLabel(this.selected);
         if (!this.siteList) {
             this.loadSiteList();
         }
-    }
-
-    get ariaLabel(): string {
-        return this._ariaLabel;
     }
 
     loadAllOnScroll() {
@@ -106,7 +100,6 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     selectedSite(event: MatSelectChange) {
-        this.updateAriaLabel(event.value);
         this.liveAnnouncer.announce(this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
             placeholder: this.translateService.instant(this.placeholder),
             selectedOption: this.translateService.instant(event.value.entry.title)
@@ -155,7 +148,6 @@ export class DropdownSitesComponent implements OnInit {
                 }
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
-                this.updateAriaLabel(this.selected);
 
                 if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
@@ -189,9 +181,5 @@ export class DropdownSitesComponent implements OnInit {
     private isCurrentUserMember(site, loggedUserName): boolean {
         return site.entry.visibility === 'PUBLIC' ||
             !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase());
-    }
-
-    private updateAriaLabel(site: SiteEntry): void {
-        this._ariaLabel = `${this.translateService.instant(this.placeholder)} ${site ? this.translateService.instant(site.entry.title) : ''}`;
     }
 }
