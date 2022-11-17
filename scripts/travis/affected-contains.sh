@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 verifyLib=$1;
 cd $DIR/../../
@@ -11,12 +11,6 @@ if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
 fi
 AFFECTED_LIBS=$(nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain)
 #echo "Verify if affected build contains $1"
-
-
-if [ $? -ne 0 ]; then
-  echo "nx got an execution error"
-  exit 1
-fi
 
 #echo "Affected libs:$AFFECTED_LIBS"
 if [[  $AFFECTED_LIBS =~ $verifyLib ]]; then

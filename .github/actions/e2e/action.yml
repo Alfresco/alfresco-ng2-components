@@ -58,6 +58,7 @@ runs:
         echo "TEST NAME: $E2E_TEST_NAME"
         echo "FOLDER: $FOLDER"
         echo "PROVIDER: $PROVIDER"
+        export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
         bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"
     - name: Debug on failure
       uses: mxschmitt/action-tmate@v3
