@@ -17,7 +17,16 @@ runs:
       with:
         path: dist.tar.gz
         name: dist-${{ github.ref_name }}
-    - shell: bash
+    - name: extract cache
+      run: |
+        time tar xzf nxcache.tar.gz
+      shell: bash
+    - name: extract cache
+      run: |
+        time tar xzf dist.tar.gz
+      shell: bash
+    - name: show files
+      shell: bash
       run: |
         pwd
         ls -lha
@@ -27,8 +36,3 @@ runs:
         find nxcache -maxdepth 1 -type d
         echo "====NODE_MODULES===="
         find node_modules -maxdepth 1 -type d
-    # - name: extract cache
-    #   run: |
-    #     time tar xzf nxcache.tar.gz
-    #     time tar xzf dist.tar.gz
-    #   shell: bash
