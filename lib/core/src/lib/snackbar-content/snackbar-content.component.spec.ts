@@ -74,7 +74,7 @@ describe('SnackbarContentComponent', () => {
         };
         spyOn(component.snackBarRef, 'dismissWithAction');
         fixture.detectChanges();
-        fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label').click();
+        fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-button').click();
         expect(component.snackBarRef.dismissWithAction).toHaveBeenCalled();
     });
 
@@ -85,7 +85,7 @@ describe('SnackbarContentComponent', () => {
             actionLabel: 'Some action action'
         };
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label').innerText).toBe(component.data.actionLabel);
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-button').innerText).toBe(component.data.actionLabel);
     });
 
     it('should not display actionLabel if actionLabel in data is not set', () => {
@@ -94,7 +94,7 @@ describe('SnackbarContentComponent', () => {
             showAction: true
         };
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-label')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-button')).toBeNull();
     });
 
     it('should render icon if actionIcon in data is set', () => {

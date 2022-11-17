@@ -1,6 +1,7 @@
-<p class="adf-snackbar-message-content">{{ data.message }}</p>
+<p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content">{{ data.message }}</p>
 <div *ngIf="data.showAction" class="adf-snackbar-message-content-action">
-    <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-label">
+    <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-button"
+            data-automation-id="adf-snackbar-message-content-action-button">
         {{data.actionLabel}}
     </button>
     <button mat-button *ngIf="data.actionIcon" (click)="onIconClicked()" class="adf-snackbar-message-content-action-icon"
