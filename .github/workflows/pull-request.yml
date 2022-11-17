@@ -107,8 +107,27 @@ jobs:
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
+      - uses: ./.github/actions/upload-artifacts
+
+  playwright:
+    timeout-minutes: 80
+    name: "playwright"
+    needs: [ main ]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all
+      - uses: ./.github/actions/setup
+      - name: clean 
+        run: |
+            rm -rf nxcache
+            rm -rf dist
+      - uses: ./.github/actions/download-artifacts
+      - run: find nxcache -type d -maxdepth 1
+      - run: find dist -type d -maxdepth 2
       - run: nx run testing:bundle
-      # UPDATE BUILD CACHE
 
       - name: Install playRight
         run: |
@@ -118,7 +137,6 @@ jobs:
         run: |
           nx build cli
       - name: Process Cloud Storybook Playwright
-        # if: matrix.components == 'process Cloud::Storybook Playwright'
         run: |
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
@@ -126,9 +144,7 @@ jobs:
       - name: debug
         run: ls -lath node_modules/@alfresco || true
       - uses: ./.github/actions/upload-artifacts  
-      - name: copy cli into node modules
-        run: nx run cli:bundle
-        shell: bash
+
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
       #   if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
@@ -158,8 +174,8 @@ jobs:
             auth: "BASIC"
         
     timeout-minutes: 80
-    name: "get artifacts"
-    needs: [ main ]
+    name: "e2e"
+    needs: [ playwright ]
     runs-on: ubuntu-22.04
 
     steps:
@@ -173,6 +189,9 @@ jobs:
             rm -rf nxcache
             rm -rf dist
       - uses: ./.github/actions/download-artifacts
+      - name: copy cli into node modules
+        run: nx run cli:bundle
+        shell: bash      
       - run: find nxcache -type d -maxdepth 1
       - run: find dist -type d -maxdepth 2
       - name: e2e
