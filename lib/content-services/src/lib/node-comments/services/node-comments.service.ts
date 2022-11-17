@@ -26,7 +26,7 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class NodeCommentsService {
 
-  _commentsApi: CommentsApi;
+  private _commentsApi: CommentsApi;
   get commentsApi(): CommentsApi {
       this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
       return this._commentsApi;

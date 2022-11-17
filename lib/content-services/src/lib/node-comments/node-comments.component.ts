@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-node-comments',
-    templateUrl: './node-comments.component.html'
+    templateUrl: './node-comments.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class NodeCommentsComponent {
     @Input()
@@ -27,6 +28,4 @@ export class NodeCommentsComponent {
 
     @Input()
     readOnly: boolean;
-
-    constructor() {}
 }

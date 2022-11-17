@@ -14,7 +14,7 @@ Displays comments from users involved in a specified environment and allows an i
 
 ```html
 <adf-comments
-    [id]="YOUR_TASK_ID"
+    [id]="YOUR_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
 </adf-comments>
 ```
