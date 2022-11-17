@@ -40,7 +40,6 @@ runs:
       shell: bash      
       run: |
         ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
-      # check ps env
     - name: check PS is UP
       shell: bash        
       run: |
@@ -51,21 +50,17 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
-      shell: bash    
-      # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
+      shell: bash
       run: |
-        echo "AUTH TYPE: $AUTH_TYPE"
-        echo "TEST NAME: $E2E_TEST_NAME"
-        echo "FOLDER: $FOLDER"
-        echo "PROVIDER: $PROVIDER"
         export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
         bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"
     - name: Debug on failure
       uses: mxschmitt/action-tmate@v3
       env:
-        FOLDER: "core"
-        PROVIDER: 'ALL'
-        AUTH_TYPE: 'OAUTH'
+        FOLDER: "${{ inputs.e2e-test-folder }}"
+        PROVIDER: "${{ inputs.e2e-test-provider }}"
+        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
+        E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
       with:
         timeout-minutes: ${{ inputs.ssh_debug_timeout }}
         limit-access-to-actor: true                  

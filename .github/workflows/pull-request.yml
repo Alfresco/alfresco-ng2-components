@@ -3,7 +3,7 @@ name: "pull-request"
 on:
   push:
     branches:
-      - AAE-7986-dev-act
+      - AAE-7986-dev-act*
       #
       #   - /^master(-patch.*)?$/
       #   - /^develop(-patch.*)?$/
