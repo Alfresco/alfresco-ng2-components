@@ -90,6 +90,16 @@ jobs:
       # TODO TRAVIS_JOB_ID TO SET
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
+      - name: Debug on failure
+        uses: mxschmitt/action-tmate@v3
+        env:
+          FOLDER: "core"
+          PROVIDER: 'ALL'
+          AUTH_TYPE: 'OAUTH'
+        if: ${{ failure() }}
+        with:
+          timeout-minutes: 60
+          limit-access-to-actor: true      
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
