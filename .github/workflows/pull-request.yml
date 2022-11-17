@@ -162,7 +162,7 @@ jobs:
 
   e2e:
     timeout-minutes: 80
-    name: "e2e"
+    name: "🔅 e2e:: ${{ matrix.e2e-test.name }}"
     needs: [ playwright ]
     runs-on: ubuntu-22.04
     strategy: 
@@ -192,7 +192,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
         with:
-          enable-cache: "false"
+          enable-cache: "true"
       - name: clean 
         run: |
             rm -rf nxcache
