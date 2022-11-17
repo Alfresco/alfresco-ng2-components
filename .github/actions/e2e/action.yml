@@ -47,10 +47,10 @@ runs:
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
     - name: run test
       env:
-        FOLDER: "${{ inputs.test-folder }}"
-        PROVIDER: "${{ inputs.test-provider }}"
-        AUTH_TYPE: "${{ inputs.test-auth }}"
-        E2E_TEST_NAME: "${{ inputs.test-name }}"
+        FOLDER: "${{ inputs.e2e-test-folder }}"
+        PROVIDER: "${{ inputs.e2e-test-provider }}"
+        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
+        E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
       shell: bash    
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
       run: |
