@@ -143,10 +143,11 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:        
-        tests: 
-          - {name: "core", folder: "core", provider: "ALL", auth:"OAUTH"}
-          - {name: "content-services", folder: "content-services/components", provider: "ECM", auth:"BASIC"}
-          - {name: "content-services", folder: "content-services/directives", provider: "ECM", auth:"BASIC"}
+        tests: [
+          {name: "core", folder: "core", provider: "ALL", auth:"OAUTH"},
+          {name: "content-services", folder: "content-services/components", provider: "ECM", auth:"BASIC"},
+          {name: "content-services", folder: "content-services/directives", provider: "ECM", auth:"BASIC"}
+        ]
     timeout-minutes: 80
     name: "get artifacts"
     needs: [ main ]
