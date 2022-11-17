@@ -168,6 +168,10 @@ jobs:
 
 
   e2e:
+    timeout-minutes: 80
+    name: "e2e"
+    needs: [ playwright ]
+    runs-on: ubuntu-22.04
     strategy: 
       fail-fast: false
       matrix:        
@@ -188,21 +192,21 @@ jobs:
             provider: "ECM"
             auth: "BASIC"
  
-    timeout-minutes: 80
-    name: "e2e"
-    needs: [ playwright ]
-    runs-on: ubuntu-22.04
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
+        with:
+          enable-cache: "false"
       - name: clean 
         run: |
             rm -rf nxcache
             rm -rf dist
+      - name: debug
+        run: |
+          echo ${{ toJson(matrix) }}
       - uses: ./.github/actions/download-artifacts
       - name: copy cli into node modules
         run: nx run cli:bundle

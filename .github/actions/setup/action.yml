@@ -1,10 +1,11 @@
 name: 'Setup'
 description: 'Build setup'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  enable-cache:
+    description: 'enable caching'
     required: false
-    default: 'World'
+    type: boolean
+    default: 'true'
 runs:
   using: "composite"
   steps:
@@ -22,6 +23,7 @@ runs:
 # CACHE
       - name: Node cache
         id: node-cache
+        if: ${{ inputs.enable-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: node-cache
@@ -38,6 +40,7 @@ runs:
             node-${{ runner.os }}-
       - name: pip cache
         uses: actions/cache@v3
+        if: ${{ inputs.enable-cache == 'true' }}
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-
