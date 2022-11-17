@@ -50,11 +50,24 @@ runs:
         FOLDER: "${{ inputs.test-folder }}"
         PROVIDER: "${{ inputs.test-provider }}"
         AUTH_TYPE: "${{ inputs.test-auth }}"
+        TEST_NAME: "${{ inputs.test-name }}"
       shell: bash    
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
       run: |
         echo "AUTH TYPE: $AUTH_TYPE"
-        bash ./scripts/travis/e2e/e2e.sh "${{ inputs.test-name }}"
+        echo "TEST NAME: $TEST_NAME"
+        echo "FOLDER: $FOLDER"
+        echo "PROVIDER: $PROVIDER"
+        bash ./scripts/travis/e2e/e2e.sh "$TEST_NAME"
+    - name: Debug on failure
+      uses: mxschmitt/action-tmate@v3
+      env:
+        FOLDER: "core"
+        PROVIDER: 'ALL'
+        AUTH_TYPE: 'OAUTH'
+      with:
+        timeout-minutes: ${{ inputs.ssh_debug_timeout }}
+        limit-access-to-actor: true                  
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
