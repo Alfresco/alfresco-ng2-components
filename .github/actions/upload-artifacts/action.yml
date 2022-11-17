@@ -22,12 +22,12 @@ runs:
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        path: .
+        path: nxcache.tar.gz
         name: nxcache-${{ github.ref_name }}
     ## DIST
     - name: update Dist folder
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        path: .
+        path: dist.tar.gz
         name: dist-${{ github.ref_name }}
