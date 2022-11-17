@@ -199,8 +199,8 @@ jobs:
         with:
           test-name: ${{ matrix.name }}
           test-folder: ${{ matrix.folder }}
-          provider: ${{ matrix.provider }}
-          auth: ${{ matrix.auth }}
+          test-provider: ${{ matrix.provider }}
+          test-auth: ${{ matrix.auth }}
           upload-to-s3: false
           download-from-s3: false
       - name: Debug on failure
