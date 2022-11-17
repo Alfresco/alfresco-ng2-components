@@ -582,6 +582,6 @@
   },
   "ADF_DROPDOWN": {
     "LOADING": "Loading...",
-    "SELECTION_ARIA_LABEL": "{{placeholder}} listbox {{selectedOption}}"
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   }
 }
