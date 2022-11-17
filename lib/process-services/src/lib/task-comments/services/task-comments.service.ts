@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, CommentModel, CommentsService, LogService, UserProcessModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, CommentModel, CommentsService, UserProcessModel } from '@alfresco/adf-core';
 import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
@@ -26,15 +26,14 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class TaskCommentsService implements CommentsService {
 
-  _commentsApi: ActivitiCommentsApi;
+  private _commentsApi: ActivitiCommentsApi;
   get commentsApi(): ActivitiCommentsApi {
       this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
       return this._commentsApi;
   }
 
   constructor(
-    private apiService: AlfrescoApiService,
-    private logService: LogService
+    private apiService: AlfrescoApiService
   ) {}
 
   /**
@@ -103,7 +102,6 @@ export class TaskCommentsService implements CommentsService {
   }
 
   private handleError(error: any) {
-    this.logService.error(error);
     return throwError(error || 'Server error');
   }
 }

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-task-comments',
-    templateUrl: './task-comments.component.html'
+    templateUrl: './task-comments.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskCommentsComponent {
     @Input()
@@ -27,6 +28,4 @@ export class TaskCommentsComponent {
 
     @Input()
     readOnly: boolean;
-
-    constructor() {}
 }
