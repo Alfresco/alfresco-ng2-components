@@ -13,7 +13,7 @@ AFFECTED_LIBS=$(nx print-affected --type=lib --select=projects ${NX_CALCULATION_
 #echo "Verify if affected build contains $1"
 
 
-if [ $? -ne 0 ] 
+if [ $? -ne 0 ]; then
   echo "nx got an execution error"
   exit 1
 fi
