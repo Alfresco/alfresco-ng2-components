@@ -175,7 +175,7 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:        
-        include:
+        e2e-test:
           - description: "Core"
             name: "core"
             folder: "core"
@@ -216,10 +216,10 @@ jobs:
       - name: e2e
         uses: ./.github/actions/e2e
         with:
-          e2e-test-name: ${{ matrix.name }}
-          e2e-test-folder: ${{ matrix.folder }}
-          e2e-test-provider: ${{ matrix.provider }}
-          e2e-test-auth: ${{ matrix.auth }}
+          e2e-test-name: ${{ matrix.e2e-test.name }}
+          e2e-test-folder: ${{ matrix.e2e-test.folder }}
+          e2e-test-provider: ${{ matrix.e2e-test.provider }}
+          e2e-test-auth: ${{ matrix.e2e-test.auth }}
           upload-to-s3: false
           download-from-s3: false
       - name: Debug on failure
