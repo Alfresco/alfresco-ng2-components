@@ -20,13 +20,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { AspectListDialogComponentData } from '../aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from '../aspect-list-dialog.component';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DialogAspectListService {
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog, private overlayContainer: OverlayContainer) {
     }
 
     openAspectListDialog(nodeId?: string): Observable<string[]> {
@@ -52,11 +53,14 @@ export class DialogAspectListService {
             data,
             panelClass,
             width,
+            role: 'dialog',
             disableClose: true
         });
+        this.overlayContainer.getContainerElement().setAttribute('role', 'main');
     }
 
     close() {
         this.dialog.closeAll();
+        this.overlayContainer.getContainerElement().setAttribute('role', 'region');
     }
 }
