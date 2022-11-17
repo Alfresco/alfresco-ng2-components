@@ -24,7 +24,6 @@ import {
     SharedLinkEntry,
     Node,
     Version,
-    RenditionEntry,
     NodeEntry,
     VersionEntry,
     SharedlinksApi, VersionsApi, NodesApi, ContentApi
@@ -461,7 +460,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    private setUpSharedLinkFile(details: any) {
+    private async setUpSharedLinkFile(details: any) {
         this.mimeType = details.entry.content.mimeType;
         this.fileTitle = this.getDisplayName(details.entry.name);
         this.extension = this.viewerService.getFileExtension(details.entry.name);
@@ -470,7 +469,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.viewerType = this.viewerService.getViewerType(this.extension, this.mimeType);
 
         if (this.viewerType === 'unknown') {
-            this.displaySharedLinkRendition(this.sharedLinkId);
+            const rendition = await this.viewerService.getSharedLinkRendition(this.sharedLinkId);
+
+            if (rendition) {
+                this.viewerType = rendition.viewerType;
+                this.urlFileContent = rendition.contentUrl;
+            }
         }
 
         this.extensionChange.emit(this.extension);
@@ -579,27 +583,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
             if (container) {
                 this.viewerService.enterFullScreen(container);
-            }
-        }
-    }
-
-    private async displaySharedLinkRendition(sharedId: string) {
-        try {
-            const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
-            if (rendition.entry.status.toString() === 'CREATED') {
-                this.viewerType = 'pdf';
-                this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-            }
-        } catch (error) {
-            this.logService.error(error);
-            try {
-                const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
-                if (rendition.entry.status.toString() === 'CREATED') {
-                    this.viewerType = 'image';
-                    this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
-                }
-            } catch (renditionError) {
-                this.logService.error(renditionError);
             }
         }
     }

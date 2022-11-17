@@ -17,11 +17,32 @@
 
 import { Injectable } from '@angular/core';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { ContentApi, SharedlinksApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../services/log.service';
+
+export interface SharedLinkViewerSettings {
+    viewerType: string;
+    contentUrl: string;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class ViewerService {
+    private _sharedLinksApi: SharedlinksApi;
+    get sharedLinksApi(): SharedlinksApi {
+        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
+        return this._sharedLinksApi;
+    }
+
+    private _contentApi: ContentApi;
+    get contentApi(): ContentApi {
+        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
+        return this._contentApi;
+    }
+
+
     // Mime types that are supported by the Viewer without conversion
     private mimeTypes = {
         text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
@@ -38,7 +59,11 @@ export class ViewerService {
         pdf: ['pdf']
     };
 
-    constructor(private extensionService: AppExtensionService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private extensionService: AppExtensionService,
+        private logService: LogService
+    ) {}
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -167,5 +192,32 @@ export class ViewerService {
                 viewport.msRequestFullscreen();
             }
         }
+    }
+
+    async getSharedLinkRendition(sharedId: string): Promise<SharedLinkViewerSettings> {
+        try {
+            const rendition = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
+            if (rendition.entry.status.toString() === 'CREATED') {
+                return {
+                    viewerType: 'pdf',
+                    contentUrl: this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf')
+                };
+            }
+        } catch (error) {
+            this.logService.error(error);
+            try {
+                const rendition = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                if (rendition.entry.status.toString() === 'CREATED') {
+                    return {
+                        viewerType: 'pdf',
+                        contentUrl: this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview')
+                    };
+                }
+            } catch (renditionError) {
+                this.logService.error(renditionError);
+            }
+        }
+
+        return null;
     }
 }
