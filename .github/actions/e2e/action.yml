@@ -53,17 +53,8 @@ runs:
       shell: bash
       run: |
         export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
-        bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"
-    - name: Debug on failure
-      uses: mxschmitt/action-tmate@v3
-      env:
-        FOLDER: "${{ inputs.e2e-test-folder }}"
-        PROVIDER: "${{ inputs.e2e-test-provider }}"
-        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
-        E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
-      with:
-        timeout-minutes: ${{ inputs.ssh_debug_timeout }}
-        limit-access-to-actor: true                  
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
+        bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"             
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload

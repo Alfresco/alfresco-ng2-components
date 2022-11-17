@@ -162,7 +162,7 @@ jobs:
 
   e2e:
     timeout-minutes: 80
-    name: "🔅 e2e:: ${{ matrix.e2e-test.name }}"
+    name: "e2e: ${{ matrix.e2e-test.name }}"
     needs: [ playwright ]
     runs-on: ubuntu-22.04
     strategy: 
@@ -184,7 +184,17 @@ jobs:
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
- 
+          - description: "Content: Document List"
+            name: "content-services"
+            folder: "content-services/document-list"
+            provider: "ECM"
+            auth: "BASIC"
+          - description: "Content: Metadata"
+            name: "content-services"
+            folder: "content-services/metadata"
+            provider: "ECM"
+            auth: "BASIC"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
