@@ -80,8 +80,9 @@ jobs:
         run: |
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
+      # TODO: remove override
       - name: override NX_CALCULATION_FLAGS
-        run: echo 'NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD' >> $GITHUB_ENV
+        run: echo "NX_CALCULATION_FLAGS=\'--base=origin/develop --head=HEAD\'" >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
@@ -197,10 +198,10 @@ jobs:
       - name: e2e
         uses: ./.github/actions/e2e
         with:
-          test-name: ${{ matrix.name }}
-          test-folder: ${{ matrix.folder }}
-          test-provider: ${{ matrix.provider }}
-          test-auth: ${{ matrix.auth }}
+          e2e-test-name: ${{ matrix.name }}
+          e2e-test-folder: ${{ matrix.folder }}
+          e2e-test-provider: ${{ matrix.provider }}
+          e2e-test-auth: ${{ matrix.auth }}
           upload-to-s3: false
           download-from-s3: false
       - name: Debug on failure
@@ -211,5 +212,5 @@ jobs:
           AUTH_TYPE: 'OAUTH'
         if: ${{ failure() }}
         with:
-          timeout-minutes: ${{ inputs.ssh_debug_timeout }}
+          timeout-minutes: 60
           limit-access-to-actor: true          

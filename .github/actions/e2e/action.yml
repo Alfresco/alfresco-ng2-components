@@ -1,16 +1,16 @@
 name: "s3/download"
 description: "s3/download"
 inputs:
-  test-name:
+  e2e-test-name:
     description: "Test name"
     required: true
-  test-folder:
+  e2e-test-folder:
     description: "Test folder"
     required: true
-  test-provider:
+  e2e-test-provider:
     description: "Test provider"
     required: true
-  test-auth:
+  e2e-test-auth:
     description: "Test auth"
     required: true
   upload-to-s3:
@@ -50,15 +50,15 @@ runs:
         FOLDER: "${{ inputs.test-folder }}"
         PROVIDER: "${{ inputs.test-provider }}"
         AUTH_TYPE: "${{ inputs.test-auth }}"
-        TEST_NAME: "${{ inputs.test-name }}"
+        E2E_TEST_NAME: "${{ inputs.test-name }}"
       shell: bash    
       # run: bash ./scripts/travis/e2e/e2e.sh ${{ inputs.test-id }}
       run: |
         echo "AUTH TYPE: $AUTH_TYPE"
-        echo "TEST NAME: $TEST_NAME"
+        echo "TEST NAME: $E2E_TEST_NAME"
         echo "FOLDER: $FOLDER"
         echo "PROVIDER: $PROVIDER"
-        bash ./scripts/travis/e2e/e2e.sh "$TEST_NAME"
+        bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"
     - name: Debug on failure
       uses: mxschmitt/action-tmate@v3
       env:

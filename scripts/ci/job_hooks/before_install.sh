@@ -37,7 +37,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
         export BUILD_OPTS="--configuration production"
     else
         # into develop
-        export NX_CALCULATION_FLAGS="--base=$(git describe --tags `git rev-list --tags --max-count=1`) --head=$HEAD_HASH"
+        export NX_CALCULATION_FLAGS="--base=$(git describe --tags $(git rev-list --tags --max-count=1)) --head=$HEAD_HASH"
         export BUILD_OPTS="--configuration production"
     fi
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then

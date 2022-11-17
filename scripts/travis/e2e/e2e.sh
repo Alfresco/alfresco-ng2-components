@@ -17,7 +17,7 @@ fi
 
 echo "Step1 - Verify if affected libs contains $verifyLib"
 
-AFFECTED_LIB="$(./scripts/travis/affected-contains.sh $verifyLib )";
+AFFECTED_LIB=$(./scripts/travis/affected-contains.sh $verifyLib )
 if [ ${AFFECTED_LIB} == true ]; then
     echo "Step2 - $verifyLib affected... will execute e2e"
 
