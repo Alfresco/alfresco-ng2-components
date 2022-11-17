@@ -143,11 +143,20 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:        
-        tests: [
-          {name: "core", folder: "core", provider: "ALL", auth:"OAUTH"},
-          {name: "content-services", folder: "content-services/components", provider: "ECM", auth:"BASIC"},
-          {name: "content-services", folder: "content-services/directives", provider: "ECM", auth:"BASIC"}
-        ]
+        include:
+          - name: "core"
+            folder: "core"
+            provider: "ALL"
+            auth: "OAUTH"
+          - name: "content-services"
+            folder: "content-services/components"
+            provider: "ECM"
+            auth: "BASIC"
+          - name: "content-services"
+            folder: "content-services/directives"
+            provider: "ECM"
+            auth: "BASIC"
+        
     timeout-minutes: 80
     name: "get artifacts"
     needs: [ main ]
@@ -169,10 +178,10 @@ jobs:
       - name: e2e
         uses: ./.github/actions/e2e
         with:
-          test-name: ${{ matrix.tests.name }}
-          test-folder: ${{ matrix.tests.folder }}
-          provider: ${{ matrix.tests.provider }}
-          auth: ${{ matrix.tests.auth }}
+          test-name: ${{ matrix.name }}
+          test-folder: ${{ matrix.folder }}
+          provider: ${{ matrix.provider }}
+          auth: ${{ matrix.auth }}
           upload-to-s3: false
           download-from-s3: false
       - name: Debug on failure
