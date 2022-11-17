@@ -16,9 +16,10 @@
  */
 
 import { AfterContentInit, ContentChild, Directive, Input, TemplateRef, OnDestroy } from '@angular/core';
-import { ViewerComponent } from '../components/viewer.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ViewerComponent } from '../components/viewer.component';
+import { ViewerService } from '../components/viewer.service';
 
 @Directive({
     selector: 'adf-viewer-extension'
@@ -41,7 +42,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewerComponent: ViewerComponent) {
+    constructor(private viewerComponent: ViewerComponent, private viewerService: ViewerService) {
     }
 
     ngAfterContentInit() {
@@ -57,7 +58,9 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
         if (this.supportedExtensions instanceof Array) {
             this.supportedExtensions.forEach((extension) => {
-                this.viewerComponent.externalExtensions.push(extension);
+                if (!this.viewerService.externalExtensions.includes(extension)) {
+                    this.viewerService.externalExtensions.push(extension);
+                }
             });
         }
     }

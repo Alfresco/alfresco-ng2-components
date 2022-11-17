@@ -36,6 +36,7 @@ import { FileModel } from '../../models';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewerService } from './viewer.service';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -158,6 +159,7 @@ describe('ViewerComponent', () => {
     let dialog: MatDialog;
     let uploadService: UploadService;
     let extensionService: AppExtensionService;
+    let viewerService: ViewerService;
 
     setupTestBed({
         imports: [
@@ -196,6 +198,7 @@ describe('ViewerComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
+        viewerService = TestBed.inject(ViewerService);
     });
 
     afterEach(() => {
@@ -207,7 +210,7 @@ describe('ViewerComponent', () => {
         it('should not reload the content of all the viewer after type change', async () => {
             const fixtureDouble = TestBed.createComponent(DoubleViewerComponent);
 
-            await fixtureDouble.detectChanges();
+            fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
             fixtureDouble.componentInstance.viewer1.urlFile = 'fake-test-file.pdf';
@@ -216,7 +219,7 @@ describe('ViewerComponent', () => {
             fixtureDouble.componentInstance.viewer1.ngOnChanges();
             fixtureDouble.componentInstance.viewer2.ngOnChanges();
 
-            await fixtureDouble.detectChanges();
+            fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
             expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
@@ -251,7 +254,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.externalExtensions.includes('*')).toBe(true);
+            expect(viewerService.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
             expect(component.viewerType).toBe('external');
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
@@ -304,7 +307,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.externalExtensions.includes('*')).toBe(true);
+            expect(viewerService.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
             expect(component.viewerType).toBe('external');
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
@@ -595,7 +598,7 @@ describe('ViewerComponent', () => {
         spyOn(component['nodesApi'], 'getNode').and.returnValues(
             Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
         );
-        spyOn(component, 'getViewerTypeByExtension').and.returnValue('jpg');
+        spyOn(viewerService, 'getViewerTypeByExtension').and.returnValue('jpg');
 
         component.urlFile = null;
         component.displayName = null;
@@ -740,7 +743,7 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const sidebar = element.querySelector('#adf-left-sidebar');
+                    const sidebar: any = element.querySelector('#adf-left-sidebar');
                     expect(getComputedStyle(sidebar).order).toEqual('1');
                     done();
                 });
@@ -773,7 +776,7 @@ describe('ViewerComponent', () => {
                 await fixture.whenStable();
 
                 const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
-                expect(nextButton.title).toBe('ADF_VIEWER.ACTIONS.NEXT_FILE');
+                expect(nextButton?.title).toBe('ADF_VIEWER.ACTIONS.NEXT_FILE');
             });
 
             it('should show only previous file button', async () => {
@@ -800,7 +803,7 @@ describe('ViewerComponent', () => {
                 await fixture.whenStable();
 
                 const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
-                expect(prevButton.title).toBe('ADF_VIEWER.ACTIONS.PREV_FILE');
+                expect(prevButton?.title).toBe('ADF_VIEWER.ACTIONS.PREV_FILE');
             });
 
             it('should show both file navigation buttons', async () => {
@@ -1270,7 +1273,7 @@ describe('ViewerComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
+                    expect(element.querySelector('#adf-viewer-display-name')?.textContent).toEqual('test name');
                     done();
                 });
             });
@@ -1283,7 +1286,7 @@ describe('ViewerComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                    expect(element.querySelector('#adf-viewer-display-name')?.textContent).toEqual('fake-test-file.pdf');
                     done();
                 });
             });
@@ -1299,7 +1302,7 @@ describe('ViewerComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
+                    expect(element.querySelector('#adf-viewer-display-name')?.textContent).toEqual('blob file display name');
                     done();
                 });
             });
@@ -1312,7 +1315,7 @@ describe('ViewerComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
+                    expect(element.querySelector('#adf-viewer-display-name')?.textContent).toEqual('Unknown');
                     done();
                 });
             });
@@ -1340,7 +1343,7 @@ describe('ViewerComponent', () => {
                 component.ngOnChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('the-name');
+                    expect(element.querySelector('#adf-viewer-display-name')?.textContent).toEqual('the-name');
                     done();
                 });
             });

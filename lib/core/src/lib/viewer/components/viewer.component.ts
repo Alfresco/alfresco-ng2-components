@@ -38,12 +38,13 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { fromEvent, Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
-import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { ViewerService } from './viewer.service';
 
 @Component({
     selector: 'adf-viewer',
@@ -71,7 +72,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * can use this URL to specify where to load the file from.
      */
     @Input()
-    urlFile = '';
+    urlFile: string = '';
 
     /** Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).
      * Used when `urlFile` has no filename and extension.
@@ -235,20 +236,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * Returns a list of the active Viewer content extensions.
      */
     get viewerExtensions(): ViewerExtensionRef[] {
-        return this.extensionService.getViewerExtensions();
-    }
-
-    /**
-     * Provides a list of file extensions supported by external plugins.
-     */
-    get externalExtensions(): string[] {
-        return this.viewerExtensions.map(ext => ext.fileExtension);
+        return this.viewerService.viewerExtensions;
     }
 
     private _externalViewer: ViewerExtensionRef;
     get externalViewer(): ViewerExtensionRef {
         if (!this._externalViewer) {
-            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
+            this._externalViewer = this.viewerService.viewerExtensions.find(ext => ext.fileExtension === '*');
         }
 
         return this._externalViewer;
@@ -259,45 +253,29 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private cacheBusterNumber: number;
     cacheTypeForContent = '';
 
-    // Extensions that are supported by the Viewer without conversion
-    private extensions = {
-        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
-        media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
-        pdf: ['pdf']
-    };
-
-    // Mime types that are supported by the Viewer without conversion
-    private mimeTypes = {
-        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
-        pdf: ['application/pdf'],
-        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
-        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
-    };
-
     private onDestroy$ = new Subject<boolean>();
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    _sharedLinksApi: SharedlinksApi;
+    private _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
 
-    _versionsApi: VersionsApi;
+    private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
@@ -306,12 +284,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     constructor(private apiService: AlfrescoApiService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
-                private extensionService: AppExtensionService,
                 private contentService: ContentService,
                 private uploadService: UploadService,
                 private el: ElementRef,
                 public dialog: MatDialog,
-                private cdr: ChangeDetectorRef) {
+                private cdr: ChangeDetectorRef,
+                private viewerService: ViewerService) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -425,7 +403,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private setUpBlobData() {
         this.fileTitle = this.getDisplayName('Unknown');
         this.mimeType = this.blobFile.type;
-        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+        this.viewerType = this.viewerService.getViewerTypeByMimeType(this.mimeType);
 
         this.allowDownload = false;
         // TODO: wrap blob into the data url and allow downloading
@@ -435,12 +413,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setUpUrlFile() {
-        const filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+        const filenameFromUrl = this.viewerService.getFilenameFromUrl(this.urlFile);
         this.fileTitle = this.getDisplayName(filenameFromUrl);
-        this.extension = this.getFileExtension(filenameFromUrl);
+        this.extension = this.viewerService.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
         this.fileName = this.displayName;
-        this.viewerType = this.urlFileViewer || this.getViewerType(this.extension, this.mimeType);
+        this.viewerType = this.urlFileViewer || this.viewerService.getViewerType(this.extension, this.mimeType);
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
@@ -465,9 +443,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
             this.urlFileContent + '&' + currentFileVersion;
 
-        this.extension = this.getFileExtension(versionData ? versionData.name : nodeData.name);
+        this.extension = this.viewerService.getFileExtension(versionData ? versionData.name : nodeData.name);
         this.fileName = versionData ? versionData.name : nodeData.name;
-        this.viewerType = this.getViewerType(this.extension, this.mimeType);
+        this.viewerType = this.viewerService.getViewerType(this.extension, this.mimeType);
 
         if (this.viewerType === 'unknown') {
             if (versionData) {
@@ -483,23 +461,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    private getViewerType(extension: string, mimeType: string): string {
-        let viewerType = this.getViewerTypeByExtension(extension);
-
-        if (viewerType === 'unknown') {
-            viewerType = this.getViewerTypeByMimeType(mimeType);
-        }
-
-        return viewerType;
-    }
-
     private setUpSharedLinkFile(details: any) {
         this.mimeType = details.entry.content.mimeType;
         this.fileTitle = this.getDisplayName(details.entry.name);
-        this.extension = this.getFileExtension(details.entry.name);
+        this.extension = this.viewerService.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
         this.urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-        this.viewerType = this.getViewerType(this.extension, this.mimeType);
+        this.viewerType = this.viewerService.getViewerType(this.extension, this.mimeType);
 
         if (this.viewerType === 'unknown') {
             this.displaySharedLinkRendition(this.sharedLinkId);
@@ -536,52 +504,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         window.scrollTo(0, 1);
     }
 
-    getViewerTypeByMimeType(mimeType: string) {
-        if (mimeType) {
-            mimeType = mimeType.toLowerCase();
-
-            const editorTypes = Object.keys(this.mimeTypes);
-            for (const type of editorTypes) {
-                if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
-                    return type;
-                }
-            }
-        }
-        return 'unknown';
-    }
-
-    getViewerTypeByExtension(extension: string): string {
-        if (extension) {
-            extension = extension.toLowerCase();
-        }
-
-        if (this.isExternalViewer()) {
-            return 'external';
-        }
-
-        if (this.isCustomViewerExtension(extension)) {
-            return 'custom';
-        }
-
-        if (this.extensions.image.indexOf(extension) >= 0) {
-            return 'image';
-        }
-
-        if (this.extensions.media.indexOf(extension) >= 0) {
-            return 'media';
-        }
-
-        if (this.extensions.text.indexOf(extension) >= 0) {
-            return 'text';
-        }
-
-        if (this.extensions.pdf.indexOf(extension) >= 0) {
-            return 'pdf';
-        }
-
-        return 'unknown';
-    }
-
     onBackButtonClick() {
         this.close();
     }
@@ -603,51 +525,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
-    }
-
-    /**
-     * get File name from url
-     *
-     * @param  url - url file
-     */
-    getFilenameFromUrl(url: string): string {
-        const anchor = url.indexOf('#');
-        const query = url.indexOf('?');
-        const end = Math.min(
-            anchor > 0 ? anchor : url.length,
-            query > 0 ? query : url.length);
-        return url.substring(url.lastIndexOf('/', end) + 1, end);
-    }
-
-    /**
-     * Get file extension from the string.
-     * Supports the URL formats like:
-     * http://localhost/test.jpg?cache=1000
-     * http://localhost/test.jpg#cache=1000
-     *
-     * @param fileName - file name
-     */
-    getFileExtension(fileName: string): string {
-        if (fileName) {
-            const match = fileName.match(/\.([^\./\?\#]+)($|\?|\#)/);
-            return match ? match[1] : null;
-        }
-        return null;
-    }
-
-    private isExternalViewer(): boolean {
-        return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
-    }
-
-    isCustomViewerExtension(extension: string): boolean {
-        const extensions = this.externalExtensions || [];
-
-        if (extension && extensions.length > 0) {
-            extension = extension.toLowerCase();
-            return extensions.flat().indexOf(extension) >= 0;
-        }
-
-        return false;
     }
 
     /**
@@ -699,16 +576,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     enterFullScreen(): void {
         if (this.allowFullScreen) {
             const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
+
             if (container) {
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                } else if (container.mozRequestFullScreen) {
-                    container.mozRequestFullScreen();
-                } else if (container.msRequestFullscreen) {
-                    container.msRequestFullscreen();
-                }
+                this.viewerService.enterFullScreen(container);
             }
         }
     }
