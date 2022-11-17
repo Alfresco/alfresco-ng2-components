@@ -45,6 +45,7 @@ jobs:
         run: |            
             curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }} " https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs >| jsonParser.json
             echo "str" = "$(cat jsonParser.json | jq -r '.jobs[0].html_url')" >> $GITHUB_ENV
+            echo $str
             job_id=$(echo "${str: -10}")
             echo "Job ID: $job_id"
             rm jsonParser.json         
