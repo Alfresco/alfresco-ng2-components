@@ -1,7 +1,7 @@
 <ng-container *ngIf="sharedLinkId">
-    <adf-viewer
+    <adf-alfresco-viewer
         (invalidSharedLink)="redirectTo404()"
         [sharedLinkId]="sharedLinkId"
         [allowGoBack]="false">
-    </adf-viewer>
+    </adf-alfresco-viewer>
 </ng-container>
