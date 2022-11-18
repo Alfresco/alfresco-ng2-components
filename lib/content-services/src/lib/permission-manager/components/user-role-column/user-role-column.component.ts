@@ -26,7 +26,9 @@ import { RoleModel } from '../../models/role.model';
                 (click)="$event.stopPropagation()"
                 [placeholder]="placeholder | translate"
                 [value]="value"
-                (selectionChange)="onRoleChanged($event.value)">
+                (selectionChange)="onRoleChanged($event.value)"
+                (keyup.arrowdown)="$event.stopPropagation()"
+                (keyup.arrowup)="$event.stopPropagation()">
                 <mat-option *ngFor="let role of roles" [value]="role.role">
                     {{ role.label | adfLocalizedRole }}
                 </mat-option>

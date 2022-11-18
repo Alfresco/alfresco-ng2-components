@@ -18,10 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiService, CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
 
 describe('NodeFavoriteDirective', () => {
 

@@ -21,10 +21,6 @@ import { MaterialModule } from '../material.module';
 
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
-import { NodeDeleteDirective } from './node-delete.directive';
-import { NodeFavoriteDirective } from './node-favorite.directive';
-import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
-import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
@@ -32,8 +28,6 @@ import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import { LibraryFavoriteDirective } from './library-favorite.directive';
-import { LibraryMembershipDirective } from './library-membership.directive';
 
 @NgModule({
     imports: [
@@ -44,33 +38,21 @@ import { LibraryMembershipDirective } from './library-membership.directive';
     declarations: [
         HighlightDirective,
         LogoutDirective,
-        NodeDeleteDirective,
-        NodeFavoriteDirective,
-        CheckAllowableOperationDirective,
-        NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,
         TooltipCardDirective,
         TooltipCardComponent,
-        InfiniteSelectScrollDirective,
-        LibraryFavoriteDirective,
-        LibraryMembershipDirective
+        InfiniteSelectScrollDirective
     ],
     exports: [
         HighlightDirective,
         LogoutDirective,
-        NodeDeleteDirective,
-        NodeFavoriteDirective,
-        CheckAllowableOperationDirective,
-        NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,
         TooltipCardDirective,
-        InfiniteSelectScrollDirective,
-        LibraryFavoriteDirective,
-        LibraryMembershipDirective
+        InfiniteSelectScrollDirective
     ]
 })
 export class DirectiveModule {}

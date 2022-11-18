@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
 import { PackageInfo } from '../interfaces';
 
 @Component({
@@ -24,7 +24,11 @@ import { PackageInfo } from '../interfaces';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PackageListComponent {
+export class PackageListComponent implements OnInit {
+
+  @Input()
+  dependencies: any;
+
   columns = [
     {
       columnDef: 'title',
@@ -42,4 +46,20 @@ export class PackageListComponent {
 
   @Input()
   data: Array<PackageInfo> = [];
+
+  ngOnInit() {
+    const regexp = new RegExp('^(@alfresco)');
+
+    if (this.dependencies) {
+        const libs = Object.keys(this.dependencies).filter((val) => regexp.test(val));
+        this.data = [];
+
+        libs.forEach((val) => {
+            this.data.push({
+                name: val,
+                version: (this.dependencies[val])
+            });
+        });
+    }
+  }
 }

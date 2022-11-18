@@ -19,12 +19,8 @@
 
 import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { ContentService } from '../services/content.service';
-import { EXTENDIBLE_COMPONENT } from '../interface/injection.tokens';
-
-export interface NodeAllowableOperationSubject {
-    disabled: boolean;
-}
+import { ContentService, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
+import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Directive({
     selector: '[adf-check-allowable-operation]'

@@ -46,4 +46,14 @@
     &-start-form-actions {
         text-align: right !important;
     }
+
+    &-loading {
+        margin: auto;
+    }
+
+    &-loading-container {
+        min-height: 300px;
+        display: flex;
+        height: 100%;
+    }
 }

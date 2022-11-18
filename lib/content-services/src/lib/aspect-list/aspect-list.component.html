@@ -7,8 +7,8 @@
                                   [checked]="nodeAspects?.includes(aspect?.entry?.id)"
                                   (click)="onCheckBoxClick($event)"
                                   (change)="onChange($event, aspect?.entry?.id)">
-                    </mat-checkbox>
-                    <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
+                                  <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
+                    </mat-checkbox>                    
                 </mat-panel-title>
                 <mat-panel-description [id]="'aspect-list-'+colIndex+'-title'"
                                         [matTooltip]="getTitle(aspect)">

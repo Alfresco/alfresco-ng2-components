@@ -20,6 +20,7 @@
   "CLAIM": "CLAIM",
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
+  "DATA_LOADING": "Data is loading",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "You have no notifications at this time.",
     "TITLE": "Notifications",
@@ -219,8 +220,7 @@
         "CREATED_DATE": "Created Date",
         "MODIFIER": "Modifier",
         "MODIFIED_DATE": "Modified Date",
-        "CONTENT_TYPE": "Content Type",
-        "DATA_LOADING": "Data is loading"
+        "CONTENT_TYPE": "Content Type"
       },
       "CONTENT_TYPE": {
         "DIALOG": {
@@ -508,6 +508,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
+    "REPOSITORY": "Repository",
     "VERSIONS": {
       "TITLE": "Product Versions",
       "CONTENT_SERVICE": "Content Services",
@@ -580,6 +581,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Loading..."
+    "LOADING": "Loading...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   }
 }

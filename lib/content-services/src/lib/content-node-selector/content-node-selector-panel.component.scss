@@ -1,7 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 $content-node-selector-thumbnail-width: 35px !default;
 
-.adf-search-results-label {
+h2.adf-search-results-label {
     flex: 1;
     font-weight: 600;
     font-size: var(--theme-body-1-font-size);
@@ -95,6 +95,13 @@ $content-node-selector-thumbnail-width: 35px !default;
             overflow: auto;
             border: 1px solid var(--theme-border-color);
             border-top: 0;
+            position: relative;
+
+            &-empty + adf-infinite-pagination {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
 
             .adf-highlight {
                 color: var(--theme-primary-color);

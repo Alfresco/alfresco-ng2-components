@@ -30,7 +30,7 @@ export class AboutServerSettingsComponent implements OnInit {
     constructor(private appConfig: AppConfigService) {}
 
     ngOnInit() {
-        this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
-        this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
+        this.ecmHost = this.appConfig.get(AppConfigValues.ECMHOST);
+        this.bpmHost = this.appConfig.get(AppConfigValues.BPMHOST);
     }
 }

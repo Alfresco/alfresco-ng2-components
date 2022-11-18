@@ -20,8 +20,8 @@
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Directive({
     selector: '[adf-node-favorite]',

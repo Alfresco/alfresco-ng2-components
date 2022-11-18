@@ -19,6 +19,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { SitesService, LogService, InfiniteSelectScrollDirective } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {TranslateService} from '@ngx-translate/core';
 
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -79,7 +81,9 @@ export class DropdownSitesComponent implements OnInit {
     MY_FILES_VALUE = '-my-';
 
     constructor(private sitesService: SitesService,
-                private logService: LogService) {
+                private logService: LogService,
+                private liveAnnouncer: LiveAnnouncer,
+                private translateService: TranslateService) {
     }
 
     ngOnInit() {
@@ -96,6 +100,10 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     selectedSite(event: MatSelectChange) {
+        this.liveAnnouncer.announce(this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
+            placeholder: this.translateService.instant(this.placeholder),
+            selectedOption: this.translateService.instant(event.value.entry.title)
+        }));
         this.change.emit(event.value);
     }
 

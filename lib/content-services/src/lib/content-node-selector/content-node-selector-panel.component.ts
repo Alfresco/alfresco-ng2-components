@@ -80,6 +80,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private showSiteList = true;
     private showSearchField = true;
     private showCounter = false;
+    private _emptyList = true;
 
     /** If true will restrict the search and breadcrumbs to the currentFolderId */
     @Input()
@@ -293,6 +294,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     get chosenNode() {
         return this._chosenNode;
+    }
+
+    get emptyList(): boolean {
+        return this._emptyList;
     }
 
     getSelectedCount(): number {
@@ -567,6 +572,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Attempts to set the currently loaded node
      */
     onFolderLoaded(nodePaging: NodePaging): void {
+        setTimeout(() => {
+            this._emptyList = !this.documentList.data.getRows().length;
+        });
         this.updatePaginationAfterRowFilter(nodePaging);
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);

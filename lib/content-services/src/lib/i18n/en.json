@@ -413,7 +413,8 @@
       "ADD-ACTION": "ADD",
       "CLOSE-ACTION": "CANCEL",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
-      "EVERYONE": "EVERYONE"
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List"
     },
     "COLUMN": {
       "NAME": "Users and Groups ({{ count }})",
@@ -428,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Directly Applied Permission",
       "INHERITED-PERMISSIONS": "Inherited Permission",
       "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
-      "SELECT-ROLE": "Select role"
+      "SELECT-ROLE": "Select role",
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "No users/groups",

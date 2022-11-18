@@ -28,7 +28,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
@@ -114,6 +114,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     protected onDestroy$ = new Subject<boolean>();
     processDefinitionLoaded = false;
+    loading$ = new BehaviorSubject<boolean>(!this.processDefinitionLoaded);
 
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: UntypedFormBuilder,
@@ -253,7 +254,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
         this.startProcessCloudService.getProcessDefinitions(this.appName)
             .pipe(
-                tap(() => this.processDefinitionLoaded = true),
+                tap(() => {
+                    this.processDefinitionLoaded = true;
+                    this.loading$.next(false);
+                }),
                 takeUntil(this.onDestroy$))
             .subscribe((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;

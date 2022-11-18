@@ -16,7 +16,11 @@
  */
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ModuleInfo } from '@alfresco/js-api';
+
+interface ModuleInfo {
+  title: string;
+  version: string;
+}
 
 @Component({
   selector: 'adf-about-module-list',

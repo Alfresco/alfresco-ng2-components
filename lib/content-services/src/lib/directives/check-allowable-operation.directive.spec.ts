@@ -16,12 +16,11 @@
  */
 
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
-import { ContentService } from '../services/content.service';
-import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from './check-allowable-operation.directive';
-import { setupTestBed } from '../testing/setup-test-bed';
+import { ContentService, CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Component({
     selector: 'adf-text-subject',

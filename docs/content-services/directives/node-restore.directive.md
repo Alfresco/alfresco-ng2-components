@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Node Restore directive](lib/core/src/lib/directives/node-restore.directive.ts "Defined in node-restore.directive.ts")
+# [Node Restore directive](../../../lib/content-services/src/lib/directives/node-restore.directive.ts "Defined in node-restore.directive.ts")
 
 Restores deleted nodes to their original location.
 
@@ -56,7 +56,7 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
+| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../../lib/content-services/src/lib/interfaces/restore-message-model.interface.ts)`>` | Emitted when restoration is complete. |
 
 ## Details
 

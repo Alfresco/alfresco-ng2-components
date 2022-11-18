@@ -25,6 +25,7 @@
 
                     <mat-slide-toggle
                         class="adf-inherit-toggle"
+                        title="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate }}"
                         color="primary"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
@@ -42,6 +43,7 @@
                 data-automation-id="permission-info-button"
                 [adf-pop-over]="inheritedPermission"
                 [target]="target"
+                [autofocusedElementSelector]="'.adf-sortable'"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
@@ -72,7 +74,7 @@
 
                 <button
                     mat-button
-                    [matTooltip]="'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate"
+                    title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
                     (click)="openAddPermissionDialog()"
                     data-automation-id="adf-add-permission-button">
                     <mat-icon>person_add_outline</mat-icon>
@@ -80,7 +82,7 @@
 
                 <button
                     mat-button
-                    [matTooltip]="'PERMISSION_MANAGER.ACTION.DELETE' | translate"
+                    title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
                     [disabled]="!selectedPermissions?.length"
                     (click)="deleteSelection()"
                     data-automation-id="adf-delete-selected-permission">
