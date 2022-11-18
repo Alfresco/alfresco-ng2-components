@@ -32,14 +32,15 @@
 .adf-dialog-action-button:disabled > span {
     color: var(--theme-text-color);
 }
-@media screen and (max-width: 380px){
-    .adf-font-size-input{
+
+@media screen and (max-width: 380px) {
+    .adf-font-size-input {
         font-size: 6px;
     }
-    .title{
+    .mat-dialog-title {
         margin: 0 0 0px;
     }
-    .adf-dialog-buttons{
+    .adf-dialog-buttons {
         padding: 0px;
     }
 }
