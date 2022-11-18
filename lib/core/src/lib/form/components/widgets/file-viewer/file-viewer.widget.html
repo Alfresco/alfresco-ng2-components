@@ -2,6 +2,6 @@
     [class.adf-readonly]="field.readOnly">
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
             *ngIf="isRequired()">*</span></label>
-    <adf-viewer [overlayMode]="false" [nodeId]="field.value" [showViewer]="field.value" [allowGoBack]="false"></adf-viewer>
+    <adf-viewer [overlayMode]="false" [urlFile]="field.value" [showViewer]="field.value" [allowGoBack]="false"></adf-viewer>
     <error-widget [error]="field.validationSummary"></error-widget>
 </div>

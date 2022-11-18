@@ -60,7 +60,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     blobFile: Blob;
 
     @Input()
-    nameFile: string;
+    fileName: string;
 
     @Input()
     showToolbar: boolean = true;
