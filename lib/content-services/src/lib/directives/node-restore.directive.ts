@@ -18,17 +18,12 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
+import {
+    TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { TranslationService } from '../services/translation.service';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
-
-export class RestoreMessageModel {
-    message: string;
-    path: PathInfoEntity;
-    action: string;
-}
+import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { RestoreMessageModel } from '../interfaces/restore-message-model.interface';
 
 @Directive({
     selector: '[adf-restore]'

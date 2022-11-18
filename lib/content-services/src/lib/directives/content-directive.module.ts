@@ -23,6 +23,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
+import { LibraryFavoriteDirective } from './library-favorite.directive';
+import { LibraryMembershipDirective } from './library-membership.directive';
+import { NodeDeleteDirective } from './node-delete.directive';
+import { NodeFavoriteDirective } from './node-favorite.directive';
+import { NodeRestoreDirective } from './node-restore.directive';
 
 @NgModule({
     imports: [
@@ -34,12 +40,24 @@ import { AutoFocusDirective } from './auto-focus.directive';
         NodeLockDirective,
         NodeCounterDirective,
         NodeCounterComponent,
-        AutoFocusDirective
+        AutoFocusDirective,
+        CheckAllowableOperationDirective,
+        LibraryFavoriteDirective,
+        LibraryMembershipDirective,
+        NodeDeleteDirective,
+        NodeFavoriteDirective,
+        NodeRestoreDirective
     ],
     exports: [
         NodeLockDirective,
         NodeCounterDirective,
-        AutoFocusDirective
+        AutoFocusDirective,
+        CheckAllowableOperationDirective,
+        LibraryFavoriteDirective,
+        LibraryMembershipDirective,
+        NodeDeleteDirective,
+        NodeFavoriteDirective,
+        NodeRestoreDirective
     ]
 })
 export class ContentDirectiveModule {

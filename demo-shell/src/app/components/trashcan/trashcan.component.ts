@@ -16,8 +16,8 @@
  */
 
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { DocumentListComponent } from '@alfresco/adf-content-services';
-import { UserPreferencesService, UserPreferenceValues, RestoreMessageModel, NotificationService } from '@alfresco/adf-core';
+import { DocumentListComponent, RestoreMessageModel } from '@alfresco/adf-content-services';
+import { UserPreferencesService, UserPreferenceValues, NotificationService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 import { PathInfoEntity } from '@alfresco/js-api';
 import { Subject } from 'rxjs';

@@ -19,10 +19,9 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { TranslationService } from '../services/translation.service';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TranslationService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
     template: `
@@ -48,7 +47,8 @@ describe('NodeRestoreDirective', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreTestingModule
+            CoreTestingModule,
+            ContentDirectiveModule
         ],
         declarations: [
             TestComponent

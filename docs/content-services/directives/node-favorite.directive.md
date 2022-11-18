@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Node Favorite directive](lib/core/src/lib/directives/node-favorite.directive.ts "Defined in node-favorite.directive.ts")
+# [Node Favorite directive](../../../lib/content-services/src/lib/directives/node-favorite.directive.ts "Defined in node-favorite.directive.ts")
 
 Selectively toggles nodes as favorites.
 

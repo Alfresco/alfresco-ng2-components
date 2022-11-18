@@ -16,14 +16,12 @@
  */
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlfrescoApiService, SitesService } from '../services';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from './directive.module';
-import { CoreModule } from '../core.module';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { AlfrescoApiService, CoreModule, CoreTestingModule, SitesService } from '@alfresco/adf-core';
+import { ContentDirectiveModule } from './content-directive.module';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;
@@ -41,7 +39,7 @@ describe('LibraryMembershipDirective', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                DirectiveModule,
+                ContentDirectiveModule,
                 CoreModule.forRoot(),
                 CoreTestingModule
             ],
