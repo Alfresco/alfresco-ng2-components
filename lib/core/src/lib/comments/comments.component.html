@@ -1,7 +1,7 @@
 <div class="adf-comments-container">
-    <h1 id="comment-header" class="adf-comments-header">
+    <div id="comment-header" class="adf-comments-header">
         {{'COMMENTS.HEADER' | translate: { count: comments?.length} }}
-    </h1>
+    </div>
     <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
             <mat-form-field class="adf-full-width">
                 <textarea id="comment-input"

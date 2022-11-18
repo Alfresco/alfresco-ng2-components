@@ -1,4 +1,5 @@
-<div role="listbox" id="adf-search-results-content" [ngClass]="_classList" #panel>
+<div role="listbox" id="adf-search-results-content" title="{{'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate}}"
+    [ngClass]="_classList" #panel>
     <ng-template
         [ngTemplateOutlet]="template"
         [ngTemplateOutletContext]="{ $implicit: results }">

@@ -4,6 +4,7 @@
            id="searchInput"
            [formControl]="searchInput"
            type="text"
+           title="{{'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate}}"
            placeholder="{{'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate}}"
            [value]="searchedWord">
 
@@ -34,7 +35,8 @@
             class="adf-permission-result-list"
             [class.adf-permission-result-list-search]="searchedWord.length === 0">
     <ng-template let-data>
-        <mat-selection-list class="adf-permission-result-list-elements" (keydown.control.a)="onSelectionChange()"
+        <mat-selection-list class="adf-permission-result-list-elements"
+                            title="{{'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate}}"
                             (selectionChange)="onSelectionChange()">
             <mat-list-option id="adf-add-permission-group-everyone"
                              class="adf-list-option-item"

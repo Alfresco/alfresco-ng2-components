@@ -273,7 +273,7 @@ export class TaskDetailsPage {
     }
 
     async checkIsEmptyCommentListDisplayed(): Promise<void> {
-        const emptyList = element(by.cssContainingText('h1[id="comment-header"]', '(0)'));
+        const emptyList = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
         await BrowserVisibility.waitUntilElementIsVisible(emptyList);
     }
 
