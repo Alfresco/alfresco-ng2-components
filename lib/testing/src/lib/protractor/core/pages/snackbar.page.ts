@@ -22,7 +22,7 @@ import { BrowserActions } from '../utils/browser-actions';
 export class SnackbarPage {
 
     notificationSnackBar = $$(`[data-automation-id='adf-snackbar-message-content']`).first();
-    snackBarAction = $('simple-snack-bar button span');
+    snackBarAction = $(`[data-automation-id='adf-snackbar-message-content-action-button']`);
     snackBarContainerCss = $$('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear(timeout = 5000) {
