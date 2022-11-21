@@ -25,7 +25,7 @@ export class AttachFileWidgetPage {
     formFields = new FormFields();
     alfrescoTypeUploadLocator = 'button[id="attachfile"]';
     localStorageButton = $('input[id="attachfile"]');
-    filesListLocator = 'div[id="adf-attach-widget-readonly-list"]';
+    filesListLocator = 'div[data-automation-id="adf-attach-widget-readonly-list"]';
     attachFileWidget = $('#attachfile');
     attachedFileMenu = $('mat-list-item button');
     attachedFileOptions = $('.mat-menu-panel .mat-menu-content');
