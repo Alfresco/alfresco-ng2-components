@@ -24,7 +24,7 @@ import { AlfrescoApiService, RenditionsService } from '../../services';
 import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ViewerComponent } from './viewer.component';
+import { ViewerRenderComponent } from './viewer-render.component.ts';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -142,17 +142,17 @@ class ViewerWithCustomMoreActionsComponent {
 })
 class DoubleViewerComponent {
     @ViewChild('viewer1')
-    viewer1: ViewerComponent;
+    viewer1: ViewerRenderComponent;
 
     @ViewChild('viewer2')
-    viewer2: ViewerComponent;
+    viewer2: ViewerRenderComponent;
 
 }
 
 describe('ViewerComponent', () => {
 
-    let component: ViewerComponent;
-    let fixture: ComponentFixture<ViewerComponent>;
+    let component: ViewerRenderComponent;
+    let fixture: ComponentFixture<ViewerRenderComponent>;
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
@@ -188,7 +188,7 @@ describe('ViewerComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ViewerComponent);
+        fixture = TestBed.createComponent(ViewerRenderComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
@@ -241,7 +241,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -272,7 +272,7 @@ describe('ViewerComponent', () => {
             ];
             spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -294,7 +294,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -318,7 +318,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -1350,7 +1350,7 @@ describe('ViewerComponent', () => {
     describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 

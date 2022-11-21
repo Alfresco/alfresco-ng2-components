@@ -41,5 +41,6 @@ export * from './lib/interfaces/index';
 export * from './lib/version-compatibility/index';
 export * from './lib/pipes/index';
 export * from './lib/services/index';
+export * from './lib/viewer';
 
 export * from './lib/content.module';

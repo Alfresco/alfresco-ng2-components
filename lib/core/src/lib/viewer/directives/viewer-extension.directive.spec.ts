@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ViewerComponent } from '../components/viewer.component';
+import { ViewerRenderComponent } from '../components/viewer-render.component.ts';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -43,7 +43,7 @@ describe('ExtensionViewerDirective', () => {
             { provide: Location, useClass: SpyLocation },
             ViewerExtensionDirective,
             {provide: ElementRef, useClass: MockElementRef},
-            ViewerComponent,
+            ViewerRenderComponent,
             { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } }
         ]
     });

@@ -23,7 +23,7 @@ import { Track } from '../models/viewer.model';
     selector: 'adf-media-player',
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
-    host: { class: 'adf-media-player' },
+    host: {class: 'adf-media-player'},
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
@@ -54,7 +54,7 @@ export class MediaPlayerComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
-       // const nodeId = changes['nodeId'];
+        // const nodeId = changes['nodeId'];
 
         if (blobFile && blobFile.currentValue) {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
@@ -70,7 +70,7 @@ export class MediaPlayerComponent implements OnChanges {
         }
     }
 
-    onMediaPlayerError() {
-        this.error.emit();
+    onMediaPlayerError(event: any) {
+        this.error.emit(event);
     }
 }

@@ -34,6 +34,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
+        ContentModule,
         InfoDrawerModule,
         ContentModule,
         ContentDirectiveModule,
