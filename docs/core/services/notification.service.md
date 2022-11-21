@@ -38,18 +38,21 @@ Shows a notification message with optional feedback.
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
 -   **showInfo**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase info message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
 -   **showWarning**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase warning message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
 
 ## Details
