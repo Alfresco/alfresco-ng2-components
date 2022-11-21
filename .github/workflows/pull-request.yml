@@ -64,6 +64,8 @@ env:
   IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
   HOST_SSO: ${{ secrets.HOST_SSO }}
+  LOG_LEVEL: "ERROR"
+  E2E_LOG_LEVEL: "ERROR"
 jobs:
   main:
     timeout-minutes: 20
