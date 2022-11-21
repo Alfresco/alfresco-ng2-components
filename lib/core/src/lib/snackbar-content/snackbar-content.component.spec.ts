@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {SnackbarContentComponent} from '@alfresco/adf-core';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
-import {MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef} from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
-import {By} from '@angular/platform-browser';
-import {TranslateModule} from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SnackbarContentComponent } from '@alfresco/adf-core';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;
