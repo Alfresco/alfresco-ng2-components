@@ -51,7 +51,7 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}
   TRAVIS_BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
-  E2E_HOST_APA: ${{ secrets.E2E_HOST }}
+  E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
   E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
