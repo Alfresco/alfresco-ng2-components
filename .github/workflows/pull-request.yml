@@ -67,6 +67,11 @@ env:
   LOG_LEVEL: "ERROR"
   E2E_LOG_LEVEL: "ERROR"
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
+  E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
+  E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
+  EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
+  E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
+  E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
 jobs:
   main:
     timeout-minutes: 20
@@ -89,7 +94,8 @@ jobs:
           echo "HEAD: ${{ env.NX_HEAD }}"
       # TODO: remove override
       - name: override NX_CALCULATION_FLAGS
-        run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
+        # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
+        run: echo NX_CALCULATION_FLAGS=--all --head=HEAD >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
@@ -177,82 +183,112 @@ jobs:
             folder: "core"
             provider: "ALL"
             auth: "OAUTH"
+            check-cs-env: "true"
+            check-ps-env: "true"
           - description: "Content: Components"
             name: "content-services"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Content: Directives"
             name: "content-services"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Content: Document List"
             name: "content-services"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Content: Metadata"
             name: "content-services"
             folder: "content-services/metadata"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Content: Upload and Versioning"
             name: "content-services browser"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Search"
             name: "content-services"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
+            check-cs-env: "true"
           - description: "Process: Form"
-            name: "process-services"
+            name: "Process: Form"
             folder: "process-services/form"
             provider: "BPM"
             auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"
           - description: "Process: Process"
-            name: "process-services/process"
+            name: "Process: Process"
             folder: "process-services/process"
             provider: "BPM"
             auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"            
+          - description: "Process: Tasks"
+            name: "Process: Tasks"
+            folder: "process-services/tasks"
+            provider: "BPM"
+            auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"            
           - description: "Process: Widget"
-            name: "process-services/widgets"
+            name: "Process: Widget"
             folder: "process-services/widgets"
             provider: "BPM"
             auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"            
           - description: "Process Cloud: Form"
-            name: "process-services-cloud/form-field"
+            name: "Process Cloud: Form"
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
             proxy: $E2E_HOST_APA
-          - description: "Process Cloud : People"
-            name: "process-services-cloud"
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"  
+          - description: "Process Cloud: People"
+            name: "Process Cloud: People"
             folder: "process-services-cloud/people"
             provider: "ALL"
             auth: "OAUTH"
             proxy: $E2E_HOST_APA
-          - description: "Process Cloud : Process"
-            name: "process-services-cloud"
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"              
+          - description: "Process Cloud: Process"
+            name: "Process Cloud: Process"
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
             proxy: $E2E_HOST_APA
-          - description: "Process Cloud : Start Task"
-            name: "process-services-cloud"
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"              
+          - description: "Process Cloud: Start Task"
+            name: "Process Cloud: Start Task"
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
             proxy: $E2E_HOST_APA
-          - description: "Process Cloud : Tasks List"
-            name: "process-services-cloud"
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"              
+          - description: "Process Cloud: Tasks List"
+            name: "Process Cloud: Tasks List"
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
             proxy: $E2E_HOST_APA
-
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"  
 
     steps:
       - name: Checkout repository

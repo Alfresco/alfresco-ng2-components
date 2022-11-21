@@ -21,11 +21,29 @@ inputs:
     required: true
   proxy:
     description: "proxy host"
-    required: true
+    required: false
     default: $E2E_HOST
   output:
     description: "Output path"
     required: true
+  check-cs-env:
+    required: false
+    description: check cs env
+    default: "false"
+  check-ps-env:
+    required: false
+    description: check ps env
+    default: "false"
+  check-external-cs-env:  
+    required: false
+    description: check external cs env
+    default: "false"
+  check-ps-cloud-env:
+    required: false
+    description: check ps cloud env
+    default: "false"
+
+
 runs:
   using: "composite"
   steps:
@@ -40,26 +58,71 @@ runs:
     - name: reinstall testing
       shell: bash
       run: nx run testing:bundle
-    - name: Check Content is UP
-      shell: bash      
+
+    - name: check EXTERNAL-CS is UP
+      shell: bash
+      if: ${{ inputs.check-external-cs-env == 'true' }}
       run: |
-        ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
+          check-cs-env \
+          --host "$EXTERNAL_ACS_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" || exit 1
+
+    - name: Check CS is UP
+      shell: bash
+      if: ${{ inputs.check-cs-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
+          check-cs-env \
+          --host "$E2E_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" || exit 1
+      
     - name: check PS is UP
-      shell: bash        
+      shell: bash
+      if: ${{ inputs.check-ps-env == 'true' }}
       run: |
-        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE"
+      set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
+          --host "$E2E_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" \
+          --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE" || exit 1
+
+    - name: check PS-CLOUD is UP
+      shell: bash
+      if: ${{ inputs.check-ps-cloud-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
+        --oauth "$E2E_HOST" \
+        --host "$E2E_HOST_APA" \
+        --modelerUsername "$E2E_MODELER_USERNAME" \
+        --modelerPassword "$E2E_MODELER_PASSWORD" \
+        --devopsUsername "$E2E_DEVOPS_USERNAME" \
+        --devopsPassword "$E2E_DEVOPS_PASSWORD" \
+        --clientId 'alfresco' || exit 1
+
+
     - name: run test
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
+        PROXY_HOST_BPM: ${{ inputs.proxy }}
       shell: bash
       run: |
-        export PROXY_HOST_BPM=${{ inputs.proxy }}
+        set -u;
+        echo $PROXY_HOST_BPM
         export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-        bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"             
+        bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"
+
+
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
