@@ -19,6 +19,10 @@ inputs:
   download-from-s3:
     description: "enable download from s3 after e2e"
     required: true
+  proxy:
+    description: "proxy host"
+    required: true
+    default: $E2E_HOST
   output:
     description: "Output path"
     required: true
@@ -52,6 +56,7 @@ runs:
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
       shell: bash
       run: |
+        export PROXY_HOST_BPM=${{ inputs.proxy }}
         export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
         bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_NAME"             

@@ -66,6 +66,7 @@ env:
   HOST_SSO: ${{ secrets.HOST_SSO }}
   LOG_LEVEL: "ERROR"
   E2E_LOG_LEVEL: "ERROR"
+  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
 jobs:
   main:
     timeout-minutes: 20
@@ -226,27 +227,31 @@ jobs:
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
+            proxy: $E2E_HOST_APA
           - description: "Process Cloud : People"
             name: "process-services-cloud"
             folder: "process-services-cloud/people"
             provider: "ALL"
             auth: "OAUTH"
+            proxy: $E2E_HOST_APA
           - description: "Process Cloud : Process"
             name: "process-services-cloud"
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
+            proxy: $E2E_HOST_APA
           - description: "Process Cloud : Start Task"
             name: "process-services-cloud"
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
+            proxy: $E2E_HOST_APA
           - description: "Process Cloud : Tasks List"
             name: "process-services-cloud"
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
-
+            proxy: $E2E_HOST_APA
 
 
     steps:
