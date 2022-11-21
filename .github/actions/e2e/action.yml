@@ -22,7 +22,7 @@ inputs:
   proxy:
     description: "proxy host"
     required: false
-    default: $E2E_HOST
+    default: ${{ env.E2E_HOST }}
   output:
     description: "Output path"
     required: true
@@ -114,6 +114,7 @@ runs:
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
         PROXY_HOST_BPM: ${{ inputs.proxy }}
+        # PROXY: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}
       shell: bash
       run: |
         set -u;
