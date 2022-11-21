@@ -95,7 +95,7 @@ jobs:
       # TODO: remove override
       - name: override NX_CALCULATION_FLAGS
         # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
-        run: echo NX_CALCULATION_FLAGS=--all --head=HEAD >> $GITHUB_ENV
+        run: echo NX_CALCULATION_FLAGS=--all >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
