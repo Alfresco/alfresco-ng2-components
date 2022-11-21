@@ -85,7 +85,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}
       run: |
-      set -u;
+        set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
           --host "$E2E_HOST" \
           -u "$E2E_USERNAME" \
@@ -98,13 +98,13 @@ runs:
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
-        --oauth "$E2E_HOST" \
-        --host "$E2E_HOST_APA" \
-        --modelerUsername "$E2E_MODELER_USERNAME" \
-        --modelerPassword "$E2E_MODELER_PASSWORD" \
-        --devopsUsername "$E2E_DEVOPS_USERNAME" \
-        --devopsPassword "$E2E_DEVOPS_PASSWORD" \
-        --clientId 'alfresco' || exit 1
+          --oauth "$E2E_HOST" \
+          --host "$E2E_HOST_APA" \
+          --modelerUsername "$E2E_MODELER_USERNAME" \
+          --modelerPassword "$E2E_MODELER_PASSWORD" \
+          --devopsUsername "$E2E_DEVOPS_USERNAME" \
+          --devopsPassword "$E2E_DEVOPS_PASSWORD" \
+          --clientId 'alfresco' || exit 1
 
 
     - name: run test
