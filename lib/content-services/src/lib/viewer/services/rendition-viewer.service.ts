@@ -17,10 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
-import { Track } from '../models/viewer.model';
-import { TranslationService } from '../../services/translation.service';
+import { AlfrescoApiService , LogService, Track,TranslationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +26,7 @@ export class RenditionViewerService {
 
     /**
      * Content groups based on categorization of files that can be viewed in the web browser. This
-     * implementation or grouping is tied to the definition the ng component: ViewerComponent
+     * implementation or grouping is tied to the definition the ng component: ViewerRenderComponent
      */
     static ContentGroup = {
         IMAGE: 'image',
@@ -44,13 +41,13 @@ export class RenditionViewerService {
     static SUBTITLES_RENDITION_NAME = 'webvtt';
 
     /**
-     * Based on ViewerComponent Implementation, this value is used to determine how many times we try
+     * Based on ViewerRenderComponent Implementation, this value is used to determine how many times we try
      * to get the rendition of a file for preview, or printing.
      */
     maxRetries = 5;
 
     /**
-     * Mime-type grouping based on the ViewerComponent.
+     * Mime-type grouping based on the ViewerRenderComponent.
      */
     private mimeTypes = {
         text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],

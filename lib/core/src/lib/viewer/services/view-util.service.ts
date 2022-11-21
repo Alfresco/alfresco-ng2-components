@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { LogService } from '../../common/services/log.service';
-import { RenditionViewerService } from "./rendition-viewer.service";
+import { RenditionViewerService } from "../../../../../content-services/src/lib/viewer/services/rendition-viewer.service";
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Injectable({

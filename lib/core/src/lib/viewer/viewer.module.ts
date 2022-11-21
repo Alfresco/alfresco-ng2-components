@@ -38,12 +38,11 @@ import { ViewerMoreActionsComponent } from './components/viewer-more-actions.com
 import { ViewerOpenWithComponent } from './components/viewer-open-with.component';
 import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
-import { ViewerComponent } from './components/viewer.component';
+import { ViewerRenderComponent } from './components/viewer-render.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { A11yModule } from '@angular/cdk/a11y';
-import { AlfrescoViewerComponent } from "./components/alfresco-viewer.component";
 
 @NgModule({
     imports: [
@@ -61,8 +60,7 @@ import { AlfrescoViewerComponent } from "./components/alfresco-viewer.component"
     ],
     declarations: [
         PdfPasswordDialogComponent,
-        ViewerComponent,
-        AlfrescoViewerComponent,
+        ViewerRenderComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,
@@ -78,8 +76,7 @@ import { AlfrescoViewerComponent } from "./components/alfresco-viewer.component"
         ViewerToolbarActionsComponent
     ],
     exports: [
-        ViewerComponent,
-        AlfrescoViewerComponent,
+        ViewerRenderComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,

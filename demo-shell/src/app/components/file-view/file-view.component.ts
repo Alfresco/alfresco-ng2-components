@@ -45,7 +45,6 @@ export class FileViewComponent implements OnInit {
     customPreset: string = null;
     displayDefaultProperties = true;
     showToolbar = true;
-    displayName = null;
     urlFile = null;
     allowGoBack = true;
     openWith = false;
@@ -55,7 +54,6 @@ export class FileViewComponent implements OnInit {
     allowLeftSidebar = true;
     moreActions = true;
     moreActionsMenu = false;
-    customName = false;
     fileUrlSwitch = false;
     showLeftSidebar = null;
     showRightSidebar = false;
@@ -65,7 +63,6 @@ export class FileViewComponent implements OnInit {
     showTabWithIconAndLabel = false;
     desiredAspect: string = null;
     showAspect: string = null;
-    content: Blob;
     name: string;
 
     constructor(private router: Router,
@@ -93,9 +90,6 @@ export class FileViewComponent implements OnInit {
                     },
                     () => this.router.navigate(['/files', id])
                 );
-            } else if (this.preview.content) {
-                this.content = this.preview.content;
-                this.displayName = this.preview.name;
             }
         });
     }
@@ -180,14 +174,6 @@ export class FileViewComponent implements OnInit {
 
     toggleShowTabWithIconAndLabel() {
         this.showTabWithIconAndLabel = !this.showTabWithIconAndLabel;
-    }
-
-    toggleCustomName() {
-        this.customName = !this.customName;
-
-        if (!this.customName) {
-            this.displayName = null;
-        }
     }
 
     toggleFileUrl() {

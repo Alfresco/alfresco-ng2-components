@@ -19,12 +19,12 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NodesApiService, RenditionsService } from '../../services';
+import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ViewerComponent } from './viewer.component';
+import { ViewerRenderComponent } from './viewer-render.component.ts';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -142,18 +142,18 @@ class ViewerWithCustomMoreActionsComponent {
 })
 class DoubleViewerComponent {
     @ViewChild('viewer1')
-    viewer1: ViewerComponent;
+    viewer1: ViewerRenderComponent;
 
     @ViewChild('viewer2')
-    viewer2: ViewerComponent;
+    viewer2: ViewerRenderComponent;
 
 }
 
 describe('ViewerComponent', () => {
 
-    let component: ViewerComponent;
-    let fixture: ComponentFixture<ViewerComponent>;
-    let nodesApiService: NodesApiService;
+    let component: ViewerRenderComponent;
+    let fixture: ComponentFixture<ViewerRenderComponent>;
+    let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
     let uploadService: UploadService;
@@ -188,12 +188,12 @@ describe('ViewerComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ViewerComponent);
+        fixture = TestBed.createComponent(ViewerRenderComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        nodesApiService = TestBed.inject(NodesApiService);
         uploadService = TestBed.inject(UploadService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
     });
@@ -241,7 +241,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -272,7 +272,7 @@ describe('ViewerComponent', () => {
             ];
             spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -294,7 +294,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -318,7 +318,7 @@ describe('ViewerComponent', () => {
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
@@ -609,15 +609,15 @@ describe('ViewerComponent', () => {
 
         expect(component.fileTitle).toBe('file1');
 
-        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
+        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file2');
 
-        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
+        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
 
-        nodesApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
+        alfrescoApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
         expect(component.nodeId).toBe('id1');
@@ -1350,7 +1350,7 @@ describe('ViewerComponent', () => {
     describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(ViewerComponent);
+            fixture = TestBed.createComponent(ViewerRenderComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 

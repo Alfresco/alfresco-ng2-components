@@ -1,11 +1,11 @@
 ---
-Title: Viewer component
+Title: Render Viewer component
 Added: v2.0.0
 Status: Active
 Last reviewed: 2019-03-25
 ---
 
-# [Viewer component](../../../lib/core/src/lib/viewer/components/viewer.component.ts "Defined in viewer.component.ts")
+# [Viewer component](lib/core/src/lib/viewer/components/viewer-render.component.ts "Defined in viewer-render.component.ts")
 
 Displays content from an ACS repository.
 
@@ -110,11 +110,11 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
-| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/src/lib/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
 | invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/src/lib/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
+| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts

@@ -1,12 +1,14 @@
 import {
     ChangeDetectorRef,
-    Component,
+    Component, ContentChild,
     EventEmitter, HostListener,
     Input,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ElementRef,
+    TemplateRef
 } from "@angular/core";
-import { ViewUtilService } from "../services/view-util.service";
+import { ViewUtilService } from "../../../../../core/src/lib/viewer/services/view-util.service";
 import {
     ContentApi, Node,
     NodeEntry,
@@ -16,23 +18,35 @@ import {
     VersionEntry,
     VersionsApi
 } from "@alfresco/js-api";
-import { AlfrescoApiService, LogService, UploadService } from "../../services";
+import { AlfrescoApiService, LogService, UploadService } from "../../../../../core/src/lib/services";
 import { MatDialog } from "@angular/material/dialog";
-import { filter, takeUntil } from "rxjs/operators";
-import { FileModel } from "../../models";
-import { Subject } from "rxjs";
+import { filter, skipWhile, takeUntil } from "rxjs/operators";
+import { FileModel } from "../../../../../core/src/lib/models";
+import { fromEvent, Subject } from "rxjs";
 import { RenditionViewerService } from "../services/rendition-viewer.service";
-import { BaseEvent } from '../../events';
+import { ViewerToolbarComponent,ViewerSidebarComponent, ViewerOpenWithComponent,ViewerMoreActionsComponent } from "@alfresco/adf-core";
 
 @Component({
     selector: 'adf-alfresco-viewer',
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
-    host: {class: 'adf-viewer'},
+    host: {class: 'adf-alfresco-viewer'},
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
 export class AlfrescoViewerComponent {
+
+    @ContentChild(ViewerToolbarComponent)
+    toolbar: ViewerToolbarComponent;
+
+    @ContentChild(ViewerSidebarComponent)
+    sidebar: ViewerSidebarComponent;
+
+    @ContentChild(ViewerOpenWithComponent)
+    mnuOpenWith: ViewerOpenWithComponent;
+
+    @ContentChild(ViewerMoreActionsComponent)
+    mnuMoreActions: ViewerMoreActionsComponent;
 
     /** Node Id of the file to load. */
     @Input()
@@ -92,6 +106,30 @@ export class AlfrescoViewerComponent {
     @Input()
     allowRightSidebar = false;
 
+    /** Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. */
+    @Input()
+    showRightSidebar = false;
+
+    /** Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. */
+    @Input()
+    showLeftSidebar = false;
+
+    /** Toggles downloading. */
+    @Input()
+    allowDownload = true;
+
+    /** Toggles printing. */
+    @Input()
+    allowPrint = false;
+
+    /** The template for the right sidebar. The template context contains the loaded node data. */
+    @Input()
+    sidebarRightTemplate: TemplateRef<any> = null;
+
+    /** The template for the left sidebar. The template context contains the loaded node data. */
+    @Input()
+    sidebarLeftTemplate: TemplateRef<any> = null;
+
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter();
@@ -104,30 +142,28 @@ export class AlfrescoViewerComponent {
     @Output()
     navigateNext = new EventEmitter<MouseEvent | KeyboardEvent>();
 
-    /** Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. */
-    @Input()
-    showRightSidebar = false;
-
-    /** Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. */
-    @Input()
-    showLeftSidebar = false;
+    /** Emitted when the viewer close */
+    @Output()
+    close = new EventEmitter<boolean>();
 
     private onDestroy$ = new Subject<boolean>();
+    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
     private cacheBusterNumber: number;
-    private nodeEntry: NodeEntry;
-     versionEntry: VersionEntry;
-     isLoading: boolean;
+    private closeViewer: any;
 
+    versionEntry: VersionEntry;
+    isLoading: boolean;
     urlFileContent: string;
+    viewerType: any;
+    fileName: string;
+    mimeType: string;
+    nodeEntry: NodeEntry;
+
+    sidebarRightTemplateContext: { node: Node } = {node: null};
+    sidebarLeftTemplateContext: { node: Node } = {node: null};
 
     _sharedLinksApi: SharedlinksApi;
-
-     viewerType: any;
-     fileName: string;
-     fileExtension: any;
-     mimeType: string;
-
     get sharedLinksApi(): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
@@ -155,7 +191,7 @@ export class AlfrescoViewerComponent {
                 private renditionViewerService: RenditionViewerService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
-                // private contentService: ContentService,
+                private el: ElementRef,
                 private uploadService: UploadService,
                 public dialog: MatDialog,
                 private cdr: ChangeDetectorRef) {
@@ -178,6 +214,39 @@ export class AlfrescoViewerComponent {
                     this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
+        this.closeOverlayManager();
+    }
+
+    private closeOverlayManager() {
+        this.dialog.afterOpened.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.closeViewer = false);
+
+        this.dialog.afterAllClosed.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.closeViewer = true);
+
+        this.keyDown$.pipe(
+            skipWhile(() => !this.overlayMode),
+            filter((e: KeyboardEvent) => e.keyCode === 27),
+            takeUntil(this.onDestroy$)
+        ).subscribe((event: KeyboardEvent) => {
+            event.preventDefault();
+
+            if (this.closeViewer) {
+                this.onClose();
+            }
+        });
+    }
+
+    /**
+     * close the viewer
+     */
+    onClose() {
+        this.showViewer = false;
+        this.close.emit(this.showViewer);
     }
 
     private onNodeUpdated(node: Node) {
@@ -275,8 +344,8 @@ export class AlfrescoViewerComponent {
         }
         this.isLoading = false;
 
-        // this.sidebarRightTemplateContext.node = nodeData;
-        // this.sidebarLeftTemplateContext.node = nodeData;
+        this.sidebarRightTemplateContext.node = nodeData;
+        this.sidebarLeftTemplateContext.node = nodeData;
     }
 
     private async setUpSharedLinkFile(details: any) {
@@ -294,9 +363,11 @@ export class AlfrescoViewerComponent {
         }
     }
 
-    onPrintContent(event: BaseEvent<any>) {
-        if (!event.defaultPrevented) {
-            this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
+    onPrintContent(event: MouseEvent) {
+        if (this.allowPrint) {
+            if (!event.defaultPrevented) {
+                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
+            }
         }
     }
 
@@ -365,24 +436,12 @@ export class AlfrescoViewerComponent {
         }
     }
 
-    toggleSidebar() {
+    toggleRightSidebar() {
         this.showRightSidebar = !this.showRightSidebar;
-        if (this.showRightSidebar && this.nodeId) {
-            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
-              //   .then((nodeEntry: NodeEntry) => {
-              // //      this.sidebarRightTemplateContext.node = nodeEntry.entry;
-              //   });
-        }
     }
 
     toggleLeftSidebar() {
         this.showLeftSidebar = !this.showLeftSidebar;
-        if (this.showRightSidebar && this.nodeId) {
-            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
-                // .then((nodeEntry: NodeEntry) => {
-                //  //   this.sidebarLeftTemplateContext.node = nodeEntry.entry;
-                // });
-        }
     }
 
     @HostListener('document:keyup', ['$event'])
@@ -403,6 +462,30 @@ export class AlfrescoViewerComponent {
         if (key === 39 && this.canNavigateNext) {
             event.preventDefault();
             this.onNavigateNextClick(event);
+        }
+
+        // Ctrl+F
+        if (key === 70 && event.ctrlKey) {
+            event.preventDefault();
+            this.enterFullScreen();
+        }
+    }
+
+    /**
+     * Triggers full screen mode with a main content area displayed.
+     */
+    enterFullScreen(): void {
+        const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
+        if (container) {
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.webkitRequestFullscreen) {
+                container.webkitRequestFullscreen();
+            } else if (container.mozRequestFullScreen) {
+                container.mozRequestFullScreen();
+            } else if (container.msRequestFullscreen) {
+                container.msRequestFullscreen();
+            }
         }
     }
 

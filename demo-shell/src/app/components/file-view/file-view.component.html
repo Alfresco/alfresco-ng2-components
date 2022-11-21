@@ -1,4 +1,4 @@
-<ng-container *ngIf="nodeId || content">
+<ng-container *ngIf="nodeId">
 
     <ng-template let-node="node" #sidebarRightTemplate>
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
@@ -126,26 +126,6 @@
         <adf-info-drawer [title]="'Viewer Options'">
 
             <adf-info-drawer-tab label="Settings">
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-custoname"
-                        [color]="'primary'"
-                        (change)="toggleCustomName()"
-                        [checked]="customName">
-                        Custom Name
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <ng-container *ngIf="customName">
-                        <mat-form-field floatLabel="never">
-                            <input matInput
-                                   placeholder="Custom Name"
-                                   [(ngModel)]="displayName"
-                                   data-automation-id="adf-text-custom-name">
-                        </mat-form-field>
-                    </ng-container>
-                </p>
 
                 <p class="toggle">
                     <mat-slide-toggle
@@ -321,105 +301,98 @@
     </ng-template>
 
     <adf-alfresco-viewer
+        (close)="onViewerVisibilityChanged()"
         [nodeId]="nodeId"
-    ></adf-alfresco-viewer>
+        [versionId]="versionId"
+        [showRightSidebar]="showRightSidebar"
+        [showLeftSidebar]="showLeftSidebar"
+        [allowGoBack]="allowGoBack"
+        [showToolbar]="showToolbar"
+        [allowPrint]="allowPrint"
+        [allowDownload]="allowDownload"
+        [allowRightSidebar]="allowRightSidebar"
+        [allowLeftSidebar]="allowLeftSidebar"
+        [sidebarLeftTemplate]="sidebarLeftTemplate"
+        [sidebarRightTemplate]="sidebarRightTemplate">
 
-<!--    <adf-viewer-->
-<!--        [blobFile]="content"-->
-<!--        [nodeId]="nodeId"-->
-<!--        [versionId]="versionId"-->
-<!--        [showRightSidebar]="showRightSidebar"-->
-<!--        [showLeftSidebar]="showLeftSidebar"-->
-<!--        [allowGoBack]="allowGoBack"-->
-<!--        [displayName]="displayName"-->
-<!--        [showToolbar]="showToolbar"-->
-<!--        [allowPrint]="allowPrint"-->
-<!--        [allowDownload]="allowDownload"-->
-<!--        [allowRightSidebar]="allowRightSidebar"-->
-<!--        [allowLeftSidebar]="allowLeftSidebar"-->
-<!--        [urlFile]="urlFile"-->
-<!--        (showViewerChange)="onViewerVisibilityChanged()"-->
-<!--        [sidebarLeftTemplate]="sidebarLeftTemplate"-->
-<!--        [sidebarRightTemplate]="sidebarRightTemplate">-->
+        <adf-viewer-toolbar *ngIf="customToolbar" data-automation-id="adf-viewer-custom-toolbar">
+            <h1>My custom toolbar</h1>
+        </adf-viewer-toolbar>
 
-<!--        <adf-viewer-toolbar *ngIf="customToolbar" data-automation-id="adf-viewer-custom-toolbar">-->
-<!--            <h1>My custom toolbar</h1>-->
-<!--        </adf-viewer-toolbar>-->
+        <adf-viewer-toolbar-actions *ngIf="moreActions">
+            <button mat-icon-button id="adf-viewer-time">
+                <mat-icon>alarm</mat-icon>
+            </button>
+            <button mat-icon-button id="adf-viewer-upload">
+                <mat-icon>backup</mat-icon>
+            </button>
+            <button mat-icon-button id="adf-viewer-bug">
+                <mat-icon>bug_report</mat-icon>
+            </button>
+        </adf-viewer-toolbar-actions>
 
-<!--        <adf-viewer-toolbar-actions *ngIf="moreActions">-->
-<!--            <button mat-icon-button id="adf-viewer-time">-->
-<!--                <mat-icon>alarm</mat-icon>-->
-<!--            </button>-->
-<!--            <button mat-icon-button id="adf-viewer-upload">-->
-<!--                <mat-icon>backup</mat-icon>-->
-<!--            </button>-->
-<!--            <button mat-icon-button id="adf-viewer-bug">-->
-<!--                <mat-icon>bug_report</mat-icon>-->
-<!--            </button>-->
-<!--        </adf-viewer-toolbar-actions>-->
+        <adf-viewer-more-actions *ngIf="moreActionsMenu">
+            <button mat-menu-item id="adf-viewer-more-menu-alarm">
+                <mat-icon>alarm</mat-icon>
+                <span>Alarm</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-backup">
+                <mat-icon>backup</mat-icon>
+                <span>Backup</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-bug">
+                <mat-icon>bug_report</mat-icon>
+                <span>Bug report</span>
+            </button>
+        </adf-viewer-more-actions>
 
-<!--        <adf-viewer-more-actions *ngIf="moreActionsMenu">-->
-<!--            <button mat-menu-item id="adf-viewer-more-menu-alarm">-->
-<!--                <mat-icon>alarm</mat-icon>-->
-<!--                <span>Alarm</span>-->
-<!--            </button>-->
-<!--            <button mat-menu-item id="adf-viewer-more-menu-backup">-->
-<!--                <mat-icon>backup</mat-icon>-->
-<!--                <span>Backup</span>-->
-<!--            </button>-->
-<!--            <button mat-menu-item id="adf-viewer-more-menu-bug">-->
-<!--                <mat-icon>bug_report</mat-icon>-->
-<!--                <span>Bug report</span>-->
-<!--            </button>-->
-<!--        </adf-viewer-more-actions>-->
+        <ng-container *ngIf="openWith">
+            <adf-viewer-open-with>
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Option 1</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>voicemail</mat-icon>
+                    <span>Option 2</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span>Option 3</span>
+                </button>
+            </adf-viewer-open-with>
+        </ng-container>
 
-<!--        <ng-container *ngIf="openWith">-->
-<!--            <adf-viewer-open-with>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>dialpad</mat-icon>-->
-<!--                    <span>Option 1</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item disabled>-->
-<!--                    <mat-icon>voicemail</mat-icon>-->
-<!--                    <span>Option 2</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item>-->
-<!--                    <mat-icon>notifications_off</mat-icon>-->
-<!--                    <span>Option 3</span>-->
-<!--                </button>-->
-<!--            </adf-viewer-open-with>-->
-<!--        </ng-container>-->
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['json']">
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+            <h1>JSON VIEWER</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
 
-<!--        &lt;!&ndash;-->
-<!--        <adf-viewer-extension [supportedExtensions]="['json']">-->
-<!--            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">-->
-<!--            <h1>JSON VIEWER</h1>-->
-<!--            </ng-template>-->
-<!--        </adf-viewer-extension>-->
-<!--        &ndash;&gt;-->
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['png']">
+            <ng-template>
+            <h1>PNG Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
 
-<!--        &lt;!&ndash;-->
-<!--        <adf-viewer-extension [supportedExtensions]="['png']">-->
-<!--            <ng-template>-->
-<!--            <h1>PNG Viewer</h1>-->
-<!--            </ng-template>-->
-<!--        </adf-viewer-extension>-->
-<!--        &ndash;&gt;-->
+        <!--
+        <adf-viewer-extension [supportedExtensions]="['pdf']">
+            <ng-template>
+            <h1>PDF Viewer</h1>
+            </ng-template>
+        </adf-viewer-extension>
+        -->
 
-<!--        &lt;!&ndash;-->
-<!--        <adf-viewer-extension [supportedExtensions]="['pdf']">-->
-<!--            <ng-template>-->
-<!--            <h1>PDF Viewer</h1>-->
-<!--            </ng-template>-->
-<!--        </adf-viewer-extension>-->
-<!--        &ndash;&gt;-->
-
-<!--        &lt;!&ndash;-->
-<!--        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>-->
-<!--            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >-->
-<!--            <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>-->
-<!--            </ng-template>-->
-<!--        </extension-viewer>-->
-<!--        &ndash;&gt;-->
-<!--    </adf-viewer>-->
+        <!--
+        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+            <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+            </ng-template>
+        </extension-viewer>
+        -->
+    </adf-alfresco-viewer>
 </ng-container>

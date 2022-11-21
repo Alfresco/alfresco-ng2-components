@@ -79,7 +79,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     initializeScaling() {
-        const scaling = this.appConfigService.get<number>('adf-viewer.image-viewer-scaling', undefined) / 100;
+        const scaling = this.appConfigService.get<number>('adf-viewer-render.image-viewer-scaling', undefined) / 100;
         if (scaling) {
             this.scale = scaling;
         }
