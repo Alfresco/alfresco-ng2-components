@@ -39,10 +39,8 @@ export class MediaPlayerComponent implements OnChanges {
 
     @Input()
     fileName: string;
-    //
-    // @Input()
-    // nodeId: string;
 
+    /** media subtitles for the media player*/
     @Input()
     tracks: Track[] = [];
 
@@ -54,16 +52,11 @@ export class MediaPlayerComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
-        // const nodeId = changes['nodeId'];
 
         if (blobFile && blobFile.currentValue) {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
             return;
         }
-
-        // if (nodeId && nodeId.currentValue) {
-        //     this.viewUtils.generateMediaTracksRendition(this.nodeId).then((tracks) => this.tracks = tracks);
-        // }
 
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');

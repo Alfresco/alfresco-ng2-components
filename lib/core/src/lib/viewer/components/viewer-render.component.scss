@@ -16,7 +16,7 @@
         justify-content: center;
     }
 
-    .adf-viewer-render-layout-content {
+    &-layout-content {
         @extend .adf-full-screen;
 
         position: relative;

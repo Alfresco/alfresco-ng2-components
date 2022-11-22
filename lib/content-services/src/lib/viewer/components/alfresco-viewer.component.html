@@ -178,13 +178,16 @@
             <adf-viewer-render
                 fxFlexOrder="1"
                 fxFlex="1 1 auto"
+                (close)="onClose()"
                 (submitFile)="onSubmitFile($event)"
                 [viewerType]="viewerType"
                 [fileName]="fileName"
                 [isLoading]="isLoading"
                 [allowGoBack]="allowGoBack"
                 [urlFile]="urlFileContent"
-            ></adf-viewer-render>
+                [tracks]="tracks"
+                [readOnly]="readOnly">
+            </adf-viewer-render>
 
         </div>
     </div>

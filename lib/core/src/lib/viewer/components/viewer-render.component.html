@@ -1,5 +1,7 @@
 <div *ngIf="isLoading"
-     class="adf-viewer-main">
+     class="adf-viewer-render-main"
+     fxFlexOrder="1"
+     fxFlex="1 1 auto">
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
         <div class="adf-viewer-render-content-container">
             <ng-container *ngIf="isLoading">
@@ -17,7 +19,9 @@
 </div>
 
 <div *ngIf="!isLoading"
-     class="adf-viewer-main">
+     class="adf-viewer-render-main"
+     fxFlexOrder="1"
+     fxFlex="1 1 auto">
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
         <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
             <ng-container *ngSwitchCase="'external'">
@@ -37,6 +41,7 @@
                                 [urlFile]="urlFile"
                                 [fileName]="fileName"
                                 [cacheType]="cacheTypeForContent"
+                                (close)="onClose()"
                                 (error)="onUnsupportedFile()">
 
                 </adf-pdf-viewer>
@@ -44,6 +49,7 @@
 
             <ng-container *ngSwitchCase="'image'">
                 <adf-img-viewer [urlFile]="urlFile"
+                                [readOnly]="readOnly"
                                 [fileName]="fileName"
                                 [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
@@ -54,6 +60,7 @@
             <ng-container *ngSwitchCase="'media'">
                 <adf-media-player id="adf-mdedia-player"
                                   [urlFile]="urlFile"
+                                  [tracks]="tracks"
                                   [mimeType]="mimeType"
                                   [blobFile]="blobFile"
                                   [fileName]="fileName"
