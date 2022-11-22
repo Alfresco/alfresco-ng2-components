@@ -114,6 +114,7 @@ runs:
           --clientId 'alfresco' || exit 1
 
     - name: override NX_CALCULATION_FLAGS
+      shell: bash
       # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
       run: echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
     - name: run test
