@@ -21,7 +21,7 @@ inputs:
     required: true
   proxy:
     description: "proxy host"
-    required: false
+    required: true
   output:
     description: "Output path"
     required: true
@@ -113,14 +113,15 @@ runs:
           --devopsPassword "$E2E_DEVOPS_PASSWORD" \
           --clientId 'alfresco' || exit 1
 
-
+    - name: override NX_CALCULATION_FLAGS
+      # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
+      run: echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
     - name: run test
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
-        # PROXY_HOST_BPM: ${{ inputs.proxy }}
         PROXY_HOST_BPM: ${{ inputs.proxy }}
       shell: bash
       run: |
