@@ -118,7 +118,9 @@ runs:
       # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
       run: |
         echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
-        nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain
+        echo "FLAGS: $NX_CALCULATION_FLAGS"
+        export NX_CALCULATION_FLAGS=--all
+        nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain || true
     - name: run test
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
