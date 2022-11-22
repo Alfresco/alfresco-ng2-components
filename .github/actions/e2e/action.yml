@@ -62,7 +62,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-external-cs-env == 'true' }}
       env:
-        PROXY_HOST_BPM: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}      
+        PROXY_HOST_BPM: ${{ inputs.proxy }}      
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
@@ -75,7 +75,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-cs-env == 'true' }}
       env:
-        PROXY_HOST_BPM: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}      
+        PROXY_HOST_BPM: ${{ inputs.proxy }}      
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
@@ -88,7 +88,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}
       env:
-        PROXY_HOST_BPM: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}
+        PROXY_HOST_BPM: ${{ inputs.proxy }}
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
@@ -99,7 +99,7 @@ runs:
 
     - name: check PS-CLOUD is UP
       env:
-        PROXY_HOST_BPM: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}    
+        PROXY_HOST_BPM: ${{ inputs.proxy }}    
       shell: bash
       if: ${{ inputs.check-ps-cloud-env == 'true' }}
       run: |
@@ -121,7 +121,7 @@ runs:
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_NAME: "${{ inputs.e2e-test-name }}"
         # PROXY_HOST_BPM: ${{ inputs.proxy }}
-        PROXY_HOST_BPM: ${{ inputs.proxy || ${{ env.E2E_HOST }} }}
+        PROXY_HOST_BPM: ${{ inputs.proxy }}
       shell: bash
       run: |
         set -u;
