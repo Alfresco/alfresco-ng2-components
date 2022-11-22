@@ -1,5 +1,5 @@
-name: "s3/download"
-description: "s3/download"
+name: "e2e"
+description: "e2e"
 inputs:
   e2e-test-name:
     description: "Test name"
@@ -113,10 +113,12 @@ runs:
           --devopsPassword "$E2E_DEVOPS_PASSWORD" \
           --clientId 'alfresco' || exit 1
 
-    - name: override NX_CALCULATION_FLAGS
+    - name: debug & override NX_CALCULATION_FLAGS
       shell: bash
       # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
-      run: echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
+      run: |
+        echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
+        nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain
     - name: run test
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
