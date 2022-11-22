@@ -15,18 +15,8 @@
  * limitations under the License.
  */
 
-//TODO BETTER APPROACH FOR IMG EXTENSION submit
-//TODO uncomment readOnly
-//TODO TO UNDERSTAND THE LEFT AND RIGHT SIDEBAR
-//TODO uncomment media load subtitle
-//TODO rename allowGoBack allow close button
-//TODO prevent momentous unknown format
-//TODO null propagation
-//TODO viewer widget specialization in process service cloud
-//TODO Test close dialog password scenario
-//TODO Remove unused CSS
 //TODO FIX documentation
-//TODO Fix core viewer widget
+//TODO FIX unit test
 
 import {
     Component, EventEmitter,
@@ -37,6 +27,7 @@ import { Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatDialog } from '@angular/material/dialog';
+import { Track } from "../models/viewer.model";
 
 @Component({
     selector: 'adf-viewer-render',
@@ -99,6 +90,14 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     isLoading = false;
 
+    /** Enable when where is possible the editing functionalities  */
+    @Input()
+    readOnly = true;
+
+    /** media subtitles for the media player*/
+    @Input()
+    tracks: Track[] = [];
+
     /** Emitted when the filename extension changes. */
     @Output()
     extensionChange = new EventEmitter<string>();
@@ -106,6 +105,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     /** Emitted when the img is submitted in the img viewer. */
     @Output()
     submitFile = new EventEmitter<Blob>();
+
+    /** Emitted when the img is submitted in the img viewer. */
+    @Output()
+    close = new EventEmitter<boolean>();
 
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extension: string;
@@ -198,6 +201,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     onUnsupportedFile() {
         this.viewerType = 'unknown';
+    }
+
+    onClose() {
+        this.close.next(true);
     }
 
 }

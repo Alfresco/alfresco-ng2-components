@@ -1,30 +1,58 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import {
     ChangeDetectorRef,
-    Component, ContentChild,
-    EventEmitter, HostListener,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostListener,
     Input,
     Output,
-    ViewEncapsulation,
-    ElementRef,
-    TemplateRef
-} from "@angular/core";
-import { ViewUtilService } from "../../../../../core/src/lib/viewer/services/view-util.service";
+    TemplateRef,
+    ViewEncapsulation
+} from '@angular/core';
 import {
-    ContentApi, Node,
+    AlfrescoApiService, ContentService,
+    FileModel,
+    LogService, Track,
+    UploadService,
+    ViewerMoreActionsComponent,
+    ViewerOpenWithComponent,
+    ViewerSidebarComponent,
+    ViewerToolbarComponent,
+    ViewUtilService
+} from "@alfresco/adf-core";
+import { fromEvent, Subject } from "rxjs";
+import {
+    ContentApi,
+    Node,
     NodeEntry,
-    NodesApi, RenditionEntry,
-    SharedLinkEntry,
-    SharedlinksApi, Version,
+    NodesApi,
+    RenditionEntry,
+    SharedlinksApi,
+    Version,
     VersionEntry,
     VersionsApi
 } from "@alfresco/js-api";
-import { AlfrescoApiService, LogService, UploadService } from "../../../../../core/src/lib/services";
+import { RenditionViewerService } from "../services/rendition-viewer.service";
 import { MatDialog } from "@angular/material/dialog";
 import { filter, skipWhile, takeUntil } from "rxjs/operators";
-import { FileModel } from "../../../../../core/src/lib/models";
-import { fromEvent, Subject } from "rxjs";
-import { RenditionViewerService } from "../services/rendition-viewer.service";
-import { ViewerToolbarComponent,ViewerSidebarComponent, ViewerOpenWithComponent,ViewerMoreActionsComponent } from "@alfresco/adf-core";
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -159,6 +187,8 @@ export class AlfrescoViewerComponent {
     fileName: string;
     mimeType: string;
     nodeEntry: NodeEntry;
+    tracks: Track[] = [];
+    readOnly: boolean = true;
 
     sidebarRightTemplateContext: { node: Node } = {node: null};
     sidebarLeftTemplateContext: { node: Node } = {node: null};
@@ -191,20 +221,13 @@ export class AlfrescoViewerComponent {
                 private renditionViewerService: RenditionViewerService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
+                private contentService: ContentService,
                 private el: ElementRef,
                 private uploadService: UploadService,
                 public dialog: MatDialog,
                 private cdr: ChangeDetectorRef) {
         renditionViewerService.maxRetries = this.maxRetries;
 
-    }
-
-    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
-        this.navigateBefore.next(event);
-    }
-
-    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
-        this.navigateNext.next(event);
     }
 
     ngOnInit() {
@@ -241,22 +264,13 @@ export class AlfrescoViewerComponent {
         });
     }
 
-    /**
-     * close the viewer
-     */
-    onClose() {
-        this.showViewer = false;
-        this.close.emit(this.showViewer);
-    }
-
-    private onNodeUpdated(node: Node) {
+    private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
-            // this.cacheTypeForContent = 'no-cache';
             this.generateCacheBusterNumber();
             this.isLoading = true;
-            this.setUpNodeFile(node).then(() => {
-                this.isLoading = false;
-            });
+
+            await this.setUpNodeFile(node)
+            this.isLoading = false;
         }
     }
 
@@ -264,52 +278,42 @@ export class AlfrescoViewerComponent {
         return node?.properties['cm:versionLabel'] ?? '';
     }
 
-    private setupSharedLink() {
+    private async setupSharedLink() {
         this.allowGoBack = false;
 
-        this.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-            (sharedLinkEntry: SharedLinkEntry) => {
-                this.setUpSharedLinkFile(sharedLinkEntry);
-                this.isLoading = false;
-            },
-            () => {
-                this.isLoading = false;
-                this.logService.error('This sharedLink does not exist');
-                this.invalidSharedLink.next();
-            });
+        try {
+            const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);
+            await this.setUpSharedLinkFile(sharedLinkEntry);
+            this.isLoading = false;
+        } catch (error) {
+            this.isLoading = false;
+            this.logService.error('This sharedLink does not exist');
+            this.invalidSharedLink.next();
+        }
     }
 
-    private setupNode() {
-        this.nodesApi.getNode(this.nodeId, {include: ['allowableOperations']}).then(
-            (node: NodeEntry) => {
-                this.nodeEntry = node;
-                if (this.versionId) {
-                    this.versionsApi.getVersion(this.nodeId, this.versionId).then(
-                        (version: VersionEntry) => {
-                            this.versionEntry = version;
-                            this.setUpNodeFile(node.entry, version.entry).then(() => {
-                                this.isLoading = false;
-                            });
-                        }
-                    );
-                } else {
-                    this.setUpNodeFile(node.entry).then(() => {
-                        this.isLoading = false;
-                        this.cdr.detectChanges();
-                    });
-                }
-            },
-            () => {
+    private async setupNode() {
+        try {
+            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, {include: ['allowableOperations']});
+            if (this.versionId) {
+                this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
+                await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
                 this.isLoading = false;
-                this.logService.error('This node does not exist');
+            } else {
+                await this.setUpNodeFile(this.nodeEntry.entry);
+                this.isLoading = false;
+                this.cdr.detectChanges();
             }
-        );
+        } catch (error) {
+            this.isLoading = false;
+            this.logService.error('This node does not exist');
+        }
     }
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
         this.isLoading = true;
 
-        // this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
+        this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
 
         if (versionData && versionData.content) {
             this.mimeType = versionData.content.mimeType;
@@ -341,7 +345,10 @@ export class AlfrescoViewerComponent {
                     viewerType: this.viewerType
                 } = await this.renditionViewerService.getNodeRendition(nodeData.id));
             }
+        } else if (this.viewerType === 'media') {
+            this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
         }
+
         this.isLoading = false;
 
         this.sidebarRightTemplateContext.node = nodeData;
@@ -360,14 +367,6 @@ export class AlfrescoViewerComponent {
                 url: this.urlFileContent,
                 viewerType: this.viewerType
             } = await this.getSharedLinkRendition(this.sharedLinkId));
-        }
-    }
-
-    onPrintContent(event: MouseEvent) {
-        if (this.allowPrint) {
-            if (!event.defaultPrevented) {
-                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
-            }
         }
     }
 
@@ -400,8 +399,32 @@ export class AlfrescoViewerComponent {
         this.cacheBusterNumber = Date.now();
     }
 
+    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
+        this.navigateBefore.next(event);
+    }
+
+    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
+        this.navigateNext.next(event);
+    }
+
+    /**
+     * close the viewer
+     */
+    onClose() {
+        this.showViewer = false;
+        this.close.emit(this.showViewer);
+    }
+
+    onPrintContent(event: MouseEvent) {
+        if (this.allowPrint) {
+            if (!event.defaultPrevented) {
+                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
+            }
+        }
+    }
+
     onSubmitFile(newImageBlob: Blob) {
-        if (this?.nodeEntry?.entry?.id) { // && !this.readOnly) {
+        if (this?.nodeEntry?.entry?.id && !this.readOnly) {
             const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, {type: this?.nodeEntry?.entry?.content?.mimeType});
             const newFile = new FileModel(
                 newImageFile,

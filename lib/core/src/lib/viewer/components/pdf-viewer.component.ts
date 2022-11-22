@@ -80,6 +80,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
+    @Output()
+    close = new EventEmitter<any>();
+
     page: number;
     displayPage: number;
     totalPages: number;
@@ -513,6 +516,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             .afterClosed().subscribe((password) => {
             if (password) {
                 callback(password);
+            } else {
+                this.close.emit();
             }
         });
     }
