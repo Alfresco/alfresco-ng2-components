@@ -136,10 +136,16 @@ runs:
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
         bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
 
-
     - name: after e2e - upload artifacts to S3
       if: ${{ inputs.upload-to-s3 == 'true' }}
       uses: ./.github/actions/s3/upload
       with:
         artifact-id: '$S3_SMART_RUNNER_PATH/${{ github.run_id }}-${{ github.sha }}.tar.bz2'
         output: "$SMART_RUNNER_DIRECTORY"
+
+    - name: upload 2e2 reports
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: e2e-output/
+        name: dist-${{ github.ref_name }}-${{ inputs.e2e-test-id }}
