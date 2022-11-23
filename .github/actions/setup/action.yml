@@ -13,7 +13,7 @@ runs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
