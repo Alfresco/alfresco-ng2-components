@@ -1,0 +1,48 @@
+<adf-sidenav-layout
+  #layout
+  [sidenavMin]="70"
+  [sidenavMax]="320"
+  [stepOver]="600"
+  [hideSidenav]="hideSidenav"
+  [expandedSidenav]="expandedSidenav"
+  (expanded)="onExpanded($event)"
+>
+  <adf-sidenav-layout-header>
+    <ng-template let-isMenuMinimized="isMenuMinimized">
+      <div
+        role="heading"
+        aria-level="1"
+        *ngIf="!hideSidenav"
+      >
+        <adf-dynamic-component id="app.layout.header" [data]="{ layout }">
+        </adf-dynamic-component>
+      </div>
+    </ng-template>
+  </adf-sidenav-layout-header>
+
+  <adf-sidenav-layout-navigation>
+    <ng-template let-isMenuMinimized="isMenuMinimized">
+      <div
+        (swipeleft)="hideMenu($event)"
+        [attr.data-automation-id]="isMenuMinimized() ? 'collapsed' : 'expanded'"
+      >
+        <adf-dynamic-component
+          id="app.layout.sidenav"
+          [data]="{ mode: layout.isMenuMinimized ? 'collapsed' : 'expanded'}"
+        >
+        </adf-dynamic-component>
+      </div>
+    </ng-template>
+  </adf-sidenav-layout-navigation>
+
+  <adf-sidenav-layout-content>
+    <ng-template>
+      <router-outlet></router-outlet>
+    </ng-template>
+  </adf-sidenav-layout-content>
+</adf-sidenav-layout>
+
+<adf-dynamic-component id="app.shell.sibling">
+</adf-dynamic-component>
+
+<router-outlet name="viewer"></router-outlet>
