@@ -92,7 +92,7 @@ export class NotificationDemoPage {
     }
 
     async clickActionButton(): Promise<void> {
-        await browser.executeScript(`document.querySelector("simple-snack-bar > div > button").click();`);
+        await browser.executeScript(`document.querySelector("[data-automation-id='adf-snackbar-message-content-action-button']").click();`);
     }
 
     async clearMessage(): Promise<void> {

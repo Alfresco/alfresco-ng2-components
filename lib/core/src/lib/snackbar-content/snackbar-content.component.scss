@@ -1,0 +1,26 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .adf-snackbar-message-content {
+        margin: 0;
+    }
+
+    .adf-snackbar-message-content-action {
+        margin-left: 24px;
+
+        .mat-button {
+            min-width: 0;
+            margin: -8px;
+
+            &.adf-snackbar-message-content-action-button {
+                margin-right: 8px;
+            }
+
+            &.adf-snackbar-message-content-action-icon {
+                padding: 0;
+            }
+        }
+    }
+}
