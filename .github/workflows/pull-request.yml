@@ -62,6 +62,7 @@ env:
   EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
   E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
   E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
+  NODE_OPTIONS: "--max-old-space-size=5120"
 jobs:
   main:
     timeout-minutes: 20
