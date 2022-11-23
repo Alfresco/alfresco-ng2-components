@@ -95,9 +95,7 @@ jobs:
       - run: npm ci
       # --parallel=3
       - name: nx affected lint
-        run: |
-          free -h
-          npx nx affected $NX_CALCULATION_FLAGS --target=lint
+        run: nx run-many --target=lint
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
