@@ -46,18 +46,6 @@ export class NotificationDemoPage {
         return BrowserActions.getText(this.notificationConfig);
     }
 
-    async isNotificationSnackBarDisplayed(): Promise<boolean> {
-        return this.snackbarPage.isNotificationSnackBarDisplayed();
-    }
-
-    async getSnackBarMessage(): Promise<string> {
-        return this.snackbarPage.getSnackBarMessage();
-    }
-
-    async waitForSnackBarToClose(): Promise<void> {
-        await this.snackbarPage.waitForSnackBarToClose(15000);
-    }
-
     async enterMessageField(text: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.messageField, text);
     }
