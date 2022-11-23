@@ -175,59 +175,51 @@ jobs:
             provider: "ALL"
             auth: "OAUTH"
             check-cs-env: "true"
-            check-ps-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-ps-env: "true"            
           - description: "Content: Components"
             test-id: "content-services"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           - description: "Content: Directives"
             test-id: "content-services"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           - description: "Content: Document List"
             test-id: "content-services"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           - description: "Content: Metadata"
             test-id: "content-services"
             folder: "content-services/metadata"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           #TODO CHECK "content-services browser" input into e2e.sh
           - description: "Content: Upload and Versioning"
             test-id: "content-services browser"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           - description: "Search"
             test-id: "content-services"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-cs-env: "true"            
           - description: "Process: Form"
             test-id: "process-services"
             folder: "process-services/form"
             provider: "BPM"
             auth: "OAUTH"
             check-ps-env: "true"
-            check-external-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-external-cs-env: "true"            
           - description: "Process: Process"
             test-id: "process-services"
             folder: "process-services/process"
@@ -235,15 +227,13 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}
           - description: "Process: Tasks"
             test-id: "process-services"
             folder: "process-services/tasks"
             provider: "BPM"
             auth: "OAUTH"
             check-ps-env: "true"
-            check-external-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}            
+            check-external-cs-env: "true"            
           - description: "Process: Widget"
             test-id: "process-services"
             folder: "process-services/widgets"
@@ -251,13 +241,12 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
-            proxy: $ {{ env.PROXY_HOST_BPM }}
           - description: "Process Cloud: Form"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $ {{ env.E2E_HOST_APA }}
+            proxy: $E2E_HOST_APA
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
           - description: "Process Cloud: People"
@@ -265,7 +254,7 @@ jobs:
             folder: "process-services-cloud/people"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $ {{ env.E2E_HOST_APA }}
+            proxy: $E2E_HOST_APA
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Process"
@@ -273,7 +262,7 @@ jobs:
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $ {{ env.E2E_HOST_APA }}
+            proxy: $E2E_HOST_APA
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Start Task"
@@ -281,7 +270,7 @@ jobs:
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $ {{ env.E2E_HOST_APA }}
+            proxy: $E2E_HOST_APA
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Tasks List"
@@ -289,7 +278,7 @@ jobs:
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $ {{ env.E2E_HOST_APA }}
+            proxy: $E2E_HOST_APA
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
 
@@ -323,6 +312,11 @@ jobs:
           e2e-test-auth: ${{ matrix.e2e-test.auth }}
           upload-to-s3: false
           download-from-s3: false
+          check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
+          check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
+          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 
+          check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
+          proxy: ${{ matrix.e2e-test.proxy }}
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:

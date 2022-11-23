@@ -26,19 +26,19 @@ inputs:
     description: "Output path"
     required: true
   check-cs-env:
-    required: false
+    required: true
     description: check cs env
     default: "false"
   check-ps-env:
-    required: false
+    required: true
     description: check ps env
     default: "false"
   check-external-cs-env:  
-    required: false
+    required: true
     description: check external cs env
     default: "false"
   check-ps-cloud-env:
-    required: false
+    required: true
     description: check ps cloud env
     default: "false"
 
@@ -58,11 +58,20 @@ runs:
       shell: bash
       run: nx run testing:bundle
 
+    - name: setup proxy env var
+      shell: bash
+      run: |
+        if [[ -z "${{ inputs.proxy }}" ]]; then
+          echo "Custom proxy not set. using default "
+          echo "PROXY_HOST_BPM=$PROXY_HOST_BPM" >> $GITHUB_ENV
+        else
+          echo "Custom proxy set."
+          echo "PROXY_HOST_BPM=${{ inputs.proxy }}" >> $GITHUB_ENV
+        fi
+
     - name: check EXTERNAL-CS is UP
       shell: bash
       if: ${{ inputs.check-external-cs-env == 'true' }}
-      env:
-        PROXY_HOST_BPM: ${{ inputs.proxy }}      
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
@@ -73,9 +82,7 @@ runs:
 
     - name: Check CS is UP
       shell: bash
-      if: ${{ inputs.check-cs-env == 'true' }}
-      env:
-        PROXY_HOST_BPM: ${{ inputs.proxy }}      
+      if: ${{ inputs.check-cs-env == 'true' }}    
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
@@ -87,8 +94,6 @@ runs:
     - name: check PS is UP
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}
-      env:
-        PROXY_HOST_BPM: ${{ inputs.proxy }}
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
@@ -97,9 +102,7 @@ runs:
           -p "$E2E_PASSWORD" \
           --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE" || exit 1
 
-    - name: check PS-CLOUD is UP
-      env:
-        PROXY_HOST_BPM: ${{ inputs.proxy }}    
+    - name: check PS-CLOUD is UP  
       shell: bash
       if: ${{ inputs.check-ps-cloud-env == 'true' }}
       run: |
@@ -127,7 +130,6 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
-        PROXY_HOST_BPM: ${{ inputs.proxy }}
       shell: bash
       run: |
         set -u;
