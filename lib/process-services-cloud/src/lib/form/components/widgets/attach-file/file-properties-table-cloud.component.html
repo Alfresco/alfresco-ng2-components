@@ -40,7 +40,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
                 <button id="{{'file-'+element?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
-                    *ngIf="!!element.content?.mimeType">
+                    *ngIf="!!element.content?.mimeType" [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #fileActionMenu="matMenu" xPosition="before">
