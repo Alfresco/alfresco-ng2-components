@@ -84,15 +84,16 @@ jobs:
           echo "HEAD: ${{ env.NX_HEAD }}"
       # TODO: remove override
       - name: override NX_CALCULATION_FLAGS
-        # run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
-        run: echo NX_CALCULATION_FLAGS=--all >> $GITHUB_ENV
+        run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
+        # run: echo NX_CALCULATION_FLAGS=--all >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
       # TODO TRAVIS_JOB_ID TO SET
       - run: npm ci
-      - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
+      # --parallel=3
+      - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
