@@ -1,0 +1,40 @@
+            check-cs-env: true
+            check-ps-env: true
+
+Core, FOLDER="core", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Core, FOLDER="core", ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+
+
+            check-cs-env: true
+Content: Components, FOLDER="content-services/components", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Content: Directives, FOLDER="content-services/directives", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Content: Document List, FOLDER="content-services/document-list", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Content: Metadata, FOLDER="content-services/metadata", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Content: Upload and Versioning, FOLDER="content-services/upload", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Search, FOLDER="search", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+
+
+            check-ps-env: true
+            check-external-cs-env: true
+Process: Form, FOLDER="process-services/form", ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+Process: Form, FOLDER="process-services/form", ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
+Process: Process, FOLDER="process-services/process", ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+Process: Process, FOLDER="process-services/process", ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
+Process: Tasks, FOLDER="process-services/tasks", ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+Process: Tasks, FOLDER="process-services/tasks", ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
+Process: Widgets, FOLDER="process-services/widgets", ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+Process: Widgets, FOLDER="process-services/widgets", ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
+
+
+            check-cs-env: true
+            check-ps-cloud-env: true  
+Process Cloud : Form, FOLDER="process-services-cloud/form-field", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Process Cloud : Form, FOLDER="process-services-cloud/form-field", ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
+Process Cloud : People, FOLDER="process-services-cloud/people", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Process Cloud : People, FOLDER="process-services-cloud/people", ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
+Process Cloud : Process, FOLDER="process-services-cloud/process", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Process Cloud : Process, FOLDER="process-services-cloud/process", ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
+Process Cloud : Start Task, FOLDER="process-services-cloud/start-task", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Process Cloud : Start Task, FOLDER="process-services-cloud/start-task", ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
+Process Cloud : Tasks List, FOLDER="process-services-cloud/task-list", ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+Process Cloud : Tasks List, FOLDER="process-services-cloud/task-list", ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1

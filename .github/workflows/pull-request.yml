@@ -103,7 +103,7 @@ jobs:
           xvfb_pid=$(ps x | grep -v grep | grep xvfb-run | awk '{print $1}')
           if [ "$xvfb_pid" != "" ]; then
               echo "Killing the following xvfb process: $xvfb_pid"
-              sudo kill $xvfb_pid
+              sudo kill $xvfb_pid || true
           else
               echo "Nothing to kill"
           fi

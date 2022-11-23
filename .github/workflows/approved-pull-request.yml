@@ -10,7 +10,7 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}
   TRAVIS_BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
-  E2E_HOST_APA: ${{ secrets.E2E_HOST }}
+  E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
   E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
@@ -23,6 +23,18 @@ env:
   IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
   HOST_SSO: ${{ secrets.HOST_SSO }}
+  LOG_LEVEL: "ERROR"
+  E2E_LOG_LEVEL: "ERROR"
+  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
+  E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
+  E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
+  EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
+  E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
+  E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
+
+
+
+
 jobs:
   main:
     timeout-minutes: 20
@@ -42,14 +54,10 @@ jobs:
         run: |
           echo "BASE: ${{ env.NX_BASE }}"
           echo "HEAD: ${{ env.NX_HEAD }}"
-      # TODO: remove override
-      - name: override NX_CALCULATION_FLAGS
-        run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
-      # TODO TRAVIS_JOB_ID TO SET
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint --parallel=3
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
@@ -59,14 +67,16 @@ jobs:
 
       - name: Release
         run: |
+          set -u;
           ./scripts/travis/build/bumpversion.sh
-          $(npm bin)/nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" # TODO ??
-          $(npm bin)/nx affected $NX_CALCULATION_FLAGS --target=pretheme
+          time $(npm bin)/nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" # TODO ??
+          time $(npm bin)/nx affected $NX_CALCULATION_FLAGS --target=pretheme
           ./scripts/travis/release/release-npm.sh
 
 
       - name: push Demoshell docker image
         run: |
+          set -u;        
           $(npm bin)/nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
           ./scripts/travis/release/release-demoshell-docker.sh
@@ -75,6 +85,7 @@ jobs:
 
       - name: push Storybook docker image
         run: |
+          set -u;        
           $(npm bin)/nx run stories:build-storybook --configuration ci
           . ./scripts/travis/release/docker-tag.sh
           ./scripts/travis/release/release-storybook-docker.sh 
