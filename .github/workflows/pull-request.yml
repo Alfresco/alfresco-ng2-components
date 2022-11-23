@@ -93,7 +93,10 @@ jobs:
       # TODO TRAVIS_JOB_ID TO SET
       - run: npm ci
       # --parallel=3
-      - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint
+      - name: nx affected lint
+        run: |
+          free -h
+          npx nx affected $NX_CALCULATION_FLAGS --target=lint
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
