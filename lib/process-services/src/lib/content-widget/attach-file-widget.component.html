@@ -72,7 +72,7 @@
             <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
                   role="button" tabindex="0" class="adf-file">{{file.name}}</span>
             <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
-                    [title]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
+                    [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
