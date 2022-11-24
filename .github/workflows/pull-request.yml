@@ -62,7 +62,7 @@ env:
   EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
   E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
   E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
-  NODE_OPTIONS: "--max-old-space-size=5120"
+  
 jobs:
   main:
     timeout-minutes: 20
@@ -95,7 +95,10 @@ jobs:
       - run: npm ci
       # --parallel=3
       - name: nx affected lint
-        run: nx run-many --target=lint
+        run: |
+          export NODE_OPTIONS="--max-old-space-size=5120"
+          echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
+          npx nx affected $NX_CALCULATION_FLAGS --target=lint
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb

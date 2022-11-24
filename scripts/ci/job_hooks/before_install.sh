@@ -13,7 +13,7 @@ ENV_FILE=${1:-"/tmp/github_vars.env"}
 export GIT_HASH=$(git rev-parse HEAD)
 
 # Node settings
-# export NODE_OPTIONS="--max_old_space_size=30000"
+#export NODE_OPTIONS="--max_old_space_size=30000"
 
 # Settings for Nx ---------------------------------------------------------------------
 export BASE_HASH="$(git merge-base origin/"$TRAVIS_BRANCH" HEAD)"
