@@ -61,7 +61,7 @@ runs:
     - name: setup proxy env var
       shell: bash
       run: |
-        echo "APA PROXY FLAG: $apa_proxy"
+        echo "APA PROXY FLAG: "${{ inputs.apa_proxy }}"
         if [[ -z "${{ inputs.apa_proxy }}" ]]; then
           echo "APA proxy not found. terminating"
           exit 1

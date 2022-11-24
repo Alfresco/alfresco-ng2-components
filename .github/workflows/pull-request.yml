@@ -38,9 +38,10 @@ env:
   GITHUB_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  BUILD_ID: ${{ github.run_id }}
+  BUILD_ID: ${GITHUB_JOB}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
   TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
+  JOB_ID: ${GITHUB_RUN_ID}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
   E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
@@ -314,8 +315,8 @@ jobs:
           e2e-test-folder: ${{ matrix.e2e-test.folder }}
           e2e-test-provider: ${{ matrix.e2e-test.provider }}
           e2e-test-auth: ${{ matrix.e2e-test.auth }}
-          upload-to-s3: false
-          download-from-s3: false
+          upload-to-s3: true
+          download-from-s3: true
           check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
           check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 

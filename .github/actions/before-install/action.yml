@@ -6,8 +6,7 @@ runs:
     - name: Before install
       shell: bash
       run: |
-        export JOB_ID=${BUILD_ID}_${{ github.}}
-        export BUILD_ID
+        export S3_DBP_PATH='s3://gh-action-builds/adf'
         bash -xv ./scripts/ci/job_hooks/before_install.sh "/tmp/github_vars.env"
         while read ENVVAR; do
           echo "$ENVVAR" >> $GITHUB_ENV
