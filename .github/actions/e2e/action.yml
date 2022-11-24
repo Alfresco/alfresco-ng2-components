@@ -61,7 +61,7 @@ runs:
     - name: setup proxy env var
       shell: bash
       env: 
-        E2E_HOST_PROXY: ${{ secrets.E2E_HOST_APA }}
+        E2E_HOST_PROXY: ${E2E_HOST_APA}
       run: |
         echo "E2E_PROXY: $E2E_HOST_PROXY"
         if [[ -z "$E2E_HOST_PROXY" ]]; then
@@ -73,7 +73,7 @@ runs:
           echo "PROXY_HOST_BPM=$PROXY_HOST_BPM" >> $GITHUB_ENV
         else
           echo "Custom proxy set."
-          echo "PROXY_HOST_BPM=${{ secrets.E2E_HOST_APA }}" >> $GITHUB_ENV
+          echo "PROXY_HOST_BPM=${E2E_HOST_PROXY}" >> $GITHUB_ENV
         fi
 
 
