@@ -59,7 +59,6 @@ describe('AppLayoutComponent', () => {
     TestBed.configureTestingModule({
       imports: [CommonModule, NoopAnimationsModule, HttpClientModule, SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([])],
       providers: [
-        Store,
         {
           provide: Router,
           useClass: MockRouter

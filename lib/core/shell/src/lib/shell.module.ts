@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, provideRoutes, RouterModule, Route } from '@angular/router';
-import { SHELL_LAYOUT_ROUTE } from './app-shell.routes';
+import { SHELL_LAYOUT_ROUTE } from './shell.routes';
 import { SidenavLayoutModule } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { ShellLayoutComponent } from './components/shell/shell.component';
