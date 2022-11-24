@@ -56,6 +56,11 @@ runs:
         uses: ./.github/actions/travis-event-type-load
       - name: before install script
         uses: ./.github/actions/before-install
+      - name: input validation for NX CALCULATION FLAGS
+        shell: bash
+        run: |
+          export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
+          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
       - name: setup nx shas
         uses: nrwl/nx-set-shas@v3
         with:

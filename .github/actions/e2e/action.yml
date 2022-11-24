@@ -147,6 +147,7 @@ runs:
           echo $PROVIDER
           echo $AUTH_TYPE
           echo $E2E_TEST_ID
+          rm -rf e2e-output || true
           export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
