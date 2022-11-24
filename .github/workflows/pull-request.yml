@@ -65,7 +65,7 @@ env:
   
 jobs:
   main:
-    timeout-minutes: 20
+    timeout-minutes: 30
     name: "Build Components"
     runs-on: ubuntu-22.04
     # TODO : pull request not merged
@@ -113,9 +113,7 @@ jobs:
           else
               echo "Nothing to kill"
           fi
-      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
-      - run: nx build demoshell --configuration production
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-artifacts
 
