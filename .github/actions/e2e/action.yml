@@ -60,11 +60,9 @@ runs:
 
     - name: setup proxy env var
       shell: bash
-      env: 
-        E2E_HOST_PROXY: ${E2E_HOST_APA}
       run: |
-        echo "E2E_PROXY: $E2E_HOST_PROXY"
-        if [[ -z "$E2E_HOST_PROXY" ]]; then
+        echo "APA PROXY FLAG: $apa_proxy"
+        if [[ -z "${{ inputs.apa_proxy }}" ]]; then
           echo "APA proxy not found. terminating"
           exit 1
         else
