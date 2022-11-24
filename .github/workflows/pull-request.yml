@@ -251,7 +251,7 @@ jobs:
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $E2E_HOST_APA
+            apa_proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
           - description: "Process Cloud: People"
@@ -259,7 +259,7 @@ jobs:
             folder: "process-services-cloud/people"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $E2E_HOST_APA
+            apa_proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Process"
@@ -267,7 +267,7 @@ jobs:
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $E2E_HOST_APA
+            apa_proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Start Task"
@@ -275,7 +275,7 @@ jobs:
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $E2E_HOST_APA
+            apa_proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Tasks List"
@@ -283,7 +283,7 @@ jobs:
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
-            proxy: $E2E_HOST_APA
+            apa_proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
 

@@ -19,9 +19,9 @@ inputs:
   download-from-s3:
     description: "enable download from s3 after e2e"
     required: true
-  proxy:
+  apa_proxy:
     description: "proxy host"
-    required: true
+    required: false
   output:
     description: "Output path"
     required: true
@@ -60,14 +60,22 @@ runs:
 
     - name: setup proxy env var
       shell: bash
+      env: 
+        E2E_HOST_PROXY: ${{ secrets.E2E_HOST_APA }}
       run: |
-        if [[ -z "${{ inputs.proxy }}" ]]; then
+        echo "E2E_PROXY: $E2E_HOST_PROXY"
+        if [[ -z "$E2E_HOST_PROXY" ]]; then
+          echo "APA proxy not found. terminating"
+          exit 1
+        else
+        if [[ -z "${{ inputs.apa_proxy }}" ]]; then
           echo "Custom proxy not set. using default "
           echo "PROXY_HOST_BPM=$PROXY_HOST_BPM" >> $GITHUB_ENV
         else
           echo "Custom proxy set."
-          echo "PROXY_HOST_BPM=${{ inputs.proxy }}" >> $GITHUB_ENV
+          echo "PROXY_HOST_BPM=${{ secrets.E2E_HOST_APA }}" >> $GITHUB_ENV
         fi
+
 
     - name: check EXTERNAL-CS is UP
       shell: bash
