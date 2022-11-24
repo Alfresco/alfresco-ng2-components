@@ -65,7 +65,7 @@ runs:
         if [[ -z "${{ inputs.apa_proxy }}" ]]; then
           echo "APA proxy not found. terminating"
           exit 1
-        else
+        fi
         if [[ -z "${{ inputs.apa_proxy }}" ]]; then
           echo "Custom proxy not set. using default "
           echo "PROXY_HOST_BPM=$PROXY_HOST_BPM" >> $GITHUB_ENV

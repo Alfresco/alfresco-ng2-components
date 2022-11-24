@@ -38,7 +38,7 @@ env:
   GITHUB_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  TRAVIS_BUILD_ID: ${{ github.run_id }}
+  BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
   TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
@@ -92,7 +92,6 @@ jobs:
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
-      # TODO TRAVIS_JOB_ID TO SET
       - run: npm ci
       # --parallel=3
       - name: nx affected lint
@@ -321,7 +320,7 @@ jobs:
           check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
-          proxy: ${{ matrix.e2e-test.proxy }}
+          apa_proxy: ${{ matrix.e2e-test.apa_proxy }}
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:
