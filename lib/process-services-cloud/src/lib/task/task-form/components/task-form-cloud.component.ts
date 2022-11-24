@@ -21,11 +21,11 @@ import {
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent, LogService } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -115,11 +115,13 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     candidateGroups: string[] = [];
 
     loading: boolean = false;
+    showErrorLoaded: boolean = false;
     onDestroy$ = new Subject<boolean>();
 
     constructor(
         private taskCloudService: TaskCloudService,
-        private formRenderingService: FormRenderingService) {
+        private formRenderingService: FormRenderingService,
+        private logService: LogService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
@@ -147,21 +149,26 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private loadTask() {
         this.loading = true;
+        this.showErrorLoaded = false;
         this.taskCloudService
-            .getTaskById(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$))
-            .subscribe(details => {
-                this.taskDetails = details;
+            .getTaskById(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$)).pipe(
+                switchMap((details) => {
+                    this.taskDetails = details;
+                    return this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
+                }),
+                switchMap((candidateUsers) => {
+                    this.candidateUsers = candidateUsers || [];
+                    return this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
+                })
+            )
+            .subscribe((candidateGroups) => {
                 this.loading = false;
+                this.candidateGroups = candidateGroups || [];
                 this.onTaskLoaded.emit(this.taskDetails);
+            }, (error) => {
+                this.logService.error(error.message);
+                this.showErrorLoaded = true;
             });
-
-        this.taskCloudService
-            .getCandidateUsers(this.appName, this.taskId)
-            .subscribe(users => this.candidateUsers = users || []);
-
-        this.taskCloudService
-            .getCandidateGroups(this.appName, this.taskId)
-            .subscribe(groups => this.candidateGroups = groups || []);
     }
 
     hasForm(): boolean {
