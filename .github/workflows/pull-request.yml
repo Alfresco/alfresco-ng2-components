@@ -277,7 +277,7 @@ jobs:
             auth: "OAUTH"
             apa_proxy: true
             check-cs-env: "true"
-            check-ps-cloud-env: "true"              
+            check-ps-cloud-env: "true"
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/task-list"
