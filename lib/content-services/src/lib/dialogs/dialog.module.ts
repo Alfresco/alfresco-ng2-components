@@ -27,6 +27,7 @@ import { ConfirmDialogComponent } from './confirm.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { LibraryDialogComponent } from './library/library.dialog';
+import { ContentDirectiveModule } from '../directives';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { LibraryDialogComponent } from './library/library.dialog';
         FormsModule,
         ReactiveFormsModule,
         MatMomentDatetimeModule,
-        MatDatetimepickerModule
+        MatDatetimepickerModule,
+        ContentDirectiveModule
     ],
     declarations: [
         FolderDialogComponent,
