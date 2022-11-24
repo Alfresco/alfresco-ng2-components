@@ -51,27 +51,27 @@ describe('Notifications Component', () => {
     });
 
     afterEach(async () => {
-        await notificationPage.waitForSnackBarToClose();
+        await notificationPage.snackbarPage.waitForSnackBarToClose();
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
         await notificationPage.clearMessage();
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
+        await expect(await notificationPage.snackbarPage.isNotificationSnackBarDisplayed()).toEqual(false);
     });
 
     it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.getSnackBarMessage()).toEqual('test');
+        await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('test');
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickActionToggle();
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.getSnackBarMessage()).toEqual('test');
+        await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('test');
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
         await notificationPage.clickActionToggle();
@@ -80,16 +80,16 @@ describe('Notifications Component', () => {
     it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
+        await expect(await notificationPage.snackbarPage.isNotificationSnackBarDisplayed()).toEqual(true);
     });
 
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickActionToggle();
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
-        await expect(await notificationPage.getSnackBarMessage()).toEqual('test');
-        await notificationPage.waitForSnackBarToClose();
+        await expect(await notificationPage.snackbarPage.isNotificationSnackBarDisplayed()).toEqual(true);
+        await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('test');
+        await notificationPage.snackbarPage.waitForSnackBarToClose();
         await notificationPage.clickNotificationButton();
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
@@ -100,9 +100,9 @@ describe('Notifications Component', () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.enterDurationField(1000);
         await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
+        await expect(await notificationPage.snackbarPage.isNotificationSnackBarDisplayed()).toEqual(true);
         await browser.sleep(2000);
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
+        await expect(await notificationPage.snackbarPage.isNotificationSnackBarDisplayed()).toEqual(false);
     });
 
     it('[C280001] Should meet configuration when a custom notification is set', async () => {

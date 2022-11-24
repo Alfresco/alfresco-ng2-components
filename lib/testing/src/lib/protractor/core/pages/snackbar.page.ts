@@ -31,7 +31,7 @@ export class SnackbarPage {
         );
     }
 
-    async waitForSnackBarToClose(timeout = 5000) {
+    async waitForSnackBarToClose(timeout = 15000) {
         return BrowserVisibility.waitUntilElementIsNotVisible(this.snackBarContainerCss.first(), timeout);
     }
 
