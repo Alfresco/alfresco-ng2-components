@@ -65,6 +65,7 @@ env:
   
 jobs:
   main:
+    # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Build Components"
     runs-on: ubuntu-22.04
