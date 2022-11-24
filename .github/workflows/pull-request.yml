@@ -38,7 +38,7 @@ env:
   GITHUB_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
   TRAVIS_COMMIT: ${{ github.sha }}
-  BUILD_ID: ${GITHUB_JOB}
+  BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
   TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${GITHUB_RUN_ID}
