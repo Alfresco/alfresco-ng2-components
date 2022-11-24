@@ -57,7 +57,9 @@ describe('Permissions Component', () => {
 
     const contentList = contentServicesPage.getDocumentList();
 
-    let publicSite, privateSite, folderName;
+    let publicSite;
+    let privateSite;
+    let folderName;
 
     const fileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -79,7 +81,8 @@ describe('Permissions Component', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
-    let siteFolder, privateSiteFile;
+    let siteFolder;
+    let privateSiteFile;
 
     const folderOwnerUser = new UserModel();
     const consumerUser: UserModel = new UserModel();
@@ -210,8 +213,8 @@ describe('Permissions Component', () => {
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.fullName)).toEqual('Site Collaborator');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'Add button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
-            await notificationPage.waitForSnackBarToClose();
+            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
+            await notificationPage.snackbarPage.waitForSnackBarToClose();
 
             await permissionsPage.checkUserIsAdded(consumerUser.username);
 
