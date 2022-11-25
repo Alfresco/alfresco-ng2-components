@@ -163,7 +163,7 @@
       "DIALOG_CLOSE": "Close upload dialog",
       "STOP_ALL": "Stop uploads",
       "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
-      "STOP_FILE": "Cancel scheduled file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
       "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
       "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
