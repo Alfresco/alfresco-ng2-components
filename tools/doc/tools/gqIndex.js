@@ -24,9 +24,9 @@ function processDocs(mdCache, aggData) {
     var indexMD = remark()
         .use(frontMatter, ['yaml'])
         .parse(indexFileText);
-    var schema = graphql_1.buildSchema(MQ.schema);
+    var schema = (0, graphql_1.buildSchema)(MQ.schema);
     libNamesList.forEach(function (libName) {
-        graphql_1.graphql(schema, query, docset, null, { 'libName': libName })
+        (0, graphql_1.graphql)(schema, query, docset, null, { 'libName': libName })
             .then(function (response) {
             if (!response['data']) {
                 console.log(JSON.stringify(response));

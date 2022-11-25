@@ -31,7 +31,7 @@ function showErrors(filename, errorMessages) {
     console.log('');
 }
 function updateFile(tree, pathname, aggData, errorMessages) {
-    var className = ngHelpers_1.ngNameToClassName(path.basename(pathname, '.md'), nameExceptions);
+    var className = (0, ngHelpers_1.ngNameToClassName)(path.basename(pathname, '.md'), nameExceptions);
     var classTypeMatch = className.match(/component|directive|service/i);
     var compData = aggData.classInfo[className];
     if (classTypeMatch && compData) {
@@ -168,7 +168,7 @@ function updatePropDocsFromMD(comp, inputDocs, outputDocs, errorMessages) {
         // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
         if (!prop.docText && propMDDoc) {
             prop.docText = propMDDoc;
-            errorMessages.push("Warning: empty JSDocs for property \"" + prop.name + "\" may need sync with the .md file.");
+            errorMessages.push("Warning: empty JSDocs for property \"".concat(prop.name, "\" may need sync with the .md file."));
         }
     });
 }
@@ -178,12 +178,12 @@ function updateMethodDocsFromMD(comp, methodDocs, errorMessages) {
         // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
         if (!meth.docText && currMethMD && currMethMD.docText) {
             meth.docText = currMethMD.docText;
-            errorMessages.push("Warning: empty JSDocs for method sig \"" + meth.name + "\" may need sync with the .md file.");
+            errorMessages.push("Warning: empty JSDocs for method sig \"".concat(meth.name, "\" may need sync with the .md file."));
         }
         meth.params.forEach(function (param) {
             if (!param.docText && currMethMD && currMethMD.params[param.name]) {
                 param.docText = currMethMD.params[param.name];
-                errorMessages.push("Warning: empty JSDocs for parameter \"" + param.name + " (" + meth.name + ")\" may need sync with the .md file.");
+                errorMessages.push("Warning: empty JSDocs for parameter \"".concat(param.name, " (").concat(meth.name, ")\" may need sync with the .md file."));
             }
         });
     });

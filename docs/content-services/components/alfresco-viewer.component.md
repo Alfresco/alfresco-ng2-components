@@ -1,11 +1,10 @@
 ---
-Title: Render Viewer component
-Added: v2.0.0
+Title: Alfresco Viewer component
+Added: 6.0.0
 Status: Active
-Last reviewed: 2019-03-25
 ---
 
-# [Viewer component](lib/core/src/lib/viewer/components/viewer-render.component.ts "Defined in viewer-render.component.ts")
+# [Alfresco Viewer component](../../../lib/content-services/src/lib/viewer/components/alfresco-viewer.component.ts "Defined in alfresco-viewer.component.ts")
 
 Displays content from an ACS repository.
 
@@ -21,7 +20,6 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 -   [Keyboard shortcuts](#keyboard-shortcuts)
 -   [Details](#details)
     -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
-    -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
@@ -35,29 +33,20 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 Using with node id:
 
 ```html
-<adf-viewer 
+<adf-alfresco-viewer 
     [showViewer]="true" 
     [overlayMode]="true" 
     [nodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
-</adf-viewer>
-```
-
-Using with file url:
-
-```html
-<adf-viewer 
-    [overlayMode]="true" 
-    [urlFile]="'filename.pdf'">
-</adf-viewer>
+</adf-alfresco-viewer>
 ```
 
 Using with shared link:
 
 ```html
-<adf-viewer
+<adf-alfresco-viewer
     [overlayMode]="true" 
     [sharedLinkId]="'WWDg_afiTU6lHEgr4fAbQA'">
-</adf-viewer>
+</adf-alfresco-viewer>
 ```
 
 Note that if you have a URL which contains a shared link ID, you should extract the
@@ -66,7 +55,7 @@ URL with `urlFile`.
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
-The [Viewer component](viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
+The [Alfresco Viewer component](viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
 the sidebar, thumbnails, and the "Open with" and "More actions" menus.
 See the [Custom layout](#custom-layout) section for full details of all available tranclusions.
 
@@ -77,20 +66,14 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Toggles downloading. |
-| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowPrint | `boolean` | false | Toggles printing. |
 | allowRightSidebar | `boolean` | false | Allow the right sidebar. |
-| allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
-| fileName | `string` |  | Content filename. |
 | maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
-| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
 | nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
@@ -100,22 +83,16 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | showViewer | `boolean` | true | Hide or show the viewer |
 | sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
 | sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
-| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
-| urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
 | versionId | `string` | null | Version Id of the file to load. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
-| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| close | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
 | invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
 
@@ -139,11 +116,11 @@ Below is the most simple integration of the Viewer and
     (preview)="showPreview($event)">
 </adf-document-list>
 
-<adf-viewer
+<adf-alfresco-viewer
     [(showViewer)]="showViewer"
     [overlayMode]="true"
     [nodeId]="nodeId">
-</adf-viewer>
+</adf-alfresco-viewer>
 ```
 
 The component controller class implementation might look like the following:
@@ -165,22 +142,9 @@ export class OverlayViewerComponent {
 }
 ```
 
-### Custom file parameters
-
-You can provide custom file parameters, for example a value for the `mimeType` or `displayName` when using URL values that have no file names or extensions:
-
-```html
-<adf-viewer
-    [displayName]="fileName"
-    [allowGoBack]="false"
-    [mimeType]="mimeType"
-    [urlFile]="fileUrl">
-</adf-viewer>
-```
-
 ### Supported file formats
 
-The [Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
+The [Alfresco Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -238,7 +202,7 @@ Configure your webpack-enabled application with the PDF.js library as follows.
 npm install pdfjs-dist
 ```
 
-2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](viewer.component.md)
+2.  Update `vendors.ts` by appending the following code. This will enable the [Alfresco Viewer component](viewer.component.md)
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -262,8 +226,6 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The [Viewer component](viewer.component.md) should now be able to display PDF files.
-
 ### Extending the Viewer
 
 #### Internal extension mechanism
@@ -273,11 +235,11 @@ The Viewer supports dynamically-loaded viewer preview extensions, to know more a
 #### Code extension mechanism]
 
 You can define your own custom handler to handle other file formats that are not yet supported by
-the [Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
+the [Alfresco Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-alfresco-viewer [nodeId]="nodeId">
     
     <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
         <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
@@ -288,7 +250,7 @@ to handle 3D data files:
         </ng-template>
     </adf-viewer-extension>
 
-</adf-viewer> 
+</adf-alfresco-viewer> 
 ```
 
 Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
@@ -296,7 +258,7 @@ Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file
 You can define multiple `adf-viewer-extension` templates if required:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-alfresco-viewer [nodeId]="nodeId">
 
     <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
         <ng-template let-urlFileContent="urlFileContent">
@@ -313,12 +275,12 @@ You can define multiple `adf-viewer-extension` templates if required:
             </my-custom-txt-component>
         </ng-template>
     </adf-viewer-extension>
-</adf-viewer> 
+</adf-alfresco-viewer> 
 ```
 
 ### Custom layout
 
-The [Viewer component](viewer.component.md) lets you transclude custom content in several different places as
+The [Alfresco Viewer Component](viewer.component.md) lets you transclude custom content in several different places as
 explained in the sections below.
 
 #### Custom toolbar
@@ -326,14 +288,14 @@ explained in the sections below.
 You can replace the standard viewer toolbar with your own custom implementation:
 
 ```html
-<adf-viewer>
-    <adf-viewer-toolbar>
+<adf-alfresco-viewer>
+    <adf-alfresco-viewer-toolbar>
         <h1>toolbar</h1>
-    </adf-viewer-toolbar>
-</adf-viewer>
+    </adf-alfresco-viewer-toolbar>
+</adf-alfresco-viewer>
 ```
 
-Everything you put inside the "adf-viewer-toolbar" tags will be rendered instead of the
+Everything you put inside the "adf-alfresco-viewer-toolbar" tags will be rendered instead of the
 standard toolbar.
 
 #### Custom toolbar buttons
@@ -342,8 +304,8 @@ If you are happy with the custom toolbar's behaviour but want to add some extra 
 then you can do so as shown in the following example:
 
 ```html
-<adf-viewer>
-    <adf-viewer-toolbar-actions>
+<adf-alfresco-viewer>
+    <adf-alfresco-viewer-toolbar-actions>
         <button mat-icon-button>
             <mat-icon>alarm</mat-icon>
         </button>
@@ -353,8 +315,8 @@ then you can do so as shown in the following example:
         <button mat-icon-button>
             <mat-icon>bug_report</mat-icon>
         </button>
-    </adf-viewer-toolbar-actions>
-</adf-viewer>
+    </adf-alfresco-viewer-toolbar-actions>
+</adf-alfresco-viewer>
 ```
 
 The result should look like this:
@@ -363,18 +325,18 @@ The result should look like this:
 
 #### Custom sidebar
 
-The [Viewer component](viewer.component.md) also supports custom sidebar components and layouts.
+The [Alfresco Viewer Component](viewer.component.md) also supports custom sidebar components and layouts.
 Set the `allowRightSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways. The first way is to use
-transclusion, which will display all content placed inside the `<adf-viewer-sidebar>` element:
+transclusion, which will display all content placed inside the `<adf-alfresco-viewer-sidebar>` element:
 
 ```html
-<adf-viewer [allowRightSidebar]="true">
-    <adf-viewer-sidebar>
+<adf-alfresco-viewer [allowRightSidebar]="true">
+    <adf-alfresco-viewer-sidebar>
         <h1>My info</h1>
-    </adf-viewer-sidebar>
-</adf-viewer>
+    </adf-alfresco-viewer-sidebar>
+</adf-alfresco-viewer>
 ```
 
 The second way to customize the sidebar is to use template injection but note that this only works
@@ -384,7 +346,7 @@ when using the viewer with `nodeId`.
 <ng-template let-node="node" #sidebarTemplate>
     <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
 </ng-template>
-<adf-viewer [allowRightSidebar]="true" [sidebarRightTemplate]="sidebarTemplate"></adf-viewer>
+<adf-alfresco-viewer [allowRightSidebar]="true" [sidebarRightTemplate]="sidebarTemplate"></adf-alfresco-viewer>
 ```
 
 #### Custom thumbnails
@@ -416,18 +378,18 @@ export class CustomThumbnailsComponent {
     <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
 </ng-template>
 
-<adf-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-viewer>
+<adf-alfresco-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-alfresco-viewer>
 ```
 
 #### Custom "Open With" menu
 
 You can enable a custom "Open With" menu by providing at least one action inside the
-`adf-viewer-open-with` tag:
+`adf-alfresco-viewer-open-with` tag:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-alfresco-viewer [nodeId]="nodeId">
 
-    <adf-viewer-open-with>
+    <adf-alfresco-viewer-open-with>
         <button mat-menu-item>
             <mat-icon>dialpad</mat-icon>
             <span>Option 1</span>
@@ -440,21 +402,21 @@ You can enable a custom "Open With" menu by providing at least one action inside
             <mat-icon>notifications_off</mat-icon>
             <span>Option 3</span>
         </button>
-    </adf-viewer-open-with>
+    </adf-alfresco-viewer-open-with>
 
-</adf-viewer>
+</adf-alfresco-viewer>
 ```
 
 ![Open with](../../docassets/images/viewer-open-with.png)
 
 #### Custom "More actions" menu
 
-You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
+You can enable a custom "More actions" menu by providing at least one action inside the `adf-alfresco-viewer-more-actions` tag:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-alfresco-viewer [nodeId]="nodeId">
 
-    <adf-viewer-more-actions>
+    <adf-alfresco-viewer-more-actions>
         <button mat-menu-item>
             <mat-icon>dialpad</mat-icon>
             <span>Action One</span>
@@ -467,7 +429,7 @@ You can enable a custom "More actions" menu by providing at least one action ins
             <mat-icon>notifications_off</mat-icon>
             <span>Action Three</span>
         </button>
-    </adf-viewer-more-actions>
+    </adf-alfresco-viewer-more-actions>
 
 </adv-viewer>
 ```
@@ -479,13 +441,13 @@ You can enable a custom "More actions" menu by providing at least one action ins
 You can set a default zoom scaling value for pdf viewer by adding the following code in `app.config.json`.
 Note: For the pdf viewer the value has to be within the range of 25 - 1000.
 
-"adf-viewer": {
+"adf-alfresco-viewer": {
 "pdf-viewer-scaling": 150
 }
 
 In the same way you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
 
-"adf-viewer": {
+"adf-alfresco-viewer": {
 "image-viewer-scaling": 150
 }
 
@@ -498,9 +460,9 @@ component will show a "Print" button if the `allowPrint` property is set to
 true.
 
 ```html
-<adf-viewer [allowPrint]="true">
+<adf-alfresco-viewer [allowPrint]="true">
     ...
-</adf-viewer>
+</adf-alfresco-viewer>
 ```
 
 You can also use the `print` event to get notification when the user prints some
