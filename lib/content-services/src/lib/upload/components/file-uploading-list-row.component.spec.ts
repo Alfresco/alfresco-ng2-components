@@ -109,6 +109,6 @@ describe('FileUploadingListRowComponent', () => {
         await fixture.whenStable();
 
         const cancelButton: HTMLDivElement = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]')).nativeElement;
-        expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE');
+        expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.STOP_FILE');
     });
 });
