@@ -16,7 +16,6 @@
  */
 
 //TODO FIX documentation
-//TODO FIX unit test
 
 import {
     Component, EventEmitter,
@@ -82,10 +81,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     viewerType: string = 'unknown';
 
-    /** Allows `back` navigation */
-    @Input()
-    allowGoBack = true;
-
     /** Override loading status */
     @Input()
     isLoading = false;
@@ -112,6 +107,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extension: string;
+    internalViewerType: string;
+    internalFileName: string;
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -159,27 +156,26 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.blobFile) {
             this.setUpBlobData();
-            this.isLoading = false;
         } else if (this.urlFile) {
             this.setUpUrlFile();
-            this.isLoading = false;
         }
+        this.isLoading = false;
     }
 
     private setUpBlobData() {
-        this.mimeType = this.blobFile.type;
-        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.mimeType);
+        this.internalFileName = this.fileName;
+        this.internalViewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
 
-        this.extensionChange.emit(this.mimeType);
+        this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
     }
 
     private setUpUrlFile() {
-        this.fileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
-        this.extension = this.viewUtilService.getFileExtension(this.fileName);
-        this.viewerType = this.viewerType === 'unknown' ? this.viewUtilService.getViewerType(this.extension, this.mimeType) : this.viewerType;
+        this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
+        this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
+        this.internalViewerType = this.viewerType === 'unknown' ? this.viewUtilService.getViewerType(this.extension, this.mimeType) : this.viewerType;
 
-        this.extensionChange.emit(this.extension);
+        this.extensionChange.emit(this.internalViewerType);
         this.scrollTop();
     }
 

@@ -24,6 +24,8 @@ import { AlfrescoApiService , LogService, Track,TranslationService } from '@alfr
 })
 export class RenditionViewerService {
 
+    static TARGET = '_new';
+
     /**
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerRenderComponent
@@ -282,4 +284,53 @@ export class RenditionViewerService {
 
         return rendition?.entry?.status?.toString() === 'CREATED' || false;
     }
+
+    /**
+     * This method takes a url to trigger the print dialog against, and the type of artifact that it
+     * is.
+     * This URL should be one that can be rendered in the browser, for example PDF, Image, or Text
+     */
+    printFile(url: string, type: string): void {
+        const pwa = window.open(url, RenditionViewerService.TARGET);
+        if (pwa) {
+            // Because of the way chrome focus and close image window vs. pdf preview window
+            if (type === RenditionViewerService.ContentGroup.IMAGE) {
+                pwa.onfocus = () => {
+                    setTimeout(() => {
+                        pwa.close();
+                    }, 500);
+                };
+            }
+
+            pwa.onload = () => {
+                pwa.print();
+            };
+        }
+    }
+
+    /**
+     * Launch the File Print dialog from anywhere other than the preview service, which resolves the
+     * rendition of the object that can be printed from a web browser.
+     * These are: images, PDF files, or PDF rendition of files.
+     * We also force PDF rendition for TEXT type objects, otherwise the default URL is to download.
+     * TODO there are different TEXT type objects, (HTML, plaintext, xml, etc. we should determine how these are handled)
+     */
+    printFileGeneric(objectId: string, mimeType: string): void {
+        const nodeId = objectId;
+        const type: string = this.getViewerTypeByMimeType(mimeType);
+
+        this.getRendition(nodeId, RenditionViewerService.ContentGroup.PDF)
+            .then((value) => {
+                const url: string = this.getRenditionUrl(nodeId, type, (!!value));
+                const printType = (type === RenditionViewerService.ContentGroup.PDF
+                    || type === RenditionViewerService.ContentGroup.TEXT)
+                    ? RenditionViewerService.ContentGroup.PDF : type;
+                this.printFile(url, printType);
+            })
+            .catch((err) => {
+                this.logService.error('Error with Printing');
+                this.logService.error(err);
+            });
+    }
+
 }

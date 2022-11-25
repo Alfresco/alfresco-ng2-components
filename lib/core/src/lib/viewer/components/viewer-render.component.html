@@ -23,7 +23,7 @@
      fxFlexOrder="1"
      fxFlex="1 1 auto">
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
-        <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
+        <div class="adf-viewer-render-content-container" [ngSwitch]="internalViewerType">
             <ng-container *ngSwitchCase="'external'">
                 <adf-preview-extension
                     *ngIf="!!externalViewer"
@@ -39,7 +39,7 @@
                                 [allowThumbnails]="allowThumbnails"
                                 [blobFile]="blobFile"
                                 [urlFile]="urlFile"
-                                [fileName]="fileName"
+                                [fileName]="internalFileName"
                                 [cacheType]="cacheTypeForContent"
                                 (close)="onClose()"
                                 (error)="onUnsupportedFile()">
@@ -50,7 +50,7 @@
             <ng-container *ngSwitchCase="'image'">
                 <adf-img-viewer [urlFile]="urlFile"
                                 [readOnly]="readOnly"
-                                [fileName]="fileName"
+                                [fileName]="internalFileName"
                                 [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"
@@ -63,7 +63,7 @@
                                   [tracks]="tracks"
                                   [mimeType]="mimeType"
                                   [blobFile]="blobFile"
-                                  [fileName]="fileName"
+                                  [fileName]="internalFileName"
                                   (error)="onUnsupportedFile()">
                 </adf-media-player>
             </ng-container>

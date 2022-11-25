@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ViewerRenderComponent } from '../components/viewer-render.component.ts';
+import { ViewerRenderComponent } from '../components/viewer-render.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
