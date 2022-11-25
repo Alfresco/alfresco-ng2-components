@@ -159,7 +159,7 @@
     "graphql-request": "^5.0.0",
     "husky": "^7.0.4",
     "jasmine-ajax": "4.0.0",
-    "jasmine-core": "4.1.1",
+    "jasmine-core": "4.5.0",
     "jasmine-reporters": "^2.4.0",
     "jasmine-spec-reporter": "7.0.0",
     "js-yaml": "^4.0.0",
