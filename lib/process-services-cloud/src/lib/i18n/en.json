@@ -40,7 +40,7 @@
           "START": "Start Process",
           "CANCEL": "Cancel"
         },
-        "SELECT_PROCESS_DROPDOWN": "Select Process Dropdowngit BUTTON"
+        "SELECT_PROCESS_DROPDOWN": "Select Process Dropdown BUTTON"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
