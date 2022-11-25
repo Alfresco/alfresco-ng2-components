@@ -178,7 +178,7 @@ export class AlfrescoViewerComponent {
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
     private cacheBusterNumber: number;
-    private closeViewer: any;
+    private closeViewer = true;
 
     versionEntry: VersionEntry;
     isLoading: boolean;
@@ -289,6 +289,7 @@ export class AlfrescoViewerComponent {
             this.isLoading = false;
             this.logService.error('This sharedLink does not exist');
             this.invalidSharedLink.next();
+            this.viewerType = 'invalid-link';
         }
     }
 
@@ -418,7 +419,7 @@ export class AlfrescoViewerComponent {
     onPrintContent(event: MouseEvent) {
         if (this.allowPrint) {
             if (!event.defaultPrevented) {
-                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
+                this.renditionViewerService.printFileGeneric(this.nodeId, this.mimeType);
             }
         }
     }

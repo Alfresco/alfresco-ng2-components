@@ -138,7 +138,7 @@ describe('Test Img viewer component ', () => {
         });
 
         it('The file Name should be present in the alt attribute', () => {
-            component.nameFile = 'fake-name';
+            component.fileName = 'fake-name';
             fixture.detectChanges();
             expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
         });

@@ -16,15 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { LogService } from '../../common/services/log.service';
-import { RenditionViewerService } from "../../../../../content-services/src/lib/viewer/services/rendition-viewer.service";
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ViewUtilService {
-    static TARGET = '_new';
 
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
@@ -56,9 +53,7 @@ export class ViewUtilService {
         return this.viewerExtensions.map(ext => ext.fileExtension);
     }
 
-    constructor(private renditionViewerService: RenditionViewerService,
-                private extensionService: AppExtensionService,
-                private logService: LogService) {
+    constructor(private extensionService: AppExtensionService) {
     }
 
     /**
@@ -90,55 +85,6 @@ export class ViewUtilService {
         }
         return null;
     }
-
-    /**
-     * This method takes a url to trigger the print dialog against, and the type of artifact that it
-     * is.
-     * This URL should be one that can be rendered in the browser, for example PDF, Image, or Text
-     */
-    printFile(url: string, type: string): void {
-        const pwa = window.open(url, ViewUtilService.TARGET);
-        if (pwa) {
-            // Because of the way chrome focus and close image window vs. pdf preview window
-            if (type === RenditionViewerService.ContentGroup.IMAGE) {
-                pwa.onfocus = () => {
-                    setTimeout(() => {
-                        pwa.close();
-                    }, 500);
-                };
-            }
-
-            pwa.onload = () => {
-                pwa.print();
-            };
-        }
-    }
-
-    /**
-     * Launch the File Print dialog from anywhere other than the preview service, which resolves the
-     * rendition of the object that can be printed from a web browser.
-     * These are: images, PDF files, or PDF rendition of files.
-     * We also force PDF rendition for TEXT type objects, otherwise the default URL is to download.
-     * TODO there are different TEXT type objects, (HTML, plaintext, xml, etc. we should determine how these are handled)
-     */
-    printFileGeneric(objectId: string, mimeType: string): void {
-        const nodeId = objectId;
-        const type: string = this.renditionViewerService.getViewerTypeByMimeType(mimeType);
-
-        this.renditionViewerService.getRendition(nodeId, RenditionViewerService.ContentGroup.PDF)
-            .then((value) => {
-                const url: string = this.renditionViewerService.getRenditionUrl(nodeId, type, (!!value));
-                const printType = (type === RenditionViewerService.ContentGroup.PDF
-                    || type === RenditionViewerService.ContentGroup.TEXT)
-                    ? RenditionViewerService.ContentGroup.PDF : type;
-                this.printFile(url, printType);
-            })
-            .catch((err) => {
-                this.logService.error('Error with Printing');
-                this.logService.error(err);
-            });
-    }
-
 
      getViewerType(extension: string, mimeType: string): string {
         let viewerType = this.getViewerTypeByExtension(extension);
@@ -196,7 +142,6 @@ export class ViewUtilService {
         return 'unknown';
     }
 
-
     private isExternalViewer(): boolean {
         return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
     }
@@ -211,6 +156,5 @@ export class ViewUtilService {
 
         return false;
     }
-
 
 }
