@@ -57,7 +57,7 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| additionalSorting | [`DataSorting`](lib/core/src/lib/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
+| additionalSorting | [`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
 | allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
@@ -82,7 +82,7 @@ Displays the documents from a repository.
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `ShowHeaderMode` |  | Toggles the header |
-| sorting | `string[] \| `[`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts) | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| sorting | `string[] \| `[`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts) | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `"server" \| "client"` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
@@ -99,7 +99,7 @@ Displays the documents from a repository.
 | nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
 | nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
 | nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when the node selection change |
-| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
+| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
 | ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details

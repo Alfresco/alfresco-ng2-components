@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-06
 ---
 
-# [People Content service](lib/core/src/lib/services/people-content.service.ts "Defined in people-content.service.ts")
+# [People Content service](../../../lib/core/src/lib/services/people-content.service.ts "Defined in people-content.service.ts")
 
 Gets information about a Content Services user.
 
@@ -18,6 +18,10 @@ Gets information about a Content Services user.
     -   _newPerson:_ [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/model/personBodyCreate.ts)  - Object containing the new person details.
     -   _opts:_ `any`  - (Optional) Optional parameters
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Created new person
+-   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - 
+
 -   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about the current user alias -me-
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information
@@ -32,10 +36,10 @@ Gets information about a Content Services user.
 -   **isCurrentUserAdmin**(): `boolean`<br/>
     Used to know if the current user has the admin capability
     -   **Returns** `boolean` - true or false
--   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](lib/core/src/lib/services/people-content.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>`<br/>
+-   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/src/lib/services/people-content.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/src/lib/services/people-content.service.ts)`>`<br/>
     Gets a list of people.
-    -   _requestQuery:_ [`PeopleContentQueryRequestModel`](lib/core/src/lib/services/people-content.service.ts)  - (Optional) maxItems and skipCount parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>` - Response containing pagination and list of entries
+    -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/src/lib/services/people-content.service.ts)  - (Optional) maxItems and skipCount parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/src/lib/services/people-content.service.ts)`>` - Response containing pagination and list of entries
 -   **resetLocalCurrentUser**()<br/>
     Reset the local current user object
 -   **updatePerson**(personId: `string`, details: `PersonBodyUpdate`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>

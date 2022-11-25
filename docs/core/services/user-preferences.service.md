@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [User Preferences Service](lib/core/src/lib/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
+# [User Preferences Service](../../../lib/core/src/lib/services/user-preferences.service.ts "Defined in user-preferences.service.ts")
 
 Stores preferences for the app and for individual components.
 

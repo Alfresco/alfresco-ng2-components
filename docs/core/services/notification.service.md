@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Notification Service](lib/core/src/lib/notifications/services/notification.service.ts "Defined in notification.service.ts")
+# [Notification Service](../../../lib/core/src/lib/notifications/services/notification.service.ts "Defined in notification.service.ts")
 
 Shows a notification message with optional feedback.
 
@@ -17,42 +17,42 @@ Shows a notification message with optional feedback.
 
 -   **dismissSnackMessageAction**()<br/>
     dismiss the notification snackbar
--   **openSnackMessage**(message: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **openSnackMessage**(message: `string`, config?: `number|MatSnackBarConfig<Omit<SnackBarData,"actionLabel"|"message">>`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification to show a message.
     -   _message:_ `string`  - The message (or resource key) to show.
-    -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
+    -   _config:_ `number|MatSnackBarConfig<Omit<SnackBarData,"actionLabel"|"message">>`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
--   **openSnackMessageAction**(message: `string`, action: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **openSnackMessageAction**(message: `string`, action: `string`, config?: `number|MatSnackBarConfig<Omit<SnackBarData,"actionLabel"|"message">>`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification with a message and a response button.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _action:_ `string`  - Caption for the response button
-    -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
+    -   _config:_ `number|MatSnackBarConfig<Omit<SnackBarData,"actionLabel"|"message">>`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
--   **pushToNotificationHistory**(notification: [`NotificationModel`](lib/core/src/lib/notifications/models/notification.model.ts))<br/>
+-   **pushToNotificationHistory**(notification: [`NotificationModel`](../../../lib/core/src/lib/notifications/models/notification.model.ts))<br/>
     Push new notification to Notification History
-    -   _notification:_ [`NotificationModel`](lib/core/src/lib/notifications/models/notification.model.ts)  - Notification model to be pushed.
--   **showError**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   _notification:_ [`NotificationModel`](../../../lib/core/src/lib/notifications/models/notification.model.ts)  - Notification model to be pushed.
+-   **showError**(message: `string`, action?: `string`, interpolateArgs?: `any`, showAction: `boolean` = `true`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase error message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
-    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
+    -   _showAction:_ `boolean`  - True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
--   **showInfo**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **showInfo**(message: `string`, action?: `string`, interpolateArgs?: `any`, showAction: `boolean` = `true`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase info message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
-    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
+    -   _showAction:_ `boolean`  - True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
--   **showWarning**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **showWarning**(message: `string`, action?: `string`, interpolateArgs?: `any`, showAction: `boolean` = `true`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase warning message
     -   _message:_ `string`  - Text message or translation key for the message.
     -   _action:_ `string`  - (Optional) Action name
     -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
-    -   _showError:_ `boolean`  - (Optional) True if action should be visible, false if not. Default: true.
+    -   _showAction:_ `boolean`  - True if action should be visible, false if not. Default: true.
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
 
 ## Details

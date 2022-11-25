@@ -41,11 +41,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.0.0](#v200)
 
 ## v5.1.0
+
 <!--v510 start-->
 
--   [Snackbar Content](core/components/snackbar-content.component.md)
+-   [Auto focus directive](content-services/directives/auto-focus.directive.md)
+-   [Snackbar content component](core/components/snackbar-content.component.md)
 
 <!--v510 end-->
+
 ## v4.7.0
 
 <!--v470 start-->
@@ -159,6 +162,7 @@ backend services have been tested with each released version of ADF.
 -   [About application component](core/components/about-application.component.md)
 -   [About github link component](core/components/about-github-link.component.md)
 -   [About product version component](core/components/about-product-version.component.md)
+-   [About component](core/components/about.component.md)
 -   [Edit json dialog](core/dialogs/edit-json.dialog.md)
 -   [Identity role service](core/services/identity-role.service.md)
 
@@ -432,7 +436,7 @@ backend services have been tested with each released version of ADF.
 -   [Card item types service](core/services/card-item-types.service.md)
 -   [Card view update service](core/services/card-view-update.service.md)
 -   [Card view component](core/components/card-view.component.md)
--   [Check allowable operation directive](core/directives/check-allowable-operation.directive.md)
+-   [Check allowable operation directive](content-services/directives/check-allowable-operation.directive.md)
 -   [Checklist component](process-services/components/checklist.component.md)
 -   [Comment list component](core/components/comment-list.component.md)
 -   [Comment process service](core/services/comment-process.service.md)
@@ -485,11 +489,11 @@ backend services have been tested with each released version of ADF.
 -   [Login component](core/components/login.component.md)
 -   [Logout directive](core/directives/logout.directive.md)
 -   [Mime type icon pipe](core/pipes/mime-type-icon.pipe.md)
--   [Node delete directive](core/directives/node-delete.directive.md)
--   [Node favorite directive](core/directives/node-favorite.directive.md)
+-   [Node delete directive](content-services/directives/node-delete.directive.md)
+-   [Node favorite directive](content-services/directives/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)
 -   [Node permission service](content-services/services/node-permission.service.md)
--   [Node restore directive](core/directives/node-restore.directive.md)
+-   [Node restore directive](content-services/directives/node-restore.directive.md)
 -   [Node service](core/services/node.service.md)
 -   [Nodes api service](core/services/nodes-api.service.md)
 -   [Notification service](core/services/notification.service.md)
@@ -562,7 +566,6 @@ backend services have been tested with each released version of ADF.
 -   [User process model](core/models/user-process.model.md)
 -   [Version list component](content-services/components/version-list.component.md)
 -   [Version manager component](content-services/components/version-manager.component.md)
--   [Viewer component](core/components/viewer.component.md)
 -   [Webscript component](content-services/components/webscript.component.md)
 -   [Widget component](insights/components/widget.component.md)
 

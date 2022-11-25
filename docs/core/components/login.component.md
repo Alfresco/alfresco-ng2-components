@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Login component](lib/core/src/lib/login/components/login.component.ts "Defined in login.component.ts")
+# [Login component](../../../lib/core/src/lib/login/components/login.component.ts "Defined in login.component.ts")
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 
@@ -92,9 +92,9 @@ with custom input fields handled by your application or parent component:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
-| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/src/lib/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/src/lib/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/src/lib/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
 
 ## Details
 

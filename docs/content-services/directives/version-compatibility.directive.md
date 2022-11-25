@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2022-07-12
 ---
 
-# [Version Compatibility Directive](lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts "Defined in version-compatibility.directive.ts")
+# [Version Compatibility Directive](../../../lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts "Defined in version-compatibility.directive.ts")
 
 Enables/disables components based on ACS version in use.
 

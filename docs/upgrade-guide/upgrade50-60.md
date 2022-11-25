@@ -23,6 +23,14 @@ project.
 
 -   [Library updates](#library-updates)
 -   [Breaking changes](#breaking-changes)
+-   [Deprecated items](#deprecated-items)
+    -   [Viewer Component](#viewer-component)
+-   [See also](#see-also)
+-   [Relocated classes](#relocated-classes)
+-   [Renamed items](#renamed-items)
+    -   [New Classes or Services](#new-classes-or-services)
+    -   [Properties and methods](#properties-and-methods)
+    -   [Component selectors](#component-selectors)
 
 ## Library updates
 
@@ -57,15 +65,13 @@ in 6.0. See also our
 For more information about the changes and links to the associated
 pull requests.
 
+[TODO ADD HERE the PRs ][`checkallowableoperationdirective`](../content-services/directives/check-allowable-operation.directive.md): Moved from ADF Core to ADF content services
+[`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts): Moved from ADF Core to ADF content services
+[`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts): Moved from ADF Core to ADF content services
+[`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md): Moved from ADF Core to ADF content services
+[`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md): Moved from ADF Core to ADF content services
+[`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md): Moved from ADF Core to ADF content services
 [TODO ADD HERE the PRs ] 
-CheckAllowableOperationDirective: Moved from ADF Core to ADF content services
-LibraryFavoriteDirective: Moved from ADF Core to ADF content services
-LibraryMembershipDirective: Moved from ADF Core to ADF content services
-NodeDeleteDirective: Moved from ADF Core to ADF content services
-NodeFavoriteDirective: Moved from ADF Core to ADF content services
-NodeRestoreDirective: Moved from ADF Core to ADF content services
-[TODO ADD HERE the PRs ] 
-
 
 Each section needs to contains:
 Title
@@ -120,14 +126,53 @@ v6.0.0 and after:
 ```
 
 ## Renamed items
+### Viewer Component
 
+The generic `adf-viewer` has been deprecated in favour of a new design where the viewer has been split in two parts:
+
+v6.0.0 and before:
+
+    <adf-viewer 
+        [showViewer]="true" 
+        [overlayMode]="true" 
+        [nodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+    </adf-viewer>
+
+v6.0.0 and after:
+
+    <adf-alfresco-viewer
+    [showViewer]="true"
+    [overlayMode]="true"
+    [nodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+    </adf-alfresco-viewer>
+
+The adf-viewer is now split in Render and Viewer. This will allow us to reuse the render technology behind the viewer in more context and will allow also other developers to use this component as base of more custom viewers.
+
+The `adf-alfresco-viewer` use now inside the `adf-viewer-render`. The `adf-viewer-render` is agnostic and only accept as input URL of a file or a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob).
+
+v6.0.0 and after:
+
+    <adf-viewer-render 
+        [overlayMode]="true" 
+        [blobFile]="myBlobVar">
+    </adf-viewer-render>
+    <adf-viewer-render 
+        [overlayMode]="true" 
+        [urlFile]="'filename.pdf'">
+    </adf-viewer-render>
+
+## See also
+
+-   [Alfresco Viewer component](../content-services/components/alfresco-viewer.component.md)
+-   [Viewer Render component](../content-services/components/alfresco-viewer.component.md)
+
+## Relocated classes
+
+## Renamed items
 
 ### New Classes or Services
-
 
 ### Properties and methods
 - `<adf-comments>`: The `taskId` input has now been renamed as `id`
 
 ### Component selectors
-
-

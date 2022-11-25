@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-//TODO FIX documentation
-
 import {
     Component, EventEmitter,
     Input, OnChanges, Output, TemplateRef,
@@ -55,14 +53,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     /** Toggles PDF thumbnails. */
     @Input()
     allowThumbnails = true;
-
-    /** The template for the right sidebar. The template context contains the loaded node data. */
-    @Input()
-    sidebarRightTemplate: TemplateRef<any> = null;
-
-    /** The template for the left sidebar. The template context contains the loaded node data. */
-    @Input()
-    sidebarLeftTemplate: TemplateRef<any> = null;
 
     /** The template for the pdf thumbnails. */
     @Input()

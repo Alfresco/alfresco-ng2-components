@@ -29,13 +29,13 @@ function processDocs(mdCache, aggData) {
             }
         }
         else {
-            var linkElems = unist_util_select_1.selectAll('link', tree);
+            var linkElems = (0, unist_util_select_1.selectAll)('link', tree);
             linkElems.forEach(function (linkElem) {
                 var normUrl = normaliseLinkPath(pathname, linkElem.url);
                 multiSetAdd(linkRefs, normUrl, pathname);
             });
         }
-        var imageElems = unist_util_select_1.selectAll('image', tree);
+        var imageElems = (0, unist_util_select_1.selectAll)('image', tree);
         imageElems.forEach(function (imageElem) {
             var normUrl = normaliseLinkPath(pathname, imageElem.url);
             multiSetAdd(imageRefs, normUrl, pathname);
@@ -46,11 +46,11 @@ function processDocs(mdCache, aggData) {
     });
     classlessDocs.forEach(function (docPath) {
         var relDocPath = docPath.substring(docPath.indexOf('docs'));
-        console.group("Warning: no source class found for \"" + relDocPath + "\"");
+        console.group("Warning: no source class found for \"".concat(relDocPath, "\""));
         if (linkRefs[docPath]) {
             linkRefs[docPath].forEach(function (linkRef) {
                 var relLinkPath = linkRef.substring(linkRef.indexOf('docs'));
-                console.log("Linked from: \"" + relLinkPath + "\"");
+                console.log("Linked from: \"".concat(relLinkPath, "\""));
             });
         }
         console.groupEnd();
@@ -60,7 +60,7 @@ function processDocs(mdCache, aggData) {
     imagePaths.forEach(function (imagePath) {
         if (!imageRefs[imagePath]) {
             var relImagePath = imagePath.substring(imagePath.indexOf('docs'));
-            console.log("Warning: no links to image file \"" + relImagePath + "\"");
+            console.log("Warning: no links to image file \"".concat(relImagePath, "\""));
         }
     });
     console.log();
@@ -68,11 +68,11 @@ function processDocs(mdCache, aggData) {
     brokenImUrls.forEach(function (url) {
         var relUrl = url.substring(url.indexOf('docs'));
         var relDocPath = brokenImageRefs[url].substring(brokenImageRefs[url].indexOf('docs'));
-        console.group("Broken image link \"" + relUrl + "\" found in \"" + relDocPath);
+        console.group("Broken image link \"".concat(relUrl, "\" found in \"").concat(relDocPath));
         imagePaths.forEach(function (imPath) {
             if (lev.get(imPath, url) <= maxImagePathLevDistance) {
                 var relImPath = imPath.substring(imPath.indexOf('docs'));
-                console.log("Should it be \"" + relImPath + "\"?");
+                console.log("Should it be \"".concat(relImPath, "\"?"));
             }
         });
         console.groupEnd();
