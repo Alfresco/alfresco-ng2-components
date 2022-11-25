@@ -84,12 +84,12 @@
     <footer class="adf-upload-dialog__actions" *ngIf="!isConfirmation">
         <button
             id="adf-upload-dialog-cancel-all"
-            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_ALL' | translate"
+            [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_ALL' | translate"
             color="primary"
             mat-button
             *ngIf="canShowCancelAll()"
             (click)="toggleConfirmation()"
-        >{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}</button>
+        >{{ 'ADF_FILE_UPLOAD.BUTTON.STOP_ALL' | translate }}</button>
 
         <button
             id="adf-upload-dialog-close"
