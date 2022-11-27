@@ -92,7 +92,7 @@
     "chart.js": "2.9.4",
     "cropperjs": "1.5.12",
     "custom-event-polyfill": "^1.0.7",
-    "dotenv-expand": "^5.1.0",
+    "dotenv-expand": "^9.0.0",
     "editorjs-html": "3.4.2",
     "editorjs-paragraph-with-alignment": "3.0.0",
     "minimatch": "^3.0.4",
