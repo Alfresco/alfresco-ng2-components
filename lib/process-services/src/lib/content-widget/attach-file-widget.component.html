@@ -61,13 +61,15 @@
 <div data-automation-id="adf-attach-widget-readonly-list">
     <mat-list *ngIf="hasFile" role="list">
         <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value" role="listitem">
-            <img mat-list-icon class="adf-attach-widget__icon"
-                 [id]="'file-'+file.id+'-icon'"
-                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
-                 [alt]="mimeTypeIcon"
-                 (click)="onAttachFileClicked(file)"
-                 (keyup.enter)="onAttachFileClicked(file)"
-                 tabindex="0"/>
+                <img mat-list-icon class="adf-attach-widget__icon"
+                    [id]="'file-'+file.id+'-icon'"
+                    [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
+                    [alt]="mimeTypeIcon"
+                    (click)="onAttachFileClicked(file)"
+                    (keyup.enter)="onAttachFileClicked(file)"
+                    role="img" 
+                    [attr.aria-label]="file.name"
+                    tabindex="0"/>
             <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
                   tabindex="0" class="adf-file">{{file.name}}</span>
             <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
