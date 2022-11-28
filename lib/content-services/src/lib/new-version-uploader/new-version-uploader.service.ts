@@ -76,6 +76,7 @@ export class NewVersionUploaderService {
                     });
                     dialogRef.afterClosed().subscribe(() => {
                         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
+                        observer.complete();
                     });
                     this.overlayContainer.getContainerElement().setAttribute('role', 'main');
                 });

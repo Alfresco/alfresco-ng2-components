@@ -30,7 +30,7 @@ export class DialogAspectListService {
     constructor(private dialog: MatDialog, private overlayContainer: OverlayContainer) {
     }
 
-    openAspectListDialog(nodeId?: string): Observable<string[]> {
+    openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();
         select.subscribe({
             complete: this.close.bind(this)
@@ -44,23 +44,28 @@ export class DialogAspectListService {
             nodeId
         };
 
-        this.openDialog(data, 'adf-aspect-list-dialog', '750px');
+        this.openDialog(data, 'adf-aspect-list-dialog', '750px', selectorAutoFocusedOnClose);
         return select;
     }
 
-    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string) {
+    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string,
+                       selectorAutoFocusedOnClose?: string) {
         this.dialog.open(AspectListDialogComponent, {
             data,
             panelClass,
             width,
             role: 'dialog',
             disableClose: true
-        });
+        }).afterClosed().subscribe(() => DialogAspectListService.focusOnClose(selectorAutoFocusedOnClose));
         this.overlayContainer.getContainerElement().setAttribute('role', 'main');
     }
 
     close() {
         this.dialog.closeAll();
         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
+    }
+
+    private static focusOnClose(selectorAutoFocusedOnClose: string): void {
+        document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
     }
 }
