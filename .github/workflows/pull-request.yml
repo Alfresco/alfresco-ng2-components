@@ -33,6 +33,8 @@ on:
 #     types: [opened, reopened]
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TRAVIS_BRANCH: ${{ github.ref_name }}
   GITHUB_BRANCH: ${{ github.ref_name }}
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
@@ -304,8 +306,6 @@ jobs:
           e2e-test-folder: ${{ matrix.e2e-test.folder }}
           e2e-test-provider: ${{ matrix.e2e-test.provider }}
           e2e-test-auth: ${{ matrix.e2e-test.auth }}
-          upload-to-s3: true
-          download-from-s3: true
           check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
           check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
@@ -314,9 +314,8 @@ jobs:
           apa-proxy-host: ${{ secrets.E2E_HOST_APA }}
           e2e-proxy-host: ${{ secrets.E2E_HOST }}
           s3-build-path: ${{ secrets.S3_DBP_PATH }}
-          aws-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          nx-calculation-flags: ""
+
+
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:

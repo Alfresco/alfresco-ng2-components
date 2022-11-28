@@ -13,12 +13,6 @@ inputs:
   e2e-test-auth:
     description: "Test auth"
     required: true
-  upload-to-s3:
-    description: "enable upload to s3 before e2e"
-    required: true
-  download-from-s3:
-    description: "enable download from s3 after e2e"
-    required: true
   output:
     description: "Output path"
     required: true
@@ -38,27 +32,23 @@ inputs:
     required: true
     description: check ps cloud env
     default: "false"
-  local-smart-runner-path:
+  local-smart-runner-path: #
     required: false
     default: ".protractor-smartrunner"
-  e2e-tar-name:
+  e2e-tar-name: #
     required: false
     default: e2e.tar.gz
-  s3-build-path:
+  s3-build-path: #
     required: true
-  aws-key-id:
-    required: true
-  aws-secret-access-key:
-    required: true
+
   apa-proxy-host:
     required: true
-  e2e-proxy-host:
+  e2e-proxy-host: #
     required: true
-  apa-proxy:
+  apa-proxy: #
     description: "proxy host"
     required: true
-  nx-calculation-flags:
-    required: true
+
 runs:
   # description: try to download an e2e, if it was built previously
   using: "composite"
@@ -89,8 +79,6 @@ runs:
     - name: download test from s3 bucket
       shell: bash
       env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
         FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
       run: |
         set -u;
@@ -195,8 +183,7 @@ runs:
     - name: up to s3
       shell: bash
       env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+
         FULL_REMOTE_PATH: "${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
 
       # description: always upload newer results
