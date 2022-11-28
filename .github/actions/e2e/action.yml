@@ -179,7 +179,7 @@ runs:
           export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
           echo $NX_CALCULATION_FLAGS
-        # bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
+          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
     - name: up to s3
       shell: bash
       env:
