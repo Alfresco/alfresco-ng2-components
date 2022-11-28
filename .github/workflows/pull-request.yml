@@ -322,6 +322,8 @@ jobs:
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa_proxy: ${{ matrix.e2e-test.apa_proxy }}
+          s3-build-path: ${{ secrets.S3_DBP_PATH }}
+          
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:

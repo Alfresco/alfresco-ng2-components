@@ -47,6 +47,8 @@ inputs:
   e2e-tar-name:
     required: false
     default: e2e.tar.gz
+  s3-build-path:
+    required: true
 
 runs:
   using: "composite"
@@ -55,7 +57,7 @@ runs:
     - name: download test from s3 bucket
       shell: bash
       env:
-        FULL_REMOTE_PATH: ${{ secrets.S3_DBP_PATH }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+        FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
       # description: try to download an e2e, if it was built previously
       run: |
         set -u;
@@ -178,7 +180,7 @@ runs:
     - name: up to s3
       shell: bash
       env:
-        FULL_REMOTE_PATH: ${{ secrets.S3_DBP_PATH }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+        FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
 
       # description: always upload newer results
       run: |
