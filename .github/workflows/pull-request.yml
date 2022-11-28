@@ -15,7 +15,6 @@ on:
       #   - /.*next-release.*/
       #   - /.*beta.*/
 
-
 # on:
 #   pull_request:
 #     types:
@@ -50,7 +49,7 @@ env:
   E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
   PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
-  URL_HOST_ADF: ${{ secrets.URL_HOST_ADF }}  
+  URL_HOST_ADF: ${{ secrets.URL_HOST_ADF }}
   IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
@@ -63,7 +62,7 @@ env:
   EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
   E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
   E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
-  
+
 jobs:
   main:
     # long timeout required when cache has to be recreated
@@ -121,7 +120,7 @@ jobs:
   playwright:
     timeout-minutes: 20
     name: "playwright"
-    needs: [ main ]
+    needs: [main]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -129,10 +128,10 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
-      - name: clean 
+      - name: clean
         run: |
-            rm -rf nxcache
-            rm -rf dist
+          rm -rf nxcache
+          rm -rf dist
       - uses: ./.github/actions/download-artifacts
       - run: find nxcache -type d -maxdepth 1
       - run: find dist -type d -maxdepth 2
@@ -152,27 +151,17 @@ jobs:
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: debug
         run: ls -lath node_modules/@alfresco || true
-      - uses: ./.github/actions/upload-artifacts  
-
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      #   if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-      #   with:
-      #     timeout-minutes: ${{ inputs.ssh_debug_timeout }}
-      #     limit-access-to-actor: true
-      # - run: sleep 300
-      #   if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-
+      - uses: ./.github/actions/upload-artifacts
 
   e2e:
     timeout-minutes: 60
     name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [ playwright ]
+    needs: [playwright]
     runs-on: ubuntu-22.04
-    strategy: 
+    strategy:
       fail-fast: false
       # max-parallel: 4
-      matrix:        
+      matrix:
         e2e-test:
           - description: "Core"
             test-id: "core"
@@ -180,51 +169,51 @@ jobs:
             provider: "ALL"
             auth: "OAUTH"
             check-cs-env: "true"
-            check-ps-env: "true"            
+            check-ps-env: "true"
           - description: "Content: Components"
             test-id: "content-services"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           - description: "Content: Directives"
             test-id: "content-services"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           - description: "Content: Document List"
             test-id: "content-services"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           - description: "Content: Metadata"
             test-id: "content-services"
             folder: "content-services/metadata"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           #TODO CHECK "content-services browser" input into e2e.sh
           - description: "Content: Upload and Versioning"
             test-id: "content-services browser"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           - description: "Search"
             test-id: "content-services"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
-            check-cs-env: "true"            
+            check-cs-env: "true"
           - description: "Process: Form"
             test-id: "process-services"
             folder: "process-services/form"
             provider: "BPM"
             auth: "OAUTH"
             check-ps-env: "true"
-            check-external-cs-env: "true"            
+            check-external-cs-env: "true"
           - description: "Process: Process"
             test-id: "process-services"
             folder: "process-services/process"
@@ -238,7 +227,7 @@ jobs:
             provider: "BPM"
             auth: "OAUTH"
             check-ps-env: "true"
-            check-external-cs-env: "true"            
+            check-external-cs-env: "true"
           - description: "Process: Widget"
             test-id: "process-services"
             folder: "process-services/widgets"
@@ -253,7 +242,7 @@ jobs:
             auth: "OAUTH"
             apa-proxy: true
             check-cs-env: "true"
-            check-ps-cloud-env: "true"  
+            check-ps-cloud-env: "true"
           - description: "Process Cloud: People"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/people"
@@ -261,7 +250,7 @@ jobs:
             auth: "OAUTH"
             apa-proxy: true
             check-cs-env: "true"
-            check-ps-cloud-env: "true"              
+            check-ps-cloud-env: "true"
           - description: "Process Cloud: Process"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/process"
@@ -269,7 +258,7 @@ jobs:
             auth: "OAUTH"
             apa-proxy: true
             check-cs-env: "true"
-            check-ps-cloud-env: "true"              
+            check-ps-cloud-env: "true"
           - description: "Process Cloud: Start Task"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/start-task"
@@ -285,7 +274,7 @@ jobs:
             auth: "OAUTH"
             apa-proxy: true
             check-cs-env: "true"
-            check-ps-cloud-env: "true"  
+            check-ps-cloud-env: "true"
 
     steps:
       - name: Checkout repository
@@ -295,17 +284,17 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           enable-cache: "true"
-      - name: clean 
+      - name: clean
         run: |
-            rm -rf nxcache
-            rm -rf dist
+          rm -rf nxcache
+          rm -rf dist
       - name: debug
         run: |
           echo '${{ toJson(matrix) }}'
       - uses: ./.github/actions/download-artifacts
       - name: copy cli into node modules
         run: nx run cli:bundle
-        shell: bash      
+        shell: bash
       - run: find nxcache -type d -maxdepth 1
       - run: find dist -type d -maxdepth 2
       - name: e2e
@@ -319,7 +308,7 @@ jobs:
           download-from-s3: true
           check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
           check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
-          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 
+          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
           apa-proxy-host: ${{ secrets.E2E_HOST_APA }}
@@ -327,9 +316,7 @@ jobs:
           s3-build-path: ${{ secrets.S3_DBP_PATH }}
           aws-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
-
+          nx-calculation-flags: ""
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:
@@ -339,4 +326,4 @@ jobs:
       #   if: ${{ failure() }}
       #   with:
       #     timeout-minutes: 60
-      #     limit-access-to-actor: true          
+      #     limit-access-to-actor: true

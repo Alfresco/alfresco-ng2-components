@@ -30,7 +30,7 @@ inputs:
     required: true
     description: check ps env
     default: "false"
-  check-external-cs-env:  
+  check-external-cs-env:
     required: true
     description: check external cs env
     default: "false"
@@ -56,13 +56,13 @@ inputs:
     required: true
   apa-proxy:
     description: "proxy host"
-    required: true    
+    required: true
+  nx-calculation-flags:
+    required: true
 runs:
   # description: try to download an e2e, if it was built previously
   using: "composite"
   steps:
-
-
     - name: setup proxy env var
       shell: bash
       run: |
@@ -109,9 +109,6 @@ runs:
       shell: bash
       run: nx run testing:bundle
 
-
-
-
     - name: check EXTERNAL-CS is UP
       shell: bash
       if: ${{ inputs.check-external-cs-env == 'true' }}
@@ -125,7 +122,7 @@ runs:
 
     - name: Check CS is UP
       shell: bash
-      if: ${{ inputs.check-cs-env == 'true' }}    
+      if: ${{ inputs.check-cs-env == 'true' }}
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
@@ -133,7 +130,7 @@ runs:
           --host "$E2E_HOST" \
           -u "$E2E_USERNAME" \
           -p "$E2E_PASSWORD" || exit 1
-      
+
     - name: check PS is UP
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}
@@ -145,7 +142,7 @@ runs:
           -p "$E2E_PASSWORD" \
           --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE" || exit 1
 
-    - name: check PS-CLOUD is UP  
+    - name: check PS-CLOUD is UP
       shell: bash
       if: ${{ inputs.check-ps-cloud-env == 'true' }}
       run: |
@@ -179,7 +176,7 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
-      uses: nick-fields/retry@v2.8.0
+      uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 20
         max_attempts: 3
@@ -193,8 +190,8 @@ runs:
           rm -rf e2e-output || true
           export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-# bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
-
+          echo $NX_CALCULATION_FLAGS
+        # bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
     - name: up to s3
       shell: bash
       env:
