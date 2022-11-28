@@ -50,10 +50,21 @@ runs:
     - name: get artifacts from S3
       if: ${{ inputs.download-from-s3 == 'true' }}
 
-      uses: ./.github/actions/s3/download
-      with:
-        artifact-id: ${{ env.S3_DBP_PATH }}/smart-runner/${{ github.run_id }}-${{ github.sha }}.tar.bz2
-        output: "$SMART_RUNNER_DIRECTORY"
+    - name: download test from s3 bucket
+      # description: try to download an e2e, if it was built previously
+      run: |
+        set -u;
+        mkdir -p "$LOCAL_SMART_RUNNER_PATH"
+        pip install awscli
+        if [[ $(aws s3 ls ${FULL_REMOTE_PATH} > /dev/null; echo $?) -eq 0 ]]; then 
+          echo "downloading test files"
+          aws s3 cp ${FULL_REMOTE_PATH} .;
+          tar xzf $E2E_TAR_NAME;
+          ls -lR "$LOCAL_SMART_RUNNER_PATH/";
+          cat "$LOCAL_SMART_RUNNER_PATH/devel";
+        else
+          echo "nothing to download";
+        fi
 
     - name: reinstall testing
       shell: bash
@@ -159,13 +170,20 @@ runs:
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
 
-
-    - name: after e2e - upload artifacts to S3
-      if: ${{ inputs.upload-to-s3 == 'true' }}
-      uses: ./.github/actions/s3/upload   
-      with:
-        artifact-id: ${{ env.S3_DBP_PATH }}/smart-runner/${{ github.run_id }}-${{ github.sha }}.tar.bz2
-        output: "$SMART_RUNNER_DIRECTORY"
+    - name: up to s3 ${{ env.FULL_REMOTE_PATH }}
+      # description: always upload newer results
+      run: |
+        set -u;
+        
+        mkdir -p "$LOCAL_SMART_RUNNER_PATH"
+        touch "$LOCAL_SMART_RUNNER_PATH"/devel
+        echo "devel" > "$LOCAL_SMART_RUNNER_PATH/devel"
+        ls -lhart "$LOCAL_SMART_RUNNER_PATH"
+        tar czf "$E2E_TAR_NAME" "$LOCAL_SMART_RUNNER_PATH"
+        pip install awscli
+        aws s3 cp "$E2E_TAR_NAME" $FULL_REMOTE_PATH
+        rm -rf  "$LOCAL_SMART_RUNNER_PATH"
+        rm -rf  "$E2E_TAR_NAME"
 
     - name: upload 2e2 reports
       uses: actions/upload-artifact@v3
