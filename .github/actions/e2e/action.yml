@@ -19,9 +19,9 @@ inputs:
   download-from-s3:
     description: "enable download from s3 after e2e"
     required: true
-  apa_proxy:
+  proxy:
     description: "proxy host"
-    required: false
+    required: true
   output:
     description: "Output path"
     required: true
@@ -49,16 +49,23 @@ inputs:
     default: e2e.tar.gz
   s3-build-path:
     required: true
+  aws-key-id:
+    required: true
+  aws-secret-access-key:
+    required: true
+
 
 runs:
+  # description: try to download an e2e, if it was built previously
   using: "composite"
   steps:
 
     - name: download test from s3 bucket
       shell: bash
       env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
         FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
-      # description: try to download an e2e, if it was built previously
       run: |
         set -u;
         mkdir -p "${{ inputs.local-smart-runner-path }}"
@@ -180,6 +187,8 @@ runs:
     - name: up to s3
       shell: bash
       env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
         FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
 
       # description: always upload newer results

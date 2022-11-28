@@ -43,6 +43,7 @@ env:
   TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${GITHUB_RUN_ID}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
+  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
@@ -57,7 +58,6 @@ env:
   HOST_SSO: ${{ secrets.HOST_SSO }}
   LOG_LEVEL: "ERROR"
   E2E_LOG_LEVEL: "ERROR"
-  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
   E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
   EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
@@ -175,31 +175,36 @@ jobs:
       matrix:        
         e2e-test:
           - description: "Core"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "core"
             folder: "core"
             provider: "ALL"
             auth: "OAUTH"
             check-cs-env: "true"
-            check-ps-env: "true"            
+            check-ps-env: "true"
           - description: "Content: Components"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"            
           - description: "Content: Directives"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"            
           - description: "Content: Document List"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"            
           - description: "Content: Metadata"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services"
             folder: "content-services/metadata"
             provider: "ECM"
@@ -207,18 +212,21 @@ jobs:
             check-cs-env: "true"            
           #TODO CHECK "content-services browser" input into e2e.sh
           - description: "Content: Upload and Versioning"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services browser"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"            
           - description: "Search"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "content-services"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"            
           - description: "Process: Form"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "process-services"
             folder: "process-services/form"
             provider: "BPM"
@@ -226,6 +234,7 @@ jobs:
             check-ps-env: "true"
             check-external-cs-env: "true"            
           - description: "Process: Process"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "process-services"
             folder: "process-services/process"
             provider: "BPM"
@@ -233,6 +242,7 @@ jobs:
             check-ps-env: "true"
             check-external-cs-env: "true"
           - description: "Process: Tasks"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "process-services"
             folder: "process-services/tasks"
             provider: "BPM"
@@ -240,6 +250,7 @@ jobs:
             check-ps-env: "true"
             check-external-cs-env: "true"            
           - description: "Process: Widget"
+            proxy: ${{ secrets.E2E_HOST }}
             test-id: "process-services"
             folder: "process-services/widgets"
             provider: "BPM"
@@ -251,7 +262,7 @@ jobs:
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
-            apa_proxy: true
+            proxy: ${{ secrets.E2E_HOST_APA }}
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
           - description: "Process Cloud: People"
@@ -259,7 +270,7 @@ jobs:
             folder: "process-services-cloud/people"
             provider: "ALL"
             auth: "OAUTH"
-            apa_proxy: true
+            proxy: ${{ secrets.E2E_HOST_APA }}
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Process"
@@ -267,7 +278,7 @@ jobs:
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
-            apa_proxy: true
+            proxy: ${{ secrets.E2E_HOST_APA }}
             check-cs-env: "true"
             check-ps-cloud-env: "true"              
           - description: "Process Cloud: Start Task"
@@ -275,7 +286,7 @@ jobs:
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
-            apa_proxy: true
+            proxy: ${{ secrets.E2E_HOST_APA }}
             check-cs-env: "true"
             check-ps-cloud-env: "true"
           - description: "Process Cloud: Tasks List"
@@ -283,7 +294,7 @@ jobs:
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
-            apa_proxy: true
+            proxy: ${{ secrets.E2E_HOST_APA }}
             check-cs-env: "true"
             check-ps-cloud-env: "true"  
 
@@ -321,9 +332,11 @@ jobs:
           check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }} 
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
-          apa_proxy: ${{ matrix.e2e-test.apa_proxy }}
+          proxy: ${{ matrix.e2e-test.proxy }}
           s3-build-path: ${{ secrets.S3_DBP_PATH }}
-          
+          aws-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       # - name: Debug on failure
       #   uses: mxschmitt/action-tmate@v3
       #   env:
