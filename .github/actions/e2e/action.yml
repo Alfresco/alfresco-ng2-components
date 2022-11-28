@@ -47,12 +47,10 @@ inputs:
   e2e-tar-name:
     required: false
     default: e2e.tar.gz
+
 runs:
   using: "composite"
   steps:
-
-    - name: get artifacts from S3
-      if: ${{ inputs.download-from-s3 == 'true' }}
 
     - name: download test from s3 bucket
       shell: bash
@@ -175,7 +173,7 @@ runs:
           rm -rf e2e-output || true
           export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
+# bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
 
     - name: up to s3
       shell: bash
