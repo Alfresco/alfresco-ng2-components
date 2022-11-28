@@ -19,9 +19,6 @@ inputs:
   download-from-s3:
     description: "enable download from s3 after e2e"
     required: true
-  proxy:
-    description: "proxy host"
-    required: true
   output:
     description: "Output path"
     required: true
@@ -53,12 +50,41 @@ inputs:
     required: true
   aws-secret-access-key:
     required: true
-
-
+  apa-proxy-host:
+    required: true
+  e2e-proxy-host:
+    required: true
+  apa-proxy:
+    description: "proxy host"
+    required: true    
 runs:
   # description: try to download an e2e, if it was built previously
   using: "composite"
   steps:
+
+    - name: setup proxy env var
+      shell: bash
+      run: |
+        echo "APA PROXY FLAG: ${{ inputs.apa-proxy }}"
+        if [[ -z "${{ inputs.apa-proxy }}" ]]; then
+          echo "APA proxy not found. terminating"
+          exit 1
+        fi
+        if [[ -z "${{ inputs.apa-proxy-host }}" ]]; then
+          echo "APA proxy host not found. terminating"
+          exit 1
+        fi
+        if [[ -z "${{ inputs.e2e-proxy-host }}" ]]; then
+          echo "e2e proxy host not found. terminating"
+          exit 1
+        fi
+        if [[ -z "${{ inputs.apa-proxy }}" ]]; then
+          echo "Custom proxy not set. using default "
+          echo "PROXY_HOST_BPM=$ {{ inputs.e2e-proxy-host }}" >> $GITHUB_ENV
+        else
+          echo "APA proxy set."
+          echo "PROXY_HOST_BPM=${{ inputs.apa-proxy-host }}" >> $GITHUB_ENV
+        fi
 
     - name: download test from s3 bucket
       shell: bash
@@ -84,21 +110,7 @@ runs:
       shell: bash
       run: nx run testing:bundle
 
-    - name: setup proxy env var
-      shell: bash
-      run: |
-        echo "APA PROXY FLAG: ${{ inputs.apa_proxy }}"
-        if [[ -z "${{ inputs.apa_proxy }}" ]]; then
-          echo "APA proxy not found. terminating"
-          exit 1
-        fi
-        if [[ -z "${{ inputs.apa_proxy }}" ]]; then
-          echo "Custom proxy not set. using default "
-          echo "PROXY_HOST_BPM=$PROXY_HOST_BPM" >> $GITHUB_ENV
-        else
-          echo "Custom proxy set."
-          echo "PROXY_HOST_BPM=${E2E_HOST_PROXY}" >> $GITHUB_ENV
-        fi
+
 
 
     - name: check EXTERNAL-CS is UP
