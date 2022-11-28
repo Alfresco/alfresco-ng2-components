@@ -41,8 +41,12 @@ inputs:
     required: true
     description: check ps cloud env
     default: "false"
-
-
+  local-smart-runner-path:
+    required: false
+    default: ".protractor-smartrunner"
+  e2e-tar-name:
+    required: false
+    default: e2e.tar.gz
 runs:
   using: "composite"
   steps:
@@ -51,17 +55,20 @@ runs:
       if: ${{ inputs.download-from-s3 == 'true' }}
 
     - name: download test from s3 bucket
+      shell: bash
+      env:
+        FULL_REMOTE_PATH: ${{ secrets.S3_DBP_PATH }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
       # description: try to download an e2e, if it was built previously
       run: |
         set -u;
-        mkdir -p "$LOCAL_SMART_RUNNER_PATH"
+        mkdir -p "${{ inputs.local-smart-runner-path }}"
         pip install awscli
         if [[ $(aws s3 ls ${FULL_REMOTE_PATH} > /dev/null; echo $?) -eq 0 ]]; then 
           echo "downloading test files"
           aws s3 cp ${FULL_REMOTE_PATH} .;
-          tar xzf $E2E_TAR_NAME;
-          ls -lR "$LOCAL_SMART_RUNNER_PATH/";
-          cat "$LOCAL_SMART_RUNNER_PATH/devel";
+          tar xzf $ {{ inputs.e2e-tar-name }};
+          ls -lR "${{ inputs.local-smart-runner-path }}/";
+          cat "${{ inputs.local-smart-runner-path }}/devel";
         else
           echo "nothing to download";
         fi
@@ -170,20 +177,24 @@ runs:
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
 
-    - name: up to s3 ${{ env.FULL_REMOTE_PATH }}
+    - name: up to s3
+      shell: bash
+      env:
+        FULL_REMOTE_PATH: ${{ secrets.S3_DBP_PATH }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+
       # description: always upload newer results
       run: |
         set -u;
-        
-        mkdir -p "$LOCAL_SMART_RUNNER_PATH"
-        touch "$LOCAL_SMART_RUNNER_PATH"/devel
-        echo "devel" > "$LOCAL_SMART_RUNNER_PATH/devel"
-        ls -lhart "$LOCAL_SMART_RUNNER_PATH"
-        tar czf "$E2E_TAR_NAME" "$LOCAL_SMART_RUNNER_PATH"
+
+        mkdir -p "${{ inputs.local-smart-runner-path }}"
+        touch "${{ inputs.local-smart-runner-path }}"/devel
+        echo "devel" > "${{ inputs.local-smart-runner-path }}/devel"
+        ls -lhart "${{ inputs.local-smart-runner-path }}"
+        tar czf "$ {{ inputs.e2e-tar-name }}" "${{ inputs.local-smart-runner-path }}"
         pip install awscli
-        aws s3 cp "$E2E_TAR_NAME" $FULL_REMOTE_PATH
-        rm -rf  "$LOCAL_SMART_RUNNER_PATH"
-        rm -rf  "$E2E_TAR_NAME"
+        aws s3 cp "$ {{ inputs.e2e-tar-name }}" $FULL_REMOTE_PATH
+        rm -rf  "${{ inputs.local-smart-runner-path }}"
+        rm -rf  "$ {{ inputs.e2e-tar-name }}"
 
     - name: upload 2e2 reports
       uses: actions/upload-artifact@v3
