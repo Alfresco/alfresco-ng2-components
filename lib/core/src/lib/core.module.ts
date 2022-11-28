@@ -30,6 +30,7 @@ import { DataTableModule } from './datatable/datatable.module';
 import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { HostSettingsModule } from './settings/host-settings.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
@@ -92,6 +93,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         FormBaseModule,
         CommentsModule,
         LoginModule,
+        ForgotPasswordModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
@@ -134,6 +136,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         FormBaseModule,
         CommentsModule,
         LoginModule,
+        ForgotPasswordModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,

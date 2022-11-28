@@ -38,6 +38,8 @@ import { OauthConfigModel } from '../../models/oauth-config.model';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ForgotPasswordComponent } from '../../forgot-password/forgot-password.component';
+import { MatDialog } from '@angular/material/dialog';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -140,9 +142,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private alfrescoApiService: AlfrescoApiService
-    ) {
-    }
+        private alfrescoApiService: AlfrescoApiService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit() {
         this.initFormError();
@@ -188,6 +190,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit() {
         this.onSubmit(this.form.value);
+    }
+
+    forgotPassword() {
+        this.dialog.open(ForgotPasswordComponent, {
+                data: {
+                    title: 'Recover',
+                },
+            });
     }
 
     redirectToImplicitLogin() {

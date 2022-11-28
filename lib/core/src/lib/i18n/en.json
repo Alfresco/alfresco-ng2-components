@@ -309,10 +309,29 @@
       "HELP": "NEED HELP?",
       "REGISTER": "REGISTER"
     },
+    "FORGOT-PASSWORD": {
+      "FORGOT-PASSWORD": "Forgot Password?"
+    },
     "DIALOG": {
       "CANCEL": "Cancel",
       "CHOOSE": "Choose",
       "LOGIN": "Sign in"
+    }
+  },
+  "PASSWORD": {
+    "RECOVER-PASSWORD": "Recover Password",
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Required",
+      "FILLER": "Don't worry, happens to the best of us.",
+      "ENTER-USERNAME": "Enter Username of your account",
+      "INVALID-USERNAME": "You've entered an invalid Email ID",
+      "RESET-PASSWORD-EMAIL-SENT": "An email has been sent to your registered Email ID. Please click this link when get it."
+    },
+    "PLACEHOLDERS": {
+      "USERNAME": "USERNAME"
+    },
+    "BUTTONS": {
+      "SEND-INSTRUCTIONS": "Send Instructions"
     }
   },
   "ADF-DATATABLE": {
