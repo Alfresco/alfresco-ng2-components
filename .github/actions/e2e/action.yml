@@ -84,6 +84,7 @@ runs:
         fi
 
     - name: install aws cli
+      shell: bash
       run: pip install awscli
     - name: download test from s3 bucket
       shell: bash
