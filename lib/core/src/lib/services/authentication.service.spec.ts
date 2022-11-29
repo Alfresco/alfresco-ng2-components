@@ -23,7 +23,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PersonEntry } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -67,25 +66,12 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: true };
         });
 
-        it('when kerberos is enabled and after api is initialized it should get user and its profile', (done) => {
-            spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(new PersonEntry()));
-            spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
-            const apiInitialized = apiService.alfrescoApiInitialized.subscribe(() => {
-                expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
-                expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
-                apiInitialized.unsubscribe();
-                done();
-            });
-        });
-
-        it('should emit login event for kerberos', (done) => {
-            spyOn(authService.onLogin, 'next').and.callThrough();
-            spyOn(apiService.getInstance(), 'login').and.returnValue(Promise.resolve('fake-post-ticket'));
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.onLogin.next).toHaveBeenCalledWith('fake-post-ticket');
+       it('should emit login event for kerberos', (done) => {
+            const disposableLogin = authService.onLogin.subscribe(() => {
                 disposableLogin.unsubscribe();
                 done();
             });
+            appConfigService.load();
         });
     });
 
@@ -94,9 +80,9 @@ describe('AuthenticationService', () => {
         const fakeECMLoginResponse = { type: 'ECM', ticket: 'fake-post-ticket' };
 
         beforeEach(() => {
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            appConfigService.config.auth = { withCredentials: false };
             apiService.reset();
         });
 
