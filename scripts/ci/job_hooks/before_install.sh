@@ -12,8 +12,6 @@ ENV_FILE=${1:-"/tmp/github_vars.env"}
 # Settings for protractor-smartrunner -------------------------------------------------
 export GIT_HASH=$(git rev-parse HEAD)
 
-# Node settings
-#export NODE_OPTIONS="--max_old_space_size=30000"
 
 # Settings for Nx ---------------------------------------------------------------------
 export BASE_HASH="$(git merge-base origin/"$TRAVIS_BRANCH" HEAD)"
@@ -96,6 +94,5 @@ echo "HEAD_HASH='$HEAD_HASH'" | tee -a $ENV_FILE
 echo "========== Build vars=========="
 echo "BUILD_OPTS='$BUILD_OPTS'" | tee -a $ENV_FILE
 echo "NX_CALCULATION_FLAGS='$NX_CALCULATION_FLAGS'" | tee -a $ENV_FILE
-echo "NODE_OPTIONS='$NODE_OPTIONS'" | tee -a $ENV_FILE
 echo "HEAD_COMMIT_HASH='$HEAD_COMMIT_HASH'" | tee -a $ENV_FILE
 echo "COMMIT_MESSAGE=\"$COMMIT_MESSAGE\"" | tee -a $ENV_FILE

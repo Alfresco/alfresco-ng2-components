@@ -73,6 +73,17 @@ runs:
           echo "PROXY_HOST_BPM=${{ inputs.apa-proxy-host }}" >> $GITHUB_ENV
         fi
 
+    - name: Debug on failure
+      uses: mxschmitt/action-tmate@v3
+      env:
+        FOLDER: "core"
+        PROVIDER: 'ALL'
+        AUTH_TYPE: 'OAUTH'
+      with:
+        timeout-minutes: 60
+        limit-access-to-actor: true
+
+
     - name: install aws cli
       shell: bash
       run: pip install awscli
@@ -161,6 +172,7 @@ runs:
         
 
     - name: run test with retries
+      id: retry_run
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
@@ -179,8 +191,8 @@ runs:
 
     - name: up to s3
       shell: bash
+      if: always()
       env:
-
         FULL_REMOTE_PATH: "${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
 
       # description: always upload newer results
