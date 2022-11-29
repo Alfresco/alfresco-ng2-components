@@ -67,22 +67,11 @@ runs:
 
         if [[ -z "${{ inputs.apa-proxy }}" ]]; then
           echo "Custom proxy not set. using default "
-          echo "PROXY_HOST_BPM=$ {{ inputs.e2e-proxy-host }}" >> $GITHUB_ENV
+          echo "PROXY_HOST_BPM=${{ inputs.e2e-proxy-host }}" >> $GITHUB_ENV
         else
           echo "APA proxy set."
           echo "PROXY_HOST_BPM=${{ inputs.apa-proxy-host }}" >> $GITHUB_ENV
         fi
-
-    - name: Debug on failure
-      uses: mxschmitt/action-tmate@v3
-      env:
-        FOLDER: "core"
-        PROVIDER: 'ALL'
-        AUTH_TYPE: 'OAUTH'
-      with:
-        timeout-minutes: 60
-        limit-access-to-actor: true
-
 
     - name: install aws cli
       shell: bash

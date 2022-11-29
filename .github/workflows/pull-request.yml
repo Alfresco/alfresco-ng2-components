@@ -43,6 +43,7 @@ env:
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
   TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${GITHUB_RUN_ID}
+  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
   E2E_HOST: ${{ secrets.E2E_HOST }}
   E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
@@ -58,7 +59,6 @@ env:
   HOST_SSO: ${{ secrets.HOST_SSO }}
   LOG_LEVEL: "ERROR"
   E2E_LOG_LEVEL: "ERROR"
-  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
   E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
   EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
@@ -260,14 +260,14 @@ jobs:
           #   apa-proxy: true
           #   check-cs-env: "true"
           #   check-ps-cloud-env: "true"
-          # - description: "Process Cloud: Start Task"
-          #   test-id: "process-services-cloud"
-          #   folder: "process-services-cloud/start-task"
-          #   provider: "ALL"
-          #   auth: "OAUTH"
-          #   apa-proxy: true
-          #   check-cs-env: "true"
-          #   check-ps-cloud-env: "true"
+          - description: "Process Cloud: Start Task"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/start-task"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/task-list"
