@@ -154,8 +154,11 @@ runs:
       run: |
         set -u;
         echo $PROXY_HOST_BPM
-        export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
+        NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
+        GIT_HASH=$(echo $GIT_HASH | sed "s@'@@g")
+        echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
+        
 
     - name: run test with retries
       env:
