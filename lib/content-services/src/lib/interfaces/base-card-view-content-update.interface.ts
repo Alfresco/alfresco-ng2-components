@@ -15,10 +15,15 @@
  * limitations under the License.
  */
 
-export * from './node-allowable-operation-subject.interface';
-export * from './library-entity.interface';
-export * from './restore-message-model.interface';
-export * from './library-membership-error-event.interface';
-export * from './library-membership-toggle-event.interface';
-export * from './base-card-view-content-update.interface';
+import { CardViewBaseItemModel, UpdateNotification } from '@alfresco/adf-core';
+import { MinimalNode } from '@alfresco/js-api';
+import { Subject } from 'rxjs';
 
+export interface BaseCardViewContentUpdate {
+    itemUpdated$: Subject<UpdateNotification>;
+    updatedAspect$: Subject<MinimalNode>;
+
+    update(property: CardViewBaseItemModel, newValue: any);
+    updateElement(notification: CardViewBaseItemModel);
+    updateNodeAspect(node: MinimalNode);
+}

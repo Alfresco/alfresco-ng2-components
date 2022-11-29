@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { MinimalNode } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
@@ -82,14 +81,6 @@ describe('CardViewUpdateService', () => {
                 }
             );
             cardViewUpdateService.clicked(property);
-        }));
-
-        it('should send updated node when aspect changed', fakeAsync(() => {
-            const fakeNode: MinimalNode = { id: 'Bigfoot'} as MinimalNode;
-            cardViewUpdateService.updatedAspect$.subscribe((node: MinimalNode) => {
-                expect(node.id).toBe('Bigfoot');
-            });
-            cardViewUpdateService.updateNodeAspect(fakeNode);
         }));
     });
 });

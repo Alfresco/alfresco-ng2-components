@@ -38,5 +38,6 @@ export * from './lib/content-type/index';
 export * from './lib/new-version-uploader';
 export * from './lib/interfaces/index';
 export * from './lib/version-compatibility/index';
+export * from './lib/services/index';
 
 export * from './lib/content.module';

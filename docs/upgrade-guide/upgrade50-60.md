@@ -81,6 +81,17 @@ How to fix it:
 
 Following classes have been relocated:
 - `VersionCompatibilityService` and `VersionCompatibilityDirective` relocated from `@alfresco/adf-core` to `@alfresco/adf-content-services`
+The following directives have been moved from the Core library to the Content Services
+library. You should modify your code to import these classes from
+`@alfresco/adf-content-services`.
+
+-   [`CheckAllowableOperationDirective`](lib/content-services/src/lib/directives/check-allowable-operation.directive.ts)
+-   [`LibraryFavoriteDirective`](lib/content-services/src/lib/directives/library-favorite.directive.ts)
+-   [`LibraryMembershipDirective`](lib/content-services/src/lib/directives/library-membership.directive.ts)
+-   [`NodeDeleteDirective`](lib/content-services/src/lib/directives/node-delete.directive.ts)
+-   [`NodeFavoriteDirective`](lib/content-services/src/lib/directives/node-favorite.directive.ts)
+-   [`NodeRestoreDirective`](lib/content-services/src/lib/directives/node-restore.directive.ts)
+
 
 ## Renamed items
 

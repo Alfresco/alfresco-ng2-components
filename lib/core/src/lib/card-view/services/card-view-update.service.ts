@@ -15,19 +15,12 @@
  * limitations under the License.
  */
 
-import { MinimalNode } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { BaseCardViewUpdate } from '../interfaces/base-card-view-update.interface';
+import { ClickNotification } from '../interfaces/click-notification.interface';
+import { UpdateNotification } from '../interfaces/update-notification.interface';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
-
-export interface UpdateNotification {
-    target: CardViewBaseItemModel;
-    changed: any;
-}
-
-export interface ClickNotification {
-    target: any;
-}
 
 export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
@@ -38,12 +31,11 @@ export const transformKeyToObject = (key: string, value): any => {
 @Injectable({
     providedIn: 'root'
 })
-export class CardViewUpdateService {
+export class CardViewUpdateService implements BaseCardViewUpdate {
 
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
-    updatedAspect$ = new Subject<MinimalNode>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
@@ -65,10 +57,6 @@ export class CardViewUpdateService {
      */
     updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
-    }
-
-    updateNodeAspect(node: MinimalNode) {
-        this.updatedAspect$.next(node);
     }
 
 }

@@ -24,3 +24,6 @@ export * from './card-view-boolitem-properties.interface';
 export * from './card-view-textitem-pipe-property.interface';
 export * from './card-view-keyvaluepairsitem-properties.interface';
 export * from './card-view-selectitem-properties.interface';
+export * from './base-card-view-update.interface';
+export * from './click-notification.interface';
+export * from './update-notification.interface';

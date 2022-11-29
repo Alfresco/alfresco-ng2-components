@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-export * from './node-allowable-operation-subject.interface';
-export * from './library-entity.interface';
-export * from './restore-message-model.interface';
-export * from './library-membership-error-event.interface';
-export * from './library-membership-toggle-event.interface';
-export * from './base-card-view-content-update.interface';
+import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
+export interface UpdateNotification {
+    target: CardViewBaseItemModel;
+    changed: any;
+}
