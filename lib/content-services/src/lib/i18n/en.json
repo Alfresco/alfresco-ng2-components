@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Manage Versions"
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Upload New Version",
