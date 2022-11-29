@@ -144,19 +144,18 @@ runs:
           --devopsPassword "$E2E_DEVOPS_PASSWORD" \
           --clientId 'alfresco' || exit 1
 
-    # - name: run test
-    #   env:
-    #     FOLDER: "${{ inputs.e2e-test-folder }}"
-    #     PROVIDER: "${{ inputs.e2e-test-provider }}"
-    #     AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
-    #     E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
-    #   shell: bash
-    #   run: |
-    #     set -u;
-    #     echo $PROXY_HOST_BPM
-    #     export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
-    #     echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-    #     bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
+    - name: some debug
+      env:
+        FOLDER: "${{ inputs.e2e-test-folder }}"
+        PROVIDER: "${{ inputs.e2e-test-provider }}"
+        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
+        E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+      shell: bash
+      run: |
+        set -u;
+        echo $PROXY_HOST_BPM
+        export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
 
     - name: run test with retries
       env:
@@ -171,15 +170,10 @@ runs:
         shell: bash
         command: |
           set -u;
-          echo $FOLDER
-          echo $PROVIDER
-          echo $AUTH_TYPE
-          echo $E2E_TEST_ID
-          export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
-          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-          echo $NX_CALCULATION_FLAGS
+          echo "+++ running new attempt +++"
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
           rm -rf e2e-output* || true
+
     - name: up to s3
       shell: bash
       env:
