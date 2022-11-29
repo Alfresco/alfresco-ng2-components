@@ -67,16 +67,25 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: true };
         });
 
-        it('should emit login event for kerberos', (done) => {
+        it('when kerberos is enabled and after api is initialized it should get user and its profile', (done) => {
             spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(new PersonEntry()));
             spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
-            const disposableLogin = authService.onLogin.subscribe(() => {
+            const apiInitialized = apiService.alfrescoApiInitialized.subscribe(() => {
                 expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
                 expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
+                apiInitialized.unsubscribe();
+                done();
+            });
+        });
+
+        it('should emit login event for kerberos', (done) => {
+            spyOn(authService.onLogin, 'next').and.callThrough();
+            spyOn(apiService.getInstance(), 'login').and.returnValue(Promise.resolve('fake-post-ticket'));
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.onLogin.next).toHaveBeenCalledWith('fake-post-ticket');
                 disposableLogin.unsubscribe();
                 done();
             });
-            appConfigService.load();
         });
     });
 
@@ -87,6 +96,7 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
+            appConfigService.config.auth = { withCredentials: false };
             apiService.reset();
         });
 
