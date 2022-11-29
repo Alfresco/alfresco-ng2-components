@@ -155,7 +155,7 @@ jobs:
       - uses: ./.github/actions/upload-artifacts
 
   e2e:
-    timeout-minutes: 60
+    timeout-minutes: 70
     name: "e2e: ${{ matrix.e2e-test.description }}"
     needs: [playwright]
     runs-on: ubuntu-22.04

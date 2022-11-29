@@ -169,7 +169,8 @@ runs:
       uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 20
-        max_attempts: 1
+        max_attempts: 2
+        retry_wait_seconds: 30
         shell: bash
         command: |
           set -u;
