@@ -86,9 +86,8 @@ runs:
         if [[ $(aws s3 ls "${FULL_REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then 
           echo "downloading test files"
           aws s3 cp "${FULL_REMOTE_PATH}" .;
-          tar xzf $ {{ inputs.e2e-tar-name }};
-          ls -lR "${{ inputs.local-smart-runner-path }}/";
-          cat "${{ inputs.local-smart-runner-path }}/devel";
+          tar xzf ${{ inputs.e2e-tar-name }};
+          ls -l "${{ inputs.local-smart-runner-path }}/";
         else
           echo "nothing to download";
         fi
@@ -170,13 +169,13 @@ runs:
       uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 20
-        max_attempts: 3
+        max_attempts: 1
         shell: bash
         command: |
           set -u;
           echo "+++ running new attempt +++"
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
-          rm -rf e2e-output* || true
+         # rm -rf e2e-output* || true
 
     - name: up to s3
       shell: bash
@@ -187,15 +186,11 @@ runs:
       # description: always upload newer results
       run: |
         set -u;
-
-        mkdir -p "${{ inputs.local-smart-runner-path }}"
-        touch "${{ inputs.local-smart-runner-path }}"/devel
-        echo "devel" > "${{ inputs.local-smart-runner-path }}/devel"
         ls -lhart "${{ inputs.local-smart-runner-path }}"
-        tar czf "$ {{ inputs.e2e-tar-name }}" "${{ inputs.local-smart-runner-path }}"
-        aws s3 cp "$ {{ inputs.e2e-tar-name }}" "$FULL_REMOTE_PATH"
+        tar czf "${{ inputs.e2e-tar-name }}" "${{ inputs.local-smart-runner-path }}"
+        aws s3 cp "${{ inputs.e2e-tar-name }}" "$FULL_REMOTE_PATH"
         rm -rf  "${{ inputs.local-smart-runner-path }}"
-        rm -rf  "$ {{ inputs.e2e-tar-name }}"
+        rm -rf  "${{ inputs.e2e-tar-name }}"
 
     - name: upload 2e2 reports
       uses: actions/upload-artifact@v3
