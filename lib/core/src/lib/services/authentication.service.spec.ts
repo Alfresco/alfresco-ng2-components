@@ -23,7 +23,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PersonEntry } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -67,12 +66,8 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: true };
         });
 
-        it('should emit login event for kerberos', (done) => {
-            spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(new PersonEntry()));
-            spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
+       it('should emit login event for kerberos', (done) => {
             const disposableLogin = authService.onLogin.subscribe(() => {
-                expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
-                expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
                 disposableLogin.unsubscribe();
                 done();
             });
@@ -85,6 +80,7 @@ describe('AuthenticationService', () => {
         const fakeECMLoginResponse = { type: 'ECM', ticket: 'fake-post-ticket' };
 
         beforeEach(() => {
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
             apiService.reset();
