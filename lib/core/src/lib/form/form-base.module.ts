@@ -31,7 +31,7 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './components/widgets';
 import { StartFormCustomButtonDirective } from './components/form-custom-button.directive';
 
 import { FormFieldComponent } from './components/form-field/form-field.component';
-import { FormListComponent } from './components/form-list.component';
+import { FormListComponent } from './components/form-list/form-list.component';
 import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
