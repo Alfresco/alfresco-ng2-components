@@ -176,7 +176,7 @@ runs:
           set -u;
           echo "+++ running new attempt +++"
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
-         # rm -rf e2e-output* || true
+          rm -rf e2e-output* || true
 
     - name: up to s3
       shell: bash
