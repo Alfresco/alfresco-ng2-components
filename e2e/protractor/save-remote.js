@@ -44,11 +44,11 @@ async function uploadScreenshot(retryCount, suffixFileName) {
 
     suffixFileName = suffixFileName.replace(/\//g, '-');
 
-    fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
+    fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`))
 
     const child_process = require("child_process");
     child_process.execSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
-        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}/`)
+        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`)
     });
 
     let pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
