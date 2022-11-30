@@ -361,6 +361,12 @@ export class FormFieldModel extends FormWidgetModel {
 
         switch (this.type) {
             case FormFieldTypes.DROPDOWN:
+
+                if (!this.value) {
+                    this.form.values[this.id] = null;
+                    break;
+                }
+
                 /*
                  This is needed due to Activiti reading dropdown values as string
                  but saving back as object: { id: <id>, name: <name> }
@@ -372,7 +378,7 @@ export class FormFieldModel extends FormWidgetModel {
 
                 if (typeof this.value === 'string') {
                     if (this.value === 'empty' || this.value === '') {
-                        delete this.form.values[this.id];
+                        this.form.values[this.id] = null;
                         break;
                     }
 
