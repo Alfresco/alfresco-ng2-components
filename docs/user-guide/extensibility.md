@@ -97,7 +97,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) (layout component) |
 | Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |
-| Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/core/src/lib/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
+| Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/process-services/src/lib/form/widgets/upload/upload.widget.ts) (based on metadata) |
 | N/A | N/A | [`UnknownWidgetComponent`](lib/core/src/lib/form/components/widgets/unknown/unknown.widget.ts) |
 
 ## Form Extensibility for APS/AAE

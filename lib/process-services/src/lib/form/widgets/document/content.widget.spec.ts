@@ -18,14 +18,14 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentService } from '../../../../services';
+import { ContentService } from '../../../../../../core/src/lib/services';
 import { of } from 'rxjs';
 
-import { ProcessContentService } from '../../../services/process-content.service';
-import { ContentLinkModel } from '../index';
+import { ProcessContentService } from '../../services/process-content.service';
+import { ContentLinkModel } from '../../../../../../core/src/lib/form/components/widgets';
 import { ContentWidgetComponent } from './content.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { setupTestBed } from '../../../../../../core/src/lib/testing/setup-test-bed';
+import { CoreTestingModule } from '../../../../../../core/src/lib/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;

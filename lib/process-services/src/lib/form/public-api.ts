@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+export * from './widgets/index';
+
 export * from './form.component';
 export * from './start-form.component';
 export * from './process-form-rendering.service';

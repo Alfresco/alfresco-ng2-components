@@ -21,6 +21,9 @@ import { CoreModule } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
 import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
+import { DocumentWidgetComponent } from './widgets/document/document.widget';
+import { ContentWidgetComponent } from './widgets/document/content.widget';
+import { UploadWidgetComponent } from "./widgets/upload/upload.widget";
 
 @NgModule({
     imports: [
@@ -28,9 +31,12 @@ import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
         MaterialModule
     ],
     declarations: [
+        UploadWidgetComponent,
         FormComponent,
         StartFormComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        DocumentWidgetComponent,
+        ContentWidgetComponent
     ],
     exports: [
         FormComponent,

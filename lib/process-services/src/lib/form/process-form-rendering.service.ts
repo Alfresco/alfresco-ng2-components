@@ -16,9 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FormRenderingService } from '@alfresco/adf-core';
-import { AttachFileWidgetComponent } from '../content-widget/attach-file-widget.component';
-import { AttachFolderWidgetComponent } from '../content-widget/attach-folder-widget.component';
+import {  FormRenderingService } from '@alfresco/adf-core';
+import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
+import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
+import { DocumentWidgetComponent } from './widgets/document/document.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,8 @@ export class ProcessFormRenderingService extends FormRenderingService {
 
         this.register({
             upload: () => AttachFileWidgetComponent,
-            'select-folder': () => AttachFolderWidgetComponent
+            'select-folder': () => AttachFolderWidgetComponent,
+            document: () => DocumentWidgetComponent,
         }, true);
     }
 }

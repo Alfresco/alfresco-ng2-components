@@ -27,7 +27,7 @@ import {
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
-import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const fakeMinimalNode: Node = {

@@ -54,7 +54,7 @@ Forms defined in APS have the following default mappings for the form fields:
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |
-| Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/core/src/lib/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
+| Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/process-services/src/lib/form/widgets/upload/upload.widget.ts) (based on metadata) |
 | Display value | readonly | [`TextWidgetComponent`](lib/core/src/lib/form/components/widgets/text/text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-text/display-text.widget.ts) |
 | Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |

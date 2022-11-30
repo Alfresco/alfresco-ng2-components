@@ -16,11 +16,13 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { EcmModelService, NodeService, WidgetVisibilityService,
+import {
+    EcmModelService, WidgetVisibilityService,
     FormService, FormBaseComponent, FormOutcomeModel,
     FormEvent, FormErrorEvent, FormFieldModel,
-    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
-import { Observable, of, Subject } from 'rxjs';
+    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel, NodesApiService, FormDefinitionModel
+} from '@alfresco/adf-core';
+import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -89,7 +91,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
                 protected ecmModelService: EcmModelService,
-                protected nodeService: NodeService) {
+                protected nodeService: NodesApiService) {
         super();
     }
 
@@ -314,7 +316,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         this.formService.searchFrom(nodeType).subscribe(
             (form) => {
                 if (!form) {
-                    this.formService.createFormFromANode(nodeType).subscribe((formMetadata) => {
+                    this.createFormFromANode(nodeType).subscribe((formMetadata) => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
@@ -325,6 +327,33 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                 this.handleError(error);
             }
         );
+    }
+
+
+    /**
+     * Creates a Form with a field for each metadata property.
+     *
+     * @param formName Name of the new form
+     * @returns The new form
+     */
+    createFormFromANode(formName: string): Observable<any> {
+        return new Observable((observer) => {
+            this.formService.createForm(formName).subscribe(
+                (form) => {
+                    this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
+                        (customType) => {
+                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
+                            from(
+                                this.formService.editorApi.saveForm(form.id, formDefinitionModel)
+                            ).subscribe((formData) => {
+                                observer.next(formData);
+                                observer.complete();
+                            }, (err) => this.handleError(err));
+                        },
+                        (err) => this.handleError(err));
+                },
+                (err) => this.handleError(err));
+        });
     }
 
     protected storeFormAsMetadata() {

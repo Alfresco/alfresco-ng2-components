@@ -19,7 +19,6 @@ export * from './components/form-field/form-field.component';
 export * from './components/form-base.component';
 export * from './components/form-list/form-list.component';
 export * from './components/inplace-form-input/inplace-form-input.component';
-export * from './components/widgets/content/content.widget';
 export * from './components/form-custom-button.directive';
 export * from './components/form-renderer.component';
 export * from './components/widgets';
@@ -30,8 +29,6 @@ export * from './services/ecm-model.service';
 export * from './services/form-rendering.service';
 export * from './services/form.service';
 export * from './services/form-validation-service.interface';
-export * from './services/node.service';
-export * from './services/process-content.service';
 export * from './services/widget-visibility.service';
 
 export * from './events';
@@ -39,3 +36,4 @@ export * from './events';
 export * from './form-base.module';
 
 export * from './models/form-rules.model';
+export * from './models/form-definition.model';

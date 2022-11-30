@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService } from '@alfresco/adf-content-services';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, NodesApiService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';

@@ -17,20 +17,20 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../services/log.service';
-import { ThumbnailService } from '../../../../services/thumbnail.service';
+import { LogService } from '../../../../../../core/src/lib/services/log.service';
+import { ThumbnailService } from '../../../../../../core/src/lib/services/thumbnail.service';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { FormService } from '../../../services/form.service';
-import { ProcessContentService } from '../../../services/process-content.service';
-import { ContentLinkModel } from '../core/content-link.model';
-import { WidgetComponent } from '../widget.component';
+import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
+import { ProcessContentService } from '../../services/process-content.service';
+import { ContentLinkModel } from '../../../../../../core/src/lib/form/components/widgets/core/content-link.model';
+import { WidgetComponent } from '../../../../../../core/src/lib/form/components/widgets/widget.component';
 import { mergeMap, map } from 'rxjs/operators';
 
 @Component({
-    selector: 'upload-folder-widget',
-    templateUrl: './upload-folder.widget.html',
-    styleUrls: ['./upload-folder.widget.scss'],
+    selector: 'upload-widget',
+    templateUrl: './upload.widget.html',
+    styleUrls: ['./upload.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -44,7 +44,7 @@ import { mergeMap, map } from 'rxjs/operators';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class UploadFolderWidgetComponent extends WidgetComponent implements OnInit {
+export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     hasFile: boolean;
     displayText: string;
@@ -88,32 +88,29 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
             from(files)
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
-                    (res) => {
-                        filesSaved.push(res);
-                    },
-                    () => {
-                        this.logService.error('Error uploading file. See console output for more details.');
-                    },
+                    (res) => filesSaved.push(res),
+                    () => this.logService.error('Error uploading file. See console output for more details.'),
                     () => {
                         this.field.value = filesSaved;
                         this.field.json.value = filesSaved;
+                        this.hasFile = true;
                     }
                 );
-
-            this.hasFile = true;
         }
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.processContentService.createTemporaryRawRelatedContent(file).pipe(
-            map((response: any) => {
-                this.logService.info(response);
-                return response;
-            })
-        );
+        return this.processContentService.createTemporaryRawRelatedContent(file)
+            .pipe(
+                map((response: any) => {
+                    this.logService.info(response);
+                    response.contentBlob = file;
+                    return response;
+                })
+            );
     }
 
-    private getMultipleFileParam() {
+    getMultipleFileParam() {
         if (this.field &&
             this.field.params &&
             this.field.params.multiple) {
@@ -121,7 +118,7 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    private removeElementFromList(file) {
+    private removeElementFromList(file: any) {
         const index = this.field.value.indexOf(file);
 
         if (index !== -1) {
@@ -132,17 +129,13 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
 
         this.hasFile = this.field.value.length > 0;
 
-        this.resetFormValueWithNoFiles();
-    }
-
-    private resetFormValueWithNoFiles() {
-        if (this.field.value.length === 0) {
-            this.field.value = [];
-            this.field.json.value = [];
+        if (!this.hasFile) {
+            this.field.value = null;
+            this.field.json.value = null;
         }
     }
 
-    getIcon(mimeType) {
+    getIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 

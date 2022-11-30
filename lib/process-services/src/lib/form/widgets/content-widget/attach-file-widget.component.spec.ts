@@ -32,7 +32,7 @@ import {
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
-import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 

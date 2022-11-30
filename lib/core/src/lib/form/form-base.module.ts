@@ -32,7 +32,6 @@ import { StartFormCustomButtonDirective } from './components/form-custom-button.
 
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { FormListComponent } from './components/form-list/form-list.component';
-import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FormRendererComponent } from './components/form-renderer.component';
@@ -61,7 +60,6 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         ViewerModule
     ],
     declarations: [
-        ContentWidgetComponent,
         FormFieldComponent,
         FormListComponent,
         FormRendererComponent,
@@ -72,7 +70,6 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         InplaceFormInputComponent
     ],
     exports: [
-        ContentWidgetComponent,
         FormFieldComponent,
         FormListComponent,
         FormRendererComponent,

@@ -165,32 +165,6 @@ export class FormService implements FormValidationService {
     }
 
     /**
-     * Creates a Form with a field for each metadata property.
-     *
-     * @param formName Name of the new form
-     * @returns The new form
-     */
-    createFormFromANode(formName: string): Observable<any> {
-        return new Observable((observer) => {
-            this.createForm(formName).subscribe(
-                (form) => {
-                    this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
-                        (customType) => {
-                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            from(
-                                this.editorApi.saveForm(form.id, formDefinitionModel)
-                            ).subscribe((formData) => {
-                                observer.next(formData);
-                                observer.complete();
-                            }, (err) => this.handleError(err));
-                        },
-                        (err) => this.handleError(err));
-                },
-                (err) => this.handleError(err));
-        });
-    }
-
-    /**
      * Create a Form.
      *
      * @param formName Name of the new form

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';

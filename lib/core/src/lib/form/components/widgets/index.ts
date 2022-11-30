@@ -21,7 +21,6 @@ import { AmountWidgetComponent } from './amount/amount.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponent } from './display-text/display-text.widget';
-import { DocumentWidgetComponent } from './document/document.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
@@ -41,17 +40,14 @@ import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widge
 import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
 import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
-import { UploadWidgetComponent } from './upload/upload.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
-import { UploadFolderWidgetComponent } from './upload-folder/upload-folder.widget';
 import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './display-rich-text/display-rich-text.widget';
 
 // core
 export * from './widget.component';
 export * from './core';
-
 
 // primitives
 export * from './unknown/unknown.widget';
@@ -63,7 +59,6 @@ export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './display-text/display-text.widget';
-export * from './upload/upload.widget';
 export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
@@ -71,10 +66,8 @@ export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
-export * from './document/document.widget';
 export * from './date-time/date-time.widget';
 export * from './json/json.widget';
-export * from './upload-folder/upload-folder.widget';
 export * from './file-viewer/file-viewer.widget';
 export * from './display-rich-text/display-rich-text.widget';
 
@@ -99,7 +92,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     HyperlinkWidgetComponent,
     RadioButtonsWidgetComponent,
     DisplayTextWidgetComponent,
-    UploadWidgetComponent,
     TypeaheadWidgetComponent,
     FunctionalGroupWidgetComponent,
     PeopleWidgetComponent,
@@ -112,12 +104,10 @@ export const WIDGET_DIRECTIVES: any[] = [
     TextEditorComponent,
     RowEditorComponent,
     ErrorWidgetComponent,
-    DocumentWidgetComponent,
     DateTimeWidgetComponent,
     DateTimeEditorComponent,
     JsonWidgetComponent,
     AmountEditorComponent,
-    UploadFolderWidgetComponent,
     FileViewerWidgetComponent,
     DisplayRichTextWidgetComponent
 ];

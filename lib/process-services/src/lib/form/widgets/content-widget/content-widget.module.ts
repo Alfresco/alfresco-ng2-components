@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 

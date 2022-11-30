@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
 import { setupTestBed } from '@alfresco/adf-core';
-import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileWidgetDialogService', () => {
