@@ -1,0 +1,34 @@
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    min-height: 0;
+
+    router-outlet[name='viewer'] + * {
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: white;
+    }
+
+    adf-file-uploading-dialog {
+        z-index: 1000;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .adf-app-title {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 719px) {
+    .adf-app-logo {
+        display: none;
+    }
+}

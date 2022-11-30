@@ -339,7 +339,9 @@
               "lib/core/api/**/*.ts",
               "lib/core/api/**/*.html",
               "lib/core/auth/**/*.ts",
-              "lib/core/auth/**/*.html"
+              "lib/core/auth/**/*.html",
+              "lib/core/shell/**/*.ts",
+              "lib/core/shell/**/*.html"
             ]
           }
         },

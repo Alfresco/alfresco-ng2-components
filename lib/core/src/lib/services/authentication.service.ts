@@ -17,13 +17,13 @@
 
 import { Authentication } from '@alfresco/adf-core/auth';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, Observer, ReplaySubject, forkJoin } from 'rxjs';
+import { Observable, from, throwError, Observer, ReplaySubject } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
@@ -49,12 +49,6 @@ export class AuthenticationService extends Authentication {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-    _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
-        return this._peopleApi;
-    }
-
     _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
         this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
@@ -72,28 +66,7 @@ export class AuthenticationService extends Authentication {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
             });
-
-            if (this.isKerberosEnabled()) {
-                this.loadUserDetails();
-            }
         });
-    }
-
-    private loadUserDetails() {
-        if (this.isALLProvider()) {
-            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
-            const bpmUser$ = this.getBpmLoggedUser();
-
-            forkJoin([ecmUser$, bpmUser$]).subscribe(() => this.onLogin.next());
-        } else if (this.isECMProvider()) {
-            const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
-
-            ecmUser$.subscribe(() => this.onLogin.next());
-        } else {
-            const bpmUser$ = this.getBpmLoggedUser();
-
-            bpmUser$.subscribe(() => this.onLogin.next());
-        }
     }
 
     /**

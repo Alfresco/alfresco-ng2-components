@@ -100,7 +100,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             text-align: left;
             flex: 0 1 24%;
             height: 136px !important;
-            white-space: nowrap;
+            white-space: normal;
             text-overflow: ellipsis;
             overflow: hidden;
             outline: none;

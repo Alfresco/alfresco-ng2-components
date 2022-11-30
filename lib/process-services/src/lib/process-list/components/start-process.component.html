@@ -15,9 +15,10 @@
                             (selectionChange)="onAppSelectionChange($event)"
                             [(ngModel)]="selectedApplication"
                             data-automation-id="adf-start-process-apps-drop-down">
-                            <mat-option 
+                            <mat-option
                                 *ngFor="let application of applications"
                                 [value]="application"
+                                role="option"
                                 [attr.data-automation-id]="'adf-start-process-apps-option-' + application.name">
                                 {{ application.name }}
                             </mat-option>
@@ -75,7 +76,7 @@
                         {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
                     </mat-error>
                 </mat-form-field>
-        
+
                 <ng-container *ngIf="!isProcessDefinitionsLoading ; else showStartFormLoadingTemplate">
                     <ng-container *ngIf="isProcessDefinitionSelected() ; else emptyProcessDefTemplate">
                         <ng-container  *ngIf="hasStartForm(); else noStartFormTemplate">
@@ -96,7 +97,7 @@
                             </adf-start-form>
                         </ng-container>
                         <ng-template #noStartFormTemplate>
-                            <adf-empty-content 
+                            <adf-empty-content
                                 class="adf-start-process-empty-template"
                                 [icon]="'assessment'"
                                 [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM'  | translate">
@@ -141,5 +142,5 @@
                 [icon]="'assessment'"
                 [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate">
             </adf-empty-content>
-        </ng-template>    
+        </ng-template>
 </ng-template>

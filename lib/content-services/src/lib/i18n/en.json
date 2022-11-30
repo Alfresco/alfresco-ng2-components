@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Manage Versions"
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Upload New Version",
@@ -137,9 +138,9 @@
       "MINIMIZE": "Minimize",
       "MAXIMIZE": "Maximize",
       "CLOSE": "Close",
-      "CANCEL_ALL": "Cancel uploads",
-      "CANCEL_FILE": "Cancel upload",
-      "REMOVE_FILE": "Remove uploaded file"
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload successful"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Canceled",
@@ -151,8 +152,8 @@
         "CONTINUE": "No"
       },
       "MESSAGE": {
-        "TITLE": "Cancel Upload",
-        "TEXT": "Stop uploading and remove files already uploaded."
+        "TITLE": "Stop Upload",
+        "TEXT": "Stop and cancel all in-progress and pending uploads."
       }
     },
     "ARIA-LABEL": {
@@ -161,10 +162,10 @@
       "DIALOG_MAXIMIZE": "Maximize upload dialog",
       "DIALOG_MINIMIZE": "Minimize upload dialog",
       "DIALOG_CLOSE": "Close upload dialog",
-      "CANCEL_ALL": "Cancel all uploading files",
-      "REMOVE_FILE": "Remove uploaded file {{ file }}",
-      "CANCEL_FILE": "Cancel scheduled file {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Cancel file upload {{ file }}",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
       "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Confirm cancel",
