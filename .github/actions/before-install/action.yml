@@ -1,5 +1,5 @@
 name: "before-install"
-description: "run before install script"
+description: "launch before_install.sh and then parse env vars"
 runs:
   using: "composite"
   steps:

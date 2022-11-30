@@ -1,10 +1,6 @@
 name: 'Get tag sha'
 description: 'get the sha of the latest or a specific tag'
-# inputs:
-#   tag-to-get:  # id of input
-#     description: 'tag to get'
-#     required: false
-#     default: 'latest'
+
 outputs:
   tag_sha:
     description: "long sha of the tag"

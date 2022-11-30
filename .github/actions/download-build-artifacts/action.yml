@@ -1,5 +1,5 @@
-name: "Download artifacts"
-description: "Download artifacts"
+name: "Download build artifacts"
+description: "Download build artifacts"
 runs:
   using: "composite"
   steps:

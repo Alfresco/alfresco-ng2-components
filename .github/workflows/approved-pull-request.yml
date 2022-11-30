@@ -63,7 +63,7 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
-      - uses: ./.github/actions/upload-artifacts
+      - uses: ./.github/actions/upload-build-artifacts
 
       - name: Release
         run: |

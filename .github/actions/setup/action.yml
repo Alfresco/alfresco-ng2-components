@@ -1,5 +1,5 @@
 name: 'Setup'
-description: 'Build setup'
+description: 'Initialize cache, env var load'
 inputs:
   enable-cache:
     description: 'enable caching'

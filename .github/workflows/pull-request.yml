@@ -120,7 +120,7 @@ jobs:
           fi
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
-      - uses: ./.github/actions/upload-artifacts
+      - uses: ./.github/actions/upload-build-artifacts
 
   playwright:
     timeout-minutes: 20
@@ -137,7 +137,7 @@ jobs:
         run: |
           rm -rf nxcache
           rm -rf dist
-      - uses: ./.github/actions/download-artifacts
+      - uses: ./.github/actions/download-build-artifacts
       - run: find nxcache -type d -maxdepth 1
       - run: find dist -type d -maxdepth 2
       - run: nx run testing:bundle
@@ -156,7 +156,7 @@ jobs:
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: debug
         run: ls -lath node_modules/@alfresco || true
-      - uses: ./.github/actions/upload-artifacts
+      - uses: ./.github/actions/upload-build-artifacts
 
   e2e:
     timeout-minutes: 70
@@ -296,7 +296,7 @@ jobs:
       - name: debug
         run: |
           echo '${{ toJson(matrix) }}'
-      - uses: ./.github/actions/download-artifacts
+      - uses: ./.github/actions/download-build-artifacts
       - name: copy cli into node modules
         run: nx run cli:bundle
         shell: bash

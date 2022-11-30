@@ -1,14 +1,6 @@
-name: "Setup"
-description: "Build setup"
-inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
-    required: false
-    default: "World"
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+name: "Upload build artifacts"
+description: "Upload build artifacts"
+
 runs:
   using: "composite"
   steps:
