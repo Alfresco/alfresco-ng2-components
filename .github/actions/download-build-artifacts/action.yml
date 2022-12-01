@@ -34,5 +34,3 @@ runs:
         find dist -maxdepth 1 -type d
         echo "====NXCACHE===="
         find nxcache -maxdepth 1 -type d
-        echo "====NODE_MODULES===="
-        find node_modules -maxdepth 1 -type d

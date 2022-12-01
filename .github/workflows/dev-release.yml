@@ -97,6 +97,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all        
       - uses: ./.github/actions/setup
+      - run: nx run cli:bundle      
       - name: push Demoshell docker image
         run: |
           nx build demoshell --configuration production
