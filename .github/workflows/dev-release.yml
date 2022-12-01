@@ -102,70 +102,70 @@ jobs:
 
 
 
-  push-storybook:
-    needs: [build]
-    timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all    
-      - uses: ./.github/actions/download-build-artifacts    
-      - name: push Storybook docker image
-        run: |
-          nx run stories:build-storybook --configuration ci
-          . ./scripts/travis/release/docker-tag.sh
-          set -u;        
-          ./scripts/travis/release/release-storybook-docker.sh
+  # push-storybook:
+  #   needs: [build]
+  #   timeout-minutes: 10
+  #   # if: github.event.pull_request.merged == true
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0 # Fetch all history for all    
+  #     - uses: ./.github/actions/download-build-artifacts    
+  #     - name: push Storybook docker image
+  #       run: |
+  #         nx run stories:build-storybook --configuration ci
+  #         . ./scripts/travis/release/docker-tag.sh
+  #         set -u;        
+  #         ./scripts/travis/release/release-storybook-docker.sh
 
-      - name: Check npm bundle
-        run: |
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
-
-
-  npm-release:
-    needs: [build]
-    timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all    
-      - uses: ./.github/actions/download-build-artifacts    
-      # - name: Release
-      #   run: |
-      #     set -u;
-      #     ./scripts/travis/build/bumpversion.sh
-      #     nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      #     nx affected $NX_CALCULATION_FLAGS --target=pretheme
-      #     ./scripts/travis/release/release-npm.sh
-      - name: npm release
-        run: echo "bump"
+  #     - name: Check npm bundle
+  #       run: |
+  #         ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+  #         ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
 
 
-  npm-check-bundle:
-    needs: [npm-release]
-    timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all    
-      - uses: ./.github/actions/download-build-artifacts
-      - name: Check npm bundle
-        run: |
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+  # npm-release:
+  #   needs: [build]
+  #   timeout-minutes: 10
+  #   # if: github.event.pull_request.merged == true
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0 # Fetch all history for all    
+  #     - uses: ./.github/actions/download-build-artifacts    
+  #     # - name: Release
+  #     #   run: |
+  #     #     set -u;
+  #     #     ./scripts/travis/build/bumpversion.sh
+  #     #     nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+  #     #     nx affected $NX_CALCULATION_FLAGS --target=pretheme
+  #     #     ./scripts/travis/release/release-npm.sh
+  #     - name: npm release
+  #       run: echo "bump"
 
-      # - name: Debug
-      #   uses: mxschmitt/action-tmate@v3
-      #   with:
-      #     timeout-minutes: 60
-      #     limit-access-to-actor: true
+
+  # npm-check-bundle:
+  #   needs: [npm-release]
+  #   timeout-minutes: 10
+  #   # if: github.event.pull_request.merged == true
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0 # Fetch all history for all    
+  #     - uses: ./.github/actions/download-build-artifacts
+  #     - name: Check npm bundle
+  #       run: |
+  #         ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+  #         ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+
+  #     # - name: Debug
+  #     #   uses: mxschmitt/action-tmate@v3
+  #     #   with:
+  #     #     timeout-minutes: 60
+  #     #     limit-access-to-actor: true
