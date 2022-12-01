@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - AAE-7986-dev-act*
+      - '!AAE-7986-dev-act-releases*'
       #
       #   - /^master(-patch.*)?$/
       #   - /^develop(-patch.*)?$/
