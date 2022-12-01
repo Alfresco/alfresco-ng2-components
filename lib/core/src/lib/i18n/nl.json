@@ -20,12 +20,15 @@
   "CLAIM": "Claimen",
   "UNCLAIM": "Vrijgeven",
   "START PROCESS": "Proces starten",
+  "DATA_LOADING": "Gegevens worden geladen",
+  "CLOSE": "Sluiten",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "U hebt op dit moment geen meldingen.",
     "TITLE": "Meldingen",
     "MARK_AS_READ": "Alles markeren als gelezen",
     "SYSTEM": "Systeem",
-    "LOAD_MORE": "Meer laden"
+    "LOAD_MORE": "Meer laden",
+    "OPEN_HISTORY": "Meldingsgeschiedenis openen"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Annuleren",
-      "CHOOSE": "Kiezen"
+      "CHOOSE": "Kiezen",
+      "LOGIN": "Aanmelden"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Aflopend op {{ string }}",
       "ICON_TEXT": "Itemtype {{ type }}",
       "ICON_DISABLED": "Uitgeschakeld",
-      "ROW_OPTION_BUTTON": "Acties"
+      "ROW_OPTION_BUTTON": "Acties",
+      "EMPTY_HEADER": "Lege kop"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",
-      "OF": "van"
+      "OF": "van",
+      "PAGE_SELECTOR_LABEL": "Selectiefunctie voor pagina"
     },
     "LOADING": "Wordt geladen",
     "UNKNOWN_FORMAT": "Kan preview niet laden. Onbekende indeling.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
+    "REPOSITORY": "Repository",
     "VERSIONS": {
       "TITLE": "Productversies",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Laden..."
+    "LOADING": "Laden...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} keuzelijst met invoervak {{selectedOption}}"
   }
 }

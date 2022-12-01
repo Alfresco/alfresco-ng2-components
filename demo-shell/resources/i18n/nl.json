@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Actietype"
     }
   },
-  "DEFAULT_SEARCH": "Standaard"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Knop Nieuwe map maken",
+    "EDIT_NODE_LABEL": "Knop Node bewerken",
+    "DELETE_NODE_LABEL": "Pictogramknop Node verwijderen"
+  },
+  "DEFAULT_SEARCH": "Standaard",
+  "OPEN_DIALOG": "Dialoogvenster Openen",
+  "SHOW_LIST_LABEL": "Klik om de lijst weer te geven"
 }

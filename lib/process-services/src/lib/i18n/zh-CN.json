@@ -174,8 +174,8 @@
   },
   "ADF_PROCESS_LIST": {
     "LIST": {
-      "TITLE": "找不到流程",
-      "SUBTITLE": "创建您想要今后轻松查找的新流程",
+      "TITLE": "找不到进程",
+      "SUBTITLE": "创建您想要今后轻松查找的新进程",
       "SUMMARY": "找到 {{total}} 个流程实例",
       "ERROR": "无法加载流程实例。请重试，或将以下信息告知 IT 团队：{{errorMessage}}"
     },
@@ -218,14 +218,16 @@
         "START_FORM": "启动表单",
         "TASKS_ACTIVE": "活动的任务",
         "TASKS_COMPLETED": "完成的任务",
-        "TASK_SUBTITLE": "分配给 {{user}}，已创建 {{created}}"
+        "TASK_SUBTITLE": "分配给 {{user}}，已创建 {{created}}",
+        "REFRESH": "刷新"
       },
       "BUTTON": {
         "CANCEL": "取消流程",
         "CLOSE": "关闭",
         "SHOW_DIAGRAM": "显示流程图",
         "DRAG-ATTACHMENT": "放置文件以上传",
-        "UPLOAD-ATTACHMENT": "上传附件"
+        "UPLOAD-ATTACHMENT": "上传附件",
+        "FILE_OPTION_MENU": "文件选项菜单"
       },
       "MESSAGES": {
         "NONE": "未找到流程详情"

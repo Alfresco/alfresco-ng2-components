@@ -218,14 +218,16 @@
         "START_FORM": "Uruchom formularz",
         "TASKS_ACTIVE": "Aktywne zadania",
         "TASKS_COMPLETED": "Ukończone zadania",
-        "TASK_SUBTITLE": "Przypisane do użytkownika {{user}}, utworzone {{created}}."
+        "TASK_SUBTITLE": "Przypisane do użytkownika {{user}}, utworzone {{created}}.",
+        "REFRESH": "Odśwież"
       },
       "BUTTON": {
         "CANCEL": "Anuluj proces",
         "CLOSE": "Zamknij",
         "SHOW_DIAGRAM": "Pokaż schemat",
         "DRAG-ATTACHMENT": "Upuść i prześlij pliki",
-        "UPLOAD-ATTACHMENT": "Prześlij załącznik"
+        "UPLOAD-ATTACHMENT": "Prześlij załącznik",
+        "FILE_OPTION_MENU": "Menu opcji pliku"
       },
       "MESSAGES": {
         "NONE": "Nie znaleziono szczegółów procesu."

@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Toiminnon tyyppi"
     }
   },
-  "DEFAULT_SEARCH": "Oletus"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Luo uusi kansio -painike",
+    "EDIT_NODE_LABEL": "Muokkaa solmua -painike",
+    "DELETE_NODE_LABEL": "Poista solmukuvake -painike"
+  },
+  "DEFAULT_SEARCH": "Oletus",
+  "OPEN_DIALOG": "Avaa valintaikkuna",
+  "SHOW_LIST_LABEL": "Näytä luettelo napsauttamalla"
 }

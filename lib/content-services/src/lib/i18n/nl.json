@@ -20,12 +20,12 @@
       "MESSAGE": "Verwijderde bestandsversies kunnen niet worden hersteld. Doorgaan?",
       "YES_LABEL": "Ja",
       "NO_LABEL": "Nee"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Versieopties beheren"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Versies beheren",
-      "CLOSE": "Sluiten"
+      "TITLE": "Versies beheren"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Nieuwe versie uploaden",
@@ -71,7 +71,8 @@
       "VIEW": "Weergeven",
       "REMOVE": "Verwijderen",
       "DOWNLOAD": "Downloaden"
-    }
+    },
+    "LOADER_LABEL": "Lader lijst met documenten"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimaliseren",
       "MAXIMIZE": "Maximaliseren",
       "CLOSE": "Sluiten",
-      "CANCEL_ALL": "Uploads annuleren",
-      "CANCEL_FILE": "Uploaden annuleren",
-      "REMOVE_FILE": "Geüpload bestand verwijderen"
+      "STOP_ALL": "Uploads stoppen",
+      "STOP_FILE": "Uploaden stoppen",
+      "UPLOAD_SUCCESSFUL": "Uploaden geslaagd"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Geannuleerd",
@@ -150,8 +151,8 @@
         "CONTINUE": "Nee"
       },
       "MESSAGE": {
-        "TITLE": "Uploaden annuleren",
-        "TEXT": "Stop het uploaden en verwijder de bestanden die al zijn geüpload."
+        "TITLE": "Uploaden stoppen",
+        "TEXT": "Stop het uploaden en annuleer alle uploads in behandeling."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Uploaddialoogvenster maximaliseren",
       "DIALOG_MINIMIZE": "Uploaddialoogvenster minimaliseren",
       "DIALOG_CLOSE": "Uploaddialoogvenster sluiten",
-      "CANCEL_ALL": "Alle bestanden die worden geüpload annuleren",
-      "REMOVE_FILE": "Geüpload bestand {{ file }} verwijderen",
-      "CANCEL_FILE": "Gepland bestand {{ file }} annuleren",
-      "CANCEL_FILE_UPLOAD": "Bestand uploaden {{ file }} annuleren",
+      "STOP_ALL": "Uploads stoppen",
+      "UPLOAD_SUCCESSFUL": "Het bestand {{ file }} is geüpload",
+      "STOP_FILE": "Bestand {{ file }} stoppen",
+      "STOP_FILE_UPLOAD": "Uploaden van bestand {{ file }} stoppen",
       "UPLOAD_FILE_ERROR": "Fout bij uploaden {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Annuleren bevestigen",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "De datum ligt na de laatste datum.",
         "INVALID-DATETIME": "Ongeldige datum/tijd. De datum/tijd moet de volgende notatie hebben: '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "De datum/tijd ligt na de laatste datum/tijd."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Zoekfilterlijst"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Verloopdatum",
     "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
     "CLOSE": "Sluiten",
+    "COPY_BUTTON_LABEL": "Koppeling kopiëren",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Deze gedeelde koppeling verwijderen",
       "MESSAGE": "Deze koppeling wordt verwijderd en er wordt een nieuwe koppeling gemaakt de volgende keer dat dit bestand wordt gedeeld",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Toevoegen",
       "CLOSE-ACTION": "Annuleren",
       "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
-      "EVERYONE": "Iedereen"
+      "EVERYONE": "Iedereen",
+      "USER-GROUP-LIST": "Gebruiker of groepslijst"
     },
     "COLUMN": {
       "NAME": "Gebruikers en groepen ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Rechtstreeks toegepaste rechten",
       "INHERITED-PERMISSIONS": "Overgenomen rechten",
       "INHERITED-SUBTITLE": "{{count}} gebruikers of groepen nemen rechten over van een bovenliggende map",
-      "SELECT-ROLE": "Rol selecteren"
+      "SELECT-ROLE": "Rol selecteren",
+      "INHERITED_PERMISSION_TOGGLE": "Overgenomen recht in-/uitschakelen"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Geen gebruikers/groepen",

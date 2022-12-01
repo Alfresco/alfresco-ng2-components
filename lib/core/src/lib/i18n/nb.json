@@ -20,12 +20,15 @@
   "CLAIM": "Krev",
   "UNCLAIM": "Frigi",
   "START PROCESS": "Start prosess",
+  "DATA_LOADING": "Data laster",
+  "CLOSE": "Lukk",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Du har ingen varsler for øyeblikket.",
     "TITLE": "Varsler",
     "MARK_AS_READ": "Merk alle som lest",
     "SYSTEM": "System",
-    "LOAD_MORE": "Last ned mer"
+    "LOAD_MORE": "Last ned mer",
+    "OPEN_HISTORY": "Åpne varslingshistorikk"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Avbryt",
-      "CHOOSE": "Velg"
+      "CHOOSE": "Velg",
+      "LOGIN": "Logg på"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Synkende med {{ string }}",
       "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktivert",
-      "ROW_OPTION_BUTTON": "Handlinger"
+      "ROW_OPTION_BUTTON": "Handlinger",
+      "EMPTY_HEADER": "Tom topptekst"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",
-      "OF": "av"
+      "OF": "av",
+      "PAGE_SELECTOR_LABEL": "Sidevelger"
     },
     "LOADING": "Laster",
     "UNKNOWN_FORMAT": "Kan ikke laste forhåndsvisning. Ukjent format.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL til Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL til Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Oppbevaringsste",
     "VERSIONS": {
       "TITLE": "Produktversjoner",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Laster inn..."
+    "LOADING": "Laster inn...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} komboboks {{selectedOption}}"
   }
 }

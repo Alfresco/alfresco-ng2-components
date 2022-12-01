@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Tipo di azione"
     }
   },
-  "DEFAULT_SEARCH": "Predefinito"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Crea pulsante nuova cartella",
+    "EDIT_NODE_LABEL": "Modifica pulsante nodo",
+    "DELETE_NODE_LABEL": "Elimina icona nodo"
+  },
+  "DEFAULT_SEARCH": "Predefinito",
+  "OPEN_DIALOG": "Apri finestra di dialogo",
+  "SHOW_LIST_LABEL": "Fai clic per mostrare l'elenco"
 }

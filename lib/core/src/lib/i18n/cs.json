@@ -20,12 +20,15 @@
   "CLAIM": "Převzít",
   "UNCLAIM": "Vzdát se",
   "START PROCESS": "Zahájit proces",
+  "DATA_LOADING": "Probíhá načítání dat",
+  "CLOSE": "Zavřít",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Momentálně nemáte žádná oznámení.",
     "TITLE": "Upozornění",
     "MARK_AS_READ": "Označit všechny jako přečtené",
     "SYSTEM": "Systém",
-    "LOAD_MORE": "Načíst další"
+    "LOAD_MORE": "Načíst další",
+    "OPEN_HISTORY": "Otevřít historii oznámení"
   },
   "FORM": {
     "START_FORM": {
@@ -39,7 +42,7 @@
       "SOURCE": "Vybrat zdroj z ",
       "VIEW_FILE": "Zobrazit",
       "DOWNLOAD_FILE": "Stáhnout",
-      "REMOVE_FILE": "Odebrat",
+      "REMOVE_FILE": "Odstranit",
       "UPLOAD": "Odeslat",
       "REQUIRED": "Povinné pole",
       "REST_API_FAILED": "Server {{ hostname }} není dosažitelný",
@@ -156,7 +159,7 @@
       "LOCATION_MISSING": "Položku „{{ name }}“ nebylo možné obnovit, protože původní umístění již neexistuje",
       "GENERIC": "Při pokusu o obnovení položky „{{ name }}“ došlo k potížím",
       "PLURAL": "Obnovení proběhlo úspěšně",
-      "SINGULAR": "Položku „{{ name }}“​se podařilo úspěšně obnovit"
+      "SINGULAR": "Položku „{{ name }}“ se podařilo úspěšně obnovit"
     },
     "DELETE_NODE": {
       "SINGULAR": "„{{ name }}“ se podařilo úspěšně odstranit",
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Zrušit",
-      "CHOOSE": "Vybrat"
+      "CHOOSE": "Vybrat",
+      "LOGIN": "Přihlásit se"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Sestupně podle {{ string }}",
       "ICON_TEXT": "Typ položky {{ type }}",
       "ICON_DISABLED": "Zakázáno",
-      "ROW_OPTION_BUTTON": "Akce"
+      "ROW_OPTION_BUTTON": "Akce",
+      "EMPTY_HEADER": "Prázdný nadpis"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Zobrazeno",
-      "OF": "z"
+      "OF": "z",
+      "PAGE_SELECTOR_LABEL": "Selektor stránek"
     },
     "LOADING": "Načítání",
     "UNKNOWN_FORMAT": "Náhled se nepodařilo načíst. Neznámý formát.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Adresa URL pro Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "Adresa URL pro Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Úložiště",
     "VERSIONS": {
       "TITLE": "Verze produktu",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Načítání..."
+    "LOADING": "Načítání...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   }
 }

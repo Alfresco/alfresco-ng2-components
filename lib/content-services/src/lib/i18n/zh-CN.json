@@ -20,12 +20,12 @@
       "MESSAGE": "已删除的文件版本无法恢复。是否继续？",
       "YES_LABEL": "是",
       "NO_LABEL": "否"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "管理版本选项"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "管理版本",
-      "CLOSE": "关闭"
+      "TITLE": "管理版本"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "上传新版本",
@@ -71,7 +71,8 @@
       "VIEW": "查看",
       "REMOVE": "删除",
       "DOWNLOAD": "下载"
-    }
+    },
+    "LOADER_LABEL": "文档列表加载器"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "最小化(&M)",
       "MAXIMIZE": "最大化",
       "CLOSE": "关闭",
-      "CANCEL_ALL": "取消上传",
-      "CANCEL_FILE": "取消上传",
-      "REMOVE_FILE": "移除已上传文件"
+      "STOP_ALL": "停止上传",
+      "STOP_FILE": "停止上传",
+      "UPLOAD_SUCCESSFUL": "上传成功"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "已取消",
@@ -150,8 +151,8 @@
         "CONTINUE": "否"
       },
       "MESSAGE": {
-        "TITLE": "取消上传",
-        "TEXT": "停止上传并移除已上传文件。"
+        "TITLE": "停止上传",
+        "TEXT": "停止上传并取消正在执行和等待执行的上传。"
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "最大化上传对话框",
       "DIALOG_MINIMIZE": "最小化上传对话框",
       "DIALOG_CLOSE": "关闭上传对话框",
-      "CANCEL_ALL": "取消所有正在上传的文件",
-      "REMOVE_FILE": "移除已上传文件 {{ file }}",
-      "CANCEL_FILE": "取消计划的文件 {{ file }}",
-      "CANCEL_FILE_UPLOAD": "取消文件上传 {{ file }}",
+      "STOP_ALL": "停止上传",
+      "UPLOAD_SUCCESSFUL": "成功上传文件 {{ file }}",
+      "STOP_FILE": "停止文件 {{ file }}",
+      "STOP_FILE_UPLOAD": "停止文件上传 {{ file }}",
       "UPLOAD_FILE_ERROR": "上传错误 {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "确认取消",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "日期超过最大日期。",
         "INVALID-DATETIME": "无效的日期时间。日期时间的格式必须为“{{requiredFormat}}”",
         "BEYOND-MAX-DATETIME": "日期时间超过了最大日期时间。"
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "搜索筛选器列表"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "截止日期",
     "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
     "CLOSE": "关闭",
+    "COPY_BUTTON_LABEL": "复制链接",
     "CONFIRMATION": {
       "DIALOG-TITLE": "删除此共享链接",
       "MESSAGE": "此链接将被删除，下次共享此文件时将会创建新链接",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "添加",
       "CLOSE-ACTION": "取消",
       "BASE-DIALOG-TITLE": "搜索要添加的组或人员...",
-      "EVERYONE": "任何人"
+      "EVERYONE": "任何人",
+      "USER-GROUP-LIST": "用户或组列表"
     },
     "COLUMN": {
       "NAME": "用户和组 ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "直接应用权限",
       "INHERITED-PERMISSIONS": "继承的权限",
       "INHERITED-SUBTITLE": "{{count}} 用户或组正在从父文件夹继承权限",
-      "SELECT-ROLE": "选择角色"
+      "SELECT-ROLE": "选择角色",
+      "INHERITED_PERMISSION_TOGGLE": "切换继承的权限"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "无用户/组",

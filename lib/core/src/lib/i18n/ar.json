@@ -20,12 +20,15 @@
   "CLAIM": "مطالبة",
   "UNCLAIM": "تحرير",
   "START PROCESS": "بدء العملية",
+  "DATA_LOADING": "يتم تحميل البيانات",
+  "CLOSE": "أغلق",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "ليس لديك إشعارات في هذا الوقت.",
+    "NO_MESSAGE": "ليس لديك إعلامات في هذا الوقت.",
     "TITLE": "إعلامات",
     "MARK_AS_READ": "وضع علامة على الكل كغير مقروءة",
     "SYSTEM": "النظام",
-    "LOAD_MORE": "تحميل المزيد"
+    "LOAD_MORE": "تحميل المزيد",
+    "OPEN_HISTORY": "فتح سجل الإعلامات"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "إلغاء",
-      "CHOOSE": "اختيار"
+      "CHOOSE": "اختيار",
+      "LOGIN": "تسجيل دخول"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "تنازلي حسب {{ string }}",
       "ICON_TEXT": "نوع العنصر {{ type }}",
       "ICON_DISABLED": "معطّل",
-      "ROW_OPTION_BUTTON": "إجراءات"
+      "ROW_OPTION_BUTTON": "إجراءات",
+      "EMPTY_HEADER": "الرأس فارغ"
     },
     "FILE_TYPE": {
       "DOCUMENT": "مستند",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "إظهار",
-      "OF": "من"
+      "OF": "من",
+      "PAGE_SELECTOR_LABEL": "محدد الصفحة"
     },
     "LOADING": "تحميل",
     "UNKNOWN_FORMAT": "تعذر تحميل المعاينة. تنسيق غير معروف",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "عنوان URL الخاص بـ Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "مخزن",
     "VERSIONS": {
       "TITLE": "إصدارات المنتج",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "جار التحميل..."
+    "LOADING": "جار التحميل...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} مربع تحرير وسرد {{selectedOption}}"
   }
 }

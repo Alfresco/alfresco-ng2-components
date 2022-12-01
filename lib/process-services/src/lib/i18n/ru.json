@@ -207,7 +207,7 @@
       "REMOVE_CONTENT": "Удалить",
       "DOWNLOAD_CONTENT": "Скачать",
       "DOWNLOAD_AUDIT": "Скачать аудит",
-      "VIEW_TASK": "Просмотреть задачу"
+      "VIEW_TASK": "Посмотреть задачу"
     },
     "DETAILS": {
       "LABELS": {
@@ -218,14 +218,16 @@
         "START_FORM": "Запустить форму",
         "TASKS_ACTIVE": "Активные задачи",
         "TASKS_COMPLETED": "Завершенные задачи",
-        "TASK_SUBTITLE": "Назначено пользователю {{user}}, создано {{created}}"
+        "TASK_SUBTITLE": "Назначено пользователю {{user}}, создано {{created}}",
+        "REFRESH": "Обновить"
       },
       "BUTTON": {
         "CANCEL": "Отменить процесс",
         "CLOSE": "Закрыть",
         "SHOW_DIAGRAM": "Показать схему",
         "DRAG-ATTACHMENT": "Перетащите файлы для загрузки",
-        "UPLOAD-ATTACHMENT": "Загрузить вложение"
+        "UPLOAD-ATTACHMENT": "Загрузить вложение",
+        "FILE_OPTION_MENU": "Меню параметров файла"
       },
       "MESSAGES": {
         "NONE": "Сведения о процессе не найдены"

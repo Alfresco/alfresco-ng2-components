@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Тип действия"
     }
   },
-  "DEFAULT_SEARCH": "По умолчанию"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Кнопка \"Создать новую папку\"",
+    "EDIT_NODE_LABEL": "Кнопка \"Редактировать узел\"",
+    "DELETE_NODE_LABEL": "Кнопка \"Удалить значок узла\""
+  },
+  "DEFAULT_SEARCH": "По умолчанию",
+  "OPEN_DIALOG": "Открыть диалог",
+  "SHOW_LIST_LABEL": "Нажмите для отображения списка"
 }

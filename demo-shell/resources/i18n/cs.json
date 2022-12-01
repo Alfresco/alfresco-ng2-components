@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Typ akce"
     }
   },
-  "DEFAULT_SEARCH": "Výchozí"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Vytvořit tlačítko pro novou složku",
+    "EDIT_NODE_LABEL": "Upravit tlačítko uzlu",
+    "DELETE_NODE_LABEL": "Odebrat tlačítko ikony uzlu"
+  },
+  "DEFAULT_SEARCH": "Výchozí",
+  "OPEN_DIALOG": "Otevřít dialogové okno",
+  "SHOW_LIST_LABEL": "Na seznam pro zobrazení klikněte"
 }

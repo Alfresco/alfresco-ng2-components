@@ -20,12 +20,12 @@
       "MESSAGE": "Gelöschte Dateiversionen können nicht wiederhergestellt werden. Fortfahren?",
       "YES_LABEL": "Ja",
       "NO_LABEL": "Nein"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Verwalten von Versionsoptionen"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Versionen verwalten",
-      "CLOSE": "Schließen"
+      "TITLE": "Versionen verwalten"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Neue Version hochladen",
@@ -71,7 +71,8 @@
       "VIEW": "Anzeigen",
       "REMOVE": "Entfernen",
       "DOWNLOAD": "Herunterladen"
-    }
+    },
+    "LOADER_LABEL": "Ladeprogramm für Dokumentenliste"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimieren",
       "MAXIMIZE": "Maximieren",
       "CLOSE": "Schließen",
-      "CANCEL_ALL": "Hochladen abbrechen",
-      "CANCEL_FILE": "Upload abbrechen",
-      "REMOVE_FILE": "Hochgeladene Datei entfernen"
+      "STOP_ALL": "Uploads anhalten",
+      "STOP_FILE": "Upload anhalten",
+      "UPLOAD_SUCCESSFUL": "Upload erfolgreich"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Abgebrochen",
@@ -150,8 +151,8 @@
         "CONTINUE": "Nein"
       },
       "MESSAGE": {
-        "TITLE": "Upload abbrechen",
-        "TEXT": "Beenden Sie das Hochladen und entfernen Sie bereits hochgeladene Dateien."
+        "TITLE": "Upload anhalten",
+        "TEXT": "Anhalten und Abbrechen aller laufenden und anstehenden Uploads."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Upload-Dialog maximieren",
       "DIALOG_MINIMIZE": "Upload-Dialog minimieren",
       "DIALOG_CLOSE": "Upload-Dialog schließen",
-      "CANCEL_ALL": "Alle Datei-Uploads abbrechen",
-      "REMOVE_FILE": "Hochgeladene Datei {{ file }} entfernen",
-      "CANCEL_FILE": "Geplantes Hochladen der Datei {{ file }} abbrechen",
-      "CANCEL_FILE_UPLOAD": "Hochladen der Datei {{ file }} abbrechen",
+      "STOP_ALL": "Uploads anhalten",
+      "UPLOAD_SUCCESSFUL": "Datei {{ file }} erfolgreich hochgeladen",
+      "STOP_FILE": "Datei {{ Datei }} anhalten",
+      "STOP_FILE_UPLOAD": "Datei-Upload {{ file }} anhalten",
       "UPLOAD_FILE_ERROR": "Upload-Fehler {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Abbruch bestätigen",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Das Datum liegt nach dem maximal zulässigen Datum.",
         "INVALID-DATETIME": "Datum/Uhrzeit ungültig. Datum/Uhrzeit muss das Format '{{ requiredFormat }}' haben.",
         "BEYOND-MAX-DATETIME": "Datum/Uhrzeit liegt über dem Höchstwert für Datum/Uhrzeit."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Suchfilter-Liste"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Ablaufdatum",
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
     "CLOSE": "Schließen",
+    "COPY_BUTTON_LABEL": "Link kopieren",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Diesen freigegebenen Link entfernen",
       "MESSAGE": "Dieser Link wird gelöscht und ein neuer Link wird erstellt wenn diese Datei das nächste Mal geteilt wird.",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Hinzufügen",
       "CLOSE-ACTION": "Abbrechen",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
-      "EVERYONE": "Jeder"
+      "EVERYONE": "Jeder",
+      "USER-GROUP-LIST": "Benutzer- oder Gruppenliste"
     },
     "COLUMN": {
       "NAME": "Benutzer und Gruppen ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Direkt angewendete Berechtigung",
       "INHERITED-PERMISSIONS": "Geerbte Berechtigung",
       "INHERITED-SUBTITLE": "{{count}} Benutzer oder Gruppen erben Berechtigungen von einem übergeordneten Ordner.",
-      "SELECT-ROLE": "Rolle auswählen"
+      "SELECT-ROLE": "Rolle auswählen",
+      "INHERITED_PERMISSION_TOGGLE": "Geerbte Berechtigung umschalten"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Keine Benutzer/Gruppen",

@@ -218,14 +218,16 @@
         "START_FORM": "نموذج البدء",
         "TASKS_ACTIVE": "مهام نشطة",
         "TASKS_COMPLETED": "مهام مكتملة",
-        "TASK_SUBTITLE": "تم التعيين إلى {{user}}، تم إنشاء {{created}}"
+        "TASK_SUBTITLE": "تم التعيين إلى {{user}}، تم إنشاء {{created}}",
+        "REFRESH": "تحديث"
       },
       "BUTTON": {
         "CANCEL": "إلغاء العملية",
         "CLOSE": "إغلاق",
         "SHOW_DIAGRAM": "إظهار المخطط",
         "DRAG-ATTACHMENT": "إفلات الملفات لتحميلها",
-        "UPLOAD-ATTACHMENT": "تحميل المرفق"
+        "UPLOAD-ATTACHMENT": "تحميل المرفق",
+        "FILE_OPTION_MENU": "قائمة خيارات الملف"
       },
       "MESSAGES": {
         "NONE": "لم يتم العثور على تفاصيل العملية"

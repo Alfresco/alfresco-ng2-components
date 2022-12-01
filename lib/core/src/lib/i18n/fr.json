@@ -20,12 +20,15 @@
   "CLAIM": "S'attribuer",
   "UNCLAIM": "Libérer",
   "START PROCESS": "Démarrer le processus",
+  "DATA_LOADING": "Chargement des données en cours",
+  "CLOSE": "Fermer",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aucune notification n'est disponible pour l'instant.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Marquer tout comme lu",
     "SYSTEM": "Système",
-    "LOAD_MORE": "Charger plus"
+    "LOAD_MORE": "Charger plus",
+    "OPEN_HISTORY": "Ouvrir l'historique des notifications"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Annuler",
-      "CHOOSE": "Choisir"
+      "CHOOSE": "Choisir",
+      "LOGIN": "Connexion"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Trié par {{ string }} dans l'ordre décroissant",
       "ICON_TEXT": "Type d'élément {{ type }}",
       "ICON_DISABLED": "Désactivé",
-      "ROW_OPTION_BUTTON": "Actions"
+      "ROW_OPTION_BUTTON": "Actions",
+      "EMPTY_HEADER": "En-tête vide"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Document",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",
-      "OF": "sur"
+      "OF": "sur",
+      "PAGE_SELECTOR_LABEL": "Sélecteur de page"
     },
     "LOADING": "Chargement en cours",
     "UNKNOWN_FORMAT": "Impossible de charger l'aperçu. Format inconnu.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL d'Alfresco Content Services : {{ value }}",
       "PROCESS_SERVICE_HOST": "URL d'Alfresco Process Services : {{ value }}"
     },
+    "REPOSITORY": "Entrepôt",
     "VERSIONS": {
       "TITLE": "Versions du produit",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Chargement..."
+    "LOADING": "Chargement...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} zone de liste déroulante {{selectedOption}}"
   }
 }

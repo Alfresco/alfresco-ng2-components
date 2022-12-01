@@ -218,14 +218,16 @@
         "START_FORM": "Démarrer le formulaire",
         "TASKS_ACTIVE": "Tâches actives",
         "TASKS_COMPLETED": "Tâches terminées",
-        "TASK_SUBTITLE": "Assigné à {{user}}, créé le {{created}}"
+        "TASK_SUBTITLE": "Assigné à {{user}}, créé le {{created}}",
+        "REFRESH": "Actualiser"
       },
       "BUTTON": {
         "CANCEL": "Annuler le processus",
         "CLOSE": "Fermer",
         "SHOW_DIAGRAM": "Afficher le diagramme",
         "DRAG-ATTACHMENT": "Déposez des fichiers pour les importer",
-        "UPLOAD-ATTACHMENT": "Importer la pièce jointe"
+        "UPLOAD-ATTACHMENT": "Importer la pièce jointe",
+        "FILE_OPTION_MENU": "Menu des options de fichier"
       },
       "MESSAGES": {
         "NONE": "Aucun détail de processus trouvé"
