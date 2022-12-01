@@ -24,6 +24,7 @@ import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { ContentWidgetComponent } from './widgets/document/content.widget';
 import { UploadWidgetComponent } from "./widgets/upload/upload.widget";
+import { FormListComponent } from "./form-list/form-list.component";
 
 @NgModule({
     imports: [
@@ -36,12 +37,14 @@ import { UploadWidgetComponent } from "./widgets/upload/upload.widget";
         StartFormComponent,
         FormCustomOutcomesComponent,
         DocumentWidgetComponent,
-        ContentWidgetComponent
+        ContentWidgetComponent,
+        FormListComponent
     ],
     exports: [
         FormComponent,
         StartFormComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        FormListComponent
     ]
 })
 export class FormModule {}

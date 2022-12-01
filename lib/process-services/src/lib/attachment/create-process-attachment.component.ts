@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '@alfresco/adf-core';
+import { ProcessContentService } from "../form/services/process-content.service";
 
 @Component({
     selector: 'adf-create-process-attachment',

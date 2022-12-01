@@ -20,6 +20,7 @@ export * from './widgets/index';
 export * from './services/ecm-model.service';
 export * from './process-form-rendering.service';
 
+export * from './form-list/form-list.component';
 export * from './form.component';
 export * from './start-form.component';
 export * from './form-custom-outcomes.component';

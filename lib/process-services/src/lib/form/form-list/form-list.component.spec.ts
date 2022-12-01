@@ -17,10 +17,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { FormService } from '../../services/form.service';
+import { FormService } from '../../../../../core/src/lib/form/services/form.service';
 import { FormListComponent } from './form-list.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { setupTestBed } from '../../../../../core/src/lib/testing/setup-test-bed';
+import { CoreTestingModule } from '../../../../../core/src/lib/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskAttachmentList', () => {

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../services/form.service';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { FormService } from "@alfresco/adf-core";
 
 @Component({
     selector: 'adf-form-list',
     templateUrl: './form-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FormListComponent {
+export class FormListComponent implements OnChanges {
 
     /** The array that contains the information to show inside the list. */
     @Input()
@@ -32,8 +32,18 @@ export class FormListComponent {
     constructor(protected formService: FormService) {
     }
 
+    ngOnChanges() {
+        this.getForms();
+    }
+
     isEmpty(): boolean {
         return this.forms && this.forms.length === 0;
+    }
+
+    getForms() {
+        this.formService.getForms().subscribe((forms) => {
+            this.forms.push(...forms);
+        });
     }
 
 }

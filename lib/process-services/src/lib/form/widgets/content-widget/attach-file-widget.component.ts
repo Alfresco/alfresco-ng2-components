@@ -26,7 +26,6 @@ import {
     DownloadService,
     FormService,
     LogService,
-    ProcessContentService,
     ThumbnailService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
@@ -40,6 +39,7 @@ import { from, of, Subject, zip } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
+import { ProcessContentService } from "../../services/process-content.service";
 
 @Component({
     selector: 'attach-widget',
