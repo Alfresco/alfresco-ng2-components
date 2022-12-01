@@ -531,7 +531,7 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe(false);
     });
 
-    it('should delete empty dropdown value from the form values', () => {
+    it('should set the value as null for a dropdown field that has the None value selected', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'dropdown-1',
@@ -539,10 +539,13 @@ describe('FormFieldModel', () => {
         });
 
         field.value = 'empty';
-        expect(form.values['dropdown-1']).toBe(undefined);
+        expect(form.values['dropdown-1']).toBe(null);
 
         field.value = '';
-        expect(form.values['dropdown-1']).toBe(undefined);
+        expect(form.values['dropdown-1']).toBe(null);
+
+        field.value = undefined;
+        expect(form.values['dropdown-1']).toBe(null);
     });
 
     it('should update form with dropdown value', () => {
