@@ -99,16 +99,16 @@ jobs:
 
       - name: push Demoshell docker image
         run: |
-          set -u;        
           nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
+          set -u;
           ./scripts/travis/release/release-demoshell-docker.sh
 
       - name: push Storybook docker image
         run: |
-          set -u;        
           nx run stories:build-storybook --configuration ci
           . ./scripts/travis/release/docker-tag.sh
+          set -u;        
           ./scripts/travis/release/release-storybook-docker.sh
 
 
@@ -117,8 +117,8 @@ jobs:
           ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
 
-      - name: Debug
-        uses: mxschmitt/action-tmate@v3
-        with:
-          timeout-minutes: 60
-          limit-access-to-actor: true
+      # - name: Debug
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     timeout-minutes: 60
+      #     limit-access-to-actor: true
