@@ -79,7 +79,7 @@ jobs:
       # TODO REMOVE OVERRIDE
       - name: override NX_CALCULATION_FLAGS & TAG_NPM
         run: |
-          echo "TAG_NPM=alpha" >> $GITHUB_ENV 
+          echo "TAG_NPM=alpha-ci" >> $GITHUB_ENV 
           echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV      
       - run: echo $NX_CALCULATION_FLAGS
       - run: npm ci
@@ -97,21 +97,19 @@ jobs:
       #     ./scripts/travis/release/release-npm.sh
 
 
-      # - name: push Demoshell docker image
-      #   run: |
-      #     set -u;        
-      #     nx build demoshell --configuration production
-      #     . ./scripts/travis/release/docker-tag.sh
-      #     ./scripts/travis/release/release-demoshell-docker.sh
+      - name: push Demoshell docker image
+        run: |
+          set -u;        
+          nx build demoshell --configuration production
+          . ./scripts/travis/release/docker-tag.sh
+          ./scripts/travis/release/release-demoshell-docker.sh
 
-      # - run: nx run stories:build-storybook --configuration ci
-
-      # - name: push Storybook docker image
-      #   run: |
-      #     set -u;        
-      #     nx run stories:build-storybook --configuration ci
-      #     . ./scripts/travis/release/docker-tag.sh
-      #     ./scripts/travis/release/release-storybook-docker.sh 
+      - name: push Storybook docker image
+        run: |
+          set -u;        
+          nx run stories:build-storybook --configuration ci
+          . ./scripts/travis/release/docker-tag.sh
+          ./scripts/travis/release/release-storybook-docker.sh
 
 
       - name: Check npm bundle
