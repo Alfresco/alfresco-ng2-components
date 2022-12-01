@@ -218,14 +218,16 @@
         "START_FORM": "Startformulär",
         "TASKS_ACTIVE": "Aktiva uppgifter",
         "TASKS_COMPLETED": "Slutförda uppgifter",
-        "TASK_SUBTITLE": "Tilldelad till {{user}}, skapad {{created}}"
+        "TASK_SUBTITLE": "Tilldelad till {{user}}, skapad {{created}}",
+        "REFRESH": "Uppdatera"
       },
       "BUTTON": {
         "CANCEL": "Avbryt processen",
         "CLOSE": "Stäng",
         "SHOW_DIAGRAM": "Visa diagram",
         "DRAG-ATTACHMENT": "Släpp filer att ladda upp",
-        "UPLOAD-ATTACHMENT": "Ladda upp bilaga"
+        "UPLOAD-ATTACHMENT": "Ladda upp bilaga",
+        "FILE_OPTION_MENU": "Menyn för filalternativ"
       },
       "MESSAGES": {
         "NONE": "Inga processdetaljer hittades"

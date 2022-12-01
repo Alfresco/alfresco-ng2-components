@@ -382,7 +382,7 @@
     "RETRIEVE_METADATA": "Rellenar los campos del formulario"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "Asignado a mí",
+    "ASSIGNED_TO": "Asignado a",
     "CURRENT_USER": "Asignado a mí",
     "UNASSIGNED": "No asignado",
     "NONE": "Ninguno",

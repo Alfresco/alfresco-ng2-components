@@ -20,12 +20,15 @@
   "CLAIM": "Richiedi",
   "UNCLAIM": "Rifiuta",
   "START PROCESS": "Avvia processo",
+  "DATA_LOADING": "Caricamento dei dati in corso",
+  "CLOSE": "Chiudi",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Non sono presenti notifiche in questo momento.",
     "TITLE": "Notifiche",
     "MARK_AS_READ": "Seleziona tutti come già letti",
     "SYSTEM": "Sistema",
-    "LOAD_MORE": "Carica altro"
+    "LOAD_MORE": "Carica altro",
+    "OPEN_HISTORY": "Apri cronologia notifiche"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Annulla",
-      "CHOOSE": "Scegli"
+      "CHOOSE": "Scegli",
+      "LOGIN": "Accedi"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Ordine decrescente per {{ string }}",
       "ICON_TEXT": "Tipo di elemento {{ type }}",
       "ICON_DISABLED": "Disabilitato",
-      "ROW_OPTION_BUTTON": "Azioni"
+      "ROW_OPTION_BUTTON": "Azioni",
+      "EMPTY_HEADER": "Intestazione vuota"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Visualizzazione di",
-      "OF": "di"
+      "OF": "di",
+      "PAGE_SELECTOR_LABEL": "Selettore pagina"
     },
     "LOADING": "Caricamento in corso",
     "UNKNOWN_FORMAT": "Impossibile caricare l'anteprima. Formato sconosciuto.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL di Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL di Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Repository",
     "VERSIONS": {
       "TITLE": "Versioni prodotto",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Caricamento in corso..."
+    "LOADING": "Caricamento in corso...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} casella combinata {{selectedOption}}"
   }
 }

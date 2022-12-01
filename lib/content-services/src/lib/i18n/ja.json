@@ -20,12 +20,12 @@
       "MESSAGE": "削除したバージョンは復元できません。削除しますか?",
       "YES_LABEL": "はい",
       "NO_LABEL": "いいえ"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "バージョンオプションの管理"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "バージョンの管理",
-      "CLOSE": "閉じる"
+      "TITLE": "バージョンの管理"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "新しいバージョンのアップロード",
@@ -71,7 +71,8 @@
       "VIEW": "表示",
       "REMOVE": "削除",
       "DOWNLOAD": "ダウンロード"
-    }
+    },
+    "LOADER_LABEL": "ドキュメントリストローダー"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "最小化",
       "MAXIMIZE": "最大化",
       "CLOSE": "閉じる",
-      "CANCEL_ALL": "アップロードをキャンセル",
-      "CANCEL_FILE": "アップロードのキャンセル",
-      "REMOVE_FILE": "アップロードしたファイルを削除"
+      "STOP_ALL": "アップロードの停止",
+      "STOP_FILE": "アップロードの停止",
+      "UPLOAD_SUCCESSFUL": "正常にアップロードしました"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "キャンセルされました",
@@ -150,8 +151,8 @@
         "CONTINUE": "いいえ"
       },
       "MESSAGE": {
-        "TITLE": "アップロードのキャンセル",
-        "TEXT": "アップロードを中止し、アップロード済みのファイルを削除します。"
+        "TITLE": "アップロードの停止",
+        "TEXT": "アップロード中のもの、保留中のものをすべて停止、キャンセルします。"
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "アップロードダイアログを最大化",
       "DIALOG_MINIMIZE": "アップロードダイアログを最小化",
       "DIALOG_CLOSE": "アップロードダイアログを閉じる",
-      "CANCEL_ALL": "ファイルのアップロードをすべてキャンセル",
-      "REMOVE_FILE": "アップロード済みのファイル {{ file }} を削除",
-      "CANCEL_FILE": "スケジュール済みのファイル {{ file }} をキャンセル",
-      "CANCEL_FILE_UPLOAD": "ファイル {{ file }} のアップロードをキャンセル",
+      "STOP_ALL": "アップロードの停止",
+      "UPLOAD_SUCCESSFUL": "ファイル{{ file }}を正常にアップロードしました",
+      "STOP_FILE": "ファイル{{ file }}の停止",
+      "STOP_FILE_UPLOAD": "ファイルアップロード{{ file }}の停止",
       "UPLOAD_FILE_ERROR": "アップロードエラー: {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "キャンセルを確定",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。",
         "INVALID-DATETIME": "日時が無効です。日時は '{{ requiredFormat }}' 形式で指定する必要があります",
         "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています"
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "検索フィルタリスト"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "有効期限",
     "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
     "CLOSE": "閉じる",
+    "COPY_BUTTON_LABEL": "リンクのコピー",
     "CONFIRMATION": {
       "DIALOG-TITLE": "共有リンクの削除",
       "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "追加",
       "CLOSE-ACTION": "キャンセル",
       "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
-      "EVERYONE": "全員"
+      "EVERYONE": "全員",
+      "USER-GROUP-LIST": "ユーザーまたはグループのリスト"
     },
     "COLUMN": {
       "NAME": "ユーザーとグループ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "直接適用される権限",
       "INHERITED-PERMISSIONS": "継承権限",
       "INHERITED-SUBTITLE": "{{count}}ユーザーやグループが親フォルダから権限を継承しています",
-      "SELECT-ROLE": "役割の選択"
+      "SELECT-ROLE": "役割の選択",
+      "INHERITED_PERMISSION_TOGGLE": "継承した権限の切り替え"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "ユーザー/グループなし",

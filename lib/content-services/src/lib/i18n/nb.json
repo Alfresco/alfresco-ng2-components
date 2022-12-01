@@ -20,12 +20,12 @@
       "MESSAGE": "Slettede filversjoner kan ikke gjenopprettes. Vil du fortsette?",
       "YES_LABEL": "Ja",
       "NO_LABEL": "Nei"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Administrer versjonsalternativer"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Håndtere versjoner",
-      "CLOSE": "Lukk"
+      "TITLE": "Håndtere versjoner"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Last opp ny versjon",
@@ -71,7 +71,8 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Last ned"
-    }
+    },
+    "LOADER_LABEL": "Lasting av dokumentliste"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimer",
       "MAXIMIZE": "Maksimer",
       "CLOSE": "Lukk",
-      "CANCEL_ALL": "Avbryt opplastinger",
-      "CANCEL_FILE": "Avbryt opplasting",
-      "REMOVE_FILE": "Fjern opplastet fil"
+      "STOP_ALL": "Stopp opplastinger",
+      "STOP_FILE": "Stopp opplasting",
+      "UPLOAD_SUCCESSFUL": "Vellykket opplasting"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Avbrutt",
@@ -150,8 +151,8 @@
         "CONTINUE": "Nei"
       },
       "MESSAGE": {
-        "TITLE": "Avbryt opplasting",
-        "TEXT": "Stopp opplasting, og fjern filer som allerede er opplastet."
+        "TITLE": "Stopp opplasting",
+        "TEXT": "Stopp og avbryt alle pågående og ventende opplastinger."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Maksimer opplastingsdialog",
       "DIALOG_MINIMIZE": "Minimer opplastingsdialog",
       "DIALOG_CLOSE": "Lukk opplastingsdialog",
-      "CANCEL_ALL": "Avbryt alle filer som lastes opp",
-      "REMOVE_FILE": "Fjern opplastet fil {{ file }}",
-      "CANCEL_FILE": "Avbryt planlagt fil {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Avbryt filopplasting {{ file }}",
+      "STOP_ALL": "Stopp opplastinger",
+      "UPLOAD_SUCCESSFUL": "Fil lastet opp {{ file }}",
+      "STOP_FILE": "Stopp fil {{ file }}",
+      "STOP_FILE_UPLOAD": "Stopp filopplasting {{ file }}",
       "UPLOAD_FILE_ERROR": "Opplastingsfeil {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Bekreft avbrudd",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Datoen er utover maksimumsdato.",
         "INVALID-DATETIME": "Ugyldig dato/klokkeslett. Dato/klokkeslett må være i formatet '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "Dato/klokkeslett overgår maksimum dato/klokkeslett."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Søkefilter-liste"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Utløpsdato",
     "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
     "CLOSE": "Lukk",
+    "COPY_BUTTON_LABEL": "Kopier lenke",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Fjern denne delte koblingen",
       "MESSAGE": "Denne koblingen vil bli slettet, og en ny kobling vil bli opprettet neste gang denne filen deles",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "LEGG TIL",
       "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
-      "EVERYONE": "Alle"
+      "EVERYONE": "Alle",
+      "USER-GROUP-LIST": "Bruker- eller gruppeliste"
     },
     "COLUMN": {
       "NAME": "Brukere og grupper ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Direkte brukt tillatelse",
       "INHERITED-PERMISSIONS": "Arvet tillatelse",
       "INHERITED-SUBTITLE": "{{count}} brukere eller grupper arver tillatelse fra en overordnet mappe",
-      "SELECT-ROLE": "Velg rolle"
+      "SELECT-ROLE": "Velg rolle",
+      "INHERITED_PERMISSION_TOGGLE": "Veksle arvet tillatelse"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Ingen brukere/grupper",

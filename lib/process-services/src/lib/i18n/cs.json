@@ -119,7 +119,7 @@
       "FORM": {
         "TITLE": "Zahájit úkol",
         "LABEL": {
-          "NONE": "Žádný",
+          "NONE": "Žádné",
           "NAME": "Název",
           "DESCRIPTION": "Popis",
           "ATTACHFORM": "Připojit formulář",
@@ -197,7 +197,7 @@
       "CREATED_BY_DEFAULT": "Žádná pověřená osoba",
       "CREATED": "Vytvořeno",
       "BUSINESS_KEY": "Obchodní klíč",
-      "BUSINESS_KEY_DEFAULT": "Žádný",
+      "BUSINESS_KEY_DEFAULT": "Žádné",
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
       "ID": "ID"
@@ -218,14 +218,16 @@
         "START_FORM": "Spustit formulář",
         "TASKS_ACTIVE": "Aktivní úkoly",
         "TASKS_COMPLETED": "Dokončené úkoly",
-        "TASK_SUBTITLE": "Přiřazeno: {{user}}. Vytvořeno k {{created}}"
+        "TASK_SUBTITLE": "Přiřazeno: {{user}}. Vytvořeno k {{created}}",
+        "REFRESH": "Obnovit"
       },
       "BUTTON": {
         "CANCEL": "Zrušit proces",
         "CLOSE": "Zavřít",
         "SHOW_DIAGRAM": "Zobrazit diagram",
         "DRAG-ATTACHMENT": "Přetáhněte soubory, které chcete odeslat",
-        "UPLOAD-ATTACHMENT": "Odeslat přílohu"
+        "UPLOAD-ATTACHMENT": "Odeslat přílohu",
+        "FILE_OPTION_MENU": "Menu Možnosti souborů"
       },
       "MESSAGES": {
         "NONE": "Nenalezeny žádné podrobnosti o procesu"

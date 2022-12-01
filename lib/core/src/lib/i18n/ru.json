@@ -16,16 +16,19 @@
   },
   "SAVE": "Сохранить",
   "COMPLETE": "Завершить",
-  "CANCEL": "Отменить",
+  "CANCEL": "Отмена",
   "CLAIM": "Принять",
   "UNCLAIM": "Освободить",
   "START PROCESS": "Начать процесс",
+  "DATA_LOADING": "Выполняется загрузка данных",
+  "CLOSE": "Закрыть",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "В настоящее время у вас нет уведомлений.",
     "TITLE": "Оповещения",
     "MARK_AS_READ": "Отметить все как прочитанное",
     "SYSTEM": "Система",
-    "LOAD_MORE": "Загрузить еще"
+    "LOAD_MORE": "Загрузить еще",
+    "OPEN_HISTORY": "Открыть историю оповещений"
   },
   "FORM": {
     "START_FORM": {
@@ -37,7 +40,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Локальное хранение",
       "SOURCE": "Выберите источник из ",
-      "VIEW_FILE": "Просмотреть",
+      "VIEW_FILE": "Посмотреть",
       "DOWNLOAD_FILE": "Скачать",
       "REMOVE_FILE": "Удалить",
       "UPLOAD": "Загрузить",
@@ -94,7 +97,7 @@
     "DIALOG": {
       "DOWNLOAD_ZIP": {
         "ACTIONS": {
-          "CANCEL": "Отменить"
+          "CANCEL": "Отмена"
         },
         "TITLE": "Добавление файлов в архив, это может занять несколько минут"
       },
@@ -112,7 +115,7 @@
         "LABEL": "Сохранить"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Отменить"
+        "LABEL": "Отмена"
       }
     },
     "FOLDER_DIALOG": {
@@ -140,7 +143,7 @@
         "LABEL": "Обновить"
       },
       "CANCEL_BUTTON": {
-        "LABEL": "Отменить"
+        "LABEL": "Отмена"
       }
     },
     "MESSAGES": {
@@ -150,7 +153,7 @@
       }
     },
     "RESTORE_NODE": {
-      "VIEW": "Просмотреть",
+      "VIEW": "Посмотреть",
       "PARTIAL_PLURAL": "Из-за проблем с местоположением восстановления не восстановлено элементов: {{ number }}",
       "NODE_EXISTS": "Невозможно восстановить, элемент {{ name }} уже существует",
       "LOCATION_MISSING": "Невозможно восстановить элемент {{ name }}, исходное местоположение больше не существует",
@@ -225,9 +228,9 @@
           "TITLE": "Изменить тип содержимого",
           "DESCRIPTION": "Внесение этого изменения в тип содержимого навсегда добавит в документ некоторые свойства и сохраненные метаданные.",
           "CONFIRM": "Вы уверены, что хотите изменить тип содержимого?",
-          "CANCEL": "Отменить",
+          "CANCEL": "Отмена",
           "APPLY": "Сохранить изменения",
-          "VIEW_DETAILS": "Просмотреть детали",
+          "VIEW_DETAILS": "Посмотреть детали",
           "PROPERTY": {
             "NAME": "Имя",
             "DESCRIPTION": "Описание",
@@ -238,7 +241,7 @@
       "ACTIONS": {
         "EDIT": "Редактировать",
         "SAVE": "Сохранить",
-        "CANCEL": "Отменить",
+        "CANCEL": "Отмена",
         "CLEAR": "Очистить",
         "TOGGLE": "Переключить значение",
         "COPY_TO_CLIPBOARD": "Нажмите дважды, чтобы скопировать значение",
@@ -269,7 +272,7 @@
       },
       "BUTTON": {
         "ADD": "Добавить комментарий",
-        "CANCEL": "Отменить"
+        "CANCEL": "Отмена"
       }
     }
   },
@@ -307,8 +310,9 @@
       "REGISTER": "Регистрация"
     },
     "DIALOG": {
-      "CANCEL": "Отменить",
-      "CHOOSE": "Выбрать"
+      "CANCEL": "Отмена",
+      "CHOOSE": "Выбрать",
+      "LOGIN": "Войти"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "По убыванию {{ string }}",
       "ICON_TEXT": "Тип элемента {{ type }}",
       "ICON_DISABLED": "Отключено",
-      "ROW_OPTION_BUTTON": "Действия"
+      "ROW_OPTION_BUTTON": "Действия",
+      "EMPTY_HEADER": "Пустой заголовок"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Документ",
@@ -396,14 +401,15 @@
       "ROTATE": "Повернуть",
       "CROP": "Обрезать",
       "SAVE": "Сохранить",
-      "CANCEL": "Отменить",
+      "CANCEL": "Отмена",
       "RESET": "Сброс",
       "THUMBNAILS": "Миниатюры документов",
       "THUMBNAILS_PANLEL_CLOSE": "Закрыть панель эскизов"
     },
     "PAGE_LABEL": {
       "SHOWING": "Отображается",
-      "OF": "из"
+      "OF": "из",
+      "PAGE_SELECTOR_LABEL": "Выбор страницы"
     },
     "LOADING": "Загружается",
     "UNKNOWN_FORMAT": "Не удалось загрузить предварительный просмотр. Неизвестный формат.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL-адрес Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL-адрес Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Репозиторий",
     "VERSIONS": {
       "TITLE": "Версии продукта",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Загрузка..."
+    "LOADING": "Загрузка...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} выпадающий список {{selectedOption}}"
   }
 }

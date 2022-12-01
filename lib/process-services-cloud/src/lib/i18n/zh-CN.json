@@ -263,7 +263,7 @@
         "RANGE": "位于以下日期之间"
       },
       "DATE_RANGE_TITLE": "开始日期 - 结束日期",
-      "START_DATE": "开始日期",
+      "START_DATE": "启动日期",
       "END_DATE": "结束日期",
       "ID": "ID",
       "BUSINESS_KEY": "商业 Key"

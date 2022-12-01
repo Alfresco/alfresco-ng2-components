@@ -20,12 +20,12 @@
       "MESSAGE": "Poistettuja tiedostoversioita ei voi palauttaa. Jatketaanko?",
       "YES_LABEL": "Kyllä",
       "NO_LABEL": "Ei"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Hallitse versioasetuksia"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Hallitse versioita",
-      "CLOSE": "Sulje"
+      "TITLE": "Hallitse versioita"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Lataa uusi versio",
@@ -71,7 +71,8 @@
       "VIEW": "Näytä",
       "REMOVE": "Poista",
       "DOWNLOAD": "Lataa"
-    }
+    },
+    "LOADER_LABEL": "Asiakirjaluettelon lataustoiminto"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Pienennä",
       "MAXIMIZE": "Suurenna",
       "CLOSE": "Sulje",
-      "CANCEL_ALL": "Peruuta lataukset",
-      "CANCEL_FILE": "Peruuta lataus",
-      "REMOVE_FILE": "Poista ladattu tiedosto"
+      "STOP_ALL": "Lopeta lataukset",
+      "STOP_FILE": "Lopeta lataus",
+      "UPLOAD_SUCCESSFUL": "Lataus onnistui"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Peruutettu",
@@ -150,8 +151,8 @@
         "CONTINUE": "Ei"
       },
       "MESSAGE": {
-        "TITLE": "Peruuta lataus",
-        "TEXT": "Lopeta lataaminen ja poista jo ladatut tiedostot."
+        "TITLE": "Lopeta lataus",
+        "TEXT": "Lopeta ja peruuta kaikki käynnissä olevat ja odottavat lataukset."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Suurenna latauksen valintaikkuna",
       "DIALOG_MINIMIZE": "Pienennä latauksen valintaikkuna",
       "DIALOG_CLOSE": "Sulje latauksen valintaikkuna",
-      "CANCEL_ALL": "Peruuta kaikki lataukset",
-      "REMOVE_FILE": "Poista ladattu tiedosto {{ file }}",
-      "CANCEL_FILE": "Peruuta ajoitettu tiedosto {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Peruuta tiedoston {{ file }} lataus",
+      "STOP_ALL": "Lopeta lataukset",
+      "UPLOAD_SUCCESSFUL": "Tiedoston {{ file }} lataaminen onnistui",
+      "STOP_FILE": "Lopeta tiedosto {{ file }}",
+      "STOP_FILE_UPLOAD": "Lopeta tiedoston lataus {{ file }}",
       "UPLOAD_FILE_ERROR": "Latausvirhe {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Vahvista peruutus",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Päivämäärä ei ole sallitulla alueella.",
         "INVALID-DATETIME": "Virheellinen päivä ja aika. Päivä ja aika tulee olla muodossa '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "Päivä ja aika eivät ole sallitulla alueella."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Hakusuodatinluettelo"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Voimassaolon päättymispäivä",
     "CLIPBOARD-MESSAGE": "Linkki kopioitu leikepöydälle",
     "CLOSE": "Sulje",
+    "COPY_BUTTON_LABEL": "Kopioi linkki",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Poista tämä jaettu linkki",
       "MESSAGE": "Tämä linkki poistetaan ja uusi linkki luodaan, kun tiedosto jaetaan seuraavan kerran",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Lisää",
       "CLOSE-ACTION": "Peruuta",
       "BASE-DIALOG-TITLE": "Hae lisättävää ryhmää tai ihmistä...",
-      "EVERYONE": "Kaikki"
+      "EVERYONE": "Kaikki",
+      "USER-GROUP-LIST": "Käyttäjä- tai ryhmäluettelo"
     },
     "COLUMN": {
       "NAME": "Käyttäjät ja ryhmät ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Suoraan määrätty oikeus",
       "INHERITED-PERMISSIONS": "Peritty oikeus",
       "INHERITED-SUBTITLE": "{{count}} käyttäjää tai ryhmää perii oikeuden ylätason kansiolta",
-      "SELECT-ROLE": "Valitse rooli"
+      "SELECT-ROLE": "Valitse rooli",
+      "INHERITED_PERMISSION_TOGGLE": "Vaihda perittyä käyttöoikeutta"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Ei käyttäjiä/ryhmiä",
@@ -519,7 +526,7 @@
     "DATA_TYPE": "Tietotyyppi",
     "DIALOG": {
       "TITLE": "Muokkaa ominaisuuksia",
-      "DESCRIPTION": "Hallitse valittuihin tiedostoihin liittyviä ominaisuuksia.Valitse allaolevista ominaisuusjoukoista paljastaaksesi ja soveltaaksesi ylimääräisiä metatietoja ja toimivuuksia.",
+      "DESCRIPTION": "Hallitse valittuihin tiedostoihin liittyviä ominaisuuksia.Valitse alla olevista ominaisuusjoukoista paljastaaksesi ja soveltaaksesi ylimääräisiä metatietoja ja toimivuuksia.",
       "RESET": "Nollaa",
       "CLEAR": "Tyhjennä",
       "CANCEL": "Peruuta",

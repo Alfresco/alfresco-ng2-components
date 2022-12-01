@@ -20,12 +20,15 @@
   "CLAIM": "申领",
   "UNCLAIM": "释放",
   "START PROCESS": "启动流程",
+  "DATA_LOADING": "数据正在加载",
+  "CLOSE": "关闭",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "您目前没有通知。",
     "TITLE": "通知",
     "MARK_AS_READ": "全部标记为已读",
     "SYSTEM": "系统",
-    "LOAD_MORE": "加载更多"
+    "LOAD_MORE": "加载更多",
+    "OPEN_HISTORY": "打开通知历史记录"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "取消",
-      "CHOOSE": "选择"
+      "CHOOSE": "选择",
+      "LOGIN": "登录"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "按 {{ string }} 降序排列",
       "ICON_TEXT": "项目类型 {{ type }}",
       "ICON_DISABLED": "已禁用",
-      "ROW_OPTION_BUTTON": "操作"
+      "ROW_OPTION_BUTTON": "操作",
+      "EMPTY_HEADER": "空白标题"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文档",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "正在显示",
-      "OF": "/"
+      "OF": "/",
+      "PAGE_SELECTOR_LABEL": "页面选择器"
     },
     "LOADING": "正在加载",
     "UNKNOWN_FORMAT": "无法加载预览。未知格式。",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL：{{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL：{{ value }}"
     },
+    "REPOSITORY": "存储库",
     "VERSIONS": {
       "TITLE": "产品版本",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "加载..."
+    "LOADING": "加载...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} 组合框 {{selectedOption}}"
   }
 }

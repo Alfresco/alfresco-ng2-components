@@ -20,12 +20,15 @@
   "CLAIM": "Przejmij",
   "UNCLAIM": "Zwolnij",
   "START PROCESS": "Rozpocznij proces",
+  "DATA_LOADING": "Dane są wczytywane",
+  "CLOSE": "Zamknij",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Aktualnie brak powiadomień.",
     "TITLE": "Powiadomienia",
     "MARK_AS_READ": "Oznacz wszystkie jako przeczytane",
     "SYSTEM": "System",
-    "LOAD_MORE": "Wczytaj więcej"
+    "LOAD_MORE": "Wczytaj więcej",
+    "OPEN_HISTORY": "Otwórz historię powiadomień"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Anuluj",
-      "CHOOSE": "Wybierz"
+      "CHOOSE": "Wybierz",
+      "LOGIN": "Zaloguj się"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Malejąco według {{ string }}",
       "ICON_TEXT": "Typ elementu {{ type }}",
       "ICON_DISABLED": "Wyłączone",
-      "ROW_OPTION_BUTTON": "Czynności"
+      "ROW_OPTION_BUTTON": "Czynności",
+      "EMPTY_HEADER": "Pusty nagłówek"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Wyświetlanie",
-      "OF": "z"
+      "OF": "z",
+      "PAGE_SELECTOR_LABEL": "Selektor stron"
     },
     "LOADING": "Wczytywanie",
     "UNKNOWN_FORMAT": "Nie można wczytać podglądu. Nieznany format.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Adres URL rozwiązania Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "Adres URL rozwiązania Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Repozytorium",
     "VERSIONS": {
       "TITLE": "Wersje produktu",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Wczytywanie..."
+    "LOADING": "Wczytywanie...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} - pole kombi - {{selectedOption}}"
   }
 }

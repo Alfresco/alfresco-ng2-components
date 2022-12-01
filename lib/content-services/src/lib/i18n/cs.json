@@ -20,12 +20,12 @@
       "MESSAGE": "Odstraněné verze souboru nelze obnovit. Chcete pokračovat?",
       "YES_LABEL": "Ano",
       "NO_LABEL": "Ne"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Spravovat možnosti verze"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Spravovat verze",
-      "CLOSE": "Zavřít"
+      "TITLE": "Spravovat verze"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Odeslat novou verzi",
@@ -71,7 +71,8 @@
       "VIEW": "Zobrazit",
       "REMOVE": "Odstranit",
       "DOWNLOAD": "Stáhnout"
-    }
+    },
+    "LOADER_LABEL": "Loader seznamu dokumentů"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimalizovat",
       "MAXIMIZE": "Maximalizovat",
       "CLOSE": "Zavřít",
-      "CANCEL_ALL": "Zrušit odesílání",
-      "CANCEL_FILE": "Zrušit odesílání",
-      "REMOVE_FILE": "Odebrat odeslaný soubor"
+      "STOP_ALL": "Zastavit odesílání",
+      "STOP_FILE": "Zastavit odesílání",
+      "UPLOAD_SUCCESSFUL": "Odeslání bylo úspěšně provedeno"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Zrušeno",
@@ -150,8 +151,8 @@
         "CONTINUE": "Ne"
       },
       "MESSAGE": {
-        "TITLE": "Zrušit odesílání",
-        "TEXT": "Zastavit odesílání a odebrat již odeslané soubory."
+        "TITLE": "Zrušit odeslání",
+        "TEXT": "Zastavit a zrušit odesílání a odebrat již odeslané soubory."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Maximalizovat dialog pro odeslání",
       "DIALOG_MINIMIZE": "Minimalizovat dialog pro odeslání",
       "DIALOG_CLOSE": "Zavřít dialog pro odeslání",
-      "CANCEL_ALL": "Zrušit všechny odesílané soubory",
-      "REMOVE_FILE": "Odebrat odeslaný soubor {{ file }}",
-      "CANCEL_FILE": "Zrušit naplánovaný soubor {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Zrušit odesílání souboru {{ file }}",
+      "STOP_ALL": "Zastavit odesílání",
+      "UPLOAD_SUCCESSFUL": "Úspěšně odeslaný soubor {{ file }}",
+      "STOP_FILE": "Zastavit soubor {{ file }}",
+      "STOP_FILE_UPLOAD": "Zastavit odesílání souboru {{ file }}",
       "UPLOAD_FILE_ERROR": "Chyba při odesílání {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Potvrdit zrušení",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Datum nesplňuje limit pro nejvzdálenější datum.",
         "INVALID-DATETIME": "Neplatné datum a čas. Datum a čas musí být ve formátu '{{ requiredFormat }}'.",
         "BEYOND-MAX-DATETIME": "Datum a čas překračuje maximální datum a čas."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Seznam filtrů vyhledávání"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Datum vypršení platnosti",
     "CLIPBOARD-MESSAGE": "Odkaz zkopírován do schránky",
     "CLOSE": "Zavřít",
+    "COPY_BUTTON_LABEL": "Zkopírovat odkaz",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Odebrat tento sdílený odkaz",
       "MESSAGE": "Tento odkaz se odstraní a při dalším sdílení tohoto souboru se vytvoří odkaz nový",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Přidat",
       "CLOSE-ACTION": "Zrušit",
       "BASE-DIALOG-TITLE": "Vyhledejte skupinu nebo osoby, které chcete přidat...",
-      "EVERYONE": "Každý"
+      "EVERYONE": "Každý",
+      "USER-GROUP-LIST": "Seznam uživatelů nebo skupin"
     },
     "COLUMN": {
       "NAME": "Uživatelé a skupiny ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Přímo použité oprávnění",
       "INHERITED-PERMISSIONS": "Zděděné oprávnění",
       "INHERITED-SUBTITLE": "Uživatelé nebo skupiny ({{count}}) dědí oprávnění z nadřazené složky",
-      "SELECT-ROLE": "Vybrat roli"
+      "SELECT-ROLE": "Vybrat roli",
+      "INHERITED_PERMISSION_TOGGLE": "Zapnout povolení zdědění"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Žádní uživatelé/skupiny",

@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Tipo de ação"
     }
   },
-  "DEFAULT_SEARCH": "Padrão"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Criar um novo botão de pasta",
+    "EDIT_NODE_LABEL": "Editar botão de nó",
+    "DELETE_NODE_LABEL": "Excluir botão de ícone de nó"
+  },
+  "DEFAULT_SEARCH": "Padrão",
+  "OPEN_DIALOG": "Abrir caixa de diálogo",
+  "SHOW_LIST_LABEL": "Clique para mostrar a lista"
 }

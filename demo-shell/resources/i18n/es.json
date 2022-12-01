@@ -112,7 +112,7 @@
     "CONFIRM-DIALOG": "Cuadro de diálogo de confirmación",
     "COMMUNITY": "Community",
     "SERVICE_TASK_LIST": "Lista de tareas de servicio",
-    "RICH_TEXT_EDITOR": "Abrir el editor de texto enriquecido"
+    "RICH_TEXT_EDITOR": "Editor de texto enriquecido"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Tipo de acción"
     }
   },
-  "DEFAULT_SEARCH": "Predeterminado"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Crear un nuevo botón de carpeta",
+    "EDIT_NODE_LABEL": "Editar botón de nodo",
+    "DELETE_NODE_LABEL": "Eliminar el botón del icono del nodo"
+  },
+  "DEFAULT_SEARCH": "Predeterminado",
+  "OPEN_DIALOG": "Abrir cuadro de diálogo",
+  "SHOW_LIST_LABEL": "Hacer clic para mostrar la lista"
 }

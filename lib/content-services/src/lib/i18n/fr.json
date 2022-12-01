@@ -20,12 +20,12 @@
       "MESSAGE": "Les versions supprimées ne pourront pas être restaurées. Continuer ?",
       "YES_LABEL": "Oui",
       "NO_LABEL": "Non"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Gérer les options de version"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gérer les versions",
-      "CLOSE": "Fermer"
+      "TITLE": "Gérer les versions"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Importer une nouvelle version",
@@ -71,7 +71,8 @@
       "VIEW": "Afficher",
       "REMOVE": "Supprimer",
       "DOWNLOAD": "Télécharger"
-    }
+    },
+    "LOADER_LABEL": "Chargeur de liste de documents"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Réduire",
       "MAXIMIZE": "Agrandir",
       "CLOSE": "Fermer",
-      "CANCEL_ALL": "Annuler les importations",
-      "CANCEL_FILE": "Annuler l'importation",
-      "REMOVE_FILE": "Supprimer le fichier importé"
+      "STOP_ALL": "Arrêter les importations",
+      "STOP_FILE": "Arrêter l'importation",
+      "UPLOAD_SUCCESSFUL": "Importation réussie"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Annulé",
@@ -150,8 +151,8 @@
         "CONTINUE": "Non"
       },
       "MESSAGE": {
-        "TITLE": "Annuler l'Importation",
-        "TEXT": "Arrêter l'importation et supprimer les fichiers déjà importés."
+        "TITLE": "Arrêter l'importation",
+        "TEXT": "Arrêter et annuler toutes les importations en cours et en attente."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Agrandir la boîte de dialogue d'importation",
       "DIALOG_MINIMIZE": "Réduire la boîte de dialogue d'importation",
       "DIALOG_CLOSE": "Fermer la boîte de dialogue d'importation",
-      "CANCEL_ALL": "Annuler l'importation de tous les fichiers",
-      "REMOVE_FILE": "Supprimer le fichier importé {{ file }}",
-      "CANCEL_FILE": "Annuler le fichier planifié {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Annuler l'importation du fichier {{ file }}",
+      "STOP_ALL": "Arrêter les importations",
+      "UPLOAD_SUCCESSFUL": "Le fichier {{ file }} a bien été importé",
+      "STOP_FILE": "Arrêter le fichier {{ file }}",
+      "STOP_FILE_UPLOAD": "Arrêter l'importation du fichier {{ file }}",
       "UPLOAD_FILE_ERROR": "Erreur d'importation {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Confirmer l'annulation",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "La date est postérieure à la date maximum.",
         "INVALID-DATETIME": "Date et heure incorrectes. La date et l'heure doivent être au format '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "La date et l'heure sont postérieures à la limite autorisée."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Liste des filtres de recherche"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Date d'expiration",
     "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
     "CLOSE": "Fermer",
+    "COPY_BUTTON_LABEL": "Copier le lien",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Supprimer ce lien partagé",
       "MESSAGE": "Ce lien sera supprimé et un nouveau lien sera créé lors du prochain partage de ce fichier",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Ajouter",
       "CLOSE-ACTION": "Annuler",
       "BASE-DIALOG-TITLE": "Rechercher un groupe ou une personne à ajouter...",
-      "EVERYONE": "Tout le monde"
+      "EVERYONE": "Tout le monde",
+      "USER-GROUP-LIST": "Liste des utilisateurs ou des groupes"
     },
     "COLUMN": {
       "NAME": "Utilisateurs et groupes ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Droits d'accès directement appliqués",
       "INHERITED-PERMISSIONS": "Droits d'accès hérités",
       "INHERITED-SUBTITLE": "{{count}} utilisateurs ou groupes héritent des droits d'accès d'un dossier parent",
-      "SELECT-ROLE": "Sélectionner un rôle"
+      "SELECT-ROLE": "Sélectionner un rôle",
+      "INHERITED_PERMISSION_TOGGLE": "Activer/désactiver les droits d'accès hérités"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Aucun utilisateur/groupe",

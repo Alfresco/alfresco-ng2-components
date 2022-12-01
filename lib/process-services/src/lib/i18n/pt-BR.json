@@ -218,14 +218,16 @@
         "START_FORM": "Iniciar formulário",
         "TASKS_ACTIVE": "Tarefas ativas",
         "TASKS_COMPLETED": "Tarefas concluídas",
-        "TASK_SUBTITLE": "Atribuído a {{user}}, criado {{created}}"
+        "TASK_SUBTITLE": "Atribuído a {{user}}, criado {{created}}",
+        "REFRESH": "Atualizar"
       },
       "BUTTON": {
         "CANCEL": "Cancelar processo",
         "CLOSE": "Fechar",
         "SHOW_DIAGRAM": "Mostrar diagrama",
         "DRAG-ATTACHMENT": "Solte os arquivos para carregar",
-        "UPLOAD-ATTACHMENT": "Carregar Anexo"
+        "UPLOAD-ATTACHMENT": "Carregar Anexo",
+        "FILE_OPTION_MENU": "Menu de opção de arquivo"
       },
       "MESSAGES": {
         "NONE": "Nenhum detalhe de processo encontrado"
