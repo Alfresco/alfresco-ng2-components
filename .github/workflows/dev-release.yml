@@ -49,7 +49,7 @@ env:
 
 
 jobs:
-  main:
+  build:
     timeout-minutes: 20
     # if: github.event.pull_request.merged == true
     name: "Build Components"
@@ -73,31 +73,26 @@ jobs:
           then
               echo "TAG_NPM=alpha" >> $GITHUB_ENV 
           fi
-      - run: echo $TRAVIS_EVENT_TYPE
-      - run: echo $S3_NODE_MODULES_CACHE_ID
-      - run: echo $HEAD_COMMIT_HASH
       # TODO REMOVE OVERRIDE
       - name: override NX_CALCULATION_FLAGS & TAG_NPM
         run: |
           echo "TAG_NPM=alpha-ci" >> $GITHUB_ENV 
-          echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV      
-      - run: echo $NX_CALCULATION_FLAGS
+          echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
       - run: nx run cli:bundle
+      - uses: ./.github/actions/upload-build-artifacts
 
-      # - name: Release
-      #   run: |
-      #     set -u;
-      #     ./scripts/travis/build/bumpversion.sh
-      #     nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      #     nx affected $NX_CALCULATION_FLAGS --target=pretheme
-      #     ./scripts/travis/release/release-npm.sh
-
-
+  push-demoshell:
+    needs: [build]
+    timeout-minutes: 10
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: ./.github/actions/download-build-artifacts    
       - name: push Demoshell docker image
         run: |
           nx build demoshell --configuration production
@@ -105,6 +100,15 @@ jobs:
           set -u;
           ./scripts/travis/release/release-demoshell-docker.sh
 
+
+
+  push-storybook:
+    needs: [build]
+    timeout-minutes: 10
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: ./.github/actions/download-build-artifacts    
       - name: push Storybook docker image
         run: |
           nx run stories:build-storybook --configuration ci
@@ -112,7 +116,37 @@ jobs:
           set -u;        
           ./scripts/travis/release/release-storybook-docker.sh
 
+      - name: Check npm bundle
+        run: |
+          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
 
+
+  npm-release:
+    needs: [build]
+    timeout-minutes: 10
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: ./.github/actions/download-build-artifacts    
+      # - name: Release
+      #   run: |
+      #     set -u;
+      #     ./scripts/travis/build/bumpversion.sh
+      #     nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      #     nx affected $NX_CALCULATION_FLAGS --target=pretheme
+      #     ./scripts/travis/release/release-npm.sh
+      - name: npm release
+        run: echo "bump"
+
+
+  npm-check-bundle:
+    needs: [npm-release]
+    timeout-minutes: 10
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: ./.github/actions/download-build-artifacts
       - name: Check npm bundle
         run: |
           ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
