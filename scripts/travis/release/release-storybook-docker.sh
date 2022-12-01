@@ -18,5 +18,5 @@ echo "{}" > $DIR/../../../dist/storybook/stories/app.config.json
 --dockerRepo "$DOCKER_REPOSITORY_STORYBOOK" \
 --buildArgs "$DOCKER_PROJECT_ARGS" \
 --dockerTags "$TAGS" \
---pathProject "$(pwd)"
+--pathProject "$(pwd)" \
 --dryrun
