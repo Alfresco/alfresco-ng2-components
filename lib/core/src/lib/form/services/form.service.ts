@@ -23,7 +23,6 @@ import { Observable, Subject, from, of, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from '../components/widgets/core/content-link.model';
 import { GroupModel } from '../components/widgets/core/group.model';
-import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
     CompleteFormRepresentation,
@@ -133,8 +132,7 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor(private ecmModelService: EcmModelService,
-                private apiService: AlfrescoApiService,
+    constructor(private apiService: AlfrescoApiService,
                 protected logService: LogService) {
     }
 

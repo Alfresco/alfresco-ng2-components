@@ -16,14 +16,14 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import {
-    EcmModelService, WidgetVisibilityService,
+import { WidgetVisibilityService,
     FormService, FormBaseComponent, FormOutcomeModel,
     FormEvent, FormErrorEvent, FormFieldModel,
     FormModel, FormOutcomeEvent, FormValues, ContentLinkModel, NodesApiService, FormDefinitionModel
 } from '@alfresco/adf-core';
 import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { EcmModelService } from './services/ecm-model.service';
 
 @Component({
     selector: 'adf-form',

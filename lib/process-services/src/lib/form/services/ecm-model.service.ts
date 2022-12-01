@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../services/log.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { LogService } from '../../../../../core/src/lib/services/log.service';
+import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { FormModel } from '../components/widgets/core/form.model';
+import { FormModel } from '../../../../../core/src/lib/form/components/widgets/core/form.model';
 import { map, catchError } from 'rxjs/operators';
 import { CustomModelApi } from '@alfresco/js-api';
 
