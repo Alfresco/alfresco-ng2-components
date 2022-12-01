@@ -1,0 +1,120 @@
+on:
+  push:
+    branches:
+      - AAE-7986-dev-act-releases*
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TRAVIS_BRANCH: ${{ github.ref_name }}
+  GITHUB_BRANCH: ${{ github.ref_name }}
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  TRAVIS_COMMIT: ${{ github.sha }}
+  BUILD_ID: ${{ github.run_id }}
+  TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
+  TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
+  JOB_ID: ${GITHUB_RUN_ID}
+  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
+  E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
+  E2E_HOST: ${{ secrets.E2E_HOST }}
+  E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
+  E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+  E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
+  E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
+  USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
+  PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
+  URL_HOST_ADF: ${{ secrets.URL_HOST_ADF }}
+  IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
+  IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
+  AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
+  HOST_SSO: ${{ secrets.HOST_SSO }}
+  LOG_LEVEL: "ERROR"
+  E2E_LOG_LEVEL: "ERROR"
+  E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
+  E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
+  EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
+  E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
+  E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
+  USERNAME_SUPER_ADMIN_ADF: ${{ secrets.USERNAME_SUPER_ADMIN_ADF }}
+  PASSWORD_SUPER_ADMIN_ADF: ${{ secrets.PASSWORD_SUPER_ADMIN_ADF }}
+  HR_USER: ${{ secrets.HR_USER }}
+  HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
+  NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
+  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+
+jobs:
+  main:
+    timeout-minutes: 20
+    # if: github.event.pull_request.merged == true
+    name: "Build Components"
+    runs-on: ubuntu-22.04
+    env:
+      TRAVIS_BRANCH: develop
+      # TRAVIS_EVENT_TYPE: push
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - name: set TAG_NPM
+        run: |
+          if [[ $GITHUB_BRANCH =~ ^master(-patch.*)?$ ]]
+          then
+              echo "TAG_NPM=latest" >> $GITHUB_ENV
+          fi
+          if [[ $GITHUB_BRANCH =~ ^develop(-patch.*)?$ ]]
+          then
+              echo "TAG_NPM=alpha" >> $GITHUB_ENV 
+          fi
+      - run: echo $TRAVIS_EVENT_TYPE
+      - run: echo $S3_NODE_MODULES_CACHE_ID
+      - run: echo $HEAD_COMMIT_HASH
+      # TODO REMOVE OVERRIDE
+      - name: override NX_CALCULATION_FLAGS & TAG_NPM
+        run: |
+          echo "TAG_NPM=alpha" >> $GITHUB_ENV 
+          echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV      
+      - run: echo $NX_CALCULATION_FLAGS
+      - run: npm ci
+      - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
+      - run: nx build demoshell --configuration production
+
+      # - name: Release
+      #   run: |
+      #     set -u;
+      #     ./scripts/travis/build/bumpversion.sh
+      #     nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      #     nx affected $NX_CALCULATION_FLAGS --target=pretheme
+      #     ./scripts/travis/release/release-npm.sh
+
+
+      # - name: push Demoshell docker image
+      #   run: |
+      #     set -u;        
+      #     nx build demoshell --configuration production
+      #     . ./scripts/travis/release/docker-tag.sh
+      #     ./scripts/travis/release/release-demoshell-docker.sh
+
+      # - run: nx run stories:build-storybook --configuration ci
+
+      # - name: push Storybook docker image
+      #   run: |
+      #     set -u;        
+      #     nx run stories:build-storybook --configuration ci
+      #     . ./scripts/travis/release/docker-tag.sh
+      #     ./scripts/travis/release/release-storybook-docker.sh 
+
+
+      - name: Check npm bundle
+        run: |
+          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+
+      - name: Debug
+        uses: mxschmitt/action-tmate@v3
+        with:
+          timeout-minutes: 60
+          limit-access-to-actor: true
