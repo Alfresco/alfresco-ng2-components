@@ -70,7 +70,7 @@ runs:
           echo "nothing to download";
         fi
 
-    - name: reinstall testing
+    - name: 'before e2e: run testing bundle'
       shell: bash
       run: nx run testing:bundle
 
