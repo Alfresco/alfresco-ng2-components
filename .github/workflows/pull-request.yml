@@ -96,7 +96,7 @@ jobs:
       - name: Install playRight
         run: |
           npm install -D @playwright/test
-          playwright install
+          npx playwright install
       - name: build adf cli
         run: |
           nx build cli
