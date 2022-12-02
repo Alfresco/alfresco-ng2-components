@@ -7,8 +7,10 @@ runs:
     ## NXCACHE
     - name: tar artifacts
       run: |
-        time tar czf dist.tar.gz dist
-        time tar czf nxcache.tar.gz nxcache
+        tar czf dist.tar.gz dist
+        tar czf nxcache.tar.gz nxcache
+        tar czf adf-cli.tar.gz node_modules/@alfresco/adf-cli
+        tar czf adf-testing.tar.gz node_modules/@alfresco/adf-testing
       shell: bash
     - name: update NX cache folder
       uses: actions/upload-artifact@v3
@@ -23,3 +25,17 @@ runs:
       with:
         path: dist.tar.gz
         name: dist-${{ github.ref_name }}
+    ## ADF CLI
+    - name: save ADF cli
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: adf-cli.tar.gz
+        name: adf-cli-${{ github.ref_name }}
+    ## ADF TESTING
+    - name: save ADF testing
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: adf-testing.tar.gz
+        name: adf-testing-${{ github.ref_name }}

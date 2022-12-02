@@ -70,10 +70,6 @@ runs:
           echo "nothing to download";
         fi
 
-    - name: 'before e2e: run testing bundle'
-      shell: bash
-      run: nx run testing:bundle
-
     - name: check EXTERNAL-CS is UP
       shell: bash
       if: ${{ inputs.check-external-cs-env == 'true' }}

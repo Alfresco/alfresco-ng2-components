@@ -242,9 +242,6 @@ jobs:
           rm -rf nxcache
           rm -rf dist
       - uses: ./.github/actions/download-build-artifacts
-      - name: copy cli into node modules
-        run: nx run cli:bundle
-        shell: bash
       - name: e2e
         uses: ./.github/actions/e2e
         with:

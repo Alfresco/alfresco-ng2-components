@@ -17,13 +17,32 @@ runs:
       with:
         path: .
         name: dist-${{ github.ref_name }}
-    - name: extract cache
+    ## ADF CLI
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      continue-on-error: true
+      with:
+        path: .
+        name: adf-cli-${{ github.ref_name }}
+    ## ADF TESTING
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      continue-on-error: true
+      with:
+        path: .
+        name: adf-testing-${{ github.ref_name }}
+    - name: extract nxcache
       run: |
-        time tar xzf nxcache.tar.gz
+        tar xzf nxcache.tar.gz
       shell: bash
-    - name: extract cache
+    - name: extract dist
       run: |
-        time tar xzf dist.tar.gz
+        tar xzf dist.tar.gz
+      shell: bash
+    - name: extract adf cli
+      run: |
+        tar xzf adf-cli.tar.gz
+        tar xzf adf-testing.tar.gz
       shell: bash
     - name: show files
       shell: bash
@@ -34,3 +53,5 @@ runs:
         find dist -maxdepth 1 -type d
         echo "====NXCACHE===="
         find nxcache -maxdepth 1 -type d
+        echo "====ADF===="
+        find node_modules/@alfresco/ -maxdepth 1 -type d
