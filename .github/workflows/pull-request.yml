@@ -93,18 +93,14 @@ jobs:
           rm -rf nxcache
           rm -rf dist
       - uses: ./.github/actions/download-build-artifacts
-      - name: Install playRight
-        run: |
-          npm install -D @playwright/test
-          npx playwright install
       - name: build adf cli
         run: |
           nx build cli
       - name: Process Cloud Storybook Playwright
         run: |
-          playwright install chromium
+          npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
-          playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
+          npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - uses: ./.github/actions/upload-build-artifacts
 
   e2e:
