@@ -57,13 +57,13 @@ runs:
     - name: download smartrunner test results from s3 bucket if they exist
       shell: bash
       env:
-        FULL_REMOTE_PATH: ${S3_DBP_PATH}/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+        REMOTE_PATH: smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
       run: |
         set -u;
         mkdir -p "${SMART_RUNNER_PATH}"
-        if [[ $(aws s3 ls "${FULL_REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then 
+        if [[ $(aws s3 ls "${S3_DBP_PATH}/${REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then 
           echo "downloading test files"
-          aws s3 cp "${FULL_REMOTE_PATH}" .;
+          aws s3 cp "${S3_DBP_PATH}/${REMOTE_PATH}" .;
           tar xzf ${{ inputs.e2e-tar-name }};
           ls -l "${SMART_RUNNER_PATH}/";
         else
@@ -157,14 +157,13 @@ runs:
       shell: bash
       if: always()
       env:
-        FULL_REMOTE_PATH: "${S3_DBP_PATH}/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
-
+        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
       # description: always upload newer results
       run: |
         set -u;
         ls -lhart "${SMART_RUNNER_PATH}"
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
-        aws s3 cp "${{ inputs.e2e-tar-name }}" "$FULL_REMOTE_PATH"
+        aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_DBP_PATH}/$REMOTE_PATH"
         rm -rf  "${SMART_RUNNER_PATH}"
         rm -rf  "${{ inputs.e2e-tar-name }}"
 
