@@ -20,4 +20,4 @@ echo "Publishing on npm with tag $TAG_NPM"
     --tokenRegistry $NPM_REGISTRY_TOKEN \
     --tag $TAG_NPM \
     --pathProject "$(pwd)" \
-    --dryrun
+    "$@"

@@ -1,7 +1,7 @@
 on:
-  push:
-    branches:
-      - AAE-7986-dev-act-releases*
+  pull_request:
+    types:
+      - closed
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -51,33 +51,15 @@ env:
 jobs:
   build:
     timeout-minutes: 20
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     name: "Build Components"
     runs-on: ubuntu-22.04
-    env:
-      TRAVIS_BRANCH: develop
-      # TRAVIS_EVENT_TYPE: push
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0 
       - uses: ./.github/actions/setup
-      - name: set TAG_NPM
-        run: |
-          if [[ $GITHUB_BRANCH =~ ^master(-patch.*)?$ ]]
-          then
-              echo "TAG_NPM=latest" >> $GITHUB_ENV
-          fi
-          if [[ $GITHUB_BRANCH =~ ^develop(-patch.*)?$ ]]
-          then
-              echo "TAG_NPM=alpha" >> $GITHUB_ENV 
-          fi
-      # TODO REMOVE OVERRIDE
-      - name: override NX_CALCULATION_FLAGS & TAG_NPM
-        run: |
-          echo "TAG_NPM=alpha-ci" >> $GITHUB_ENV 
-          echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
       - run: npm ci
       - run: npx nx affected $NX_CALCULATION_FLAGS --target=lint
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
@@ -89,13 +71,13 @@ jobs:
   push-demoshell:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all        
+          fetch-depth: 0    
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -107,21 +89,20 @@ jobs:
         run: |
           nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
+          echo "TAGS=$TAGS" >> $GITHUB_ENV
           set -u;
-          ./scripts/travis/release/release-demoshell-docker.sh
-
-
+          ./scripts/travis/release/release-demoshell-docker.sh --dryrun
 
   push-storybook:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all    
+          fetch-depth: 0
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -134,18 +115,18 @@ jobs:
           nx run stories:build-storybook --configuration ci
           . ./scripts/travis/release/docker-tag.sh
           set -u;        
-          ./scripts/travis/release/release-storybook-docker.sh
+          ./scripts/travis/release/release-storybook-docker.sh --dryrun
 
   npm-release:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all    
+          fetch-depth: 0 
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -159,7 +140,7 @@ jobs:
           ./scripts/travis/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
-          ./scripts/travis/release/release-npm.sh
+          ./scripts/travis/release/release-npm.sh --dryrun
       - name: npm release
         run: echo "bump"
 
@@ -167,21 +148,15 @@ jobs:
   npm-check-bundle:
     needs: [npm-release]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all    
+          fetch-depth: 0 
       - uses: ./.github/actions/download-build-artifacts
       - name: Check npm bundle
         run: |
           ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
-
-      # - name: Debug
-      #   uses: mxschmitt/action-tmate@v3
-      #   with:
-      #     timeout-minutes: 60
-      #     limit-access-to-actor: true

@@ -17,4 +17,4 @@ DOCKER_PROJECT_ARGS="PROJECT_NAME=demo-shell"
     --buildArgs "$DOCKER_PROJECT_ARGS" \
     --dockerTags "$TAGS" \
     --pathProject "$(pwd)" \
-    --dryrun
+    "$@"
