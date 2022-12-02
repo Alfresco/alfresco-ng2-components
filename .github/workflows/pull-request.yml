@@ -62,14 +62,14 @@ jobs:
       - run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
       - run: npm ci
       - name: nx affected lint
-        run: nx affected "$NX_CALCULATION_FLAGS" --target=lint
+        run: nx affected --target=lint $NX_CALCULATION_FLAGS
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
         run: sudo apt-get install -y x11-xserver-utils xvfb
-      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test "$NX_CALCULATION_FLAGS" --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
       - uses: ./.github/actions/clean-test-env
-      - run: nx affected:build "$NX_CALCULATION_FLAGS" --prod
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-build-artifacts
 

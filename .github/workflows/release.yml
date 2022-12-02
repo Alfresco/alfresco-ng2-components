@@ -61,9 +61,9 @@ jobs:
           fetch-depth: 0 
       - uses: ./.github/actions/setup
       - run: npm ci
-      - run: npx nx affected "$NX_CALCULATION_FLAGS" --target=lint
-      - run: nx affected:build "$NX_CALCULATION_FLAGS" --prod --exclude="demoshell"
-      - run: nx "$NX_CALCULATION_FLAGS" build demoshell --configuration production
+      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
       - run: nx run cli:bundle
       - uses: ./.github/actions/upload-build-artifacts
@@ -138,8 +138,8 @@ jobs:
         run: |
           set -u;
           ./scripts/travis/build/bumpversion.sh
-          nx affected:build "$NX_CALCULATION_FLAGS" --prod --exclude="demoshell"
-          nx affected "$NX_CALCULATION_FLAGS" --target=pretheme
+          nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+          nx affected $NX_CALCULATION_FLAGS --target=pretheme
           ./scripts/travis/release/release-npm.sh --dryrun
       - name: npm release
         run: echo "bump"
