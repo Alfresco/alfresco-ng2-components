@@ -3,7 +3,8 @@ name: "pull-request"
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
   push:
-    - AAE-7986*
+    branches:
+      - AAE-7986*
   pull_request:
     types:
       - opened
