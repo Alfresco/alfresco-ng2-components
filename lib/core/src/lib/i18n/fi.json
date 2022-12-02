@@ -20,12 +20,15 @@
   "CLAIM": "Varaa",
   "UNCLAIM": "Vapauta",
   "START PROCESS": "Käynnistä prosessi",
+  "DATA_LOADING": "Tiedot latautuvat",
+  "CLOSE": "Sulje",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Sinulla ei ole ilmoituksia.",
     "TITLE": "Ilmoitukset",
     "MARK_AS_READ": "Merkitse kaikki luetuiksi",
     "SYSTEM": "Järjestelmä",
-    "LOAD_MORE": "Lataa lisää"
+    "LOAD_MORE": "Lataa lisää",
+    "OPEN_HISTORY": "Avaa ilmoitushistoria"
   },
   "FORM": {
     "START_FORM": {
@@ -195,7 +198,7 @@
         "NAME": "Nimi",
         "VALUE": "Arvo"
       },
-      "NONE": "Ei yhtään",
+      "NONE": "Ei mitään",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
@@ -292,7 +295,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Annoit tuntemattoman käyttäjänimen tai salasanan",
       "LOGIN-ERROR-PROVIDERS": "Palveluiden määritystä ei voi poistaa",
       "LOGIN-ERROR-CORS": "Ilmeni CORS-poikkeus, tarkista palvelinmääritykset",
-      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuken \"disableCSRF\": arvoksi true kohteessa app.config.json",
+      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen \"disableCSRF\": arvoksi true kohteessa app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services -säilö on Vain luku -tilassa",
       "SSO-WRONG-CONFIGURATION": "Kertakirjautumisen todennuspalvelimeen ei saada yhteyttä"
     },
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Peruuta",
-      "CHOOSE": "Valitse"
+      "CHOOSE": "Valitse",
+      "LOGIN": "Kirjaudu sisään"
     }
   },
   "ADF-DATATABLE": {
@@ -328,13 +332,14 @@
       "SELECT_FILE": "Valitse tiedosto",
       "SORT_ASCENDING": "Nouseva",
       "SORT_DESCENDING": "Laskeva",
-      "SORT_NONE": "Ei yhtään",
+      "SORT_NONE": "Ei mitään",
       "SORT_DEFAULT": "Lajiteltavissa",
       "SORT_ASCENDING_BY": "Nouseva: {{ string }} ensin",
       "SORT_DESCENDING_BY": "Laskeva {{ string }} ensin",
       "ICON_TEXT": "Kohteen tyyppi {{ type }}",
       "ICON_DISABLED": "Poistettu käytöstä",
-      "ROW_OPTION_BUTTON": "Toiminnot"
+      "ROW_OPTION_BUTTON": "Toiminnot",
+      "EMPTY_HEADER": "Tyhjä otsikko"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Asiakirja",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Näytetään",
-      "OF": "/"
+      "OF": "/",
+      "PAGE_SELECTOR_LABEL": "Sivuvalitsin"
     },
     "LOADING": "Ladataan",
     "UNKNOWN_FORMAT": "Esikatselun lataaminen epäonnistui. Tuntematon muoto.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Servicesin URL-osoite: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Servicesin URL-osoite: {{ value }}"
     },
+    "REPOSITORY": "Säilö",
     "VERSIONS": {
       "TITLE": "Tuoteversiot",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Ladataan..."
+    "LOADING": "Ladataan...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} yhdistelmäruutu {{selectedOption}}"
   }
 }

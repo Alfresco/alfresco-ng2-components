@@ -218,14 +218,16 @@
         "START_FORM": "Aloita lomake",
         "TASKS_ACTIVE": "Aktiiviset tehtävät",
         "TASKS_COMPLETED": "Suoritetut tehtävät",
-        "TASK_SUBTITLE": "Määritetty käyttäjälle {{user}}, luotu {{created}}"
+        "TASK_SUBTITLE": "Määritetty käyttäjälle {{user}}, luotu {{created}}",
+        "REFRESH": "Päivitä"
       },
       "BUTTON": {
         "CANCEL": "Peruuta prosessi",
         "CLOSE": "Sulje",
         "SHOW_DIAGRAM": "Näytä kaavio",
         "DRAG-ATTACHMENT": "Lataa tiedostoja pudottamalla niitä",
-        "UPLOAD-ATTACHMENT": "Lataa liite"
+        "UPLOAD-ATTACHMENT": "Lataa liite",
+        "FILE_OPTION_MENU": "Tiedostoasetukset-valikko"
       },
       "MESSAGES": {
         "NONE": "Prosessitietoja ei löydy"

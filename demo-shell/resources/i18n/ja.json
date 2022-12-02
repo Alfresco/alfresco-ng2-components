@@ -358,5 +358,12 @@
       "ACTION_TYPE": "処理のタイプ"
     }
   },
-  "DEFAULT_SEARCH": "デフォルト"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "新しいフォルダボタンの作成",
+    "EDIT_NODE_LABEL": "ノードボタンの編集",
+    "DELETE_NODE_LABEL": "ノードアイコンボタンの削除"
+  },
+  "DEFAULT_SEARCH": "デフォルト",
+  "OPEN_DIALOG": "ダイアログを開く",
+  "SHOW_LIST_LABEL": "クリックしてリストを表示"
 }

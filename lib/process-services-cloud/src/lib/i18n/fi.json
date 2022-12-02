@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Suorittaja",
       "PRIORITY_VALUES": {
-        "NONE": "Ei yhtään",
+        "NONE": "Ei mitään",
         "LOW": "Matala",
         "NORMAL": "Normaali",
         "HIGH": "Korkea"
@@ -272,7 +272,7 @@
       "DATE": "Päivämäärämuoto: PP/KK/VVVV",
       "INDALID_START_DATE": "Virheellinen alkamispäivä",
       "INDALID_END_DATE": "Virheellinen päättymispäivä",
-      "INVALID_DATE_FILTER": "Päivämäärasuodatin ei ole tuettu"
+      "INVALID_DATE_FILTER": "Päivämääräsuodatin ei ole tuettu"
     },
     "TOOL_TIP": {
       "SAVE": "Tallenna suodatin",
@@ -385,7 +385,7 @@
     "ASSIGNED_TO": "Määritetty käyttäjälle",
     "CURRENT_USER": "Määritetty minulle",
     "UNASSIGNED": "Määrittämätön",
-    "NONE": "Ei yhtään",
+    "NONE": "Ei mitään",
     "CANDIDATE_GROUPS": "Kandidaattiryhmien lista",
     "ASSIGNEE": "Vastuuhenkilö",
     "ASSIGNMENT_TYPE": "Määrityksen tyyppi"

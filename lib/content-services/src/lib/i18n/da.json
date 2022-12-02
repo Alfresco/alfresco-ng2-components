@@ -20,12 +20,12 @@
       "MESSAGE": "Slettede filversioner kan ikke gendannes. Vil du fortsætte?",
       "YES_LABEL": "Ja",
       "NO_LABEL": "Nej"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Administrér versionsoptioner"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Administrer versioner",
-      "CLOSE": "Luk"
+      "TITLE": "Administrer versioner"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Upload ny version",
@@ -71,7 +71,8 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Download"
-    }
+    },
+    "LOADER_LABEL": "Dokumentlisteindlæser"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimer",
       "MAXIMIZE": "Maksimer",
       "CLOSE": "Luk",
-      "CANCEL_ALL": "Annuller uploads",
-      "CANCEL_FILE": "Annuller upload",
-      "REMOVE_FILE": "Fjern den uploadede fil"
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload afsluttet"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Annulleret",
@@ -150,8 +151,8 @@
         "CONTINUE": "Nej"
       },
       "MESSAGE": {
-        "TITLE": "Annuller upload",
-        "TEXT": "Stop med at uploade, og fjern de filer, der allerede er uploadet."
+        "TITLE": "Stop upload",
+        "TEXT": "Stop og annullér alle uploads, der er i gang og venter."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Maksimer dialogboksen Upload",
       "DIALOG_MINIMIZE": "Minimer dialogboksen Upload",
       "DIALOG_CLOSE": "Luk dialogboksen Upload",
-      "CANCEL_ALL": "Annuller alle filer, der uploades",
-      "REMOVE_FILE": "Fjern den uploadede fil {{ file }}",
-      "CANCEL_FILE": "Annuller den planlagte fil {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Annuller filupload {{ file }}",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploadede filen {{ file }}",
+      "STOP_FILE": "Stop filen {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop upload af filen {{ file }}",
       "UPLOAD_FILE_ERROR": "Uploadfejl {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Bekræft annullering",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Datoen er senere end tilladt.",
         "INVALID-DATETIME": "Ugyldig dato/klokkeslæt. Dato/klokkeslæt skal være i formatet '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "Maks. dato/klokkeslæt er nået."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Søgefilterliste"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Udløbsdato",
     "CLIPBOARD-MESSAGE": "Link kopieret til udklipsholderen",
     "CLOSE": "Luk",
+    "COPY_BUTTON_LABEL": "Kopiér link",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Fjern dette delte link",
       "MESSAGE": "Dette link bliver slettet, og der oprettes et nyt link, når filen deles næste gang",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Tilføj",
       "CLOSE-ACTION": "Annuller",
       "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
-      "EVERYONE": "Alle"
+      "EVERYONE": "Alle",
+      "USER-GROUP-LIST": "Bruger eller gruppeliste"
     },
     "COLUMN": {
       "NAME": "Brugere og grupper ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Direkte tilføjet tilladelse",
       "INHERITED-PERMISSIONS": "Nedarvet tilladelse",
       "INHERITED-SUBTITLE": "{{count}} brugere eller grupper arver tilladelse fra overordnet mappe",
-      "SELECT-ROLE": "Vælg funktion"
+      "SELECT-ROLE": "Vælg funktion",
+      "INHERITED_PERMISSION_TOGGLE": "Skift overtaget tilladelse"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Ingen brugere/grupper",

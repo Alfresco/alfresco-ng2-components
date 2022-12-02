@@ -20,12 +20,15 @@
   "CLAIM": "担当する",
   "UNCLAIM": "担当解除",
   "START PROCESS": "プロセスの開始",
+  "DATA_LOADING": "データの読込中",
+  "CLOSE": "閉じる",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "現在通知はありません。",
     "TITLE": "通知",
     "MARK_AS_READ": "すべて既読にする",
     "SYSTEM": "システム",
-    "LOAD_MORE": "もっと見る"
+    "LOAD_MORE": "もっと見る",
+    "OPEN_HISTORY": "通知履歴を開く"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "キャンセル",
-      "CHOOSE": "選択"
+      "CHOOSE": "選択",
+      "LOGIN": "サインイン"
     }
   },
   "ADF-DATATABLE": {
@@ -316,7 +320,7 @@
       "HEADER": "このリストは空です",
       "DRAG-AND-DROP": {
         "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-        "SUBTITLE": ""
+        "SUBTITLE": "ファイルのアップロード"
       }
     },
     "CONTENT-ACTIONS": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "{{ string }} (降順)",
       "ICON_TEXT": "アイテムタイプ {{ type }}",
       "ICON_DISABLED": "無効",
-      "ROW_OPTION_BUTTON": "アクション"
+      "ROW_OPTION_BUTTON": "アクション",
+      "EMPTY_HEADER": "空のヘッダー"
     },
     "FILE_TYPE": {
       "DOCUMENT": "文書",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "表示中",
-      "OF": "/"
+      "OF": "/",
+      "PAGE_SELECTOR_LABEL": "ページセレクター"
     },
     "LOADING": "読み込み中",
     "UNKNOWN_FORMAT": "プレビューを読み込めませんでした。不明な形式です。",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services の URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services の URL: {{ value }}"
     },
+    "REPOSITORY": "リポジトリ",
     "VERSIONS": {
       "TITLE": "製品のバージョン",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "読み込んでいます..."
+    "LOADING": "読み込んでいます...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}}コンボボックス{{selectedOption}}"
   }
 }

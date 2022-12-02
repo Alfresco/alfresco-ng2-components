@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Typ czynności"
     }
   },
-  "DEFAULT_SEARCH": "Domyślne"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Przycisk Utwórz nowy folder",
+    "EDIT_NODE_LABEL": "Przycisk Edytuj węzeł",
+    "DELETE_NODE_LABEL": "Przycisk Usuń ikonę węzła"
+  },
+  "DEFAULT_SEARCH": "Domyślne",
+  "OPEN_DIALOG": "Otwórz okno dialogowe",
+  "SHOW_LIST_LABEL": "Kliknij, aby wyświetlić listę"
 }

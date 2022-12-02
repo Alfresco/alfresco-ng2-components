@@ -20,12 +20,12 @@
       "MESSAGE": "Nie można przywrócić usuniętych wersji plików. Czy kontynuować?",
       "YES_LABEL": "Tak",
       "NO_LABEL": "Nie"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Zarządzaj opcjami wersji"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Zarządzaj wersjami",
-      "CLOSE": "Zamknij"
+      "TITLE": "Zarządzaj wersjami"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Prześlij nową wersję",
@@ -71,7 +71,8 @@
       "VIEW": "Widok",
       "REMOVE": "Usuń",
       "DOWNLOAD": "Pobierz"
-    }
+    },
+    "LOADER_LABEL": "Program do wczytywania listy dokumentów"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Zminimalizuj",
       "MAXIMIZE": "Zmaksymalizuj",
       "CLOSE": "Zamknij",
-      "CANCEL_ALL": "Anuluj przesyłania",
-      "CANCEL_FILE": "Anuluj przesyłanie",
-      "REMOVE_FILE": "Usuń przesłany plik"
+      "STOP_ALL": "Zatrzymaj operacje przesyłania",
+      "STOP_FILE": "Zatrzymaj przesyłanie",
+      "UPLOAD_SUCCESSFUL": "Przesyłanie powiodło się"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Anulowane",
@@ -150,8 +151,8 @@
         "CONTINUE": "Nie"
       },
       "MESSAGE": {
-        "TITLE": "Anuluj przesyłanie",
-        "TEXT": "Zatrzymaj przesyłanie i usuń już przesłane pliki."
+        "TITLE": "Zatrzymaj przesyłanie",
+        "TEXT": "Zatrzymaj i anuluj wszystkie trwające i oczekujące operacje przesyłania."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Maksymalizuj okno dialogowe przesyłania",
       "DIALOG_MINIMIZE": "Minimalizuj okno dialogowe przesyłania",
       "DIALOG_CLOSE": "Zamknij okno dialogowe przesyłania",
-      "CANCEL_ALL": "Anuluj wszystkie przesyłane pliki",
-      "REMOVE_FILE": "Usuń przesłany plik: {{ file }}",
-      "CANCEL_FILE": "Anuluj zaplanowany plik: {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Anuluj przesyłanie pliku: {{ file }}",
+      "STOP_ALL": "Zatrzymaj operacje przesyłania",
+      "UPLOAD_SUCCESSFUL": "Plik pomyślnie przesłany {{ file }}",
+      "STOP_FILE": "Zatrzymaj plik {{ file }}",
+      "STOP_FILE_UPLOAD": "Zatrzymaj przesyłanie pliku {{ file }}",
       "UPLOAD_FILE_ERROR": "Błąd przesyłania: {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Potwierdź anulowanie",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Data jest późniejsza niż maksymalna.",
         "INVALID-DATETIME": "Nieprawidłowa data i godzina. Data i godzina muszą być w formacie „{{ requiredFormat }}”",
         "BEYOND-MAX-DATETIME": "Data i godzina wykraczają poza maksymalną datę i godzinę."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Lista filtrów wyszukiwania"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Data ważności",
     "CLIPBOARD-MESSAGE": "Link został skopiowany do schowka.",
     "CLOSE": "Zamknij",
+    "COPY_BUTTON_LABEL": "Kopiuj link",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Usuń udostępniony link",
       "MESSAGE": "Ten link zostanie usunięty, a przy następnym udostępnieniu tego pliku zostanie utworzony nowy link.",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Dodaj",
       "CLOSE-ACTION": "Anuluj",
       "BASE-DIALOG-TITLE": "Wyszukaj grupę lub osoby do dodania...",
-      "EVERYONE": "Wszyscy"
+      "EVERYONE": "Wszyscy",
+      "USER-GROUP-LIST": "Lista użytkowników lub grup"
     },
     "COLUMN": {
       "NAME": "Użytkownicy i grupy ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Uprawnienie stosowane bezpośrednio",
       "INHERITED-PERMISSIONS": "Uprawnienie dziedziczone",
       "INHERITED-SUBTITLE": "Użytkownicy lub grupy ({{count}}) dziedziczą uprawnienie z folderu nadrzędnego",
-      "SELECT-ROLE": "Wybierz rolę"
+      "SELECT-ROLE": "Wybierz rolę",
+      "INHERITED_PERMISSION_TOGGLE": "Przełącz dziedziczone uprawnienie"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Brak użytkowników/grup",

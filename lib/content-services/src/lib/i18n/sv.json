@@ -20,12 +20,12 @@
       "MESSAGE": "Raderade filversioner kan inte återställas. Fortsätt?",
       "YES_LABEL": "Ja",
       "NO_LABEL": "Nej"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Hantera versionsalternativ"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Hantera versioner",
-      "CLOSE": "Stäng"
+      "TITLE": "Hantera versioner"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Ladda upp ny version",
@@ -71,7 +71,8 @@
       "VIEW": "Visa",
       "REMOVE": "Ta bort",
       "DOWNLOAD": "Ladda ner"
-    }
+    },
+    "LOADER_LABEL": "Inläsare för dokumentlista"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimera",
       "MAXIMIZE": "Maximera",
       "CLOSE": "Stäng",
-      "CANCEL_ALL": "Avbryt uppladdningar",
-      "CANCEL_FILE": "Avbryt uppladdning",
-      "REMOVE_FILE": "Ta bort uppladdad fil"
+      "STOP_ALL": "Stoppa uppladdningar",
+      "STOP_FILE": "Stoppa uppladdning",
+      "UPLOAD_SUCCESSFUL": "Uppladdningen lyckades"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Avbruten",
@@ -151,7 +152,7 @@
       },
       "MESSAGE": {
         "TITLE": "Avbryt uppladdning",
-        "TEXT": "Stoppa uppladdning och ta bort filer som redan laddats upp"
+        "TEXT": "Stoppa och avbryt alla pågående och väntande uppladdningar."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Förstora dialogruta för uppladdning",
       "DIALOG_MINIMIZE": "Förminska dialogruta för uppladdning",
       "DIALOG_CLOSE": "Stäng dialogruta för uppladdning",
-      "CANCEL_ALL": "Avbryt alla filer som laddas upp",
-      "REMOVE_FILE": "Ta bort uppladdad fil {{ file }}",
-      "CANCEL_FILE": "Avbryt planerad fil {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Avbryt uppladdning av fil {{ file }}",
+      "STOP_ALL": "Stoppa uppladdningar",
+      "UPLOAD_SUCCESSFUL": "Laddade upp filen {{ file }}",
+      "STOP_FILE": "Stoppa fil {{ file }}",
+      "STOP_FILE_UPLOAD": "Stoppa filuppladdning {{ file }}",
       "UPLOAD_FILE_ERROR": "Uppladdningsfel {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Bekräfta avbrott",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "Datumet ligger bortom maximidatum",
         "INVALID-DATETIME": "Ogiltig datumtid. Datumtiden måste ha formatet '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "Datumtiden är bortom den maximala datumtiden."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Lista över sökfilter"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Sista giltighetsdatum",
     "CLIPBOARD-MESSAGE": "Länk kopierad till urklipp",
     "CLOSE": "Stäng",
+    "COPY_BUTTON_LABEL": "Kopiera länk",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Ta bort den här delade länken",
       "MESSAGE": "Den här länken kommer att raderas och en ny länk kommer att skapas nästa gång den här filen delas",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Lägg till",
       "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Sök en grupp eller personer att lägga till...",
-      "EVERYONE": "Alla"
+      "EVERYONE": "Alla",
+      "USER-GROUP-LIST": "Användar- eller grupplista"
     },
     "COLUMN": {
       "NAME": "Användare och grupper ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Direkt tillämpat behörighet",
       "INHERITED-PERMISSIONS": "Ärvt behörighet",
       "INHERITED-SUBTITLE": "{{count}} användare eller grupper ärver behörighet från en överordnad mapp",
-      "SELECT-ROLE": "Välj roll"
+      "SELECT-ROLE": "Välj roll",
+      "INHERITED_PERMISSION_TOGGLE": "Växla ärvd behörighet"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Inga användare/grupper",

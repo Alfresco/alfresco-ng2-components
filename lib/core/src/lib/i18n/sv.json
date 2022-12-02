@@ -20,12 +20,15 @@
   "CLAIM": "Anta",
   "UNCLAIM": "Avsäga",
   "START PROCESS": "Starta process",
+  "DATA_LOADING": "Data laddas",
+  "CLOSE": "Stäng",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Du har inga aviseringar just nu.",
     "TITLE": "Aviseringar",
     "MARK_AS_READ": "Markera allt som läst",
     "SYSTEM": "System",
-    "LOAD_MORE": "Läs in mer"
+    "LOAD_MORE": "Läs in mer",
+    "OPEN_HISTORY": "Öppna meddelandehistorik"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Avbryt",
-      "CHOOSE": "Välj"
+      "CHOOSE": "Välj",
+      "LOGIN": "Logga in"
     }
   },
   "ADF-DATATABLE": {
@@ -327,14 +331,15 @@
       "SELECT_ALL": "Välj alla",
       "SELECT_FILE": "Välj fil",
       "SORT_ASCENDING": "Stigande",
-      "SORT_DESCENDING": "Nedåtgående",
+      "SORT_DESCENDING": "Sjunkande",
       "SORT_NONE": "Ingen",
       "SORT_DEFAULT": "Sorterbar",
       "SORT_ASCENDING_BY": "Stigande efter {{ string }}",
       "SORT_DESCENDING_BY": "Sjunkande efter {{ string }}",
       "ICON_TEXT": "Artikeltyp {{ type }}",
       "ICON_DISABLED": "Avaktiverad",
-      "ROW_OPTION_BUTTON": "Åtgärder"
+      "ROW_OPTION_BUTTON": "Åtgärder",
+      "EMPTY_HEADER": "Tomt sidhuvud"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Visar",
-      "OF": "av"
+      "OF": "av",
+      "PAGE_SELECTOR_LABEL": "Sidväljare"
     },
     "LOADING": "Läser in",
     "UNKNOWN_FORMAT": "Kunde inte läsa in förhandsgranskning. Okänt format.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
+    "REPOSITORY": "Arkiv",
     "VERSIONS": {
       "TITLE": "Produktversioner",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Läser in..."
+    "LOADING": "Läser in...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} kombinationsrutan {{selectedOption}}"
   }
 }

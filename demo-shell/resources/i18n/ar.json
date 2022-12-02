@@ -112,7 +112,7 @@
     "CONFIRM-DIALOG": "مربع حوار التأكيد",
     "COMMUNITY": "Community",
     "SERVICE_TASK_LIST": "قائمة مهام الخدمات",
-    "RICH_TEXT_EDITOR": "افتح محرر النص المنسق"
+    "RICH_TEXT_EDITOR": "محرر نص منسق"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -358,5 +358,12 @@
       "ACTION_TYPE": "نوع الإجراء"
     }
   },
-  "DEFAULT_SEARCH": "افتراضي"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "تم إنشاء زر مجلد جديد",
+    "EDIT_NODE_LABEL": "زر تحرير العقدة",
+    "DELETE_NODE_LABEL": "زر حذف أيقونة العقدة"
+  },
+  "DEFAULT_SEARCH": "افتراضي",
+  "OPEN_DIALOG": "فتح الحوار",
+  "SHOW_LIST_LABEL": "انقر لعرض القائمة"
 }

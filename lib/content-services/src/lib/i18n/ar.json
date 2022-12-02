@@ -20,12 +20,12 @@
       "MESSAGE": "لم يمكن استعادة إصدارات الملفات المحذوفة. أتريد المتابعة؟",
       "YES_LABEL": "نعم",
       "NO_LABEL": "لا"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "إدارة خيارات الإصدار"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "إدارة الإصدارات",
-      "CLOSE": "إغلاق"
+      "TITLE": "إدارة الإصدارات"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "تحميل إصدار جديد",
@@ -71,7 +71,8 @@
       "VIEW": "عرض",
       "REMOVE": "إزالة",
       "DOWNLOAD": "تنزيل"
-    }
+    },
+    "LOADER_LABEL": "محمل قائمة المستندات"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "تصغير",
       "MAXIMIZE": "تكبير",
       "CLOSE": "إغلاق",
-      "CANCEL_ALL": "إلغاء التحميلات",
-      "CANCEL_FILE": "إلغاء التحميل",
-      "REMOVE_FILE": "إزالة الملف المحمل"
+      "STOP_ALL": "وقف التحميلات",
+      "STOP_FILE": "وقف التحميل",
+      "UPLOAD_SUCCESSFUL": "تحميل ناجح"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "تم الإلغاء",
@@ -150,8 +151,8 @@
         "CONTINUE": "لا"
       },
       "MESSAGE": {
-        "TITLE": "إلغاء التحميل",
-        "TEXT": "قم بإيقاف التحميل وإزالة الملفات التي تم تحميلها بالفعل."
+        "TITLE": "وقف التحميل",
+        "TEXT": "أوقف وألغِ جميع عمليات التحميل قيد التقدم والمعلقة."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "تكبير مربع حوار التحميل",
       "DIALOG_MINIMIZE": "تصغير مربع حوار التحميل",
       "DIALOG_CLOSE": "إغلاق مربع حوار التحميل",
-      "CANCEL_ALL": "إلغاء كل ملفات التي يتم تحميلها",
-      "REMOVE_FILE": "إزالة الملف الذي تم تحميله {{ file }}",
-      "CANCEL_FILE": "إلغاء الملف المجدول {{ file }}",
-      "CANCEL_FILE_UPLOAD": "إلغاء تحميل الملف {{ file }}",
+      "STOP_ALL": "وقف التحميلات",
+      "UPLOAD_SUCCESSFUL": "تم تحميل الملف بنجاح {{ file }}",
+      "STOP_FILE": "إيقاف الملف {{ file }}",
+      "STOP_FILE_UPLOAD": "وقف تحميل الملف {{ file }}",
       "UPLOAD_FILE_ERROR": "خطأ في التحميل {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "تأكيد الإلغاء",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "يتجاوز التاريخ الحد الأقصى للتاريخ.",
         "INVALID-DATETIME": "التاريخ والوقت غير صالحين. يجب أن يكون التاريخ والوقت بالتنسيق '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "التاريخ والوقت يتجاوزان الحد الأقصى للتاريخ والوقت."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "قائمة تصفية البحث"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "تاريخ الانتهاء",
     "CLIPBOARD-MESSAGE": "تم نسخ الرابط إلى الحافظة",
     "CLOSE": "إغلاق",
+    "COPY_BUTTON_LABEL": "انسخ الرابط",
     "CONFIRMATION": {
       "DIALOG-TITLE": "إزالة هذا الرابط المشترك",
       "MESSAGE": "سيتم حذف هذا الرابط وسيتم إنشاء رابط جديد في المرة التالية التي يتم فيها مشاركة هذا الملف",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "إضافة",
       "CLOSE-ACTION": "إلغاء",
       "BASE-DIALOG-TITLE": "بحث عن مجموعة أو أشخاص لإضافتهم...",
-      "EVERYONE": "كل شخص"
+      "EVERYONE": "كل شخص",
+      "USER-GROUP-LIST": "قائمة المستخدم أو المجموعة"
     },
     "COLUMN": {
       "NAME": "المستخدمون والمجموعات ({{count}})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "الإذن المطبق بشكل مباشر",
       "INHERITED-PERMISSIONS": "إذن موروث",
       "INHERITED-SUBTITLE": "{{count}} المستخدمين أو المجموعات يرثون الإذن من مجلد رئيسي",
-      "SELECT-ROLE": "حدد الدور"
+      "SELECT-ROLE": "حدد الدور",
+      "INHERITED_PERMISSION_TOGGLE": "تبديل الإذن الموروث"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "لا مستخدمين / مجموعات",

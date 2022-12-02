@@ -218,14 +218,16 @@
         "START_FORM": "Modulo di inizio",
         "TASKS_ACTIVE": "Compiti attivi",
         "TASKS_COMPLETED": "Compiti completati",
-        "TASK_SUBTITLE": "Assegnato a {{user}}, creazione {{created}}"
+        "TASK_SUBTITLE": "Assegnato a {{user}}, creazione {{created}}",
+        "REFRESH": "Aggiorna"
       },
       "BUTTON": {
         "CANCEL": "Annulla processo",
         "CLOSE": "Chiudi",
         "SHOW_DIAGRAM": "Visualizza diagramma",
         "DRAG-ATTACHMENT": "Rilascia file da caricare",
-        "UPLOAD-ATTACHMENT": "Carica allegato"
+        "UPLOAD-ATTACHMENT": "Carica allegato",
+        "FILE_OPTION_MENU": "Menu opzioni file"
       },
       "MESSAGES": {
         "NONE": "Nessun dettaglio di processo trovato"

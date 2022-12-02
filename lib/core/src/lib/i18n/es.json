@@ -20,12 +20,15 @@
   "CLAIM": "Pedir",
   "UNCLAIM": "Liberar",
   "START PROCESS": "Iniciar proceso",
+  "DATA_LOADING": "Los datos se están cargando",
+  "CLOSE": "Cerrar",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "No tiene notificaciones en este momento.",
     "TITLE": "Notificaciones",
     "MARK_AS_READ": "Marcar todo como leído",
     "SYSTEM": "Sistema",
-    "LOAD_MORE": "Cargar más"
+    "LOAD_MORE": "Cargar más",
+    "OPEN_HISTORY": "Abrir el historial de notificaciones"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Cancelar",
-      "CHOOSE": "Elegir"
+      "CHOOSE": "Elegir",
+      "LOGIN": "Iniciar sesión"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Descendente por {{ string }}",
       "ICON_TEXT": "Tipo de elemento {{ type }}",
       "ICON_DISABLED": "Desactivado",
-      "ROW_OPTION_BUTTON": "Acciones"
+      "ROW_OPTION_BUTTON": "Acciones",
+      "EMPTY_HEADER": "Encabezado vacío"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Documento",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Mostrando",
-      "OF": "de"
+      "OF": "de",
+      "PAGE_SELECTOR_LABEL": "Selector de página"
     },
     "LOADING": "Cargando",
     "UNKNOWN_FORMAT": "No se ha podido cargar la vista previa. Formato desconocido.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL de Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL de Alfresco Process Services: {{ value }}"
     },
+    "REPOSITORY": "Repositorio",
     "VERSIONS": {
       "TITLE": "Versiones de productos",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Cargando..."
+    "LOADING": "Cargando...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
   }
 }

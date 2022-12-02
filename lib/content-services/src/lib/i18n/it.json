@@ -20,12 +20,12 @@
       "MESSAGE": "Le versioni eliminate del file non possono essere ripristinate. Continuare?",
       "YES_LABEL": "Sì",
       "NO_LABEL": "No"
-    }
+    },
+    "MANAGE_VERSION_OPTIONS": "Gestisci opzioni di versione"
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gestione versioni",
-      "CLOSE": "Chiudi"
+      "TITLE": "Gestione versioni"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Caricare la nuova versione",
@@ -71,7 +71,8 @@
       "VIEW": "Visualizza",
       "REMOVE": "Rimuovi",
       "DOWNLOAD": "Scarica"
-    }
+    },
+    "LOADER_LABEL": "Caricatore elenco documenti"
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -136,9 +137,9 @@
       "MINIMIZE": "Minimizzare",
       "MAXIMIZE": "Massimizzare",
       "CLOSE": "Chiudi",
-      "CANCEL_ALL": "Annulla i caricamenti",
-      "CANCEL_FILE": "Annulla caricamento",
-      "REMOVE_FILE": "Rimuovere file caricato"
+      "STOP_ALL": "Interrompi i caricamenti",
+      "STOP_FILE": "Interrompi il caricamento",
+      "UPLOAD_SUCCESSFUL": "Caricamento completato"
     },
     "STATUS": {
       "FILE_CANCELED_STATUS": "Annullato",
@@ -150,8 +151,8 @@
         "CONTINUE": "No"
       },
       "MESSAGE": {
-        "TITLE": "Annulla caricamento",
-        "TEXT": "Interrompi il caricamento e rimuovi i file già caricati."
+        "TITLE": "Interrompi il caricamento",
+        "TEXT": "Interrompi e annulla tutti i caricamenti in corso e in sospeso."
       }
     },
     "ARIA-LABEL": {
@@ -160,10 +161,10 @@
       "DIALOG_MAXIMIZE": "Massimizza finestra di caricamento",
       "DIALOG_MINIMIZE": "Minimizza finestra di caricamento",
       "DIALOG_CLOSE": "Chiudi finestra di caricamento",
-      "CANCEL_ALL": "Annulla tutti i file in caricamento",
-      "REMOVE_FILE": "Rimuovi file caricato {{ file }}",
-      "CANCEL_FILE": "Annulla file programmato {{ file }}",
-      "CANCEL_FILE_UPLOAD": "Annulla caricamento file {{ file }}",
+      "STOP_ALL": "Interrompi i caricamenti",
+      "UPLOAD_SUCCESSFUL": "File {{ file }} caricato correttamente",
+      "STOP_FILE": "Interrompi file {{ file }}",
+      "STOP_FILE_UPLOAD": "Interrompi caricamento file {{ file }}",
       "UPLOAD_FILE_ERROR": "Errore di caricamento {{ error }}",
       "CONFIRMATION": {
         "CANCEL": "Conferma annullamento",
@@ -268,6 +269,9 @@
         "BEYOND-MAX-DATE": "La data è successiva alla data massima.",
         "INVALID-DATETIME": "Data/ora non valida. La data/ora deve essere specificata nel formato '{{ requiredFormat }}'",
         "BEYOND-MAX-DATETIME": "La data/ora supera il valore massimo consentito."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Cerca elenco filtri"
       }
     },
     "ICONS": {
@@ -382,6 +386,7 @@
     "EXPIRATION-LABEL": "Data di scadenza",
     "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
     "CLOSE": "Chiudi",
+    "COPY_BUTTON_LABEL": "Copia link",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Rimuovi link condiviso",
       "MESSAGE": "Il link verrà eliminato e verrà creato un nuovo link per il prossimo file condiviso",
@@ -408,7 +413,8 @@
       "ADD-ACTION": "Aggiungi",
       "CLOSE-ACTION": "Annulla",
       "BASE-DIALOG-TITLE": "Cerca un gruppo o una persona da aggiungere...",
-      "EVERYONE": "Tutti"
+      "EVERYONE": "Tutti",
+      "USER-GROUP-LIST": "Elenco di utenti o gruppi"
     },
     "COLUMN": {
       "NAME": "Utenti e gruppi ({{ count }})",
@@ -423,7 +429,8 @@
       "DIRECT-PERMISSIONS": "Autorizzazione applicata direttamente",
       "INHERITED-PERMISSIONS": "Autorizzazione ereditata",
       "INHERITED-SUBTITLE": "{{count}} utenti o gruppi ereditano l'autorizzazione da una cartella principale",
-      "SELECT-ROLE": "Seleziona ruolo"
+      "SELECT-ROLE": "Seleziona ruolo",
+      "INHERITED_PERMISSION_TOGGLE": "Abilita/disabilita autorizzazione ereditata"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Nessun utente/gruppo",

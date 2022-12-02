@@ -134,9 +134,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private parentValueChanged(value: string) {
-        if (value && !this.isDefaultValue(value)) {
+        if (value && !this.isNoneValueSelected(value)) {
             this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
-        } else if (this.isDefaultValue(value)) {
+        } else if (this.isNoneValueSelected(value)) {
             this.resetRestApiErrorMessage();
             this.addDefaultOption();
             this.resetInvalidValue();
@@ -146,8 +146,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    private isDefaultValue(value: string): boolean {
-        return value === DEFAULT_OPTION.id;
+    private isNoneValueSelected(value: string): boolean {
+        return value === undefined;
     }
 
     private getFormFieldById(fieldId): FormFieldModel {
@@ -181,7 +181,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isValidValue(): boolean {
-        return this.fieldValue && !this.isDefaultValue(this.fieldValue) && this.isSelectedValueInOptions();
+        return this.fieldValue && this.isSelectedValueInOptions();
     }
 
     private isSelectedValueInOptions(): boolean {
@@ -249,7 +249,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         let optionValue: string = '';
-        if (option.id === DEFAULT_OPTION.id || option.name !== fieldValue) {
+        if (option.id === DEFAULT_OPTION.id) {
+            optionValue = undefined;
+        } else if (option.name !== fieldValue) {
             optionValue = option.id;
         } else {
             optionValue = option.name;
@@ -309,6 +311,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     showRequiredMessage(): boolean {
-        return (this.isInvalidFieldRequired() || this.field.value === 'empty') && this.isTouched() && !this.isRestApiFailed;
+        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) && this.isTouched() && !this.isRestApiFailed;
+    }
+
+    getDefaultOption(options: FormFieldOption[]): FormFieldOption {
+        return options.find((option: FormFieldOption) => option.id === DEFAULT_OPTION.id);
     }
 }

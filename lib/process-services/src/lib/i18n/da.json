@@ -218,14 +218,16 @@
         "START_FORM": "Åbn formular",
         "TASKS_ACTIVE": "Aktive opgaver",
         "TASKS_COMPLETED": "Fuldførte opgaver",
-        "TASK_SUBTITLE": "Tildelt til {{user}}, oprettet {{created}}"
+        "TASK_SUBTITLE": "Tildelt til {{user}}, oprettet {{created}}",
+        "REFRESH": "Opdater"
       },
       "BUTTON": {
         "CANCEL": "Annuller proces",
         "CLOSE": "Luk",
         "SHOW_DIAGRAM": "Vis diagram",
         "DRAG-ATTACHMENT": "Slip filer for at uploade dem",
-        "UPLOAD-ATTACHMENT": "Upload vedhæftet fil"
+        "UPLOAD-ATTACHMENT": "Upload vedhæftet fil",
+        "FILE_OPTION_MENU": "Filoptionsmenu"
       },
       "MESSAGES": {
         "NONE": "Der blev ikke fundet nogen procesdetaljer"

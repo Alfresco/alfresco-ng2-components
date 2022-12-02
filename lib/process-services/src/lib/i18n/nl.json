@@ -218,14 +218,16 @@
         "START_FORM": "Beginformulier",
         "TASKS_ACTIVE": "Actieve taken",
         "TASKS_COMPLETED": "Voltooide taken",
-        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt {{created}}"
+        "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt {{created}}",
+        "REFRESH": "Vernieuwen"
       },
       "BUTTON": {
         "CANCEL": "Proces annuleren",
         "CLOSE": "Sluiten",
         "SHOW_DIAGRAM": "Diagram weergeven",
         "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
-        "UPLOAD-ATTACHMENT": "Bijlage uploaden"
+        "UPLOAD-ATTACHMENT": "Bijlage uploaden",
+        "FILE_OPTION_MENU": "Menu Bestandsopties"
       },
       "MESSAGES": {
         "NONE": "Geen procesdetails gevonden"

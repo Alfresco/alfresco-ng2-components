@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Type d'action"
     }
   },
-  "DEFAULT_SEARCH": "Par défaut"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Bouton Créer un nouveau dossier",
+    "EDIT_NODE_LABEL": "Bouton Modifier le nœud",
+    "DELETE_NODE_LABEL": "Bouton Supprimer l'icône du nœud"
+  },
+  "DEFAULT_SEARCH": "Par défaut",
+  "OPEN_DIALOG": "Boîte de dialogue Ouvrir",
+  "SHOW_LIST_LABEL": "Cliquer pour afficher la liste"
 }

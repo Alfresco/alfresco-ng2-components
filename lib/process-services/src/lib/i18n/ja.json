@@ -154,7 +154,7 @@
         "HEADER": "このリストは空です",
         "DRAG-AND-DROP": {
           "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-          "SUBTITLE": ""
+          "SUBTITLE": "ファイルのアップロード"
         }
       },
       "EMPTY-LIST": {
@@ -218,14 +218,16 @@
         "START_FORM": "開始フォーム",
         "TASKS_ACTIVE": "アクティブなタスク",
         "TASKS_COMPLETED": "完了済みタスク",
-        "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}"
+        "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}",
+        "REFRESH": "再読み込み"
       },
       "BUTTON": {
         "CANCEL": "プロセスのキャンセル",
         "CLOSE": "閉じる",
         "SHOW_DIAGRAM": "図の表示",
         "DRAG-ATTACHMENT": "アップロードするファイルをここにドロップしてください",
-        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード"
+        "UPLOAD-ATTACHMENT": "添付ファイルのアップロード",
+        "FILE_OPTION_MENU": "ファイルオプションメニュ"
       },
       "MESSAGES": {
         "NONE": "プロセスの詳細が見つかりません"
@@ -301,7 +303,7 @@
         "HEADER": "このリストは空です",
         "DRAG-AND-DROP": {
           "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
-          "SUBTITLE": ""
+          "SUBTITLE": "ファイルのアップロード"
         }
       },
       "EMPTY-LIST": {

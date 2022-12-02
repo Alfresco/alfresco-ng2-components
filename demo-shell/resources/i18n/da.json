@@ -358,5 +358,12 @@
       "ACTION_TYPE": "Handlingstype"
     }
   },
-  "DEFAULT_SEARCH": "Standard"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "Knap Opret en ny mappe",
+    "EDIT_NODE_LABEL": "Knap Redigér knude",
+    "DELETE_NODE_LABEL": "Knap Slet knudeikon"
+  },
+  "DEFAULT_SEARCH": "Standard",
+  "OPEN_DIALOG": "Åbn dialog",
+  "SHOW_LIST_LABEL": "Klik for at vise listen"
 }

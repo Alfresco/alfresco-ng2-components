@@ -83,7 +83,7 @@
     "FORM_LOADING": "表单加载",
     "UPLOADER": "上传程序",
     "WEBSCRIPT": "Webscript",
-    "TAG": "标签",
+    "TAG": "标记",
     "PIPES": "管道",
     "TRASHCAN": "垃圾桶",
     "SOCIAL": "社交",
@@ -358,5 +358,12 @@
       "ACTION_TYPE": "操作类型"
     }
   },
-  "DEFAULT_SEARCH": "默认值"
+  "BREADCRUMB_DEMO": {
+    "NEW_FOLDER_LABEL": "创建一个新文件夹按钮",
+    "EDIT_NODE_LABEL": "编辑节点按钮",
+    "DELETE_NODE_LABEL": "删除节点图标按钮"
+  },
+  "DEFAULT_SEARCH": "默认值",
+  "OPEN_DIALOG": "打开对话框",
+  "SHOW_LIST_LABEL": "单击以显示列表"
 }

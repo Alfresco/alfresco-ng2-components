@@ -382,7 +382,7 @@
     "RETRIEVE_METADATA": "Autofyld formular"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "Tildelt mig",
+    "ASSIGNED_TO": "Tildelt til",
     "CURRENT_USER": "Tildelt mig",
     "UNASSIGNED": "Ikke tildelt",
     "NONE": "Ingen",

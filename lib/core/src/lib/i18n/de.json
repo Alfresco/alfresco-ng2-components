@@ -20,12 +20,15 @@
   "CLAIM": "Beanspruchen",
   "UNCLAIM": "Anspruch aufheben",
   "START PROCESS": "Prozess starten",
+  "DATA_LOADING": "Daten werden geladen",
+  "CLOSE": "Schließen",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Sie haben momentan keine Benachrichtigungen.",
     "TITLE": "Benachrichtigungen",
     "MARK_AS_READ": "Alles als gelesen markieren",
     "SYSTEM": "System",
-    "LOAD_MORE": "Mehr laden"
+    "LOAD_MORE": "Mehr laden",
+    "OPEN_HISTORY": "Benachrichtigungsverlauf öffnen"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Abbrechen",
-      "CHOOSE": "Auswählen"
+      "CHOOSE": "Auswählen",
+      "LOGIN": "Anmelden"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Absteigend ({{ string }})",
       "ICON_TEXT": "Elementtyp {{ type }}",
       "ICON_DISABLED": "Deaktiviert",
-      "ROW_OPTION_BUTTON": "Aktionen"
+      "ROW_OPTION_BUTTON": "Aktionen",
+      "EMPTY_HEADER": "Leerer Header"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",
-      "OF": "von"
+      "OF": "von",
+      "PAGE_SELECTOR_LABEL": "Seitenwähler"
     },
     "LOADING": "Laden",
     "UNKNOWN_FORMAT": "Vorschau konnte nicht geladen werden",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
       "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
     },
+    "REPOSITORY": "Repository",
     "VERSIONS": {
       "TITLE": "Produktversionen",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Es wird geladen..."
+    "LOADING": "Es wird geladen...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} Kombinationsfeld {{selectedOption}}"
   }
 }

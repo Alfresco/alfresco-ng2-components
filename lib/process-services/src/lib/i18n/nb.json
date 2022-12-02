@@ -218,14 +218,16 @@
         "START_FORM": "Start skjema",
         "TASKS_ACTIVE": "Aktive oppgaver",
         "TASKS_COMPLETED": "Fullførte oppgaver",
-        "TASK_SUBTITLE": "Tilordnet til {{user}}, opprettet {{created}}"
+        "TASK_SUBTITLE": "Tilordnet til {{user}}, opprettet {{created}}",
+        "REFRESH": "Oppdater"
       },
       "BUTTON": {
         "CANCEL": "Avbryt prosess",
         "CLOSE": "Lukk",
         "SHOW_DIAGRAM": "Vis diagram",
         "DRAG-ATTACHMENT": "Slipp filer for å laste opp",
-        "UPLOAD-ATTACHMENT": "Last opp vedlegg"
+        "UPLOAD-ATTACHMENT": "Last opp vedlegg",
+        "FILE_OPTION_MENU": "Filalternativmeny"
       },
       "MESSAGES": {
         "NONE": "Ingen prosessdetaljer funnet"

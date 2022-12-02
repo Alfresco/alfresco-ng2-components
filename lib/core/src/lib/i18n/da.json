@@ -20,12 +20,15 @@
   "CLAIM": "Gør krav på",
   "UNCLAIM": "Frigiv",
   "START PROCESS": "Start proces",
+  "DATA_LOADING": "Data indlæses",
+  "CLOSE": "Luk",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "Du har ingen meddelelser i øjeblikket.",
     "TITLE": "Meddelelser",
     "MARK_AS_READ": "Markér alle som læst",
     "SYSTEM": "System",
-    "LOAD_MORE": "Indlæs flere"
+    "LOAD_MORE": "Indlæs flere",
+    "OPEN_HISTORY": "Åbn meddelelseshistorie"
   },
   "FORM": {
     "START_FORM": {
@@ -308,7 +311,8 @@
     },
     "DIALOG": {
       "CANCEL": "Annuller",
-      "CHOOSE": "Vælg"
+      "CHOOSE": "Vælg",
+      "LOGIN": "Log ind"
     }
   },
   "ADF-DATATABLE": {
@@ -334,7 +338,8 @@
       "SORT_DESCENDING_BY": "Faldende efter {{ string }}",
       "ICON_TEXT": "Elementtype {{ type }}",
       "ICON_DISABLED": "Deaktiveret",
-      "ROW_OPTION_BUTTON": "Handlinger"
+      "ROW_OPTION_BUTTON": "Handlinger",
+      "EMPTY_HEADER": "Tom toptekst"
     },
     "FILE_TYPE": {
       "DOCUMENT": "Dokument",
@@ -403,7 +408,8 @@
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",
-      "OF": "af"
+      "OF": "af",
+      "PAGE_SELECTOR_LABEL": "Sidevælger"
     },
     "LOADING": "Indlæser",
     "UNKNOWN_FORMAT": "Forhåndsvisningen kunne ikke indlæses. Ukendt format.",
@@ -503,6 +509,7 @@
       "CONTENT_SERVICE_HOST": "URL-adresse til Alfresco-indholdstjenester: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL-adresse til Alfresco-procestjenester: {{ value }}"
     },
+    "REPOSITORY": "Opbevaringssted",
     "VERSIONS": {
       "TITLE": "Produktversioner",
       "CONTENT_SERVICE": "Content Services",
@@ -575,6 +582,7 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Indlæser..."
+    "LOADING": "Indlæser...",
+    "SELECTION_ARIA_LABEL": "{{placeholder}} kombiboks {{selectedOption}}"
   }
 }

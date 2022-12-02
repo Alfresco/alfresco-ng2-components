@@ -218,14 +218,16 @@
         "START_FORM": "Startformular",
         "TASKS_ACTIVE": "Aktive Aufgaben",
         "TASKS_COMPLETED": "Abgeschlossene Aufgaben",
-        "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}"
+        "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}",
+        "REFRESH": "Aktualisieren"
       },
       "BUTTON": {
         "CANCEL": "Prozess abbrechen",
         "CLOSE": "Schließen",
         "SHOW_DIAGRAM": "Diagramm anzeigen",
         "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
-        "UPLOAD-ATTACHMENT": "Anhang hochladen"
+        "UPLOAD-ATTACHMENT": "Anhang hochladen",
+        "FILE_OPTION_MENU": "Menü der Dateioptionen"
       },
       "MESSAGES": {
         "NONE": "Keine Prozessdetails gefunden"

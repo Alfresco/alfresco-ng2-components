@@ -382,7 +382,7 @@
     "RETRIEVE_METADATA": "نموذج الملء التلقائي"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "معين لي",
+    "ASSIGNED_TO": "معين إلى",
     "CURRENT_USER": "معين لي",
     "UNASSIGNED": "غير معين",
     "NONE": "بلا",
