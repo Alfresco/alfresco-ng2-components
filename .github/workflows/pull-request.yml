@@ -43,7 +43,7 @@ env:
   HR_USER: ${{ secrets.HR_USER }}
   HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
   SMART_RUNNER_PATH: ".protractor-smartrunner"
-
+  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
 jobs:
   main:
     # long timeout required when cache has to be recreated
