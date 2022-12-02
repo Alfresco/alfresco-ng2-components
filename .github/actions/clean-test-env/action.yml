@@ -3,6 +3,11 @@ description: "clean test env"
 runs:
   using: "composite"
   steps:
+    - name: Debug on failure
+      uses: mxschmitt/action-tmate@v3
+      with:
+        timeout-minutes: 60
+        limit-access-to-actor: true
     - name: cleanup test env
       shell: bash
       run: |

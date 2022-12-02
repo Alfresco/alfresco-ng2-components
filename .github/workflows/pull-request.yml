@@ -42,6 +42,7 @@ env:
   PASSWORD_SUPER_ADMIN_ADF: ${{ secrets.PASSWORD_SUPER_ADMIN_ADF }}
   HR_USER: ${{ secrets.HR_USER }}
   HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
+  SMART_RUNNER_PATH: ".protractor-smartrunner"
 
 jobs:
   main:
@@ -60,7 +61,11 @@ jobs:
       - run: echo $HEAD_COMMIT_HASH
       - run: echo "$NX_CALCULATION_FLAGS"
       - run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
-      - run: npm ci
+      - name: install
+        run: |
+          npm ci
+          nx run cli:bundle
+          nx run testing:bundle
       - name: nx affected lint
         run: nx affected --target=lint $NX_CALCULATION_FLAGS
       - name: install chrome
@@ -89,9 +94,6 @@ jobs:
           rm -rf nxcache
           rm -rf dist
       - uses: ./.github/actions/download-build-artifacts
-      - run: find nxcache -type d -maxdepth 1
-      - run: find dist -type d -maxdepth 2
-      - run: nx run testing:bundle
       - name: Install playRight
         run: |
           npm install -D @playwright/test
@@ -104,8 +106,6 @@ jobs:
           playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
-      - name: debug
-        run: ls -lath node_modules/@alfresco || true
       - uses: ./.github/actions/upload-build-artifacts
 
   e2e:
@@ -242,15 +242,10 @@ jobs:
         run: |
           rm -rf nxcache
           rm -rf dist
-      - name: debug
-        run: |
-          echo '${{ toJson(matrix) }}'
       - uses: ./.github/actions/download-build-artifacts
       - name: copy cli into node modules
         run: nx run cli:bundle
         shell: bash
-      - run: find nxcache -type d -maxdepth 1
-      - run: find dist -type d -maxdepth 2
       - name: e2e
         uses: ./.github/actions/e2e
         with:
@@ -263,6 +258,3 @@ jobs:
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
-          apa-proxy-host: ${{ secrets.E2E_HOST_APA }}
-          e2e-proxy-host: ${{ secrets.E2E_HOST }}
-          s3-build-path: ${{ secrets.S3_DBP_PATH }}

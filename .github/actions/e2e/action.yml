@@ -32,19 +32,9 @@ inputs:
     required: true
     description: check ps cloud env
     default: "false"
-  local-smart-runner-path: #
-    required: false
-    default: ".protractor-smartrunner"
   e2e-tar-name: #
     required: false
     default: e2e.tar.gz
-  s3-build-path: #
-    required: true
-
-  apa-proxy-host:
-    required: true
-  e2e-proxy-host: #
-    required: true
   apa-proxy: #
     description: "proxy host"
     required: true
@@ -53,41 +43,29 @@ runs:
   # description: try to download an e2e, if it was built previously
   using: "composite"
   steps:
-    - name: setup proxy env var
+    - name: if apa-proxy is set, use APA as PROXY host for tests
       shell: bash
       run: |
-        if [[ -z "${{ inputs.apa-proxy-host }}" ]]; then
-          echo "APA proxy host not found. terminating"
-          exit 1
-        fi
-        if [[ -z "${{ inputs.e2e-proxy-host }}" ]]; then
-          echo "e2e proxy host not found. terminating"
-          exit 1
-        fi
-
-        if [[ -z "${{ inputs.apa-proxy }}" ]]; then
-          echo "Custom proxy not set. using default "
-          echo "PROXY_HOST_BPM=${{ inputs.e2e-proxy-host }}" >> $GITHUB_ENV
-        else
+        if [[ -n "${{ inputs.apa-proxy }}" ]]; then
           echo "APA proxy set."
-          echo "PROXY_HOST_BPM=${{ inputs.apa-proxy-host }}" >> $GITHUB_ENV
+          echo "PROXY_HOST_BPM=${E2E_HOST_APA}" >> $GITHUB_ENV
         fi
 
     - name: install aws cli
       shell: bash
       run: pip install awscli
-    - name: download test from s3 bucket
+    - name: download smartrunner test results from s3 bucket if they exist
       shell: bash
       env:
-        FULL_REMOTE_PATH: ${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+        FULL_REMOTE_PATH: ${S3_DBP_PATH}/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
       run: |
         set -u;
-        mkdir -p "${{ inputs.local-smart-runner-path }}"
+        mkdir -p "${SMART_RUNNER_PATH}"
         if [[ $(aws s3 ls "${FULL_REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then 
           echo "downloading test files"
           aws s3 cp "${FULL_REMOTE_PATH}" .;
           tar xzf ${{ inputs.e2e-tar-name }};
-          ls -l "${{ inputs.local-smart-runner-path }}/";
+          ls -l "${SMART_RUNNER_PATH}/";
         else
           echo "nothing to download";
         fi
@@ -143,7 +121,7 @@ runs:
           --devopsPassword "$E2E_DEVOPS_PASSWORD" \
           --clientId 'alfresco' || exit 1
 
-    - name: some debug
+    - name: variable sanification
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
@@ -179,22 +157,22 @@ runs:
           GH_ACTION_RETRY_COUNT=$(( $GH_ACTION_RETRY_COUNT + 1 ))
           echo "GH_ACTION_RETRY_COUNT=$GH_ACTION_RETRY_COUNT" >> $GITHUB_ENV
 
-    - name: up to s3
+    - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
       if: always()
       env:
-        FULL_REMOTE_PATH: "${{ inputs.s3-build-path }}/adf/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
+        FULL_REMOTE_PATH: "${S3_DBP_PATH}/smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
 
       # description: always upload newer results
       run: |
         set -u;
-        ls -lhart "${{ inputs.local-smart-runner-path }}"
-        tar czf "${{ inputs.e2e-tar-name }}" "${{ inputs.local-smart-runner-path }}"
+        ls -lhart "${SMART_RUNNER_PATH}"
+        tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
         aws s3 cp "${{ inputs.e2e-tar-name }}" "$FULL_REMOTE_PATH"
-        rm -rf  "${{ inputs.local-smart-runner-path }}"
+        rm -rf  "${SMART_RUNNER_PATH}"
         rm -rf  "${{ inputs.e2e-tar-name }}"
 
-    - name: upload 2e2 reports
+    - name: upload e2e reports
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
