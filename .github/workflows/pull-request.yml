@@ -5,14 +5,6 @@ on:
   push:
     branches:
       - AAE-7986*
-  pull_request:
-    types:
-      - opened
-    branches:
-      - /^master(-patch.*)?$/
-      - /^develop(-patch.*)?$/
-      - master
-      - develop
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
