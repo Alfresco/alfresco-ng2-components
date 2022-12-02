@@ -1,38 +1,16 @@
 name: "pull-request"
 
-on:
-  push:
-    branches:
-      - AAE-7986-dev-act*
-      - '!AAE-7986-dev-act-releases*'
-      #
-      #   - /^master(-patch.*)?$/
-      #   - /^develop(-patch.*)?$/
-      #   - master
-      #   - develop
-      # #remove after upgrade
-      #   - angular-14-rebase
-      #   - /.*old-env.*/
-      #   - /.*next-release.*/
-      #   - /.*beta.*/
-
-# on:
-#   pull_request:
-#     types:
-#       - closed
-
-# jobs:
-#   if_merged:
-#     if: github.event.pull_request.merged == true
-#     runs-on: ubuntu-latest
-#     steps:
-#     - run: |
-#         echo The PR was merged
-
-# on:
-#   pull_request:
-#     types: [opened, reopened]
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - /^master(-patch.*)?$/
+      - /^develop(-patch.*)?$/
+      - master
+      - develop
+
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -76,49 +54,26 @@ jobs:
     timeout-minutes: 30
     name: "Build Components"
     runs-on: ubuntu-22.04
-    # TODO : pull request not merged
-    # if: github.event.pull_request.merged == true
-    env:
-      TRAVIS_BRANCH: develop
-      # TRAVIS_EVENT_TYPE: push
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - name: debug nx-set-sha
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-      # TODO: remove override
-      - name: override NX_CALCULATION_FLAGS
-        run: echo NX_CALCULATION_FLAGS=--base=origin/develop --head=HEAD >> $GITHUB_ENV
-        # run: echo NX_CALCULATION_FLAGS=--all >> $GITHUB_ENV
       - run: echo $TRAVIS_EVENT_TYPE
       - run: echo $S3_NODE_MODULES_CACHE_ID
       - run: echo $HEAD_COMMIT_HASH
       - run: echo $NX_CALCULATION_FLAGS
       - run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
       - run: npm ci
-      # --parallel=3
       - name: nx affected lint
-        run: |
-          npx nx affected $NX_CALCULATION_FLAGS --target=lint
+        run: nx affected $NX_CALCULATION_FLAGS --target=lint
       - name: install chrome
         uses: browser-actions/setup-chrome@latest
       - name: install xvfb
         run: sudo apt-get install -y x11-xserver-utils xvfb
-      - run: /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
-      - name: test cleanup
-        run: |
-          xvfb_pid=$(ps x | grep -v grep | grep xvfb-run | awk '{print $1}')
-          if [ "$xvfb_pid" != "" ]; then
-              echo "Killing the following xvfb process: $xvfb_pid"
-              sudo kill $xvfb_pid || true
-          else
-              echo "Nothing to kill"
-          fi
+      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - uses: ./.github/actions/clean-test-env
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-build-artifacts
@@ -142,19 +97,18 @@ jobs:
       - run: find nxcache -type d -maxdepth 1
       - run: find dist -type d -maxdepth 2
       - run: nx run testing:bundle
-
       - name: Install playRight
         run: |
           npm install -D @playwright/test
-          npx playwright install
+          playwright install
       - name: build adf cli
         run: |
           nx build cli
       - name: Process Cloud Storybook Playwright
         run: |
-          npx playwright install chromium
+          playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
-          npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
+          playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
       - name: debug
         run: ls -lath node_modules/@alfresco || true
       - uses: ./.github/actions/upload-build-artifacts
@@ -200,7 +154,6 @@ jobs:
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
-          #TODO CHECK "content-services browser" input into e2e.sh
           - description: "Content: Upload and Versioning"
             test-id: "content-services browser"
             folder: "content-services/upload"
@@ -318,15 +271,3 @@ jobs:
           apa-proxy-host: ${{ secrets.E2E_HOST_APA }}
           e2e-proxy-host: ${{ secrets.E2E_HOST }}
           s3-build-path: ${{ secrets.S3_DBP_PATH }}
-
-
-      # - name: Debug on failure
-      #   uses: mxschmitt/action-tmate@v3
-      #   env:
-      #     FOLDER: "core"
-      #     PROVIDER: 'ALL'
-      #     AUTH_TYPE: 'OAUTH'
-      #   if: ${{ failure() }}
-      #   with:
-      #     timeout-minutes: 60
-      #     limit-access-to-actor: true

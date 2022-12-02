@@ -28,6 +28,7 @@ export interface PublishArgs {
     npmRegistry?: string;
     tokenRegistry?: string;
     pathProject: string;
+    dryrun?: boolean;
 }
 
 const projects = [
@@ -42,6 +43,10 @@ const projects = [
 ];
 
 async function npmPublish(args: PublishArgs, project: string) {
+    if (args.dryrun) {
+        logger.info(`Dry run mode, no publish will be done`);
+    }
+
     if (args.npmRegistry) {
         changeRegistry(args, project);
     }
@@ -57,10 +62,14 @@ async function npmPublish(args: PublishArgs, project: string) {
             options.push('-tag');
             options.push(`${args.tag}`);
         }
-        const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/dist/libs/${project}`) });
-        logger.info(response);
-        if (args.npmRegistry) {
-            removeNpmConfig(args, project);
+        if (args.dryrun) {
+            logger.info(`Dry-run npm publish. cwd: ${args.pathProject}/dist/libs/${project}`);
+        } else {
+            const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/dist/libs/${project}`) });
+            logger.info(response);
+            if (args.npmRegistry) {
+                removeNpmConfig(args, project);
+            }
         }
 
         await sleep(30000);
@@ -73,7 +82,7 @@ async function npmPublish(args: PublishArgs, project: string) {
 function npmCheckExist(project: string, version: string) {
     logger.info(`Check if lib  ${project} is already in npm with version ${version}`);
 
-    const exist = exec(`npm`, [`view`, `@alfresco/adf-${project}@${version} version`]  );
+    const exist = exec(`npm`, [`view`, `@alfresco/adf-${project}@${version} version`]);
 
     return exist !== '';
 }
@@ -117,6 +126,7 @@ async function main(args) {
         .option('--npmRegistry [type]', 'npm Registry')
         .option('--tokenRegistry [type]', 'token Registry')
         .option('--pathProject [type]', 'pathProject')
+        .option('--dryrun [type]', 'dryrun')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {

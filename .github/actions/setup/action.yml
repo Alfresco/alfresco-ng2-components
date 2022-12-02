@@ -56,6 +56,7 @@ runs:
         uses: ./.github/actions/travis-event-type-load
       - name: before install script
         uses: ./.github/actions/before-install
+      # sanitize nx calculation flags string
       - name: input validation for NX CALCULATION FLAGS
         shell: bash
         run: |
@@ -68,5 +69,3 @@ runs:
       - name: link nx executable
         run: sudo ln -s $(npm bin)/nx /usr/bin/nx
         shell: bash
-      # - if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }} || ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-# BUILD
