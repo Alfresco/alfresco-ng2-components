@@ -4,7 +4,7 @@ name: "pull-request"
 on:
   push:
     branches:
-      - AAE-7986*
+      - AAe-7986*
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
