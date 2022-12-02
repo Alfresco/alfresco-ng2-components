@@ -49,8 +49,8 @@ Forms defined in APS have the following default mappings for the form fields:
 | Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/core/src/lib/form/components/widgets/typeahead/typeahead.widget.ts) |
 | Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
 | Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/core/src/lib/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
-| People | people | [`PeopleWidgetComponent`](lib/core/src/lib/form/components/widgets/people/people.widget.ts) |
-| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/core/src/lib/form/components/widgets/functional-group/functional-group.widget.ts) |
+| People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |
+| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/process-services/src/lib/form/widgets/functional-group/functional-group.widget.ts) |
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |

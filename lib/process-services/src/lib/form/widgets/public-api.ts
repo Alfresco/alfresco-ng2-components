@@ -17,5 +17,7 @@
 
 export * from './document/content.widget';
 export * from './content-widget/index';
+export * from './people/people.widget';
+export * from './functional-group/functional-group.widget';
 
 export * from './upload/upload.widget';

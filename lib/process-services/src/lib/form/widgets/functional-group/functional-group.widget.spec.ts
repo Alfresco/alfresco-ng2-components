@@ -16,15 +16,15 @@
  */
 
 import { of, timer } from 'rxjs';
-import { FormService } from '../../../services/form.service';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { GroupModel } from '../core/group.model';
+import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
+import { FormFieldModel } from '../../../../../../core/src/lib/form/components/widgets/core/form-field.model';
+import { FormModel } from '../../../../../../core/src/lib/form/components/widgets/core/form.model';
+import { GroupModel } from '../../../../../../core/src/lib/form/components/widgets/core/group.model';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, setupTestBed } from '../../../../testing';
+import { CoreTestingModule, setupTestBed } from '../../../../../../core/src/lib/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldTypes } from '../core/form-field-types';
+import { FormFieldTypes } from '../../../../../../core/src/lib/form/components/widgets/core/form-field-types';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;

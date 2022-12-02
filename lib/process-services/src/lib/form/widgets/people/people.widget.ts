@@ -17,11 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { PeopleProcessService } from '../../../../services/people-process.service';
-import { UserProcessModel } from '../../../../models';
+import { UserProcessModel, PeopleProcessService, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import {

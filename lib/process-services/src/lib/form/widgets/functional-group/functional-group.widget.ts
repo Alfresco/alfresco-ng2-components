@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { GroupModel } from '../core/group.model';
-import { WidgetComponent } from '../widget.component';
+import { FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { UntypedFormControl } from '@angular/forms';
@@ -51,7 +49,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         tap((search: GroupModel | string) => {
             const isValid = typeof search !== 'string';
             const empty = search === '';
-            this.updateOption( isValid ? search as GroupModel : null );
+            this.updateOption(isValid ? search as GroupModel : null);
             this.validateGroup(isValid, empty);
         }),
         filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
@@ -62,7 +60,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
     constructor(public formService: FormService,
                 public elementRef: ElementRef) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {
@@ -84,7 +82,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }
     }
 
-   updateOption(option?: GroupModel) {
+    updateOption(option?: GroupModel) {
         if (option) {
             this.field.value = option;
         } else {

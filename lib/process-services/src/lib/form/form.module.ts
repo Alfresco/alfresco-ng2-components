@@ -25,6 +25,8 @@ import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { ContentWidgetComponent } from './widgets/document/content.widget';
 import { UploadWidgetComponent } from "./widgets/upload/upload.widget";
 import { FormListComponent } from "./form-list/form-list.component";
+import { FunctionalGroupWidgetComponent } from "./widgets/functional-group/functional-group.widget";
+import { PeopleWidgetComponent } from "./widgets/people/people.widget";
 
 @NgModule({
     imports: [
@@ -38,13 +40,18 @@ import { FormListComponent } from "./form-list/form-list.component";
         FormCustomOutcomesComponent,
         DocumentWidgetComponent,
         ContentWidgetComponent,
+        PeopleWidgetComponent,
+        FunctionalGroupWidgetComponent,
         FormListComponent
     ],
     exports: [
         FormComponent,
         StartFormComponent,
         FormCustomOutcomesComponent,
+        PeopleWidgetComponent,
+        FunctionalGroupWidgetComponent,
         FormListComponent
     ]
 })
-export class FormModule {}
+export class FormModule {
+}

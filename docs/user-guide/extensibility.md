@@ -92,8 +92,8 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/display-text/display-text.widget.ts) |
 | Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/core/src/lib/form/components/widgets/typeahead/typeahead.widget.ts) |
-| People | people | [`PeopleWidgetComponent`](lib/core/src/lib/form/components/widgets/people/people.widget.ts) |
-| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/core/src/lib/form/components/widgets/functional-group/functional-group.widget.ts) |
+| People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |
+| Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/process-services/src/lib/form/widgets/functional-group/functional-group.widget.ts) |
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) (layout component) |
 | Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |

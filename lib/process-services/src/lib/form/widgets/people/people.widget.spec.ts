@@ -17,16 +17,16 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { UserProcessModel } from '../../../../models';
+import { UserProcessModel } from '../../../../../../core/src/lib/models';
 import { Observable, of } from 'rxjs';
-import { FormService } from '../../../services/form.service';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
+import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
+import { FormFieldTypes } from '../../../../../../core/src/lib/form/components/widgets/core/form-field-types';
+import { FormFieldModel } from '../../../../../../core/src/lib/form/components/widgets/core/form-field.model';
+import { FormModel } from '../../../../../../core/src/lib/form/components/widgets/core/form.model';
 import { PeopleWidgetComponent } from './people.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
+import { setupTestBed } from '../../../../../../core/src/lib/testing/setup-test-bed';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../../../../core/src/lib/testing/core.testing.module';
 
 describe('PeopleWidgetComponent', () => {
 

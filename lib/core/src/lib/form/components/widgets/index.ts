@@ -31,11 +31,9 @@ import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
 import { AmountEditorComponent } from './dynamic-table/editors/amount/amount.editor';
 import { ErrorWidgetComponent } from './error/error.component';
-import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
 import { NumberWidgetComponent } from './number/number.widget';
-import { PeopleWidgetComponent } from './people/people.widget';
 import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
 import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
@@ -60,8 +58,6 @@ export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './display-text/display-text.widget';
 export * from './typeahead/typeahead.widget';
-export * from './functional-group/functional-group.widget';
-export * from './people/people.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
@@ -93,8 +89,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     RadioButtonsWidgetComponent,
     DisplayTextWidgetComponent,
     TypeaheadWidgetComponent,
-    FunctionalGroupWidgetComponent,
-    PeopleWidgetComponent,
     DateWidgetComponent,
     AmountWidgetComponent,
     DynamicTableWidgetComponent,
