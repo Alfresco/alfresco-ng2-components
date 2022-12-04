@@ -90,7 +90,7 @@
     "@storybook/core-server": "6.4.22",
     "apollo-angular": "^4.0.1",
     "chart.js": "2.9.4",
-    "cropperjs": "1.5.12",
+    "cropperjs": "1.5.13",
     "custom-event-polyfill": "^1.0.7",
     "dotenv-expand": "^5.1.0",
     "editorjs-html": "3.4.2",
