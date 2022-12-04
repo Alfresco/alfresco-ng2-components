@@ -190,7 +190,7 @@
     "stylelint": "^14.15.0",
     "stylelint-config-standard-scss": "^3.0.0",
     "ts-node": "^10.4.0",
-    "tsconfig-paths": "^4.1.0",
+    "tsconfig-paths": "^4.1.1",
     "typescript": "4.7.4",
     "webdriver-manager": "12.1.8",
     "webpack-cli": "^4.9.2"
