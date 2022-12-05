@@ -24,6 +24,8 @@ import { WidgetVisibilityService,
 import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { EcmModelService } from './services/ecm-model.service';
+import { ModelService } from "./services/model.service";
+import { EditorService } from "./services/editor.service";
 
 @Component({
     selector: 'adf-form',
@@ -89,6 +91,8 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formService: FormService,
+                protected editorService: EditorService,
+                protected modelService: ModelService,
                 protected visibilityService: WidgetVisibilityService,
                 protected ecmModelService: EcmModelService,
                 protected nodeService: NodesApiService) {
@@ -210,7 +214,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormDefinitionByFormId(formId: number) {
-        this.formService
+        this.editorService
             .getFormDefinitionById(formId)
             .subscribe(
                 (form) => {
@@ -227,11 +231,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormDefinitionByFormName(formName: string) {
-        this.formService
+        this.modelService
             .getFormDefinitionByName(formName)
             .subscribe(
                 (id) => {
-                    this.formService.getFormDefinitionById(id).subscribe(
+                    this.editorService.getFormDefinitionById(id).subscribe(
                         (form) => {
                             this.form = this.parseForm(form);
                             this.visibilityService.refreshVisibility(this.form);
@@ -313,7 +317,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     loadFormFromActiviti(nodeType: string): any {
-        this.formService.searchFrom(nodeType).subscribe(
+        this.modelService.searchFrom(nodeType).subscribe(
             (form) => {
                 if (!form) {
                     this.createFormFromANode(nodeType).subscribe((formMetadata) => {
@@ -338,13 +342,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      */
     createFormFromANode(formName: string): Observable<any> {
         return new Observable((observer) => {
-            this.formService.createForm(formName).subscribe(
+            this.modelService.createForm(formName).subscribe(
                 (form) => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         (customType) => {
                             const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
                             from(
-                                this.formService.editorApi.saveForm(form.id, formDefinitionModel)
+                                this.editorService.saveForm(form.id, formDefinitionModel)
                             ).subscribe((formData) => {
                                 observer.next(formData);
                                 observer.complete();

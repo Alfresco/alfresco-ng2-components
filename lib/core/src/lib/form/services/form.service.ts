@@ -19,16 +19,13 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, from, throwError } from 'rxjs';
-import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from '../components/widgets/core/content-link.model';
 import { map, catchError } from 'rxjs/operators';
 import {
     CompleteFormRepresentation,
-    ModelsApi,
     SaveFormRepresentation,
     TasksApi,
     TaskFormsApi,
-    FormModelsApi,
     ProcessDefinitionsApi
 } from '@alfresco/js-api';
 import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
@@ -62,18 +59,6 @@ export class FormService implements FormValidationService {
     get taskApi(): TasksApi {
         this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
         return this._taskApi;
-    }
-
-    _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
-        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
-        return this._modelsApi;
-    }
-
-    _editorApi: FormModelsApi;
-    get editorApi(): FormModelsApi {
-        this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
-        return this._editorApi;
     }
 
     _processDefinitionsApi: ProcessDefinitionsApi;
@@ -132,74 +117,7 @@ export class FormService implements FormValidationService {
         return null;
     }
 
-    /**
-     * Create a Form.
-     *
-     * @param formName Name of the new form
-     * @returns The new form
-     */
-    createForm(formName: string): Observable<any> {
-        const dataModel = {
-            name: formName,
-            description: '',
-            modelType: 2,
-            stencilSet: 0
-        };
 
-        return from(
-            this.modelsApi.createModel(dataModel)
-        );
-    }
-
-    /**
-     * Saves a form.
-     *
-     * @param formId ID of the form to save
-     * @param formModel Model data for the form
-     * @returns Data for the saved form
-     */
-    saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
-        return from(
-            this.editorApi.saveForm(formId, formModel)
-        );
-    }
-
-    /**
-     * Searches for a form by name.
-     *
-     * @param name The form name to search for
-     * @returns Form model(s) matching the search name
-     */
-    searchFrom(name: string): Observable<any> {
-        const opts = {
-            modelType: 2
-        };
-
-        return from(
-            this.modelsApi.getModels(opts)
-        )
-            .pipe(
-                map((forms: any) => forms.data.find((formData) => formData.name === name)),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets all the forms.
-     *
-     * @returns List of form models
-     */
-    getForms(): Observable<any> {
-        const opts = {
-            modelType: 2
-        };
-
-        return from(this.modelsApi.getModels(opts))
-            .pipe(
-                map(this.toJsonArray),
-                catchError((err) => this.handleError(err))
-            );
-    }
 
     /**
      * Gets all the tasks.
@@ -279,40 +197,6 @@ export class FormService implements FormValidationService {
     }
 
     /**
-     * Gets a form definition.
-     *
-     * @param formId ID of the target form
-     * @returns Form definition
-     */
-    getFormDefinitionById(formId: number): Observable<any> {
-        return from(this.editorApi.getForm(formId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets the form definition with a given name.
-     *
-     * @param name The form name
-     * @returns Form definition
-     */
-    getFormDefinitionByName(name: string): Observable<any> {
-        const opts = {
-            filter: 'myReusableForms',
-            filterText: name,
-            modelType: 2
-        };
-
-        return from(this.modelsApi.getModels(opts))
-            .pipe(
-                map(this.getFormId),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
      * Gets values of fields populated by a REST backend.
      *
      * @param taskId Task identifier
@@ -370,21 +254,6 @@ export class FormService implements FormValidationService {
             );
     }
 
-    /**
-     * Gets the ID of a form.
-     *
-     * @param form Object representing a form
-     * @returns ID string
-     */
-    getFormId(form: any): string {
-        let result = null;
-
-        if (form && form.data && form.data.length > 0) {
-            result = form.data[0].id;
-        }
-
-        return result;
-    }
 
     /**
      * Creates a JSON representation of form data.

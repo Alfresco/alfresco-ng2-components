@@ -20,6 +20,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { ModelService } from "../../form/services/model.service";
 
 @Component({
     selector: 'adf-attach-form',
@@ -59,6 +60,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     constructor(private taskService: TaskListService,
         private logService: LogService,
+        private modelService: ModelService,
         private formService: FormService) { }
 
     ngOnInit() {
@@ -113,7 +115,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
     private onFormAttached() {
         this.formService.getTaskForm(this.taskId)
             .subscribe((res) => {
-                this.formService.getFormDefinitionByName(res.name).subscribe((formDef) => {
+                this.modelService.getFormDefinitionByName(res.name).subscribe((formDef) => {
                     this.formId = this.selectedFormId = formDef;
                 });
             }, (err) => {

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { FormService } from "@alfresco/adf-core";
+import { ModelService } from "../services/model.service";
 
 @Component({
     selector: 'adf-form-list',
@@ -29,7 +29,7 @@ export class FormListComponent implements OnChanges {
     @Input()
     forms: any [] = [];
 
-    constructor(protected formService: FormService) {
+    constructor(protected modelService: ModelService) {
     }
 
     ngOnChanges() {
@@ -41,7 +41,7 @@ export class FormListComponent implements OnChanges {
     }
 
     getForms() {
-        this.formService.getForms().subscribe((forms) => {
+        this.modelService.getForms().subscribe((forms) => {
             this.forms.push(...forms);
         });
     }

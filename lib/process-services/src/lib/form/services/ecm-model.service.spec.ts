@@ -16,11 +16,9 @@
  */
 
 import { Observable } from 'rxjs';
-import { FormModel } from '../../../../../core/src/lib/form/components/widgets/core/form.model';
+import { FormModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { EcmModelService } from './ecm-model.service';
-import { setupTestBed } from '../../../../../core/src/lib/testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../../../core/src/lib/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;

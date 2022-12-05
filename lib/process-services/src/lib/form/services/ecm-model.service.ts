@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../../../../core/src/lib/services/log.service';
-import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
+import { AlfrescoApiService, LogService, FormModel } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { FormModel } from '../../../../../core/src/lib/form/components/widgets/core/form.model';
 import { map, catchError } from 'rxjs/operators';
 import { CustomModelApi } from '@alfresco/js-api';
 
@@ -216,7 +214,7 @@ export class EcmModelService {
         return {};
     }
 
-    handleError(err: any): any {
+    private handleError(err: any): any {
         this.logService.error(err);
     }
 }
