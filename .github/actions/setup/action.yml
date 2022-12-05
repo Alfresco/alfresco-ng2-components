@@ -50,7 +50,7 @@ runs:
         with:
           yml_path: .travis.yml
       - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-event-type-load
+        uses: ./.github/actions/travis-env-var-facade
       - name: before install script
         uses: ./.github/actions/before-install
       # sanitize nx calculation flags string
