@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "5.1.0",
+  "version": "6.0.0-A.1",
   "author": "Alfresco Software, Ltd.",
   "repository": {
     "type": "git",
@@ -42,8 +42,8 @@
     "@angular/router": ">=10.0.2",
     "@mat-datetimepicker/core": ">=4.1.0",
     "@mat-datetimepicker/moment": ">=4.1.0",
-    "@alfresco/js-api": "5.2.0-446",
-    "@alfresco/adf-extensions": "5.1.0",
+    "@alfresco/js-api": "5.2.0",
+    "@alfresco/adf-extensions": "6.0.0-A.1",
     "@ngx-translate/core": ">=13.0.0",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
