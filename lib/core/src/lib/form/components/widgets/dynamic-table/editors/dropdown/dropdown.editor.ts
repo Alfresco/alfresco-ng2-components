@@ -65,7 +65,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     getValuesByTaskId(field) {
-        this.formService
+        this.taskFormService
             .getRestFieldValuesColumn(
                 field.form.taskId,
                 field.id,

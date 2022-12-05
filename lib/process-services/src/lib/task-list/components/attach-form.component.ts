@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { FormService, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { ModelService } from "../../form/services/model.service";
+import { TaskFormService } from "../../form";
 
 @Component({
     selector: 'adf-attach-form',
@@ -61,7 +62,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
     constructor(private taskService: TaskListService,
         private logService: LogService,
         private modelService: ModelService,
-        private formService: FormService) { }
+        private taskFormService: TaskFormService) { }
 
     ngOnInit() {
         this.attachFormControl = new UntypedFormControl('', Validators.required);
@@ -113,7 +114,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
     }
 
     private onFormAttached() {
-        this.formService.getTaskForm(this.taskId)
+        this.taskFormService.getTaskForm(this.taskId)
             .subscribe((res) => {
                 this.modelService.getFormDefinitionByName(res.name).subscribe((formDef) => {
                     this.formId = this.selectedFormId = formDef;

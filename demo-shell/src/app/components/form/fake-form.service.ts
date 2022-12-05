@@ -29,10 +29,8 @@ export class FakeFormService extends FormService {
     executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(
-        apiService: AlfrescoApiService,
-        protected logService: LogService
     ) {
-        super(apiService, logService);
+        super();
     }
 
     public getRestFieldValues(

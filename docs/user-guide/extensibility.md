@@ -83,7 +83,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Number | integer | [`NumberWidgetComponent`](lib/core/src/lib/form/components/widgets/number/number.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/multiline-text/multiline-text.widget.ts) |
 | Checkbox | boolean | [`CheckboxWidgetComponent`](lib/core/src/lib/form/components/widgets/checkbox/checkbox.widget.ts) |
-| Dropdown | dropdown | [`DropdownWidgetComponent`](lib/core/src/lib/form/components/widgets/dropdown/dropdown.widget.ts) |
+| Dropdown | dropdown | [`DropdownWidgetComponent`](lib/process-services/src/lib/form/widgets/dropdown/dropdown.widget.ts) |
 | Date | date | [`DateWidgetComponent`](lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
 | Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
 | Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |

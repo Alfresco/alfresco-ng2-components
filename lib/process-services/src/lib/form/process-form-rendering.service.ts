@@ -17,6 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
+    DropdownWidgetComponent,
     FormRenderingService,
 } from '@alfresco/adf-core';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
@@ -35,6 +36,7 @@ export class ProcessFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
+            dropdown: () => DropdownWidgetComponent,
             typeahead: () =>  TypeaheadWidgetComponent,
             'radio-buttons': () =>  RadioButtonsWidgetComponent,
             upload: () => AttachFileWidgetComponent,

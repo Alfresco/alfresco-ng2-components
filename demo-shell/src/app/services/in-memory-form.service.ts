@@ -43,9 +43,8 @@ export class InMemoryFormService extends FormService {
     executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(appConfig: AppConfigService,
-                apiService: AlfrescoApiService,
                 protected logService: LogService) {
-        super(apiService, logService);
+        super();
         this.data = appConfig.get<ProcessServiceData>('activiti');
     }
 

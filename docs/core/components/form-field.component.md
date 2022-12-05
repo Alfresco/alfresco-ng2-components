@@ -45,7 +45,7 @@ Forms defined in APS have the following default mappings for the form fields:
 | Number | integer | [`NumberWidgetComponent`](lib/core/src/lib/form/components/widgets/number/number.widget.ts) |
 | Checkbox | boolean | [`CheckboxWidgetComponent`](lib/core/src/lib/form/components/widgets/checkbox/checkbox.widget.ts) |
 | Date | date | [`DateWidgetComponent`](lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
-| Dropdown | dropdown | [`DropdownWidgetComponent`](lib/core/src/lib/form/components/widgets/dropdown/dropdown.widget.ts) |
+| Dropdown | dropdown | [`DropdownWidgetComponent`](lib/process-services/src/lib/form/widgets/dropdown/dropdown.widget.ts) |
 | Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/process-services/src/lib/form/widgets/typeahead/typeahead.widget.ts) |
 | Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
 | Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |

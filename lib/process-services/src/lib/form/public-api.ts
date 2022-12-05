@@ -20,6 +20,9 @@ export * from './widgets/index';
 export * from './services/ecm-model.service';
 export * from './services/editor.service';
 export * from './services/process-content.service';
+export * from './services/task.service';
+export * from './services/task-form.service';
+export * from './services/process-definition.service';
 
 export * from './process-form-rendering.service';
 

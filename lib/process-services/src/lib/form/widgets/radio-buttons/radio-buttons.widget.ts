@@ -19,6 +19,7 @@
 
 import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { TaskFormService } from "../../services/task-form.service";
 
 @Component({
     selector: 'radio-buttons-widget',
@@ -40,6 +41,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
+                private taskFormService: TaskFormService,
                 private logService: LogService) {
         super(formService);
     }
@@ -55,7 +57,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     }
 
     getOptionsByTaskId() {
-        this.formService
+        this.taskFormService
             .getRestFieldValues(
                 this.field.form.taskId,
                 this.field.id

@@ -32,7 +32,6 @@ export class FormRenderingService extends DynamicComponentMapper {
         integer: DynamicComponentResolver.fromType(widgets.NumberWidgetComponent),
         'multi-line-text': DynamicComponentResolver.fromType(widgets.MultilineTextWidgetComponentComponent),
         boolean: DynamicComponentResolver.fromType(widgets.CheckboxWidgetComponent),
-        dropdown: DynamicComponentResolver.fromType(widgets.DropdownWidgetComponent),
         date: DynamicComponentResolver.fromType(widgets.DateWidgetComponent),
         amount: DynamicComponentResolver.fromType(widgets.AmountWidgetComponent),
         hyperlink: DynamicComponentResolver.fromType(widgets.HyperlinkWidgetComponent),

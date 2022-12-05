@@ -20,6 +20,7 @@
 import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { TaskFormService } from "../../services/task-form.service";
 
 @Component({
     selector: 'typeahead-widget',
@@ -46,6 +47,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     options: FormFieldOption[] = [];
 
     constructor(public formService: FormService,
+                private taskFormService: TaskFormService,
                 private logService: LogService) {
         super(formService);
     }
@@ -62,7 +64,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getValuesByTaskId() {
-        this.formService
+        this.taskFormService
             .getRestFieldValues(
                 this.field.form.taskId,
                 this.field.id

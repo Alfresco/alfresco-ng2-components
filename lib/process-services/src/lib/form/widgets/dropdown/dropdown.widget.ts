@@ -17,11 +17,12 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../services/log.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from '../core/form-field-option';
-import { WidgetComponent } from '../widget.component';
+import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
+import { FormFieldOption } from '../../../../../../core/src/lib/form/components/widgets/core/form-field-option';
+import { WidgetComponent } from '../../../../../../core/src/lib/form/components/widgets/widget.component';
+import { LogService } from "../../../../../../core/src/lib/services";
+import { ProcessDefinitionService } from "../../services/process-definition.service";
 
 @Component({
     selector: 'dropdown-widget',
@@ -43,6 +44,7 @@ import { WidgetComponent } from '../widget.component';
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
+                public processDefinitionService: ProcessDefinitionService,
                 private logService: LogService) {
          super(formService);
     }
@@ -58,7 +60,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getValuesByTaskId() {
-        this.formService
+        this.processDefinitionService
             .getRestFieldValues(
                 this.field.form.taskId,
                 this.field.id

@@ -29,6 +29,7 @@ import { FunctionalGroupWidgetComponent } from './widgets/functional-group/funct
 import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
+import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
         FunctionalGroupWidgetComponent,
         FormListComponent,
         RadioButtonsWidgetComponent,
+        DropdownWidgetComponent,
         TypeaheadWidgetComponent
     ],
     exports: [
@@ -56,6 +58,7 @@ import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
         FunctionalGroupWidgetComponent,
         RadioButtonsWidgetComponent,
         TypeaheadWidgetComponent,
+        DropdownWidgetComponent,
         FormListComponent
     ]
 })

@@ -24,8 +24,10 @@ import { WidgetVisibilityService,
 import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { EcmModelService } from './services/ecm-model.service';
-import { ModelService } from "./services/model.service";
-import { EditorService } from "./services/editor.service";
+import { ModelService } from './services/model.service';
+import { EditorService } from './services/editor.service';
+import { TaskService } from './services/task.service';
+import { TaskFormService } from "./services/task-form.service";
 
 @Component({
     selector: 'adf-form',
@@ -91,6 +93,8 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formService: FormService,
+                protected taskFormService: TaskFormService,
+                protected taskService: TaskService,
                 protected editorService: EditorService,
                 protected modelService: ModelService,
                 protected visibilityService: WidgetVisibilityService,
@@ -175,7 +179,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     findProcessVariablesByTaskId(taskId: string): Observable<any> {
-        return this.formService.getTask(taskId).pipe(
+        return this.taskService.getTask(taskId).pipe(
             switchMap((task: any) => {
                 if (this.isAProcessTask(task)) {
                     return this.visibilityService.getTaskProcessVariable(taskId);
@@ -193,7 +197,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>(resolve => {
             this.findProcessVariablesByTaskId(taskId).subscribe(() => {
-                this.formService
+                this.taskFormService
                     .getTaskForm(taskId)
                     .subscribe(
                         (form) => {
@@ -255,7 +259,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     saveTaskForm() {
         if (this.form && this.form.taskId) {
-            this.formService
+            this.taskFormService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
                     () => {
@@ -269,7 +273,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     completeTaskForm(outcome?: string) {
         if (this.form && this.form.taskId) {
-            this.formService
+            this.taskFormService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
                     () => {

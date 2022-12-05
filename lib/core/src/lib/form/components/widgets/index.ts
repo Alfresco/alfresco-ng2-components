@@ -21,7 +21,6 @@ import { AmountWidgetComponent } from './amount/amount.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponent } from './display-text/display-text.widget';
-import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
 import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
@@ -51,7 +50,6 @@ export * from './text/text.widget';
 export * from './number/number.widget';
 export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
-export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './display-text/display-text.widget';
 export * from './date/date.widget';
@@ -80,7 +78,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     NumberWidgetComponent,
     CheckboxWidgetComponent,
     MultilineTextWidgetComponentComponent,
-    DropdownWidgetComponent,
     HyperlinkWidgetComponent,
     DisplayTextWidgetComponent,
     DateWidgetComponent,

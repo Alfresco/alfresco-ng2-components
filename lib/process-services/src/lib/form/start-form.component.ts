@@ -33,6 +33,8 @@ import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeMode
 import { ProcessService } from '../process-list/services/process.service';
 import { EditorService } from './services/editor.service';
 import { ModelService } from "./services/model.service";
+import { TaskFormService } from "./services/task-form.service";
+import { TaskService } from "./services/task.service";
 
 @Component({
     selector: 'adf-start-form',
@@ -74,10 +76,12 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     outcomesContainer: ElementRef = null;
 
     constructor(public processService: ProcessService,
+                taskFormService: TaskFormService,
+                taskService: TaskService,
                 editorService: EditorService,
                 modelService: ModelService,
                 formService: FormService, visibilityService: WidgetVisibilityService) {
-        super(formService, editorService, modelService, visibilityService, null, null);
+        super(formService, taskFormService, taskService, editorService, modelService, visibilityService, null, null);
         this.showTitle = false;
     }
 
