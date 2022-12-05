@@ -2,9 +2,14 @@ name: "pull-request"
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
-  push:
+  pull_request:
+    types:
+      - opened
     branches:
-      - AAe-7986*
+      - /^master(-patch.*)?$/
+      - /^develop(-patch.*)?$/
+      - master
+      - develop
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
