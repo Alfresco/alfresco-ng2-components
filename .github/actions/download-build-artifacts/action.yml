@@ -6,31 +6,27 @@ runs:
     ## NXCACHE
     - name: update NX cache folder
       uses: actions/download-artifact@v3
-      continue-on-error: true
       with:
         path: .
-        name: nxcache-${{ github.ref_name }}
+        name: nxcache
     ## DIST
     - name: update Dist folder
       uses: actions/download-artifact@v3
-      continue-on-error: true
       with:
         path: .
-        name: dist-${{ github.ref_name }}
+        name: dist
     ## ADF CLI
     - name: update Dist folder
       uses: actions/download-artifact@v3
-      continue-on-error: true
       with:
         path: .
-        name: adf-cli-${{ github.ref_name }}
+        name: adf-cli
     ## ADF TESTING
     - name: update Dist folder
       uses: actions/download-artifact@v3
-      continue-on-error: true
       with:
         path: .
-        name: adf-testing-${{ github.ref_name }}
+        name: adf-testing
     - name: extract nxcache
       run: |
         tar xzf nxcache.tar.gz
