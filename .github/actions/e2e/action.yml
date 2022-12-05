@@ -169,5 +169,5 @@ runs:
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        path: e2e-output/
+        path: e2e-output*/
         name: dist-${{ github.ref_name }}-${{ inputs.e2e-test-id }}
