@@ -147,9 +147,9 @@ runs:
         command: |
           set -u;
           echo "+++ running new attempt #$GH_ACTION_RETRY_COUNT +++"
-          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
           GH_ACTION_RETRY_COUNT=$(( $GH_ACTION_RETRY_COUNT + 1 ))
           echo "GH_ACTION_RETRY_COUNT=$GH_ACTION_RETRY_COUNT" >> $GITHUB_ENV
+          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
 
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
