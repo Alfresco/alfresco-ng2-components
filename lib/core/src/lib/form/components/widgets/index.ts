@@ -34,10 +34,8 @@ import { ErrorWidgetComponent } from './error/error.component';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
 import { NumberWidgetComponent } from './number/number.widget';
-import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
 import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
-import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
@@ -55,9 +53,7 @@ export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
 export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
-export * from './radio-buttons/radio-buttons.widget';
 export * from './display-text/display-text.widget';
-export * from './typeahead/typeahead.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
@@ -86,9 +82,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     MultilineTextWidgetComponentComponent,
     DropdownWidgetComponent,
     HyperlinkWidgetComponent,
-    RadioButtonsWidgetComponent,
     DisplayTextWidgetComponent,
-    TypeaheadWidgetComponent,
     DateWidgetComponent,
     AmountWidgetComponent,
     DynamicTableWidgetComponent,

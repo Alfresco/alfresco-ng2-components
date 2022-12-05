@@ -46,9 +46,9 @@ Forms defined in APS have the following default mappings for the form fields:
 | Checkbox | boolean | [`CheckboxWidgetComponent`](lib/core/src/lib/form/components/widgets/checkbox/checkbox.widget.ts) |
 | Date | date | [`DateWidgetComponent`](lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
 | Dropdown | dropdown | [`DropdownWidgetComponent`](lib/core/src/lib/form/components/widgets/dropdown/dropdown.widget.ts) |
-| Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/core/src/lib/form/components/widgets/typeahead/typeahead.widget.ts) |
+| Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/process-services/src/lib/form/widgets/typeahead/typeahead.widget.ts) |
 | Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
-| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/core/src/lib/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
+| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |
 | People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |
 | Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/process-services/src/lib/form/widgets/functional-group/functional-group.widget.ts) |
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |

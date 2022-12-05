@@ -19,16 +19,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 
 import { By } from '@angular/platform-browser';
-import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from '../core/form-field-option';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
+import {
+    FormService,
+    FormFieldOption,
+    FormFieldTypes,
+    FormFieldModel,
+    FormModel,
+    setupTestBed,
+    CoreTestingModule,
+    AlfrescoApiService
+} from '@alfresco/adf-core';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { AlfrescoApiService } from '../../../../services';
 
 describe('TypeaheadWidgetComponent', () => {
 
@@ -52,7 +54,7 @@ describe('TypeaheadWidgetComponent', () => {
 
         formService = new FormService(null, alfrescoApiService, null);
         widget = new TypeaheadWidgetComponent(formService, null);
-        widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
+        widget.field = new FormFieldModel(new FormModel({taskId: 'task-id'}));
         widget.field.restUrl = 'whateverURL';
     });
 
@@ -141,8 +143,8 @@ describe('TypeaheadWidgetComponent', () => {
     it('should setup initial value', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
-                { id: '1', name: 'One' },
-                { id: '2', name: 'Two' }
+                {id: '1', name: 'One'},
+                {id: '2', name: 'Two'}
             ]);
             observer.complete();
         }));
@@ -157,8 +159,8 @@ describe('TypeaheadWidgetComponent', () => {
     it('should not setup initial value due to missing option', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
-                { id: '1', name: 'One' },
-                { id: '2', name: 'Two' }
+                {id: '1', name: 'One'},
+                {id: '2', name: 'Two'}
             ]);
             observer.complete();
         }));
@@ -173,8 +175,8 @@ describe('TypeaheadWidgetComponent', () => {
 
     it('should setup field options on load', () => {
         const options: FormFieldOption[] = [
-            { id: '1', name: 'One' },
-            { id: '2', name: 'Two' }
+            {id: '1', name: 'One'},
+            {id: '2', name: 'Two'}
         ];
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
@@ -200,8 +202,8 @@ describe('TypeaheadWidgetComponent', () => {
 
     it('should get filtered options', () => {
         const options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item two' }
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'Item two'}
         ];
         widget.field.options = options;
         widget.value = 'tw';
@@ -213,8 +215,8 @@ describe('TypeaheadWidgetComponent', () => {
 
     it('should be case insensitive when filtering options', () => {
         const options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'iTEM TWo' }
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'iTEM TWo'}
         ];
         widget.field.options = options;
         widget.value = 'tW';
@@ -235,7 +237,7 @@ describe('TypeaheadWidgetComponent', () => {
         }, {
             id: '2',
             name: 'Fake Name 2'
-        }, { id: '3', name: 'Fake Name 3' }];
+        }, {id: '3', name: 'Fake Name 3'}];
 
         beforeEach(() => {
             fixture = TestBed.createComponent(TypeaheadWidgetComponent);
@@ -248,16 +250,16 @@ describe('TypeaheadWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        describe ('and typeahead is in readonly mode', () => {
+        describe('and typeahead is in readonly mode', () => {
 
             it('should show typeahead value with input disabled', async () => {
                 typeaheadWidgetComponent.field = new FormFieldModel(
-                    new FormModel({ processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
-                    id: 'typeahead-id',
-                    name: 'typeahead-name',
-                    type: 'readonly',
-                    params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
-                });
+                    new FormModel({processVariables: [{name: 'typeahead-id_LABEL', value: 'FakeProcessValue'}]}), {
+                        id: 'typeahead-id',
+                        name: 'typeahead-name',
+                        type: 'readonly',
+                        params: {field: {id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead'}}
+                    });
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -279,7 +281,7 @@ describe('TypeaheadWidgetComponent', () => {
             beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(fakeOptionList));
-                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: FormFieldTypes.TYPEAHEAD,
@@ -357,13 +359,13 @@ describe('TypeaheadWidgetComponent', () => {
             beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(fakeOptionList));
-                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
+                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: FormFieldTypes.TYPEAHEAD,
                     readOnly: 'false'
                 });
-                typeaheadWidgetComponent.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                typeaheadWidgetComponent.field.emptyOption = {id: 'empty', name: 'Choose one...'};
                 typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
             });

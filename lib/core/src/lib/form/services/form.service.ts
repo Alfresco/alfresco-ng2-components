@@ -17,25 +17,19 @@
 
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
-import { UserProcessModel } from '../../models';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, of, throwError } from 'rxjs';
+import { Observable, Subject, from, throwError } from 'rxjs';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from '../components/widgets/core/content-link.model';
-import { GroupModel } from '../components/widgets/core/group.model';
-import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import {
     CompleteFormRepresentation,
     ModelsApi,
-    ProcessInstanceVariablesApi,
     SaveFormRepresentation,
     TasksApi,
     TaskFormsApi,
-    ProcessInstancesApi,
     FormModelsApi,
-    ProcessDefinitionsApi,
-    UsersApi,
-    ActivitiGroupsApi
+    ProcessDefinitionsApi
 } from '@alfresco/js-api';
 import { FormOutcomeEvent } from '../components/widgets/core/form-outcome-event.model';
 import { FormValues } from '../components/widgets/core/form-values';
@@ -86,30 +80,6 @@ export class FormService implements FormValidationService {
     get processDefinitionsApi(): ProcessDefinitionsApi {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;
-    }
-
-    _processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.apiService.getInstance());
-        return this._processInstanceVariablesApi;
-    }
-
-    _processInstancesApi: ProcessInstancesApi;
-    get processInstancesApi(): ProcessInstancesApi {
-        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.apiService.getInstance());
-        return this._processInstancesApi;
-    }
-
-    _groupsApi: ActivitiGroupsApi;
-    get groupsApi(): ActivitiGroupsApi {
-        this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
-        return this._groupsApi;
-    }
-
-    _usersApi: UsersApi;
-    get usersApi(): UsersApi {
-        this._usersApi = this._usersApi ?? new UsersApi(this.apiService.getInstance());
-        return this._usersApi;
     }
 
     formLoaded = new Subject<FormEvent>();
@@ -232,33 +202,6 @@ export class FormService implements FormValidationService {
     }
 
     /**
-     * Gets process definitions.
-     *
-     * @returns List of process definitions
-     */
-    getProcessDefinitions(): Observable<any> {
-        return from(this.processDefinitionsApi.getProcessDefinitions({}))
-            .pipe(
-                map(this.toJsonArray),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets instance variables for a process.
-     *
-     * @param processInstanceId ID of the target process
-     * @returns List of instance variable information
-     */
-    getProcessVariablesById(processInstanceId: string): Observable<any[]> {
-        return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
      * Gets all the tasks.
      *
      * @returns List of tasks
@@ -370,48 +313,6 @@ export class FormService implements FormValidationService {
     }
 
     /**
-     * Gets the start form instance for a given process.
-     *
-     * @param processId Process definition ID
-     * @returns Form definition
-     */
-    getStartFormInstance(processId: string): Observable<any> {
-        return from(this.processInstancesApi.getProcessInstanceStartForm(processId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets a process instance.
-     *
-     * @param processId ID of the process to get
-     * @returns Process instance
-     */
-    getProcessInstance(processId: string): Observable<any> {
-        return from(this.processInstancesApi.getProcessInstance(processId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets the start form definition for a given process.
-     *
-     * @param processId Process definition ID
-     * @returns Form definition
-     */
-    getStartFormDefinition(processId: string): Observable<any> {
-        return from(this.processDefinitionsApi.getProcessDefinitionStartForm(processId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
      * Gets values of fields populated by a REST backend.
      *
      * @param taskId Task identifier
@@ -465,60 +366,6 @@ export class FormService implements FormValidationService {
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
         return from(this.taskFormsApi.getRestFieldColumnValues(taskId, field, column))
             .pipe(
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Returns a URL for the profile picture of a user.
-     *
-     * @param userId ID of the target user
-     * @returns URL string
-     */
-    getUserProfileImageApi(userId: string): string {
-        return this.usersApi.getUserProfilePictureUrl(userId);
-    }
-
-    /**
-     * Gets a list of workflow users.
-     *
-     * @param filter Filter to select specific users
-     * @param groupId Group ID for the search
-     * @returns Array of users
-     */
-    getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        const option: any = { filter };
-        if (groupId) {
-            option.groupId = groupId;
-        }
-        return from(this.usersApi.getUsers(option))
-            .pipe(
-                switchMap(response => response.data as UserProcessModel[] || []),
-                map((user) => {
-                    user.userImage = this.getUserProfileImageApi(user.id.toString());
-                    return of(user);
-                }),
-                combineAll(),
-                defaultIfEmpty([]),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Gets a list of groups in a workflow.
-     *
-     * @param filter Filter to select specific groups
-     * @param groupId Group ID for the search
-     * @returns Array of groups
-     */
-    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        const option: any = { filter };
-        if (groupId) {
-            option.groupId = groupId;
-        }
-        return from(this.groupsApi.getGroups(option))
-            .pipe(
-                map((response: any) => response.data || []),
                 catchError((err) => this.handleError(err))
             );
     }

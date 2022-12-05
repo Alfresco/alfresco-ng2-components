@@ -85,20 +85,6 @@ describe('Form service', () => {
 
         const simpleResponseBody = { id: 1, modelType: 'test' };
 
-        it('should fetch and parse process definitions', (done) => {
-            service.getProcessDefinitions().subscribe(() => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
-                expect([{ id: '1' }, { id: '2' }]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(responseBody)
-            });
-        });
-
         it('should fetch and parse tasks', (done) => {
             service.getTasks().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
@@ -306,43 +292,6 @@ describe('Form service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(simpleResponseBody)
-            });
-        });
-
-        it('should return list of people', (done) => {
-            spyOn(service, 'getUserProfileImageApi').and.returnValue('/app/rest/users/2002/picture');
-            const fakeFilter: string = 'whatever';
-
-            service.getWorkflowUsers(fakeFilter).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.length).toBe(3);
-                expect(result[0].id).toBe(2002);
-                expect(result[0].firstName).toBe('Peo');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakePeopleResponse)
-            });
-        });
-
-        it('should return list of groups', (done) => {
-            const fakeFilter: string = 'whatever';
-
-            service.getWorkflowGroups(fakeFilter).subscribe((result) => {
-                expect(result).toBeDefined();
-                expect(result.length).toBe(2);
-                expect(result[0].id).toBe('2004');
-                expect(result[0].name).toBe('PEOPLE_GROUP');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGroupResponse)
             });
         });
 

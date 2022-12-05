@@ -30,6 +30,7 @@ import {
 } from '@angular/core';
 import { FormComponent } from './form.component';
 import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeModel } from '@alfresco/adf-core';
+import { ProcessService } from "../process-list/services/process.service";
 
 @Component({
     selector: 'adf-start-form',
@@ -70,7 +71,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer')
     outcomesContainer: ElementRef = null;
 
-    constructor(formService: FormService, visibilityService: WidgetVisibilityService) {
+    constructor(public processService: ProcessService,formService: FormService, visibilityService: WidgetVisibilityService) {
         super(formService, visibilityService, null, null);
         this.showTitle = false;
     }
@@ -99,9 +100,9 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     loadStartForm(processId: string) {
-        this.formService.getProcessInstance(processId)
+        this.processService.getProcess(processId)
             .subscribe((instance: any) => {
-                this.formService
+                this.processService
                     .getStartFormInstance(processId)
                     .subscribe(
                         (form) => {
@@ -117,7 +118,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     getStartFormDefinition(processId: string) {
-        this.formService
+        this.processService
             .getStartFormDefinition(processId)
             .subscribe(
                 (form) => {

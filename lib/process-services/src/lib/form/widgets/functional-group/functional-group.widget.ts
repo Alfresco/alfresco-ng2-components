@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, GroupModel, PeopleProcessService, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { UntypedFormControl } from '@angular/forms';
@@ -54,11 +54,12 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }),
         filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
         debounceTime(300),
-        switchMap((searchTerm: string) => this.formService.getWorkflowGroups(searchTerm, this.groupId)
+        switchMap((searchTerm: string) => this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId)
             .pipe(catchError(() => of([]))))
     );
 
-    constructor(public formService: FormService,
+    constructor(public peopleProcessService: PeopleProcessService,
+                public formService: FormService,
                 public elementRef: ElementRef) {
         super(formService);
     }

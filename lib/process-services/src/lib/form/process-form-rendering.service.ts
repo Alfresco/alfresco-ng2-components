@@ -22,8 +22,10 @@ import {
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
-import { PeopleWidgetComponent } from "./widgets/people/people.widget";
-import { FunctionalGroupWidgetComponent } from "./widgets/functional-group/functional-group.widget";
+import { PeopleWidgetComponent } from './widgets/people/people.widget';
+import { FunctionalGroupWidgetComponent } from './widgets/functional-group/functional-group.widget';
+import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
+import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +35,8 @@ export class ProcessFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
+            typeahead: () =>  TypeaheadWidgetComponent,
+            'radio-buttons': () =>  RadioButtonsWidgetComponent,
             upload: () => AttachFileWidgetComponent,
             'select-folder': () => AttachFolderWidgetComponent,
             document: () => DocumentWidgetComponent,

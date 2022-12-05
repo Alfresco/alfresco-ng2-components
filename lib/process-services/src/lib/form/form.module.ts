@@ -23,10 +23,12 @@ import { StartFormComponent } from './start-form.component';
 import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { ContentWidgetComponent } from './widgets/document/content.widget';
-import { UploadWidgetComponent } from "./widgets/upload/upload.widget";
-import { FormListComponent } from "./form-list/form-list.component";
-import { FunctionalGroupWidgetComponent } from "./widgets/functional-group/functional-group.widget";
-import { PeopleWidgetComponent } from "./widgets/people/people.widget";
+import { UploadWidgetComponent } from './widgets/upload/upload.widget';
+import { FormListComponent } from './form-list/form-list.component';
+import { FunctionalGroupWidgetComponent } from './widgets/functional-group/functional-group.widget';
+import { PeopleWidgetComponent } from './widgets/people/people.widget';
+import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
+import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 
 @NgModule({
     imports: [
@@ -42,7 +44,9 @@ import { PeopleWidgetComponent } from "./widgets/people/people.widget";
         ContentWidgetComponent,
         PeopleWidgetComponent,
         FunctionalGroupWidgetComponent,
-        FormListComponent
+        FormListComponent,
+        RadioButtonsWidgetComponent,
+        TypeaheadWidgetComponent
     ],
     exports: [
         FormComponent,
@@ -50,6 +54,8 @@ import { PeopleWidgetComponent } from "./widgets/people/people.widget";
         FormCustomOutcomesComponent,
         PeopleWidgetComponent,
         FunctionalGroupWidgetComponent,
+        RadioButtonsWidgetComponent,
+        TypeaheadWidgetComponent,
         FormListComponent
     ]
 })

@@ -86,12 +86,12 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Dropdown | dropdown | [`DropdownWidgetComponent`](lib/core/src/lib/form/components/widgets/dropdown/dropdown.widget.ts) |
 | Date | date | [`DateWidgetComponent`](lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
 | Amount | amount | [`AmountWidgetComponent`](lib/core/src/lib/form/components/widgets/amount/amount.widget.ts) |
-| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/core/src/lib/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
+| Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Display value | readonly | DisplayValueWidgetComponent |
 | Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/display-text/display-text.widget.ts) |
-| Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/core/src/lib/form/components/widgets/typeahead/typeahead.widget.ts) |
+| Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/process-services/src/lib/form/widgets/typeahead/typeahead.widget.ts) |
 | People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |
 | Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/process-services/src/lib/form/widgets/functional-group/functional-group.widget.ts) |
 | Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |

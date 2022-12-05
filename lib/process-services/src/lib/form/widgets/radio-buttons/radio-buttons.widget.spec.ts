@@ -17,20 +17,22 @@
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import { FormService } from '../../../services/form.service';
-import { ContainerModel } from '../core/container.model';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldOption } from '../core/form-field-option';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
+import {
+    FormService,
+    ContainerModel,
+    FormFieldTypes,
+    FormFieldOption,
+    FormFieldModel,
+    FormModel,
+    setupTestBed,
+    CoreTestingModule,
+    AlfrescoApiService
+} from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from '../../../../services';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -53,7 +55,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
         formService = new FormService(null, alfrescoApiService, null);
         widget = new RadioButtonsWidgetComponent(formService, null);
-        widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
+        widget.field = new FormFieldModel(new FormModel(), {restUrl: '<url>'});
     });
 
     it('should request field values from service', () => {
@@ -260,7 +262,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
             beforeEach(() => {
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(restOption));
-                radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
+                radioButtonWidget.field = new FormFieldModel(new FormModel({taskId: 'task-id'}), {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,
@@ -322,7 +324,7 @@ describe('RadioButtonsWidgetComponent', () => {
         describe('and radioButton is populated via processDefinitionId', () => {
 
             beforeEach(() => {
-                radioButtonWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'proc-id' }), {
+                radioButtonWidget.field = new FormFieldModel(new FormModel({processDefinitionId: 'proc-id'}), {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,

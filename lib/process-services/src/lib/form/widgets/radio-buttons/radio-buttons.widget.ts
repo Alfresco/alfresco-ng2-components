@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../services/log.service';
+import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from '../core/form-field-option';
-import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'radio-buttons-widget',
@@ -44,7 +41,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
 
     constructor(public formService: FormService,
                 private logService: LogService) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {

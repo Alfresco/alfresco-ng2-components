@@ -17,12 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../services/log.service';
+import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from '../core/form-field-option';
-import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'typeahead-widget',
@@ -124,7 +121,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     isValidOptionName(optionName: string): boolean {
         const option = this.field.options.find((item) => item.name && item.name.toLocaleLowerCase() === optionName.toLocaleLowerCase());
-        return option ? true : false;
+        return !!option;
     }
 
     onKeyUp(event: KeyboardEvent) {
@@ -166,7 +163,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     isReadOnlyType(): boolean {
-        return this.field.type === 'readonly' ? true : false;
+        return this.field.type === 'readonly';
     }
 
 }
