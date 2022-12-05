@@ -51,7 +51,7 @@ describe('NodeAspectService', () => {
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
-        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
+        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id', undefined);
     });
 
     it('should update the node when the aspect dialog apply the changes', () => {

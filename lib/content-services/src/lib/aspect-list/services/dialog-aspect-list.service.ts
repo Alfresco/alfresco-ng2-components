@@ -66,6 +66,8 @@ export class DialogAspectListService {
     }
 
     private static focusOnClose(selectorAutoFocusedOnClose: string): void {
-        document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
+        if (selectorAutoFocusedOnClose) {
+            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
+        }
     }
 }

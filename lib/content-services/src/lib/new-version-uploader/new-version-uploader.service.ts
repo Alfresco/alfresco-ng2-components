@@ -53,7 +53,7 @@ export class NewVersionUploaderService {
      * @param config allow to override default MatDialogConfig
      * @returns an Observable represents the triggered dialog action or an error in case of an error condition
      */
-    openUploadNewVersionDialog(data: NewVersionUploaderDialogData, config?: MatDialogConfig) {
+    openUploadNewVersionDialog(data: NewVersionUploaderDialogData, config?: MatDialogConfig, selectorAutoFocusedOnClose?: string) {
         const { file, node, showVersionsOnly } = data;
         const showComments = true;
         const allowDownload = true;
@@ -76,7 +76,7 @@ export class NewVersionUploaderService {
                     });
                     dialogRef.afterClosed().subscribe(() => {
                         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
-                        observer.complete();
+                        NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose)
                     });
                     this.overlayContainer.getContainerElement().setAttribute('role', 'main');
                 });
@@ -90,5 +90,11 @@ export class NewVersionUploaderService {
     private composePanelClass(showVersionsOnly: boolean): string | string[] {
         const dialogCssClass = 'adf-new-version-uploader-dialog';
         return [dialogCssClass, `${dialogCssClass}-${showVersionsOnly ? 'list' : 'upload'}`];
+    }
+
+    private static focusOnClose(selectorAutoFocusedOnClose: string): void {
+        if (selectorAutoFocusedOnClose) {
+            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
+        }
     }
 }
