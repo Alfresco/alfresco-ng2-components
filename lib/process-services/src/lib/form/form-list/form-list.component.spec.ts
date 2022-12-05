@@ -17,11 +17,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { FormService } from '../../../../../core/src/lib/form/services/form.service';
+import { FormService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { FormListComponent } from './form-list.component';
-import { setupTestBed } from '../../../../../core/src/lib/testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../../core/src/lib/testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskAttachmentList', () => {
 
@@ -46,8 +43,8 @@ describe('TaskAttachmentList', () => {
 
     it('should show the forms as a list', async () => {
         spyOn(service, 'getForms').and.returnValue(of([
-            { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
-            { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
+            {name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02'},
+            {name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03'}
         ]));
 
         component.ngOnChanges();

@@ -16,15 +16,18 @@
  */
 
 import { of, timer } from 'rxjs';
-import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
-import { FormFieldModel } from '../../../../../../core/src/lib/form/components/widgets/core/form-field.model';
-import { FormModel } from '../../../../../../core/src/lib/form/components/widgets/core/form.model';
-import { GroupModel } from '../../../../../../core/src/lib/form/components/widgets/core/group.model';
+import {
+    FormService,
+    FormFieldModel,
+    FormModel,
+    GroupModel,
+    CoreTestingModule,
+    setupTestBed,
+    FormFieldTypes
+} from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, setupTestBed } from '../../../../../../core/src/lib/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldTypes } from '../../../../../../core/src/lib/form/components/widgets/core/form-field-types';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;
@@ -33,8 +36,8 @@ describe('FunctionalGroupWidgetComponent', () => {
     let getWorkflowGroupsSpy: jasmine.Spy;
     let element: HTMLElement;
     const groups: GroupModel[] = [
-        { id: '1', name: 'group 1' },
-        { id: '2', name: 'group 2' }
+        {id: '1', name: 'group 1'},
+        {id: '2', name: 'group 2'}
     ];
 
     setupTestBed({
@@ -78,7 +81,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     };
 
     it('should setup text from underlying field on init', async () => {
-        const group: GroupModel = { name: 'group-1'};
+        const group: GroupModel = {name: 'group-1'};
         component.field.value = group;
         component.ngOnInit();
 
@@ -95,7 +98,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         component.ngOnInit();
         expect(component.groupId).toBeUndefined();
 
-        component.field.params = { restrictWithGroup: { id: '<id>' } };
+        component.field.params = {restrictWithGroup: {id: '<id>'}};
         component.ngOnInit();
         expect(component.groupId).toBe('<id>');
     });
@@ -114,7 +117,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         expect(component.field.value).toBe(groups[1]);
     });
 
-    it('should fetch groups and show popup on key up',  async () => {
+    it('should fetch groups and show popup on key up', async () => {
         component.groupId = 'parentGroup';
         getWorkflowGroupsSpy.and.returnValue(of(groups));
 
@@ -141,7 +144,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         expect(getWorkflowGroupsSpy).toHaveBeenCalledTimes(2);
     });
 
-    it('should not fetch groups when value is missing', async  () => {
+    it('should not fetch groups when value is missing', async () => {
         await typeIntoInput('');
         expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
@@ -155,7 +158,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     describe('when is required', () => {
 
         beforeEach(() => {
-            component.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            component.field = new FormFieldModel(new FormModel({taskId: '<id>'}), {
                 type: FormFieldTypes.FUNCTIONAL_GROUP,
                 required: true
             });

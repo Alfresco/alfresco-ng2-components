@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
-import { FormFieldOption } from '../../../../../../core/src/lib/form/components/widgets/core/form-field-option';
-import { WidgetComponent } from '../../../../../../core/src/lib/form/components/widgets/widget.component';
-import { LogService } from "../../../../../../core/src/lib/services";
-import { ProcessDefinitionService } from "../../services/process-definition.service";
+import {
+    FormService,
+    FormFieldOption,
+    WidgetComponent,
+    LogService,
+    ProcessDefinitionService
+} from '@alfresco/adf-core';
 
 @Component({
     selector: 'dropdown-widget',
@@ -46,7 +48,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     constructor(public formService: FormService,
                 public processDefinitionService: ProcessDefinitionService,
                 private logService: LogService) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {

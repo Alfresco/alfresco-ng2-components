@@ -18,14 +18,15 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ContentService } from '../../../../../../core/src/lib/services';
+import {
+    ContentService,
+    ProcessContentService,
+    ContentLinkModel,
+    CoreTestingModule,
+    setupTestBed
+} from '@alfresco/adf-core';
 import { of } from 'rxjs';
-
-import { ProcessContentService } from '../../services/process-content.service';
-import { ContentLinkModel } from '../../../../../../core/src/lib/form/components/widgets';
 import { ContentWidgetComponent } from './content.widget';
-import { setupTestBed } from '../../../../../../core/src/lib/testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../../../core/src/lib/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
@@ -41,7 +42,7 @@ describe('ContentWidgetComponent', () => {
 
     const createFakeImageBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], { type: 'image/png' });
+        return new Blob([data], {type: 'image/png'});
     };
 
     const createFakePdfBlob = (): Blob => {
@@ -59,7 +60,7 @@ describe('ContentWidgetComponent', () => {
             'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], {type: 'application/pdf'});
     };
 
     setupTestBed({
@@ -115,7 +116,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({id: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -155,7 +156,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({id: change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -183,7 +184,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({id: change});
 
             component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();

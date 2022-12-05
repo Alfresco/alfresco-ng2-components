@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { ContentService } from '../../../../../../core/src/lib/services/content.service';
-import { LogService } from '../../../../../../core/src/lib/services/log.service';
+import { ContentService, LogService, ContentLinkModel, FormService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
-import { ContentLinkModel } from '../../../../../../core/src/lib/form/components/widgets/core/content-link.model';
-import { FormService } from '../../../../../../core/src/lib/form/services/form.service';
 
 @Component({
     selector: 'adf-content',
