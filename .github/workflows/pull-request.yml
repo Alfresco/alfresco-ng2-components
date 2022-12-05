@@ -3,8 +3,7 @@ name: "pull-request"
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
   pull_request:
-    types:
-      - opened
+    types: [opened, synchronize, reopened]
     branches:
       - /^master(-patch.*)?$/
       - /^develop(-patch.*)?$/
