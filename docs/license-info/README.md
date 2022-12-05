@@ -32,3 +32,4 @@ The pages linked below contain the licenses for all third party dependencies of 
 - [ADF 5.0.0-angular.13](license-info-5.0.0-angular.13.md)
 - [ADF 5.0.0](license-info-5.0.0.md)
 - [ADF 5.1.0](license-info-5.1.0.md)
+- [ADF 6.0.0-A.1](license-info-6.0.0-A.1.md)
