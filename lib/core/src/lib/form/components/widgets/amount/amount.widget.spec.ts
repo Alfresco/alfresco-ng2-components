@@ -134,6 +134,33 @@ describe('AmountWidgetComponent - rendering', () => {
         element = fixture.nativeElement;
     });
 
+    it('[C289915] - Should be able to display different currency icons', () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'TestAmount1',
+            name: 'Test Amount',
+            type: 'amount',
+            currency: '$'
+        });
+        fixture.detectChanges();
+
+        let widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        expect(widgetPrefix.textContent.trim()).toBe('$');
+
+        widget.field.currency = '£';
+        widget.ngOnInit();
+        fixture.detectChanges();
+
+        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        expect(widgetPrefix.textContent.trim()).toBe('£');
+
+        widget.field.currency = '€';
+        widget.ngOnInit();
+        fixture.detectChanges();
+
+        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        expect(widgetPrefix.textContent.trim()).toBe('€');
+    });
+
     it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             id: 'TestAmount1',
@@ -179,6 +206,73 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(widget.field.isValid).toBe(false, 'amount widget with an invalid field');
         const errorWidget = fixture.nativeElement.querySelector('error-widget .adf-error-text');
         expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
+    });
+
+    it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'TestAmount1',
+            name: 'Test Amount',
+            type: 'amount',
+            required: true,
+            colspan: 2,
+            placeholder: 'Check Placeholder Text',
+            minValue: 10,
+            maxValue: 90,
+            visibilityCondition: null,
+            params: {
+                existingColspan: 1,
+                maxColspan: 2
+            },
+            enableFractions: true,
+            currency: '£'
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
+        expect(widgetLabel.textContent).toBe('Test Amount*');
+        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        expect(widgetPrefix.textContent.trim()).toBe('£');
+        expect(widget.field.isValid).toBe(false);
+        const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
+        expect(widgetById).toBeDefined();
+        expect(widgetById).not.toBeNull();
+
+        widgetById.value = '8';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
+        let errorMessage: HTMLElement = fixture.nativeElement.querySelector('.adf-error-text');
+        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+
+        widgetById.value = '99';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
+        errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
+        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+
+        widgetById.value = '80';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(true, 'amount widget field is invalid');
+
+        widgetById.value = '80.67';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(true, 'amount widget field is invalid');
+
+        widgetById.value = 'incorrect format';
+        widgetById.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
+        errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
+        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
     it('should display tooltip when tooltip is set', async () => {

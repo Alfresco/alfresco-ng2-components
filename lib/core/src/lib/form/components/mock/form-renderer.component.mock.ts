@@ -1583,3 +1583,372 @@ export const formDateVisibility = {
       }
     }
   };
+
+export const amountWidgetFormVisibilityMock = {
+    formRepresentation: {
+        id: 'form-48577532-6d9d-485e-9fe6-b8b9b005f53b',
+        name: 'amountVisibility',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'ce32844c-20b2-4361-88b5-a56f28219aef',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [],
+                        2: [
+                            {
+                                id: 'Text0id3ic',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'd8b8c021-1920-4f81-af28-fd5d0c31395b',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'Amount0kceqc',
+                                name: 'Amount',
+                                type: 'amount',
+                                required: false,
+                                colspan: 1,
+                                placeholder: '123',
+                                minValue: null,
+                                maxValue: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'Text0id3ic',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'text1',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: 'and',
+                                    nextCondition: {
+                                        leftFormFieldId: 'Number0yggl7',
+                                        leftRestResponseId: '',
+                                        operator: '!empty',
+                                        rightValue: '',
+                                        rightType: null,
+                                        rightFormFieldId: '',
+                                        rightRestResponseId: '',
+                                        nextConditionOperator: ''
+                                    }
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                },
+                                enableFractions: false,
+                                currency: '$'
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'Number0yggl7',
+                                name: 'Number',
+                                type: 'integer',
+                                colspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const checkboxWidgetFormVisibilityMock = {
+	formRepresentation: {
+		id: 'form-a6af80b9-d200-4a00-b17a-b1309691493d',
+		name: 'regresion',
+		description: '',
+		version: 0,
+		standAlone: true,
+		formDefinition: {
+			tabs: [],
+			fields: [
+				{
+					id: '09913af9-f91a-4ba5-ae4c-8e6ff3e21b6f',
+					name: 'Label',
+					type: 'container',
+					tab: null,
+					numberOfColumns: 2,
+					fields: {
+						1: [
+							{
+								id: 'Checkbox0pr51m',
+								name: 'Checkbox1',
+								type: 'boolean',
+								readOnly: false,
+								required: true,
+								colspan: 1,
+								visibilityCondition: null,
+								params: {
+									existingColspan: 1,
+									maxColspan: 2
+								}
+							}
+						],
+						2: [
+							{
+								id: 'Checkbox0fp0zf',
+								name: 'Checkbox2',
+								type: 'boolean',
+								readOnly: false,
+								required: false,
+								colspan: 1,
+								visibilityCondition: null,
+								params: {
+									existingColspan: 1,
+									maxColspan: 2
+								}
+							}
+						]
+					}
+				},
+				{
+					id: '45086850-c83d-4bfc-bd94-eccd9634c4ce',
+					name: 'Label',
+					type: 'container',
+					tab: null,
+					numberOfColumns: 2,
+					fields: {
+						1: [
+							{
+								id: 'Checkbox0lb7ze',
+								name: 'Checkbox',
+								type: 'boolean',
+								readOnly: false,
+								required: false,
+								colspan: 1,
+								visibilityCondition: {
+									leftType: 'field',
+									leftValue: 'Checkbox0pr51m',
+									operator: '==',
+									rightValue: 'Checkbox0fp0zf',
+									rightType: 'field',
+									nextConditionOperator: '',
+									nextCondition: null
+								},
+								params: {
+									existingColspan: 1,
+									maxColspan: 2
+								}
+							}
+						],
+						2: []
+					}
+				}
+			],
+			outcomes: [],
+			metadata: {},
+			variables: []
+		}
+	}
+};
+
+export const dateWidgetFormVisibilityMock = {
+    formRepresentation: {
+        id: 'form-7376baca-c855-473f-9d1f-508ceac9e8e5',
+        name: 'DateVisibility',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'f8b5b91f-77b9-48dc-8316-f084db369012',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'Text5asd0a',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'Date8wbe3d',
+                                name: 'Date',
+                                type: 'date',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'Text5asd0a',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'Date',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: '',
+                                    nextCondition: null
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                },
+                                dateDisplayFormat: 'D-M-YYYY'
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const multilineWidgetFormVisibilityMock = {
+    formRepresentation: {
+        id: 'form-af31c6e7-8cd1-4737-8555-43ed7ecf82bb',
+        name: 'Mulktilinetextwidget',
+        description: 'Multi Line Text Widget Description',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'a99d8eca-bff1-432c-bbd5-cccb60b54a82',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'MultilineTextId',
+                                name: 'Multi Line Label',
+                                type: 'multi-line-text',
+                                colspan: 2,
+                                placeholder: 'Some Placeholder Text',
+                                minLength: 2,
+                                maxLength: 10,
+                                regexPattern: '[a-z]+[0-9]',
+                                required: true,
+                                visibilityCondition: {
+                                    leftFormFieldId: 'Text',
+                                    leftRestResponseId: '',
+                                    operator: '==',
+                                    rightValue: 'text',
+                                    rightType: null,
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: 'or',
+                                    nextCondition: {
+                                        leftFormFieldId: 'Text',
+                                        leftRestResponseId: '',
+                                        operator: '==',
+                                        rightValue: 'text1',
+                                        rightType: null,
+                                        rightFormFieldId: '',
+                                        rightRestResponseId: '',
+                                        nextConditionOperator: 'or',
+                                        nextCondition: {
+                                            leftFormFieldId: 'Text',
+                                            leftRestResponseId: '',
+                                            operator: 'empty',
+                                            rightValue: '',
+                                            rightType: null,
+                                            rightFormFieldId: '',
+                                            rightRestResponseId: '',
+                                            nextConditionOperator: '',
+                                            nextCondition: null
+                                        }
+                                    }
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            },
+                            {
+                                id: 'Text',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: []
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: [
+                {
+                    id: '946ed79c-c7cf-4373-b741-4e9d8d8b7f36',
+                    name: 'name',
+                    type: 'string',
+                    value: 'stringValue'
+                }
+            ]
+        }
+    }
+};

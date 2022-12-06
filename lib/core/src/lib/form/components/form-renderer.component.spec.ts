@@ -34,7 +34,11 @@ import {
     radioWidgetVisibiltyForm,
     customWidgetForm,
     formDateVisibility,
-    customWidgetFormWithVisibility
+    customWidgetFormWithVisibility,
+    amountWidgetFormVisibilityMock,
+    checkboxWidgetFormVisibilityMock,
+    dateWidgetFormVisibilityMock,
+    multilineWidgetFormVisibilityMock
 } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
@@ -142,6 +146,24 @@ describe('Form Renderer Component', () => {
 
             displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeHidden(displayTextElementContainer);
+        });
+
+        it('[C310336] - Should be able to set visibility conditions for Date widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(dateWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const textInputElement = fixture.nativeElement.querySelector('#Text5asd0a');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text5asd0a-container');
+            let dateContainer = fixture.nativeElement.querySelector('#field-Date8wbe3d-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeHidden(dateContainer);
+
+            typeIntoInput(textInputElement, 'Date');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            dateContainer = fixture.nativeElement.querySelector('#field-Date8wbe3d-container');
+            expectElementToBeVisible(dateContainer);
         });
     });
 
@@ -680,6 +702,84 @@ describe('Form Renderer Component', () => {
             formRendererComponent.ngOnDestroy();
 
             expect(rulesManager.destroy).toHaveBeenCalled();
+        });
+    });
+
+    describe('Amount widget', () => {
+        it('[C309694] - Should be possible to set the visibility conditions with Form fields for Amount Widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(amountWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const textInputElement = fixture.nativeElement.querySelector('#Text0id3ic');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text0id3ic-container');
+            const numberInputElement = fixture.nativeElement.querySelector('#Number0yggl7');
+            const numberInputContainer = fixture.nativeElement.querySelector('#field-Number0yggl7-container');
+            let amountContainer = fixture.nativeElement.querySelector('#field-Amount0kceqc-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeVisible(numberInputContainer);
+            expectElementToBeHidden(amountContainer);
+
+            typeIntoInput(textInputElement, 'text1');
+            typeIntoInput(numberInputElement, '77');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            amountContainer = fixture.nativeElement.querySelector('#field-Amount0kceqc-container');
+            expectElementToBeVisible(amountContainer);
+        });
+    });
+
+    describe('Checkbox widget', () => {
+        it('[C315208] - Should be possible to set the visibility conditions with Form fields for Checkbox Widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(checkboxWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const firstCheckboxInputElement = fixture.nativeElement.querySelector('#Checkbox0pr51m-input');
+            const firstCheckboxInputContainer = fixture.nativeElement.querySelector('#field-Checkbox0pr51m-container');
+            const secondCheckboxInputElement = fixture.nativeElement.querySelector('#Checkbox0fp0zf-input');
+            const secondCheckboxInputContainer = fixture.nativeElement.querySelector('#field-Checkbox0fp0zf-container');
+            let visibilityCheckboxContainer = fixture.nativeElement.querySelector('#field-Checkbox0lb7ze-container');
+            expectElementToBeVisible(firstCheckboxInputContainer);
+            expectElementToBeVisible(secondCheckboxInputContainer);
+            expectElementToBeHidden(visibilityCheckboxContainer);
+
+            firstCheckboxInputElement.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expectElementToBeHidden(visibilityCheckboxContainer);
+
+            secondCheckboxInputElement.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            visibilityCheckboxContainer = fixture.nativeElement.querySelector('#field-Checkbox0lb7ze-container');
+            expectElementToBeVisible(visibilityCheckboxContainer);
+        });
+    });
+
+    describe('Multiline widget', () => {
+        it('[C309670] - Should be able to set the Visibility Conditions of the Multiline Text Widget', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(multilineWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const textInputElement = fixture.nativeElement.querySelector('#Text');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text-container');
+            let multilineContainer = fixture.nativeElement.querySelector('#field-MultilineTextId-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeVisible(multilineContainer);
+
+            typeIntoInput(textInputElement, 'textwrong');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            multilineContainer = fixture.nativeElement.querySelector('#field-MultilineTextId-container');
+            expectElementToBeHidden(multilineContainer);
+
+            typeIntoInput(textInputElement, 'text');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            multilineContainer = fixture.nativeElement.querySelector('#field-MultilineTextId-container');
+            expectElementToBeVisible(multilineContainer);
         });
     });
 });
