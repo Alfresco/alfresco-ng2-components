@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AppsProcessService } from '../services/apps-process.service';
 
 @Component({
     selector: 'adf-select-apps-dialog',

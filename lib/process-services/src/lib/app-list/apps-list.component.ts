@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
+import { AppsProcessService } from '../services/apps-process.service';
 
 const DEFAULT_TASKS_APP: string = 'tasks';
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';

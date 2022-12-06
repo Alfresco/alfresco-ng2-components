@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
@@ -27,6 +27,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
+import { AppsProcessService } from '../../services/apps-process.service';
 
 describe('TaskFiltersComponent', () => {
 

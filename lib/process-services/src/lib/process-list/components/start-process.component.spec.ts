@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -37,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { deployedApps } from '../../mock/apps-list.mock';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ProcessInstance } from '../models/process-instance.model';
+import { AppsProcessService } from '../../services/apps-process.service';
 
 describe('StartProcessComponent', () => {
 

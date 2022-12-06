@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
@@ -26,6 +26,7 @@ import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock/process/process-filters.mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppsProcessService } from '../../services/apps-process.service';
 
 describe('ProcessFiltersComponent', () => {
 

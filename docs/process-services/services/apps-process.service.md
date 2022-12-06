@@ -2,10 +2,10 @@
 Title: Apps Process service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-16
+Last reviewed: 2022-12-06
 ---
 
-# [Apps Process service](lib/core/src/lib/services/apps-process.service.ts "Defined in apps-process.service.ts")
+# [Apps Process service](../../../lib/process-services/src/lib/services/apps-process.service.ts "Defined in apps-process.service.ts")
 
 Gets details of the Process Services apps that are deployed for the user.
 

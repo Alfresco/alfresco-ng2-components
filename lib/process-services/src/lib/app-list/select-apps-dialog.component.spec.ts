@@ -19,13 +19,14 @@ import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { deployedApps } from '../mock/apps-list.mock';
 import { of } from 'rxjs';
 
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppsProcessService } from '../services/apps-process.service';
 
 @Component({
     selector: 'adf-dialog-test',

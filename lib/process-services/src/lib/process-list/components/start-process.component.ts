@@ -23,7 +23,6 @@ import {
     ActivitiContentService,
     AppConfigService,
     AppConfigValues,
-    AppsProcessService,
     FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -39,6 +38,7 @@ import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
+import { AppsProcessService } from '../../services/apps-process.service';
 
 const MAX_LENGTH = 255;
 @Component({

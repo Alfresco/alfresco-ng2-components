@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core';
 import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
