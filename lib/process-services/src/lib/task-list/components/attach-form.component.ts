@@ -20,8 +20,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UntypedFormControl, Validators } from '@angular/forms';
-import { ModelService } from "../../form/services/model.service";
-import { TaskFormService } from "../../form";
+import { ModelService } from '../../form/services/model.service';
+import { TaskFormService } from '../../form';
 
 @Component({
     selector: 'adf-attach-form',

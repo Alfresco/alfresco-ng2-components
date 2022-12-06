@@ -20,7 +20,7 @@
 import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TaskFormService } from "../../services/task-form.service";
+import { TaskFormService } from '../../services/task-form.service';
 
 @Component({
     selector: 'typeahead-widget',

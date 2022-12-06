@@ -32,9 +32,9 @@ import { FormComponent } from './form.component';
 import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeModel } from '@alfresco/adf-core';
 import { ProcessService } from '../process-list/services/process.service';
 import { EditorService } from './services/editor.service';
-import { ModelService } from "./services/model.service";
-import { TaskFormService } from "./services/task-form.service";
-import { TaskService } from "./services/task.service";
+import { ModelService } from './services/model.service';
+import { TaskFormService } from './services/task-form.service';
+import { TaskService } from './services/task.service';
 
 @Component({
     selector: 'adf-start-form',

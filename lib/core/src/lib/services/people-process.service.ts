@@ -26,7 +26,7 @@ import {
     UsersApi,
     ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi
 } from '@alfresco/js-api';
-import { GroupModel } from "../form";
+import { GroupModel } from '../form';
 
 @Injectable({
     providedIn: 'root'

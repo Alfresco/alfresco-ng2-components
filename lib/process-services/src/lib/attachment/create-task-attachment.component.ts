@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from "../form/services/process-content.service";
+import { ProcessContentService } from '../form/services/process-content.service';
 
 @Component({
     selector: 'adf-create-task-attachment',

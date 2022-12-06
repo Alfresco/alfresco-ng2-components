@@ -19,7 +19,7 @@
 
 import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TaskFormService } from "../../services/task-form.service";
+import { TaskFormService } from '../../services/task-form.service';
 
 @Component({
     selector: 'radio-buttons-widget',

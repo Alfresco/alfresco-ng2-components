@@ -28,7 +28,7 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { ProcessContentService } from "../form/services/process-content.service";
+import { ProcessContentService } from '../form/services/process-content.service';
 
 @Component({
     selector: 'adf-process-attachment-list',

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { ModelService } from "../services/model.service";
+import { ModelService } from '../services/model.service';
 
 @Component({
     selector: 'adf-form-list',
