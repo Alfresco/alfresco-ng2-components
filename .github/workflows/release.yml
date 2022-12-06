@@ -63,7 +63,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 
+          fetch-depth: 1
+      - run: git fetch --all
       - uses: ./.github/actions/setup
       - run: npm ci
       - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
@@ -83,7 +84,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0    
+          fetch-depth: 1
+      - run: git fetch --all
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -107,7 +109,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+      - run: git fetch --all
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -131,7 +134,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 
+          fetch-depth: 1
+      - run: git fetch --all
       - uses: ./.github/actions/setup
       - name: clean
         run: |
@@ -159,7 +163,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 
+          fetch-depth: 1
+      - run: git fetch --all
       - uses: ./.github/actions/download-build-artifacts
       - name: Check npm bundle
         run: |
