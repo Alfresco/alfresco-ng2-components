@@ -4,9 +4,18 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
+VERSION_IN_PACKAGE_JSON=`node -p "require('./package.json')".version;`;
+
 if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]
 then
-    TAG_NPM=latest
+    # Pre-release versions
+    if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
+    then
+        TAG_NPM=next
+    # Stable major versions
+    else
+        TAG_NPM=latest
+    fi
 fi
 
 if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ]]
