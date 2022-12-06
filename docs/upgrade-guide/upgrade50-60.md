@@ -65,6 +65,7 @@ NodeDeleteDirective: Moved from ADF Core to ADF content services
 NodeFavoriteDirective: Moved from ADF Core to ADF content services
 NodeRestoreDirective: Moved from ADF Core to ADF content services
 AppsProcessService: Moved from ADF Core to ADF process services
+DeletedNodesApiService: Moved from ADF Core to ADF content services
 [TODO ADD HERE the PRs ] 
 
 

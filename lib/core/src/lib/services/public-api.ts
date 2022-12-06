@@ -35,7 +35,6 @@ export * from './upload.service';
 export * from './dynamic-component-mapper.service';
 export * from './user-preferences.service';
 export * from './highlight-transform.service';
-export * from './deleted-nodes-api.service';
 export * from './favorites-api.service';
 export * from './nodes-api.service';
 export * from './people-content.service';
