@@ -17,13 +17,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import moment from 'moment';
-import { FormFieldModel, FormModel } from '../../../index';
-import { DynamicTableColumn  } from '../../dynamic-table-column.model';
-import { DynamicTableRow  } from '../../dynamic-table-row.model';
+import { FormFieldModel, FormModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { DynamicTableColumn } from '../../dynamic-table-column.model';
+import { DynamicTableRow } from '../../dynamic-table-row.model';
 import { DynamicTableModel } from '../../dynamic-table.widget.model';
 import { DateTimeEditorComponent } from './datetime.editor';
-import { setupTestBed } from '../../../../../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateTimeEditorComponent', () => {
@@ -44,8 +42,8 @@ describe('DateTimeEditorComponent', () => {
         fixture = TestBed.createComponent(DateTimeEditorComponent);
         component = fixture.componentInstance;
 
-        row = { value: { date: '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
-        column = { id: 'datetime', type: 'Datetime' } as DynamicTableColumn;
+        row = {value: {date: '1879-03-14T00:00:00.000Z'}} as DynamicTableRow;
+        column = {id: 'datetime', type: 'Datetime'} as DynamicTableColumn;
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field, null);
         table.rows.push(row);

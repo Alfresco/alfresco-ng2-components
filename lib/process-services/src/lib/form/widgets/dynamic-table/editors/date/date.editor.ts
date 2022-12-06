@@ -17,10 +17,12 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
-
-import { MomentDateAdapter } from '../../../../../../utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
+import {
+    UserPreferencesService,
+    UserPreferenceValues,
+    MomentDateAdapter,
+    MOMENT_DATE_FORMATS
+} from '@alfresco/adf-core';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -86,7 +88,7 @@ export class DateEditorComponent implements OnInit, OnDestroy {
             const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
-                this.row.value[this.column.id] =  newDateValue.value;
+                this.row.value[this.column.id] = newDateValue.value;
             } else {
                 this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 this.table.flushValue();

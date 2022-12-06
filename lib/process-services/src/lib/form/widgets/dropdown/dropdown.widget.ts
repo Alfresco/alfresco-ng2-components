@@ -81,7 +81,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getValuesByProcessDefinitionId() {
-        this.formService
+        this.processDefinitionService
             .getRestFieldValuesByProcessId(
                 this.field.form.processDefinitionId,
                 this.field.id

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, AlfrescoApiService, LogService,
+import { AppConfigService, LogService,
          FormFieldOption, FormService, FormValues, FormModel,
          FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { Observable, Subject } from 'rxjs';

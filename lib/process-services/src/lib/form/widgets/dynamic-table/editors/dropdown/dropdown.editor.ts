@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../../../services/log.service';
+import { LogService, FormService } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormService } from '../../../../../services/form.service';
 import { DynamicTableColumnOption } from '../../dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../../dynamic-table-column.model';
 import { DynamicTableRow } from '../../dynamic-table-row.model';

@@ -15,15 +15,19 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormModel } from '../../core';
-import { FormService } from '../../../../services/form.service';
+import {
+    FormFieldModel,
+    FormModel,
+    FormService,
+    AlfrescoApiService,
+    CoreTestingModule,
+    setupTestBed
+} from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../dynamic-table-column.model';
 import { DynamicTableRow } from '../dynamic-table-row.model';
 import { DynamicTableModel } from '../dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
-import { AlfrescoApiService } from '../../../../../services';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule, setupTestBed } from '../../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { DynamicRowValidationSummary } from '../dynamic-row-validation-summary.model';
 
@@ -72,7 +76,7 @@ describe('RowEditorComponent', () => {
 
     it('should emit [save] event', (done) => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            new DynamicRowValidationSummary({ isValid: true, message: null })
+            new DynamicRowValidationSummary({isValid: true, message: null})
         );
         component.save.subscribe((event) => {
             expect(event.table).toBe(component.table);
@@ -85,7 +89,7 @@ describe('RowEditorComponent', () => {
 
     it('should not emit [save] event for invalid row', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            new DynamicRowValidationSummary({ isValid: false, message: 'error' })
+            new DynamicRowValidationSummary({isValid: false, message: 'error'})
         );
         let raised = false;
         component.save.subscribe(() => raised = true);

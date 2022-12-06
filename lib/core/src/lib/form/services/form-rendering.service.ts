@@ -38,7 +38,6 @@ export class FormRenderingService extends DynamicComponentMapper {
         'readonly-text': DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
         json: DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
         readonly: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
-        'dynamic-table': DynamicComponentResolver.fromType(widgets.DynamicTableWidgetComponent),
         datetime:  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
         'file-viewer': DynamicComponentResolver.fromType(widgets.FileViewerWidgetComponent),
         'display-rich-text': DynamicComponentResolver.fromType(widgets.DisplayRichTextWidgetComponent)

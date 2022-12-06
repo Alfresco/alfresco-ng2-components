@@ -21,14 +21,6 @@ import { AmountWidgetComponent } from './amount/amount.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponent } from './display-text/display-text.widget';
-import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
-import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
-import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
-import { DateTimeEditorComponent } from './dynamic-table/editors/datetime/datetime.editor';
-import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
-import { RowEditorComponent } from './dynamic-table/editors/row.editor';
-import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
-import { AmountEditorComponent } from './dynamic-table/editors/amount/amount.editor';
 import { ErrorWidgetComponent } from './error/error.component';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
@@ -54,22 +46,11 @@ export * from './hyperlink/hyperlink.widget';
 export * from './display-text/display-text.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
-export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
 export * from './date-time/date-time.widget';
 export * from './json/json.widget';
 export * from './file-viewer/file-viewer.widget';
 export * from './display-rich-text/display-rich-text.widget';
-
-// editors (dynamic table)
-export * from './dynamic-table/dynamic-table.widget.model';
-export * from './dynamic-table/editors/row.editor';
-export * from './dynamic-table/editors/date/date.editor';
-export * from './dynamic-table/editors/dropdown/dropdown.editor';
-export * from './dynamic-table/editors/boolean/boolean.editor';
-export * from './dynamic-table/editors/text/text.editor';
-export * from './dynamic-table/editors/datetime/datetime.editor';
-export * from './dynamic-table/editors/amount/amount.editor';
 export * from './text/text-mask.component';
 
 export const WIDGET_DIRECTIVES: any[] = [
@@ -82,17 +63,9 @@ export const WIDGET_DIRECTIVES: any[] = [
     DisplayTextWidgetComponent,
     DateWidgetComponent,
     AmountWidgetComponent,
-    DynamicTableWidgetComponent,
-    DateEditorComponent,
-    DropdownEditorComponent,
-    BooleanEditorComponent,
-    TextEditorComponent,
-    RowEditorComponent,
     ErrorWidgetComponent,
     DateTimeWidgetComponent,
-    DateTimeEditorComponent,
     JsonWidgetComponent,
-    AmountEditorComponent,
     FileViewerWidgetComponent,
     DisplayRichTextWidgetComponent
 ];

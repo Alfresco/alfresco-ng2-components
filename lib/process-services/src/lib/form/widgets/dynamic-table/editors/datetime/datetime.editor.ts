@@ -17,9 +17,12 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../../../utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
+import {
+    MOMENT_DATE_FORMATS,
+    MomentDateAdapter,
+    UserPreferencesService,
+    UserPreferenceValues
+} from '@alfresco/adf-core';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
@@ -35,10 +38,10 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-datetime-editor',
     templateUrl: './datetime.editor.html',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
-        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS},
+        {provide: DatetimeAdapter, useClass: MomentDatetimeAdapter},
+        {provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS}
     ],
     styleUrls: ['./datetime.editor.scss']
 })

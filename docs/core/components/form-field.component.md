@@ -51,7 +51,7 @@ Forms defined in APS have the following default mappings for the form fields:
 | Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |
 | People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |
 | Group of people | functional-group | [`FunctionalGroupWidgetComponent`](lib/process-services/src/lib/form/widgets/functional-group/functional-group.widget.ts) |
-| Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
+| Dynamic table | dynamic-table | [`DynamicTableWidgetComponent`](lib/process-services/src/lib/form/widgets/dynamic-table/dynamic-table.widget.ts) |
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Header | group | [`ContainerWidgetComponent`](lib/core/src/lib/form/components/widgets/container/container.widget.ts) |
 | Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](lib/process-services/src/lib/form/widgets/upload/upload.widget.ts) (based on metadata) |

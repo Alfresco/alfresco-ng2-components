@@ -27,7 +27,6 @@ import { FormFieldEvent } from '../events/form-field.event';
 import { FormErrorEvent } from '../events/form-error.event';
 import { ValidateFormEvent } from '../events/validate-form.event';
 import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
-import { ValidateDynamicTableRowEvent } from '../events/validate-dynamic-table-row.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
 
@@ -48,7 +47,7 @@ export class FormService implements FormValidationService {
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();
-    validateDynamicTableRow = new Subject<ValidateDynamicTableRowEvent>();
+    validateDynamicTableRow = new Subject<FormFieldEvent>();
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 

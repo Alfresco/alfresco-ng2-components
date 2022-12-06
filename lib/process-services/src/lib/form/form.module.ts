@@ -30,6 +30,7 @@ import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
+import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
         FormListComponent,
         RadioButtonsWidgetComponent,
         DropdownWidgetComponent,
+        DynamicTableWidgetComponent,
         TypeaheadWidgetComponent
     ],
     exports: [
@@ -59,6 +61,7 @@ import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
         RadioButtonsWidgetComponent,
         TypeaheadWidgetComponent,
         DropdownWidgetComponent,
+        DynamicTableWidgetComponent,
         FormListComponent
     ]
 })

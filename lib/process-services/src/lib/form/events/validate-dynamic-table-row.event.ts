@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from '../components/widgets/core/form-field.model';
-import { FormModel } from '../components/widgets/core/form.model';
-import { DynamicRowValidationSummary } from '../components/widgets/dynamic-table/dynamic-row-validation-summary.model';
-import { DynamicTableRow } from '../components/widgets/dynamic-table/dynamic-table-row.model';
-import { FormFieldEvent } from './form-field.event';
+import { FormFieldModel, FormFieldEvent, FormModel } from '@alfresco/adf-core';
+import { DynamicRowValidationSummary } from '../widgets/dynamic-table/dynamic-row-validation-summary.model';
+import { DynamicTableRow } from '../widgets/dynamic-table/dynamic-table-row.model';
 
 export class ValidateDynamicTableRowEvent extends FormFieldEvent {
 

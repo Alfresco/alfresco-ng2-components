@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import {
-    DropdownWidgetComponent,
     FormRenderingService,
 } from '@alfresco/adf-core';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
@@ -27,6 +26,8 @@ import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { FunctionalGroupWidgetComponent } from './widgets/functional-group/functional-group.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
+import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
+import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +44,9 @@ export class ProcessFormRenderingService extends FormRenderingService {
             'select-folder': () => AttachFolderWidgetComponent,
             document: () => DocumentWidgetComponent,
             people: () =>  PeopleWidgetComponent,
-            'functional-group':  () => FunctionalGroupWidgetComponent
+            'functional-group':  () => FunctionalGroupWidgetComponent,
+            'dynamic-table':  () => DynamicTableWidgetComponent,
+
         }, true);
     }
 }

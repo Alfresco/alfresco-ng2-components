@@ -19,7 +19,8 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { TasksApi } from '@alfresco/js-api';
-import { catchError, map } from "rxjs/operators";
+import { catchError, map } from 'rxjs/operators';
+import { TaskRepresentation } from "@alfresco/js-api/typings/src/api/activiti-rest-api/model/taskRepresentation";
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,7 @@ export class TaskService {
      * @param taskId Task Id
      * @returns Task info
      */
-    getTask(taskId: string): Observable<any> {
+    getTask(taskId: string): Observable<TaskRepresentation> {
         return from(this.taskApi.getTask(taskId))
             .pipe(
                 map(this.toJson),

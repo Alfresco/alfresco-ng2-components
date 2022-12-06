@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ErrorMessageModel } from '../core/error-message.model';
+import { ErrorMessageModel } from '@alfresco/adf-core';
 
 /* eslint-disable @angular-eslint/component-selector */
 

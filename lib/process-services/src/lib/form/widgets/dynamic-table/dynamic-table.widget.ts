@@ -17,11 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService } from '../../../../services/log.service';
+import { LogService, WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicTableModel } from './dynamic-table.widget.model';
@@ -195,7 +192,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {
-        return { value: this.copyObject(row.value) } as DynamicTableRow;
+        return {value: this.copyObject(row.value)} as DynamicTableRow;
     }
 
     private copyObject(obj: any): any {

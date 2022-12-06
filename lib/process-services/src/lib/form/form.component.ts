@@ -15,11 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { WidgetVisibilityService,
-    FormService, FormBaseComponent, FormOutcomeModel,
-    FormEvent, FormErrorEvent, FormFieldModel,
-    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel, NodesApiService, FormDefinitionModel
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewEncapsulation,
+    SimpleChanges,
+    OnInit,
+    OnDestroy,
+    OnChanges
+} from '@angular/core';
+import {
+    WidgetVisibilityService,
+    FormService,
+    FormBaseComponent,
+    FormOutcomeModel,
+    FormEvent,
+    FormErrorEvent,
+    FormFieldModel,
+    FormModel,
+    FormOutcomeEvent,
+    FormValues,
+    ContentLinkModel,
+    NodesApiService,
+    FormDefinitionModel,
+    TaskProcessVariableModel
 } from '@alfresco/adf-core';
 import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -27,7 +48,8 @@ import { EcmModelService } from './services/ecm-model.service';
 import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
-import { TaskFormService } from './services/task-form.service';
+import { TaskFormService } from './services/task-form.service;
+import { TaskRepresentation } from "@alfresco/js-api/typings/src/api/activiti-rest-api/model/taskRepresentation";
 
 @Component({
     selector: 'adf-form',
@@ -65,7 +87,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     data: FormValues;
 
     /** The form will set a prefixed space for invisible fields. */
-     @Input()
+    @Input()
     enableFixedSpacedForm: boolean = true;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
@@ -178,13 +200,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    findProcessVariablesByTaskId(taskId: string): Observable<any> {
+    findProcessVariablesByTaskId(taskId: string): Observable<TaskProcessVariableModel[]> {
         return this.taskService.getTask(taskId).pipe(
-            switchMap((task: any) => {
+            switchMap((task: TaskRepresentation) => {
                 if (this.isAProcessTask(task)) {
-                    return this.visibilityService.getTaskProcessVariable(taskId);
+                    return this.taskFormService.getTaskProcessVariable(taskId);
                 } else {
-                    return of({});
+                    return of([]);
                 }
             })
         );
@@ -196,13 +218,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>(resolve => {
-            this.findProcessVariablesByTaskId(taskId).subscribe(() => {
+            this.findProcessVariablesByTaskId(taskId).subscribe((taskProcessVariables) => {
                 this.taskFormService
                     .getTaskForm(taskId)
                     .subscribe(
                         (form) => {
                             const parsedForm = this.parseForm(form);
-                            this.visibilityService.refreshVisibility(parsedForm);
+                            this.visibilityService.refreshVisibility(parsedForm, taskProcessVariables);
                             parsedForm.validateForm();
                             this.form = parsedForm;
                             this.onFormLoaded(this.form);
@@ -310,7 +332,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, {id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
         ];
     }
 

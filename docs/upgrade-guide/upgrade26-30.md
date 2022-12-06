@@ -432,7 +432,7 @@ These changes are noted with an arrow "->".
 -   `adf-grid-list`
 -   `adf-grid-list-item`
 
-#### [../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss](lib/core/src/lib/form/components/widgets/dynamic-table/dynamic-table.widget.scss)
+#### [../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.scss](lib/process-services/src/lib/form/widgets/dynamic-table/dynamic-table.widget.scss)
 
 -   `adf-is-selected`
 -   `adf-no-select`

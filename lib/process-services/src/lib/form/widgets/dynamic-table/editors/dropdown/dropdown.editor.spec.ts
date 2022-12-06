@@ -18,17 +18,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of, throwError } from 'rxjs';
-import { FormService } from '../../../../../services/form.service';
-import { FormFieldModel, FormModel } from '../../../core';
-import { DynamicTableColumnOption  } from '../../dynamic-table-column-option.model';
-import { DynamicTableColumn  } from '../../dynamic-table-column.model';
-import { DynamicTableRow  } from '../../dynamic-table-row.model';
+import {
+    AlfrescoApiService,
+    setupTestBed,
+    CoreTestingModule,
+    FormFieldModel,
+    FormModel,
+    FormService
+} from '@alfresco/adf-core';
+import { DynamicTableColumnOption } from '../../dynamic-table-column-option.model';
+import { DynamicTableColumn } from '../../dynamic-table-column.model';
+import { DynamicTableRow } from '../../dynamic-table-row.model';
 import { DynamicTableModel } from '../../dynamic-table.widget.model';
 import { DropdownEditorComponent } from './dropdown.editor';
-import { setupTestBed } from '../../../../../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from '../../../../../../services';
 
 describe('DropdownEditorComponent', () => {
 
@@ -303,5 +306,5 @@ describe('DropdownEditorComponent', () => {
                 expect(optThree).not.toBeNull();
             });
         });
-   });
+    });
 });

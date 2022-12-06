@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import moment from 'moment';
-import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
-import { FormService } from '../../../services/form.service';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormWidgetModel } from '../core/form-widget.model';
+import { ValidateDynamicTableRowEvent } from '../../events/validate-dynamic-table-row.event';
+import { FormService, FormFieldModel, FormWidgetModel } from '@alfresco/adf-core';
 import { CellValidator } from './cell-validator.model';
 import { DateCellValidator } from './date-cell-validator-model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
@@ -72,7 +70,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj } as DynamicTableRow));
+                this.rows = field.json.value.map((obj) => ({selected: false, value: obj} as DynamicTableRow));
             }
         }
 
@@ -145,7 +143,7 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     validateRow(row: DynamicTableRow): DynamicRowValidationSummary {
-        const summary = new DynamicRowValidationSummary( {
+        const summary = new DynamicRowValidationSummary({
             isValid: true,
             message: null
         });

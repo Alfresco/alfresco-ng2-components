@@ -19,7 +19,7 @@ import { AlfrescoApiService, FormDefinitionModel, LogService } from '@alfresco/a
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { FormModelsApi } from '@alfresco/js-api';
-import { catchError, map } from "rxjs/operators";
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'

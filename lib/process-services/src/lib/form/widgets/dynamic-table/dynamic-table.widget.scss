@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import '../../../../styles/mixins';
+@import '../../../../../../core/src/lib/styles/mixins';
 
 $dynamic-table-font-size: var(--theme-body-1-font-size) !default;
 $dynamic-table-header-font-size: var(--theme-caption-font-size) !default;

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormValues, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, FormValues, LogService, TaskProcessVariableModel } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { CompleteFormRepresentation, SaveFormRepresentation, TaskFormsApi } from '@alfresco/js-api';
-import { catchError, map } from "rxjs/operators";
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -116,6 +116,17 @@ export class TaskFormService {
                 catchError((err) => this.handleError(err))
             );
     }
+
+    getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
+        return from(this.taskFormsApi.getTaskFormVariables(taskId))
+            .pipe(
+                map((res) => {
+                    return this.toJson(res);
+                }),
+                catchError((err) => this.handleError(err))
+            );
+    }
+
     /**
      * Creates a JSON representation of form data.
      *

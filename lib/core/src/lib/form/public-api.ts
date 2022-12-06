@@ -21,7 +21,6 @@ export * from './components/inplace-form-input/inplace-form-input.component';
 export * from './components/form-custom-button.directive';
 export * from './components/form-renderer.component';
 export * from './components/widgets';
-export * from './components/widgets/dynamic-table/dynamic-table-row.model';
 
 export * from './services/form-rendering.service';
 export * from './services/form.service';
@@ -34,3 +33,4 @@ export * from './form-base.module';
 
 export * from './models/form-rules.model';
 export * from './models/form-definition.model';
+export * from './models/task-process-variable.model';

@@ -16,15 +16,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService } from '../../../../services';
-import { FormService } from '../../../services/form.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
-import { DynamicTableColumn  } from './dynamic-table-column.model';
-import { DynamicTableRow  } from './dynamic-table-row.model';
+import {
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    LogService,
+    FormService,
+    setupTestBed,
+    CoreTestingModule
+} from '@alfresco/adf-core';
+import { DynamicTableColumn } from './dynamic-table-column.model';
+import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './dynamic-table.widget.model';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const fakeFormField = {
@@ -308,7 +312,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.content.field.validate()).toBeTruthy();
         expect(widget.isValid()).toBe(widget.content.field.isValid);
         expect(widget.content.field.isValid).toBeTruthy();
-   });
+    });
 
     it('should prepend default currency for amount columns', () => {
         const row = {value: {key: '100'}} as DynamicTableRow;

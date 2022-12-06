@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { ModelsApi } from '@alfresco/js-api';
-import { catchError, map } from "rxjs/operators";
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
