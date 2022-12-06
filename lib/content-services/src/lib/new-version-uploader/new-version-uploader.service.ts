@@ -76,7 +76,7 @@ export class NewVersionUploaderService {
                     });
                     dialogRef.afterClosed().subscribe(() => {
                         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
-                        NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose)
+                        NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose);
                     });
                     this.overlayContainer.getContainerElement().setAttribute('role', 'main');
                 });

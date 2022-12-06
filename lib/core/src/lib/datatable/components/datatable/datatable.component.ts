@@ -757,9 +757,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return `${row.cssClass} ${this.rowStyleClass} ${contextMenuSourceClass}`;
     }
 
-    markRowAsContextMenuSource(row: DataRow): void {
+    markRowAsContextMenuSource(selectedRow: DataRow): void {
         this.data.getRows().forEach((row) => row.isContextMenuSource = false);
-        row.isContextMenuSource = true;
+        selectedRow.isContextMenuSource = true;
     }
 
     getSortingKey(): string | null {
