@@ -20,7 +20,7 @@ import { Observable, from, throwError } from 'rxjs';
 import { LogService } from './log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
-import { ApiClientsService } from '../../../api';
+import { ApiClientsService } from '../../../api/api-clients.service';
 
 /**
  *

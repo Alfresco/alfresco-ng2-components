@@ -27,7 +27,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
-import { ApiClientsService } from '@alfresco/adf-core/api';
+import { ApiClientsService } from '../../../api/api-clients.service';
 import { UserRepresentation } from '../interface/user-representation.interface';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
