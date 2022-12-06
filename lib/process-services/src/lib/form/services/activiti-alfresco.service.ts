@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
-import { SitesService } from '../../services/sites.service';
+import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
+import { LogService } from '../../../../../core/src/lib/services/log.service';
+import { SitesService } from '../../../../../core/src/lib/services/sites.service';
 import { Injectable } from '@angular/core';
 import {
     IntegrationAlfrescoOnPremiseApi,
@@ -26,8 +26,8 @@ import {
     ActivitiContentApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
-import { ExternalContent } from '../components/widgets/core/external-content';
-import { ExternalContentLink } from '../components/widgets/core/external-content-link';
+import { ExternalContent } from '../../../../../core/src/lib/form/components/widgets/core/external-content';
+import { ExternalContentLink } from '../../../../../core/src/lib/form/components/widgets/core/external-content-link';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({

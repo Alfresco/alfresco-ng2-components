@@ -759,7 +759,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1879](https://issues.alfresco.com/jira/browse/ADF-1879)] - ADF Process Services is not working properly
 -   \[[ADF-1885](https://issues.alfresco.com/jira/browse/ADF-1885)] - Once accessed process services components appear throughout app
 -   \[[ADF-1890](https://issues.alfresco.com/jira/browse/ADF-1890)] - Viewer - Content projection for sidebar only works if sidebarPosition is left
--   \[[ADF-1891](https://issues.alfresco.com/jira/browse/ADF-1891)] - [`ActivitiContentService`](lib/core/src/lib/form/services/activiti-alfresco.service.ts) is not exported
+-   \[[ADF-1891](https://issues.alfresco.com/jira/browse/ADF-1891)] - [`ActivitiContentService`](lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) is not exported
 -   \[[ADF-1898](https://issues.alfresco.com/jira/browse/ADF-1898)] - [`ProcessService`](../process-services/services/process.service.md).createOrUpdateProcessInstanceVariables has incorrect method signature
 -   \[[ADF-1900](https://issues.alfresco.com/jira/browse/ADF-1900)] - [`ProcessService`](../process-services/services/process.service.md).getProcessInstanceVariables has incorrect method signature
 -   \[[ADF-1901](https://issues.alfresco.com/jira/browse/ADF-1901)] - [`ProcessService`](../process-services/services/process.service.md).createDefaultFilters has incorrect method signature

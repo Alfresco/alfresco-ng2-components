@@ -19,7 +19,6 @@
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-    ActivitiContentService,
     AppConfigService,
     AppConfigValues,
     ContentService,
@@ -39,7 +38,8 @@ import { from, of, Subject, zip } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
-import { ProcessContentService } from "../../services/process-content.service";
+import { ProcessContentService } from '../../services/process-content.service';
+import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 
 @Component({
     selector: 'attach-widget',

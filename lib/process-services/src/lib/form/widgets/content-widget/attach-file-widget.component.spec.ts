@@ -24,7 +24,6 @@ import {
     FormFieldTypes,
     FormService,
     ProcessContentService,
-    ActivitiContentService,
     FormFieldMetadata,
     setupTestBed,
     DownloadService
@@ -35,6 +34,7 @@ import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
+import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 
 const fakeRepositoryListAnswer = [
     {
