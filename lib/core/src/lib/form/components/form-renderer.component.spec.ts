@@ -38,7 +38,8 @@ import {
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
     dateWidgetFormVisibilityMock,
-    multilineWidgetFormVisibilityMock
+    multilineWidgetFormVisibilityMock,
+    displayTextWidgetFormVisibilityMock
 } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
@@ -780,6 +781,56 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             multilineContainer = fixture.nativeElement.querySelector('#field-MultilineTextId-container');
             expectElementToBeVisible(multilineContainer);
+        });
+    });
+
+    describe('Display Text (readonly) widget', () => {
+        it('[C309868] - Should be able to see Display text widget when visibility condition refers to another field with specific value', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayTextWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const textInputElement = fixture.nativeElement.querySelector('#Text0tzu53');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text0tzu53-container');
+            let displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext0q4w02-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeHidden(displayTextContainer);
+
+            typeIntoInput(textInputElement, 'aaa-value');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext0q4w02-container');
+            expectElementToBeVisible(displayTextContainer);
+
+            typeIntoInput(textInputElement, 'bbb');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext0q4w02-container');
+            expectElementToBeHidden(displayTextContainer);
+        });
+
+        it('[C309870] - Should be able to see Display text widget when visibility condition refers to another field and form variable', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayTextWidgetFormVisibilityMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const textInputElement = fixture.nativeElement.querySelector('#Text0tzu53');
+            const textInputContainer = fixture.nativeElement.querySelector('#field-Text0tzu53-container');
+            let displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext8bac2e-container');
+            expectElementToBeVisible(textInputContainer);
+            expectElementToBeHidden(displayTextContainer);
+
+            typeIntoInput(textInputElement, 'aaa-variable');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext8bac2e-container');
+            expectElementToBeVisible(displayTextContainer);
+
+            typeIntoInput(textInputElement, 'bbb');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext8bac2e-container');
+            expectElementToBeHidden(displayTextContainer);
         });
     });
 });

@@ -1952,3 +1952,98 @@ export const multilineWidgetFormVisibilityMock = {
         }
     }
 };
+
+export const displayTextWidgetFormVisibilityMock = {
+    formRepresentation: {
+        id: 'form-620756a5-64ce-4c3a-8aa2-81dabc9a88b6',
+        name: 'displayTextForm',
+        description: '',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: '45269202-5f2a-438e-b14c-fe13eb4b2aa1',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'Text0tzu53',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'Displaytext0q4w02',
+                                name: 'Display text',
+                                type: 'readonly-text',
+                                value: 'Display text as part of the form',
+                                colspan: 1,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'Text0tzu53',
+                                    operator: '==',
+                                    rightValue: 'aaa-value',
+                                    rightType: 'value',
+                                    nextConditionOperator: '',
+                                    nextCondition: null
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        3: [
+                            {
+                                id: 'Displaytext8bac2e',
+                                name: 'Display text',
+                                type: 'readonly-text',
+                                value: 'Display text as part of the form',
+                                colspan: 1,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'Text0tzu53',
+                                    operator: '==',
+                                    rightValue: 'variable',
+                                    rightType: 'variable',
+                                    nextConditionOperator: ''
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: [
+                {
+                    id: '8a8537a6-cfca-45d3-bd42-80ffc48a26f8',
+                    name: 'variable',
+                    type: 'string',
+                    value: 'aaa-variable'
+                }
+            ]
+        }
+    }
+};
