@@ -62,11 +62,8 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - run: echo $TRAVIS_EVENT_TYPE
-      - run: echo $S3_NODE_MODULES_CACHE_ID
-      - run: echo $HEAD_COMMIT_HASH
-      - run: echo "$NX_CALCULATION_FLAGS"
-      - run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
+      - name: set up max memory for node
+        run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
       - name: install
         run: |
           npm ci

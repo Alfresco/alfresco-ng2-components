@@ -1,7 +1,4 @@
-# on:
-#   pull_request:
-#     types:
-#       - closed
+name: "release"
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -11,6 +8,10 @@ on:
       - master
       - develop
 
+# on:
+#   pull_request:
+#     types:
+#       - closed
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
