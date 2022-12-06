@@ -17,6 +17,7 @@ Display a dialog that allows to upload new file version or to manage the current
       Opens a dialog to upload new file version or to manage current node versions
     -   _data:_ [`NewVersionUploaderDialogData`](../../../lib/content-services/src/lib/new-version-uploader/models/new-version-uploader.model.ts) - The data to pass to the dialog
     -   _config:_ `MatDialogConfig` - A configuration object that allows to override default dialog configuration 
+    -   _selectorAutoFocusedOnClose:_ `string` - Element's selector which should be autofocused after closing modal
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html) - [`Observable`](http://reactivex.io/documentation/observable.html) which you can subscribe in order to get information about the dialog actions or error notification in case of error condition.
 
 ## Details
