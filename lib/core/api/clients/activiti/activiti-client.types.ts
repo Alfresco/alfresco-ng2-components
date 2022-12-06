@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
+import { AboutApi, SystemPropertiesApi, UserProfileApi } from '@alfresco/js-api';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -23,6 +23,7 @@ declare global {
         interface ApiRegistry {
             ['ActivitiClient.about']: AboutApi;
             ['ActivitiClient.system-properties']: SystemPropertiesApi;
+            ['ActivitiClient.user-profile']: UserProfileApi;
         }
     }
 }

@@ -23,11 +23,12 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
+import { UserRepresentation } from '../interface/user-representation.interface';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -49,16 +50,11 @@ export class AuthenticationService extends Authentication {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-    _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
-    }
-
     constructor(
         private appConfig: AppConfigService,
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
+        private apiClientsService: ApiClientsService,
         private cookie: CookieService,
         private logService: LogService) {
         super();
@@ -321,7 +317,8 @@ export class AuthenticationService extends Authentication {
      * @returns User information
      */
     getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.profileApi.getProfile());
+        const userProfileApi = this.apiClientsService.get('ActivitiClient.user-profile');
+        return from(userProfileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {

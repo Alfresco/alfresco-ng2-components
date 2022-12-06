@@ -23,6 +23,9 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ApiClientsService } from '@alfresco/adf-core/api';
+import { UserRepresentation } from '../interface/user-representation.interface';
+
 
 declare let jasmine: any;
 
@@ -31,6 +34,7 @@ describe('AuthenticationService', () => {
     let authService: AuthenticationService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
+    let apiClientsService: ApiClientsService;
 
     setupTestBed({
         imports: [
@@ -44,6 +48,7 @@ describe('AuthenticationService', () => {
         localStorage.clear();
         apiService = TestBed.inject(AlfrescoApiService);
         authService = TestBed.inject(AuthenticationService);
+        apiClientsService = TestBed.inject(ApiClientsService);
 
         cookie = TestBed.inject(CookieService);
         cookie.clear();
@@ -517,6 +522,16 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return isALLProvider true', () => {
             expect(authService.isALLProvider()).toBe(true);
+        });
+    });
+
+    describe('getBpmLoggedUser', () => {
+        it('should get user profile calling api client service get', () => {
+            spyOn(apiClientsService, 'get').and.returnValue({
+                getProfile: () => Promise.resolve<UserRepresentation>({})
+            } as any);
+            authService.getBpmLoggedUser();
+            expect(apiClientsService.get).toHaveBeenCalledOnceWith('ActivitiClient.user-profile');
         });
     });
 });

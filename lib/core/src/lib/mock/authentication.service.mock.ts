@@ -23,6 +23,7 @@ import { CookieService } from '../services/cookie.service';
 import { LogService } from '../services/log.service';
 import { StorageService } from '../services/storage.service';
 import { AppConfigService } from '../app-config/app-config.service';
+import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -32,10 +33,11 @@ export class AuthenticationMock extends AuthenticationService {
         appConfig: AppConfigService,
         storageService: StorageService,
         alfrescoApi: AlfrescoApiService,
+        apiClientsService: ApiClientsService,
         cookie: CookieService,
         logService: LogService
     ) {
-        super(appConfig, storageService, alfrescoApi, cookie, logService);
+        super(appConfig, storageService, alfrescoApi, apiClientsService, cookie, logService);
     }
 
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
