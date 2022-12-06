@@ -156,16 +156,7 @@ runs:
         REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
       # description: always upload newer results
       run: |
-        set -u;
-        ls -lhart "${SMART_RUNNER_PATH}"
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
         aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
-        rm -rf  "${SMART_RUNNER_PATH}"
-        rm -rf  "${{ inputs.e2e-tar-name }}"
 
-    - name: upload e2e reports
-      uses: actions/upload-artifact@v3
-      continue-on-error: true
-      with:
-        path: e2e-output*/
-        name: dist-${{ github.ref_name }}-${{ inputs.e2e-test-id }}
+
