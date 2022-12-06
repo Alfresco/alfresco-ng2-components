@@ -59,10 +59,6 @@ runs:
         run: |
           export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-      - name: setup nx shas
-        uses: nrwl/nx-set-shas@v3
-        with:
-          main-branch-name: 'develop'
       - name: link nx executable
         run: sudo ln -s $(npm bin)/nx /usr/bin/nx
         shell: bash
