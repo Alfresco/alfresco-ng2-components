@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
-import { UserProfileApi } from '@alfresco/js-api';
+import { ApiClientsService } from '../../../api';
 
 /**
  *
@@ -33,13 +32,7 @@ import { UserProfileApi } from '@alfresco/js-api';
 })
 export class BpmUserService {
 
-    private _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
-        return this._profileApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService,
+    constructor(private apiClientsService: ApiClientsService,
                 private logService: LogService) {
     }
 
@@ -49,7 +42,9 @@ export class BpmUserService {
      * @returns User information object
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return from(this.profileApi.getProfile())
+        const userProfileApi = this.apiClientsService.get('ActivitiClient.user-profile');
+
+        return from(userProfileApi.getProfile())
             .pipe(
                 map((userRepresentation) => new BpmUserModel(userRepresentation)),
                 catchError((err) => this.handleError(err))
@@ -62,7 +57,9 @@ export class BpmUserService {
      * @returns URL string
      */
     getCurrentUserProfileImage(): string {
-        return this.profileApi.getProfilePictureUrl();
+        const userProfileApi = this.apiClientsService.get('ActivitiClient.user-profile');
+
+        return userProfileApi.getProfilePictureUrl();
     }
 
     private handleError(error: any) {

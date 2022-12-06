@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
+import { AboutApi, SystemPropertiesApi, UserProfileApi } from '@alfresco/js-api';
 import { NgModule } from '@angular/core';
 import { ApiClientsService } from '../../api-clients.service';
 
@@ -24,5 +24,6 @@ export class ActivitiClientModule {
     constructor(private apiClientsService: ApiClientsService) {
         this.apiClientsService.register('ActivitiClient.about', AboutApi);
         this.apiClientsService.register('ActivitiClient.system-properties', SystemPropertiesApi);
+        this.apiClientsService.register('ActivitiClient.user-profile', UserProfileApi);
     }
 }
