@@ -1,7 +1,16 @@
+# on:
+#   pull_request:
+#     types:
+#       - closed
 on:
   pull_request:
-    types:
-      - closed
+    types: [opened, synchronize, reopened]
+    branches:
+      - /^master(-patch.*)?$/
+      - /^develop(-patch.*)?$/
+      - master
+      - develop
+
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -11,7 +20,7 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}
   BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
-  TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
+  TRAVIS_BUILD_NUMBER: github-run-${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
@@ -50,7 +59,7 @@ env:
 jobs:
   build:
     timeout-minutes: 20
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     name: "Build Components"
     runs-on: ubuntu-22.04
     steps:
@@ -70,7 +79,7 @@ jobs:
   push-demoshell:
     needs: [build]
     timeout-minutes: 10
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -88,14 +97,13 @@ jobs:
         run: |
           nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
-          echo "TAGS=$TAGS" >> $GITHUB_ENV
           set -u;
           ./scripts/travis/release/release-demoshell-docker.sh --dryrun
 
   push-storybook:
     needs: [build]
     timeout-minutes: 10
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -119,7 +127,7 @@ jobs:
   npm-release:
     needs: [build]
     timeout-minutes: 10
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -147,7 +155,7 @@ jobs:
   npm-check-bundle:
     needs: [npm-release]
     timeout-minutes: 10
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -157,5 +165,5 @@ jobs:
       - uses: ./.github/actions/download-build-artifacts
       - name: Check npm bundle
         run: |
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+          export ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}

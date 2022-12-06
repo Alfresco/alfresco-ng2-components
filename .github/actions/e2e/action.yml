@@ -42,7 +42,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: if apa-proxy is set, use APA as PROXY host for tests
+    - name: use APA as PROXY host if apa-proxy is set
       shell: bash
       run: |
         if [[ -n "${{ inputs.apa-proxy }}" ]]; then
@@ -147,7 +147,9 @@ runs:
         command: |
           set -u;
           echo "+++ running new attempt +++"
-          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID"
+          GH_ACTION_RETRY_COUNT=$(($GH_ACTION_RETRY_COUNT + 1))
+          echo "GH_ACTION_RETRY_COUNT=$GH_ACTION_RETRY_COUNT" >> $GITHUB_ENV
+          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
 
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash

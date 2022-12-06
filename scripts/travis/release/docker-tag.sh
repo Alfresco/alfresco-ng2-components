@@ -12,7 +12,9 @@ else
     else
         export TAGS="$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER,$TRAVIS_BRANCH"
     fi;
-
 fi;
 
-echo $TAGS
+if [[ -n "$GITHUB_ACTIONS" ]]; then
+    echo "TAGS=$TAGS" >> $GITHUB_ENV;
+fi
+echo "$TAGS"
