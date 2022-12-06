@@ -129,8 +129,6 @@ runs:
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
         GIT_HASH=$(echo $GIT_HASH | sed "s@'@@g")
         echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
-        echo GH_ACTION_RETRY_COUNT=0 >> $GITHUB_ENV
-
     - name: run test with retries
       id: retry_run
       env:
@@ -146,9 +144,8 @@ runs:
         shell: bash
         command: |
           set -u;
-          echo "+++ running new attempt +++"
-          GH_ACTION_RETRY_COUNT=$(($GH_ACTION_RETRY_COUNT + 1))
-          echo "GH_ACTION_RETRY_COUNT=$GH_ACTION_RETRY_COUNT" >> $GITHUB_ENV
+          export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
+          echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
 
     - name: upload smartrunner tests results on s3 to cache tests
