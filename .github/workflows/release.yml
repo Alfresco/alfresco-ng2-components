@@ -71,6 +71,7 @@ jobs:
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
       - run: nx run cli:bundle
+      - run: nx run testing:bundle
       - uses: ./.github/actions/upload-build-artifacts
 
   push-demoshell:
