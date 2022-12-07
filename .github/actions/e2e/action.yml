@@ -138,7 +138,7 @@ runs:
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
       uses: nick-fields/retry@v2.8.2
       with:
-        timeout_minutes: 20
+        timeout_minutes: 30
         max_attempts: 2
         retry_wait_seconds: 30
         shell: bash
