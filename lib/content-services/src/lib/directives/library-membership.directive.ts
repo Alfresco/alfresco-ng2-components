@@ -24,9 +24,10 @@ import {
     SitesApi
 } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { VersionCompatibilityService, SitesService, AlfrescoApiService } from '@alfresco/adf-core';
+import { SitesService, AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
 import { LibraryMembershipErrorEvent} from '../interfaces/library-membership-error-event.interface';
+import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 
 @Directive({
     selector: '[adf-library-membership]',

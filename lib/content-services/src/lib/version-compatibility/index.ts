@@ -15,11 +15,4 @@
  * limitations under the License.
  */
 
-export * from './highlight.directive';
-export * from './logout.directive';
-export * from './node-download.directive';
-export * from './upload.directive';
-export * from './tooltip-card/tooltip-card.directive';
-export * from './infinite-select-scroll.directive';
-
-export * from './directive.module';
+export * from './public-api';

@@ -11,7 +11,7 @@ Being a standard Angular application, the lifecycle and the tasks described for 
 
 The command to be used is the same of any Angular application
 
-    npm nstall
+    npm install
 
 ## Applications and distributions
 
