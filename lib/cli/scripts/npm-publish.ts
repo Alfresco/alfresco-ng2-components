@@ -81,8 +81,12 @@ async function npmPublish(args: PublishArgs, project: string) {
 
 function npmCheckExist(project: string, version: string) {
     logger.info(`Check if lib  ${project} is already in npm with version ${version}`);
-
-    const exist = exec(`npm`, [`view`, `@alfresco/adf-${project}@${version} version`]);
+    let exist = '';
+    try {
+        exist = exec(`npm`, [`view`, `@alfresco/adf-${project}@${version} version`]);
+    } catch (e) {
+        logger.info(`Error: '@alfresco/adf-${project}@${version} version' is not available `);
+    }
 
     return exist !== '';
 }
