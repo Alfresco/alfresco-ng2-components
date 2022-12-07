@@ -68,7 +68,7 @@ env:
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
-
+  NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
   build:

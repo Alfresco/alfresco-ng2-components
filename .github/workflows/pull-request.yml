@@ -50,6 +50,7 @@ env:
   SMART_RUNNER_PATH: ".protractor-smartrunner"
   S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   S3_BUILD_BUCKET: ${{ secrets.S3_BUILD_BUCKET }}
+  NODE_OPTIONS: "--max-old-space-size=5120"
 jobs:
   main:
     # long timeout required when cache has to be recreated
@@ -62,8 +63,6 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - name: set up max memory for node
-        run: echo NODE_OPTIONS="--max-old-space-size=5120" >> $GITHUB_ENV
       - name: install
         run: |
           npm ci
