@@ -20,7 +20,6 @@ on:
         - warning
         - debug
 
-
 # on:
 #   pull_request:
 #     types:
