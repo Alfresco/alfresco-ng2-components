@@ -1,12 +1,9 @@
 name: "release"
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches:
-      - /^master(-patch.*)?$/
-      - /^develop(-patch.*)?$/
-      - master
-      - develop
+      - AAE-7986-dev-act*
+
 # on:
 #   pull_request:
 #     types:
@@ -66,7 +63,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - run: git fetch --all
       - uses: ./.github/actions/setup
       - run: npm ci
