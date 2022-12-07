@@ -96,7 +96,8 @@ jobs:
       - name: push Demoshell docker image
         run: |
           nx build demoshell --configuration production
-          bash -x ./scripts/travis/release/docker-tag.sh
+          . ./scripts/travis/release/docker-tag.sh
+          echo $TAGS          
           set -u;
           ./scripts/travis/release/release-demoshell-docker.sh --dryrun
 
@@ -120,7 +121,8 @@ jobs:
       - name: push Storybook docker image
         run: |
           nx run stories:build-storybook --configuration ci
-          bash -x ./scripts/travis/release/docker-tag.sh
+          . ./scripts/travis/release/docker-tag.sh
+          echo $TAGS
           set -u;        
           ./scripts/travis/release/release-storybook-docker.sh --dryrun
 
@@ -141,13 +143,14 @@ jobs:
           rm -rf dist      
       - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle  
-      - name: Release
+      - name: nx build
         run: |
           set -u;
           ./scripts/travis/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
-          bash -x ./scripts/travis/release/release-npm.sh --dryrun
+      - name: release
+        run: ./scripts/travis/release/release-npm.sh --dryrun
 
 
   npm-check-bundle:
