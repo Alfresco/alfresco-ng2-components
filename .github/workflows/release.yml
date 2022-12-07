@@ -147,7 +147,7 @@ jobs:
           ./scripts/travis/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
-          ./scripts/travis/release/release-npm.sh --dryrun
+          bash -x ./scripts/travis/release/release-npm.sh --dryrun
 
 
   npm-check-bundle:
