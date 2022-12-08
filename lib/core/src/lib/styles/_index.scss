@@ -105,6 +105,12 @@
         --theme-colors-mat-grey: mat.get-color-from-palette(mat.$grey-palette, A200),
         --theme-colors-mat-grey-dark: mat.get-color-from-palette(mat.$grey-palette, A400),
         --theme-colors-mag-grey-light: mat.get-color-from-palette(mat.$grey-palette, 50),
+        --theme-forgot-password-title-color: #212121,
+        --theme-forgot-password-label-color: rgba(33, 35, 40, 0.7),
+        --theme-forgot-password-input-background-color: rgba(33, 33, 33, 0.05),
+        --theme-forgot-password-button-background-color: #1F74DB,
+        --theme-forgot-password-dialog-border-color: rgba(33, 33, 33, 0.12),
+        --theme-forgot-password-dialog-shadow-color: rgba(33, 35, 40, 0.06),
     );
 
     // propagates SCSS variables into the CSS variables scope
