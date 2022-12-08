@@ -323,12 +323,12 @@
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
       "FILLER": "Don't worry, happens to the best of us.",
-      "ENTER-USERNAME": "Enter Username of your account",
-      "INVALID-USERNAME": "You've entered an invalid Email ID",
-      "RESET-PASSWORD-EMAIL-SENT": "An email has been sent to your registered Email ID. Please click this link when get it."
+      "ENTER-USERNAME": "Enter username for your account",
+      "INVALID-USERNAME": "You've entered an invalid username",
+      "RESET-PASSWORD-EMAIL-SENT": "An email has been sent to your registered Email ID. Please click the link when you get it."
     },
     "PLACEHOLDERS": {
-      "USERNAME": "USERNAME"
+      "USERNAME": "Username"
     },
     "BUTTONS": {
       "SEND-INSTRUCTIONS": "Send Instructions"

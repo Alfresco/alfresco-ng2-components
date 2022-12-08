@@ -194,10 +194,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     forgotPassword() {
         this.dialog.open(ForgotPasswordComponent, {
-                data: {
-                    title: 'Recover',
-                },
-            });
+            width: '371px',
+            data: {
+                title: 'Recover',
+            },
+            backdropClass: 'backdrop-background',
+            panelClass: 'forgot-password-dialog-box' 
+        });
     }
 
     redirectToImplicitLogin() {

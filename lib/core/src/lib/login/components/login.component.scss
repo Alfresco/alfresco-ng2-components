@@ -4,6 +4,17 @@
     @include flex-column;
 }
 
+.backdrop-background {
+    background-color: #E5E5E5;;
+    opacity: 1 !important;
+}
+
+.forgot-password-dialog-box {   
+    border: 1px solid var(--theme-forgot-password-dialog-border-color) !important;
+    box-shadow: 0px 0px 24px var(--theme-forgot-password-dialog-shadow-color) !important;
+    border-radius: 12px !important;
+}
+
 .adf-login-content {
     background-size: cover;
     background-position: center;
