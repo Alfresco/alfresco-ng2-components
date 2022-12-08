@@ -67,6 +67,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 @NgModule({
     imports: [
@@ -93,6 +94,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         CommentsModule,
         LoginModule,
         LanguageMenuModule,
+        ForgotPasswordModule,
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
@@ -134,6 +136,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         FormBaseModule,
         CommentsModule,
         LoginModule,
+        ForgotPasswordModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataColumnModule,
