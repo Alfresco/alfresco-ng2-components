@@ -33,47 +33,50 @@ import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibili
 })
 export class WidgetVisibilityService {
 
+    private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
     constructor(private logService: LogService) {
     }
 
-    public refreshVisibility(form: FormModel, processVarList: TaskProcessVariableModel[]) {
+    public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;
-
+        if (processVarList) {
+            this.processVarList = processVarList;
+        }
         if (form && form.tabs && form.tabs.length > 0) {
-            form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel, processVarList));
+            form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
 
         if (form && form.outcomes && form.outcomes.length > 0) {
-            form.outcomes.map((outcomeModel) => this.refreshOutcomeVisibility(outcomeModel, processVarList));
+            form.outcomes.map((outcomeModel) => this.refreshOutcomeVisibility(outcomeModel));
         }
 
         if (form) {
-            form.getFormFields().map((field) => this.refreshEntityVisibility(field, processVarList));
+            form.getFormFields().map((field) => this.refreshEntityVisibility(field));
         }
     }
 
-    private refreshEntityVisibility(element: FormFieldModel | TabModel, processVarList: TaskProcessVariableModel[]) {
-        element.isVisible = this.isParentTabVisible(this.form, element) && this.evaluateVisibility(element.form, element.visibilityCondition, processVarList);
+    private refreshEntityVisibility(element: FormFieldModel | TabModel) {
+        element.isVisible = this.isParentTabVisible(this.form, element) && this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
-    private refreshOutcomeVisibility(element: FormOutcomeModel, processVarList: TaskProcessVariableModel[]) {
-        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition, processVarList);
+    private refreshOutcomeVisibility(element: FormOutcomeModel) {
+        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
-    private evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel, processVarList: TaskProcessVariableModel[]): boolean {
+    private evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         const isLeftFieldPresent = visibilityObj && (visibilityObj.leftType || visibilityObj.leftValue);
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
-            return this.isFieldVisible(form, visibilityObj, processVarList);
+            return this.isFieldVisible(form, visibilityObj);
         }
     }
 
-    private isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, processVarList: TaskProcessVariableModel[], accumulator: any[] = [], result: boolean = false): boolean {
-        const leftValue = this.getLeftValue(form, visibilityObj, processVarList);
-        const rightValue = this.getRightValue(form, visibilityObj, processVarList);
+    private isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
+        const leftValue = this.getLeftValue(form, visibilityObj);
+        const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
 
         accumulator.push({value: actualResult, operator: visibilityObj.nextConditionOperator});
@@ -110,24 +113,24 @@ export class WidgetVisibilityService {
         }
     }
 
-    private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel, processVarList: TaskProcessVariableModel[]): string {
+    private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let leftValue = '';
         if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.variable) {
-            leftValue = this.getVariableValue(form, visibilityObj.leftValue, processVarList);
+            leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
         } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
             if (leftValue === undefined || leftValue === '') {
-                const variableValue = this.getVariableValue(form, visibilityObj.leftValue, processVarList);
+                const variableValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
                 leftValue = !this.isInvalidValue(variableValue) ? variableValue : leftValue;
             }
         }
         return leftValue;
     }
 
-    private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel, processVarList: TaskProcessVariableModel[]): string {
+    private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let valueFound = '';
         if (visibilityObj.rightType === WidgetTypeEnum.variable) {
-            valueFound = this.getVariableValue(form, visibilityObj.rightValue, processVarList);
+            valueFound = this.getVariableValue(form, visibilityObj.rightValue, this.processVarList);
         } else if (visibilityObj.rightType === WidgetTypeEnum.field) {
             valueFound = this.getFormValue(form, visibilityObj.rightValue);
         } else {
@@ -319,6 +322,10 @@ export class WidgetVisibilityService {
 
     private contains(leftValue: any, rightValue: any) {
         return Array.isArray(leftValue) && Array.isArray(rightValue) && rightValue.every((element) => leftValue.includes(element));
+    }
+
+    cleanProcessVariable() {
+        this.processVarList = [];
     }
 
     private isValidCondition(condition: WidgetVisibilityModel): boolean {

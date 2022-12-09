@@ -89,6 +89,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         const processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
             this.processDefinitionId = processDefinitionId.currentValue;
+            this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
             return;
         }
@@ -101,6 +102,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
         const processId = changes['processId'];
         if (processId && processId.currentValue) {
+            this.visibilityService.cleanProcessVariable();
             this.loadStartForm(processId.currentValue);
             return;
         }
@@ -163,8 +165,10 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     /** @override */
     onRefreshClicked() {
         if (this.processDefinitionId) {
+            this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
         } else if (this.processId) {
+            this.visibilityService.cleanProcessVariable();
             this.loadStartForm(this.processId);
         }
     }

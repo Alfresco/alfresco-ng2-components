@@ -48,7 +48,7 @@ import { EcmModelService } from './services/ecm-model.service';
 import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
-import { TaskFormService } from './services/task-form.service;
+import { TaskFormService } from './services/task-form.service';
 import { TaskRepresentation } from "@alfresco/js-api/typings/src/api/activiti-rest-api/model/taskRepresentation";
 
 @Component({

@@ -23,8 +23,9 @@ import {
     FormFieldOption,
     WidgetComponent,
     LogService,
-    ProcessDefinitionService
 } from '@alfresco/adf-core';
+import { ProcessDefinitionService } from '../../services/process-definition.service';
+import { TaskFormService } from '../../services/task-form.service';
 
 @Component({
     selector: 'dropdown-widget',
@@ -46,6 +47,7 @@ import {
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
+                public taskFormService: TaskFormService,
                 public processDefinitionService: ProcessDefinitionService,
                 private logService: LogService) {
         super(formService);
@@ -62,7 +64,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getValuesByTaskId() {
-        this.processDefinitionService
+        this.taskFormService
             .getRestFieldValues(
                 this.field.form.taskId,
                 this.field.id

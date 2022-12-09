@@ -22,8 +22,11 @@ import {
     FormOutcomeEvent,
     CoreAutomationService
 } from '@alfresco/adf-core';
+import {
+    TaskFormService
+} from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
-import { FakeFormService } from './fake-form.service';
+import { FakeTaskFormService } from './fake-tak-form.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -31,7 +34,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'app-form-loading',
     templateUrl: './form-loading.component.html',
     styleUrls: ['./form-loading.component.scss'],
-    providers: [{ provide: FormService, useClass: FakeFormService }]
+    providers: [{ provide: FakeTaskFormService, useClass: TaskFormService }]
 })
 export class FormLoadingComponent implements OnInit, OnDestroy {
     form: FormModel;

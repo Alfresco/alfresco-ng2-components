@@ -21,6 +21,7 @@ import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfr
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
+import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 @Component({
     selector: 'typeahead-widget',
@@ -48,6 +49,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     constructor(public formService: FormService,
                 private taskFormService: TaskFormService,
+                private processDefinitionService: ProcessDefinitionService,
                 private logService: LogService) {
         super(formService);
     }
@@ -89,7 +91,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getValuesByProcessDefinitionId() {
-        this.formService
+        this.processDefinitionService
             .getRestFieldValuesByProcessId(
                 this.field.form.processDefinitionId,
                 this.field.id

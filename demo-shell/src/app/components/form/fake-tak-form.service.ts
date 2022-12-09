@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
+
 import {
-    AlfrescoApiService,
-    LogService,
-    FormService,
-    FormOutcomeEvent
-} from '@alfresco/adf-core';
+    TaskFormService
+} from '@alfresco/adf-process-services';
+import { AlfrescoApiService, LogService } from "@alfresco/adf-core";
 
 @Injectable()
-export class FakeFormService extends FormService {
-    executeOutcome = new Subject<FormOutcomeEvent>();
+export class FakeTaskFormService extends TaskFormService {
 
-    constructor(
-    ) {
-        super();
+    constructor(apiService: AlfrescoApiService, logService: LogService) {
+        super(apiService, logService);
     }
 
     public getRestFieldValues(
