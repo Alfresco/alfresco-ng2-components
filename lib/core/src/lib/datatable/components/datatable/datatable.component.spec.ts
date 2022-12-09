@@ -1783,4 +1783,25 @@ describe('Show/hide columns', () => {
         const headerCells = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell--text.adf-datatable-cell-header');
         expect(headerCells.length).toBe(1);
     });
+
+    describe('markRowAsContextMenuSource', () => {
+        it('should set isContextMenuSource to false for all rows returned by getRows function', () => {
+            const rows = [{
+                isContextMenuSource: true
+            }, {
+                isContextMenuSource: true
+            }] as DataRow[];
+            spyOn(dataTable.data, 'getRows').and.returnValue(rows);
+            dataTable.markRowAsContextMenuSource({} as DataRow);
+            rows.forEach((row) => expect(row.isContextMenuSource).toBeFalse());
+        });
+
+        it('should set isContextMenuSource to true for passed row', () => {
+            const row = {
+                isContextMenuSource: false
+            } as DataRow;
+            dataTable.markRowAsContextMenuSource(row);
+            expect(row.isContextMenuSource).toBeTrue();
+        });
+    });
 });

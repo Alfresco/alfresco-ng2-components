@@ -284,6 +284,21 @@ describe('NewVersionUploaderService', () => {
                     });
             });
 
+            it('should focus element indicated by passed selector after closing modal', (done) => {
+                dialogRefSpyObj.componentInstance.dialogAction = new BehaviorSubject<VersionManagerUploadData>(mockNewVersionUploaderData);
+                const afterClosed$ = new BehaviorSubject<void>(undefined);
+                dialogRefSpyObj.afterClosed = () => afterClosed$;
+                const elementToFocusSelector = 'button';
+                const elementToFocus = document.createElement(elementToFocusSelector);
+                spyOn(elementToFocus, 'focus').and.callFake(() => {
+                    expect(elementToFocus.focus).toHaveBeenCalled();
+                    done();
+                });
+                spyOn(document, 'querySelector').and.returnValue(elementToFocus);
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, undefined, elementToFocusSelector)
+                    .subscribe();
+            });
+
         });
 
     });
