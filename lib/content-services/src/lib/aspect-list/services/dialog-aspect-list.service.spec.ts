@@ -52,7 +52,7 @@ describe('DialogAspectListService', () => {
             spyOn(document, 'querySelector').withArgs(elementToFocusSelector).and.returnValue(elementToFocus);
             dialogAspectListService.openAspectListDialog('some-node-id', elementToFocusSelector);
             afterClosed$.next();
-            expect(elementToFocus.focus).toHaveBeenCalledWith();
+            expect(elementToFocus.focus).toHaveBeenCalled();
         });
 
         it('should not focus element indicated by passed selector if modal is not closed', () => {
@@ -63,26 +63,15 @@ describe('DialogAspectListService', () => {
             expect(elementToFocus.focus).not.toHaveBeenCalled();
         });
 
-        [{
-            selector: undefined,
-            selectorDescription: 'undefined'
-        }, {
-            selector: null,
-            selectorDescription: 'null'
-        }, {
-            selector: '',
-            selectorDescription: 'empty string'
-        }].forEach((testCase) => {
-            it(`should not looking for element to focus if passed selector is ${testCase.selectorDescription}`, () => {
-                const afterClosed$ = new Subject<void>();
-                spyOn(dialog, 'open').and.returnValue({
-                    afterClosed: () => afterClosed$.asObservable()
-                } as MatDialogRef<any>);
-                spyOn(document, 'querySelector');
-                dialogAspectListService.openAspectListDialog('some-node-id', testCase.selector);
-                afterClosed$.next();
-                expect(document.querySelector).not.toHaveBeenCalled();
-            });
+        it('should not looking for element to focus if passed selector is empty string', () => {
+            const afterClosed$ = new Subject<void>();
+            spyOn(dialog, 'open').and.returnValue({
+                afterClosed: () => afterClosed$.asObservable()
+            } as MatDialogRef<any>);
+            spyOn(document, 'querySelector');
+            dialogAspectListService.openAspectListDialog('some-node-id', '');
+            afterClosed$.next();
+            expect(document.querySelector).not.toHaveBeenCalled();
         });
     });
 });
