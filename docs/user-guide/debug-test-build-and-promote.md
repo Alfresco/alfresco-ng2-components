@@ -86,7 +86,3 @@ In case of ADW, update the `apps/content-ee/src/app/extensions.module.ts` file a
 Once built, the compiled ADF-based application is available as a collection of files directly in the `dist` folder. The promotion of the distribution of the application in a different environment can be done simply by copying the files in the target server.
 
 Also in this case, nothing differs from a standard Angular application and the same tips and best practices can be followed.
-
-# Conclusions
-
-In this content you learned the most common and basic tasks for ADW and any ADF-based application.
