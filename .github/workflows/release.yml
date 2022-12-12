@@ -6,8 +6,6 @@ on:
     branches:
       - /^master(-patch.*)?$/
       - /^develop(-patch.*)?$/
-      - master
-      - develop
   workflow_dispatch:
     inputs:
       logLevel:

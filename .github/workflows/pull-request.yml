@@ -7,8 +7,6 @@ on:
     branches:
       - /^master(-patch.*)?$/
       - /^develop(-patch.*)?$/
-      - master
-      - develop
 
 env:
   BASE_REF: ${{ github.base_ref }}
@@ -70,11 +68,7 @@ jobs:
           nx run testing:bundle
       - name: nx affected lint
         run: nx affected --target=lint $NX_CALCULATION_FLAGS
-      # - name: install chrome
-      #   uses: browser-actions/setup-chrome@latest
-      # - name: install xvfb
-      #   run: sudo apt-get install -y x11-xserver-utils xvfb
-      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - run: affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-build-artifacts
