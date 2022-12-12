@@ -1,9 +1,6 @@
 name: "release"
 
 on:
-  # push:
-  #   branches:
-  #     - "AAE-7986*"
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -74,13 +71,15 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
       - run: npm -v
-      - run: npm ci
+      - name: install
+        run: |
+          npm ci
+          nx run cli:bundle
+          nx run testing:bundle
       - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
       - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
       - run: nx build demoshell --configuration production
-      - run: nx run cli:bundle
-      - run: nx run testing:bundle
       - uses: ./.github/actions/upload-build-artifacts
 
   push-demoshell:
@@ -107,7 +106,7 @@ jobs:
           . ./scripts/travis/release/docker-tag.sh
           echo $TAGS          
           set -u;
-          ./scripts/travis/release/release-demoshell-docker.sh --dryrun
+          ./scripts/travis/release/release-demoshell-docker.sh
 
   push-storybook:
     needs: [build]
@@ -132,7 +131,7 @@ jobs:
           . ./scripts/travis/release/docker-tag.sh
           echo $TAGS
           set -u;        
-          ./scripts/travis/release/release-storybook-docker.sh --dryrun
+          ./scripts/travis/release/release-storybook-docker.sh
 
   npm-release:
     needs: [build]
@@ -158,7 +157,7 @@ jobs:
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - name: release
-        run: ./scripts/travis/release/release-npm.sh --dryrun
+        run: ./scripts/travis/release/release-npm.sh
 
 
   npm-check-bundle:
