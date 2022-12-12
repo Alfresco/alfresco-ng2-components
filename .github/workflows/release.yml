@@ -7,8 +7,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - /^master(-patch.*)?$/
-      - /^develop(-patch.*)?$/
+      - develop
+      - master
+      - develop-patch*
+      - master-patch*
   # workflow_dispatch:
   #   inputs:
   #     logLevel:
