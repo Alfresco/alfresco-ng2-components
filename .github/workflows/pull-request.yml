@@ -69,7 +69,7 @@ jobs:
           nx run testing:bundle
       - name: nx affected lint
         run: nx affected --target=lint $NX_CALCULATION_FLAGS
-      - run: nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-build-artifacts
