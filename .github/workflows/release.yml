@@ -1,22 +1,25 @@
 name: "release"
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches:
-      - /^master(-patch.*)?$/
-      - /^develop(-patch.*)?$/
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
+      - "AAE-7986*"
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   branches:
+  #     - /^master(-patch.*)?$/
+  #     - /^develop(-patch.*)?$/
+  # workflow_dispatch:
+  #   inputs:
+  #     logLevel:
+  #       description: 'Log level'
+  #       required: true
+  #       default: 'warning'
+  #       type: choice
+  #       options:
+  #       - info
+  #       - warning
+  #       - debug
 
 # on:
 #   pull_request:
