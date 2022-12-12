@@ -1,14 +1,16 @@
 name: "release"
 
 on:
-  push:
-    branches:
-      - "AAE-7986*"
-  # pull_request:
-  #   types: [opened, synchronize, reopened]
+  # push:
   #   branches:
-  #     - /^master(-patch.*)?$/
-  #     - /^develop(-patch.*)?$/
+  #     - "AAE-7986*"
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - /^master(-patch.*)?$/
+      - /^develop(-patch.*)?$/
+      - develop
+      - master      
   # workflow_dispatch:
   #   inputs:
   #     logLevel:
