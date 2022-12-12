@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 
@@ -41,6 +41,9 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
 import { TreeViewModule } from './tree-view/tree-view.module';
 import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
+import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
+import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
+import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 
 @NgModule({
     imports: [
@@ -67,7 +70,8 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
         VersionManagerModule,
         TreeViewModule,
         ContentTypeModule,
-        AspectListModule
+        AspectListModule,
+        VersionCompatibilityModule
     ],
     providers: [
         {
@@ -98,7 +102,8 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
         VersionManagerModule,
         TreeViewModule,
         AspectListModule,
-        ContentTypeModule
+        ContentTypeModule,
+        VersionCompatibilityModule
     ]
 })
 export class ContentModule {
@@ -113,6 +118,12 @@ export class ContentModule {
                         name: 'adf-content-services',
                         source: 'assets/adf-content-services'
                     }
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: versionCompatibilityFactory,
+                    deps: [VersionCompatibilityService],
+                    multi: true
                 }
             ]
         };

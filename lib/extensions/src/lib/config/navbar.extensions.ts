@@ -17,8 +17,13 @@
 
 import { ExtensionElement } from './extension-element';
 
+export interface NavBarRules {
+    [ruleId: string]: string;
+}
+
 export interface NavBarGroupRef extends ExtensionElement {
     items: Array<NavBarLinkRef>;
+    rules?: NavBarRules;
 }
 
 export interface NavBarLinkRef extends ExtensionElement {
@@ -31,4 +36,5 @@ export interface NavBarLinkRef extends ExtensionElement {
     url?: string; // evaluated at runtime based on route ref
     description?: string;
     children?: Array<NavBarLinkRef>;
+    rules?: NavBarRules;
 }

@@ -2,10 +2,10 @@
 Title: Version Compatibility Directive
 Added: v3.9.0
 Status: Active
-Last reviewed: 2020-23-06
+Last reviewed: 2022-07-12
 ---
 
-# [Version Compatibility Directive](lib/core/src/lib/directives/version-compatibility.directive.ts "Defined in version-compatibility.directive.ts")
+# [Version Compatibility Directive](lib/content-services/src/lib/version-compatibility/version-compatibility.directive.ts "Defined in version-compatibility.directive.ts")
 
 Enables/disables components based on ACS version in use.
 
@@ -33,7 +33,7 @@ The directive takes the version specified in the html and compares it to the ver
 
 This will allow certain features to be only present under specific versions.
 
-#### Major version
+### Major version
 
 ```html
 <button *adf-acs-version="'7'">
@@ -41,7 +41,7 @@ This will allow certain features to be only present under specific versions.
 </button>
 ```
 
-#### Major and minor version
+### Major and minor version
 
 ```html
 <button *adf-acs-version="'6.2'">
@@ -49,7 +49,7 @@ This will allow certain features to be only present under specific versions.
 </button>
 ```
 
-#### Major, minor and patch version
+### Major, minor and patch version
 
 ```html
 <button *adf-acs-version="'6.0.1'">
@@ -61,4 +61,6 @@ It can be set to match major, minor and patches of ACS versions. Fox example, if
 
 If the minimum version required is not matched the component will not be initialized and will disappear from the DOM tree.
 
-    Note, if you don’t place the * in front, the app won’t be able to inject the TemplateRef and ViewContainerRef required for this directive to work. 
+```text
+Note, if you don’t place the * in front, the app won’t be able to inject the TemplateRef and ViewContainerRef required for this directive to work. 
+```

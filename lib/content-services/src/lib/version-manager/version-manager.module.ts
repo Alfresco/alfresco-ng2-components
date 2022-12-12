@@ -24,6 +24,7 @@ import { VersionUploadComponent } from './version-upload.component';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
 import { UploadModule } from '../upload/upload.module';
+import { VersionCompatibilityModule } from '../version-compatibility/version-compatibility.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { VersionComparisonComponent } from './version-comparison.component';
 
@@ -33,6 +34,7 @@ import { VersionComparisonComponent } from './version-comparison.component';
         MaterialModule,
         CoreModule,
         UploadModule,
+        VersionCompatibilityModule,
         FormsModule
     ],
     exports: [

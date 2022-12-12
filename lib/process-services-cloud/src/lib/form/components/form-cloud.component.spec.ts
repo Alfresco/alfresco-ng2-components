@@ -39,12 +39,12 @@ import {
     setupTestBed,
     TRANSLATION_PROVIDER,
     WidgetVisibilityService,
-    VersionCompatibilityService,
     FormService,
     UploadWidgetContentLinkModel,
     ContentLinkModel,
     AlfrescoApiService
 } from '@alfresco/adf-core';
+import { VersionCompatibilityService } from '@alfresco/adf-content-services';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
 import { FormCloudComponent } from './form-cloud.component';

@@ -45,6 +45,16 @@ describe('DateWidgetComponent', () => {
         widget = fixture.componentInstance;
     });
 
+    it('[C310333] - should be able to set a placeholder', () => {
+        widget.field = new FormFieldModel(null, {
+            id: 'date-id',
+            name: 'date-name',
+            placeholder: 'My Placeholder'
+        });
+
+        expect(widget.field.placeholder).toBe('My Placeholder');
+    });
+
     it('should setup min value for date picker', () => {
         const minValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
@@ -153,7 +163,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement.value).toContain('9-9-9999');
         });
 
-        it('should show the correct format type', () => {
+        it('[C310335] - Should be able to change display format for Date widget', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -166,11 +176,24 @@ describe('DateWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            expect(element.querySelector('#date-field-id')).toBeDefined();
-            expect(element.querySelector('#date-field-id')).not.toBeNull();
-
-            const dateElement: any = element.querySelector('#date-field-id');
+            let dateElement: any = element.querySelector('#date-field-id');
             expect(dateElement.value).toContain('12-30-9999');
+
+            widget.field.value = '5-6-2019 00:00';
+            widget.field.dateDisplayFormat = 'D-M-YYYY HH:mm';
+
+            fixture.detectChanges();
+
+            dateElement = element.querySelector('#date-field-id');
+            expect(dateElement.value).toContain('5-6-2019 00:00');
+
+            widget.field.value = '05.06.2019';
+            widget.field.dateDisplayFormat = 'DD.MM.YYYY';
+
+            fixture.detectChanges();
+
+            dateElement = element.querySelector('#date-field-id');
+            expect(dateElement.value).toContain('05.06.2019');
         });
 
         it('should disable date button when is readonly', () => {

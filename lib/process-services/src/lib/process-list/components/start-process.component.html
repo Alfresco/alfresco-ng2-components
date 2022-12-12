@@ -49,7 +49,8 @@
                                     *ngIf="showSelectProcessDropdown"
                                     mat-icon-button
                                     (click)="displayDropdown($event)"
-                                    [disabled]="disableDropdownButton()">
+                                    [disabled]="disableDropdownButton()"
+                                    [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate">
                                     <mat-icon>arrow_drop_down</mat-icon>
                                 </button>
                             </ng-container>
