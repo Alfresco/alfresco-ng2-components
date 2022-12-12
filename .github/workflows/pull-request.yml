@@ -6,6 +6,7 @@ on:
     branches:
       - /^master(-patch.*)?$/
       - /^develop(-patch.*)?$/
+      - develop
 
 env:
   BASE_REF: ${{ github.base_ref }}
