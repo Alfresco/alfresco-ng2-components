@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-export * from './highlight.directive';
-export * from './logout.directive';
-export * from './node-download.directive';
-export * from './upload.directive';
-export * from './tooltip-card/tooltip-card.directive';
-export * from './infinite-select-scroll.directive';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { VersionCompatibilityDirective } from './version-compatibility.directive';
 
-export * from './directive.module';
+@NgModule({
+    imports: [CommonModule],
+    exports: [VersionCompatibilityDirective],
+    declarations: [VersionCompatibilityDirective]
+})
+export class VersionCompatibilityModule {}

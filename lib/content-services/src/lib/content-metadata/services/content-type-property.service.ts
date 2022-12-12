@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel, VersionCompatibilityService } from '@alfresco/adf-core';
+import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel } from '@alfresco/adf-core';
 import { Observable, of, Subject, zip } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { ContentTypeDialogComponent } from '../../content-type/content-type-dialog.component';
@@ -25,6 +25,7 @@ import { ContentTypeDialogComponentData } from '../../content-type/content-type-
 import { ContentTypeService } from '../../content-type/content-type.service';
 import { Node, Property, TypeEntry } from '@alfresco/js-api';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
+import { VersionCompatibilityService } from '../../version-compatibility/version-compatibility.service';
 
 @Injectable({
     providedIn: 'root'

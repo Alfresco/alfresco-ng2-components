@@ -32,8 +32,6 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../services/directionality-config-factory';
 import { DirectionalityConfigService } from '../services/directionality-config.service';
-import { versionCompatibilityFactory } from '../services/version-compatibility-factory';
-import { VersionCompatibilityService } from '../services/version-compatibility.service';
 
 @NgModule({
     imports: [
@@ -53,12 +51,6 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
             provide: APP_INITIALIZER,
             useFactory: directionalityConfigFactory,
             deps: [ DirectionalityConfigService ],
-            multi: true
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: versionCompatibilityFactory,
-            deps: [ VersionCompatibilityService ],
             multi: true
         }
     ],

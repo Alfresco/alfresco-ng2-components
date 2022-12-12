@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, ViewContainerRef, TemplateRef } from '@angular/core';
-import { VersionCompatibilityService } from '../services/version-compatibility.service';
+import { VersionCompatibilityService } from './version-compatibility.service';
 import { take } from 'rxjs/operators';
 
 @Directive({

@@ -19,10 +19,10 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { VersionCompatibilityService } from '../services/version-compatibility.service';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
+import { VersionCompatibilityModule } from './version-compatibility.module';
 
 @Component({
     template: `
@@ -62,7 +62,8 @@ describe('VersionCompatibilityDirective', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreTestingModule
+            CoreTestingModule,
+            VersionCompatibilityModule
         ],
         declarations: [TestComponent]
     });

@@ -58,8 +58,6 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { versionCompatibilityFactory } from './services/version-compatibility-factory';
-import { VersionCompatibilityService } from './services/version-compatibility.service';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
@@ -169,12 +167,6 @@ export class CoreModule {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,
                     deps: [DirectionalityConfigService],
-                    multi: true
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: versionCompatibilityFactory,
-                    deps: [VersionCompatibilityService],
                     multi: true
                 },
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -31,6 +31,8 @@ import {
 } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
+import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 
 @NgModule({
     imports: [
@@ -44,7 +46,13 @@ import { TranslateModule } from '@ngx-translate/core';
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
-        { provide: CookieService, useClass: CookieServiceMock }
+        { provide: CookieService, useClass: CookieServiceMock },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: versionCompatibilityFactory,
+            deps: [ VersionCompatibilityService ],
+            multi: true
+        }
     ],
     exports: [
         NoopAnimationsModule,
