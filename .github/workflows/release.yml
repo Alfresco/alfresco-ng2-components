@@ -11,17 +11,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  # workflow_dispatch:
-  #   inputs:
-  #     logLevel:
-  #       description: 'Log level'
-  #       required: true
-  #       default: 'warning'
-  #       type: choice
-  #       options:
-  #       - info
-  #       - warning
-  #       - debug
 
 # on:
 #   pull_request:
