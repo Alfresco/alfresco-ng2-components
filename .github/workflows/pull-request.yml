@@ -4,8 +4,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - ^master(-patch.*)?$
-      - ^develop(-patch.*)?$
+      - "master(-patch.*)?"
+      - "develop(-patch.*)?"
 
 env:
   BASE_REF: ${{ github.base_ref }}
