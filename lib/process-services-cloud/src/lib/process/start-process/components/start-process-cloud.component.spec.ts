@@ -950,8 +950,11 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('user should see cancel button', () => {
-            const cancelBtn = fixture.nativeElement.querySelector('#cancel_process');
-            expect(cancelBtn).not.toBeNull();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const cancelBtn = fixture.debugElement.query(By.css('#cancel_process'));
+                expect(cancelBtn).toBeTruthy();
+            });
         });
 
         it('currentCreatedProcess should be null when cancel button clicked', () => {
