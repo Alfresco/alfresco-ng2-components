@@ -17,15 +17,15 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Pagination } from '@alfresco/js-api';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PaginationModel } from '../models/pagination.model';
 
-class FakePaginationInput implements Pagination {
+class FakePaginationInput implements PaginationModel {
     count = 25;
     hasMoreItems = false;
     totalItems = 0;
@@ -257,10 +257,10 @@ describe('PaginationComponent', () => {
     describe('with paginated component', () => {
 
         it('should take pagination from the external component', () => {
-            const pagination: Pagination = {};
+            const pagination: PaginationModel = {};
 
             const customComponent = {
-                pagination: new BehaviorSubject<Pagination>({})
+                pagination: new BehaviorSubject<PaginationModel>({})
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -271,11 +271,11 @@ describe('PaginationComponent', () => {
         });
 
         it('should update pagination by subscription', () => {
-            const pagination1: Pagination = {};
-            const pagination2: Pagination = {};
+            const pagination1: PaginationModel = {};
+            const pagination2: PaginationModel = {};
 
             const customComponent = {
-                pagination: new BehaviorSubject<Pagination>({})
+                pagination: new BehaviorSubject<PaginationModel>({})
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -290,7 +290,7 @@ describe('PaginationComponent', () => {
 
         it('should send pagination event to paginated component', () => {
             const customComponent = {
-                pagination: new BehaviorSubject<Pagination>({}),
+                pagination: new BehaviorSubject<PaginationModel>({}),
                 updatePagination: () => {},
                 supportedPageSizes: [],
                 rows: []
@@ -311,7 +311,7 @@ describe('PaginationComponent', () => {
         it('should go to previous page if current page has 0 items', () => {
             const customComponent = {
                 updatePagination: () => {},
-                pagination: new BehaviorSubject<Pagination>({}),
+                pagination: new BehaviorSubject<PaginationModel>({}),
                 rows: []
             } as PaginatedComponent;
 
@@ -336,9 +336,9 @@ describe('PaginationComponent', () => {
         });
 
         it('should not show pagination when external component count is zero', () => {
-            const pagination: Pagination = {};
+            const pagination: PaginationModel = {};
             const customComponent = {
-                pagination: new BehaviorSubject<Pagination>({ count: 0, maxItems: 5, totalItems: 5 })
+                pagination: new BehaviorSubject<PaginationModel>({ count: 0, maxItems: 5, totalItems: 5 })
             } as PaginatedComponent;
             component.target = customComponent;
             component.ngOnInit();

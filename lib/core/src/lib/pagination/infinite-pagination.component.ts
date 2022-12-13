@@ -26,10 +26,9 @@ import {
 import { PaginatedComponent } from './paginated-component.interface';
 import { Subject } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
-import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
-import { Pagination } from '@alfresco/js-api';
+import { PaginationModel } from '../models/pagination.model';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -42,7 +41,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
-    static DEFAULT_PAGINATION: Pagination = new Pagination({
+    static DEFAULT_PAGINATION: PaginationModel = new PaginationModel({
         skipCount: 0,
         maxItems: 25,
         totalItems: 0

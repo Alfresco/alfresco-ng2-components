@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import { Pagination } from '@alfresco/js-api';
+export class PaginationModel {
 
-export class PaginationModel extends Pagination {
     merge?: boolean;
+    count?: number;
+    hasMoreItems?: boolean;
+    totalItems?: number;
+    skipCount?: number;
+    maxItems?: number;
 
     constructor(input?: any) {
-        super(input);
         if (input) {
             this.count = input.count;
             this.hasMoreItems = input.hasMoreItems ? input.hasMoreItems : false;
