@@ -27,8 +27,6 @@ import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -82,21 +80,10 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(protected nodesApiService: NodesApiService) {}
+    constructor() {}
 
     ngOnInit() {
         this.updateValue();
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                if (this.row && node && node.id) {
-                    if (this.row['node'].entry.id === node.id) {
-                        this.row['node'].entry = node;
-                        this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', node);
-                        this.updateValue();
-                    }
-                }
-            });
     }
 
     protected updateValue() {

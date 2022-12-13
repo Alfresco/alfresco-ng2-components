@@ -22,9 +22,7 @@ import {
     OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-location-cell',
@@ -43,14 +41,14 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     @Input()
     link: any[];
 
-    constructor(nodesApiService: NodesApiService) {
-        super(nodesApiService);
+    constructor() {
+        super();
     }
 
     /** @override */
     ngOnInit() {
         if (this.column && this.column.key && this.row && this.data) {
-            const path: PathInfoEntity = this.data.getValue(
+            const path = this.data.getValue(
                 this.row,
                 this.column,
                 this.resolverFn

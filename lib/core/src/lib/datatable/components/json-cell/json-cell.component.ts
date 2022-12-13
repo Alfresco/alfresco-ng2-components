@@ -19,7 +19,6 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } 
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
-import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-json-cell',
@@ -44,10 +43,9 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
     editable: boolean = false;
 
     constructor(
-        private dialog: MatDialog,
-        nodesApiService: NodesApiService
+        private dialog: MatDialog
     ) {
-        super(nodesApiService);
+        super();
     }
 
     ngOnInit() {

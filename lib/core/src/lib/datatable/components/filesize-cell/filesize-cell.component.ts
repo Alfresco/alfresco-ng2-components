@@ -17,7 +17,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-filesize-cell',
@@ -33,7 +32,7 @@ import { NodesApiService } from '../../../services/nodes-api.service';
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent {
-    constructor(nodesApiService: NodesApiService) {
-        super(nodesApiService);
+    constructor() {
+        super();
     }
 }

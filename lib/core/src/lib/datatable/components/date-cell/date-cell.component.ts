@@ -20,8 +20,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import {
     UserPreferencesService,
     UserPreferenceValues
-} from '../../../common/services/user-preferences.service';
-import { NodesApiService } from '../../../services/nodes-api.service';
+} from '../../../services/user-preferences.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -65,10 +64,9 @@ export class DateCellComponent extends DataTableCellComponent {
 
     constructor(
         userPreferenceService: UserPreferencesService,
-        nodesApiService: NodesApiService,
         appConfig: AppConfigService
     ) {
-        super(nodesApiService);
+        super();
 
         this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);
