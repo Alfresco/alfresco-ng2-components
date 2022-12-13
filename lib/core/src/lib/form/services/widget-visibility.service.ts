@@ -57,7 +57,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    private refreshEntityVisibility(element: FormFieldModel | TabModel) {
+    public refreshEntityVisibility(element: FormFieldModel | TabModel) {
         element.isVisible = this.isParentTabVisible(this.form, element) && this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
@@ -65,7 +65,7 @@ export class WidgetVisibilityService {
         element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
-    private evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    public evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         const isLeftFieldPresent = visibilityObj && (visibilityObj.leftType || visibilityObj.leftValue);
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
@@ -74,7 +74,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    private isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
+    public isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
@@ -113,7 +113,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    public getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let leftValue = '';
         if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.variable) {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
@@ -127,7 +127,7 @@ export class WidgetVisibilityService {
         return leftValue;
     }
 
-    private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    public getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let valueFound = '';
         if (visibilityObj.rightType === WidgetTypeEnum.variable) {
             valueFound = this.getVariableValue(form, visibilityObj.rightValue, this.processVarList);
@@ -143,7 +143,7 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    private getFormValue(form: FormModel, fieldId: string): any {
+    public getFormValue(form: FormModel, fieldId: string): any {
         const formField = this.getFormFieldById(form, fieldId);
         let value;
 
@@ -157,11 +157,11 @@ export class WidgetVisibilityService {
         return value;
     }
 
-    private isFormFieldValid(formField: FormFieldModel): boolean {
+    public isFormFieldValid(formField: FormFieldModel): boolean {
         return formField && formField.isValid;
     }
 
-    private getFieldValue(valueList: any, fieldId: string): any {
+    public getFieldValue(valueList: any, fieldId: string): any {
         let labelFilterByName;
         let valueFound;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
@@ -187,11 +187,11 @@ export class WidgetVisibilityService {
         return value === undefined || value === null;
     }
 
-    private getFormFieldById(form: FormModel, fieldId: string): FormFieldModel {
+    public getFormFieldById(form: FormModel, fieldId: string): FormFieldModel {
         return form.getFormFields().find((formField: FormFieldModel) => this.isSearchedField(formField, fieldId));
     }
 
-    private searchValueInForm(formField: FormFieldModel, fieldId: string): string {
+    public searchValueInForm(formField: FormFieldModel, fieldId: string): string {
         let fieldValue = '';
 
         if (formField) {
@@ -270,7 +270,7 @@ export class WidgetVisibilityService {
         return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
-    private getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
+    public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         const processVariableValue = this.getProcessVariableValue(name, processVarList);
         const variableDefaultValue = form.getDefaultFormVariableValue(name);
 
@@ -292,7 +292,7 @@ export class WidgetVisibilityService {
         return undefined;
     }
 
-    private evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean | undefined {
+    public evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean | undefined {
         switch (operator) {
             case '==':
                 return leftValue + '' === rightValue + '';
