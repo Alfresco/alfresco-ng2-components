@@ -73,8 +73,9 @@ Description
 How to fix it:
 
 ## Deprecated items
-  
 
+### PaginationModel
+``Pagination`` model from ```@alfresco/js-api``` has been now deprecated in favour of internal implementated model ```PaginationModel``` evrywhere
 
 ## Relocated classes
 

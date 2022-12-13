@@ -17,14 +17,13 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Pagination } from '@alfresco/js-api';
+import { PaginationModel } from '../models/pagination.model';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -57,7 +56,7 @@ describe('InfinitePaginationComponent', () => {
 
     let fixture: ComponentFixture<InfinitePaginationComponent>;
     let component: InfinitePaginationComponent;
-    let pagination: Pagination;
+    let pagination: PaginationModel;
     let changeDetectorRef: ChangeDetectorRef;
 
     setupTestBed({
@@ -119,7 +118,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should NOT show the load more button if there are no more elements to load', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false };
+            pagination = {maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false};
 
             component.target.pagination.next(pagination);
 
@@ -135,7 +134,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should  show the load more button if there are  more elements to load', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
 
             component.target.pagination.next(pagination);
 
@@ -160,7 +159,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
 
             component.target.pagination.next(pagination);
 
@@ -168,7 +167,7 @@ describe('InfinitePaginationComponent', () => {
             component.pageSize = 5;
             changeDetectorRef.detectChanges();
 
-            component.loadMore.subscribe((newPagination: Pagination) => {
+            component.loadMore.subscribe((newPagination: PaginationModel) => {
                 expect(newPagination.skipCount).toBe(0);
                 done();
             });
@@ -178,7 +177,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with merge false to reload all the elements', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
 
             component.target.pagination.next(pagination);
 
@@ -201,7 +200,7 @@ describe('InfinitePaginationComponent', () => {
         let spyTarget;
 
         beforeEach(() => {
-            pagination = { maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true };
+            pagination = {maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true};
 
             spyTarget = spyOn(component.target, 'updatePagination').and.callThrough();
         });
@@ -249,7 +248,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.destroy();
 
             const emitNewPaginationEvent = () => {
-                const newPagination = { maxItems: 1, skipCount: 0, totalItems: 2, hasMoreItems: true };
+                const newPagination = {maxItems: 1, skipCount: 0, totalItems: 2, hasMoreItems: true};
                 component.target.pagination.next(newPagination);
             };
 
