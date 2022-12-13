@@ -2,17 +2,13 @@ name: "release"
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [closed]
     branches:
       - develop
       - master
       - develop-patch*
       - master-patch*
 
-# on:
-#   pull_request:
-#     types:
-#       - closed
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -61,7 +57,7 @@ env:
 jobs:
   build:
     timeout-minutes: 20
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     name: "Build Components"
     runs-on: ubuntu-22.04
     steps:
@@ -85,7 +81,7 @@ jobs:
   push-demoshell:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -111,7 +107,7 @@ jobs:
   push-storybook:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -136,7 +132,7 @@ jobs:
   npm-release:
     needs: [build]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -163,7 +159,7 @@ jobs:
   npm-check-bundle:
     needs: [npm-release]
     timeout-minutes: 10
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
