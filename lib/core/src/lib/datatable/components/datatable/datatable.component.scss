@@ -402,6 +402,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-cell--image {
         max-width: $data-table-thumbnail-width;
         display: flex;
+
+        .adf-cell-value {
+            width: unset;
+        }
     }
 
     .adf-datatable-row:not(:hover) .adf-datatable-hide-actions-without-hover {
