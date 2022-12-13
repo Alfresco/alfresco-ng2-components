@@ -116,6 +116,11 @@ describe('StartProcessCloudComponent', () => {
         TestBed.resetTestingModule();
     });
 
+    afterAll(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     describe('start a process without start form', () => {
 
         beforeEach(() => {
