@@ -45,6 +45,7 @@ import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { ProcessDefinitionCloud, TaskVariableCloud } from '@alfresco/adf-process-services-cloud';
+import { first } from 'rxjs/operators';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -159,7 +160,7 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should have start button disabled  if create operation failed', fakeAsync(() => {
+        it('should have start button disabled if create operation failed', fakeAsync(() => {
             createProcessSpy.and.returnValue(throwError('fake error'));
             const change = new SimpleChange(null, 'MyApp', false);
             fixture.detectChanges();
@@ -207,14 +208,14 @@ describe('StartProcessCloudComponent', () => {
 
         it('should include the static input mappings in the resolved values', fakeAsync(() => {
             const values: TaskVariableCloud[] = [
-                new TaskVariableCloud({name: 'value1', value: 'value'}),
-                new TaskVariableCloud({name: 'value2', value: 1}),
-                new TaskVariableCloud({name: 'value3', value: false})
+                new TaskVariableCloud({ name: 'value1', value: 'value' }),
+                new TaskVariableCloud({ name: 'value2', value: 1 }),
+                new TaskVariableCloud({ name: 'value3', value: false })
             ];
             const staticInputs: TaskVariableCloud[] = [
-                new TaskVariableCloud({name: 'static1', value: 'static value'}),
-                new TaskVariableCloud({name: 'static2', value: 0}),
-                new TaskVariableCloud({name: 'static3', value: true})
+                new TaskVariableCloud({ name: 'static1', value: 'static value' }),
+                new TaskVariableCloud({ name: 'static2', value: 0 }),
+                new TaskVariableCloud({ name: 'static3', value: true })
             ];
             component.name = 'My new process';
             component.processDefinitionName = 'processwithoutform2';
@@ -831,7 +832,7 @@ describe('StartProcessCloudComponent', () => {
         it('should set the process name using the processName cloud pipe when a process definition gets selected', () => {
             const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
             const processNamePipeTransformSpy = spyOn(processNameCloudPipe, 'transform').and.returnValue('fake-transformed-name');
-            const expectedProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: fakeProcessDefinitions[0].name};
+            const expectedProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: fakeProcessDefinitions[0].name };
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
 
             component.appName = 'myApp';
@@ -846,7 +847,7 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
 
-        it('should set the process name on when a process definition name is present',  (done) => {
+        it('should set the process name on when a process definition name is present', (done) => {
             const definitions: ProcessDefinitionCloud[] = [{
                 appName: 'app',
                 appVersion: 1,
@@ -938,5 +939,35 @@ describe('StartProcessCloudComponent', () => {
 
             expect(card).toBeTruthy();
         });
+    });
+
+    describe('cancel process', () => {
+        beforeEach(() => {
+            fixture.detectChanges();
+            component.name = 'NewProcess 1';
+            component.appName = 'myApp';
+            component.ngOnChanges({});
+        });
+
+        it('user should see cancel button', () => {
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const cancelBtn = fixture.debugElement.query(By.css('#cancel_process'));
+                expect(cancelBtn.nativeElement).toBeDefined();
+            });
+        });
+
+        it('currentCreatedProcess should be null when cancel button clicked', () => {
+            component.cancelStartProcess();
+            expect(component.currentCreatedProcess).toBeNull();
+        });
+
+        it('undefined should be emitted when cancel button clicked', () => {
+            component.cancel.pipe(first()).subscribe((data: any) => {
+                expect(data).toBe(undefined);
+            });
+            component.cancelStartProcess();
+        });
+
     });
 });
