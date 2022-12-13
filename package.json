@@ -7,8 +7,6 @@
   "scripts": {
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "ng": "nx",
-    "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
-    "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "markdownlint": "markdownlint ./docs",
