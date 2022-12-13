@@ -19,7 +19,7 @@ import { MinimalNode } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, CardViewUpdateService, NodesApiService, setupTestBed } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
 import { DialogAspectListService } from './dialog-aspect-list.service';
@@ -47,11 +47,26 @@ describe('NodeAspectService', () => {
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
     });
 
+    it('should call openAspectListDialog with correct parameters when selectorAutoFocusedOnClose is passed', () => {
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(EMPTY);
+        const nodeId = 'some node id';
+        const selector = 'some-selector';
+        nodeAspectService.updateNodeAspects(nodeId, selector);
+        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith(nodeId, selector);
+    });
+
+    it('should call openAspectListDialog with correct parameters when selectorAutoFocusedOnClose is not passed', () => {
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(EMPTY);
+        const nodeId = 'some node id';
+        nodeAspectService.updateNodeAspects(nodeId);
+        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith(nodeId, undefined);
+    });
+
     it('should open the aspect list dialog', () => {
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
-        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
+        expect(dialogAspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id', undefined);
     });
 
     it('should update the node when the aspect dialog apply the changes', () => {

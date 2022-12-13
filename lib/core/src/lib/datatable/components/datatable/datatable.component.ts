@@ -753,7 +753,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     getRowStyle(row: DataRow): string {
         row.cssClass = row.cssClass ? row.cssClass : '';
         this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
-        return `${row.cssClass} ${this.rowStyleClass}`;
+        const contextMenuSourceClass = row.isContextMenuSource ? 'adf-context-menu-source' : '';
+        return `${row.cssClass} ${this.rowStyleClass} ${contextMenuSourceClass}`;
+    }
+
+    markRowAsContextMenuSource(selectedRow: DataRow): void {
+        this.data.getRows().forEach((row) => row.isContextMenuSource = false);
+        selectedRow.isContextMenuSource = true;
     }
 
     getSortingKey(): string | null {

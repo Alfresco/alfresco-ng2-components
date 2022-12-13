@@ -6,6 +6,7 @@
             type="text"
             placeholder="{{'NODE_SELECTOR.SEARCH' | translate}}"
             [value]="searchTerm"
+            adf-auto-focus
             data-automation-id="content-node-selector-search-input">
 
         <mat-icon *ngIf="searchTerm.length > 0"

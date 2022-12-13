@@ -22,6 +22,7 @@ export interface DataRow {
     isDropTarget?: boolean;
     cssClass?: string;
     id?: string;
+    isContextMenuSource?: boolean;
 
     hasValue(key: string): boolean;
 

@@ -30,8 +30,8 @@ export class NodeAspectService {
                 private cardViewUpdateService: CardViewUpdateService) {
     }
 
-    updateNodeAspects(nodeId: string) {
-        this.dialogAspectListService.openAspectListDialog(nodeId).subscribe((aspectList) => {
+    updateNodeAspects(nodeId: string, selectorAutoFocusedOnClose?: string) {
+        this.dialogAspectListService.openAspectListDialog(nodeId, selectorAutoFocusedOnClose).subscribe((aspectList) => {
             this.nodesApiService.updateNode(nodeId, { aspectNames: [...aspectList] }).subscribe((updatedNode) => {
                 this.alfrescoApiService.nodeUpdated.next(updatedNode);
                 this.cardViewUpdateService.updateNodeAspect(updatedNode);
