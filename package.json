@@ -141,7 +141,7 @@
     "@typescript-eslint/typescript-estree": "5.42.1",
     "ajv-cli": "^4.2.0",
     "commander": "6.2.1",
-    "concurrently": "^7.0.0",
+    "concurrently": "^7.6.0",
     "cspell": "^5.5.1",
     "css-loader": "^6.7.1",
     "dotenv": "10.0.0",
