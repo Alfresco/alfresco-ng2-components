@@ -82,6 +82,32 @@ How to fix it:
 Following classes have been relocated:
 - `VersionCompatibilityService` and `VersionCompatibilityDirective` relocated from `@alfresco/adf-core` to `@alfresco/adf-content-services`
 
+### NodeNameTooltipPipe
+
+NodeNameTooltipPipe has been moved in the ```@alfresco/adf-content-services``` in ```ContentPipeModule```
+
+v6.0.0 and before:
+
+```
+@NgModule({
+    imports: [
+    ````
+    PipeModule
+    ````    
+     ]})
+```
+
+v6.0.0 and after:
+
+```
+@NgModule({
+    imports: [
+    ````
+    ContentPipeModule
+    ````    
+     ]})
+```
+
 ## Renamed items
 
 

@@ -44,9 +44,11 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
 import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
+import { ContentPipeModule } from "./pipes/content-pipe.module";
 
 @NgModule({
     imports: [
+        ContentPipeModule,
         CoreModule,
         SocialModule,
         TagModule,
@@ -84,6 +86,7 @@ import { VersionCompatibilityService } from './version-compatibility/version-com
         }
     ],
     exports: [
+        ContentPipeModule,
         SocialModule,
         TagModule,
         WebScriptModule,

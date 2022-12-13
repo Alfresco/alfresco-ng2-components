@@ -20,7 +20,6 @@ import { NgModule } from '@angular/core';
 
 import { FileSizePipe } from './file-size.pipe';
 import { MimeTypeIconPipe } from './mime-type-icon.pipe';
-import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
 import { HighlightPipe } from './text-highlight.pipe';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { InitialUsernamePipe } from './user-initial.pipe';
@@ -49,7 +48,6 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         MimeTypeIconPipe,
         InitialUsernamePipe,
         FullNamePipe,
-        NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
@@ -67,7 +65,6 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         TimeAgoPipe,
         MimeTypeIconPipe,
         InitialUsernamePipe,
-        NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
@@ -86,7 +83,6 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         MimeTypeIconPipe,
         InitialUsernamePipe,
         FullNamePipe,
-        NodeNameTooltipPipe,
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
