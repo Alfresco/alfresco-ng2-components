@@ -78,6 +78,8 @@ How to fix it:
 
 ## Relocated classes
 
+Following classes have been relocated:
+- `VersionCompatibilityService` and `VersionCompatibilityDirective` relocated from `@alfresco/adf-core` to `@alfresco/adf-content-services`
 
 ## Renamed items
 
