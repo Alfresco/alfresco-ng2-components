@@ -116,11 +116,6 @@ describe('StartProcessCloudComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    afterAll(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
     describe('start a process without start form', () => {
 
         beforeEach(() => {
@@ -958,7 +953,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const cancelBtn = fixture.debugElement.query(By.css('#cancel_process'));
-                expect(cancelBtn).toBeTruthy();
+                expect(cancelBtn.nativeElement).toBeDefined();
             });
         });
 
