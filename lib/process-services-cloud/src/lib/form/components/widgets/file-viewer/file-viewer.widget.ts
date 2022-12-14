@@ -16,8 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 
  /* eslint-disable @angular-eslint/component-selector */
 
