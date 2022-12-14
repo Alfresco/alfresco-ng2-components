@@ -25,8 +25,8 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 
 import { MaterialModule } from '../material.module';
 import { A11yModule } from '@angular/cdk/a11y';
-import { AlfrescoViewerComponent } from "./components/alfresco-viewer.component";
-import { CoreModule } from "@alfresco/adf-core";
+import { AlfrescoViewerComponent } from './components/alfresco-viewer.component';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -41,10 +41,10 @@ import { CoreModule } from "@alfresco/adf-core";
         ExtensionsModule
     ],
     declarations: [
-        AlfrescoViewerComponent,
+        AlfrescoViewerComponent
     ],
     exports: [
-        AlfrescoViewerComponent,
+        AlfrescoViewerComponent
     ]
 })
 export class AlfrescoViewerModule {

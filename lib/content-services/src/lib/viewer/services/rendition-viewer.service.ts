@@ -151,7 +151,7 @@ export class RenditionViewerService {
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
     }
 
-    async getNodeRendition(nodeId: string, versionId?: string): Promise<{ url: string, viewerType: string }> {
+    async getNodeRendition(nodeId: string, versionId?: string): Promise<{ url: string; viewerType: string }> {
         try {
             return versionId ? await this.resolveNodeRendition(nodeId, 'pdf', versionId) :
                 await this.resolveNodeRendition(nodeId, 'pdf');
@@ -161,7 +161,7 @@ export class RenditionViewerService {
         }
     }
 
-    private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string, viewerType: string }> {
+    private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; viewerType: string }> {
         renditionId = renditionId.toLowerCase();
 
         const supportedRendition: RenditionPaging = versionId ? await this.versionsApi.listVersionRenditions(nodeId, versionId) :
@@ -189,7 +189,7 @@ export class RenditionViewerService {
     private async requestCreateRendition(nodeId: string, renditionId: string, versionId: string) {
         try {
             if (versionId) {
-                await this.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId})
+                await this.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId});
             } else {
                 await this.renditionsApi.createRendition(nodeId, {id: renditionId});
             }
@@ -206,13 +206,13 @@ export class RenditionViewerService {
     }
 
     private findRenditionById(supportedRendition: RenditionPaging, renditionId: string) {
-        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        const rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         return rendition;
     }
 
-    private async waitNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string, viewerType: string }> {
+    private async waitNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; viewerType: string }> {
         let currentRetry: number = 0;
-        return new Promise<{ url: string, viewerType: string }>((resolve, reject) => {
+        return new Promise<{ url: string; viewerType: string }>((resolve, reject) => {
             const intervalId = setInterval(() => {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
@@ -243,7 +243,7 @@ export class RenditionViewerService {
         });
     }
 
-    private async handleNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string, viewerType: string }> {
+    private async handleNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; viewerType: string }> {
         let viewerType = '';
 
         if (renditionId === 'pdf') {
