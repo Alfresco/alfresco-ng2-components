@@ -8,11 +8,13 @@ if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]; then
 else
     if [[ "${TRAVIS_PULL_REQUEST_BRANCH}" != "" ]];
     then
-        export TAGS=""$TRAVIS_PULL_REQUEST_BRANCH-$TRAVIS_BUILD_NUMBER""
+        export TAGS="$TRAVIS_PULL_REQUEST_BRANCH-$TRAVIS_BUILD_NUMBER"
     else
         export TAGS="$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER,$TRAVIS_BRANCH"
     fi;
-
 fi;
 
-echo $TAGS
+if [[ -n "$GITHUB_ACTIONS" ]]; then
+    echo "TAGS=$TAGS" >> $GITHUB_ENV;
+fi
+echo "$TAGS"

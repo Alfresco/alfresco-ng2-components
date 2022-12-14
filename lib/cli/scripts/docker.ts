@@ -31,6 +31,8 @@ enum TARGETS {
 const DOCKER_FILENAME = 'Dockerfile';
 export interface PublishArgs {
     tag?: string;
+    dryrun?: boolean;
+    verbose?: boolean;
     loginCheck?: boolean;
     loginUsername?: string;
     loginPassword?: string;
@@ -44,7 +46,7 @@ export interface PublishArgs {
 
 function loginPerform(args: PublishArgs) {
     logger.info(`Perform docker login...${args.loginRepo}`);
-    const loginDockerRes = exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`], {});
+    const loginDockerRes = exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`]);
     logger.info(loginDockerRes);
 }
 
@@ -53,14 +55,16 @@ function buildImagePerform(args: PublishArgs, tag: string) {
 
     const buildArgs = [];
 
-    if (typeof args.buildArgs  === 'string') {
+    if (typeof args.buildArgs === 'string') {
         buildArgs.push(`--build-arg=${args.buildArgs}`);
     } else {
         args.buildArgs.forEach((envVar) => {
-            buildArgs.push (`--build-arg=${envVar}`);
+            buildArgs.push(`--build-arg=${envVar}`);
         });
     }
-
+    if (args.verbose) {
+        logger.info(`Dry-run Perform docker build -t=${args.dockerRepo}:${tag} ${buildArgs} -f=${args.fileName} ${args.pathProject}`);
+    }
     const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, `-f=${args.fileName}`, args.pathProject], {});
     logger.info(response);
 }
@@ -78,9 +82,13 @@ function pullImagePerform(dockerRepo: string, sourceTag: string) {
 }
 
 function pushImagePerform(args: PublishArgs, tag: string) {
-    logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
-    logger.info(response);
+    if (args.dryrun) {
+        logger.info(`Dry-run Perform docker push... ${args.dockerRepo}:${tag}`);
+    } else {
+        logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
+        const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
+        logger.info(response);
+    }
 }
 
 function cleanImagePerform(args: PublishArgs, tag: string) {
@@ -101,6 +109,8 @@ function main(args) {
         .option('--loginRepo [type]', 'URL registry')
         .option('--loginPassword [type]', ' password')
         .option('--loginUsername [type]', ' username')
+        .option('--dryrun [type]', 'dryrun')
+        .option('--verbose [type]', 'verbose')
         .option('--loginCheck [type]', 'perform login')
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')

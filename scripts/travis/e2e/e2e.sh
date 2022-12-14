@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Start e2e"
-
+set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
@@ -9,7 +9,7 @@ BASE_DIRECTORY=$(echo "$FOLDER" | cut -d "/" -f1)
 verifyLib=$1;
 
 # set test-e2e params
-if [ ! -z "$2" ]; then
+if [ -n "$2" ]; then
       e2eParams="--$2"
 else
       e2eParams=""
@@ -17,7 +17,8 @@ fi
 
 echo "Step1 - Verify if affected libs contains $verifyLib"
 
-AFFECTED_LIB="$(./scripts/travis/affected-contains.sh $verifyLib )";
+AFFECTED_LIB=$(./scripts/travis/affected-contains.sh $verifyLib )
+
 if [ ${AFFECTED_LIB} == true ]; then
     echo "Step2 - $verifyLib affected... will execute e2e"
 

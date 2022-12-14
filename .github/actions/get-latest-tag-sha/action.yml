@@ -1,0 +1,19 @@
+name: 'Get tag sha'
+description: 'get the sha of the latest or a specific tag'
+
+outputs:
+  tag_sha:
+    description: "long sha of the tag"
+    value: ${{ steps.sha_out.outputs.tag_sha }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: get tag short sha
+      shell: bash
+      id: sha_out
+      run: |
+          tag_sha=$(git rev-list -n 1 $(git tag --sort=-creatordate | head -n 1))
+          echo "tag_sha=$tag_sha" >> $GITHUB_OUTPUT
+          echo $tag_sha

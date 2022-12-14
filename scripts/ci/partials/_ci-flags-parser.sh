@@ -13,6 +13,17 @@
 #
 
 # ---------------------------------------------------------------
+# Affected projects calculation
+# ---------------------------------------------------------------
+if [[ $COMMIT_MESSAGE == *"[affected:"* ]]; then
+    PROJECTS=$(echo "$COMMIT_MESSAGE" | grep -o "\[affected\:[^]]*\]" | sed -e 's#\[affected:##g' | sed -e 's#\]##g')
+
+    if [[ $PROJECTS == "*" ]]; then
+        export NX_CALCULATION_FLAGS="--all"
+    fi
+fi
+
+# ---------------------------------------------------------------
 # Forced CI run
 # ---------------------------------------------------------------
 if [[ $COMMIT_MESSAGE == *"[ci:force]"* ]]; then
@@ -21,3 +32,4 @@ if [[ $COMMIT_MESSAGE == *"[ci:force]"* ]]; then
 else
     export CI_FORCE_RUN=false
 fi
+
