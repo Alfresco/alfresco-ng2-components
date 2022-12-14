@@ -14,14 +14,9 @@
         height: 100%;
         width: 190px;
         background-color: rgba(0, 0, 0, 0.12);
-    }
-
-    &__thumbnails {
-        width: 180px;
         display: flex;
         flex-direction: column;
         padding: 0;
-        background: #e6e6e6;
 
         .adf-info-drawer-layout {
             display: flex;
@@ -47,20 +42,6 @@
         .adf-info-drawer-layout-content > *:last-child {
             height: 100%;
             overflow: hidden;
-        }
-    }
-
-    &__toolbar {
-        &-page-scale {
-            cursor: default;
-            width: 79px;
-            height: 24px;
-            font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--theme-border-color);
-            text-align: center;
-            line-height: 24px;
-            margin-left: 4px;
-            margin-right: 4px;
         }
     }
 
@@ -129,6 +110,18 @@
                 outline-width: 1px;
                 outline-color: gray;
             }
+        }
+
+        &-page-scale {
+            cursor: default;
+            width: 79px;
+            height: 24px;
+            font-size: var(--theme-body-1-font-size);
+            border: 1px solid var(--theme-border-color);
+            text-align: center;
+            line-height: 24px;
+            margin-left: 4px;
+            margin-right: 4px;
         }
     }
 }
