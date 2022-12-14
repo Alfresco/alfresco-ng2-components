@@ -16,3 +16,4 @@
  */
 
 export * from './node-name-tooltip.pipe';
+export * from './content-pipe.module';
