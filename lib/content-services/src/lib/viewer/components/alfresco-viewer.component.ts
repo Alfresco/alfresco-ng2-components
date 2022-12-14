@@ -37,8 +37,8 @@ import {
     ViewerSidebarComponent,
     ViewerToolbarComponent,
     ViewUtilService
-} from "@alfresco/adf-core";
-import { fromEvent, Subject } from "rxjs";
+} from '@alfresco/adf-core';
+import { fromEvent, Subject } from 'rxjs';
 import {
     ContentApi,
     Node,
@@ -49,10 +49,10 @@ import {
     Version,
     VersionEntry,
     VersionsApi
-} from "@alfresco/js-api";
-import { RenditionViewerService } from "../services/rendition-viewer.service";
-import { MatDialog } from "@angular/material/dialog";
-import { filter, skipWhile, takeUntil } from "rxjs/operators";
+} from '@alfresco/js-api';
+import { RenditionViewerService } from '../services/rendition-viewer.service';
+import { MatDialog } from '@angular/material/dialog';
+import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -269,7 +269,7 @@ export class AlfrescoViewerComponent {
             this.generateCacheBusterNumber();
             this.isLoading = true;
 
-            await this.setUpNodeFile(node)
+            await this.setUpNodeFile(node);
             this.isLoading = false;
         }
     }
@@ -371,12 +371,12 @@ export class AlfrescoViewerComponent {
         }
     }
 
-    private async getSharedLinkRendition(sharedId: string): Promise<{ url: string, viewerType: string }> {
+    private async getSharedLinkRendition(sharedId: string): Promise<{ url: string; viewerType: string }> {
         try {
             const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-                return {url: urlFileContent, viewerType: 'pdf'}
+                return {url: urlFileContent, viewerType: 'pdf'};
             }
         } catch (error) {
             this.logService.error(error);
@@ -384,7 +384,7 @@ export class AlfrescoViewerComponent {
                 const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
-                    return {url: urlFileContent, viewerType: 'image'}
+                    return {url: urlFileContent, viewerType: 'image'};
 
                 }
             } catch (renditionError) {

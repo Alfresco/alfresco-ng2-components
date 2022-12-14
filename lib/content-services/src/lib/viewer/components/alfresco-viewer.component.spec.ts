@@ -25,16 +25,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NodeEntry, VersionEntry } from "@alfresco/js-api";
-import { AlfrescoViewerComponent, RenditionViewerService } from "@alfresco/adf-content-services";
+import { NodeEntry, VersionEntry } from '@alfresco/js-api';
+import { AlfrescoViewerComponent, RenditionViewerService } from '@alfresco/adf-content-services';
 import {
     AlfrescoApiService,
     CoreTestingModule,
     setupTestBed,
     EventMock,
     FileModel, UploadService
-} from "@alfresco/adf-core";
-import { throwError } from "rxjs";
+} from '@alfresco/adf-core';
+import { throwError } from 'rxjs';
 import { Component } from '@angular/core';
 
 @Component({
@@ -176,8 +176,6 @@ describe('AlfrescoViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        console.log(element);
-        console.log(component);
         uploadService = TestBed.inject(UploadService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);

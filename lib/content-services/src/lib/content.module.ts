@@ -46,7 +46,7 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { AlfrescoViewerModule } from "./viewer";
+import { AlfrescoViewerModule } from './viewer';
 
 @NgModule({
     imports: [

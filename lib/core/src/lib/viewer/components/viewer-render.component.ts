@@ -24,7 +24,7 @@ import { Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatDialog } from '@angular/material/dialog';
-import { Track } from "../models/viewer.model";
+import { Track } from '../models/viewer.model';
 
 @Component({
     selector: 'adf-viewer-render',
