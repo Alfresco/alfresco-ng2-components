@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "{{ name }} kunde inte raderas",
       "ERROR_PLURAL": "{{ number }} objekt kunde inte raderas"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Autentiseringstyp",
-      "BASIC": "Grundläggande autentisering",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit flöde",
-      "PROVIDER": "Leverantör",
-      "REQUIRED": "Detta fält krävs",
-      "CS_URL_ERROR": "Content Services-adressen matchar inte URL-formatet",
-      "PS_URL_ERROR": "Process Services-adressen matchar inte URL-formatet",
-      "TITLE": "Inställningar",
-      "CS-HOST": "Content Services-URL",
-      "BP-HOST": "Process Services-URL",
-      "BACK": "Tillbaka",
-      "APPLY": "Tillämpa",
-      "NOT_VALID": "http(s)://host|ip:port(/path) kändes inte igen, testa annan URL.",
-      "REDIRECT": "Omdirigera URI",
-      "REDIRECT_LOGOUT": "Omdirigera URI-utloggning",
-      "SILENT": "Tyst inloggning",
-      "SCOPE": "Definitionsområde",
-      "CLIENT": "Klient-ID",
-      "PUBLIC_URLS": "Offentliga url:er för tyst inloggning",
-      "SECRET": "Hemlig"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Lägg till ny",

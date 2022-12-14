@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "{{ name }} を削除できませんでした",
       "ERROR_PLURAL": "{{ number }} 件のアイテムを削除できませんでした"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "認証の種類",
-      "BASIC": "基本認証",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "暗黙的フロー",
-      "PROVIDER": "プロバイダ",
-      "REQUIRED": "このフィールドは必須です",
-      "CS_URL_ERROR": "Content Services のアドレスが URL 形式と一致しません",
-      "PS_URL_ERROR": "Process Services のアドレスが URL 形式と一致しません",
-      "TITLE": "設定",
-      "CS-HOST": "Content Services の URL",
-      "BP-HOST": "Process Services の URL",
-      "BACK": "戻る",
-      "APPLY": "適用",
-      "NOT_VALID": "http(s)://host|ip:port(/path) が認識されません。別の URL を指定してください。",
-      "REDIRECT": "リダイレクト URI",
-      "REDIRECT_LOGOUT": "リダイレクト URI のログアウト",
-      "SILENT": "サイレントログイン",
-      "SCOPE": "範囲",
-      "CLIENT": "クライアント ID",
-      "PUBLIC_URLS": "サイレントログインのパブリック URL",
-      "SECRET": "シークレット"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "新規追加",

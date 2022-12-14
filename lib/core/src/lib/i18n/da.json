@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
       "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Godkendelsestype",
-      "BASIC": "Grundlæggende godkendelse",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit flow",
-      "PROVIDER": "Udbyder",
-      "REQUIRED": "Dette felt er påkrævet",
-      "CS_URL_ERROR": "Content Services-adressen matcher ikke URL-formatet",
-      "PS_URL_ERROR": "Process Services-adressen matcher ikke URL-adresseformatet",
-      "TITLE": "Indstillinger",
-      "CS-HOST": "Content Services-URL",
-      "BP-HOST": "URL-adresse til Process Services",
-      "BACK": "Tilbage",
-      "APPLY": "Anvend",
-      "NOT_VALID": "http(s)://vært|ip-adresse:port(/sti) blev ikke genkendt. Prøv en anden URL-adresse.",
-      "REDIRECT": "URI til omdirigering",
-      "REDIRECT_LOGOUT": "Omdiriger URI til aflogning",
-      "SILENT": "Uovervåget login",
-      "SCOPE": "Omfang",
-      "CLIENT": "Klient-id",
-      "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser",
-      "SECRET": "Hemmelig"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Tilføj ny(t)",

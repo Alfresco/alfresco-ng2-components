@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "{{ name }} kan ikke slettes",
       "ERROR_PLURAL": "{{ number }} elementer kan ikke slettes"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Godkjenningstype",
-      "BASIC": "Grunnleggende godkjenning",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implisitt flyt",
-      "PROVIDER": "Leverandør",
-      "REQUIRED": "Dette feltet er påkrevd",
-      "CS_URL_ERROR": "Adressen til innholdstjenesten stemmer ikke med URL-formatet",
-      "PS_URL_ERROR": "Adressen til prosesstjenestene stemmer ikke med URL-formatet",
-      "TITLE": "Innstillinger",
-      "CS-HOST": "URL tinnholdstjenester",
-      "BP-HOST": "URL prosesstjenester",
-      "BACK": "Tilbake",
-      "APPLY": "Bruk",
-      "NOT_VALID": "http(s)://host|ip:port(/path) ikke gjenkjent, prøv en annen URL.",
-      "REDIRECT": "Omdirigerings-URI",
-      "REDIRECT_LOGOUT": "Omdirigerings-URI avlogging",
-      "SILENT": "Stille pålogging",
-      "SCOPE": "Område",
-      "CLIENT": "Klient-ID",
-      "PUBLIC_URLS": "Offentlige URL-er for stille pålogging",
-      "SECRET": "Hemmelig"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Legg til ny",

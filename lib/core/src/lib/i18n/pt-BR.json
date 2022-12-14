@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "Não foi possível excluir {{ name }}",
       "ERROR_PLURAL": "Não foi possível excluir {{ number }} itens"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Tipo de autenticação",
-      "BASIC": "Autenticação básica",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Fluxo implícito",
-      "PROVIDER": "Provedor",
-      "REQUIRED": "Este campo é obrigatório",
-      "CS_URL_ERROR": "O endereço do Content Services não corresponde ao formato de URL",
-      "PS_URL_ERROR": "O endereço do Process Services não corresponde ao formato de URL",
-      "TITLE": "Configurações",
-      "CS-HOST": "URL do Content Services",
-      "BP-HOST": "URL do Process Services",
-      "BACK": "Voltar",
-      "APPLY": "Aplicar",
-      "NOT_VALID": "http(s)://host|ip:port(/path) não reconhecida, tente uma URL diferente.",
-      "REDIRECT": "Redirecionar URI",
-      "REDIRECT_LOGOUT": "Redirecionar logout de URI",
-      "SILENT": "Login silencioso",
-      "SCOPE": "Escopo",
-      "CLIENT": "ID de cliente",
-      "PUBLIC_URLS": "Login silencioso de URLs públicas",
-      "SECRET": "Segredo"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Adicionar",

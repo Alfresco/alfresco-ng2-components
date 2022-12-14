@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "Nie można usunąć elementu {{ name }}.",
       "ERROR_PLURAL": "Nie można usunąć następującej liczby elementów: {{ number }}."
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Typ uwierzytelnienia",
-      "BASIC": "Uwierzytelnienie podstawowe",
-      "SSO": "Logowanie jednokrotne",
-      "IMPLICIT-FLOW": "Niejawny przepływ",
-      "PROVIDER": "Dostawca",
-      "REQUIRED": "To pole jest wymagane.",
-      "CS_URL_ERROR": "Adres usług Content Services jest niezgodny z formatem adresu URL.",
-      "PS_URL_ERROR": "Adres usług Process Services jest niezgodny z formatem adresu URL.",
-      "TITLE": "Ustawienia",
-      "CS-HOST": "Adres URL usług Content Services",
-      "BP-HOST": "Adres URL usług Process Services",
-      "BACK": "Wstecz",
-      "APPLY": "Zastosuj",
-      "NOT_VALID": "Nie rozpoznano adresu http(s)://host|ip:port(/path). Spróbuj użyć innego adresu URL.",
-      "REDIRECT": "Identyfikator URI przekierowania",
-      "REDIRECT_LOGOUT": "Identyfikator URI przekierowania — wylogowanie",
-      "SILENT": "Ciche logowanie",
-      "SCOPE": "Zakres",
-      "CLIENT": "Identyfikator klienta",
-      "PUBLIC_URLS": "Publiczne URL do cichego logowania",
-      "SECRET": "Klucz tajny"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Dodaj nowe",
