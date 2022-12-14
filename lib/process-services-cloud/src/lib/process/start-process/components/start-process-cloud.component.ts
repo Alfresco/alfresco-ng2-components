@@ -106,7 +106,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     isLoading = false;
     isFormCloudLoaded = false;
     formCloud: FormModel;
-    currentCreatedProcess: ProcessInstanceCloud;
     staticMappings: TaskVariableCloud[] = [];
     resolvedValues: TaskVariableCloud[];
 
@@ -300,7 +299,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     cancelStartProcess() {
-        this.currentCreatedProcess = null;
         this.cancel.emit();
     }
 
@@ -383,5 +381,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    disableStartButton() {
+        return !this.appName || !this.processDefinition.valid;
     }
 }

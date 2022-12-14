@@ -109,6 +109,7 @@
         <button
             color="primary"
             mat-button
+            [disabled]="disableStartButton()"
             (click)="startProcess()"
             data-automation-id="btn-start"
             id="button-start"
