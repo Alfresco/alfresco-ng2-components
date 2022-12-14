@@ -6,7 +6,6 @@
 }
 
 .adf-viewer-render {
-
     &-main {
         width: 0;
     }
@@ -24,10 +23,8 @@
         overflow-x: hidden;
         z-index: 1;
         background-color: var(--theme-background-color);
-
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
         flex: 1;
 
         & > div {
