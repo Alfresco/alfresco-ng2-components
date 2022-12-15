@@ -23,6 +23,9 @@ import {
     EventEmitter,
     HostListener,
     Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
     Output,
     TemplateRef,
     ViewEncapsulation
@@ -62,7 +65,7 @@ import { filter, skipWhile, takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
-export class AlfrescoViewerComponent {
+export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -511,6 +514,11 @@ export class AlfrescoViewerComponent {
                 container.msRequestFullscreen();
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
 }
