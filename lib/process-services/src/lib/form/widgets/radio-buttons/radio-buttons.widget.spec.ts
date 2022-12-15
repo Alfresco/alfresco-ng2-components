@@ -25,20 +25,22 @@ import {
     FormFieldModel,
     FormModel,
     setupTestBed,
-    CoreTestingModule,
-    AlfrescoApiService
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskFormService } from '../../services/task-form.service';
+import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 describe('RadioButtonsWidgetComponent', () => {
 
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
-    let alfrescoApiService: AlfrescoApiService;
+    let taskFormService: TaskFormService;
+    let processDefinitionService: ProcessDefinitionService;
 
     setupTestBed({
         imports: [
@@ -51,10 +53,8 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
-
-        formService = new FormService(null, alfrescoApiService, null);
-        widget = new RadioButtonsWidgetComponent(formService, null);
+        formService = new FormService();
+        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService, null);
         widget.field = new FormFieldModel(new FormModel(), {restUrl: '<url>'});
     });
 
@@ -71,12 +71,12 @@ describe('RadioButtonsWidgetComponent', () => {
             restUrl: '<url>'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
 
     it('should update form on values fetched', () => {
@@ -94,7 +94,7 @@ describe('RadioButtonsWidgetComponent', () => {
         const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -114,7 +114,7 @@ describe('RadioButtonsWidgetComponent', () => {
             id: fieldId,
             restUrl: '<url>'
         });
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -122,16 +122,16 @@ describe('RadioButtonsWidgetComponent', () => {
         const field = widget.field;
         widget.field = null;
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
         widget.field = field;
 
         widget.field.restUrl = null;
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
 
         widget.field.restUrl = '<url>';
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
     });
 
     it('should update the field value when an option is selected', () => {
@@ -145,7 +145,6 @@ describe('RadioButtonsWidgetComponent', () => {
         let radioButtonWidget: RadioButtonsWidgetComponent;
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
-        let stubFormService: FormService;
         const restOption: FormFieldOption[] = [
             {
                 id: 'opt-1',
@@ -160,7 +159,6 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
             radioButtonWidget = fixture.componentInstance;
             element = fixture.nativeElement;
-            stubFormService = fixture.debugElement.injector.get(FormService);
         });
 
         it('should show radio buttons as text when is readonly', async () => {
@@ -261,7 +259,7 @@ describe('RadioButtonsWidgetComponent', () => {
         describe('and radioButton is populated via taskId', () => {
 
             beforeEach(() => {
-                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(restOption));
+                spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of(restOption));
                 radioButtonWidget.field = new FormFieldModel(new FormModel({taskId: 'task-id'}), {
                     id: 'radio-id',
                     name: 'radio-name',
@@ -330,7 +328,7 @@ describe('RadioButtonsWidgetComponent', () => {
                     type: FormFieldTypes.RADIO_BUTTONS,
                     restUrl: 'rest-url'
                 });
-                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
+                spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
                 radioButtonWidget.field.isVisible = true;
                 fixture.detectChanges();
             });

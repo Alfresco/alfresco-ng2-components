@@ -24,13 +24,14 @@ export * from './services/task.service';
 export * from './services/task-form.service';
 export * from './services/process-definition.service';
 export * from './services/activiti-alfresco.service';
+export * from './process-form-rendering.service';
 
 export * from './events/validate-dynamic-table-row.event';
 
-export * from './process-form-rendering.service';
 
 export * from './form-list/form-list.component';
 export * from './form.component';
 export * from './start-form.component';
 export * from './form-custom-outcomes.component';
+
 export * from './form.module';

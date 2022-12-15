@@ -52,11 +52,14 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
+import { TaskFormService } from '../../../form/services/task-form.service';
+import { TaskService } from '../../../form/services/task.service';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
     let fixture: ComponentFixture<TaskFormComponent>;
-    let formService: FormService;
+    let taskService: TaskService;
+    let taskFormService: TaskFormService;
     let taskListService: TaskListService;
     let getTaskDetailsSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
@@ -78,13 +81,13 @@ describe('TaskFormComponent', () => {
         element = fixture.nativeElement;
 
         taskListService = TestBed.inject(TaskListService);
-        formService = TestBed.inject(FormService);
+        taskFormService = TestBed.inject(TaskFormService);
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
         completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({}));
-        spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
+        spyOn(taskFormService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
-        spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
+        spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.inject(AuthenticationService);
         getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of(fakeUser));
     });
@@ -123,7 +126,7 @@ describe('TaskFormComponent', () => {
             getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             component.taskId = '123';
             component.ngOnInit();
             fixture.detectChanges();
@@ -137,7 +140,7 @@ describe('TaskFormComponent', () => {
 
         it('Should emit error event in case form complete service fails', async () => {
             const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(throwError({message: 'servce failed'}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(throwError({message: 'servce failed'}));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
             component.taskId = '123';
             fixture.detectChanges();
@@ -471,7 +474,7 @@ describe('TaskFormComponent', () => {
 
         beforeEach(async () => {
             component.taskId = '123';
-            spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             taskDetailsMock.formKey = '4';
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             fixture.detectChanges();
@@ -552,7 +555,7 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
 
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             component.taskId = '123';
             component.ngOnInit();
 
@@ -573,7 +576,7 @@ describe('TaskFormComponent', () => {
         it('Should be able to complete the task if process initiator allowed to complete the task', async () => {
             getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
 
             component.taskId = '123';
@@ -614,7 +617,7 @@ describe('TaskFormComponent', () => {
         it('Should be able to complete a task with candidates users if process initiator not allowed to complete the task', async () => {
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
-            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 
             component.taskId = '123';
@@ -800,7 +803,7 @@ describe('TaskFormComponent', () => {
 
         beforeEach(() => {
             component.taskId = '20259';
-            spyOn(formService, 'saveTaskForm').and.returnValue(of({}));
+            spyOn(taskFormService, 'saveTaskForm').and.returnValue(of({}));
         });
 
         it('[T14599423] Form in unassigned task is read-only',  async () => {
@@ -821,7 +824,7 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             saveButton.click();
-            expect(formService.saveTaskForm).toHaveBeenCalled();
+            expect(taskFormService.saveTaskForm).toHaveBeenCalled();
         });
 
         it('Should be able to save a form for a involved group user', async () => {
@@ -835,7 +838,7 @@ describe('TaskFormComponent', () => {
             expect(saveButton.disabled).toEqual(false);
             expect(completeButton.disabled).toEqual(true);
             saveButton.click();
-            expect(formService.saveTaskForm).toHaveBeenCalled();
+            expect(taskFormService.saveTaskForm).toHaveBeenCalled();
         });
     });
 

@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import moment from 'moment';
-import { ValidateDynamicTableRowEvent } from '../../events/validate-dynamic-table-row.event';
+import { ValidateDynamicTableRowEvent } from '../../../../events/validate-dynamic-table-row.event';
 import { FormService, FormFieldModel, FormWidgetModel } from '@alfresco/adf-core';
 import { CellValidator } from './cell-validator.model';
 import { DateCellValidator } from './date-cell-validator-model';

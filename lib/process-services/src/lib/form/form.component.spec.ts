@@ -25,11 +25,12 @@ import {
     DebugElement
 } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { TaskRepresentation } from '@alfresco/js-api';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
+    FormService, WidgetVisibilityService, ContainerModel, fakeForm,
     setupTestBed,
     NodeMetadata
 } from '@alfresco/adf-core';
@@ -37,6 +38,10 @@ import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskFormService } from './services/task-form.service';
+import { TaskService } from './services/task.service';
+import { EditorService } from './services/editor.service';
+import { ModelService } from "./services/model.service";
 
 describe('FormComponent', () => {
 
@@ -45,7 +50,10 @@ describe('FormComponent', () => {
 
     let formService: FormService;
     let visibilityService: WidgetVisibilityService;
-    let nodeService: NodeService;
+    let taskFormService: TaskFormService;
+    let taskService: TaskService;
+    let editorService: EditorService;
+    let modelService: ModelService;
     let formRenderingService: ProcessFormRenderingService;
 
     @Component({
@@ -88,7 +96,10 @@ describe('FormComponent', () => {
         spyOn(visibilityService, 'refreshVisibility').and.stub();
 
         formService = TestBed.inject(FormService);
-        nodeService = TestBed.inject(NodeService);
+        taskService = TestBed.inject(TaskService);
+        taskFormService = TestBed.inject(TaskFormService);
+        editorService = TestBed.inject(EditorService);
+        modelService = TestBed.inject(ModelService);
         formRenderingService = TestBed.inject(ProcessFormRenderingService);
 
         fixture = TestBed.createComponent(FormComponent);
@@ -159,14 +170,14 @@ describe('FormComponent', () => {
     it('should enable custom outcome buttons', () => {
         const formModel = new FormModel();
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
+        const outcome = new FormOutcomeModel(formModel, {id: 'action1', name: 'Action 1'});
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         const formModel = new FormModel();
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -179,7 +190,7 @@ describe('FormComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, {id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION});
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -189,23 +200,23 @@ describe('FormComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-        const formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
+        const formModel = new FormModel({selectedOutcome: 'custom-outcome'});
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$customoutome', name: 'custom-outcome' });
+        let outcome = new FormOutcomeModel(formModel, {id: '$customoutome', name: 'custom-outcome'});
 
         formComponent.showCompleteButton = true;
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
-        outcome = new FormOutcomeModel(formModel, { id: '$customoutome2', name: 'custom-outcome2' });
+        outcome = new FormOutcomeModel(formModel, {id: '$customoutome2', name: 'custom-outcome2'});
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
@@ -213,7 +224,7 @@ describe('FormComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = false;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.COMPLETE_ACTION});
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -241,14 +252,14 @@ describe('FormComponent', () => {
     });
 
     it('should get process variable if is a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({ taskId: currentTaskId });
+        spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
+            observer.next({taskId: currentTaskId});
             observer.complete();
         }));
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of(null));
-        spyOn(formService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
+        spyOn(taskFormService, 'getTaskProcessVariable').and.returnValue(of(null));
+        spyOn(taskService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
+            observer.next({taskId: currentTaskId, processDefinitionId: '10201'});
             observer.complete();
         }));
         const taskId = '123';
@@ -256,18 +267,18 @@ describe('FormComponent', () => {
         formComponent.taskId = taskId;
         formComponent.loadForm();
 
-        expect(visibilityService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
+        expect(taskFormService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
     });
 
     it('should not get process variable if is not a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({ taskId: currentTaskId });
+        spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
+            observer.next({taskId: currentTaskId});
             observer.complete();
         }));
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of(null));
-        spyOn(formService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
+        spyOn(taskFormService, 'getTaskProcessVariable').and.returnValue(of(null));
+        spyOn(taskService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
+            observer.next({taskId: currentTaskId, processDefinitionId: 'null'});
             observer.complete();
         }));
         const taskId = '123';
@@ -275,7 +286,7 @@ describe('FormComponent', () => {
         formComponent.taskId = taskId;
         formComponent.loadForm();
 
-        expect(visibilityService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
+        expect(taskFormService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
     });
 
     it('should get form definition by form id on load', () => {
@@ -289,13 +300,13 @@ describe('FormComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formService, 'getFormDefinitionById').and.returnValue(of(JSON.parse(JSON.stringify(fakeForm))));
+        spyOn(editorService, 'getFormDefinitionById').and.returnValue(of(JSON.parse(JSON.stringify(fakeForm))));
         const formId = 123;
 
         formComponent.formId = formId;
         formComponent.loadForm();
 
-        expect(formService.getFormDefinitionById).toHaveBeenCalledWith(formId);
+        expect(editorService.getFormDefinitionById).toHaveBeenCalledWith(formId);
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
@@ -314,7 +325,7 @@ describe('FormComponent', () => {
         const taskId = '<task id>';
 
         const change = new SimpleChange(null, taskId, true);
-        formComponent.ngOnChanges({ taskId: change });
+        formComponent.ngOnChanges({taskId: change});
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
     });
@@ -324,7 +335,7 @@ describe('FormComponent', () => {
         const formId = '123';
 
         const change = new SimpleChange(null, formId, true);
-        formComponent.ngOnChanges({ formId: change });
+        formComponent.ngOnChanges({formId: change});
 
         expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
     });
@@ -334,7 +345,7 @@ describe('FormComponent', () => {
         const formName = '<form>';
 
         const change = new SimpleChange(null, formName, true);
-        formComponent.ngOnChanges({ formName: change });
+        formComponent.ngOnChanges({formName: change});
 
         expect(formComponent.getFormDefinitionByFormName).toHaveBeenCalledWith(formName);
     });
@@ -359,7 +370,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
 
-        formComponent.ngOnChanges({ tag: new SimpleChange(null, 'hello world', true) });
+        formComponent.ngOnChanges({tag: new SimpleChange(null, 'hello world', true)});
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormDefinitionByFormId).not.toHaveBeenCalled();
@@ -369,7 +380,7 @@ describe('FormComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
 
         let saved = false;
         formComponent.form = formModel;
@@ -434,7 +445,7 @@ describe('FormComponent', () => {
     it('should do nothing when clicking outcome for readonly form', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
 
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
@@ -453,7 +464,7 @@ describe('FormComponent', () => {
     it('should require loaded form when clicking outcome', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
 
         formComponent.readOnly = false;
         formComponent.form = null;
@@ -462,7 +473,7 @@ describe('FormComponent', () => {
 
     it('should not execute unknown system outcome', () => {
         const formModel = new FormModel();
-        const outcome = new FormOutcomeModel(formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
+        const outcome = new FormOutcomeModel(formModel, {id: 'unknown', name: 'Unknown', isSystem: true});
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
@@ -470,26 +481,26 @@ describe('FormComponent', () => {
 
     it('should require custom action name to complete form', () => {
         const formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, { id: 'custom' });
+        let outcome = new FormOutcomeModel(formModel, {id: 'custom'});
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
 
-        outcome = new FormOutcomeModel(formModel, { id: 'custom', name: 'Custom' });
+        outcome = new FormOutcomeModel(formModel, {id: 'custom', name: 'Custom'});
         spyOn(formComponent, 'completeTaskForm').and.stub();
         expect(formComponent.onOutcomeClicked(outcome)).toBeTruthy();
     });
 
     it('should fetch and parse form by task id', (done) => {
-        spyOn(formService, 'getTask').and.returnValue(of({}));
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({ taskId: currentTaskId });
+        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
+        spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
+            observer.next({taskId: currentTaskId});
             observer.complete();
         }));
 
         const taskId = '456';
         formComponent.formLoaded.subscribe(() => {
-            expect(formService.getTaskForm).toHaveBeenCalledWith(taskId);
+            expect(taskFormService.getTaskForm).toHaveBeenCalledWith(taskId);
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.taskId).toBe(taskId);
             done();
@@ -502,9 +513,9 @@ describe('FormComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(formService, 'getTask').and.returnValue(of({}));
+        spyOn(taskService, 'getTask').and.returnValue(of({}));
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getTaskForm').and.callFake(() => throwError(error));
+        spyOn(taskFormService, 'getTaskForm').and.callFake(() => throwError(error));
 
         formComponent.getFormByTaskId('123').then((_) => {
             expect(formComponent.handleError).toHaveBeenCalledWith(error);
@@ -513,9 +524,9 @@ describe('FormComponent', () => {
     });
 
     it('should apply readonly state when getting form by task id', (done) => {
-        spyOn(formService, 'getTask').and.returnValue(of({}));
-        spyOn(formService, 'getTaskForm').and.callFake((taskId) => new Observable((observer) => {
-            observer.next({ taskId });
+        spyOn(taskService, 'getTask').and.returnValue(of({}));
+        spyOn(taskFormService, 'getTaskForm').and.callFake((taskId) => new Observable((observer) => {
+            observer.next({taskId});
             observer.complete();
         }));
 
@@ -528,8 +539,8 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form definition by id', () => {
-        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormId) => new Observable((observer) => {
-            observer.next({ id: currentFormId });
+        spyOn(editorService, 'getFormDefinitionById').and.callFake((currentFormId) => new Observable((observer) => {
+            observer.next({id: currentFormId});
             observer.complete();
         }));
 
@@ -549,20 +560,20 @@ describe('FormComponent', () => {
         const error = 'Some error';
 
         spyOn(formComponent, 'handleError').and.stub();
-        spyOn(formService, 'getFormDefinitionById').and.callFake(() => throwError(error));
+        spyOn(editorService, 'getFormDefinitionById').and.callFake(() => throwError(error));
 
         formComponent.getFormDefinitionByFormId(123);
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
     });
 
     it('should fetch and parse form definition by form name', () => {
-        spyOn(formService, 'getFormDefinitionByName').and.callFake((currentFormName) => new Observable((observer) => {
+        spyOn(modelService, 'getFormDefinitionByName').and.callFake((currentFormName) => new Observable((observer) => {
             observer.next(currentFormName);
             observer.complete();
         }));
 
-        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormName) => new Observable((observer) => {
-            observer.next({ name: currentFormName });
+        spyOn(editorService, 'getFormDefinitionById').and.callFake((currentFormName) => new Observable((observer) => {
+            observer.next({name: currentFormName});
             observer.complete();
         }));
 
@@ -574,13 +585,13 @@ describe('FormComponent', () => {
         formComponent.getFormDefinitionByFormName(formName);
 
         expect(loaded).toBeTruthy();
-        expect(formService.getFormDefinitionByName).toHaveBeenCalledWith(formName);
+        expect(modelService.getFormDefinitionByName).toHaveBeenCalledWith(formName);
         expect(formComponent.form).toBeDefined();
         expect(formComponent.form.name).toBe(formName);
     });
 
     it('should save task form and raise corresponding event', () => {
-        spyOn(formService, 'saveTaskForm').and.callFake(() => new Observable((observer) => {
+        spyOn(taskFormService, 'saveTaskForm').and.callFake(() => new Observable((observer) => {
             observer.next();
             observer.complete();
         }));
@@ -595,31 +606,31 @@ describe('FormComponent', () => {
         const formModel = new FormModel({
             taskId: '123',
             fields: [
-                { id: 'field1' },
-                { id: 'field2' }
+                {id: 'field1'},
+                {id: 'field2'}
             ]
         });
         formComponent.form = formModel;
         formComponent.saveTaskForm();
 
-        expect(formService.saveTaskForm).toHaveBeenCalledWith(formModel.taskId, formModel.values);
+        expect(taskFormService.saveTaskForm).toHaveBeenCalledWith(formModel.taskId, formModel.values);
         expect(saved).toBeTruthy();
         expect(savedForm).toEqual(formModel);
     });
 
     it('should handle error during form save', () => {
         const error = 'Error';
-        spyOn(formService, 'saveTaskForm').and.callFake(() => throwError(error));
+        spyOn(taskFormService, 'saveTaskForm').and.callFake(() => throwError(error));
         spyOn(formComponent, 'handleError').and.stub();
 
-        formComponent.form = new FormModel({ taskId: '123' });
+        formComponent.form = new FormModel({taskId: '123'});
         formComponent.saveTaskForm();
 
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
     });
 
     it('should require form with task id to save', () => {
-        spyOn(formService, 'saveTaskForm').and.stub();
+        spyOn(taskFormService, 'saveTaskForm').and.stub();
 
         formComponent.form = null;
         formComponent.saveTaskForm();
@@ -627,11 +638,11 @@ describe('FormComponent', () => {
         formComponent.form = new FormModel();
         formComponent.saveTaskForm();
 
-        expect(formService.saveTaskForm).not.toHaveBeenCalled();
+        expect(taskFormService.saveTaskForm).not.toHaveBeenCalled();
     });
 
     it('should require form with task id to complete', () => {
-        spyOn(formService, 'completeTaskForm').and.stub();
+        spyOn(taskFormService, 'completeTaskForm').and.stub();
 
         formComponent.form = null;
         formComponent.completeTaskForm('save');
@@ -639,11 +650,11 @@ describe('FormComponent', () => {
         formComponent.form = new FormModel();
         formComponent.completeTaskForm('complete');
 
-        expect(formService.completeTaskForm).not.toHaveBeenCalled();
+        expect(taskFormService.completeTaskForm).not.toHaveBeenCalled();
     });
 
     it('should complete form and raise corresponding event', () => {
-        spyOn(formService, 'completeTaskForm').and.callFake(() => new Observable((observer) => {
+        spyOn(taskFormService, 'completeTaskForm').and.callFake(() => new Observable((observer) => {
             observer.next();
             observer.complete();
         }));
@@ -655,15 +666,15 @@ describe('FormComponent', () => {
         const formModel = new FormModel({
             taskId: '123',
             fields: [
-                { id: 'field1' },
-                { id: 'field2' }
+                {id: 'field1'},
+                {id: 'field2'}
             ]
         });
 
         formComponent.form = formModel;
         formComponent.completeTaskForm(outcome);
 
-        expect(formService.completeTaskForm).toHaveBeenCalledWith(formModel.taskId, formModel.values, outcome);
+        expect(taskFormService.completeTaskForm).toHaveBeenCalledWith(formModel.taskId, formModel.values, outcome);
         expect(completed).toBeTruthy();
     });
 
@@ -675,7 +686,7 @@ describe('FormComponent', () => {
         const form = formComponent.parseForm({
             id: 1,
             fields: [
-                { id: 'field1', type: FormFieldTypes.CONTAINER }
+                {id: 'field1', type: FormFieldTypes.CONTAINER}
             ]
         });
 
@@ -688,7 +699,7 @@ describe('FormComponent', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        const form = formComponent.parseForm({ id: 1 });
+        const form = formComponent.parseForm({id: 1});
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
@@ -753,7 +764,7 @@ describe('FormComponent', () => {
 
         const nodeId = '<id>';
         const change = new SimpleChange(null, nodeId, false);
-        formComponent.ngOnChanges({ nodeId: change });
+        formComponent.ngOnChanges({nodeId: change});
 
         expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
         expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
@@ -973,10 +984,10 @@ describe('FormComponent', () => {
             id: 'option_2',
             name: 'test2'
         };
-        formValues.radio = { id: 'option_2', name: 'Option 2' };
+        formValues.radio = {id: 'option_2', name: 'Option 2'};
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
-        formComponent.ngOnChanges({ data: change });
+        formComponent.ngOnChanges({data: change});
 
         formFields = formComponent.form.getFormFields();
         dropdownField = formFields.find((field) => field.id === 'dropdownId');
@@ -996,7 +1007,7 @@ describe('FormComponent', () => {
         formValues.radio = 'option_3';
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
-        formComponent.ngOnChanges({ data: change });
+        formComponent.ngOnChanges({data: change});
 
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radio');
@@ -1021,7 +1032,7 @@ describe('FormComponent', () => {
 
 class FormWithCustomOutComesComponent {
 
-    @ViewChild('adfForm', { static: true })
+    @ViewChild('adfForm', {static: true})
     adfForm: FormComponent;
 
     onCustomButtonOneClick() {
@@ -1051,10 +1062,10 @@ describe('FormWithCustomOutComesComponent', () => {
         debugElement = fixture.debugElement;
         const formRepresentation = {
             fields: [
-                { id: 'container1' }
+                {id: 'container1'}
             ],
             outcomes: [
-                { id: 'outcome-1', name: 'outcome 1' }
+                {id: 'outcome-1', name: 'outcome 1'}
             ]
         };
 

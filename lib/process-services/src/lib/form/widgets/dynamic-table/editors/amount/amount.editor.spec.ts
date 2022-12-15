@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { AmountEditorComponent } from './amount.editor';
 
 describe('AmountEditorComponent', () => {

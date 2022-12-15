@@ -23,7 +23,6 @@ export * from './functional-group/functional-group.widget';
 export * from './typeahead/typeahead.widget';
 export * from './dropdown/dropdown.widget';
 
-export * from './dynamic-table/dynamic-table.widget';
-export * from './dynamic-table/dynamic-table-row.model';
+export * from './dynamic-table/index';
 
 export * from './upload/upload.widget';

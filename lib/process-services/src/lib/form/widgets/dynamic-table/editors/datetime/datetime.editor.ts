@@ -26,9 +26,9 @@ import {
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
-import { DynamicTableModel } from '../../dynamic-table.widget.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
+import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
 import { Subject } from 'rxjs';

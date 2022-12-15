@@ -25,10 +25,10 @@ import {
     setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
-import { DynamicTableColumn } from './dynamic-table-column.model';
-import { DynamicTableRow } from './dynamic-table-row.model';
+import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
+import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableModel } from './dynamic-table.widget.model';
+import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 const fakeFormField = {

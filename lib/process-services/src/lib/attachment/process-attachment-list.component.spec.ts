@@ -18,12 +18,13 @@
 import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedProcessAttachments, mockProcessAttachments } from '../mock/process/process-attachments.mock';
+import { ProcessContentService } from '../form/services/process-content.service';
 
 describe('ProcessAttachmentListComponent', () => {
 

@@ -17,19 +17,19 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { FormService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { FormListComponent } from './form-list.component';
+import { ModelService } from '../services/model.service';
 
 describe('TaskAttachmentList', () => {
 
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
-    let service: FormService;
+    let modelService: ModelService;
     let element: HTMLElement;
 
     setupTestBed({
         imports: [
-            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });
@@ -38,11 +38,11 @@ describe('TaskAttachmentList', () => {
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        service = TestBed.inject(FormService);
+        modelService = TestBed.inject(ModelService);
     });
 
     it('should show the forms as a list', async () => {
-        spyOn(service, 'getForms').and.returnValue(of([
+        spyOn(modelService, 'getForms').and.returnValue(of([
             {name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02'},
             {name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03'}
         ]));

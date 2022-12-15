@@ -17,9 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel, FormModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
-import { DynamicTableModel } from '../../dynamic-table.widget.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
+import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 import { By } from '@angular/platform-browser';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

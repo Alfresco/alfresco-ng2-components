@@ -18,9 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
-import { DynamicTableModel } from '../../dynamic-table.widget.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
+import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 
 @Component({
     selector: 'adf-amount-editor',

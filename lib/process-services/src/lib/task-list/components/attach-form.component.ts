@@ -21,7 +21,7 @@ import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { ModelService } from '../../form/services/model.service';
-import { TaskFormService } from '../../form';
+import { TaskFormService } from '../../form/services/task-form.service';
 
 @Component({
     selector: 'adf-attach-form',

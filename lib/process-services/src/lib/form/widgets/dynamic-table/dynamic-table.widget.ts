@@ -19,9 +19,9 @@
 
 import { LogService, WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { DynamicTableColumn } from './dynamic-table-column.model';
-import { DynamicTableRow } from './dynamic-table-row.model';
-import { DynamicTableModel } from './dynamic-table.widget.model';
+import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
+import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
+import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
 
 @Component({
     selector: 'dynamic-table-widget',

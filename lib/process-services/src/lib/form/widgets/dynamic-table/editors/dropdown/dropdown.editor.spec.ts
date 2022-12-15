@@ -26,22 +26,26 @@ import {
     FormModel,
     FormService
 } from '@alfresco/adf-core';
-import { DynamicTableColumnOption } from '../../dynamic-table-column-option.model';
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
-import { DynamicTableModel } from '../../dynamic-table.widget.model';
+import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
+import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DropdownEditorComponent } from './dropdown.editor';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskFormService } from '../../../../services/task-form.service';
+import { ProcessDefinitionService } from '../../../../services/process-definition.service';
 
 describe('DropdownEditorComponent', () => {
 
     let component: DropdownEditorComponent;
     let formService: FormService;
+    let taskFormService: TaskFormService;
+    let processDefinitionService: ProcessDefinitionService;
+    let alfrescoApiService: AlfrescoApiService;
     let form: FormModel;
     let table: DynamicTableModel;
     let column: DynamicTableColumn;
     let row: DynamicTableRow;
-    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -52,7 +56,10 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        formService = new FormService(null, alfrescoApiService, null);
+
+        formService = new FormService();
+        taskFormService = new TaskFormService(alfrescoApiService, null);
+        processDefinitionService = new ProcessDefinitionService(alfrescoApiService, null);
 
         row = {value: {dropdown: 'one'}} as DynamicTableRow;
         column = {
@@ -68,7 +75,7 @@ describe('DropdownEditorComponent', () => {
         table.rows.push(row);
         table.columns.push(column);
 
-        component = new DropdownEditorComponent(formService, null);
+        component = new DropdownEditorComponent(formService, taskFormService, processDefinitionService, null);
         component.table = table;
         component.row = row;
         component.column = column;
@@ -103,7 +110,7 @@ describe('DropdownEditorComponent', () => {
             {id: '12', name: 'twelve'}
         ];
 
-        spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
+        spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(
             new Observable((observer) => {
                 observer.next(restResults);
                 observer.complete();
@@ -112,7 +119,7 @@ describe('DropdownEditorComponent', () => {
 
         component.ngOnInit();
 
-        expect(formService.getRestFieldValuesColumn).toHaveBeenCalledWith(
+        expect(taskFormService.getRestFieldValuesColumn).toHaveBeenCalledWith(
             form.taskId,
             table.field.id,
             column.id
@@ -126,7 +133,7 @@ describe('DropdownEditorComponent', () => {
     it('should create empty options array on REST response', () => {
         column.optionType = 'rest';
 
-        spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
+        spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(
             new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
@@ -135,7 +142,7 @@ describe('DropdownEditorComponent', () => {
 
         component.ngOnInit();
 
-        expect(formService.getRestFieldValuesColumn).toHaveBeenCalledWith(
+        expect(taskFormService.getRestFieldValuesColumn).toHaveBeenCalledWith(
             form.taskId,
             table.field.id,
             column.id
@@ -150,7 +157,7 @@ describe('DropdownEditorComponent', () => {
         column.optionType = 'rest';
         const error = 'error';
 
-        spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
+        spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(
             throwError(error)
         );
         spyOn(component, 'handleError').and.stub();
@@ -166,7 +173,7 @@ describe('DropdownEditorComponent', () => {
         component.table = procTable;
         const error = 'error';
 
-        spyOn(formService, 'getRestFieldValuesColumnByProcessId').and.returnValue(
+        spyOn(processDefinitionService, 'getRestFieldValuesColumnByProcessId').and.returnValue(
             throwError(error)
         );
         spyOn(component, 'handleError').and.stub();

@@ -19,10 +19,12 @@
 
 import { LogService, FormService } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
-import { DynamicTableColumnOption } from '../../dynamic-table-column-option.model';
-import { DynamicTableColumn } from '../../dynamic-table-column.model';
-import { DynamicTableRow } from '../../dynamic-table-row.model';
-import { DynamicTableModel } from '../../dynamic-table.widget.model';
+import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
+import { DynamicTableColumn } from '../models/dynamic-table-column.model';
+import { DynamicTableRow } from '../models/dynamic-table-row.model';
+import { DynamicTableModel } from '../models/dynamic-table.widget.model';
+import { ProcessDefinitionService } from '../../../../services/process-definition.service';
+import { TaskFormService } from  '../../../../services/task-form.service';
 
 @Component({
     selector: 'adf-dropdown-editor',
@@ -44,6 +46,8 @@ export class DropdownEditorComponent implements OnInit {
     column: DynamicTableColumn;
 
     constructor(public formService: FormService,
+                private taskFormService: TaskFormService,
+                private processDefinitionService: ProcessDefinitionService,
                 private logService: LogService) {
     }
 
@@ -81,7 +85,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     getValuesByProcessDefinitionId(field) {
-        this.formService
+        this.processDefinitionService
             .getRestFieldValuesColumnByProcessId(
                 field.form.processDefinitionId,
                 field.id,

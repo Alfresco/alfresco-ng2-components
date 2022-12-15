@@ -24,7 +24,7 @@ import {
     FormFieldModel,
     FormModel,
     setupTestBed,
-    CoreTestingModule
+    CoreTestingModule, PeopleProcessService
 } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
@@ -37,6 +37,7 @@ describe('PeopleWidgetComponent', () => {
     let element: HTMLElement;
     let formService: FormService;
     let translationService: TranslateService;
+    let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
         imports: [
@@ -48,6 +49,7 @@ describe('PeopleWidgetComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         formService = TestBed.inject(FormService);
+        peopleProcessService = TestBed.inject(PeopleProcessService);
 
         translationService = TestBed.inject(TranslateService);
         spyOn(translationService, 'instant').and.callFake((key) => key);
@@ -88,7 +90,7 @@ describe('PeopleWidgetComponent', () => {
             lastName: 'Doe'
         });
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(of(null));
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
 
         widget.ngOnInit();
         fixture.detectChanges();
@@ -106,7 +108,7 @@ describe('PeopleWidgetComponent', () => {
         widget.field.readOnly = true;
         widget.field.form.readOnly = true;
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(of(null));
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
 
         widget.ngOnInit();
         fixture.detectChanges();
@@ -135,7 +137,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should display involved user in task form', async () => {
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
             new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
@@ -197,7 +199,7 @@ describe('PeopleWidgetComponent', () => {
             {id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2'}];
 
         beforeEach(() => {
-            spyOn(formService, 'getWorkflowUsers').and.returnValue(new Observable((observer) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(new Observable((observer) => {
                 observer.next(fakeUserResult);
                 observer.complete();
             }));

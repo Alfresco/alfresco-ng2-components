@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldEvent, FormModel } from '@alfresco/adf-core';
-import { DynamicRowValidationSummary } from '../widgets/dynamic-table/editors/models/dynamic-row-validation-summary.model';
-import { DynamicTableRow } from '../widgets/dynamic-table/editors/models/dynamic-table-row.model';
 
-export class ValidateDynamicTableRowEvent extends FormFieldEvent {
 
-    isValid = true;
+export * from './editors/dropdown/dropdown.editor';
+export * from './editors/amount/amount.editor';
+export * from './editors/boolean/boolean.editor';
+export * from './editors/date/date.editor';
+export * from './editors/datetime/datetime.editor';
+export * from './editors/row-editor/row.editor';
+export * from './editors/text/text.editor';
+export * from './dynamic-table.widget';
 
-    constructor(form: FormModel,
-                field: FormFieldModel,
-                public row: DynamicTableRow,
-                public summary: DynamicRowValidationSummary) {
-        super(form, field);
-    }
-
-}
+export * from './dynamic-table.module';
