@@ -50,9 +50,9 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-
   test-everything:
     uses: ./.github/workflows/pull-request.yml
+    secrets: inherit
   npm-check-bundle:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
