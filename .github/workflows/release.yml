@@ -7,8 +7,8 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: 'true'
-        
+        default: true
+              
   pull_request:
     types: [closed]
     branches:
