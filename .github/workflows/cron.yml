@@ -52,7 +52,6 @@ env:
 jobs:
   npm-check-bundle:
     timeout-minutes: 10
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
