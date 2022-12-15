@@ -58,7 +58,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/download-build-artifacts
+      # - uses: ./.github/actions/download-build-artifacts
       # - uses: ./.github/actions/npm-check-bundle
       - name: Check npm bundle
         run: |
