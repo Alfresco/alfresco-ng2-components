@@ -77,11 +77,12 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false     
-      - run: npm ci
-      - run: $(npm bin)/nx run cli:bundle
+      - name: install nx
+        run: npm ci
+      - run: nx run cli:bundle
       - name: push Demoshell docker image
         run: |
-          $(npm bin)/nx build demoshell --configuration production
+          nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
           echo $TAGS
           ./scripts/travis/release/release-demoshell-docker.sh
@@ -99,11 +100,12 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false
-      - run: npm ci
-      - run: $(npm bin)/nx run cli:bundle
+      - name: install nx
+        run: npm ci
+      - run: nx run cli:bundle
       - name: push Storybook docker image
         run: |
-          $(npm bin)/nx run stories:build-storybook --configuration ci
+          nx run stories:build-storybook --configuration ci
           . ./scripts/travis/release/docker-tag.sh
           echo $TAGS     
           ./scripts/travis/release/release-storybook-docker.sh
@@ -121,14 +123,15 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false
-      - run: npm ci
-      - run: $(npm bin)/nx run cli:bundle  
-      - name: $(npm bin)/nx build
+      - name: install nx
+        run: npm ci
+      - run: nx run cli:bundle  
+      - name: nx build
         run: |
           set -u;
           ./scripts/travis/build/bumpversion.sh
-          $(npm bin)/nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-          $(npm bin)/nx affected $NX_CALCULATION_FLAGS --target=pretheme
+          nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+          nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - name: release
         run: ./scripts/travis/release/release-npm.sh
 
