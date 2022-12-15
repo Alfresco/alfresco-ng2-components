@@ -56,25 +56,6 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  # build:
-  #   timeout-minutes: 20
-  #   if: github.event.pull_request.merged == true
-  #   name: "Build Components"
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: ./.github/actions/setup
-  #     - run: npm -v
-  #     - name: install
-  #       run: |
-  #         npm ci
-  #         nx run cli:bundle
-  #         nx run testing:bundle
-  #     - uses: ./.github/actions/upload-build-artifacts
-
   release-demoshell:
     # needs: [build]
     timeout-minutes: 10
@@ -87,6 +68,8 @@ jobs:
           fetch-depth: 1
       - run: git fetch --all
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
       - name: clean
         run: |
           rm -rf nxcache
@@ -111,10 +94,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-      - name: clean
-        run: |
-          rm -rf nxcache
-          rm -rf dist      
+        with: 
+          enable-cache: false  
       # - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle
       - name: push Storybook docker image
@@ -135,10 +116,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-      - name: clean
-        run: |
-          rm -rf nxcache
-          rm -rf dist      
+        with: 
+          enable-cache: false          
       # - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle  
       - name: nx build
