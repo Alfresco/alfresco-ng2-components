@@ -91,7 +91,7 @@ jobs:
         run: |
           rm -rf nxcache
           rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
+      # - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle
       - name: push Demoshell docker image
         run: |
@@ -115,7 +115,7 @@ jobs:
         run: |
           rm -rf nxcache
           rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
+      # - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle
       - name: push Storybook docker image
         run: |
@@ -139,7 +139,7 @@ jobs:
         run: |
           rm -rf nxcache
           rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
+      # - uses: ./.github/actions/download-build-artifacts
       - run: nx run cli:bundle  
       - name: nx build
         run: |
@@ -160,7 +160,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/download-build-artifacts
+      # - uses: ./.github/actions/download-build-artifacts
       - name: Check npm bundle
         run: |
           export ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
