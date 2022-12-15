@@ -1,0 +1,16 @@
+name: 'Npm check bundle'
+
+outputs:
+  tag_sha:
+    description: "long sha of the tag"
+    value: ${{ steps.sha_out.outputs.tag_sha }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: npm check bundle
+      shell: bash
+      id: sha_out
+      run: |
+        export ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+        ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
