@@ -1,0 +1,161 @@
+name: "e2e"
+description: "e2e"
+inputs:
+  e2e-test-id:
+    description: "Test id"
+    required: true
+  e2e-test-folder:
+    description: "Test folder"
+    required: true
+  e2e-test-provider:
+    description: "Test provider"
+    required: true
+  e2e-test-auth:
+    description: "Test auth"
+    required: true
+  output:
+    description: "Output path"
+    required: true
+  check-cs-env:
+    required: true
+    description: check cs env
+    default: "false"
+  check-ps-env:
+    required: true
+    description: check ps env
+    default: "false"
+  check-external-cs-env:
+    required: true
+    description: check external cs env
+    default: "false"
+  check-ps-cloud-env:
+    required: true
+    description: check ps cloud env
+    default: "false"
+  e2e-tar-name: #
+    required: false
+    default: e2e.tar.gz
+  apa-proxy: #
+    description: "proxy host"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: use APA as PROXY host if apa-proxy is set
+      shell: bash
+      run: |
+        if [[ -n "${{ inputs.apa-proxy }}" ]]; then
+          echo "APA proxy set."
+          echo "PROXY_HOST_BPM=${E2E_HOST_APA}" >> $GITHUB_ENV
+        fi
+
+    - name: install aws cli
+      shell: bash
+      run: pip install awscli
+    - name: download smartrunner test results from s3 bucket if they exist
+      shell: bash
+      env:
+        REMOTE_PATH: smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+      run: |
+        set -u;
+        mkdir -p "${SMART_RUNNER_PATH}"
+        if [[ $(aws s3 ls "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then 
+          echo "downloading test files"
+          aws s3 cp "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" .;
+          tar xzf ${{ inputs.e2e-tar-name }};
+        else
+          echo "nothing to download";
+        fi
+
+    - name: check EXTERNAL-CS is UP
+      shell: bash
+      if: ${{ inputs.check-external-cs-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
+          check-cs-env \
+          --host "$EXTERNAL_ACS_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" || exit 1
+
+    - name: Check CS is UP
+      shell: bash
+      if: ${{ inputs.check-cs-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
+          check-cs-env \
+          --host "$E2E_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" || exit 1
+
+    - name: check PS is UP
+      shell: bash
+      if: ${{ inputs.check-ps-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
+          --host "$E2E_HOST" \
+          -u "$E2E_USERNAME" \
+          -p "$E2E_PASSWORD" \
+          --license "$AWS_S3_BUCKET_ACTIVITI_LICENSE" || exit 1
+
+    - name: check PS-CLOUD is UP
+      shell: bash
+      if: ${{ inputs.check-ps-cloud-env == 'true' }}
+      run: |
+        set -u;
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
+          --oauth "$E2E_HOST" \
+          --host "$E2E_HOST_APA" \
+          --modelerUsername "$E2E_MODELER_USERNAME" \
+          --modelerPassword "$E2E_MODELER_PASSWORD" \
+          --devopsUsername "$E2E_DEVOPS_USERNAME" \
+          --devopsPassword "$E2E_DEVOPS_PASSWORD" \
+          --clientId 'alfresco' || exit 1
+
+    - name: variables sanification
+      env:
+        FOLDER: "${{ inputs.e2e-test-folder }}"
+        PROVIDER: "${{ inputs.e2e-test-provider }}"
+        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
+        E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+      shell: bash
+      run: |
+        set -u;
+        echo $PROXY_HOST_BPM
+        NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
+        GIT_HASH=$(echo $GIT_HASH | sed "s@'@@g")
+        echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
+    - name: run test with retries
+      id: retry_run
+      env:
+        FOLDER: "${{ inputs.e2e-test-folder }}"
+        PROVIDER: "${{ inputs.e2e-test-provider }}"
+        AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
+        E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+      uses: nick-fields/retry@v2.8.2
+      with:
+        timeout_minutes: 40
+        max_attempts: 2
+        retry_wait_seconds: 30
+        shell: bash
+        command: |
+          set -u;
+          export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
+          echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
+          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
+
+    - name: upload smartrunner tests results on s3 to cache tests
+      shell: bash
+      if: always()
+      env:
+        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
+      # description: always upload newer results
+      run: |
+        tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
+        aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
+
+

@@ -1,0 +1,53 @@
+name: "Download build artifacts"
+description: "Download build artifacts"
+runs:
+  using: "composite"
+  steps:
+    ## NXCACHE
+    - name: update NX cache folder
+      uses: actions/download-artifact@v3
+      with:
+        path: .
+        name: nxcache
+    ## DIST
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      with:
+        path: .
+        name: dist
+    ## ADF CLI
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      with:
+        path: .
+        name: adf-cli
+    ## ADF TESTING
+    - name: update Dist folder
+      uses: actions/download-artifact@v3
+      with:
+        path: .
+        name: adf-testing
+    - name: extract nxcache
+      run: |
+        tar xzf nxcache.tar.gz
+      shell: bash
+    - name: extract dist
+      run: |
+        tar xzf dist.tar.gz
+      shell: bash
+    - name: extract adf cli
+      run: |
+        tar xzf adf-cli.tar.gz
+        tar xzf adf-testing.tar.gz
+      shell: bash
+    - name: show files
+      shell: bash
+      run: |
+        pwd
+        ls -lha
+        echo "====DIST===="
+        find dist -maxdepth 1 -type d
+        echo "====NXCACHE===="
+        find nxcache -maxdepth 1 -type d
+        echo "====ADF===="
+        find node_modules/@alfresco/ -maxdepth 1 -type d

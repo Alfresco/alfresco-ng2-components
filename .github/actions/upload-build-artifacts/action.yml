@@ -1,0 +1,41 @@
+name: "Upload build artifacts"
+description: "Upload build artifacts"
+
+runs:
+  using: "composite"
+  steps:
+    ## NXCACHE
+    - name: tar artifacts
+      run: |
+        tar czf dist.tar.gz dist
+        tar czf nxcache.tar.gz nxcache
+        tar czf adf-cli.tar.gz node_modules/@alfresco/adf-cli
+        tar czf adf-testing.tar.gz node_modules/@alfresco/adf-testing
+      shell: bash
+    - name: update NX cache folder
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: nxcache.tar.gz
+        name: nxcache
+    ## DIST
+    - name: update Dist folder
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: dist.tar.gz
+        name: dist
+    ## ADF CLI
+    - name: save ADF cli
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: adf-cli.tar.gz
+        name: adf-cli
+    ## ADF TESTING
+    - name: save ADF testing
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        path: adf-testing.tar.gz
+        name: adf-testing
