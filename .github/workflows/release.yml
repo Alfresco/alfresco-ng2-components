@@ -98,7 +98,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with: 
-          enable-cache: false 
+          enable-cache: false
+      - run: npm ci
       - run: $(npm bin)/nx run cli:bundle
       - name: push Storybook docker image
         run: |
@@ -119,7 +120,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with: 
-          enable-cache: false         
+          enable-cache: false
+      - run: npm ci
       - run: $(npm bin)/nx run cli:bundle  
       - name: $(npm bin)/nx build
         run: |
