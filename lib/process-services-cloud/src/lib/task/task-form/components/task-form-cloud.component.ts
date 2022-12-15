@@ -25,7 +25,7 @@ import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent, Lo
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -151,19 +151,12 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.loading = true;
         this.showErrorLoaded = false;
         this.taskCloudService
-            .getTaskById(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$)).pipe(
-                switchMap((details) => {
-                    this.taskDetails = details;
-                    return this.taskCloudService.getCandidateUsers(this.appName, this.taskId);
-                }),
-                switchMap((candidateUsers) => {
-                    this.candidateUsers = candidateUsers || [];
-                    return this.taskCloudService.getCandidateGroups(this.appName, this.taskId);
-                })
-            )
-            .subscribe((candidateGroups) => {
+            .getTaskDetailsInfo(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$))
+            .subscribe(({details, candidateUsers, candidateGroups}) => {
+                this.taskDetails = details;
+                this.candidateUsers = candidateUsers;
+                this.candidateGroups = candidateGroups;
                 this.loading = false;
-                this.candidateGroups = candidateGroups || [];
                 this.onTaskLoaded.emit(this.taskDetails);
             }, (error) => {
                 this.logService.error(error.message);

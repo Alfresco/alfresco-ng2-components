@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import {
     TaskDetailsCloudModel,
     StartTaskCloudResponseModel,
@@ -328,4 +328,12 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         this.logService.error(error);
         return throwError(error || 'Server error');
     }
+
+    getTaskDetailsInfo(appName: string, taskId: string): Observable<any> {
+        return this.getTaskById(appName, taskId).pipe(
+            switchMap(() => this.getCandidateUsers(appName, taskId)),
+            switchMap(() => this.getCandidateGroups(appName, taskId))
+        );
+    }
 }
+
