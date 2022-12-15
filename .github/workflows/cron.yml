@@ -50,9 +50,13 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  test-everything:
+  run-e2e:
     uses: ./.github/workflows/pull-request.yml
     secrets: inherit
+  release:
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+
   npm-check-bundle:
     # needs: [ test-everything ]
     timeout-minutes: 10
