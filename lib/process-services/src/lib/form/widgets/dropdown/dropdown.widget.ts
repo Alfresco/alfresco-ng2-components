@@ -22,7 +22,7 @@ import {
     FormService,
     FormFieldOption,
     WidgetComponent,
-    LogService,
+    LogService
 } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';

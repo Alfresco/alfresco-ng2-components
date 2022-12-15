@@ -49,7 +49,7 @@ import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
-import { TaskRepresentation } from "@alfresco/js-api/typings/src/api/activiti-rest-api/model/taskRepresentation";
+import { TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-form',

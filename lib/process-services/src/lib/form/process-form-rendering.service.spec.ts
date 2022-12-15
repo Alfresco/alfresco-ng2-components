@@ -25,7 +25,7 @@ import { FunctionalGroupWidgetComponent } from './widgets/functional-group/funct
 import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
-import { DocumentWidgetComponent } from "./widgets/document/document.widget";
+import { DocumentWidgetComponent } from './widgets/document/document.widget';
 
 describe('ProcessFormRenderingService', () => {
 

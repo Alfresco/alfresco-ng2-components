@@ -120,9 +120,7 @@ export class TaskFormService {
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
         return from(this.taskFormsApi.getTaskFormVariables(taskId))
             .pipe(
-                map((res) => {
-                    return this.toJson(res);
-                }),
+                map((res) => this.toJson(res)),
                 catchError((err) => this.handleError(err))
             );
     }

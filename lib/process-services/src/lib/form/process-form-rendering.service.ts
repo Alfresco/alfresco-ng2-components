@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-    FormRenderingService,
+    FormRenderingService
 } from '@alfresco/adf-core';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
@@ -45,8 +45,7 @@ export class ProcessFormRenderingService extends FormRenderingService {
             document: () => DocumentWidgetComponent,
             people: () =>  PeopleWidgetComponent,
             'functional-group':  () => FunctionalGroupWidgetComponent,
-            'dynamic-table':  () => DynamicTableWidgetComponent,
-
+            'dynamic-table':  () => DynamicTableWidgetComponent
         }, true);
     }
 }

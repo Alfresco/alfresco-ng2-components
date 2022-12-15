@@ -18,9 +18,8 @@
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { TasksApi } from '@alfresco/js-api';
+import { TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
-import { TaskRepresentation } from "@alfresco/js-api/typings/src/api/activiti-rest-api/model/taskRepresentation";
 
 @Injectable({
     providedIn: 'root'
