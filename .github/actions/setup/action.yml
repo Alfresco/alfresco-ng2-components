@@ -3,8 +3,8 @@ description: 'Initialize cache, env var load'
 inputs:
   enable-cache:
     description: 'enable caching'
+    type: string
     required: false
-    type: boolean
     default: true
     
 runs:
