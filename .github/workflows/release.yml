@@ -77,9 +77,10 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false     
-      - name: install nx
-        run: npm ci
-      - run: nx run cli:bundle
+      - name: install nx and cli
+        run: |
+          npm ci
+          nx run cli:bundle
       - name: push Demoshell docker image
         run: |
           nx build demoshell --configuration production
@@ -100,9 +101,10 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false
-      - name: install nx
-        run: npm ci
-      - run: nx run cli:bundle
+      - name: install nx and cli
+        run: |
+          npm ci
+          nx run cli:bundle
       - name: push Storybook docker image
         run: |
           nx run stories:build-storybook --configuration ci
@@ -123,9 +125,10 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false
-      - name: install nx
-        run: npm ci
-      - run: nx run cli:bundle  
+      - name: install nx and cli
+        run: |
+          npm ci
+          nx run cli:bundle
       - name: nx build
         run: |
           set -u;
