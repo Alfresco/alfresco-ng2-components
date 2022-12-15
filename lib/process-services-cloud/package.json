@@ -23,7 +23,7 @@
     "@angular/platform-browser": ">=14.0.5",
     "@angular/platform-browser-dynamic": ">=14.0.5",
     "@angular/router": ">=14.0.5",
-    "@alfresco/js-api": "5.3.0-476",
+    "@alfresco/js-api": "5.3.0-477",
     "@alfresco/adf-core": "6.0.0-A.1",
     "@alfresco/adf-content-services": "6.0.0-A.1",
     "@apollo/client": "^3.3.7",
