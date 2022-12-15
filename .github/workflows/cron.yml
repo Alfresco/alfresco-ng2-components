@@ -50,6 +50,9 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
+
+  test-everything:
+    uses: ./.github/workflows/pull-request.yml
   npm-check-bundle:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
@@ -58,9 +61,4 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      # - uses: ./.github/actions/download-build-artifacts
       - uses: ./.github/actions/npm-check-bundle
-      # - name: Check npm bundle
-      #   run: |
-      #     export ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-      #     ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
