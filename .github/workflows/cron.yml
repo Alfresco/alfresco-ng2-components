@@ -54,6 +54,7 @@ jobs:
     uses: ./.github/workflows/pull-request.yml
     secrets: inherit
   npm-check-bundle:
+    # needs: [ test-everything ]
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     steps:
