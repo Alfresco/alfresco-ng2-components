@@ -77,6 +77,7 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-cache: false     
+      - run: npm ci
       - run: $(npm bin)/nx run cli:bundle
       - name: push Demoshell docker image
         run: |
