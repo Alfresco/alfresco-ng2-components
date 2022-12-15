@@ -2,7 +2,7 @@ name: "pull-request"
 
 on:
   workflow_call:
-    secrets:
+    # secrets:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
