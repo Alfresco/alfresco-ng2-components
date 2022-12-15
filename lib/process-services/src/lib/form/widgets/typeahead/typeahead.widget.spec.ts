@@ -26,18 +26,20 @@ import {
     FormFieldModel,
     FormModel,
     setupTestBed,
-    CoreTestingModule,
-    AlfrescoApiService
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TaskFormService } from '../../services/task-form.service';
+import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
     let translationService: TranslateService;
-    let alfrescoApiService: AlfrescoApiService;
+    let taskFormService: TaskFormService;
+    let processDefinitionService: ProcessDefinitionService;
 
     setupTestBed({
         imports: [
@@ -47,13 +49,14 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         translationService = TestBed.inject(TranslateService);
+        taskFormService = TestBed.inject(TaskFormService);
+        processDefinitionService = TestBed.inject(ProcessDefinitionService);
         spyOn(translationService, 'instant').and.callFake((key) => key);
         spyOn(translationService, 'get').and.callFake((key) => of(key));
 
-        formService = new FormService(null, alfrescoApiService, null);
-        widget = new TypeaheadWidgetComponent(formService, null);
+        formService = new FormService();
+        widget = new TypeaheadWidgetComponent(formService, taskFormService, processDefinitionService, null);
         widget.field = new FormFieldModel(new FormModel({taskId: 'task-id'}));
         widget.field.restUrl = 'whateverURL';
     });
@@ -71,12 +74,12 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
 
     it('should not perform any request if restUrl is not present', () => {
@@ -91,9 +94,9 @@ describe('TypeaheadWidgetComponent', () => {
             id: fieldId
         });
 
-        spyOn(formService, 'getRestFieldValues');
+        spyOn(taskFormService, 'getRestFieldValues');
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
     });
 
     it('should handle error when requesting fields with task id', () => {
@@ -109,12 +112,12 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValues').and.returnValue(throwError(err));
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
 
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
         expect(widget.handleError).toHaveBeenCalledWith(err);
     });
 
@@ -131,17 +134,17 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
         const err = 'Error';
-        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(throwError(err));
+        spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.returnValue(throwError(err));
         spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
 
-        expect(formService.getRestFieldValuesByProcessId).toHaveBeenCalled();
+        expect(processDefinitionService.getRestFieldValuesByProcessId).toHaveBeenCalled();
         expect(widget.handleError).toHaveBeenCalledWith(err);
     });
 
     it('should setup initial value', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
                 {id: '1', name: 'One'},
                 {id: '2', name: 'Two'}
@@ -152,12 +155,12 @@ describe('TypeaheadWidgetComponent', () => {
         widget.field.restUrl = 'whateverURL';
         widget.ngOnInit();
 
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
         expect(widget.value).toBe('Two');
     });
 
     it('should not setup initial value due to missing option', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
                 {id: '1', name: 'One'},
                 {id: '2', name: 'Two'}
@@ -169,7 +172,7 @@ describe('TypeaheadWidgetComponent', () => {
         widget.field.restUrl = 'whateverURL';
         widget.ngOnInit();
 
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
         expect(widget.value).toBeUndefined();
     });
 
@@ -179,7 +182,7 @@ describe('TypeaheadWidgetComponent', () => {
             {id: '2', name: 'Two'}
         ];
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(options);
             observer.complete();
         }));
@@ -189,7 +192,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should update form upon options setup', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([]);
             observer.complete();
         }));

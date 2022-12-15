@@ -17,13 +17,13 @@
 
 import { of, timer } from 'rxjs';
 import {
-    FormService,
     FormFieldModel,
     FormModel,
     GroupModel,
     CoreTestingModule,
     setupTestBed,
-    FormFieldTypes
+    FormFieldTypes,
+    PeopleProcessService
 } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -32,7 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;
     let component: FunctionalGroupWidgetComponent;
-    let formService: FormService;
+    let peopleProcessService: PeopleProcessService;
     let getWorkflowGroupsSpy: jasmine.Spy;
     let element: HTMLElement;
     const groups: GroupModel[] = [
@@ -48,8 +48,8 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        formService = TestBed.inject(FormService);
-        getWorkflowGroupsSpy = spyOn(formService, 'getWorkflowGroups').and.returnValue(of([]));
+        peopleProcessService = TestBed.inject(PeopleProcessService);
+        getWorkflowGroupsSpy = spyOn(peopleProcessService, 'getWorkflowGroups').and.returnValue(of([]));
 
         fixture = TestBed.createComponent(FunctionalGroupWidgetComponent);
         component = fixture.componentInstance;

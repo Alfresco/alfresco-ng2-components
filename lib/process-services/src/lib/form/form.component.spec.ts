@@ -32,7 +32,7 @@ import {
     FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, ContainerModel, fakeForm,
     setupTestBed,
-    NodeMetadata
+    NodeMetadata, NodesApiService
 } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
@@ -54,6 +54,7 @@ describe('FormComponent', () => {
     let taskService: TaskService;
     let editorService: EditorService;
     let modelService: ModelService;
+    let nodeService: NodesApiService;
     let formRenderingService: ProcessFormRenderingService;
 
     @Component({
@@ -95,6 +96,7 @@ describe('FormComponent', () => {
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
 
+        nodeService = TestBed.inject(NodesApiService);
         formService = TestBed.inject(FormService);
         taskService = TestBed.inject(TaskService);
         taskFormService = TestBed.inject(TaskFormService);
@@ -249,44 +251,6 @@ describe('FormComponent', () => {
         formComponent.loadForm();
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
-    });
-
-    it('should get process variable if is a process task', () => {
-        spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({taskId: currentTaskId});
-            observer.complete();
-        }));
-
-        spyOn(taskFormService, 'getTaskProcessVariable').and.returnValue(of(null));
-        spyOn(taskService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({taskId: currentTaskId, processDefinitionId: '10201'});
-            observer.complete();
-        }));
-        const taskId = '123';
-
-        formComponent.taskId = taskId;
-        formComponent.loadForm();
-
-        expect(taskFormService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
-    });
-
-    it('should not get process variable if is not a process task', () => {
-        spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({taskId: currentTaskId});
-            observer.complete();
-        }));
-
-        spyOn(taskFormService, 'getTaskProcessVariable').and.returnValue(of(null));
-        spyOn(taskService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
-            observer.next({taskId: currentTaskId, processDefinitionId: 'null'});
-            observer.complete();
-        }));
-        const taskId = '123';
-
-        formComponent.taskId = taskId;
-        formComponent.loadForm();
-
-        expect(taskFormService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
     });
 
     it('should get form definition by form id on load', () => {
@@ -513,7 +477,7 @@ describe('FormComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(taskService, 'getTask').and.returnValue(of({}));
+        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(taskFormService, 'getTaskForm').and.callFake(() => throwError(error));
 
@@ -524,7 +488,7 @@ describe('FormComponent', () => {
     });
 
     it('should apply readonly state when getting form by task id', (done) => {
-        spyOn(taskService, 'getTask').and.returnValue(of({}));
+        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
         spyOn(taskFormService, 'getTaskForm').and.callFake((taskId) => new Observable((observer) => {
             observer.next({taskId});
             observer.complete();

@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     ContentService,
-    ProcessContentService,
     ContentLinkModel,
     CoreTestingModule,
     setupTestBed
@@ -28,6 +27,7 @@ import {
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessContentService } from '../../services/process-content.service';
 
 declare let jasmine: any;
 

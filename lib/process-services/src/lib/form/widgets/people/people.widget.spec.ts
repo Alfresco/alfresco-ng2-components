@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     UserProcessModel,
-    FormService,
     FormFieldTypes,
     FormFieldModel,
     FormModel,
@@ -35,7 +34,6 @@ describe('PeopleWidgetComponent', () => {
     let widget: PeopleWidgetComponent;
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
-    let formService: FormService;
     let translationService: TranslateService;
     let peopleProcessService: PeopleProcessService;
 
@@ -48,7 +46,6 @@ describe('PeopleWidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);
-        formService = TestBed.inject(FormService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 
         translationService = TestBed.inject(TranslateService);

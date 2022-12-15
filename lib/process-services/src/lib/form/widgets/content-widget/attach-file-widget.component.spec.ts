@@ -23,7 +23,6 @@ import {
     FormModel,
     FormFieldTypes,
     FormService,
-    ProcessContentService,
     FormFieldMetadata,
     setupTestBed,
     DownloadService
@@ -35,6 +34,7 @@ import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
+import { ProcessContentService } from '../../services/process-content.service';
 
 const fakeRepositoryListAnswer = [
     {

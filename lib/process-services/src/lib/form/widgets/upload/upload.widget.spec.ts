@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import {
     FormService,
-    ProcessContentService,
     FormFieldTypes,
     FormModel,
     FormFieldModel,
@@ -31,6 +30,7 @@ import {
 import { UploadWidgetComponent } from './upload.widget';
 import { TranslateModule } from '@ngx-translate/core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
+import { ProcessContentService } from '../../services/process-content.service';
 
 const fakePngAnswer = new RelatedContentRepresentation({
     id: 1155,

@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import {
-    FormService,
     WidgetVisibilityService,
     FormFieldOption,
     FormFieldModel,
@@ -30,10 +29,13 @@ import {
 } from '@alfresco/adf-core';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskFormService } from '../../services/task-form.service';
+import { ProcessDefinitionService } from '../../services/process-definition.service';
 
 describe('DropdownWidgetComponent', () => {
 
-    let formService: FormService;
+    let taskFormService: TaskFormService;
+    let processDefinitionService: ProcessDefinitionService;
     let widget: DropdownWidgetComponent;
     let visibilityService: WidgetVisibilityService;
     let fixture: ComponentFixture<DropdownWidgetComponent>;
@@ -60,21 +62,22 @@ describe('DropdownWidgetComponent', () => {
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        formService = TestBed.inject(FormService);
+        taskFormService = TestBed.inject(TaskFormService);
         visibilityService = TestBed.inject(WidgetVisibilityService);
+        processDefinitionService = TestBed.inject(ProcessDefinitionService);
         widget.field = new FormFieldModel(new FormModel());
     });
 
     it('should require field with restUrl', () => {
-        spyOn(formService, 'getRestFieldValues').and.stub();
+        spyOn(taskFormService, 'getRestFieldValues').and.stub();
 
         widget.field = null;
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
 
         widget.field = new FormFieldModel(null, {restUrl: null});
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
     });
 
     it('should request field values from service', () => {
@@ -90,19 +93,19 @@ describe('DropdownWidgetComponent', () => {
             restUrl: '<url>'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
             new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
             })
         );
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
 
     it('should preserve empty option when loading fields', () => {
         const restFieldValue: FormFieldOption = {id: '1', name: 'Option1'} as FormFieldOption;
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => new Observable((observer) => {
+        spyOn(taskFormService, 'getRestFieldValues').and.callFake(() => new Observable((observer) => {
             observer.next([restFieldValue]);
             observer.complete();
         }));
@@ -117,7 +120,7 @@ describe('DropdownWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
         expect(widget.field.options.length).toBe(2);
         expect(widget.field.options[0]).toBe(emptyOption);
         expect(widget.field.options[1]).toBe(restFieldValue);
@@ -171,7 +174,7 @@ describe('DropdownWidgetComponent', () => {
 
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
+                spyOn(taskFormService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -232,7 +235,7 @@ describe('DropdownWidgetComponent', () => {
 
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => of(fakeOptionList));
+                spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.callFake(() => of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
                     id: 'dropdown-id',
                     name: 'date-name',

@@ -25,18 +25,19 @@ import {
     taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleeNode
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
-import { FormService, WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessService } from '../process-list/services/process.service';
 
 describe('StartFormComponent', () => {
 
-    let formService: FormService;
     let component: StartFormComponent;
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
     let visibilityService: WidgetVisibilityService;
     let translate: TranslateService;
+    let processService: ProcessService;
 
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
@@ -52,11 +53,11 @@ describe('StartFormComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
-        formService = TestBed.inject(FormService);
+        processService = TestBed.inject(ProcessService);
         visibilityService = TestBed.inject(WidgetVisibilityService);
         translate = TestBed.inject(TranslateService);
 
-        getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of({
+        getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of({
             processDefinitionName: 'my:process'
         }));
 
@@ -71,27 +72,27 @@ describe('StartFormComponent', () => {
     it('should load start form on change if processDefinitionId defined', () => {
         component.processDefinitionId = exampleId1;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-        expect(formService.getStartFormDefinition).toHaveBeenCalled();
+        expect(processService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should load start form when processDefinitionId changed', () => {
         component.processDefinitionId = exampleId1;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-        expect(formService.getStartFormDefinition).toHaveBeenCalled();
+        expect(processService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should check visibility when the start form is loaded', () => {
         spyOn(visibilityService, 'refreshVisibility');
         component.processDefinitionId = exampleId1;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-        expect(formService.getStartFormDefinition).toHaveBeenCalled();
+        expect(processService.getStartFormDefinition).toHaveBeenCalled();
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
     it('should not load start form when changes notified but no change to processDefinitionId', () => {
         component.processDefinitionId = undefined;
         component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2, true) });
-        expect(formService.getStartFormDefinition).not.toHaveBeenCalled();
+        expect(processService.getStartFormDefinition).not.toHaveBeenCalled();
     });
 
     it('should be able to inject sigle file as value into the form with an upload single widget', () => {

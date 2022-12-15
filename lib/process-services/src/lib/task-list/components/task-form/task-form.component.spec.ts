@@ -23,7 +23,6 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    FormService,
     setupTestBed
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';

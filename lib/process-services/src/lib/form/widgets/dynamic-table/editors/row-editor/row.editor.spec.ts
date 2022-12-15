@@ -19,7 +19,6 @@ import {
     FormFieldModel,
     FormModel,
     FormService,
-    AlfrescoApiService,
     CoreTestingModule,
     setupTestBed
 } from '@alfresco/adf-core';
@@ -27,14 +26,12 @@ import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
-import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
 
 describe('RowEditorComponent', () => {
 
     let component: RowEditorComponent;
-    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -44,11 +41,9 @@ describe('RowEditorComponent', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
-
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
-        component.table = new DynamicTableModel(field, new FormService(null, alfrescoApiService, null));
+        component.table = new DynamicTableModel(field, new FormService());
         component.row = {} as DynamicTableRow;
         component.column = {} as DynamicTableColumn;
     });
