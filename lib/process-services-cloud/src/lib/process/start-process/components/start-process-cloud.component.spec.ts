@@ -664,22 +664,40 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({});
         });
 
-        it('should call service to start process if required fields provided', () => {
-            component.processForm.controls['processInstanceName'].setValue('My Process 1');
-            component.processPayloadCloud.processDefinitionKey = 'my test definition key';
-            component.startProcess();
-            expect(startProcessSpy).toHaveBeenCalled();
+        it('should see start button', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).toBeDefined();
+            expect(startButton).not.toBeNull();
         });
 
-        it('should call service to start process with the correct parameters', () => {
+        it('should call service with the correct parameters when button is clicked', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.appName = 'test app name';
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
                 ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey
             });
-            component.startProcess();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+
+            startButton.triggerEventHandler('click', null);
             expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+
+            component.success.pipe(first()).subscribe((data: ProcessInstanceCloud) => {
+                expect(data).not.toBeNull();
+                expect(data).toEqual(fakeProcessInstance);
+            });
+
         });
+
 
         it('should output start event when process started successfully', () => {
             const emitSpy = spyOn(component.success, 'emit');
@@ -713,6 +731,7 @@ describe('StartProcessCloudComponent', () => {
         it('should emit start event when start select a process and add a name', (done) => {
             const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
+                expect(startProcessSpy).toHaveBeenCalled();
                 done();
             });
 
@@ -727,6 +746,7 @@ describe('StartProcessCloudComponent', () => {
 
             const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
+                expect(startProcessSpy).toHaveBeenCalled();
                 done();
             });
             component.startProcess();
@@ -896,34 +916,25 @@ describe('StartProcessCloudComponent', () => {
 
             expect(card).toBeTruthy();
         });
-
-        it('should emit value when process started', () => {
-            component.success.pipe(first()).subscribe((data: ProcessInstanceCloud) => {
-                expect(data).not.toBeNull();
-            });
-            component.startProcess();
-        });
     });
 
     describe('cancel process', () => {
         beforeEach(() => {
-            fixture.detectChanges();
             component.name = 'NewProcess 1';
             component.appName = 'myApp';
-            component.ngOnChanges({});
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
         });
 
         it('user should see cancel button', () => {
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const cancelBtn = fixture.debugElement.query(By.css('#cancel_process'));
-                expect(cancelBtn.nativeElement).toBeDefined();
-            });
+            const startButton = fixture.debugElement.query(By.css('#cancel_process'));
+            expect(startButton).toBeDefined();
+            expect(startButton).not.toBeNull();
         });
 
         it('undefined should be emitted when cancel button clicked', () => {
             component.cancel.pipe(first()).subscribe((data: any) => {
-                expect(data).toBe(undefined);
+                expect(data).not.toBeDefined();
             });
             component.cancelStartProcess();
         });
