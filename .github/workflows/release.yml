@@ -76,7 +76,7 @@ jobs:
   #     - uses: ./.github/actions/upload-build-artifacts
 
   release-demoshell:
-    needs: [build]
+    # needs: [build]
     timeout-minutes: 10
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -101,7 +101,7 @@ jobs:
           ./scripts/travis/release/release-demoshell-docker.sh
 
   release-storybook:
-    needs: [build]
+    # needs: [build]
     timeout-minutes: 10
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -125,7 +125,7 @@ jobs:
           ./scripts/travis/release/release-storybook-docker.sh
 
   npm-release:
-    needs: [build]
+    # needs: [build]
     timeout-minutes: 10
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
