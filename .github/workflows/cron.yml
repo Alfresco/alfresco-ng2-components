@@ -50,9 +50,9 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  run-e2e:
-    uses: ./.github/workflows/pull-request.yml
-    secrets: inherit
+  # run-e2e:
+  #   uses: ./.github/workflows/pull-request.yml
+  #   secrets: inherit
   release:
     uses: ./.github/workflows/release.yml
     secrets: inherit
@@ -64,6 +64,4 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/npm-check-bundle
