@@ -18,5 +18,3 @@
 export * from './data-column-list.component';
 export * from './data-column.component';
 export * from './data-column-header.component';
-
-export * from './data-column.module';

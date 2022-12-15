@@ -25,7 +25,6 @@ import { AboutModule } from './about/about.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
-import { DataColumnModule } from './data-column/data-column.module';
 import { DataTableModule } from './datatable/datatable.module';
 import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LanguageMenuModule } from './language-menu/language-menu.module';
@@ -90,7 +89,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
-        DataColumnModule,
         DataTableModule,
         ButtonsMenuModule,
         TemplateModule,
@@ -131,7 +129,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
-        DataColumnModule,
         DataTableModule,
         TranslateModule,
         ButtonsMenuModule,

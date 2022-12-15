@@ -82,6 +82,32 @@ How to fix it:
 
 ## Deprecated items
 
+
+### DataColumnModule
+
+```DataColumnModule```  has been deprecated and moved in ```DataTableModule``` 
+
+v6.0.0 and before:
+```
+@NgModule({
+    imports: [
+    ```
+    DataColumnModule,
+    DataTableModule
+    ```    
+])
+```
+
+v6.0.0 and after:
+```
+@NgModule({
+    imports: [
+    ```
+    DataTableModule,
+    ```    
+])
+```
+
 ### PaginationModel
 
 `Pagination` model from `@alfresco/js-api` has been now deprecated in favour of internal implementated model [`PaginationModel`](../../lib/core/src/lib/models/pagination.model.ts) evrywhere

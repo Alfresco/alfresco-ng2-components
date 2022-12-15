@@ -47,10 +47,10 @@ import { MainMenuDataTableTemplateDirective } from './directives/main-data-table
 import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
-import { DataColumnModule } from '../data-column/data-column.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IconModule } from '../icon/icon.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
 
 @NgModule({
     imports: [
@@ -58,7 +58,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MaterialModule,
         CommonModule,
         TranslateModule,
-        DataColumnModule,
         ContextMenuModule,
         PipeModule,
         DirectiveModule,
@@ -89,7 +88,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        DropZoneDirective,
+        DataColumnComponent,
+        DataColumnListComponent,
+        DateColumnHeaderComponent
     ],
     exports: [
         DataTableComponent,
@@ -112,7 +114,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        DropZoneDirective,
+        DataColumnComponent,
+        DataColumnListComponent,
+        DateColumnHeaderComponent
     ]
 })
 export class DataTableModule {}

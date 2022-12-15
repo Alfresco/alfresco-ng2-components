@@ -16,13 +16,12 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { DataColumnModule } from './data-column.module';
 import { DataColumnComponent } from './data-column.component';
-import { DataTableModule } from './../datatable/datatable.module';
-import { CoreStoryModule } from '../testing/core.story.module';
-import * as data from './../mock/data-column.mock';
+import { DataTableModule } from '../datatable.module';
+import { CoreStoryModule } from '../../testing/core.story.module';
+import * as data from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataRow } from './../datatable';
+import { DataRow } from '../index';
 
 export default {
     component: DataColumnComponent,
@@ -31,7 +30,6 @@ export default {
         moduleMetadata({
             imports: [
                 CoreStoryModule,
-                DataColumnModule,
                 DataTableModule,
                 RouterTestingModule
             ]

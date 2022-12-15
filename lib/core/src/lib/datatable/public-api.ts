@@ -51,3 +51,4 @@ export * from './directives/custom-no-permission-template.directive';
 export * from './directives/main-data-table-action-template.directive';
 
 export * from './datatable.module';
+export * from './data-column';

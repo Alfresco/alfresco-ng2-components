@@ -26,7 +26,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subscription, Observable, Observer } from 'rxjs';
-import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
+import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
