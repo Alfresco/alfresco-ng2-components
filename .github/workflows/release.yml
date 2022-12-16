@@ -9,7 +9,6 @@ on:
       - develop-patch*
       - master-patch*
 
-
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -55,31 +54,7 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  build:
-    timeout-minutes: 20
-    if: github.event.pull_request.merged == true
-    name: "Build Components"
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - run: npm -v
-      - name: install
-        run: |
-          npm ci
-          nx run cli:bundle
-          nx run testing:bundle
-      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
-      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
-      - run: nx build demoshell --configuration production
-      - uses: ./.github/actions/upload-build-artifacts
-
-  push-demoshell:
-    needs: [build]
+  release-demoshell:
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -90,22 +65,20 @@ jobs:
           fetch-depth: 1
       - run: git fetch --all
       - uses: ./.github/actions/setup
-      - name: clean
+        with: 
+          enable-cache: false     
+      - name: install nx and cli
         run: |
-          rm -rf nxcache
-          rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
-      - run: nx run cli:bundle
+          npm ci
+          nx run cli:bundle
       - name: push Demoshell docker image
         run: |
           nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
-          echo $TAGS          
-          set -u;
+          echo $TAGS
           ./scripts/travis/release/release-demoshell-docker.sh
 
-  push-storybook:
-    needs: [build]
+  release-storybook:
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -115,22 +88,20 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-      - name: clean
+        with: 
+          enable-cache: false
+      - name: install nx and cli
         run: |
-          rm -rf nxcache
-          rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
-      - run: nx run cli:bundle
+          npm ci
+          nx run cli:bundle
       - name: push Storybook docker image
         run: |
           nx run stories:build-storybook --configuration ci
           . ./scripts/travis/release/docker-tag.sh
-          echo $TAGS
-          set -u;        
+          echo $TAGS     
           ./scripts/travis/release/release-storybook-docker.sh
 
   npm-release:
-    needs: [build]
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -140,12 +111,12 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-      - name: clean
+        with: 
+          enable-cache: false
+      - name: install nx and cli
         run: |
-          rm -rf nxcache
-          rm -rf dist      
-      - uses: ./.github/actions/download-build-artifacts
-      - run: nx run cli:bundle  
+          npm ci
+          nx run cli:bundle
       - name: nx build
         run: |
           set -u;
@@ -155,7 +126,6 @@ jobs:
       - name: release
         run: ./scripts/travis/release/release-npm.sh
 
-
   npm-check-bundle:
     needs: [npm-release]
     timeout-minutes: 15
@@ -164,10 +134,4 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/download-build-artifacts
-      - name: Check npm bundle
-        run: |
-          export ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+      - uses: ./.github/actions/npm-check-bundle
