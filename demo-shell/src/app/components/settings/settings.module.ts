@@ -20,6 +20,8 @@ import { SettingsComponent } from './settings.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HostSettingsComponent } from './host-settings.component';
 
 const routes: Routes = [
     {
@@ -32,8 +34,13 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule
+        CoreModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
-    declarations: [SettingsComponent]
+    declarations: [
+        SettingsComponent,
+        HostSettingsComponent
+    ]
 })
 export class AppSettingsModule {}

@@ -31,7 +31,6 @@ import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
-import { HostSettingsModule } from './settings/host-settings.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
@@ -79,7 +78,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         DownloadZipDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        HostSettingsModule,
         UserInfoModule,
         MaterialModule,
         AppConfigModule,
@@ -121,7 +119,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
-        HostSettingsModule,
         UserInfoModule,
         MaterialModule,
         AppConfigModule,

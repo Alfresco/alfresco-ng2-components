@@ -17,10 +17,7 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { StorageService } from '../services/storage.service';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
+import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, OauthConfigModel } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
@@ -47,8 +44,8 @@ export class HostSettingsComponent implements OnInit {
     form: UntypedFormGroup;
 
     /** Emitted when the URL is invalid. */
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-native
     error = new EventEmitter<string>();
 
     /** Emitted when the user cancels the changes. */
@@ -56,8 +53,8 @@ export class HostSettingsComponent implements OnInit {
     cancel = new EventEmitter<boolean>();
 
     /** Emitted when the changes are successfully applied. */
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-native
     success = new EventEmitter<boolean>();
 
     constructor(private formBuilder: UntypedFormBuilder,

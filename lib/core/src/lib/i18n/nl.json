@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "Kan {{ name }} niet verwijderen",
       "ERROR_PLURAL": "Kan {{ number }} items niet verwijderen"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Verificatietype",
-      "BASIC": "Basisverificatie",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Impliciete stroom",
-      "PROVIDER": "Provider",
-      "REQUIRED": "Dit veld is vereist",
-      "CS_URL_ERROR": "Content Services-adres komt niet overeen met de URL-indeling",
-      "PS_URL_ERROR": "Process Services-adres komt niet overeen met de URL-indeling",
-      "TITLE": "Instellingen",
-      "CS-HOST": "Content Services-URL",
-      "BP-HOST": "Process Services-URL",
-      "BACK": "Terug",
-      "APPLY": "Toepassen",
-      "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL.",
-      "REDIRECT": "Omleidings-URI",
-      "REDIRECT_LOGOUT": "Omleidings-URI afmelden",
-      "SILENT": "Stille aanmelding",
-      "SCOPE": "Bereik",
-      "CLIENT": "Client-id",
-      "PUBLIC_URLS": "Openbare URL's voor stille aanmelding",
-      "SECRET": "Geheim"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Nieuwe toevoegen",

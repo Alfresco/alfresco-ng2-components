@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "تعذر حذف {{ name }}",
       "ERROR_PLURAL": "تعذر حذف {{ number }} من العناصر"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "نوع المصادقة",
-      "BASIC": "مصادقة أساسية",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "تدفق ضمني",
-      "PROVIDER": "موفر",
-      "REQUIRED": "هذا الحقل مطلوب",
-      "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",
-      "PS_URL_ERROR": "لا يتطابق عنوان Process Services مع تنسيق URL",
-      "TITLE": "الإعدادات",
-      "CS-HOST": "عنوان URL لـ Content Services",
-      "BP-HOST": "عنوان URL لـ Process Services",
-      "BACK": "عودة",
-      "APPLY": "تطبيق",
-      "NOT_VALID": "لم يتم التعرف على http(s)://host|ip:port(/path)، جرّب عنوان URL مختلفًا.",
-      "REDIRECT": "إعادة توجيه URI",
-      "REDIRECT_LOGOUT": "إعادة توجيه خروج URI",
-      "SILENT": "دخول صامت",
-      "SCOPE": "نطاق",
-      "CLIENT": "معرف العميل",
-      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت",
-      "SECRET": "سر"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "إضافة جديد",

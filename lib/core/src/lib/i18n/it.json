@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "Impossibile eliminare {{ name }}",
       "ERROR_PLURAL": "Impossibile eliminare {{ number }} elementi"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Tipo di autenticazione",
-      "BASIC": "Autenticazione di base",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Flusso implicito",
-      "PROVIDER": "Fornitore",
-      "REQUIRED": "Questo campo è obbligatorio",
-      "CS_URL_ERROR": "L'indirizzo Content Services non corrisponde al formato dell'URL",
-      "PS_URL_ERROR": "L'indirizzo Process Services non corrisponde al formato dell'URL",
-      "TITLE": "Impostazioni",
-      "CS-HOST": "URL Content Services",
-      "BP-HOST": "URL Process Services",
-      "BACK": "Indietro",
-      "APPLY": "Applica",
-      "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso.",
-      "REDIRECT": "Reindirizza URI",
-      "REDIRECT_LOGOUT": "Reindirizza logout URI",
-      "SILENT": "Login invisibile",
-      "SCOPE": "Ambito",
-      "CLIENT": "ID client",
-      "PUBLIC_URLS": "URL pubblici per login invisibile",
-      "SECRET": "Segreto"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Aggiungi nuova",

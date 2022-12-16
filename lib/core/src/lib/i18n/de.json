@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "{{ name }} konnte nicht gelöscht werden",
       "ERROR_PLURAL": "{{ number }} Elemente konnten nicht gelöscht werden"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Authentifizierungstyp",
-      "BASIC": "Basisauthentifizierung",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Impliziter Fluss",
-      "PROVIDER": "Provider",
-      "REQUIRED": "Dieses Feld ist erforderlich",
-      "CS_URL_ERROR": "Content Services-Adresse nicht im richtigen URL-Format",
-      "PS_URL_ERROR": "Process Services-Adresse nicht im richtigen URL-Format",
-      "TITLE": "Einstellungen",
-      "CS-HOST": "Content Services-URL",
-      "BP-HOST": "URL für Process Services",
-      "BACK": "Zurück",
-      "APPLY": "Anwenden",
-      "NOT_VALID": "http(s)://host|ip:port(/path) nicht erkannt. Probieren Sie es mit einer anderen URL.",
-      "REDIRECT": "Umleitungs-URI",
-      "REDIRECT_LOGOUT": "Umleitungs-URI zum Abmelden",
-      "SILENT": "Automatische Anmeldung",
-      "SCOPE": "Bereich",
-      "CLIENT": "Client-ID",
-      "PUBLIC_URLS": "Öffentliche URLs für automatische Anmeldung",
-      "SECRET": "Geheimnis"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Neue hinzufügen",
