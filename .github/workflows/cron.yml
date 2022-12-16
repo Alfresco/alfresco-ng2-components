@@ -50,14 +50,17 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
+  # run-e2e:
+  #   uses: ./.github/workflows/pull-request.yml
+  #   secrets: inherit
   run-e2e:
-    uses: ./.github/workflows/pull-request.yml
+    uses: ./.github/workflows/release.yml
     secrets: inherit
 
-  npm-check-bundle:
-    timeout-minutes: 10
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - uses: ./.github/actions/npm-check-bundle
+  # npm-check-bundle:
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - uses: ./.github/actions/npm-check-bundle
