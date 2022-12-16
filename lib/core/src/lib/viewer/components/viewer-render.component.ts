@@ -165,7 +165,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
         this.internalViewerType = this.viewerType === 'unknown' ? this.viewUtilService.getViewerType(this.extension, this.mimeType) : this.viewerType;
 
-        this.extensionChange.emit(this.internalViewerType);
+        this.extensionChange.emit(this.extension);
         this.scrollTop();
     }
 
