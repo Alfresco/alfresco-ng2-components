@@ -16,7 +16,6 @@
  */
 
 import { CardViewItemValidator } from './card-view-item-validator.interface';
-import { Constraint } from '@alfresco/js-api';
 
 export interface CardViewItemProperties {
     label: string;
@@ -29,6 +28,12 @@ export interface CardViewItemProperties {
     hint?: string;
     validators?: CardViewItemValidator[];
     data?: any;
-    constraints?: Constraint[];
+    constraints?: Array<{
+        id: string;
+        type?: string;
+        title?: string;
+        description?: string;
+        parameters?: { [key: string]: any };
+    }>;
     multivalued?: boolean;
 }
