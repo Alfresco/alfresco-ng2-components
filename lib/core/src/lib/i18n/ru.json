@@ -169,29 +169,6 @@
       "ERROR_SINGULAR": "Не удалось удалить {{ name }}",
       "ERROR_PLURAL": "Не удалось удалить элементов: {{ number }}"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Тип авторизации",
-      "BASIC": "Базовая авторизация",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Неявный поток",
-      "PROVIDER": "Поставщик",
-      "REQUIRED": "Поле обязательно для заполнения",
-      "CS_URL_ERROR": "Адрес Content Services не соответствует формату URL",
-      "PS_URL_ERROR": "Адрес Process Services не соответствует формату URL",
-      "TITLE": "Параметры",
-      "CS-HOST": "URL-адрес Content Services",
-      "BP-HOST": "URL-адрес Process Services",
-      "BACK": "Назад",
-      "APPLY": "Применить",
-      "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес.",
-      "REDIRECT": "URI перенаправления",
-      "REDIRECT_LOGOUT": "Выход URI перенаправления",
-      "SILENT": "Автоматический вход",
-      "SCOPE": "Область применения",
-      "CLIENT": "Идентификатор клиента",
-      "PUBLIC_URLS": "Общедоступные URL-адреса с автоматическим входом",
-      "SECRET": "Секретный"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Добавить",
