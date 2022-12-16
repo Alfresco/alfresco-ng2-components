@@ -88,7 +88,7 @@ class DummyDialogComponent {
 @Component({
     selector: 'adf-viewer-container-open-with',
     template: `
-        <adf-viewer>
+        <adf-alfresco-viewer>
             <adf-viewer-open-with>
                 <button mat-menu-item>
                     <mat-icon>dialpad</mat-icon>
@@ -103,7 +103,7 @@ class DummyDialogComponent {
                     <span>Option 3</span>
                 </button>
             </adf-viewer-open-with>
-        </adf-viewer>
+        </adf-alfresco-viewer>
     `
 })
 class ViewerWithCustomOpenWithComponent {
@@ -112,7 +112,7 @@ class ViewerWithCustomOpenWithComponent {
 @Component({
     selector: 'adf-viewer-container-more-actions',
     template: `
-        <adf-viewer>
+        <adf-alfresco-viewer>
             <adf-viewer-more-actions>
                 <button mat-menu-item>
                     <mat-icon>dialpad</mat-icon>
@@ -127,7 +127,7 @@ class ViewerWithCustomOpenWithComponent {
                     <span>Action Three</span>
                 </button>
             </adf-viewer-more-actions>
-        </adf-viewer>
+        </adf-alfresco-viewer>
     `
 })
 class ViewerWithCustomMoreActionsComponent {
@@ -783,7 +783,7 @@ describe('AlfrescoViewerComponent', () => {
                     const dialogRef = dialog.open(DummyDialogComponent);
 
                     dialogRef.afterClosed().subscribe(() => {
-                        document.body.dispatchEvent(event);
+                        EventMock.keyDown(27);
                         fixture.detectChanges();
                         expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
                         done();
