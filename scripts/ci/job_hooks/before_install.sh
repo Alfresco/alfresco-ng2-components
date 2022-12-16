@@ -95,4 +95,5 @@ echo "========== Build vars=========="
 echo "BUILD_OPTS=$BUILD_OPTS" | tee -a $ENV_FILE
 echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" | tee -a $ENV_FILE
 echo "HEAD_COMMIT_HASH=$HEAD_COMMIT_HASH" | tee -a $ENV_FILE
-echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" | tee -a $ENV_FILE
+COMMIT_MESSAGE=$(echo "COMMIT_MESSAGE='${COMMIT_MESSAGE}'" | tr '*' '-' | tr '\n' ' ')
+echo $COMMIT_MESSAGE | tee -a $ENV_FILE
