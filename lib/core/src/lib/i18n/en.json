@@ -318,7 +318,7 @@
       "LOGIN": "Sign in"
     }
   },
-  "PASSWORD": {
+  "RCOVER-PASSWORD": {
     "RECOVER-PASSWORD": "Recover Password",
     "MESSAGES": {
       "USERNAME-REQUIRED": "Required",
@@ -331,7 +331,8 @@
       "USERNAME": "Username"
     },
     "BUTTONS": {
-      "SEND-INSTRUCTIONS": "Send Instructions"
+      "SEND-INSTRUCTIONS": "Send Instructions",
+      "CLOSE": "Close"
     }
   },
   "ADF-DATATABLE": {
