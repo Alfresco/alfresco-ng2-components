@@ -117,6 +117,7 @@ jobs:
         run: |
           npm ci
           nx run cli:bundle
+          nx run testing:bundle
       - name: nx build
         run: |
           set -u;
