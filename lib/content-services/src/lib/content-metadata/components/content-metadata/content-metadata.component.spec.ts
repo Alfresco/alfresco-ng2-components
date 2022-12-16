@@ -22,19 +22,20 @@ import { MinimalNode, Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
-    CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService,
+    CardViewBaseItemModel, CardViewComponent, NodesApiService,
     LogService, setupTestBed
 } from '@alfresco/adf-core';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardViewContentUpdateService } from '../../../services/card-view-content-update.service';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let contentMetadataService: ContentMetadataService;
-    let updateService: CardViewUpdateService;
+    let updateService: CardViewContentUpdateService;
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
@@ -52,7 +53,7 @@ describe('ContentMetadataComponent', () => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         contentMetadataService = TestBed.inject(ContentMetadataService);
-        updateService = TestBed.inject(CardViewUpdateService);
+        updateService = TestBed.inject(CardViewContentUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
 
         node = {
