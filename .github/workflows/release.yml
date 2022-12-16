@@ -54,31 +54,7 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
 
 jobs:
-  build:
-    timeout-minutes: 20
-    if: github.event.pull_request.merged == true
-    name: "Build Components"
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup
-      - run: npm -v
-      - name: install
-        run: |
-          npm ci
-          nx run cli:bundle
-          nx run testing:bundle
-      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
-      - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
-      - run: nx build demoshell --configuration production
-      - uses: ./.github/actions/upload-build-artifacts
-
-  push-demoshell:
-    needs: [build]
+  release-demoshell:
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -102,8 +78,7 @@ jobs:
           echo $TAGS
           ./scripts/travis/release/release-demoshell-docker.sh
 
-  push-storybook:
-    needs: [build]
+  release-storybook:
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
@@ -127,7 +102,6 @@ jobs:
           ./scripts/travis/release/release-storybook-docker.sh
 
   npm-release:
-    needs: [build]
     timeout-minutes: 15
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
