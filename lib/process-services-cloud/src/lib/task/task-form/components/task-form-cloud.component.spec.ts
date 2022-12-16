@@ -76,7 +76,7 @@ describe('TaskFormCloudComponent', () => {
         identityUserService = TestBed.inject(IdentityUserService);
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
         taskCloudService = TestBed.inject(TaskCloudService);
-        getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(taskDetails));
+        getTaskSpy = spyOn(taskCloudService, 'getTaskDetailsInfo').and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
         spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
         spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));
 
@@ -120,7 +120,6 @@ describe('TaskFormCloudComponent', () => {
 
         beforeEach(() => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
-            getTaskSpy.and.returnValue(of(taskDetails));
             component.taskId = 'task1';
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
@@ -129,7 +128,7 @@ describe('TaskFormCloudComponent', () => {
         it('should not show release button for standalone task', () => {
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
             taskDetails.standalone = true;
-            getTaskSpy.and.returnValue(of(taskDetails));
+            getTaskSpy.and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
             fixture.detectChanges();
 
             const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
@@ -140,7 +139,7 @@ describe('TaskFormCloudComponent', () => {
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             taskDetails.standalone = true;
-            getTaskSpy.and.returnValue(of(taskDetails));
+            getTaskSpy.and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
             fixture.detectChanges();
 
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
@@ -317,7 +316,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
-            getTaskSpy.and.returnValue(of(taskDetails));
+            getTaskSpy.and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
 
             component.taskClaimed.subscribe(() => {
                 done();
@@ -356,7 +355,7 @@ describe('TaskFormCloudComponent', () => {
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             taskDetails.status = TASK_CREATED_STATE;
-            getTaskSpy.and.returnValue(of(taskDetails));
+            getTaskSpy.and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
 
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
@@ -373,7 +372,7 @@ describe('TaskFormCloudComponent', () => {
 
             taskDetails.status = TASK_ASSIGNED_STATE;
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
-            getTaskSpy.and.returnValue(of(taskDetails));
+            getTaskSpy.and.returnValue(of({details: taskDetails, candidateUsers: [], candidateGroups: []}));
 
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
@@ -430,7 +429,7 @@ describe('TaskFormCloudComponent', () => {
 
     it('should display default name as title on no form template if the task name empty/undefined', () => {
         const mockTaskDetailsWithOutName = { id: 'mock-task-id', name: null, formKey: null };
-        getTaskSpy.and.returnValue(of(mockTaskDetailsWithOutName));
+        getTaskSpy.and.returnValue(of({details: mockTaskDetailsWithOutName, candidateUsers: [], candidateGroups: []}));
         component.taskId = 'mock-task-id';
 
         fixture.detectChanges();
