@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ContentService } from '../../services/content.service';
+import { UrlService } from '../../services/url.service';
 import { ImgViewerComponent } from './img-viewer.component';
 import { setupTestBed, CoreTestingModule } from '../../testing';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -27,7 +27,7 @@ import { By } from '@angular/platform-browser';
 describe('Test Img viewer component ', () => {
 
     let component: ImgViewerComponent;
-    let service: ContentService;
+    let urlService: UrlService;
     let fixture: ComponentFixture<ImgViewerComponent>;
     let element: HTMLElement;
 
@@ -46,7 +46,7 @@ describe('Test Img viewer component ', () => {
     describe('Zoom customization', () => {
 
         beforeEach(() => {
-            service = TestBed.inject(ContentService);
+            urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -86,7 +86,7 @@ describe('Test Img viewer component ', () => {
     describe('Url', () => {
 
         beforeEach(() => {
-            service = TestBed.inject(ContentService);
+            urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -115,7 +115,7 @@ describe('Test Img viewer component ', () => {
     describe('Blob', () => {
 
         beforeEach(() => {
-            service = TestBed.inject(ContentService);
+            urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -146,7 +146,7 @@ describe('Test Img viewer component ', () => {
         it('If blob is passed should not thrown an error', () => {
             const blob = createFakeBlob();
 
-            spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
+            spyOn(urlService, 'createTrustedUrl').and.returnValue('fake-blob-url');
             const change = new SimpleChange(null, blob, true);
             expect(() => {
                 component.ngOnChanges({ blobFile: change });
