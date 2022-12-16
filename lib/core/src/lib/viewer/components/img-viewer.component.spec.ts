@@ -68,7 +68,7 @@ describe('Test Img viewer component ', () => {
 
             beforeEach(() => {
                 const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-                appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
+                appConfig.config['adf-viewer-render.image-viewer-scaling'] = 70;
                 component.initializeScaling();
             });
 
