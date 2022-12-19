@@ -410,46 +410,34 @@ describe('ViewerComponent', () => {
 
         describe('display name property override by urlFile', () => {
 
-            it('should displayName override the default name if is present and urlFile is set', (done) => {
+            it('should fileName override the default name if is present and urlFile is set', () => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.fileName = 'test name';
                 fixture.detectChanges();
                 component.ngOnChanges();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
-                    done();
-                });
+                expect(component.internalFileName).toEqual('test name');
             });
 
-            it('should use the urlFile name if displayName is NOT set and urlFile is set', (done) => {
+            it('should use the urlFile name if fileName is NOT set and urlFile is set', () => {
                 component.urlFile = 'fake-test-file.pdf';
-                component.fileName = null;
+                component.fileName = '';
                 fixture.detectChanges();
                 component.ngOnChanges();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
-                    done();
-                });
+                expect(component.internalFileName).toEqual('fake-test-file.pdf');
             });
         });
 
         describe('display name property override by blobFile', () => {
 
-            it('should displayName override the name if is present and blobFile is set', (done) => {
+            it('should fileName override the name if is present and blobFile is set', () => {
                 component.fileName = 'blob file display name';
                 component.blobFile = new Blob(['This is my blob content'], {type: 'text/plain'});
                 fixture.detectChanges();
                 component.ngOnChanges();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
-                    done();
-                });
+                expect(component.internalFileName).toEqual('blob file display name');
             });
 
             it('should show uknownn name if displayName is NOT set and blobFile is set', (done) => {
