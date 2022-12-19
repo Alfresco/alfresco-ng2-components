@@ -440,18 +440,6 @@ describe('ViewerComponent', () => {
                 expect(component.internalFileName).toEqual('blob file display name');
             });
 
-            it('should show uknownn name if displayName is NOT set and blobFile is set', (done) => {
-                component.fileName = null;
-                component.blobFile = new Blob(['This is my blob content'], {type: 'text/plain'});
-                fixture.detectChanges();
-                component.ngOnChanges();
-
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
-                    done();
-                });
-            });
         });
     });
 });
