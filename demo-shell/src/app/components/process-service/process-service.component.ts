@@ -54,7 +54,8 @@ import {
     TaskListComponent,
     ProcessFormRenderingService,
     APP_LIST_LAYOUT_LIST,
-    ValidateDynamicTableRowEvent, DynamicTableRow
+    ValidateDynamicTableRowEvent,
+    DynamicTableRow
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
 import { CustomStencil01 } from './custom-editor/custom-editor.component';

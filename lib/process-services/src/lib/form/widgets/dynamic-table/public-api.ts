@@ -24,6 +24,10 @@ export * from './editors/date/date.editor';
 export * from './editors/datetime/datetime.editor';
 export * from './editors/row-editor/row.editor';
 export * from './editors/text/text.editor';
+
+export * from './editors/models/dynamic-table-row.model';
+
 export * from './dynamic-table.widget';
+
 
 export * from './dynamic-table.module';
