@@ -22,6 +22,8 @@ import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
+import { ContentPipeModule } from '../pipes/content-pipe.module';
+import { SearchModule } from './../search/search.module';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';
@@ -33,12 +35,12 @@ import { LibraryRoleColumnComponent } from './components/library-role-column/lib
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
 import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
-import { SearchModule } from './../search/search.module';
 
 @NgModule({
     imports: [
         CoreModule,
         CommonModule,
+        ContentPipeModule,
         FlexLayoutModule,
         MaterialModule,
         UploadModule,

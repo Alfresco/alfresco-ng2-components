@@ -23,7 +23,6 @@ export * from './full-name.pipe';
 export * from './localized-date.pipe';
 export * from './mime-type-icon.pipe';
 export * from './multi-value.pipe';
-export * from './node-name-tooltip.pipe';
 export * from './text-highlight.pipe';
 export * from './time-ago.pipe';
 export * from './user-initial.pipe';
