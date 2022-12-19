@@ -17,7 +17,6 @@
 
 import {
     Component,
-    ComponentFactoryResolver,
     Input,
     OnChanges,
     SimpleChange,
@@ -67,8 +66,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     public ngOnInit;
     public ngDoCheck;
 
-    constructor(private cardItemTypeService: CardItemTypeService,
-                private resolver: ComponentFactoryResolver) {
+    constructor(private cardItemTypeService: CardItemTypeService) {
         const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',
@@ -102,8 +100,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     private loadComponent() {
         const factoryClass = this.cardItemTypeService.resolveComponentType(this.property);
 
-        const factory = this.resolver.resolveComponentFactory(factoryClass);
-        this.componentReference = this.content.viewContainerRef.createComponent(factory);
+        this.componentReference = this.content.viewContainerRef.createComponent(factoryClass);
 
         this.componentReference.instance.editable = this.editable;
         this.componentReference.instance.property = this.property;

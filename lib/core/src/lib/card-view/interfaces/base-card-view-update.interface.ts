@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-export * from './node-allowable-operation-subject.interface';
-export * from './library-entity.interface';
-export * from './restore-message-model.interface';
-export * from './library-membership-error-event.interface';
-export * from './library-membership-toggle-event.interface';
-export * from './base-card-view-content-update.interface';
+import { Subject } from 'rxjs';
+import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
+import { UpdateNotification } from './update-notification.interface';
+import { ClickNotification } from './click-notification.interface';
 
+export interface BaseCardViewUpdate {
+    itemUpdated$: Subject<UpdateNotification>;
+    itemClicked$: Subject<ClickNotification>;
+    updateItem$: Subject<CardViewBaseItemModel>;
+
+    update(property: CardViewBaseItemModel, newValue: any);
+    clicked(property: CardViewBaseItemModel);
+    updateElement(notification: CardViewBaseItemModel);
+}

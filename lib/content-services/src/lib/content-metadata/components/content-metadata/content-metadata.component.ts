@@ -22,7 +22,6 @@ import {
     CardViewItem,
     NodesApiService,
     LogService,
-    CardViewUpdateService,
     AlfrescoApiService,
     TranslationService,
     AppConfigService,
@@ -32,6 +31,7 @@ import {
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
+import { CardViewContentUpdateService } from '../../../services/card-view-content-update.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -97,7 +97,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(
         private contentMetadataService: ContentMetadataService,
-        private cardViewUpdateService: CardViewUpdateService,
+        private cardViewContentUpdateService: CardViewContentUpdateService,
         private nodesApiService: NodesApiService,
         private logService: LogService,
         private alfrescoApiService: AlfrescoApiService,
@@ -110,7 +110,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$
+        this.cardViewContentUpdateService.itemUpdated$
             .pipe(
                 debounceTime(500),
                 takeUntil(this.onDestroy$))
@@ -122,7 +122,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 }
             );
 
-        this.cardViewUpdateService.updatedAspect$.pipe(
+        this.cardViewContentUpdateService.updatedAspect$.pipe(
             debounceTime(500),
             takeUntil(this.onDestroy$))
             .subscribe((node) => this.loadProperties(node));
@@ -201,14 +201,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private updateNode() {
         this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
             catchError((err) => {
-                this.cardViewUpdateService.updateElement(this.targetProperty);
+                this.cardViewContentUpdateService.updateElement(this.targetProperty);
                 this.handleUpdateError(err);
                 return of(null);
             }))
             .subscribe((updatedNode) => {
                 if (updatedNode) {
                     if (this.hasContentTypeChanged(this.changedProperties)) {
-                        this.cardViewUpdateService.updateNodeAspect(this.node);
+                        this.cardViewContentUpdateService.updateNodeAspect(this.node);
                     }
                     this.revertChanges();
                     Object.assign(this.node, updatedNode);
