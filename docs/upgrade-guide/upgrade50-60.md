@@ -126,7 +126,7 @@ v6.0.0 and after:
 
 
 ### Properties and methods
-
+- `<adf-comments>`: The `taskId` input has now been renamed as `id`
 
 ### Component selectors
 
