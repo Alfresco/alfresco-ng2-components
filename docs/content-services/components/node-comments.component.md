@@ -26,10 +26,4 @@ Displays comments from users involved in a specified content and allows an invol
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | The numeric ID of the node. |
-| readOnly | `boolean` | false | Are the comments read only? |
-
-### Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while displaying/adding a comment. |
+| readOnly | `boolean` |  | Are the comments read only? |

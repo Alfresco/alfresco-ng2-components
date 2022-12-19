@@ -4,7 +4,7 @@ Added: v5.1.0
 Status: Active
 ---
 
-# [Task Comments Component](../../../lib/process-services/src/lib/task-comments/task-comments.component.ts "Defined in task-comments.component.md")
+# [Task Comments Component](../../../lib/process-services/src/lib/task-comments/task-comments.component.ts "Defined in task-comments.component.ts")
 
 Displays comments from users involved in a specified task and allows an involved user to add a comment to a task.
 
@@ -26,10 +26,4 @@ Displays comments from users involved in a specified task and allows an involved
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | taskId | `string` |  | The numeric ID of the task. |
-| readOnly | `boolean` | false | Are the comments read only? |
-
-### Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while displaying/adding a comment. |
+| readOnly | `boolean` |  | Are the comments read only? |
