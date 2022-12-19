@@ -93,6 +93,32 @@ library. You should modify your code to import these classes from
 -   [`NodeRestoreDirective`](lib/content-services/src/lib/directives/node-restore.directive.ts)
 
 
+### NodeNameTooltipPipe
+
+NodeNameTooltipPipe has been moved in the ```@alfresco/adf-content-services``` in ```ContentPipeModule```
+
+v6.0.0 and before:
+
+```
+@NgModule({
+    imports: [
+    ````
+    PipeModule
+    ````    
+     ]})
+```
+
+v6.0.0 and after:
+
+```
+@NgModule({
+    imports: [
+    ````
+    ContentPipeModule
+    ````    
+     ]})
+```
+
 ## Renamed items
 
 

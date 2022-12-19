@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Node Name Tooltip pipe](lib/core/src/lib/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
+# [Node Name Tooltip pipe](lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
 
 Formats the tooltip for a [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md).
 
