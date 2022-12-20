@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
 import {
     TaskFormService
 } from '@alfresco/adf-process-services';
-import { AlfrescoApiService, LogService } from "@alfresco/adf-core";
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 
 @Injectable()
 export class FakeTaskFormService extends TaskFormService {

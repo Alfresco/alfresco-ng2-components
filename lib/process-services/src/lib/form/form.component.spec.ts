@@ -41,7 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from './services/task-form.service';
 import { TaskService } from './services/task.service';
 import { EditorService } from './services/editor.service';
-import { ModelService } from "./services/model.service";
+import { ModelService } from './services/model.service';
 
 describe('FormComponent', () => {
 

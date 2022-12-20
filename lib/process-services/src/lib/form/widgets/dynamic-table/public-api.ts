@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-
-
 export * from './editors/dropdown/dropdown.editor';
 export * from './editors/amount/amount.editor';
 export * from './editors/boolean/boolean.editor';

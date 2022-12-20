@@ -30,7 +30,7 @@ import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
-import { DynamicTableModule } from "./widgets/dynamic-table/dynamic-table.module";
+import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module';
 
 @NgModule({
     imports: [
