@@ -131,7 +131,7 @@ runs:
         echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
 
     - name: check e2e-test-id
-      if: inputs.e2e-test-id == 'content-services'
+      if: ${{ inputs.e2e-test-id == 'content-services' }}
       run: |
         echo "HEADLESS=browser" >> $GITHUB_ENV
 
