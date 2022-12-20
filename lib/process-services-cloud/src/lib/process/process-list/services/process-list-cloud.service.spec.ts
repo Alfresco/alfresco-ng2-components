@@ -107,15 +107,14 @@ describe('ProcessListCloudService', () => {
         );
     });
 
-    it('should make post request if admin', (done) => {
+    it('should make post request if admin', async () => {
         service.isAdmin = true;
         const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
         spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallOperation);
-        service.getProcessByRequest(processRequest).subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res).toBe('POST');
-            done();
-        });
+        const response = await service.getProcessByRequest(processRequest).toPromise();
+
+        expect(response).toBeDefined();
+        expect(response).not.toBeNull();
+        expect(response).toBe('POST');
     });
 });
