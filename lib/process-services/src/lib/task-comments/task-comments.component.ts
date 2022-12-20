@@ -15,9 +15,17 @@
  * limitations under the License.
  */
 
-export * from './comment-list.component';
-export * from './comments.component';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
-export * from './interfaces/index';
+@Component({
+    selector: 'adf-task-comments',
+    templateUrl: './task-comments.component.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class TaskCommentsComponent {
+    @Input()
+    taskId: string;
 
-export * from './comments.module';
+    @Input()
+    readOnly: boolean;
+}

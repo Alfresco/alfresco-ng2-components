@@ -17,100 +17,74 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
-import { CommentProcessService } from '../services/comment-process.service';
 import { CommentsComponent } from './comments.component';
-import { CommentContentService } from '../services/comment-content.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommentModel } from '../models/comment.model';
+import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
+import { ADF_COMMENTS_SERVICE, CommentsService } from './interfaces';
+import { of, throwError } from 'rxjs';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
     let fixture: ComponentFixture<CommentsComponent>;
-    let getProcessCommentsSpy: jasmine.Spy;
-    let addProcessCommentSpy: jasmine.Spy;
-    let addContentCommentSpy: jasmine.Spy;
-    let getContentCommentsSpy: jasmine.Spy;
-    let commentProcessService: CommentProcessService;
-    let commentContentService: CommentContentService;
+    let getCommentSpy: jasmine.Spy;
+    let addCommentSpy: jasmine.Spy;
+    let commentsService: CommentsService;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
         ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [
+            {
+                provide: ADF_COMMENTS_SERVICE,
+                useClass: CommentsServiceMock
+            }
+        ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
 
-        commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
-        commentContentService = fixture.debugElement.injector.get(CommentContentService);
+        commentsService = fixture.componentInstance['commentsService'];
 
-        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(of(new CommentModel({
-            id: 123,
-            message: 'Test Comment',
-            createdBy: {id: '999'}
-        })));
-
-        getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(of([
-            new CommentModel({message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
-            new CommentModel({message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
-            new CommentModel({message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}})
-        ]));
-
-        getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
-            new CommentModel({message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
-            new CommentModel({message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
-            new CommentModel({message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}})
-        ]));
-        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(of(new CommentModel({
-            id: 123,
-            message: 'Test Comment',
-            createdBy: {id: '999'}
-        })));
+        getCommentSpy = spyOn(commentsService, 'get').and.returnValue(commentsResponseMock.getComments());
+        addCommentSpy = spyOn(commentsService, 'add').and.returnValue(commentsResponseMock.addComment());
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should load comments when taskId specified', () => {
+    it('should load comments when id specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({id: change});
 
-        expect(getProcessCommentsSpy).toHaveBeenCalled();
-    });
-
-    it('should load comments when nodeId specified', () => {
-        const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({nodeId: change});
-
-        expect(getContentCommentsSpy).toHaveBeenCalled();
+        expect(getCommentSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading comments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getProcessCommentsSpy.and.returnValue(throwError({}));
+        getCommentSpy.and.returnValue(throwError({}));
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({id: change});
 
         expect(emitSpy).toHaveBeenCalled();
     });
 
-    it('should not load comments when no taskId is specified', () => {
+    it('should not load comments when no id is specified', () => {
         fixture.detectChanges();
-        expect(getProcessCommentsSpy).not.toHaveBeenCalled();
+        expect(getCommentSpy).not.toHaveBeenCalled();
     });
 
-    it('should display comments when the task has comments', async () => {
+    it('should display comments when the entity has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({id: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -119,9 +93,9 @@ describe('CommentsComponent', () => {
         expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
     });
 
-    it('should display comments count when the task has comments', async () => {
+    it('should display comments count when the entity has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({id: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -130,9 +104,9 @@ describe('CommentsComponent', () => {
         expect(element.innerText).toBe('COMMENTS.HEADER');
     });
 
-    it('should not display comments when the task has no comments', async () => {
-        component.taskId = '123';
-        getProcessCommentsSpy.and.returnValue(of([]));
+    it('should not display comments when the entity has no comments', async () => {
+        component.id = '123';
+        getCommentSpy.and.returnValue(of([]));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -142,7 +116,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments input by default', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({id: change});
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -150,7 +124,7 @@ describe('CommentsComponent', () => {
         expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
     });
 
-    it('should not display comments input when the task is readonly', async () => {
+    it('should not display comments input when the entity is readonly', async () => {
         component.readOnly = true;
 
         fixture.detectChanges();
@@ -159,60 +133,35 @@ describe('CommentsComponent', () => {
         expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
     });
 
-    describe('change detection taskId', () => {
+    describe('Change detection id', () => {
         const change = new SimpleChange('123', '456', true);
         const nullChange = new SimpleChange('123', null, true);
 
         beforeEach(() => {
-            component.taskId = '123';
+            component.id = '123';
             fixture.detectChanges();
         });
 
-        it('should fetch new comments when taskId changed', () => {
-            component.ngOnChanges({taskId: change});
-            expect(getProcessCommentsSpy).toHaveBeenCalledWith('456');
+        it('should fetch new comments when id changed', () => {
+            component.ngOnChanges({id: change});
+            expect(getCommentSpy).toHaveBeenCalledWith('456');
         });
 
         it('should not fetch new comments when empty changeset made', () => {
             component.ngOnChanges({});
-            expect(getProcessCommentsSpy).not.toHaveBeenCalled();
+            expect(getCommentSpy).not.toHaveBeenCalled();
         });
 
-        it('should not fetch new comments when taskId changed to null', () => {
-            component.ngOnChanges({taskId: nullChange});
-            expect(getProcessCommentsSpy).not.toHaveBeenCalled();
-        });
-    });
-
-    describe('change detection node', () => {
-        const change = new SimpleChange('123', '456', true);
-        const nullChange = new SimpleChange('123', null, true);
-
-        beforeEach(() => {
-            component.nodeId = '123';
-            fixture.detectChanges();
-        });
-
-        it('should fetch new comments when nodeId changed', () => {
-            component.ngOnChanges({nodeId: change});
-            expect(getContentCommentsSpy).toHaveBeenCalledWith('456');
-        });
-
-        it('should not fetch new comments when empty changeset made', () => {
-            component.ngOnChanges({});
-            expect(getContentCommentsSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not fetch new comments when nodeId changed to null', () => {
-            component.ngOnChanges({nodeId: nullChange});
-            expect(getContentCommentsSpy).not.toHaveBeenCalled();
+        it('should not fetch new comments when id changed to null', () => {
+            component.ngOnChanges({id: nullChange});
+            expect(getCommentSpy).not.toHaveBeenCalled();
         });
     });
 
-    describe('Add comment task', () => {
+    describe('Add comment', () => {
 
         beforeEach(() => {
-            component.taskId = '123';
+            component.id = '123';
             fixture.detectChanges();
             fixture.whenStable();
         });
@@ -225,18 +174,18 @@ describe('CommentsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'action');
+            expect(addCommentSpy).toHaveBeenCalledWith('123', 'action');
         });
 
         it('should normalize comment when user input contains spaces sequence', async () => {
             const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'test    comment';
+            component.message = 'test comment';
             element.dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'test comment');
+            expect(addCommentSpy).toHaveBeenCalledWith('123', 'test comment');
         });
 
         it('should add break lines to comment when user input contains new line characters', async () => {
@@ -247,18 +196,21 @@ describe('CommentsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addProcessCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
+            expect(addCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
         });
 
         it('should call service to add a comment when add button is pressed', async () => {
             const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+
             component.message = 'Test Comment';
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(component.message));
+
             element.dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addProcessCommentSpy).toHaveBeenCalled();
+            expect(addCommentSpy).toHaveBeenCalled();
             const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toBe('Test Comment');
@@ -272,7 +224,7 @@ describe('CommentsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addProcessCommentSpy).not.toHaveBeenCalled();
+            expect(addCommentSpy).not.toHaveBeenCalled();
         });
 
         it('should clear comment when escape key is pressed', async () => {
@@ -289,97 +241,34 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             const emitSpy = spyOn(component.error, 'emit');
-            addProcessCommentSpy.and.returnValue(throwError({}));
+            addCommentSpy.and.returnValue(throwError({}));
             component.message = 'Test comment';
-            component.add();
+            component.addComment();
             expect(emitSpy).toHaveBeenCalled();
         });
-   });
 
-    describe('Add comment node', () => {
-
-        beforeEach(() => {
-            component.nodeId = '123';
-            fixture.detectChanges();
-            fixture.whenStable();
+        it('should set beingAdded variable back to false when an error occurs adding the comment', () => {
+            addCommentSpy.and.returnValue(throwError({}));
+            component.addComment();
+            expect(component.beingAdded).toBeFalse();
         });
 
-        it('should call service to add a comment when add button is pressed', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'Test Comment';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addContentCommentSpy).toHaveBeenCalled();
-            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
-            expect(elements.length).toBe(1);
-            expect(elements[0].innerText).toBe('Test Comment');
+        it('should set beingAdded variable back to false on successful response when adding the comment', () => {
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment());
+            component.addComment();
+            expect(component.beingAdded).toBeFalse();
         });
 
-        it('should sanitize comment when user input contains html elements', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = '<div class="text-class"><button onclick=""><h1>action</h1></button></div>';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'action');
+        it('should not add comment if id is not provided', () => {
+            component.id = '';
+            component.addComment();
+            expect(addCommentSpy).not.toHaveBeenCalled();
         });
 
-        it('should normalize comment when user input contains spaces sequence', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'test    comment';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'test comment');
-        });
-
-        it('should add break lines to comment when user input contains new line characters', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'these\nare\nparagraphs\n';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addContentCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
-        });
-
-        it('should not call service to add a comment when comment is empty', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
+        it('should not add comment if message is empty', () => {
             component.message = '';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addContentCommentSpy).not.toHaveBeenCalled();
-        });
-
-        it('should clear comment when escape key is pressed', async () => {
-            const event = new KeyboardEvent('keydown', {key: 'Escape'});
-            let element = fixture.nativeElement.querySelector('#comment-input');
-            element.dispatchEvent(event);
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            element = fixture.nativeElement.querySelector('#comment-input');
-            expect(element.value).toBe('');
-        });
-
-        it('should emit an error when an error occurs adding the comment', () => {
-            const emitSpy = spyOn(component.error, 'emit');
-            addContentCommentSpy.and.returnValue(throwError({}));
-            component.message = 'Test comment';
-            component.add();
-            expect(emitSpy).toHaveBeenCalled();
+            component.addComment();
+            expect(addCommentSpy).not.toHaveBeenCalled();
         });
    });
 });

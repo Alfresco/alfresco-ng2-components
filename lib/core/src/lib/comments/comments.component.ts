@@ -15,12 +15,21 @@
  * limitations under the License.
  */
 
-import { CommentProcessService } from '../services/comment-process.service';
-import { CommentContentService } from '../services/comment-content.service';
 import { CommentModel } from '../models/comment.model';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { share } from 'rxjs/operators';
+import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
+import { CommentsService } from './interfaces/comments-service.interface';
 
 @Component({
     selector: 'adf-comments',
@@ -32,11 +41,7 @@ export class CommentsComponent implements OnChanges {
 
     /** The numeric ID of the task. */
     @Input()
-    taskId: string;
-
-    /** The numeric ID of the node. */
-    @Input()
-    nodeId: string;
+    id: string;
 
     /** Are the comments read only? */
     @Input()
@@ -46,141 +51,127 @@ export class CommentsComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    comments: CommentModel [] = [];
-
-    private commentObserver: Observer<CommentModel>;
-    comment$: Observable<CommentModel>;
+    comments: CommentModel[] = [];
 
     message: string;
 
     beingAdded: boolean = false;
 
-    constructor(private commentProcessService: CommentProcessService,
-                private commentContentService: CommentContentService) {
+    private commentObserver: Observer<CommentModel>;
+    comment$: Observable<CommentModel>;
+
+    constructor(@Inject(ADF_COMMENTS_SERVICE) private commentsService: CommentsService) {
         this.comment$ = new Observable<CommentModel>((observer) => this.commentObserver = observer)
-            .pipe(share());
+            .pipe(
+                share()
+            );
+
         this.comment$.subscribe((comment: CommentModel) => {
             this.comments.push(comment);
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        this.taskId = null;
-        this.nodeId = null;
+    ngOnChanges(changes: SimpleChanges): void {
+        this.id = null;
 
-        this.taskId = changes['taskId'] ? changes['taskId'].currentValue : null;
-        this.nodeId = changes['nodeId'] ? changes['nodeId'].currentValue : null;
+        this.id = changes['id'] ? changes['id'].currentValue : null;
 
-        if (this.taskId || this.nodeId) {
-            this.getComments();
+        if (this.id) {
+            this.loadComments();
         } else {
             this.resetComments();
         }
     }
 
-    private getComments(): void {
+    loadComments() {
         this.resetComments();
-        if (this.isATask()) {
-            this.commentProcessService.getTaskComments(this.taskId).subscribe(
-                (comments: CommentModel[]) => {
-                    if (comments && comments instanceof Array) {
-                        comments = comments.sort((comment1: CommentModel, comment2: CommentModel) => {
-                            const date1 = new Date(comment1.created);
-                            const date2 = new Date(comment2.created);
-                            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                        });
-                        comments.forEach((currentComment) => {
-                            this.commentObserver.next(currentComment);
-                        });
-                    }
 
+        if (!this.hasId()) {
+            return;
+        }
+
+        this.commentsService.get(this.id).subscribe(
+            (comments: CommentModel[]) => {
+                if (!this.isArrayInstance(comments)) {
+                    return;
+                }
+
+                comments = this.sortedComments(comments);
+                this.addCommentsToObserver(comments);
+
+            },
+            (err) => {
+                this.error.emit(err);
+            }
+        );
+    }
+
+    addComment() {
+        if (!this.canAddComment()) {
+            return;
+        }
+
+        const comment: string = this.sanitize(this.message);
+
+        this.beingAdded = true;
+
+        this.commentsService.add(this.id, comment)
+            .subscribe(
+                (res: CommentModel) => {
+                    this.addToComments(res);
+                    this.resetMessage();
                 },
                 (err) => {
                     this.error.emit(err);
-                }
-            );
-        }
-
-        if (this.isANode()) {
-            this.commentContentService.getNodeComments(this.nodeId).subscribe(
-                (comments: CommentModel[]) => {
-                    if (comments && comments instanceof Array) {
-
-                        comments = comments.sort((comment1: CommentModel, comment2: CommentModel) => {
-                            const date1 = new Date(comment1.created);
-                            const date2 = new Date(comment2.created);
-                            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                        });
-                        comments.forEach((comment) => {
-                            this.commentObserver.next(comment);
-                        });
-                    }
                 },
-                (err) => {
-                    this.error.emit(err);
+                () => {
+                    this.beingAdded = false;
                 }
             );
-        }
+    }
+
+    clearMessage(event: Event): void {
+        event.stopPropagation();
+        this.resetMessage();
+    }
+
+    private addToComments(comment: CommentModel): void {
+        this.comments.unshift(comment);
+    }
+
+    private resetMessage(): void {
+        this.message = '';
+    }
+
+    private canAddComment(): boolean {
+        return this.hasId() && this.message && this.message.trim() && !this.beingAdded;
+    }
+
+    private hasId(): boolean {
+        return !!this.id;
+    }
+
+    private isArrayInstance(entity: any): boolean {
+        return entity && entity instanceof Array;
+    }
+
+    private sortedComments(comments: CommentModel[]): CommentModel[] {
+        return comments.sort((comment1: CommentModel, comment2: CommentModel) => {
+            const date1 = new Date(comment1.created);
+            const date2 = new Date(comment2.created);
+
+            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+        });
+    }
+
+    private addCommentsToObserver(comments: CommentModel[]): void {
+        comments.forEach((currentComment: CommentModel) => {
+            this.commentObserver.next(currentComment);
+        });
     }
 
     private resetComments(): void {
         this.comments = [];
-    }
-
-    add(): void {
-        if (this.message && this.message.trim() && !this.beingAdded) {
-            const comment = this.sanitize(this.message);
-
-            this.beingAdded = true;
-            if (this.isATask()) {
-                this.commentProcessService.addTaskComment(this.taskId, comment)
-                    .subscribe(
-                        (res: CommentModel) => {
-                            this.comments.unshift(res);
-                            this.message = '';
-                            this.beingAdded = false;
-
-                        },
-                        (err) => {
-                            this.error.emit(err);
-                            this.beingAdded = false;
-                        }
-                    );
-            }
-
-            if (this.isANode()) {
-                this.commentContentService.addNodeComment(this.nodeId, comment)
-                    .subscribe(
-                        (res: CommentModel) => {
-                            this.comments.unshift(res);
-                            this.message = '';
-                            this.beingAdded = false;
-
-                        },
-                        (err) => {
-                            this.error.emit(err);
-                            this.beingAdded = false;
-                        }
-                    );
-            }
-        }
-    }
-
-    clear(event: Event): void {
-        event.stopPropagation();
-        this.message = '';
-    }
-
-    isReadOnly(): boolean {
-        return this.readOnly;
-    }
-
-    isATask(): boolean {
-        return !!this.taskId;
-    }
-
-    isANode(): boolean {
-        return !!this.nodeId;
     }
 
     private sanitize(input: string): string {

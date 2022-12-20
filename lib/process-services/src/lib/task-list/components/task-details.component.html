@@ -82,10 +82,12 @@
                 <adf-info-drawer-tab label="ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE">
                     <mat-card *ngIf="showComments">
                         <mat-card-content>
-                            <adf-comments #activitiComments
-                                          [readOnly]="isReadOnlyComment()"
-                                          [taskId]="taskDetails.id">
-                            </adf-comments>
+                            <adf-task-comments 
+                                #activitiComments
+                                [readOnly]="isReadOnlyComment()"
+                                [taskId]="taskDetails.id"
+                            >
+                            </adf-task-comments>
                         </mat-card-content>
                     </mat-card>
                 </adf-info-drawer-tab>

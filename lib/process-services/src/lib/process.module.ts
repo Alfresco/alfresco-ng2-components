@@ -31,6 +31,7 @@ import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module';
+import { TaskCommentsModule } from './task-comments/task-comments.module';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module'
         MaterialModule,
         ProcessListModule,
         TaskListModule,
+        TaskCommentsModule,
         AppsListModule,
         AttachmentModule,
         PeopleModule,
@@ -65,6 +67,7 @@ import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module'
         ReactiveFormsModule,
         ProcessListModule,
         TaskListModule,
+        TaskCommentsModule,
         AppsListModule,
         AttachmentModule,
         PeopleModule,

@@ -15,9 +15,17 @@
  * limitations under the License.
  */
 
-export * from './comment-list.component';
-export * from './comments.component';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
-export * from './interfaces/index';
+@Component({
+    selector: 'adf-node-comments',
+    templateUrl: './node-comments.component.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class NodeCommentsComponent {
+    @Input()
+    nodeId: string;
 
-export * from './comments.module';
+    @Input()
+    readOnly: boolean;
+}

@@ -4,9 +4,9 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Comments Component](lib/core/src/lib/comments/comments.component.ts "Defined in comments.component.ts")
+# [Comments Component](../../../lib/core/src/lib/comments/comments.component.ts "Defined in comments.component.ts")
 
-Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content.
+Displays comments from users involved in a specified environment and allows an involved user to add a comment to a environment.
 
 ![adf-comments](../../docassets/images/adf-comments.png)
 
@@ -14,16 +14,7 @@ Displays comments from users involved in a specified task or content and allows 
 
 ```html
 <adf-comments
-    [taskId]="YOUR_TASK_ID"
-    [readOnly]="YOUR_READ_ONLY_FLAG">
-</adf-comments>
-```
-
-## Basic Usage Content
-
-```html
-<adf-comments
-    [nodeId]="YOUR_NODE_ID"
+    [id]="YOUR_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
 </adf-comments>
 ```
@@ -34,9 +25,8 @@ Displays comments from users involved in a specified task or content and allows 
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | The numeric ID of the node. |
+| id | `string` |  | The numeric ID of the entity. |
 | readOnly | `boolean` | false | Are the comments read only? |
-| taskId | `string` |  | The numeric ID of the task. |
 
 ### Events
 

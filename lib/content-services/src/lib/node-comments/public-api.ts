@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-export * from './comment-list.component';
-export * from './comments.component';
+export * from './node-comments.component';
 
-export * from './interfaces/index';
+export * from './services/node-comments.service';
 
-export * from './comments.module';
+export * from './node-comments.module';
