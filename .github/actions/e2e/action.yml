@@ -149,9 +149,9 @@ runs:
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           echo "$E2E_TEST_ID"        
         if_false: inputs.e2e-test-id != 'content-services'
-        run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1        
+          run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1        
         if_true: inputs.e2e-test-id == 'content-services'
-        run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
+          run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
 
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
