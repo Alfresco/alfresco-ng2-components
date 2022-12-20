@@ -148,12 +148,10 @@ runs:
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           echo "$E2E_TEST_ID"
-
         - name: content-service false
           if: inputs.e2e-test-id != 'content-services'
           run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
-
-        - name: content-service true        
+        - name: content-service true
           if: inputs.e2e-test-id == 'content-services'
           run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
 
