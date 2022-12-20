@@ -29,7 +29,7 @@ export class ViewerPage {
     togglePage = new TogglePage();
 
     closeButton = $('button[data-automation-id="adf-toolbar-back"]');
-    fileName = $('#adf-viewer-display-name');
+    fileName = $('#adf-alfresco-viewer-display-name');
     infoButton = $('button[data-automation-id="adf-toolbar-sidebar"]');
     leftSideBarButton = $('button[data-automation-id="adf-toolbar-left-sidebar"]');
     previousPageButton = $('#viewer-previous-page-button');
