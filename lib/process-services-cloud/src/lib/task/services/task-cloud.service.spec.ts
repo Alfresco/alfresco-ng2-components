@@ -306,7 +306,7 @@ describe('Task Cloud Service', () => {
         });
     });
 
-    it('should throw error if appName is not defined when querying by id', (done) => {
+    it('should throw error if appName is not defined when querying by id with update playload', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
         const updatePayload = { description: 'New description' };

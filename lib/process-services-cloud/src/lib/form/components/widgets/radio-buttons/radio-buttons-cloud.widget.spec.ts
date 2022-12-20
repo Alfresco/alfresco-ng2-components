@@ -135,7 +135,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.isValid).toBe(true);
     });
 
-    it('should be able to set a Radio Button widget as required', () => {
+    it('should set Radio Button as valid when required and not empty', () => {
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',

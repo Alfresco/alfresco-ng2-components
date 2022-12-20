@@ -339,43 +339,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
+
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
-        });
-    });
-
-    describe('when is required', () => {
-
-        beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DROPDOWN,
-                required: true
-            });
-        });
-
-        it('should be able to display label with asterisk', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
-
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
-        });
-
-        it('should be invalid if no default option after interaction', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('.adf-invalid')).toBeFalsy();
-
-            const dropdownSelect = element.querySelector('.adf-select');
-            dropdownSelect.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
 

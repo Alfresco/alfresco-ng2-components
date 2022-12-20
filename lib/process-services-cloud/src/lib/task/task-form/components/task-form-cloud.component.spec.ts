@@ -338,7 +338,7 @@ describe('TaskFormCloudComponent', () => {
             component.onError({});
         });
 
-        it('should emit taskCompleted when task is completed', () => {
+        it('should reload when task is completed', () => {
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
 
@@ -350,7 +350,7 @@ describe('TaskFormCloudComponent', () => {
             expect(reloadSpy).toHaveBeenCalled();
         });
 
-        it('should emit taskClaimed when task is claimed', () => {
+        it('should reload when task is claimed', () => {
             spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();

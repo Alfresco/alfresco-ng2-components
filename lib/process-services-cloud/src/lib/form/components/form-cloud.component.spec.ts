@@ -17,56 +17,42 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { VersionCompatibilityService } from '@alfresco/adf-content-services';
 import {
-    Component,
-    DebugElement,
-    SimpleChange,
-    NgModule,
-    Injector,
-    ComponentFactoryResolver,
-    ViewChild
-} from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of, throwError } from 'rxjs';
-import {
-    CoreModule,
+    AlfrescoApiService, ContentLinkModel, CoreModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,
     FormOutcomeEvent,
-    FormOutcomeModel,
-    setupTestBed,
-    TRANSLATION_PROVIDER,
-    WidgetVisibilityService,
-    FormService,
-    UploadWidgetContentLinkModel,
-    ContentLinkModel,
-    AlfrescoApiService
+    FormOutcomeModel, FormRenderingService, FormService, setupTestBed,
+    TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
 } from '@alfresco/adf-core';
-import { VersionCompatibilityService } from '@alfresco/adf-content-services';
+import { Node } from '@alfresco/js-api';
+import { ESCAPE } from '@angular/cdk/keycodes';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import {
+    Component, ComponentFactoryResolver, Injector, SimpleChange
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Observable, of, throwError } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { FormCloudService } from '../services/form-cloud.service';
-import { FormCloudComponent } from './form-cloud.component';
+import { FormCloudModule } from '../form-cloud.module';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
     emptyFormRepresentationJSON,
-    fakeCloudForm,
-    multilingualForm,
-    fakeMetadataForm
+    fakeCloudForm, fakeMetadataForm, multilingualForm
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
-import { FormCloudModule } from '../form-cloud.module';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormCloudService } from '../services/form-cloud.service';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
-import { Node } from '@alfresco/js-api';
-import { ESCAPE } from '@angular/cdk/keycodes';
-import { MatDialog } from '@angular/material/dialog';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { FormCloudComponent } from './form-cloud.component';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -83,7 +69,6 @@ describe('FormCloudComponent', () => {
     let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
-    let translateService: TranslateService;
     let documentRootLoader: HarnessLoader;
 
     @Component({
@@ -93,13 +78,6 @@ describe('FormCloudComponent', () => {
         // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
-    }
-
-    @NgModule({
-        declarations: [CustomWidget],
-        exports: [CustomWidget]
-    })
-    class CustomUploadModule {
     }
 
     const buildWidget = (type: string, injector: Injector): any => {
@@ -115,25 +93,14 @@ describe('FormCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreModule.forRoot(),
-            FormCloudModule,
-            CustomUploadModule
+            ProcessServiceCloudTestingModule
         ],
         providers: [
             {
-                provide: TRANSLATION_PROVIDER,
-                multi: true,
-                useValue: {
-                    name: 'app',
-                    source: 'resources'
-                }
-            },
-            {
                 provide: VersionCompatibilityService,
                 useValue: {}
-            }
+            },
+            { provide: FormRenderingService, useClass: CloudFormRenderingService }
         ]
     });
 
@@ -144,7 +111,6 @@ describe('FormCloudComponent', () => {
         formRenderingService = TestBed.inject(CloudFormRenderingService);
         formCloudService = TestBed.inject(FormCloudService);
 
-        translateService = TestBed.inject(TranslateService);
         matDialog = TestBed.inject(MatDialog);
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
@@ -1100,121 +1066,77 @@ describe('FormCloudComponent', () => {
         });
     });
 
-    describe('Multilingual Form', () => {
-        it('should  translate form labels  on language change', async () => {
-            spyOn(formCloudService, 'getForm').and.returnValue(of(multilingualForm));
-            const formId = '123';
-            const appName = 'test-app';
-            formComponent.formId = formId;
-            formComponent.appVersion = 1;
-
-            formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
-            expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
-
-            fixture.detectChanges();
-            expect(getLabelValue('textField')).toEqual('Text field');
-            expect(getLabelValue('fildUploadField')).toEqual('File Upload');
-            expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
-            expect(getLabelValue('amountField')).toEqual('Amount field');
-
-            fixture.ngZone.run(() => translateService.use('fr'));
-
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            expect(getLabelValue('textField')).toEqual('Champ de texte');
-            expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
-            expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
-            expect(getLabelValue('amountField')).toEqual('Champ Montant');
-        });
-
-        const getLabelValue = (containerId: string): string => {
-            const label = fixture.debugElement.nativeElement.querySelector(`[id="field-${containerId}-container"] label`);
-            return label.innerText;
-        };
-    });
 });
 
-@Component({
-    selector: 'adf-cloud-form-with-custom-outcomes',
-    template: `
-        <adf-cloud-form #adfCloudForm>
-            <adf-cloud-form-custom-outcomes>
-                <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
-                    CUSTOM-BUTTON-1
-                </button>
-                <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
-                    CUSTOM-BUTTON-2
-                </button>
-            </adf-cloud-form-custom-outcomes>
-        </adf-cloud-form>`
-})
-
-class FormCloudWithCustomOutComesComponent {
-
-    @ViewChild('adfCloudForm', { static: true })
-    adfCloudForm: FormCloudComponent;
-
-    onCustomButtonOneClick() {
-    }
-
-    onCustomButtonTwoClick() {
-    }
-}
-
-describe('FormCloudWithCustomOutComesComponent', () => {
-
-    let fixture: ComponentFixture<FormCloudWithCustomOutComesComponent>;
-    let customComponent: FormCloudWithCustomOutComesComponent;
-    let debugElement: DebugElement;
+describe('Multilingual Form', () => {
+    let translateService: TranslateService;
+    let formCloudService: FormCloudService;
+    let formComponent: FormCloudComponent;
+    let fixture: ComponentFixture<FormCloudComponent>;
 
     setupTestBed({
         imports: [
+            NoopAnimationsModule,
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
+            CoreModule.forRoot()
         ],
-        declarations: [FormCloudWithCustomOutComesComponent]
+        providers: [
+            {
+                provide: TRANSLATION_PROVIDER,
+                multi: true,
+                useValue: {
+                    name: 'app',
+                    source: 'resources'
+                }
+            }
+        ]
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
-        customComponent = fixture.componentInstance;
-        debugElement = fixture.debugElement;
-        const formRepresentation = {
-            fields: [
-                { id: 'container1' }
-            ],
-            outcomes: [
-                { id: 'outcome-1', name: 'outcome 1' }
-            ]
-        };
+        translateService = TestBed.inject(TranslateService);
+        formCloudService = TestBed.inject(FormCloudService);
 
-        const form = new FormModel(formRepresentation);
-        customComponent.adfCloudForm.form = form;
+        fixture = TestBed.createComponent(FormCloudComponent);
+        formComponent = fixture.componentInstance;
+        formComponent.form = formComponent.parseForm(fakeMetadataForm);
         fixture.detectChanges();
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
+    it('should  translate form labels on language change', async () => {
+        spyOn(formCloudService, 'getForm').and.returnValue(of(multilingualForm));
+        const formId = '123';
+        const appName = 'test-app';
+        formComponent.formId = formId;
+        formComponent.appVersion = 1;
 
-    it('should be able to inject custom outcomes and click on custom outcomes', async () => {
-        fixture.detectChanges();
+        formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
+        expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
-        const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
-        const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
-        const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
-        expect(buttonOneBtn).not.toBeNull();
-        expect(buttonTwoBtn).not.toBeNull();
+        fixture.ngZone.run(() => translateService.use('fr'));
 
-        buttonOneBtn.nativeElement.click();
-        fixture.detectChanges();
         await fixture.whenStable();
+        fixture.detectChanges();
 
-        expect(onCustomButtonOneSpy).toHaveBeenCalled();
-        expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
-        expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
+        expect(getLabelValue('textField')).toEqual('Champ de texte');
+        expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
+        expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
+        expect(getLabelValue('amountField')).toEqual('Champ Montant');
+
+        fixture.ngZone.run(() => translateService.use('en'));
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(getLabelValue('textField')).toEqual('Text field');
+        expect(getLabelValue('fildUploadField')).toEqual('File Upload');
+        expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
+        expect(getLabelValue('amountField')).toEqual('Amount field');
     });
+
+    const getLabelValue = (containerId: string): string => {
+        const label = fixture.debugElement.nativeElement.querySelector(`[id="field-${containerId}-container"] label`);
+        return label.innerText;
+    };
 });
 
 describe('retrieve metadata on submit', () => {
