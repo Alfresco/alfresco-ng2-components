@@ -46,6 +46,13 @@ describe('ProcessListCloudService', () => {
         isEcmLoggedIn: () => false
     });
 
+    const returnCallBody = (): any => ({
+        oauth2Auth: {
+            callCustomApi: (_queryUrl, _operation, _context, _queryParams, _headerParams, _formParams, bodyParam) => Promise.resolve(bodyParam)
+        },
+        isEcmLoggedIn: () => false
+    });
+
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule
@@ -107,14 +114,86 @@ describe('ProcessListCloudService', () => {
         );
     });
 
-    it('should make post request if admin', async () => {
-        service.isAdmin = true;
-        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallOperation);
-        const response = await service.getProcessByRequest(processRequest).toPromise();
+    describe('getAdminProcessRequest', () => {
 
-        expect(response).toBeDefined();
-        expect(response).not.toBeNull();
-        expect(response).toBe('POST');
+        it('should append to the call all the parameters', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            const request = await service.getAdminProcessByRequest(processRequest).toPromise();
+
+            expect(request).toBeDefined();
+            expect(request).not.toBeNull();
+            expect(request.skipCount).toBe(0);
+            expect(request.maxItems).toBe(20);
+            expect(request.service).toBe('fake-service');
+        });
+
+        it('should concat the app name to the request url', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+            const requestUrl = await service.getAdminProcessByRequest(processRequest).toPromise();
+
+            expect(requestUrl).toBeDefined();
+            expect(requestUrl).not.toBeNull();
+            expect(requestUrl).toContain('/fakeName/query/admin/v1/process-instances');
+        });
+
+        it('should concat the sorting to append as parameters', async () => {
+            const processRequest = {
+                appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
+                sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
+            } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            const request = await service.getAdminProcessByRequest(processRequest).toPromise();
+
+            expect(request).toBeDefined();
+            expect(request).not.toBeNull();
+            expect(request.sort).toBe('NAME,DESC&TITLE,ASC');
+        });
+
+        it('should return an error when app name is not specified', async () => {
+            const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+
+            try {
+                await service.getAdminProcessByRequest(processRequest).toPromise();
+
+                fail('Should have thrown error');
+            } catch(error) {
+                expect(error).toBe('Appname not configured');
+            }
+        });
+
+        it('should make post request', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallOperation);
+            const requestMethod = await service.getAdminProcessByRequest(processRequest).toPromise();
+            expect(requestMethod).toBeDefined();
+            expect(requestMethod).not.toBeNull();
+            expect(requestMethod).toBe('POST');
+        });
+
+        it('should not have variable keys as part of query parameters', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            const requestParams = await service.getAdminProcessByRequest(processRequest).toPromise();
+
+            expect(requestParams).toBeDefined();
+            expect(requestParams).not.toBeNull();
+            expect(requestParams.variableKeys).not.toBeDefined();
+        });
+
+        it('should send right variable keys as post body', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
+            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallBody);
+            const requestBodyParams = await service.getAdminProcessByRequest(processRequest).toPromise();
+
+            expect(requestBodyParams).toBeDefined();
+            expect(requestBodyParams).not.toBeNull();
+            expect(requestBodyParams.variableKeys).toBeDefined();
+            expect(requestBodyParams.variableKeys.length).toBe(2);
+            expect(requestBodyParams.variableKeys[0]).toBe('test-one');
+            expect(requestBodyParams.variableKeys[1]).toBe('test-two');
+        });
     });
 });
