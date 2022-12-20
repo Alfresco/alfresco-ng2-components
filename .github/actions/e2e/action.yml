@@ -136,6 +136,7 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+        BROWSER: "${{ inputs.e2e-test-id }}"
       uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 40
@@ -146,7 +147,10 @@ runs:
           set -u;
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
+        if: $E2E_TEST_ID != 'content-services'
           bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
+        if: $E2E_TEST_ID == 'content-services'
+        run: bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
 
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash

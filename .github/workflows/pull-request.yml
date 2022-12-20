@@ -145,7 +145,7 @@ jobs:
             auth: "BASIC"
             check-cs-env: "true"
           - description: "Content: Upload and Versioning"
-            test-id: "content-services browser"
+            test-id: "content-services"            
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
