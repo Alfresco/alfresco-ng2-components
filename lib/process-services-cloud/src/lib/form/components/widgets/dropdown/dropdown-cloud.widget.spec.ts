@@ -71,7 +71,6 @@ describe('DropdownCloudWidgetComponent', () => {
     describe('Simple Dropdown', () => {
 
         beforeEach(() => {
-            spyOn(formService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
@@ -85,13 +84,14 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should require field with restUrl', () => {
+            spyOn(formCloudService, 'getRestWidgetData');
             widget.field = new FormFieldModel(new FormModel());
             widget.ngOnInit();
-            expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
 
             widget.field = new FormFieldModel(null, { restUrl: null });
             widget.ngOnInit();
-            expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
         });
 
         it('should select the default value when an option is chosen as default', async () => {
