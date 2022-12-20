@@ -64,7 +64,7 @@ export class ViewerPage {
     imgViewer = $('adf-img-viewer');
     activeTab = $('div[class*="mat-tab-label-active"]');
     toolbarSwitch = $('#adf-switch-toolbar');
-    toolbar = $('#adf-viewer-toolbar');
+    toolbar = $('#adf-alfresco-viewer-toolbar');
     lastButton = $$('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
     goBackSwitch = $('#adf-switch-goback');
     canvasLayer = $$('.canvasWrapper > canvas').first();
