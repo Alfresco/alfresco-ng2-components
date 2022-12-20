@@ -39,6 +39,13 @@ describe('ProcessListCloudService', () => {
         isEcmLoggedIn: () => false
     });
 
+    const returnCallOperation = (): any => ({
+        oauth2Auth: {
+            callCustomApi: (_queryUrl, operation, _context, _queryParams) => Promise.resolve(operation)
+        },
+        isEcmLoggedIn: () => false
+    });
+
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule
@@ -98,5 +105,17 @@ describe('ProcessListCloudService', () => {
                 done();
             }
         );
+    });
+
+    it('should make post request if admin', (done) => {
+        service.isAdmin = true;
+        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallOperation);
+        service.getProcessByRequest(processRequest).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res).toBe('POST');
+            done();
+        });
     });
 });

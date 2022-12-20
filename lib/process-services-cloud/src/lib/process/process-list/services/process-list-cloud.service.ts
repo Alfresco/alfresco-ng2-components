@@ -26,7 +26,7 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
 
-    protected isAdmin: boolean = false;
+    isAdmin: boolean = false;
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
