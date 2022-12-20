@@ -132,6 +132,7 @@ runs:
 
     - name: check e2e-test-id
       if: ${{ inputs.e2e-test-id == 'content-services' }}
+      shell: bash
       run: |
         echo "HEADLESS=browser" >> $GITHUB_ENV
 
