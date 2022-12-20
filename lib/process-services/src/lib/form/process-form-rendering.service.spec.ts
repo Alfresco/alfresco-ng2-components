@@ -17,7 +17,6 @@
 
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
-import { UploadWidgetComponent } from './widgets/upload/upload.widget';
 import { AttachFolderWidgetComponent } from './widgets/content-widget/attach-folder-widget.component';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
@@ -26,6 +25,7 @@ import { PeopleWidgetComponent } from './widgets/people/people.widget';
 import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
+import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
 
 describe('ProcessFormRenderingService', () => {
 
@@ -43,13 +43,13 @@ describe('ProcessFormRenderingService', () => {
             }
         });
         const type = service.resolveComponentType(field);
-        expect(type).toBe(UploadWidgetComponent);
+        expect(type).toBe(AttachFileWidgetComponent);
     });
 
     it('should resolve Upload widget for Upload', () => {
         const resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
         const type = resolver(null);
-        expect(type).toBe(UploadWidgetComponent);
+        expect(type).toBe(AttachFileWidgetComponent);
     });
 
     it('should resolve Upload widget for dropdown', () => {
@@ -89,12 +89,12 @@ describe('ProcessFormRenderingService', () => {
     });
 
     it('should resolve Upload widget for group', () => {
-        const resolver = service.getComponentTypeResolver(FormFieldTypes.GROUP);
+        const resolver = service.getComponentTypeResolver(FormFieldTypes.FUNCTIONAL_GROUP);
         const type = resolver(null);
         expect(type).toBe(FunctionalGroupWidgetComponent);
     });
 
-    it('should resolve Upload widget for group', () => {
+    it('should resolve Upload widget for dynamic table', () => {
         const resolver = service.getComponentTypeResolver(FormFieldTypes.DYNAMIC_TABLE);
         const type = resolver(null);
         expect(type).toBe(DynamicTableWidgetComponent);

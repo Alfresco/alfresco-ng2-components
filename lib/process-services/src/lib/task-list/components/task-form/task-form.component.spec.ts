@@ -81,6 +81,7 @@ describe('TaskFormComponent', () => {
 
         taskListService = TestBed.inject(TaskListService);
         taskFormService = TestBed.inject(TaskFormService);
+        taskService = TestBed.inject(TaskService);
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
         completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({}));

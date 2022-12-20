@@ -233,7 +233,7 @@ describe('TypeaheadWidgetComponent', () => {
         let typeaheadWidgetComponent: TypeaheadWidgetComponent;
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
         let element: HTMLElement;
-        let stubFormService;
+        let stubProcessDefinitionService;
         const fakeOptionList: FormFieldOption[] = [{
             id: '1',
             name: 'Fake Name 1 '
@@ -282,8 +282,7 @@ describe('TypeaheadWidgetComponent', () => {
         describe('and typeahead is populated via taskId', () => {
 
             beforeEach(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(fakeOptionList));
+                spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
@@ -360,8 +359,8 @@ describe('TypeaheadWidgetComponent', () => {
         describe('and typeahead is populated via processDefinitionId', () => {
 
             beforeEach(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(fakeOptionList));
+                stubProcessDefinitionService = fixture.debugElement.injector.get(ProcessDefinitionService);
+                spyOn(stubProcessDefinitionService, 'getRestFieldValuesByProcessId').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',

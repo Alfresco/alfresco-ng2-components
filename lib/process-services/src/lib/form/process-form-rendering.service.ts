@@ -17,6 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
+    FormFieldTypes,
     FormRenderingService
 } from '@alfresco/adf-core';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
@@ -37,15 +38,15 @@ export class ProcessFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
-            dropdown: () => DropdownWidgetComponent,
-            typeahead: () =>  TypeaheadWidgetComponent,
-            'radio-buttons': () =>  RadioButtonsWidgetComponent,
-            upload: () => AttachFileWidgetComponent,
-            'select-folder': () => AttachFolderWidgetComponent,
-            document: () => DocumentWidgetComponent,
-            people: () =>  PeopleWidgetComponent,
-            'functional-group':  () => FunctionalGroupWidgetComponent,
-            'dynamic-table':  () => DynamicTableWidgetComponent
+            [FormFieldTypes.DROPDOWN]: () => DropdownWidgetComponent,
+            [FormFieldTypes.TYPEAHEAD]: () =>  TypeaheadWidgetComponent,
+            [FormFieldTypes.RADIO_BUTTONS]: () =>  RadioButtonsWidgetComponent,
+            [FormFieldTypes.UPLOAD]: () => AttachFileWidgetComponent,
+            [FormFieldTypes.ATTACH_FOLDER]: () => AttachFolderWidgetComponent,
+            [FormFieldTypes.DOCUMENT]: () => DocumentWidgetComponent,
+            [FormFieldTypes.PEOPLE]: () =>  PeopleWidgetComponent,
+            [FormFieldTypes.FUNCTIONAL_GROUP]:  () => FunctionalGroupWidgetComponent,
+            [FormFieldTypes.DYNAMIC_TABLE]:  () => DynamicTableWidgetComponent
         }, true);
     }
 }

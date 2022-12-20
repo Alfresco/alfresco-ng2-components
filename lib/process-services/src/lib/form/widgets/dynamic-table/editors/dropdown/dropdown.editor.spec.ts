@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import {
     AlfrescoApiService,
     setupTestBed,
@@ -192,14 +192,6 @@ describe('DropdownEditorComponent', () => {
         let dropDownEditorComponent: DropdownEditorComponent;
         let fixture: ComponentFixture<DropdownEditorComponent>;
         let element: HTMLElement;
-        let stubFormService;
-        const fakeOptionList: DynamicTableColumnOption[] = [{
-            id: 'opt_1',
-            name: 'option_1'
-        }, {
-            id: 'opt_2',
-            name: 'option_2'
-        }, {id: 'opt_3', name: 'option_3'}];
         let dynamicTable: DynamicTableModel;
 
         const openSelect = () => {
@@ -221,8 +213,6 @@ describe('DropdownEditorComponent', () => {
         describe('and dropdown is populated via taskId', () => {
 
             beforeEach(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValuesColumn').and.returnValue(of(fakeOptionList));
                 row = {value: {dropdown: 'one'}} as DynamicTableRow;
                 column = {
                     id: 'column-id',
@@ -269,8 +259,6 @@ describe('DropdownEditorComponent', () => {
         describe('and dropdown is populated via processDefinitionId', () => {
 
             beforeEach(() => {
-                stubFormService = fixture.debugElement.injector.get(FormService);
-                spyOn(stubFormService, 'getRestFieldValuesColumnByProcessId').and.returnValue(of(fakeOptionList));
                 row = {value: {dropdown: 'one'}} as DynamicTableRow;
                 column = {
                     id: 'column-id',

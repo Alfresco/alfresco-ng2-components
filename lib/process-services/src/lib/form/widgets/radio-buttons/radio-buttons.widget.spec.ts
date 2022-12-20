@@ -53,6 +53,9 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     beforeEach(() => {
+        taskFormService = TestBed.inject(TaskFormService);
+        processDefinitionService = TestBed.inject(ProcessDefinitionService);
+
         formService = new FormService();
         widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService, null);
         widget.field = new FormFieldModel(new FormModel(), {restUrl: '<url>'});
@@ -215,7 +218,7 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
-        it('should be able to set a Radio Button widget as required', () => {
+        it('should be able to set another Radio Button widget as required', () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
                 id: 'radio-id',
                 name: 'radio-name-label',
