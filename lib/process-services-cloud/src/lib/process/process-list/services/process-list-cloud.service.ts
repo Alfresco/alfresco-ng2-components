@@ -26,6 +26,8 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
 
+    protected isAdmin: boolean = false;
+
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
                 private logService: LogService) {
@@ -48,6 +50,10 @@ export class ProcessListCloudService extends BaseCloudService {
                 queryParams['sort'] = sortingParams;
             }
 
+            if (this.isAdmin) {
+                return this.getAdminProcessByRequest(queryUrl, queryParams);
+            }
+
             return this.get(queryUrl, queryParams).pipe(
                 map((response: any) => {
                     const entries = response.list && response.list.entries;
@@ -61,6 +67,32 @@ export class ProcessListCloudService extends BaseCloudService {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
+    }
+
+    private getAdminProcessByRequest(queryUrl: string, queryParams: any): Observable<any> {
+        const postBody = {
+            variableKeys: this.getVariableKeysFromQueryParams(queryParams)
+        };
+
+        delete queryParams['variableKeys'];
+
+        return this.post(queryUrl, postBody, queryParams).pipe(
+            map((response: any) => {
+                const entries = response.list && response.list.entries;
+                if (entries) {
+                    response.list.entries = entries.map((entryData) => entryData.entry);
+                }
+                return response;
+            })
+        );
+    }
+
+    private getVariableKeysFromQueryParams(queryParams: any): string[] {
+        if (!queryParams['variableKeys']) {
+            return [];
+        }
+
+        return queryParams['variableKeys'].split(',');
     }
 
     protected isPropertyValueValid(requestNode: any, property: string): boolean {
