@@ -112,7 +112,7 @@ jobs:
           echo $TAGS     
           ./scripts/travis/release/release-storybook-docker.sh
 
-  npm-release:
+  release-npm:
     # needs: [build]
     timeout-minutes: 10
     # if: github.event.pull_request.merged == true
