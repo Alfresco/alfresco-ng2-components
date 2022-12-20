@@ -73,8 +73,6 @@ jobs:
           nx run testing:bundle
       - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
-      - run: nx $NX_CALCULATION_FLAGS build demoshell --configuration production
-      - run: nx build demoshell --configuration production
       - uses: ./.github/actions/upload-build-artifacts
 
   release-demoshell:
