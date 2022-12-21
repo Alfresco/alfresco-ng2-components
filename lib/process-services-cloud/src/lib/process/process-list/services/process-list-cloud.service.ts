@@ -32,23 +32,21 @@ export class ProcessListCloudService extends BaseCloudService {
         super(apiService, appConfigService);
     }
 
-    /**
-     * Finds a process using an object with optional query properties.
-     *
-     * @param requestNode Query object
-     * @param queryUrl Query url
-     * @returns Process information
-     */
-    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+    private getProcess(
+        callback: (queryUrl: string, queryParams: any) => Observable<any>,
+        defaultQueryUrl: string,
+        requestNode: ProcessQueryCloudRequestModel,
+        queryUrl?: string
+    ): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
+            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/${defaultQueryUrl}`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
 
-            return this.get(queryUrl, queryParams).pipe(
+            return callback(queryUrl, queryParams).pipe(
                 map((response: any) => {
                     const entries = response.list && response.list.entries;
                     if (entries) {
@@ -61,6 +59,51 @@ export class ProcessListCloudService extends BaseCloudService {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
+    }
+
+    /**
+     * Finds a process using an object with optional query properties.
+     *
+     * @param requestNode Query object
+     * @param queryUrl Query url
+     * @returns Process information
+     */
+    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+        const callback = (url: string, queryParams: any) => this.get(url, queryParams);
+        const defaultQueryUrl = 'query/v1/process-instances';
+
+        return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl);
+    }
+
+    /**
+     * Finds a process using an object with optional query properties in admin app.
+     *
+     * @param requestNode Query object
+     * @param queryUrl Query url
+     * @returns Process information
+     */
+    getAdminProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+        const callback = (url: string, params: any) => {
+            const postBody = {
+                variableKeys: this.getVariableKeysFromQueryParams(params)
+            };
+
+            delete params['variableKeys'];
+
+            return this.post(url, postBody, params);
+        };
+
+        const defaultQueryUrl = 'query/admin/v1/process-instances';
+
+        return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl);
+    }
+
+    private getVariableKeysFromQueryParams(queryParams: any): string[] {
+        if (!queryParams['variableKeys'] || queryParams['variableKeys'].length <= 0) {
+            return [];
+        }
+
+        return queryParams['variableKeys'].split(',');
     }
 
     protected isPropertyValueValid(requestNode: any, property: string): boolean {

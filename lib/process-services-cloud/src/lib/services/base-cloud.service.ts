@@ -52,13 +52,14 @@ export class BaseCloudService {
             : this.contextRoot;
     }
 
-    protected post<T, R>(url: string, data?: T): Observable<R> {
+    protected post<T, R>(url: string, data?: T, queryParams?: any): Observable<R> {
         return from(
             this.callApi<R>({
                 ...this.defaultParams,
                 path: url,
                 httpMethod: 'POST',
-                bodyParam: data
+                bodyParam: data,
+                queryParams
             })
         );
     }
