@@ -109,7 +109,7 @@
         <button
             color="primary"
             mat-button
-            [disabled]="disableStartButton()"
+            [disabled]="disableStartButton() || !isProcessFormValid()"
             (click)="startProcess()"
             data-automation-id="btn-start"
             id="button-start"
