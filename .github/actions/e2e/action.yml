@@ -155,9 +155,8 @@ runs:
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           echo "$E2E_TEST_ID"              
-          if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
-            echo "HEADLESS=browser" >> $GITHUB_ENV
-            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "$HEADLESS" || exit 1
+          if [[ ${{ $FOLDER }} == 'content-services/upload' ]]; then            
+            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
           else
             bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1          
           fi            
