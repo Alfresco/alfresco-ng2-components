@@ -143,7 +143,8 @@ runs:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
-        E2E_TEST_ID: "${{ inputs.e2e-test-id }}"        
+        E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+        HEADLESS: "browser"        
       uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 40
@@ -155,7 +156,7 @@ runs:
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           echo "$E2E_TEST_ID"              
-          if [[ ${{ $FOLDER }} == 'content-services/upload' ]]; then            
+          if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then            
             bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
           else
             bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1          
