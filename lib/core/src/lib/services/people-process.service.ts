@@ -81,11 +81,9 @@ export class PeopleProcessService {
      * @param searchWord Filter text to search for
      * @returns Array of user information objects
      */
-    getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        const option: any = { filter };
-        if (groupId) {
-            option.groupId = groupId;
-        }
+    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {
+        const option = { excludeTaskId: taskId, filter: searchWord, groupId };
+
         return from(this.getWorkflowUserApi(option))
             .pipe(
                 switchMap(response => response.data as UserProcessModel[] || []),

@@ -69,7 +69,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
-            return this.peopleProcessService.getWorkflowUsers(value, this.groupId)
+            return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId)
                 .pipe(catchError(() => of([])));
         }),
         map((list: UserProcessModel[]) => {
