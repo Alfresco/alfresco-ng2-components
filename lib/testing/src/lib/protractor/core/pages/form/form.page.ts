@@ -47,7 +47,7 @@ export class FormPage {
     }
 
     async isSaveButtonDisabled(): Promise<boolean> {
-        const saveButtonDisabled = $('.adf-form-mat-card-actions [disabled]');
+        const saveButtonDisabled = $('#adf-form-save[disabled]');
         try {
             await saveButtonDisabled.isDisplayed();
             return true;
