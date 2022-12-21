@@ -155,7 +155,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit an error with a bad response', async () => {
+    it('should emit an error with a bad response of getProcessFilters', async () => {
         const mockErrorFilterPromise = Promise.reject({
             error: 'wrong request'
         });
@@ -172,7 +172,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit an error with a bad response', async () => {
+    it('should emit an error with a bad response of getDeployedApplicationsByName', async () => {
         const mockErrorFilterPromise = Promise.reject({
             error: 'wrong request'
         });

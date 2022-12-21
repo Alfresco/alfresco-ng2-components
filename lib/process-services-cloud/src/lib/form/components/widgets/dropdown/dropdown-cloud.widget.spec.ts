@@ -71,7 +71,6 @@ describe('DropdownCloudWidgetComponent', () => {
     describe('Simple Dropdown', () => {
 
         beforeEach(() => {
-            spyOn(formService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
@@ -85,13 +84,14 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should require field with restUrl', () => {
+            spyOn(formCloudService, 'getRestWidgetData');
             widget.field = new FormFieldModel(new FormModel());
             widget.ngOnInit();
-            expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
 
             widget.field = new FormFieldModel(null, { restUrl: null });
             widget.ngOnInit();
-            expect(formService.getRestFieldValues).not.toHaveBeenCalled();
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
         });
 
         it('should select the default value when an option is chosen as default', async () => {
@@ -339,43 +339,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
+
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
-        });
-    });
-
-    describe('when is required', () => {
-
-        beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DROPDOWN,
-                required: true
-            });
-        });
-
-        it('should be able to display label with asterisk', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
-
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
-        });
-
-        it('should be invalid if no default option after interaction', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('.adf-invalid')).toBeFalsy();
-
-            const dropdownSelect = element.querySelector('.adf-select');
-            dropdownSelect.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
 

@@ -148,8 +148,52 @@ export class ProcessService {
     getProcess(processInstanceId: string): Observable<ProcessInstance> {
         return from(this.processInstancesApi.getProcessInstance(processInstanceId))
             .pipe(
+                map(this.toJson),
                 catchError((err) => this.handleProcessError(err))
             );
+    }
+
+    /**
+     * Gets the start form definition for a given process.
+     *
+     * @param processId Process definition ID
+     * @returns Form definition
+     */
+    getStartFormDefinition(processId: string): Observable<any> {
+        return from(this.processDefinitionsApi.getProcessDefinitionStartForm(processId))
+            .pipe(
+                map(this.toJson),
+                catchError((err) => this.handleProcessError(err))
+            );
+    }
+
+
+    /**
+     * Gets the start form instance for a given process.
+     *
+     * @param processId Process definition ID
+     * @returns Form definition
+     */
+    getStartFormInstance(processId: string): Observable<any> {
+        return from(this.processInstancesApi.getProcessInstanceStartForm(processId))
+            .pipe(
+                map(this.toJson),
+                catchError((err) => this.handleProcessError(err))
+            );
+    }
+
+
+    /**
+     * Creates a JSON representation of form data.
+     *
+     * @param res Object representing form data
+     * @returns JSON data
+     */
+    toJson(res: any) {
+        if (res) {
+            return res || {};
+        }
+        return {};
     }
 
     /**

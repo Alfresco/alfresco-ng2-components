@@ -23,7 +23,6 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    FormService,
     setupTestBed,
     BpmUserService,
     CommentProcessService, LogService, AuthenticationService,
@@ -43,6 +42,8 @@ import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskService } from '../../form/services/task.service';
+import { TaskFormService } from '../../form/services/task-form.service';
 
 const fakeUser = new UserProcessModel({
     id: 'fake-id',
@@ -60,8 +61,9 @@ const fakeTaskAssignResponse = new TaskDetailsModel({
 
 describe('TaskDetailsComponent', () => {
 
-    let service: TaskListService;
-    let formService: FormService;
+    let taskListService: TaskListService;
+    let taskService: TaskService;
+    let taskFormService: TaskFormService;
     let component: TaskDetailsComponent;
     let fixture: ComponentFixture<TaskDetailsComponent>;
     let getTaskDetailsSpy: jasmine.Spy;
@@ -86,18 +88,19 @@ describe('TaskDetailsComponent', () => {
         const userService: BpmUserService = TestBed.inject(BpmUserService);
         spyOn(userService, 'getCurrentUserInfo').and.returnValue(of(null));
 
-        service = TestBed.inject(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(of(noDataMock));
+        taskListService = TestBed.inject(TaskListService);
+        spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));
 
-        formService = TestBed.inject(FormService);
+        taskService = TestBed.inject(TaskService);
+        taskFormService = TestBed.inject(TaskFormService);
 
-        getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
-        spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
+        getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
+        spyOn(taskFormService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
-        spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
+        spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
 
-        getTasksSpy = spyOn(service, 'getTasks').and.returnValue(of(tasksMock));
-        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
+        getTasksSpy = spyOn(taskListService, 'getTasks').and.returnValue(of(tasksMock));
+        assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         commentProcessService = TestBed.inject(CommentProcessService);
 
         authService = TestBed.inject(AuthenticationService);

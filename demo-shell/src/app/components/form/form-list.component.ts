@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormModel, FormService, LogService, FormOutcomeEvent } from '@alfresco/adf-core';
-import { FormComponent } from '@alfresco/adf-process-services';
+import { FormComponent, EditorService } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -42,7 +42,7 @@ export class FormListComponent implements OnInit, OnDestroy {
     showValidationIcon = false;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private formService: FormService, private logService: LogService) {
+    constructor(private formService: FormService, private editorService: EditorService, private logService: LogService) {
     }
 
     ngOnInit() {
@@ -63,7 +63,7 @@ export class FormListComponent implements OnInit, OnDestroy {
     onRowDblClick(event: CustomEvent<any>) {
         const rowForm = event.detail.value.obj;
 
-        this.formService.getFormDefinitionById(rowForm.id).subscribe((formModel) => {
+        this.editorService.getFormDefinitionById(rowForm.id).subscribe((formModel) => {
             const form = this.formService.parseForm(formModel.formDefinition);
             this.form = form;
         });

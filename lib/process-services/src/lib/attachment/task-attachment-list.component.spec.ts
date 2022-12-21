@@ -20,10 +20,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
+import { ProcessContentService } from '../form/services/process-content.service';
 
 describe('TaskAttachmentList', () => {
 

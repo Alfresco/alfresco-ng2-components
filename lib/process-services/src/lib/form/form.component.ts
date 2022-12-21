@@ -15,13 +15,41 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { EcmModelService, NodeService, WidgetVisibilityService,
-    FormService, FormBaseComponent, FormOutcomeModel,
-    FormEvent, FormErrorEvent, FormFieldModel,
-    FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
-import { Observable, of, Subject } from 'rxjs';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewEncapsulation,
+    SimpleChanges,
+    OnInit,
+    OnDestroy,
+    OnChanges
+} from '@angular/core';
+import {
+    WidgetVisibilityService,
+    FormService,
+    FormBaseComponent,
+    FormOutcomeModel,
+    FormEvent,
+    FormErrorEvent,
+    FormFieldModel,
+    FormModel,
+    FormOutcomeEvent,
+    FormValues,
+    ContentLinkModel,
+    NodesApiService,
+    FormDefinitionModel,
+    TaskProcessVariableModel
+} from '@alfresco/adf-core';
+import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { EcmModelService } from './services/ecm-model.service';
+import { ModelService } from './services/model.service';
+import { EditorService } from './services/editor.service';
+import { TaskService } from './services/task.service';
+import { TaskFormService } from './services/task-form.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-form',
@@ -59,7 +87,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     data: FormValues;
 
     /** The form will set a prefixed space for invisible fields. */
-     @Input()
+    @Input()
     enableFixedSpacedForm: boolean = true;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
@@ -87,9 +115,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected formService: FormService,
+                protected taskFormService: TaskFormService,
+                protected taskService: TaskService,
+                protected editorService: EditorService,
+                protected modelService: ModelService,
                 protected visibilityService: WidgetVisibilityService,
                 protected ecmModelService: EcmModelService,
-                protected nodeService: NodeService) {
+                protected nodeService: NodesApiService) {
         super();
     }
 
@@ -168,13 +200,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    findProcessVariablesByTaskId(taskId: string): Observable<any> {
-        return this.formService.getTask(taskId).pipe(
-            switchMap((task: any) => {
+    findProcessVariablesByTaskId(taskId: string): Observable<TaskProcessVariableModel[]> {
+        return this.taskService.getTask(taskId).pipe(
+            switchMap((task: TaskRepresentation) => {
                 if (this.isAProcessTask(task)) {
-                    return this.visibilityService.getTaskProcessVariable(taskId);
+                    return this.taskFormService.getTaskProcessVariable(taskId);
                 } else {
-                    return of({});
+                    return of([]);
                 }
             })
         );
@@ -186,13 +218,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>(resolve => {
-            this.findProcessVariablesByTaskId(taskId).subscribe(() => {
-                this.formService
+            this.findProcessVariablesByTaskId(taskId).subscribe((taskProcessVariables) => {
+                this.taskFormService
                     .getTaskForm(taskId)
                     .subscribe(
                         (form) => {
                             const parsedForm = this.parseForm(form);
-                            this.visibilityService.refreshVisibility(parsedForm);
+                            this.visibilityService.refreshVisibility(parsedForm, taskProcessVariables);
                             parsedForm.validateForm();
                             this.form = parsedForm;
                             this.onFormLoaded(this.form);
@@ -208,7 +240,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormDefinitionByFormId(formId: number) {
-        this.formService
+        this.editorService
             .getFormDefinitionById(formId)
             .subscribe(
                 (form) => {
@@ -225,11 +257,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormDefinitionByFormName(formName: string) {
-        this.formService
+        this.modelService
             .getFormDefinitionByName(formName)
             .subscribe(
                 (id) => {
-                    this.formService.getFormDefinitionById(id).subscribe(
+                    this.editorService.getFormDefinitionById(id).subscribe(
                         (form) => {
                             this.form = this.parseForm(form);
                             this.visibilityService.refreshVisibility(this.form);
@@ -249,7 +281,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     saveTaskForm() {
         if (this.form && this.form.taskId) {
-            this.formService
+            this.taskFormService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
                     () => {
@@ -263,7 +295,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     completeTaskForm(outcome?: string) {
         if (this.form && this.form.taskId) {
-            this.formService
+            this.taskFormService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
                     () => {
@@ -300,7 +332,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, {id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
         ];
     }
 
@@ -311,10 +343,10 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     loadFormFromActiviti(nodeType: string): any {
-        this.formService.searchFrom(nodeType).subscribe(
+        this.modelService.searchFrom(nodeType).subscribe(
             (form) => {
                 if (!form) {
-                    this.formService.createFormFromANode(nodeType).subscribe((formMetadata) => {
+                    this.createFormFromANode(nodeType).subscribe((formMetadata) => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
@@ -325,6 +357,33 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                 this.handleError(error);
             }
         );
+    }
+
+
+    /**
+     * Creates a Form with a field for each metadata property.
+     *
+     * @param formName Name of the new form
+     * @returns The new form
+     */
+    createFormFromANode(formName: string): Observable<any> {
+        return new Observable((observer) => {
+            this.modelService.createForm(formName).subscribe(
+                (form) => {
+                    this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
+                        (customType) => {
+                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
+                            from(
+                                this.editorService.saveForm(form.id, formDefinitionModel)
+                            ).subscribe((formData) => {
+                                observer.next(formData);
+                                observer.complete();
+                            }, (err) => this.handleError(err));
+                        },
+                        (err) => this.handleError(err));
+                },
+                (err) => this.handleError(err));
+        });
     }
 
     protected storeFormAsMetadata() {

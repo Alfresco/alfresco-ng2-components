@@ -824,14 +824,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock-folder-id');
         });
 
-        it('it should get a destination folder path value from a folder variable', () => {
-            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithFolderVariablePathType);
-            fixture.detectChanges();
-
-            expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('folder');
-            expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock-folder-id');
-        });
-
         it('it should set destination folder path value to undefined if mapped variable deleted/renamed', () => {
             createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithRenamedFolderVariablePathType);
             fixture.detectChanges();

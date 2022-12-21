@@ -15,8 +15,23 @@
  * limitations under the License.
  */
 
+export * from './widgets/index';
+
+export * from './services/ecm-model.service';
+export * from './services/editor.service';
+export * from './services/process-content.service';
+export * from './services/task.service';
+export * from './services/task-form.service';
+export * from './services/process-definition.service';
+export * from './services/activiti-alfresco.service';
+export * from './process-form-rendering.service';
+
+export * from './events/validate-dynamic-table-row.event';
+
+
+export * from './form-list/form-list.component';
 export * from './form.component';
 export * from './start-form.component';
-export * from './process-form-rendering.service';
 export * from './form-custom-outcomes.component';
+
 export * from './form.module';

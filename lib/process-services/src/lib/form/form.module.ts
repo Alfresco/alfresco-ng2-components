@@ -21,21 +21,48 @@ import { CoreModule } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
 import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
+import { DocumentWidgetComponent } from './widgets/document/document.widget';
+import { ContentWidgetComponent } from './widgets/document/content.widget';
+import { UploadWidgetComponent } from './widgets/upload/upload.widget';
+import { FormListComponent } from './form-list/form-list.component';
+import { FunctionalGroupWidgetComponent } from './widgets/functional-group/functional-group.widget';
+import { PeopleWidgetComponent } from './widgets/people/people.widget';
+import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-buttons.widget';
+import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
+import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
+import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module';
 
 @NgModule({
     imports: [
+        DynamicTableModule,
         CoreModule,
         MaterialModule
     ],
     declarations: [
+        UploadWidgetComponent,
         FormComponent,
         StartFormComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        DocumentWidgetComponent,
+        ContentWidgetComponent,
+        PeopleWidgetComponent,
+        FunctionalGroupWidgetComponent,
+        FormListComponent,
+        RadioButtonsWidgetComponent,
+        DropdownWidgetComponent,
+        TypeaheadWidgetComponent
     ],
     exports: [
         FormComponent,
         StartFormComponent,
-        FormCustomOutcomesComponent
+        FormCustomOutcomesComponent,
+        PeopleWidgetComponent,
+        FunctionalGroupWidgetComponent,
+        RadioButtonsWidgetComponent,
+        TypeaheadWidgetComponent,
+        DropdownWidgetComponent,
+        FormListComponent
     ]
 })
-export class FormModule {}
+export class FormModule {
+}

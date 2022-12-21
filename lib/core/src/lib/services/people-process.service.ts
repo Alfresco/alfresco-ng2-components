@@ -16,16 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, of } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 import {
     TaskActionsApi,
     UsersApi,
-    ResultListDataRepresentationLightUserRepresentation
+    ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi
 } from '@alfresco/js-api';
+import { GroupModel } from '../form';
 
 @Injectable({
     providedIn: 'root'
@@ -44,8 +45,33 @@ export class PeopleProcessService {
         return this._userApi;
     }
 
+    _groupsApi: ActivitiGroupsApi;
+    get groupsApi(): ActivitiGroupsApi {
+        this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
+        return this._groupsApi;
+    }
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    /**
+     * Gets a list of groups in a workflow.
+     *
+     * @param filter Filter to select specific groups
+     * @param groupId Group ID for the search
+     * @returns Array of groups
+     */
+    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
+        const option: any = { filter };
+        if (groupId) {
+            option.groupId = groupId;
+        }
+        return from(this.groupsApi.getGroups(option))
+            .pipe(
+                map((response: any) => response.data || []),
+                catchError((err) => this.handleError(err))
+            );
     }
 
     /**
@@ -55,15 +81,21 @@ export class PeopleProcessService {
      * @param searchWord Filter text to search for
      * @returns Array of user information objects
      */
-    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
-        const option = { excludeTaskId: taskId, filter: searchWord };
+    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {
+        const option = { excludeTaskId: taskId, filter: searchWord, groupId };
+
         return from(this.getWorkflowUserApi(option))
             .pipe(
-                map((response: any) => response.data || []),
+                switchMap(response => response.data as UserProcessModel[] || []),
+                map((user) => {
+                    user.userImage = this.getUserProfileImageApi(user.id.toString());
+                    return of(user);
+                }),
+                combineAll(),
+                defaultIfEmpty([]),
                 catchError((err) => this.handleError(err))
             );
     }
-
     /**
      * Gets the profile picture URL for the specified user.
      *

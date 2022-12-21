@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -37,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { deployedApps } from '../../mock/apps-list.mock';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ProcessInstance } from '../models/process-instance.model';
+import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 
 describe('StartProcessComponent', () => {
 
@@ -45,7 +46,6 @@ describe('StartProcessComponent', () => {
     let component: StartProcessInstanceComponent;
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
     let processService: ProcessService;
-    let formService: FormService;
     let appsProcessService: AppsProcessService;
     let getDefinitionsSpy: jasmine.Spy;
     let getStartFormDefinitionSpy: jasmine.Spy;
@@ -84,12 +84,11 @@ describe('StartProcessComponent', () => {
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
         processService = TestBed.inject(ProcessService);
-        formService = TestBed.inject(FormService);
         appsProcessService = TestBed.inject(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
-        getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
+        getStartFormDefinitionSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
         applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ id: '1', name: 'fake-repo-name'}]));
     });

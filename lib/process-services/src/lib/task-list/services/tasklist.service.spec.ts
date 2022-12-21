@@ -139,26 +139,6 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
-        it('should return the task list filtered', (done) => {
-            service.findTasksByState(fakeFilter).subscribe((res) => {
-                expect(res.size).toEqual(1);
-                expect(res.start).toEqual(0);
-                expect(res.data).toBeDefined();
-                expect(res.data.length).toEqual(1);
-                expect(res.data[0].name).toEqual('FakeNameTask');
-                expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                expect(res.data[0].assignee.firstName).toEqual('firstName');
-                expect(res.data[0].assignee.lastName).toEqual('lastName');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeTaskList)
-            });
-        });
-
         it('should return the task list with all tasks filtered without state', (done) => {
             spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));

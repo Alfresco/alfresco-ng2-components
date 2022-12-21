@@ -20,7 +20,6 @@ import {
     Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import {
-    ActivitiContentService,
     AppConfigService,
     AppConfigValues,
     AppsProcessService,
@@ -39,6 +38,7 @@ import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
+import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 
 const MAX_LENGTH = 255;
 @Component({

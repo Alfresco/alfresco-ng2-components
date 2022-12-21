@@ -19,10 +19,11 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { AttachmentComponent } from './create-task-attachment.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessContentService } from '../form/services/process-content.service';
 
 describe('AttachmentComponent', () => {
 

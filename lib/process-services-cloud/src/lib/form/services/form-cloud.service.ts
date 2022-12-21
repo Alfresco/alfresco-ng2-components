@@ -20,7 +20,6 @@ import {
     AlfrescoApiService,
     FormValues,
     AppConfigService,
-    FormOutcomeModel,
     FormModel,
     FormFieldOption
 } from '@alfresco/adf-core';
@@ -232,17 +231,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(flattenForm, formValues, readOnly);
-            if (!json.fields) {
-                form.outcomes = [
-                    new FormOutcomeModel(form, {
-                        id: '$save',
-                        name: FormOutcomeModel.SAVE_ACTION,
-                        isSystem: true
-                    })
-                ];
-            }
-            return form;
+            return new FormModel(flattenForm, formValues, readOnly);
         }
         return null;
     }

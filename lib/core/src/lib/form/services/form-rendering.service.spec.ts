@@ -17,10 +17,8 @@
 
 import { DynamicComponentResolver } from '../../../../index';
 import {
-    FormFieldModel,
     FormFieldTypes,
     UnknownWidgetComponent,
-    UploadWidgetComponent,
     TextWidgetComponent,
     JsonWidgetComponent,
     DisplayRichTextWidgetComponent
@@ -33,23 +31,6 @@ describe('FormRenderingService', () => {
 
     beforeEach(() => {
         service = new FormRenderingService();
-    });
-
-    it('should resolve Upload field as Upload widget', () => {
-        const field = new FormFieldModel(null, {
-            type: FormFieldTypes.UPLOAD,
-            params: {
-                link: null
-            }
-        });
-        const type = service.resolveComponentType(field);
-        expect(type).toBe(UploadWidgetComponent);
-    });
-
-    it('should resolve Upload widget for Upload field', () => {
-        const resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
-        const type = resolver(null);
-        expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Unknown widget for unknown field type', () => {
@@ -68,12 +49,6 @@ describe('FormRenderingService', () => {
         const resolver = service.getComponentTypeResolver(null);
         const type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);
-    });
-
-    it('should fallback to custom resolver when field type missing', () => {
-        const resolver = service.getComponentTypeResolver(null, UploadWidgetComponent);
-        const type = resolver(null);
-        expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should require field type to set resolver for type', () => {
@@ -118,10 +93,6 @@ describe('FormRenderingService', () => {
 
     it('should return default value when resolving with no field', () => {
         expect(service.resolveComponentType(null)).toBe(UnknownWidgetComponent);
-    });
-
-    it('should return custom value when resolving with no field', () => {
-        expect(service.resolveComponentType(null, UploadWidgetComponent)).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Display Text Widget for JSON field type', () => {

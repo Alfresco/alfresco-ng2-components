@@ -31,8 +31,6 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './components/widgets';
 import { StartFormCustomButtonDirective } from './components/form-custom-button.directive';
 
 import { FormFieldComponent } from './components/form-field/form-field.component';
-import { FormListComponent } from './components/form-list.component';
-import { ContentWidgetComponent } from './components/widgets/content/content.widget';
 import { WidgetComponent } from './components/widgets/widget.component';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FormRendererComponent } from './components/form-renderer.component';
@@ -61,9 +59,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         ViewerModule
     ],
     declarations: [
-        ContentWidgetComponent,
         FormFieldComponent,
-        FormListComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES,
@@ -72,9 +68,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         InplaceFormInputComponent
     ],
     exports: [
-        ContentWidgetComponent,
         FormFieldComponent,
-        FormListComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES,
