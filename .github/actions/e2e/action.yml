@@ -134,8 +134,7 @@ runs:
       shell: bash
       run: |
         if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
-          echo "HEADLESS=browser" >> $GITHUB_ENV
-        else          
+          echo "HEADLESS=browser" >> $GITHUB_ENV                  
         fi
 
     - name: run test with retries
