@@ -139,13 +139,13 @@ describe('Rating component', () => {
             }
         }));
 
-        const deleteSpy = spyOn(service, 'deleteRating');
+        spyOn(service, 'deleteRating').and.returnValue(of({}));
 
         component.ngOnChanges();
         fixture.detectChanges();
         const starThree: any = element.querySelector('#adf-colored-star-2');
         starThree.click();
         expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
-        expect(deleteSpy).toHaveBeenCalled();
+        expect(service.deleteRating).toHaveBeenCalled();
     });
 });

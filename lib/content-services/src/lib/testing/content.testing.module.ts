@@ -33,6 +33,7 @@ import { ContentModule } from '../content.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { VersionCompatibilityService } from '../version-compatibility/version-co
         RouterTestingModule,
         TranslateModule,
         CoreModule,
-        ContentModule
+        ContentModule,
+        MatIconTestingModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
