@@ -130,12 +130,12 @@ runs:
         GIT_HASH=$(echo $GIT_HASH | sed "s@'@@g")
         echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
 
-    - name: check e2e-test-id      
-      shell: bash
-      run: |
-        if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
-          echo "HEADLESS=browser" >> $GITHUB_ENV                  
-        fi
+    # - name: check e2e-test-id      
+    #   shell: bash
+    #   run: |
+    #     if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
+    #       echo "HEADLESS=browser" >> $GITHUB_ENV                  
+    #     fi
 
     - name: run test with retries
       id: retry_run
@@ -155,11 +155,12 @@ runs:
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
           echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
           echo "$E2E_TEST_ID"              
-          if [ -z "$HEADLESS" ]; then            
-            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
+          if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
+            echo "HEADLESS=browser" >> $GITHUB_ENV
+            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "$HEADLESS" || exit 1
           else
-            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "$HEADLESS" || exit 1          
-          fi             
+            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1          
+          fi            
         
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
