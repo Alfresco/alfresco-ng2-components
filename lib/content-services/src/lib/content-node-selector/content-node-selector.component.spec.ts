@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { SitesService, ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
+import { ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -30,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
+import { SitesService } from '../services/sites.service';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;

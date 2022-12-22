@@ -28,12 +28,7 @@ import {
     SiteEntry,
     SitePaging
 } from '@alfresco/js-api';
-import {
-
-    NodesApiService,
-    setupTestBed,
-    SitesService
-} from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -44,6 +39,7 @@ import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
+import { SitesService } from '../services/sites.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {

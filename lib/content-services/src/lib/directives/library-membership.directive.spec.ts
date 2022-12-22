@@ -20,8 +20,9 @@ import { LibraryMembershipDirective } from './library-membership.directive';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, CoreModule, CoreTestingModule, SitesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, CoreTestingModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
+import { SitesService } from '../services/sites.service';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;

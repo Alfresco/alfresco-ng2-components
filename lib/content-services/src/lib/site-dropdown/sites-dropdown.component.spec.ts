@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { SitesService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { getFakeSitePaging,
     getFakeSitePagingNoMoreItems,
@@ -29,6 +29,7 @@ import { getFakeSitePaging,
 } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SitesService } from '../services/sites.service';
 
 const customSiteList = {
     list: {

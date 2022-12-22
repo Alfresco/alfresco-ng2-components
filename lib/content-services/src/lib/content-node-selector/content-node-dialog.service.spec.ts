@@ -17,7 +17,7 @@
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
-import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +25,7 @@ import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeAction } from '../document-list/models/node-action.enum';
+import { SitesService } from '../services/sites.service';
 
 const fakeNodeEntry = {
     entry: {

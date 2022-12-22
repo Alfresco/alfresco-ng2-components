@@ -19,12 +19,13 @@ import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { setupTestBed, SitesService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { SiteEntry } from '@alfresco/js-api';
+import { SitesService } from '../../services/sites.service';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
