@@ -17,7 +17,7 @@
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ContentService, ThumbnailService, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { ContentService, ThumbnailService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
@@ -27,6 +27,7 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
+import { SitesService } from '../services/sites.service';
 
 @Injectable({
     providedIn: 'root'

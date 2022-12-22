@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import {
     MinimalNode,
     SiteBodyCreate,
@@ -33,7 +33,6 @@ import {
     SitesApi
 } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
-import { LogService } from './log.service';
 
 @Injectable({
     providedIn: 'root'

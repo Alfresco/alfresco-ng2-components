@@ -16,3 +16,4 @@
  */
 
 export * from './card-view-content-update.service';
+export * from './sites.service';
