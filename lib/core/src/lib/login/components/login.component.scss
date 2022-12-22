@@ -237,6 +237,11 @@
         opacity: 0.87;
     }
 
+    .adf-login-forgot-password-link {
+        cursor: pointer;
+        align-items: center;
+    }
+
     .adf-login__field {
         display: block;
         margin-left: auto;
@@ -252,4 +257,15 @@
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         margin-top: 23px;
     }
+}
+
+.forgot-password-backdrop-background {
+    background-color: #E5E5E5;
+    opacity: 1 !important;
+}
+
+.forgot-password-dialog-box {   
+    border: 1px solid var(--theme-forgot-password-dialog-border-color) !important;
+    box-shadow: 0px 0px 24px var(--theme-forgot-password-dialog-shadow-color) !important;
+    border-radius: 12px !important;
 }

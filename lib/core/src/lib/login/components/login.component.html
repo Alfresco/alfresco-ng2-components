@@ -168,6 +168,13 @@
                                         {{ 'LOGIN.LABEL.REMEMBER' | translate }}
                                 </mat-checkbox>
                             </div>
+                            <div class="adf-login-action">
+                                <div id="adf-login-action" class="adf-login-action adf-full-width">
+                                    <a class="adf-login-forgot-password-link" (click)="forgotPassword()">
+                                        {{ 'LOGIN.FORGOT-PASSWORD.FORGOT-PASSWORD' | translate }}
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <div *ngIf="implicitFlow">
                             <button

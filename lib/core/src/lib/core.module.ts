@@ -66,6 +66,7 @@ import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 import { AlfrescoApiServiceWithAngularBasedHttpClient } from './api-factories/alfresco-api-service-with-angular-based-http-client';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 interface Config {
     readonly useAngularBasedHttpClientInAlfrescoJs: boolean;
@@ -96,6 +97,7 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         CommentsModule,
         CommentListModule,
         LoginModule,
+        ForgotPasswordModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataTableModule,
@@ -135,6 +137,7 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         CommentsModule,
         CommentListModule,
         LoginModule,
+        ForgotPasswordModule,
         LanguageMenuModule,
         InfoDrawerModule,
         DataTableModule,
