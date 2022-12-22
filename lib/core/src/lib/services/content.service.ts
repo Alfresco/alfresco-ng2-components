@@ -26,7 +26,6 @@ import { LogService } from './log.service';
 import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
-import { DownloadService } from './download.service';
 import { ThumbnailService } from './thumbnail.service';
 
 @Injectable({
