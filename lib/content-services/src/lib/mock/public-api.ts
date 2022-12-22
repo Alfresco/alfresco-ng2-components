@@ -23,3 +23,5 @@ export * from './search-filter-mock';
 export * from './sites-dropdown.component.mock';
 export * from './search-query.mock';
 export * from './new-version-uploader.service.mock';
+export * from './download-zip-data.mock';
+export * from './download-zip-service.mock';

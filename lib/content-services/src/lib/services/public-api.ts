@@ -16,3 +16,6 @@
  */
 
 export * from './card-view-content-update.service';
+export * from './download-zip.service';
+export * from './deleted-nodes-api.service';
+export * from './nodes-api.service';

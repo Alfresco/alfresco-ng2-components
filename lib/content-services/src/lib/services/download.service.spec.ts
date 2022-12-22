@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadService } from './download.service';
+import { DownloadService } from '@alfresco/adf-core';
 
 describe('DownloadService', () => {
     let service: DownloadService;

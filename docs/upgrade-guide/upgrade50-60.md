@@ -77,7 +77,9 @@ How to fix it:
 ### PaginationModel
 ``Pagination`` model from ```@alfresco/js-api``` has been now deprecated in favour of internal implementated model ```PaginationModel``` evrywhere
 
-## Relocated classes
+## Relocated 
+
+### Services
 
 Following classes have been relocated:
 - `VersionCompatibilityService` and `VersionCompatibilityDirective` relocated from `@alfresco/adf-core` to `@alfresco/adf-content-services`
@@ -85,12 +87,26 @@ The following directives have been moved from the Core library to the Content Se
 library. You should modify your code to import these classes from
 `@alfresco/adf-content-services`.
 
+- [`Nodes Api service`](lib/content-services/src/lib/services/nodes-api.service.ts)
+- [`Download zip service`](lib/content-services/src/lib/services/download-zip.service.ts)
+- [`Deleted Nodes Api service`](lib/content-services/src/lib/services/deleted-nodes-api.service.ts)
+
+### Directive
+
 -   [`CheckAllowableOperationDirective`](lib/content-services/src/lib/directives/check-allowable-operation.directive.ts)
 -   [`LibraryFavoriteDirective`](lib/content-services/src/lib/directives/library-favorite.directive.ts)
 -   [`LibraryMembershipDirective`](lib/content-services/src/lib/directives/library-membership.directive.ts)
 -   [`NodeDeleteDirective`](lib/content-services/src/lib/directives/node-delete.directive.ts)
 -   [`NodeFavoriteDirective`](lib/content-services/src/lib/directives/node-favorite.directive.ts)
 -   [`NodeRestoreDirective`](lib/content-services/src/lib/directives/node-restore.directive.ts)
+-   [`Node Download directive`](lib/content-services/src/lib/directives/node-download.directive.ts)
+
+
+### Components
+
+-[`DownloadZipDialogComponent`](docs/content-services/dialogs/download-zip.dialog.md)
+
+### Pipes
 
 
 ### NodeNameTooltipPipe

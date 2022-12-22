@@ -17,10 +17,9 @@
 
 import { Directive, Input, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiService, DownloadService } from '@alfresco/adf-core';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
 import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
-import { DownloadService } from '../services/download.service';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0

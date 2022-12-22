@@ -22,7 +22,6 @@ import { MaterialModule } from '../material.module';
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
 import { UploadDirective } from './upload.directive';
-import { NodeDownloadDirective } from './node-download.directive';
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
@@ -37,7 +36,6 @@ import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directiv
     declarations: [
         HighlightDirective,
         LogoutDirective,
-        NodeDownloadDirective,
         UploadDirective,
         TooltipCardDirective,
         TooltipCardComponent,
@@ -46,7 +44,6 @@ import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directiv
     exports: [
         HighlightDirective,
         LogoutDirective,
-        NodeDownloadDirective,
         UploadDirective,
         TooltipCardDirective,
         InfiniteSelectScrollDirective

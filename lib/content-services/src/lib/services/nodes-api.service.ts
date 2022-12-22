@@ -18,10 +18,8 @@
 import { Injectable } from '@angular/core';
 import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
 import { from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { AlfrescoApiService, UserPreferencesService, NodeMetadata } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
-import { NodeMetadata } from '../models/node-metadata.model';
 
 @Injectable({
     providedIn: 'root'
@@ -111,7 +109,7 @@ export class NodesApiService {
      * @returns Details of the new folder
      */
     createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
-        const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
+        const body = Object.assign({nodeType: 'cm:folder'}, nodeBody);
         return this.createNode(parentNodeId, body, options);
     }
 

@@ -44,7 +44,6 @@ import { NotificationHistoryModule } from './notifications/notification-history.
 import { BlankPageModule } from './blank-page/blank-page.module';
 
 import { DirectiveModule } from './directives/directive.module';
-import { DownloadZipDialogModule } from './dialogs/download-zip/download-zip.dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
@@ -75,7 +74,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         PipeModule,
         CommonModule,
         DirectiveModule,
-        DownloadZipDialogModule,
         FormsModule,
         ReactiveFormsModule,
         UserInfoModule,
@@ -115,7 +113,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         PipeModule,
         CommonModule,
         DirectiveModule,
-        DownloadZipDialogModule,
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,

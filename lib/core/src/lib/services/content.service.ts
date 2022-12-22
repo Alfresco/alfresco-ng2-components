@@ -54,18 +54,7 @@ export class ContentService {
                 public apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sanitizer: DomSanitizer,
-                private downloadService: DownloadService,
                 private thumbnailService: ThumbnailService) {
-    }
-
-    /**
-     * @deprecated in 3.2.0, use DownloadService instead.
-     * Invokes content download for a Blob with a file name.
-     * @param blob Content to download.
-     * @param fileName Name of the resulting file.
-     */
-    downloadBlob(blob: Blob, fileName: string): void {
-        this.downloadService.downloadBlob(blob, fileName);
     }
 
     /**
