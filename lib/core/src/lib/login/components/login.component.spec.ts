@@ -27,9 +27,9 @@ import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { of, throwError } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { LogService } from '../../services/log.service';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -76,6 +76,9 @@ describe('LoginComponent', () => {
         userPreferences = TestBed.inject(UserPreferencesService);
         appConfigService = TestBed.inject(AppConfigService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
+
+        const logService = TestBed.inject(LogService);
+        spyOn(logService, 'error');
 
         fixture.detectChanges();
 
@@ -173,6 +176,7 @@ describe('LoginComponent', () => {
 
     it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.success.subscribe(() => {
@@ -195,7 +199,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "checking key" after a login attempt', () => {
-            spyOn(authService, 'login').and.stub();
+            spyOn(component, 'performLogin').and.stub();
 
             loginWithCredentials('fake-username', 'fake-password');
 
@@ -293,7 +297,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be taken into consideration during login attempt', fakeAsync(() => {
-            spyOn(authService, 'login').and.stub();
+            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');

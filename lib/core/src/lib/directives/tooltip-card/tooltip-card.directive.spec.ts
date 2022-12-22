@@ -24,15 +24,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { TooltipCardComponent } from './tooltip-card.component';
 
+const IMAGE_URL = 'alfresco-logo.svg';
+
 @Component({
-    template: `<span #span [adf-tooltip-card]="'Sample text'" [image]="'/assets/testImg.png'" [width]="'400'" [htmlContent]="'this is the <b>html</b> raw code'" class="test-component"></span>`
+    template: `<span #span [adf-tooltip-card]="'Sample text'" [image]="'${IMAGE_URL}'" [width]="'400'" [htmlContent]="'this is the <b>html</b> raw code'" class="test-component"></span>`
 })
 class TestComponent {
     @ViewChild(TooltipCardDirective, { static: true })
-    public directive: TooltipCardDirective;
+    directive: TooltipCardDirective;
 
     @ViewChild('span', { static: true })
-    public span: ElementRef;
+    span: ElementRef;
 }
 
 describe('TooltipCardDirective', () => {
@@ -79,7 +81,7 @@ describe('TooltipCardDirective', () => {
         const div = tooltipCard.querySelector<HTMLElement>('div');
         expect(tooltipCard.getAttribute('style')).toBe('width: 400px;');
         expect(text.textContent.trim()).toEqual('Sample text');
-        expect(img.getAttribute('src')).toEqual('/assets/testImg.png');
+        expect(img.getAttribute('src')).toEqual(IMAGE_URL);
         expect(img.getAttribute('width')).toEqual('400');
         expect(div.innerHTML).toEqual('this is the <b>html</b> raw code');
     });
