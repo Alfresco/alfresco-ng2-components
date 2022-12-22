@@ -16,25 +16,24 @@
  */
 
 import {
-    Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy, HostListener
+    Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit,
+    Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 
-import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
-import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { UntypedFormControl, Validators, UntypedFormGroup, AbstractControl, UntypedFormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
+import { ContentLinkModel, FormModel } from '@alfresco/adf-core';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
+import { StartProcessCloudService } from '../services/start-process-cloud.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
-const PROCESS_FORM_DEBOUNCE: number = 400;
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -107,8 +106,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     isLoading = false;
     isFormCloudLoaded = false;
     formCloud: FormModel;
-    currentCreatedProcess: ProcessInstanceCloud;
-    disableStartButton: boolean = true;
     staticMappings: TaskVariableCloud[] = [];
     resolvedValues: TaskVariableCloud[];
 
@@ -132,19 +129,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcessDefinitionName(processDefinitionName);
-            });
-
-        this.processForm.valueChanges
-            .pipe(
-                debounceTime(PROCESS_FORM_DEBOUNCE),
-                tap(() => this.disableStartButton = true),
-                distinctUntilChanged(),
-                filter(() => this.isProcessSelectionValid()),
-                switchMap(() => this.generateProcessInstance())
-            ).pipe(takeUntil(this.onDestroy$))
-            .subscribe((res) => {
-                this.currentCreatedProcess = res;
-                this.disableStartButton = false;
             });
     }
 
@@ -176,25 +160,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.formCloud = form;
     }
 
-    private isProcessSelectionValid(): boolean {
-        return this.processForm.valid && this.isProcessPayloadValid();
-    }
-
     private getMaxNameLength(): number {
         return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
-    }
-
-    private generateProcessInstance(): Observable<ProcessInstanceCloud> {
-        const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
-            name: this.processInstanceName.value,
-            processDefinitionKey: this.processPayloadCloud.processDefinitionKey
-        });
-
-        if (this.currentCreatedProcess && this.processPayloadCloud.processDefinitionKey === this.currentCreatedProcess.processDefinitionKey) {
-            return this.startProcessCloudService.updateProcess(this.appName, this.currentCreatedProcess.id, createPayload);
-        } else {
-            return this.startProcessCloudService.createProcess(this.appName, createPayload);
-        }
     }
 
     private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
@@ -291,10 +258,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    private isProcessPayloadValid(): boolean {
-        return !!this.processPayloadCloud.processDefinitionKey;
-    }
-
     private getProcessDefinition(processDefinitionCloud: ProcessDefinitionCloud, processDefinitionName: string): boolean {
         return (this.isValidName(processDefinitionCloud.name) && processDefinitionCloud.name.toLowerCase().includes(processDefinitionName.toLowerCase())) ||
             (processDefinitionCloud.key && processDefinitionCloud.key.toLowerCase().includes(processDefinitionName.toLowerCase()));
@@ -317,10 +280,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     startProcess() {
         this.isLoading = true;
-        this.buildProcessCloudPayload();
-        this.startProcessCloudService.startCreatedProcess(this.appName,
-            this.currentCreatedProcess.id,
-            this.processPayloadCloud)
+        const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
+            name: this.processInstanceName.value,
+            processDefinitionKey: this.processPayloadCloud.processDefinitionKey
+        });
+        this.startProcessCloudService.startProcess(this.appName, createPayload)
             .subscribe(
                 (res) => {
                     this.success.emit(res);
@@ -335,7 +299,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     cancelStartProcess() {
-        this.currentCreatedProcess = null;
         this.cancel.emit();
     }
 
@@ -418,5 +381,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    disableStartButton() {
+        return !this.appName || !this.processDefinition.valid;
     }
 }

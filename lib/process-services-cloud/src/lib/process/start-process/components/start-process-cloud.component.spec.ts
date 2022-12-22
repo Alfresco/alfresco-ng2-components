@@ -34,7 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeNoNameProcessDefinitions,
-    fakeSingleProcessDefinition, fakeCreatedProcessInstance,
+    fakeSingleProcessDefinition,
     fakeSingleProcessDefinitionWithoutForm
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
@@ -55,7 +55,6 @@ describe('StartProcessCloudComponent', () => {
     let formCloudService: FormCloudService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
-    let createProcessSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
     let getStartEventFormStaticValuesMappingSpy: jasmine.Spy;
 
@@ -106,8 +105,7 @@ describe('StartProcessCloudComponent', () => {
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(fakeProcessDefinitions));
         spyOn(processService, 'updateProcess').and.returnValue(of());
-        startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
-        createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
+        startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(fakeProcessInstance));
         getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
     });
 
@@ -160,27 +158,6 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should have start button disabled if create operation failed', fakeAsync(() => {
-            createProcessSpy.and.returnValue(throwError('fake error'));
-            const change = new SimpleChange(null, 'MyApp', false);
-            fixture.detectChanges();
-
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
-            tick();
-            typeValueInto('[data-automation-id="adf-inplace-input"]', 'OLE');
-            typeValueInto('#processDefinitionName', 'processwithoutform2');
-            fixture.detectChanges();
-            tick(550);
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const startBtn = fixture.nativeElement.querySelector('#button-start');
-                expect(startBtn.disabled).toBe(true);
-                expect(component.isProcessFormValid()).toBe(false);
-                expect(createProcessSpy).toHaveBeenCalledWith('MyApp', component.processPayloadCloud);
-            });
-        }));
 
         it('should have start button disabled when no process is selected', async () => {
             component.name = '';
@@ -378,7 +355,7 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should create a process instance if the selection is valid', fakeAsync(() => {
+        it('should display enabled start process button if the selection is valid', fakeAsync(() => {
             component.name = 'testFormWithProcess';
             component.processDefinitionName = 'processwithoutform2';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
@@ -396,12 +373,6 @@ describe('StartProcessCloudComponent', () => {
                 expect(startBtn.disabled).toBe(false);
                 expect(component.formCloud.isValid).toBe(true);
                 expect(component.isProcessFormValid()).toBe(true);
-                expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({
-                    name: 'testFormWithProcess',
-                    processDefinitionKey: fakeProcessDefinitions[1].key
-                }));
-                expect(component.currentCreatedProcess.status).toBe('CREATED');
-                expect(component.currentCreatedProcess.startDate).toBeNull();
             });
         }));
 
@@ -693,36 +664,44 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({});
         });
 
-        it('should call service to start process if required fields provided', () => {
-            component.currentCreatedProcess = fakeProcessInstance;
-            component.startProcess();
-            expect(startProcessSpy).toHaveBeenCalled();
-        });
-
-        it('should call service to start process with the correct parameters', () => {
-            component.currentCreatedProcess = fakeProcessInstance;
-            component.startProcess();
-
-            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, fakeProcessInstance.id, component.processPayloadCloud);
-        });
-
-        it('should call service to start process with the variables setted', async () => {
-            const inputProcessVariable: Map<string, any>[] = [];
-            inputProcessVariable['name'] = { value: 'Josh' };
-
-            component.variables = inputProcessVariable;
-            component.currentCreatedProcess = fakeProcessInstance;
-
-            component.startProcess();
+        it('should see start button', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
             await fixture.whenStable();
-            expect(component.processPayloadCloud.variables).toBe(inputProcessVariable);
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).toBeDefined();
+            expect(startButton).not.toBeNull();
         });
+
+        it('should call service with the correct parameters when button is clicked', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processForm.controls['processInstanceName'].setValue('My Process 1');
+            component.appName = 'test app name';
+            const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
+                name: component.processInstanceName.value,
+                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+
+            startButton.triggerEventHandler('click', null);
+            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+
+            component.success.pipe(first()).subscribe((data: ProcessInstanceCloud) => {
+                expect(data).not.toBeNull();
+                expect(data).toEqual(fakeProcessInstance);
+            });
+
+        });
+
 
         it('should output start event when process started successfully', () => {
             const emitSpy = spyOn(component.success, 'emit');
-            component.currentCreatedProcess = fakeProcessInstance;
             component.startProcess();
-
             expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
         });
 
@@ -730,7 +709,6 @@ describe('StartProcessCloudComponent', () => {
             const errorSpy = spyOn(component.error, 'emit');
             const error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
-            component.currentCreatedProcess = fakeProcessInstance;
             component.startProcess();
             await fixture.whenStable();
             expect(errorSpy).toHaveBeenCalledWith(error);
@@ -739,7 +717,6 @@ describe('StartProcessCloudComponent', () => {
         it('should indicate an error to the user if process cannot be started', async () => {
             getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             const change = new SimpleChange('myApp', 'myApp1', true);
-            component.currentCreatedProcess = fakeProcessInstance;
             component.ngOnChanges({ appName: change });
             startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
             component.startProcess();
@@ -754,10 +731,10 @@ describe('StartProcessCloudComponent', () => {
         it('should emit start event when start select a process and add a name', (done) => {
             const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
+                expect(startProcessSpy).toHaveBeenCalled();
                 done();
             });
 
-            component.currentCreatedProcess = fakeProcessInstance;
             component.name = 'NewProcess 1';
             component.startProcess();
             fixture.detectChanges();
@@ -769,9 +746,9 @@ describe('StartProcessCloudComponent', () => {
 
             const disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
+                expect(startProcessSpy).toHaveBeenCalled();
                 done();
             });
-            component.currentCreatedProcess = fakeProcessInstance;
             component.startProcess();
         });
 
@@ -786,7 +763,7 @@ describe('StartProcessCloudComponent', () => {
             expect(processInstanceName.valid).toBeTruthy();
         });
 
-        it('should have start button disabled process name has a space as the first or last character.', async () => {
+        it('should have start button disabled if process definition name has a space as the first or last character', async () => {
             component.appName = 'myApp';
             component.processDefinitionName = ' Space in the beginning';
             component.ngOnChanges({ appName: firstChange });
@@ -943,28 +920,21 @@ describe('StartProcessCloudComponent', () => {
 
     describe('cancel process', () => {
         beforeEach(() => {
-            fixture.detectChanges();
             component.name = 'NewProcess 1';
             component.appName = 'myApp';
-            component.ngOnChanges({});
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
         });
 
         it('user should see cancel button', () => {
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const cancelBtn = fixture.debugElement.query(By.css('#cancel_process'));
-                expect(cancelBtn.nativeElement).toBeDefined();
-            });
-        });
-
-        it('currentCreatedProcess should be null when cancel button clicked', () => {
-            component.cancelStartProcess();
-            expect(component.currentCreatedProcess).toBeNull();
+            const startButton = fixture.debugElement.query(By.css('#cancel_process'));
+            expect(startButton).toBeDefined();
+            expect(startButton).not.toBeNull();
         });
 
         it('undefined should be emitted when cancel button clicked', () => {
             component.cancel.pipe(first()).subscribe((data: any) => {
-                expect(data).toBe(undefined);
+                expect(data).not.toBeDefined();
             });
             component.cancelStartProcess();
         });

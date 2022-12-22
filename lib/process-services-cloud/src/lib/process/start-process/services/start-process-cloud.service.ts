@@ -31,8 +31,8 @@ import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.mode
 export class StartProcessCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,
-                private logService: LogService,
-                appConfigService: AppConfigService) {
+        private logService: LogService,
+        appConfigService: AppConfigService) {
         super(apiService, appConfigService);
     }
 
@@ -96,7 +96,9 @@ export class StartProcessCloudService extends BaseCloudService {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances`;
         payload.payloadType = 'StartProcessPayload';
 
-        return this.post(url, payload);
+        return this.post(url, payload).pipe(
+            map((result: any) => result.entry)
+        );
     }
 
     /**
@@ -135,7 +137,7 @@ export class StartProcessCloudService extends BaseCloudService {
      * @param processDefinitionId ID of the target process definition
      * @returns Static mappings for the start event
      */
-     getStartEventFormStaticValuesMapping(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
+    getStartEventFormStaticValuesMapping(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions/${processDefinitionId}/static-values`;
         return this.get(apiUrl).pipe(
             map((res: { [key: string]: any }) => {
