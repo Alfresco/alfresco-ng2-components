@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { Node, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -28,7 +28,7 @@ describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
     let fixture: ComponentFixture<VersionManagerComponent>;
     let spyOnListVersionHistory: jasmine.Spy;
-    let alfrescoApiService: AlfrescoApiService;
+    let nodesApiService: NodesApiService;
 
     const expectedComment = 'test-version-comment';
     const  node: Node = new Node({
@@ -57,7 +57,7 @@ describe('VersionManagerComponent', () => {
         component = fixture.componentInstance;
         component.node = node;
 
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        nodesApiService = TestBed.inject(NodesApiService);
         spyOnListVersionHistory = spyOn(component.versionListComponent['versionsApi'], 'listVersionHistory').and
             .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [ versionEntry ] }})));
     });
@@ -102,7 +102,7 @@ describe('VersionManagerComponent', () => {
 
     it('should emit nodeUpdated event upon successful upload of a new version', () => {
         fixture.detectChanges();
-        alfrescoApiService.nodeUpdated.subscribe((res) => {
+        nodesApiService.nodeUpdated.subscribe((res) => {
             expect(res).toEqual(node);
         });
 

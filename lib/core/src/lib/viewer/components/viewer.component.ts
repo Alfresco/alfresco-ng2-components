@@ -44,6 +44,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { NodesApiService } from "../../services";
 
 @Component({
     selector: 'adf-viewer',
@@ -304,6 +305,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     constructor(private apiService: AlfrescoApiService,
+                private nodesApiService: NodesApiService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private extensionService: AppExtensionService,
@@ -320,7 +322,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.apiService.nodeUpdated.pipe(
+        this.nodesApiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId &&
                 (node.name !== this.fileName ||
                     this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),

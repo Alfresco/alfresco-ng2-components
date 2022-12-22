@@ -26,9 +26,10 @@ import {
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../../services/nodes-api.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NodesApiService } from "../../../services";
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -82,11 +83,11 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(protected alfrescoApiService: AlfrescoApiService) {}
+    constructor(protected nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
-        this.alfrescoApiService.nodeUpdated
+        this.nodesApiService.nodeUpdated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(node => {
                 if (this.row && node && node.id) {

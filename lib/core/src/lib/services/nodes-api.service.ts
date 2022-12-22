@@ -22,11 +22,17 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NodesApiService {
+
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated = new Subject<Node>();
 
     _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {

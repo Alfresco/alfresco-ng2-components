@@ -118,6 +118,19 @@ v6.0.0 and after:
     ````    
      ]})
 ```
+### nodeUpdated Subject
+The nodeUpdated Subject has been moved from AlfrescoApiService to NodesApiService
+
+v6.0.0 and before:
+```
+ this.alfrescoApiService.nodeUpdated.pipe .....
+```
+
+v6.0.0 and after:
+
+```
+ this.nodesApiService.nodeUpdated.pipe .....
+```
 
 ## Renamed items
 
