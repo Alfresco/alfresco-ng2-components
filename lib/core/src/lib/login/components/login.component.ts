@@ -22,7 +22,6 @@ import {
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -134,7 +133,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         private _fb: UntypedFormBuilder,
         private authService: AuthenticationService,
         private translateService: TranslationService,
-        private logService: LogService,
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
@@ -209,6 +207,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.executeSubmit.emit(args);
 
         if (!args.defaultPrevented) {
+            this.actualLoginStep = LoginSteps.Checking;
             this.performLogin(values);
         }
     }
@@ -249,8 +248,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    private performLogin(values: any) {
-        this.actualLoginStep = LoginSteps.Checking;
+    performLogin(values: { username: string; password: string }) {
         this.authService
             .login(values.username, values.password, this.rememberMe)
             .subscribe(
@@ -276,8 +274,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.displayErrorMessage(err);
                     this.isError = true;
                     this.error.emit(new LoginErrorEvent(err));
-                },
-                () => this.logService.info('Login done')
+                }
             );
     }
 
