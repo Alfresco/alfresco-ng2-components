@@ -34,7 +34,6 @@ import {
     FileUploadStatus,
     NodesApiService,
     setupTestBed,
-    SitesService,
     UploadService,
     FileUploadCompleteEvent,
     DataRow,
@@ -53,6 +52,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
+import { SitesService } from '../services/sites.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {

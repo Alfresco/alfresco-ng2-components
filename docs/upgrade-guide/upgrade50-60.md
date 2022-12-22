@@ -79,8 +79,14 @@ How to fix it:
 
 ## Relocated classes
 
+| Class | Before | After |
+| --- | -- | --- |
+| `VersionCompatibilityService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `VersionCompatibilityDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+
 Following classes have been relocated:
-- `VersionCompatibilityService` and `VersionCompatibilityDirective` relocated from `@alfresco/adf-core` to `@alfresco/adf-content-services`
+
 The following directives have been moved from the Core library to the Content Services
 library. You should modify your code to import these classes from
 `@alfresco/adf-content-services`.
