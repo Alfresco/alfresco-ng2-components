@@ -26,7 +26,6 @@ import {
     EventEmitter, AfterViewInit, ViewChild, HostListener, OnDestroy
 } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { UrlService } from '../../services/url.service';
 import Cropper from 'cropperjs';
 
 @Component({
@@ -46,9 +45,6 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input()
     urlFile: string;
-
-    @Input()
-    blobFile: Blob;
 
     @Input()
     fileName: string;
@@ -73,8 +69,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     constructor(
-        private appConfigService: AppConfigService,
-        private urlService: UrlService) {
+        private appConfigService: AppConfigService) {
         this.initializeScaling();
     }
 
@@ -138,12 +133,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const blobFile = changes['blobFile'];
-        if (blobFile && blobFile.currentValue) {
-            this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
-            return;
-        }
-        if (!this.urlFile && !this.blobFile) {
+        if (!this.urlFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
     }

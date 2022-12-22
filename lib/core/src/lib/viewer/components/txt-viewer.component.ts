@@ -31,27 +31,18 @@ export class TxtViewerComponent implements OnChanges {
     @Input()
     urlFile: any;
 
-    @Input()
-    blobFile: Blob;
-
     content: string | ArrayBuffer;
 
     constructor(private http: HttpClient, private appConfigService: AppConfigService) {
     }
 
     ngOnChanges(changes: SimpleChanges): Promise<void> {
-
-        const blobFile = changes['blobFile'];
-        if (blobFile && blobFile.currentValue) {
-            return this.readBlob(blobFile.currentValue);
-        }
-
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
             return this.getUrlContent(urlFile.currentValue);
         }
 
-        if (!this.urlFile && !this.blobFile) {
+        if (!this.urlFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
 
@@ -71,20 +62,4 @@ export class TxtViewerComponent implements OnChanges {
         });
     }
 
-    private readBlob(blob: Blob): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                this.content = reader.result;
-                resolve();
-            };
-
-            reader.onerror = (error: any) => {
-                reject(error);
-            };
-
-            reader.readAsText(blob);
-        });
-    }
 }

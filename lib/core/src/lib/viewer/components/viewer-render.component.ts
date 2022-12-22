@@ -42,10 +42,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     urlFile = '';
 
-    /** Loads a Blob File */
-    @Input()
-    blobFile: Blob;
-
     /** Toggles the 'Full Screen' feature. */
     @Input()
     allowFullScreen = true;
@@ -144,20 +140,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     ngOnChanges() {
         this.isLoading = true;
 
-        if (this.blobFile) {
-            this.setUpBlobData();
-        } else if (this.urlFile) {
+        if (this.urlFile) {
             this.setUpUrlFile();
         }
         this.isLoading = false;
-    }
-
-    private setUpBlobData() {
-        this.internalFileName = this.fileName;
-        this.internalViewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
-
-        this.extensionChange.emit(this.blobFile.type);
-        this.scrollTop();
     }
 
     private setUpUrlFile() {

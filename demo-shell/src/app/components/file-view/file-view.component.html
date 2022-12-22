@@ -4,8 +4,8 @@
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
 
             <adf-info-drawer-tab label="APP.INFO_DRAWER.COMMENTS">
-                <adf-node-comments 
-                    [nodeId]="nodeId" 
+                <adf-node-comments
+                    [nodeId]="nodeId"
                     [readOnly]="!isCommentEnabled"
                 >
                 </adf-node-comments>
@@ -300,6 +300,7 @@
         </adf-info-drawer>
     </ng-template>
 
+    <div *ngIf="">
     <adf-alfresco-viewer
         (close)="onViewerVisibilityChanged()"
         [nodeId]="nodeId"

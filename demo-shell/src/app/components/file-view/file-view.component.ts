@@ -64,11 +64,12 @@ export class FileViewComponent implements OnInit {
     desiredAspect: string = null;
     showAspect: string = null;
     name: string;
+    filename: string;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private nodeApiService: NodesApiService,
-                private contentServices: ContentService,
+                private contentService: ContentService,
                 private preview: PreviewService,
                 private notificationService: NotificationService) {
     }
@@ -81,8 +82,8 @@ export class FileViewComponent implements OnInit {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
                         if (node && node.isFile) {
-                            this.isCommentEnabled = this.contentServices.hasPermissions(node, PermissionsEnum.NOT_CONSUMER) ||
-                                this.contentServices.hasAllowableOperations(node, AllowableOperationsEnum.UPDATE);
+                            this.isCommentEnabled = this.contentService.hasPermissions(node, PermissionsEnum.NOT_CONSUMER) ||
+                                this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATE);
                             this.nodeId = id;
                             return;
                         }
@@ -90,6 +91,9 @@ export class FileViewComponent implements OnInit {
                     },
                     () => this.router.navigate(['/files', id])
                 );
+            } else{
+                this.urlFile = this.contentService.createTrustedUrl(this.preview.content);
+                this.filename = this.preview.name;
             }
         });
     }

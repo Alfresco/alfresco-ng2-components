@@ -37,7 +37,6 @@
             <ng-container *ngSwitchCase="'pdf'">
                 <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate"
                                 [allowThumbnails]="allowThumbnails"
-                                [blobFile]="blobFile"
                                 [urlFile]="urlFile"
                                 [fileName]="internalFileName"
                                 [cacheType]="cacheTypeForContent"
@@ -51,7 +50,6 @@
                 <adf-img-viewer [urlFile]="urlFile"
                                 [readOnly]="readOnly"
                                 [fileName]="internalFileName"
-                                [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"
                 ></adf-img-viewer>
@@ -62,15 +60,13 @@
                                   [urlFile]="urlFile"
                                   [tracks]="tracks"
                                   [mimeType]="mimeType"
-                                  [blobFile]="blobFile"
                                   [fileName]="internalFileName"
                                   (error)="onUnsupportedFile()">
                 </adf-media-player>
             </ng-container>
 
             <ng-container *ngSwitchCase="'text'">
-                <adf-txt-viewer [urlFile]="urlFile"
-                                [blobFile]="blobFile">
+                <adf-txt-viewer [urlFile]="urlFile">
 
                 </adf-txt-viewer>
             </ng-container>

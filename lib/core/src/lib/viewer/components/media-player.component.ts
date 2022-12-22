@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { ContentService } from '../../services/content.service';
 import { Track } from '../models/viewer.model';
 
 @Component({
@@ -32,9 +31,6 @@ export class MediaPlayerComponent implements OnChanges {
     urlFile: string;
 
     @Input()
-    blobFile: Blob;
-
-    @Input()
     mimeType: string;
 
     @Input()
@@ -47,18 +43,11 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private contentService: ContentService) {
+    constructor() {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const blobFile = changes['blobFile'];
-
-        if (blobFile && blobFile.currentValue) {
-            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
-            return;
-        }
-
-        if (!this.urlFile && !this.blobFile) {
+        if (!this.urlFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
     }

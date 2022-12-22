@@ -57,9 +57,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     urlFile: string;
 
     @Input()
-    blobFile: Blob;
-
-    @Input()
     fileName: string;
 
     @Input()
@@ -149,21 +146,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const blobFile = changes['blobFile'];
-
-        if (blobFile && blobFile.currentValue) {
-            const reader = new FileReader();
-            reader.onload = async () => {
-                const pdfSource: PDFSource = {
-                    ...this.pdfjsDefaultOptions,
-                    data: reader.result,
-                    withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
-                };
-                this.executePdf(pdfSource);
-            };
-            reader.readAsArrayBuffer(blobFile.currentValue);
-        }
-
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
             const pdfSource: PDFSource = {
@@ -179,7 +161,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.executePdf(pdfSource);
         }
 
-        if (!this.urlFile && !this.blobFile) {
+        if (!this.urlFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
     }
