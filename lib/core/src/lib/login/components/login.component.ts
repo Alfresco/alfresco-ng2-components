@@ -199,7 +199,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             data: {
                 title: 'Recover'
             },
-            backdropClass: 'backdrop-background',
+            backdropClass: 'forgot-password-backdrop-background',
             panelClass: 'forgot-password-dialog-box'
         });
     }
