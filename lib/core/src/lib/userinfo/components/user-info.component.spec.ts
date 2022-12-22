@@ -64,6 +64,7 @@ class FakeSanitizer extends DomSanitizer {
 }
 
 describe('User info component', () => {
+    const profilePictureUrl = 'alfresco-logo.svg';
 
     let component: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
@@ -111,8 +112,8 @@ describe('User info component', () => {
         identityUserService = TestBed.inject(IdentityUserService);
 
         spyOn(window, 'requestAnimationFrame').and.returnValue(1);
-        spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('app/rest/admin/profile-picture');
-        spyOn(contentService, 'getContentUrl').and.returnValue('alfresco-logo.svg');
+        spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue(profilePictureUrl);
+        spyOn(contentService, 'getContentUrl').and.returnValue(profilePictureUrl);
     });
 
     afterEach(() => {
@@ -215,7 +216,7 @@ describe('User info component', () => {
 
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
                     expect(loggedImage).not.toBeNull();
-                    expect(loggedImage.properties.src).toContain('alfresco-logo.svg');
+                    expect(loggedImage.properties.src).toContain(profilePictureUrl);
                 });
 
                 it('should display the current user image if user has avatarId', (done) => {
@@ -228,7 +229,7 @@ describe('User info component', () => {
                     });
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
                     expect(loggedImage).not.toBeNull();
-                    expect(loggedImage.properties.src).toContain('alfresco-logo.svg');
+                    expect(loggedImage.properties.src).toContain(profilePictureUrl);
                 });
 
                 it('should get the ecm user information from the service', async () => {
@@ -240,7 +241,7 @@ describe('User info component', () => {
                     expect(element.querySelector('#userinfo_container')).not.toBeNull();
                     expect(fixture.debugElement.query(By.css('#ecm-username'))).not.toBeNull();
                     expect(ecmImage).not.toBeNull();
-                    expect(ecmImage.properties.src).toContain('alfresco-logo.svg');
+                    expect(ecmImage.properties.src).toContain(profilePictureUrl);
                     expect(ecmFullName.nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
                     expect(ecmJobTitle.nativeElement.textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
                 });
@@ -335,8 +336,7 @@ describe('User info component', () => {
                 await whenFixtureReady();
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(element.querySelector('#logged-user-img')).not.toBeNull();
-                expect(element.querySelector('#logged-user-img').getAttribute('src'))
-                    .toContain('app/rest/admin/profile-picture');
+                expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain(profilePictureUrl);
             });
 
             it('should show last name if first name is null', async () => {
@@ -387,7 +387,7 @@ describe('User info component', () => {
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(bpmUsername).not.toBeNull();
                 expect(bpmImage).not.toBeNull();
-                expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
+                expect(bpmImage.properties.src).toContain(profilePictureUrl);
                 expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
                 expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
             });
@@ -403,7 +403,7 @@ describe('User info component', () => {
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(ecmUsername).not.toBeNull();
                 expect(ecmImage).not.toBeNull();
-                expect(ecmImage.properties.src).toContain('alfresco-logo.svg');
+                expect(ecmImage.properties.src).toContain(profilePictureUrl);
                 expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
                 expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
             });
@@ -413,7 +413,7 @@ describe('User info component', () => {
                 openUserInfo();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#logged-user-img')).toBeDefined();
-                expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('alfresco-logo.svg');
+                expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual(profilePictureUrl);
             });
 
             it('should show the ecm initials if the ecm user has no image', async () => {
@@ -572,7 +572,7 @@ describe('User info component', () => {
                 await fixture.whenStable();
                 const bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
                 const bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
-                expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
+                expect(bpmImage.properties.src).toContain(profilePictureUrl);
                 expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
                 expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
             });
