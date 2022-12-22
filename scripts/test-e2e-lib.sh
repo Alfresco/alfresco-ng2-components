@@ -2,7 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "$DIR/../"
-export BROWSER_RUN=false
+BROWSER_RUN=false
 DEVELOPMENT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
