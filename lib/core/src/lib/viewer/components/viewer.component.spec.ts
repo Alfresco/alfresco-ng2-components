@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AlfrescoApiService, NodesApiService, RenditionsService } from '../../services';
+import { NodesApiService, RenditionsService } from '../../services';
 
 import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
@@ -153,7 +153,6 @@ describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
-    let alfrescoApiService: AlfrescoApiService;
     let nodesApiService: NodesApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
@@ -195,7 +194,6 @@ describe('ViewerComponent', () => {
 
         nodesApiService = TestBed.inject(NodesApiService);
         uploadService = TestBed.inject(UploadService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
     });
