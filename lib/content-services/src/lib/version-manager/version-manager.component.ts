@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { ContentService, NodesApiService, FileUploadErrorEvent, NodesApiService } from '@alfresco/adf-core';
+import { ContentService, FileUploadErrorEvent, NodesApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
