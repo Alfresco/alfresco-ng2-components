@@ -44,7 +44,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../services/content.service';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
-import { NodesApiService } from "../../services";
+import { NodesApiService } from '../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-viewer',

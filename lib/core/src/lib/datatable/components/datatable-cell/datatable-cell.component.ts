@@ -26,10 +26,9 @@ import {
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { AlfrescoApiService } from '../../../services/nodes-api.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NodesApiService } from "../../../services";
+import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-datatable-cell',

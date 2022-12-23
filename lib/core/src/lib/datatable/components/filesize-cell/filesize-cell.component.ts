@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-filesize-cell',
@@ -33,7 +33,7 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent {
-    constructor(alfrescoApiService: AlfrescoApiService) {
-        super(alfrescoApiService);
+    constructor(nodesApiService: NodesApiService) {
+        super(nodesApiService);
     }
 }

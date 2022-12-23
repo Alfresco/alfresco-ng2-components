@@ -21,7 +21,7 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '../../../services/user-preferences.service';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { NodesApiService } from '../../../services/nodes-api.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -65,10 +65,10 @@ export class DateCellComponent extends DataTableCellComponent {
 
     constructor(
         userPreferenceService: UserPreferencesService,
-        alfrescoApiService: AlfrescoApiService,
+        nodesApiService: NodesApiService,
         appConfig: AppConfigService
     ) {
-        super(alfrescoApiService);
+        super(nodesApiService);
 
         this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);

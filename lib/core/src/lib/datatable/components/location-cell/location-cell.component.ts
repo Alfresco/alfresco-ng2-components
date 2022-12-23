@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-location-cell',
@@ -43,8 +43,8 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     @Input()
     link: any[];
 
-    constructor(alfrescoApiService: AlfrescoApiService) {
-        super(alfrescoApiService);
+    constructor(nodesApiService: NodesApiService) {
+        super(nodesApiService);
     }
 
     /** @override */
