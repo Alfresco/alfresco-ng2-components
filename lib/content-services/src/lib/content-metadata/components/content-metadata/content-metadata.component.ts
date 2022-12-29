@@ -22,7 +22,6 @@ import {
     CardViewItem,
     NodesApiService,
     LogService,
-    AlfrescoApiService,
     TranslationService,
     AppConfigService,
     CardViewBaseItemModel,
@@ -100,7 +99,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private cardViewContentUpdateService: CardViewContentUpdateService,
         private nodesApiService: NodesApiService,
         private logService: LogService,
-        private alfrescoApiService: AlfrescoApiService,
         private translationService: TranslationService,
         private appConfig: AppConfigService
     ) {
@@ -212,7 +210,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     }
                     this.revertChanges();
                     Object.assign(this.node, updatedNode);
-                    this.alfrescoApiService.nodeUpdated.next(this.node);
+                    this.nodesApiService.nodeUpdated.next(this.node);
                 }
             });
     }

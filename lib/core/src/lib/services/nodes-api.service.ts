@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
-import { from, Observable, throwError } from 'rxjs';
+import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
+import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
@@ -27,6 +27,11 @@ import { NodeMetadata } from '../models/node-metadata.model';
     providedIn: 'root'
 })
 export class NodesApiService {
+
+    /**
+     * Publish/subscribe to events related to node updates.
+     */
+    nodeUpdated = new Subject<Node>();
 
     _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {

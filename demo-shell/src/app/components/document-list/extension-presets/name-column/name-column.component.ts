@@ -26,7 +26,7 @@ import {
 } from '@angular/core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -52,12 +52,12 @@ export class NameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private element: ElementRef, private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.alfrescoApiService.nodeUpdated
+        this.nodesApiService.nodeUpdated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((node: Node) => {
                 const row = this.context.row;

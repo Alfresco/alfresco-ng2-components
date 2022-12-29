@@ -18,7 +18,7 @@
 import { MinimalNode } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
@@ -30,7 +30,6 @@ describe('NodeAspectService', () => {
     let dialogAspectListService: DialogAspectListService;
     let nodeAspectService: NodeAspectService;
     let nodeApiService: NodesApiService;
-    let alfrescoApiService: AlfrescoApiService;
     let cardViewContentUpdateService: CardViewContentUpdateService;
 
     setupTestBed({
@@ -44,7 +43,6 @@ describe('NodeAspectService', () => {
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
         nodeApiService = TestBed.inject(NodesApiService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         cardViewContentUpdateService = TestBed.inject(CardViewContentUpdateService);
     });
 
@@ -79,7 +77,7 @@ describe('NodeAspectService', () => {
     });
 
     it('should send and update node event once the node has been updated', async () => {
-        await alfrescoApiService.nodeUpdated.subscribe((nodeUpdated) => {
+        await nodeApiService.nodeUpdated.subscribe((nodeUpdated) => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
         });

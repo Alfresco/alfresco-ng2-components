@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
@@ -39,12 +39,12 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private api: AlfrescoApiService) {}
+    constructor(private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.api.nodeUpdated
+        this.nodesApiService.nodeUpdated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(node => {
                 const row: ShareDataRow = this.context.row;

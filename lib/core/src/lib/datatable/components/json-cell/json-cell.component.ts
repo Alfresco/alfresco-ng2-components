@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } 
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { NodesApiService } from '../../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-json-cell',
@@ -45,9 +45,9 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
 
     constructor(
         private dialog: MatDialog,
-        alfrescoApiService: AlfrescoApiService
+        nodesApiService: NodesApiService
     ) {
-        super(alfrescoApiService);
+        super(nodesApiService);
     }
 
     ngOnInit() {

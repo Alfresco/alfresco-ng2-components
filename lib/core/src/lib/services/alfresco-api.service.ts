@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
 import { OpenidConfiguration } from './openid-configuration.interface';
@@ -27,10 +27,6 @@ import { OpenidConfiguration } from './openid-configuration.interface';
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-    /**
-     * Publish/subscribe to events related to node updates.
-     */
-    nodeUpdated = new Subject<Node>();
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 

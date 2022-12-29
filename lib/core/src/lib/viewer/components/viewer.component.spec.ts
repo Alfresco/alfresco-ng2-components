@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AlfrescoApiService, RenditionsService } from '../../services';
+import { NodesApiService, RenditionsService } from '../../services';
 
 import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
@@ -153,7 +153,7 @@ describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
-    let alfrescoApiService: AlfrescoApiService;
+    let nodesApiService: NodesApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
     let uploadService: UploadService;
@@ -192,8 +192,8 @@ describe('ViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
+        nodesApiService = TestBed.inject(NodesApiService);
         uploadService = TestBed.inject(UploadService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
     });
@@ -609,15 +609,15 @@ describe('ViewerComponent', () => {
 
         expect(component.fileTitle).toBe('file1');
 
-        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
+        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file2');
 
-        alfrescoApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
+        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
 
-        alfrescoApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
+        nodesApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
         expect(component.nodeId).toBe('id1');

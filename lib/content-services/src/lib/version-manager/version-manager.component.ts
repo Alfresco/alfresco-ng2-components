@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { ContentService, AlfrescoApiService, FileUploadErrorEvent } from '@alfresco/adf-core';
+import { ContentService, FileUploadErrorEvent, NodesApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -85,7 +85,7 @@ export class VersionManagerComponent implements OnInit {
     uploadState: string = 'close';
 
     constructor(private contentService: ContentService,
-                private alfrescoApiService: AlfrescoApiService) {
+                private nodesApiService: NodesApiService) {
     }
 
     ngOnInit() {
@@ -95,7 +95,7 @@ export class VersionManagerComponent implements OnInit {
     }
 
     refresh(node: Node) {
-        this.alfrescoApiService.nodeUpdated.next(node);
+        this.nodesApiService.nodeUpdated.next(node);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(node);
         this.uploadState = 'close';
@@ -104,7 +104,7 @@ export class VersionManagerComponent implements OnInit {
     onUploadSuccess(event: any) {
         this.showVersionComparison = false;
         this.newFileVersion = null;
-        this.alfrescoApiService.nodeUpdated.next(event.value.entry);
+        this.nodesApiService.nodeUpdated.next(event.value.entry);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(event.value.entry);
         this.uploadState = 'close';

@@ -26,7 +26,7 @@ import {
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-core';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { takeUntil } from 'rxjs/operators';
 
@@ -61,12 +61,12 @@ export class NameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private element: ElementRef, private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.alfrescoApiService.nodeUpdated
+        this.nodesApiService.nodeUpdated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(node => {
                 const row: ShareDataRow = this.context.row;
