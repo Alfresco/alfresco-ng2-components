@@ -18,7 +18,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DownloadEntry, MinimalNode } from '@alfresco/js-api';
-import { LogService } from '../../services/log.service';
+import { LogService } from '../../common/services/log.service';
 import { DownloadZipService } from '../../services/download-zip.service';
 import { ContentService } from '../../services/content.service';
 import { NodesApiService } from '../../services/nodes-api.service';

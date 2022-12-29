@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Observable, from } from 'rxjs';
 import { Oauth2Auth } from '@alfresco/js-api';
 

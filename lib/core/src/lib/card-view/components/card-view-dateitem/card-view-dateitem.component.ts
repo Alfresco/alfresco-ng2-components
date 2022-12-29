@@ -22,9 +22,9 @@ import { MAT_MOMENT_DATETIME_FORMATS, MomentDatetimeAdapter } from '@mat-datetim
 import moment, { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
+import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
+import { MomentDateAdapter } from '../../../common/utils/moment-date-adapter';
+import { MOMENT_DATE_FORMATS } from '../../../common/utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

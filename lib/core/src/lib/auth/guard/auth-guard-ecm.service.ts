@@ -16,17 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
-import { AppConfigService } from '../app-config/app-config.service';
+import {
+    ActivatedRouteSnapshot, Router, UrlTree
+} from '@angular/router';
 import { AuthenticationService } from './authentication.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from './storage.service';
+import { StorageService } from '../common/services/storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuardBpm extends AuthGuardBase {
+export class AuthGuardEcm extends AuthGuardBase {
 
     constructor(authenticationService: AuthenticationService,
                 router: Router,
@@ -37,9 +39,10 @@ export class AuthGuardBpm extends AuthGuardBase {
     }
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
+        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }
+
         return this.redirectToUrl(redirectUrl);
     }
 }

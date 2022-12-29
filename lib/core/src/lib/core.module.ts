@@ -62,7 +62,7 @@ import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/au
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({

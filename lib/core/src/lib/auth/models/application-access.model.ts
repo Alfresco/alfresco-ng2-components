@@ -15,5 +15,7 @@
  * limitations under the License.
  */
 
-export * from './authentication';
-export * from './authentication-interceptor/authentication.interceptor';
+export interface ApplicationAccessModel {
+    name: string;
+    roles: string[];
+}

@@ -20,7 +20,7 @@ import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { map, catchError } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { CommentProcessServiceInterface } from './comment-process.service.interface';

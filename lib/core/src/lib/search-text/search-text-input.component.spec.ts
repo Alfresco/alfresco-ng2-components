@@ -22,7 +22,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 
 describe('SearchTextInputComponent', () => {

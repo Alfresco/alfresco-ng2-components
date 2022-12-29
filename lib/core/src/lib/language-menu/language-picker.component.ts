@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { LanguageItem } from '../services/language-item.interface';
+import { LanguageItem } from '../common/services/language-item.interface';
 
 @Component({
     selector: 'adf-picker-button',

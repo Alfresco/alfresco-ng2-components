@@ -20,7 +20,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import {
     UserPreferencesService,
     UserPreferenceValues
-} from '../../../services/user-preferences.service';
+} from '../../../common/services/user-preferences.service';
 import { NodesApiService } from '../../../services/nodes-api.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil } from 'rxjs/operators';

@@ -32,7 +32,7 @@ import {
     SimpleChanges
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LogService } from '../../services/log.service';
+import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';

@@ -21,9 +21,10 @@ import {
 } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../auth/services/authentication.service';
+import { OauthConfigModel } from '../../auth/models/oauth-config.model';
 import { TranslationService } from '../../services/translation.service';
-import { UserPreferencesService } from '../../services/user-preferences.service';
+import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
@@ -33,7 +34,6 @@ import {
     AppConfigService,
     AppConfigValues
 } from '../../app-config/app-config.service';
-import { OauthConfigModel } from '../../models/oauth-config.model';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

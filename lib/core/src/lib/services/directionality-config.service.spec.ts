@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 

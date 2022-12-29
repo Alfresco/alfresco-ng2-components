@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDe
 import { CommentModel } from '../models/comment.model';
 import { EcmUserService } from '../services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

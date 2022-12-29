@@ -21,8 +21,8 @@ import { ContentApi, MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
-import { LogService } from './log.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
+import { LogService } from '../common/services/log.service';
 import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';

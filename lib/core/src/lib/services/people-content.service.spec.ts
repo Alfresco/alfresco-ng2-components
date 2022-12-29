@@ -22,7 +22,7 @@ import { PeopleContentService, PeopleContentQueryRequestModel } from './people-c
 import { AlfrescoApiService } from './alfresco-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { AuthenticationService } from './authentication.service';
 
 describe('PeopleContentService', () => {

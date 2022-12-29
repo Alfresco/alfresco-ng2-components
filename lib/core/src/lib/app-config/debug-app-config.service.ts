@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '../common/services/storage.service';
 import { AppConfigService, AppConfigValues } from './app-config.service';
 import { ExtensionService } from '@alfresco/adf-extensions';
 

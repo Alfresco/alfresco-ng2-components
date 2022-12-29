@@ -27,7 +27,7 @@ import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { TranslationService } from '../services/translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
-import { CookieService } from '../services/cookie.service';
+import { CookieService } from '../common/services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../services/directionality-config-factory';

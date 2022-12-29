@@ -19,8 +19,8 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { ReplaySubject } from 'rxjs';
-import { OauthConfigModel } from '../models/oauth-config.model';
-import { StorageService } from './storage.service';
+import { OauthConfigModel } from '../auth/models/oauth-config.model';
+import { StorageService } from '../common/services/storage.service';
 import { OpenidConfiguration } from './openid-configuration.interface';
 
 @Injectable({

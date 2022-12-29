@@ -19,7 +19,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { UserPreferencesService } from '../../services/user-preferences.service';
+import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
@@ -29,7 +29,7 @@ import { of, throwError } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { LogService } from '../../services/log.service';
+import { LogService } from '../../common/services/log.service';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;

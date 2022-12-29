@@ -16,12 +16,12 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../auth/services/authentication.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
-import { IdentityUserModel } from '../../models/identity-user.model';
+import { IdentityUserModel } from '../../auth/models/identity-user.model';
 import { BpmUserService } from '../../services/bpm-user.service';
-import { IdentityUserService } from '../../services/identity-user.service';
+import { IdentityUserService } from '../../auth/services/identity-user.service';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { PeopleContentService } from '../../services/people-content.service';

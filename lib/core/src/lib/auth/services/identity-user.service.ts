@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';

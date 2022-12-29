@@ -17,7 +17,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ObjectUtils } from '../utils/object-utils';
+import { ObjectUtils } from '../common/utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';

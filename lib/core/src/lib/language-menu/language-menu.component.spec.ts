@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 

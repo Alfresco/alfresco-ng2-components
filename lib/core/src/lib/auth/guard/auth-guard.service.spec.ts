@@ -23,7 +23,7 @@ import { AuthenticationService } from './authentication.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { StorageService } from './storage.service';
+import { StorageService } from '../common/services/storage.service';
 
 describe('AuthGuardService', () => {
     let state;

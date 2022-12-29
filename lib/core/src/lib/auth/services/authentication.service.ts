@@ -18,16 +18,15 @@
 import { Authentication } from '@alfresco/adf-core/auth';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, Observer, ReplaySubject } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { CookieService } from '../../common/services/cookie.service';
+import { LogService } from '../../common/services/log.service';
 import { RedirectionModel } from '../models/redirection.model';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
-import { StorageService } from './storage.service';
+import { StorageService } from '../../common/services/storage.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -48,12 +47,6 @@ export class AuthenticationService extends Authentication {
      * Emits logout event
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
-
-    _profileApi: UserProfileApi;
-    get profileApi(): UserProfileApi {
-        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
-        return this._profileApi;
-    }
 
     constructor(
         private appConfig: AppConfigService,
@@ -313,15 +306,6 @@ export class AuthenticationService extends Authentication {
     getRedirect(): string {
         const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
-    }
-
-    /**
-     * Gets information about the user currently logged into APS.
-     *
-     * @returns User information
-     */
-    getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {

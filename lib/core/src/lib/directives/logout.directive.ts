@@ -18,7 +18,7 @@
 import { Input, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Directive({
     selector: '[adf-logout]'

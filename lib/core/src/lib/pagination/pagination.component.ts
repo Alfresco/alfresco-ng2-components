@@ -20,7 +20,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 

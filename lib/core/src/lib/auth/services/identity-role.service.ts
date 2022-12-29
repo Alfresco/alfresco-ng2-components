@@ -22,7 +22,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AppConfigService } from '../app-config/app-config.service';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 
 export interface IdentityRoleResponseModel {
     entries: IdentityRoleModel[];
