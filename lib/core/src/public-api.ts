@@ -53,5 +53,8 @@ export * from './lib/events/index';
 export * from './lib/mock/index';
 export * from './lib/testing';
 
+export * from './lib/auth';
+export * from './lib/common';
+
 export * from './lib/material.module';
 export * from './lib/core.module';
