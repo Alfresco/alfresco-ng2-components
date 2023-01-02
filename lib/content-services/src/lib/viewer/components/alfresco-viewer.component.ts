@@ -33,7 +33,9 @@ import {
 import {
     AlfrescoApiService, ContentService,
     FileModel,
-    LogService, Track,
+    LogService,
+    NodesApiService,
+    Track,
     UploadService,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
@@ -221,6 +223,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     constructor(private apiService: AlfrescoApiService,
+                private nodesApiService: NodesApiService,
                 private renditionViewerService: RenditionViewerService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
@@ -234,7 +237,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.apiService.nodeUpdated.pipe(
+        this.nodesApiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId &&
                 (node.name !== this.fileName ||
                     this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
