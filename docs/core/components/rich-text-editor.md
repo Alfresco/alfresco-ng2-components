@@ -9,12 +9,6 @@ Last reviewed: 2020-07-20
 
 Wrap [Editor.js](https://editorjs.io/) element to show a Rich Text editor allows to add formatted text.
 
-## Contents
-
--   [Basic usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-
 ## Basic usage
 
 **app.component.html**
@@ -72,7 +66,7 @@ export class RichTextEditorDemo {
 
 ### Properties
 
-| Name     | Type         | Default value | Description                                                                                  |
-| -------- | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
-| data     | `OutputData` | null          | EditorJs data format (follow the [official documentation](https://editorjs.io/saving-data) ) |
-| readOnly | `boolean`    | false         | If true users won't have the ability to change the document content                          |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| data | `OutputData` | null | EditorJs data format (follow the [official documentation](https://editorjs.io/saving-data) ) |
+| readOnly | `boolean` | false | If true users won't have the ability to change the document content |

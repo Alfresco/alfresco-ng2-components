@@ -39,6 +39,11 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     -   _obj:_ `any`  - 
     -   **Returns** [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) - 
 
+-   **resetProcessFilterToDefaults**(appName: `string`, filter: [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>`<br/>
+    Reset the process filters to the default configuration if it exists and stores it. If there is no default configuration for the process cloud filter with the provided filter name, then it changes nothing but stores the current values of the filter
+    -   _appName:_ `string`  - Name of the target app
+    -   _filter:_ [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)  - The process filter to be restored to defaults
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>` - Observable of process filters details
 -   **updateFilter**(updatedFilter: [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>`<br/>
     Update process instance filter
     -   _updatedFilter:_ [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)  - 
@@ -47,8 +52,8 @@ Manage Process Filters, which are pre-configured Process Instance queries.
 
     -   _value:_ `any`  - 
     -   _filterProperties:_ `string[]`  - 
-    -   _appName:_ `string`  - (Optional) 
-    -   _id:_ `string`  - (Optional) 
+    -   _appName:_ `string`  - (Optional)
+    -   _id:_ `string`  - (Optional)
     -   **Returns** `any` -
 
 ## Inject Preference service

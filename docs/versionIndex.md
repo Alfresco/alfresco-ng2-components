@@ -41,11 +41,16 @@ backend services have been tested with each released version of ADF.
 -   [v2.0.0](#v200)
 
 ## v5.1.0
+
 <!--v510 start-->
 
--   [Snackbar Content](core/components/snackbar-content.component.md)
+-   [Auto focus directive](content-services/directives/auto-focus.directive.md)
+-   [Node comments component](content-services/components/node-comments.component.md)
+-   [Snackbar content component](core/components/snackbar-content.component.md)
+-   [Task comments component](process-services/components/task-comments.component.md)
 
 <!--v510 end-->
+
 ## v4.7.0
 
 <!--v470 start-->
@@ -120,7 +125,7 @@ backend services have been tested with each released version of ADF.
 -   [Unclaim task cloud directive](process-services-cloud/directives/unclaim-task-cloud.directive.md)
 -   [Unclaim task directive](process-services/directives/unclaim-task.directive.md)
 -   [Version comparison component](content-services/components/version-comparison.component.md)
--   [Version compatibility directive](core/directives/version-compatibility.directive.md)
+-   [Version compatibility directive](content-services/directives/version-compatibility.directive.md)
 
 <!--v390 end-->
 
@@ -159,6 +164,7 @@ backend services have been tested with each released version of ADF.
 -   [About application component](core/components/about-application.component.md)
 -   [About github link component](core/components/about-github-link.component.md)
 -   [About product version component](core/components/about-product-version.component.md)
+-   [About component](core/components/about.component.md)
 -   [Edit json dialog](core/dialogs/edit-json.dialog.md)
 -   [Identity role service](core/services/identity-role.service.md)
 
@@ -432,7 +438,7 @@ backend services have been tested with each released version of ADF.
 -   [Card item types service](core/services/card-item-types.service.md)
 -   [Card view update service](core/services/card-view-update.service.md)
 -   [Card view component](core/components/card-view.component.md)
--   [Check allowable operation directive](core/directives/check-allowable-operation.directive.md)
+-   [Check allowable operation directive](content-services/directives/check-allowable-operation.directive.md)
 -   [Checklist component](process-services/components/checklist.component.md)
 -   [Comment list component](core/components/comment-list.component.md)
 -   [Comment process service](core/services/comment-process.service.md)
@@ -485,12 +491,11 @@ backend services have been tested with each released version of ADF.
 -   [Login component](core/components/login.component.md)
 -   [Logout directive](core/directives/logout.directive.md)
 -   [Mime type icon pipe](core/pipes/mime-type-icon.pipe.md)
--   [Node delete directive](core/directives/node-delete.directive.md)
--   [Node favorite directive](core/directives/node-favorite.directive.md)
+-   [Node delete directive](content-services/directives/node-delete.directive.md)
+-   [Node favorite directive](content-services/directives/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)
 -   [Node permission service](content-services/services/node-permission.service.md)
--   [Node restore directive](core/directives/node-restore.directive.md)
--   [Node service](core/services/node.service.md)
+-   [Node restore directive](content-services/directives/node-restore.directive.md)
 -   [Nodes api service](core/services/nodes-api.service.md)
 -   [Notification service](core/services/notification.service.md)
 -   [Page title service](core/services/page-title.service.md)
@@ -524,7 +529,7 @@ backend services have been tested with each released version of ADF.
 -   [Select apps dialog component](process-services/components/select-apps-dialog.component.md)
 -   [Shared links api service](core/services/shared-links-api.service.md)
 -   [Sites dropdown component](content-services/components/sites-dropdown.component.md)
--   [Sites service](core/services/sites.service.md)
+-   [Sites service](content-services/services/sites.service.md)
 -   [Start form component](core/components/start-form.component.md)
 -   [Start process component](process-services/components/start-process.component.md)
 -   [Start task component](process-services/components/start-task.component.md)

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-05
 ---
 
-# [People Process service](lib/core/src/lib/services/people-process.service.ts "Defined in people-process.service.ts")
+# [People Process service](../../../lib/core/src/lib/services/people-process.service.ts "Defined in people-process.service.ts")
 
 Gets information about Process Services users.
 
@@ -17,10 +17,16 @@ Gets information about Process Services users.
     Gets the profile picture URL for the specified user.
     -   _user:_ [`UserProcessModel`](../../core/models/user-process.model.md)  - The target user
     -   **Returns** `string` - Profile picture URL
--   **getWorkflowUsers**(taskId?: `string`, searchWord?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
+-   **getWorkflowGroups**(filter: `string`, groupId?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupModel`](../../../lib/core/src/lib/form/components/widgets/core/group.model.ts)`[]>`<br/>
+    Gets a list of groups in a workflow.
+    -   _filter:_ `string`  - Filter to select specific groups
+    -   _groupId:_ `string`  - (Optional) Group ID for the search
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupModel`](../../../lib/core/src/lib/form/components/widgets/core/group.model.ts)`[]>` - Array of groups
+-   **getWorkflowUsers**(taskId?: `string`, searchWord?: `string`, groupId?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Gets information about users across all tasks.
     -   _taskId:_ `string`  - (Optional) ID of the task
     -   _searchWord:_ `string`  - (Optional) Filter text to search for
+    -   _groupId:_ `string`  - (Optional) 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Array of user information objects
 -   **involveUserWithTask**(taskId: `string`, idToInvolve: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Sets a user to be involved with a task.

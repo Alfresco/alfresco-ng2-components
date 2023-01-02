@@ -54,13 +54,13 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| data | [`FormValues`](lib/core/src/lib/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
+| data | [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
 | enableFixedSpacedForm | `boolean` | true | The form will set a prefixed space for invisible fields. |
-| fieldValidators | [`FormFieldValidator`](lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)`[]` |  | Contains a list of form field validator instances. |
-| form | [`FormModel`](lib/core/src/lib/form/components/widgets/core/form.model.ts) |  | Underlying form model instance. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/src/lib/form/components/widgets/core/form-field-validator.ts)`[]` |  | Contains a list of form field validator instances. |
+| form | [`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts) |  | Underlying form model instance. |
 | formId | `number` |  | The id of the form definition to load and display with custom values. |
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
@@ -80,17 +80,17 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
-| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
+| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/src/lib/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/src/lib/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
+| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
-| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
-| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
+| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 
 ## Details
 
-All `formXXX` events receive a [`FormModel`](lib/core/src/lib/form/components/widgets/core/form.model.ts) instance as their argument:
+All `formXXX` events receive a [`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts) instance as their argument:
 
 **MyView.component.html**
 

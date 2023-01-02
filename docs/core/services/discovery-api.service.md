@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Discovery Api service](lib/core/src/lib/services/discovery-api.service.ts "Defined in discovery-api.service.ts")
+# [Discovery Api service](../../../lib/core/src/lib/services/discovery-api.service.ts "Defined in discovery-api.service.ts")
 
 Gets version and license information for Process Services and Content Services.
 
@@ -17,12 +17,12 @@ Gets version and license information for Process Services and Content Services.
 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/SystemPropertiesRepresentation.md)`>` - 
 
--   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
+-   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/src/lib/models/product-version.model.ts)`>`<br/>
     Gets product information for Process Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
--   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<RepositoryInfo>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/src/lib/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+-   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RepositoryInfo`](../../../lib/core/src/lib/about/about-repository-info/repository-info.interface.ts)`>`<br/>
     Gets product information for Content Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<RepositoryInfo>` - ProductVersionModel containing product details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RepositoryInfo`](../../../lib/core/src/lib/about/about-repository-info/repository-info.interface.ts)`>` - ProductVersionModel containing product details
 
 ## Details
 

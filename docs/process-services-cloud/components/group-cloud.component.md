@@ -38,13 +38,13 @@ Searches Groups.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified this shows the groups who have access to the app. |
-| groupChipsCtrl | `FormControl` |  | FormControl to list of group |
+| groupChipsCtrl | `FormControl<any>` |  | FormControl to list of group |
 | mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | Group selection mode (single/multiple). |
-| preSelectGroups | [`IdentityGroupModel`](lib/core/src/lib/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
+| preSelectGroups | [`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
 | readOnly | `boolean` | false | Show the info in readonly mode |
 | required | `boolean` | false | Mark this field as required |
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
-| searchGroupsControl | `FormControl` |  | FormControl to search the group |
+| searchGroupsControl | `FormControl<any>` |  | FormControl to search the group |
 | title | `string` |  | Title of the field |
 | validate | `boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
@@ -52,9 +52,9 @@ Searches Groups.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| changedGroups | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` | Emitted when a group selection change. |
-| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
-| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is selected. |
+| changedGroups | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]>` | Emitted when a group selection change. |
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
+| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`>` | Emitted when a group is selected. |
 | warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
 
 ## Details

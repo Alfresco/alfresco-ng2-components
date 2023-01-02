@@ -13,16 +13,16 @@ Adds and retrieves comments for nodes in Content Services.
 
 ### Methods
 
-- **add**(id: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
+-   **add**(id: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
     Adds a comment to a task.
-  - _id:_ `string`  - ID of the target task
-  - _message:_ `string`  - Text for the comment
-  - **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>` - Details about the comment
-- **get**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>`<br/>
+    -   _id:_ `string`  - ID of the target task
+    -   _message:_ `string`  - Text for the comment
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>` - Details about the comment
+-   **get**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>`<br/>
     Gets all comments that have been added to a task.
-  - _id:_ `string`  - ID of the target task
-  - **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
+    -   _id:_ `string`  - ID of the target task
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
 
 ## See also
 
-- [Node comments component](../../../lib/content-services/src/lib/node-comments/node-comments.component.ts)
+-   [Node comments component](../../../lib/content-services/src/lib/node-comments/node-comments.component.ts)

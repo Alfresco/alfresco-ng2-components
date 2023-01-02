@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [APS Content Component](lib/process-services/src/lib/form/widgets/document/content.widget.ts "Defined in content.widget.ts")
+# [APS Content Component](../../../lib/process-services/src/lib/form/widgets/document/content.widget.ts "Defined in content.widget.ts")
 
 Shows the content preview.
 

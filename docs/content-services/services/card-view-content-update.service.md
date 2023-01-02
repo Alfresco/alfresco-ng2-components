@@ -16,16 +16,15 @@ Implements [`BaseCardViewContentUpdate`](../../../lib/content-services/src/lib/i
 
 -   **update**(property: [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts), newValue: `any`)<br/>
 
-    -   _property:_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)
-    -   _newValue:_ `any`
+    -   _property:_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)  - 
+    -   _newValue:_ `any`  - 
 
 -   **updateElement**(notification: [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts))<br/>
     Updates the cardview items property
-    -   _notification:_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)
-
+    -   _notification:_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)  - 
 -   **updateNodeAspect**(node: [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md))<br/>
     Update node aspect observable.
-    -   _node:_ [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
+    -   _node:_ [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)  -
 
 ## Properties
 

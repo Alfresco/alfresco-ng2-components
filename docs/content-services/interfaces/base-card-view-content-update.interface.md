@@ -28,7 +28,7 @@ export interface BaseCardViewContentUpdate {
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | itemUpdated$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`UpdateNotification`](../../../lib/core/src/lib/card-view/interfaces/update-notification.interface.ts)`>` |  | The current updated item. |
-| updatedAspect$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`(@alfresco/js-api) |  | [Subject](http://reactivex.io/documentation/subject.html) holding the current node |
+| updatedAspect$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`(@alfresco/js-api) |  | [`Subject`](http://reactivex.io/documentation/subject.html) holding the current node |
 
 ### Methods
 
@@ -40,6 +40,7 @@ export interface BaseCardViewContentUpdate {
 
 -   **updateElement**(notification: [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts))<br/>
     Update updateItem$ observable.
+
     -   notification:\_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)  - The notification.
 
 -   **updateNodeAspect**(node: [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md))<br/>

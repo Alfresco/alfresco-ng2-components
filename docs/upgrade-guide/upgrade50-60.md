@@ -23,6 +23,15 @@ project.
 
 -   [Library updates](#library-updates)
 -   [Breaking changes](#breaking-changes)
+-   [Deprecated items](#deprecated-items)
+    -   [PaginationModel](#paginationmodel)
+-   [Relocated classes](#relocated-classes)
+    -   [NodeNameTooltipPipe](#nodenametooltippipe)
+    -   [nodeUpdated Subject](#nodeupdated-subject)
+-   [Renamed items](#renamed-items)
+    -   [New Classes or Services](#new-classes-or-services)
+    -   [Properties and methods](#properties-and-methods)
+    -   [Component selectors](#component-selectors)
 
 ## Library updates
 
@@ -58,14 +67,13 @@ For more information about the changes and links to the associated
 pull requests.
 
 [TODO ADD HERE the PRs ] 
-CheckAllowableOperationDirective: Moved from ADF Core to ADF content services
-LibraryFavoriteDirective: Moved from ADF Core to ADF content services
-LibraryMembershipDirective: Moved from ADF Core to ADF content services
-NodeDeleteDirective: Moved from ADF Core to ADF content services
-NodeFavoriteDirective: Moved from ADF Core to ADF content services
-NodeRestoreDirective: Moved from ADF Core to ADF content services
+[`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md): Moved from ADF Core to ADF content services
+[LibraryFavoriteDirective](../../lib/content-services/src/lib/directives/library-favorite.directive.ts): Moved from ADF Core to ADF content services
+[LibraryMembershipDirective](../../lib/content-services/src/lib/directives/library-membership.directive.ts): Moved from ADF Core to ADF content services
+[NodeDeleteDirective](../content-services/directives/node-delete.directive.md): Moved from ADF Core to ADF content services
+[NodeFavoriteDirective](../content-services/directives/node-favorite.directive.md): Moved from ADF Core to ADF content services
+[NodeRestoreDirective](../content-services/directives/node-restore.directive.md): Moved from ADF Core to ADF content services
 [TODO ADD HERE the PRs ] 
-
 
 Each section needs to contains:
 Title
@@ -75,15 +83,16 @@ How to fix it:
 ## Deprecated items
 
 ### PaginationModel
-``Pagination`` model from ```@alfresco/js-api``` has been now deprecated in favour of internal implementated model ```PaginationModel``` evrywhere
+
+`Pagination` model from `@alfresco/js-api` has been now deprecated in favour of internal implementated model [`PaginationModel`](../../lib/core/src/lib/models/pagination.model.ts) evrywhere
 
 ## Relocated classes
 
 | Class | Before | After |
-| --- | -- | --- |
-| `VersionCompatibilityService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `VersionCompatibilityDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| ----- | ------ | ----- |
+| [`VersionCompatibilityService`](../../lib/content-services/src/lib/version-compatibility/version-compatibility.service.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`VersionCompatibilityDirective`](../content-services/directives/version-compatibility.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`SitesService`](../content-services/services/sites.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 
 Following classes have been relocated:
 
@@ -91,62 +100,53 @@ The following directives have been moved from the Core library to the Content Se
 library. You should modify your code to import these classes from
 `@alfresco/adf-content-services`.
 
--   [`CheckAllowableOperationDirective`](lib/content-services/src/lib/directives/check-allowable-operation.directive.ts)
--   [`LibraryFavoriteDirective`](lib/content-services/src/lib/directives/library-favorite.directive.ts)
--   [`LibraryMembershipDirective`](lib/content-services/src/lib/directives/library-membership.directive.ts)
--   [`NodeDeleteDirective`](lib/content-services/src/lib/directives/node-delete.directive.ts)
--   [`NodeFavoriteDirective`](lib/content-services/src/lib/directives/node-favorite.directive.ts)
--   [`NodeRestoreDirective`](lib/content-services/src/lib/directives/node-restore.directive.ts)
-
+-   [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md)
+-   [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts)
+-   [`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts)
+-   [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md)
+-   [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)
+-   [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)
 
 ### NodeNameTooltipPipe
 
-NodeNameTooltipPipe has been moved in the ```@alfresco/adf-content-services``` in ```ContentPipeModule```
+[NodeNameTooltipPipe](../core/pipes/node-name-tooltip.pipe.md) has been moved in the `@alfresco/adf-content-services` in `ContentPipeModule`
 
 v6.0.0 and before:
 
-```
-@NgModule({
-    imports: [
-    ````
-    PipeModule
-    ````    
-     ]})
-```
+    @NgModule({
+        imports: [
+        ````
+        PipeModule
+        ````    
+         ]})
 
 v6.0.0 and after:
 
-```
-@NgModule({
-    imports: [
-    ````
-    ContentPipeModule
-    ````    
-     ]})
-```
+    @NgModule({
+        imports: [
+        ````
+        ContentPipeModule
+        ````    
+         ]})
+
 ### nodeUpdated Subject
-The nodeUpdated Subject has been moved from AlfrescoApiService to NodesApiService
+
+The nodeUpdated [Subject](http://reactivex.io/documentation/subject.html) has been moved from [AlfrescoApiService](../core/services/alfresco-api.service.md) to [NodesApiService](../core/services/nodes-api.service.md)
 
 v6.0.0 and before:
-```
- this.alfrescoApiService.nodeUpdated.pipe .....
-```
+
+     this.alfrescoApiService.nodeUpdated.pipe .....
 
 v6.0.0 and after:
 
-```
- this.nodesApiService.nodeUpdated.pipe .....
-```
+     this.nodesApiService.nodeUpdated.pipe .....
 
 ## Renamed items
 
-
 ### New Classes or Services
 
-
 ### Properties and methods
-- `<adf-comments>`: The `taskId` input has now been renamed as `id`
+
+-   `<adf-comments>`: The `taskId` input has now been renamed as `id`
 
 ### Component selectors
-
-

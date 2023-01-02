@@ -25,7 +25,7 @@ Displays comments from users involved in a specified environment and allows an i
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | The numeric ID of the entity. |
+| id | `string` |  | The numeric ID of the task. |
 | readOnly | `boolean` | false | Are the comments read only? |
 
 ### Events

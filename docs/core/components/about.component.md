@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2022-11-11
 ---
 
-# About Component
+# [About Component](../../../lib/core/src/lib/about/about.component.ts "Defined in about.component.ts")
 
 Presentational component to display About information as a set of collapsible panels.
 
