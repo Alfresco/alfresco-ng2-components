@@ -50,5 +50,8 @@ export * from './directives/custom-loading-template.directive';
 export * from './directives/custom-no-permission-template.directive';
 export * from './directives/main-data-table-action-template.directive';
 
+export * from './services/datatable.service';
+
+
 export * from './datatable.module';
 export * from './data-column';

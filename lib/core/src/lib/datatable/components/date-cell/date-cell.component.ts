@@ -20,9 +20,10 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import {
     UserPreferencesService,
     UserPreferenceValues
-} from '../../../services/user-preferences.service';
+} from '../../../common/services/user-preferences.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil } from 'rxjs/operators';
+import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-date-cell',
@@ -64,9 +65,10 @@ export class DateCellComponent extends DataTableCellComponent {
 
     constructor(
         userPreferenceService: UserPreferencesService,
+        dataTableService: DataTableService,
         appConfig: AppConfigService
     ) {
-        super();
+        super(dataTableService);
 
         this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);

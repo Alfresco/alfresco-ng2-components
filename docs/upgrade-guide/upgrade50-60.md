@@ -122,11 +122,7 @@ v6.0.0 and after:
 | `SearchService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `AppsProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
-Following classes have been relocated:
-
-The following directives have been moved from the Core library to the Content Services
-library. You should modify your code to import these classes from
-`@alfresco/adf-content-services`.
+### Update Data-table or Document List after a node change
 
 -   [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md)
 -   [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts)
