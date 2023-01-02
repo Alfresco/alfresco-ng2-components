@@ -40,5 +40,4 @@ export * from './models/redirection.model';
 export * from './models/identity-group.model';
 export * from './models/identity-user.model';
 export * from './models/identity-role.model';
-export * from './models/application-access.model';
 

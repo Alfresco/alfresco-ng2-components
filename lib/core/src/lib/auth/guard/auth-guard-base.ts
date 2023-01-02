@@ -23,14 +23,14 @@ import {
     CanActivateChild,
     UrlTree
 } from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 import {
     AppConfigService,
     AppConfigValues
-} from '../app-config/app-config.service';
+} from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../common/services/storage.service';
+import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {

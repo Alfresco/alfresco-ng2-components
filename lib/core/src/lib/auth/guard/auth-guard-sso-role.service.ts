@@ -18,9 +18,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentGroups } from './people-content.service';
-import { UserAccessService } from './user-access.service';
-import { UserContentAccessService } from './user-content-access.service';
+import { ContentGroups } from '../../services/people-content.service';
+import { UserAccessService } from '../../services/user-access.service';
+import { UserContentAccessService } from '../../services/user-content-access.service';
 
 @Injectable({
     providedIn: 'root'
