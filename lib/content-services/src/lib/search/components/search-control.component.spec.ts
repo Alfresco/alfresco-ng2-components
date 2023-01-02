@@ -20,13 +20,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
-    SearchService,
     setupTestBed,
     UserPreferencesService,
     SearchTextInputComponent
 } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
+import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';

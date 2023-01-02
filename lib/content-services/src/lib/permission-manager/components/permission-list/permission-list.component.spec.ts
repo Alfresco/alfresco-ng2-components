@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
+import { SearchService } from '../../../search/services/search.service';
 import { PermissionListComponent } from './permission-list.component';
 import { NodePermissionService } from '../../services/node-permission.service';
 import {

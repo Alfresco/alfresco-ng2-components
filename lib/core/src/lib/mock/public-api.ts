@@ -22,7 +22,6 @@ export * from './cookie.service.mock';
 export * from './ecm-user.service.mock';
 export * from './event.mock';
 export * from './renditions-service.mock';
-export * from './search.service.mock';
 export * from './translation.service.mock';
 export * from './alfresco-api.service.mock';
 

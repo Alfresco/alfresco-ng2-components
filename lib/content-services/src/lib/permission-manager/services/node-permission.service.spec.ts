@@ -17,7 +17,8 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { SearchService, NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { SearchService } from '../../search/services/search.service';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of, throwError } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,

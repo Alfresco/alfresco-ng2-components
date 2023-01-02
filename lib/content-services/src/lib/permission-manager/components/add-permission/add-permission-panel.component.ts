@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { SearchConfigurationService, SearchService } from '@alfresco/adf-core';
+import { SearchConfigurationService } from '../../../search/services/search-configuration.service';
+import { SearchService } from '../../../search/services/search.service';
 import { NodeEntry } from '@alfresco/js-api';
 import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';

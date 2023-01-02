@@ -18,10 +18,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { SearchService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { SearchService  } from '../../../search/services/search.service';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconTestingModule } from '@angular/material/icon/testing';

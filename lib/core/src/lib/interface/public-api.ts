@@ -17,4 +17,4 @@
 
 export * from './authentication.interface';
 export * from './injection.tokens';
-export * from './search-configuration.interface';
+export * from '../../../../content-services/src/lib/search/interfaces/search-configuration.interface';

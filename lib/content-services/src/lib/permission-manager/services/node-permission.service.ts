@@ -18,7 +18,6 @@
 import {
     AlfrescoApiService,
     NodesApiService,
-    SearchService,
     TranslationService,
     EcmUserModel
 } from '@alfresco/adf-core';
@@ -31,6 +30,7 @@ import {
     PermissionElement,
     QueryBody
 } from '@alfresco/js-api';
+import { SearchService } from '../../search/services/search.service';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';

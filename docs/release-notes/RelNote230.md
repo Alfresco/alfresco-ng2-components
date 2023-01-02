@@ -321,7 +321,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2421](https://issues.alfresco.com/jira/browse/ADF-2421)] - CLONE - Unable to copy / move a file from Recent or Favorites when user has only granular permissions on the file
 -   \[[ADF-2428](https://issues.alfresco.com/jira/browse/ADF-2428)] - \[Demo shell Unable to view document metadata from document list view
 -   \[[ADF-2429](https://issues.alfresco.com/jira/browse/ADF-2429)] - Viewer - media file full screen
--   \[[ADF-2442](https://issues.alfresco.com/jira/browse/ADF-2442)] - [Search Service](lib/core/src/lib/services/search.service.ts) has wrong types for the 'search' API
+-   \[[ADF-2442](https://issues.alfresco.com/jira/browse/ADF-2442)] - [Search Service](lib/content-services/src/lib/search/services/search.service.ts) has wrong types for the 'search' API
 -   \[[ADF-2443](https://issues.alfresco.com/jira/browse/ADF-2443)] - Typo in the UserPreferences service
 -   \[[ADF-2444](https://issues.alfresco.com/jira/browse/ADF-2444)] - CLONE - Incorrect Items per page values on all lists after upgrade to ADF 2.2.0
 -   \[[ADF-2448](https://issues.alfresco.com/jira/browse/ADF-2448)] - Wrong type definition for [`RequestPagination`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/RequestPagination.md)

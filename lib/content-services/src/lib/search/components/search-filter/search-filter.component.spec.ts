@@ -17,7 +17,8 @@
 
 import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { AppConfigService, SearchService, TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationService } from '@alfresco/adf-core';
+import { SearchService } from  '../../services/search.service';
 import { Subject } from 'rxjs';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
