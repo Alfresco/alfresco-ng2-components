@@ -23,7 +23,7 @@ import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { TranslationService } from '../services/translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';

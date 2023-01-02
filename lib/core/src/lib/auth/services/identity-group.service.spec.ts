@@ -16,8 +16,8 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { AlfrescoApiService } from './../../services/alfresco-api.service';
 import { IdentityGroupService } from './identity-group.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
@@ -27,7 +27,7 @@ import {
     mockIdentityGroup1,
     mockIdentityGroupsCount
 } from '../mock/identity-group.mock';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import {
     applicationDetailsMockApi,

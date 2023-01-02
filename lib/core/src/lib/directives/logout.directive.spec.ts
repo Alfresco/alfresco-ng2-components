@@ -19,7 +19,7 @@ import { Component, ContentChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { AuthenticationService } from '../services';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { LogoutDirective } from './logout.directive';

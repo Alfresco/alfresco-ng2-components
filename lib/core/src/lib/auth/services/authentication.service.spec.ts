@@ -16,12 +16,12 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { AppConfigService } from '../app-config/app-config.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { CookieService } from '../../common/services/cookie.service';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;

@@ -17,14 +17,14 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from '../common/services/storage.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { StorageService } from '../../common/services/storage.service';
+import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock';
 
 describe('UserPreferencesService', () => {
 

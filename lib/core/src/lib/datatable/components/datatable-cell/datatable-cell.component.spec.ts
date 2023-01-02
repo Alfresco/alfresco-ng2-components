@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserPreferencesService } from '../../../services';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { AppConfigService } from '../../../app-config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../testing';

@@ -21,7 +21,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../auth/services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';

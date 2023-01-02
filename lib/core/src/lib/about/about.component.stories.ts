@@ -24,7 +24,7 @@ import { AuthenticationMock } from '../auth/mock/authentication.service.mock';
 import { DiscoveryApiServiceMock } from '../mock/discovery-api.service.mock';
 import { AppExtensionService, AppExtensionServiceMock } from '@alfresco/adf-extensions';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { CoreStoryModule } from '../testing/core.story.module';
 
 export default {

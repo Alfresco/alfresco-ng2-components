@@ -18,6 +18,12 @@
 export * from './authentication-interceptor/auth-bearer.interceptor';
 
 export * from './mock/authentication.service.mock';
+export * from './mock/identity-group.mock';
+export * from './mock/identity-group.service.mock';
+export * from './mock/identity-user.mock';
+export * from './mock/identity-user.service.mock';
+export * from './mock/jwt-helper.service.spec';
+export * from './mock/oauth2.service.mock';
 
 export * from './guard/auth-guard-base';
 export * from './guard/auth-guard.service';

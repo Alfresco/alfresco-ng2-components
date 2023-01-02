@@ -23,7 +23,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 

@@ -17,12 +17,13 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { AuthenticationService, ContentService, PeopleContentService } from '../../services';
+import { ContentService, PeopleContentService } from '../../services';
+import { AuthenticationService } from '../../auth/services/authentication.service';
+import { IdentityUserService } from '../../auth/services/identity-user.service';
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
 import { BpmUserService } from '../../services/bpm-user.service';
-import { IdentityUserService } from '../../services/identity-user.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { UserInfoComponent } from './user-info.component';

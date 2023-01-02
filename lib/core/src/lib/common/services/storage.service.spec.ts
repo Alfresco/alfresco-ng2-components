@@ -16,13 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService } from '../app-config/app-config.service';
-import { StorageService } from '../common/services/storage.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { StorageService } from '../../common/services/storage.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../core.module';
+import { CoreModule } from '../../core.module';
 
 describe('StorageService', () => {
 

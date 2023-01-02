@@ -20,7 +20,7 @@ import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from './ecm-user.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { ContentService } from './content.service';
 
 describe('EcmUserService', () => {

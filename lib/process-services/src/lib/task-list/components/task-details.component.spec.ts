@@ -25,7 +25,7 @@ import {
     FormOutcomeModel,
     setupTestBed,
     BpmUserService,
-    CommentProcessService, LogService, AuthenticationService,
+    CommentProcessService, LogService,
     UserProcessModel,
     PeopleProcessService,
     CommentModel
@@ -72,7 +72,7 @@ describe('TaskDetailsComponent', () => {
     let logService: LogService;
     let commentProcessService: CommentProcessService;
     let peopleProcessService: PeopleProcessService;
-    let authService: AuthenticationService;
+    let bpmUserService: BpmUserService;
 
     setupTestBed({
         imports: [
@@ -85,8 +85,8 @@ describe('TaskDetailsComponent', () => {
     beforeEach(() => {
         logService = TestBed.inject(LogService);
 
-        const userService: BpmUserService = TestBed.inject(BpmUserService);
-        spyOn(userService, 'getCurrentUserInfo').and.returnValue(of(null));
+        bpmUserService = TestBed.inject(BpmUserService);
+        spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(<any>{ email: 'fake-email' }));
 
         taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));
@@ -102,9 +102,6 @@ describe('TaskDetailsComponent', () => {
         getTasksSpy = spyOn(taskListService, 'getTasks').and.returnValue(of(tasksMock));
         assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         commentProcessService = TestBed.inject(CommentProcessService);
-
-        authService = TestBed.inject(AuthenticationService);
-        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
             new CommentModel({ message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),

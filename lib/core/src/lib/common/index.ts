@@ -23,4 +23,6 @@ export * from './services/language-item.interface';
 
 export * from './models/log-levels.model';
 
+export * from './mock/app-config.service.mock';
+
 export * from './utils';

@@ -17,14 +17,14 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
-import { JwtHelperService } from './jwt-helper.service';
+import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserAccessService } from './user-access.service';
-import { UserContentAccessService } from './user-content-access.service';
+import { UserAccessService } from '../../services/user-access.service';
+import { UserContentAccessService } from '../../services/user-content-access.service';
 
 describe('Auth Guard SSO role service', () => {
 
