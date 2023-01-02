@@ -259,13 +259,13 @@ The following classes have been moved from their original libraries to the Core
 library. You should modify your code to import these classes from
 `@alfresco/adf-core`.
 
--   [`DownloadZipDialogComponent`](lib/core/src/lib/dialogs/download-zip/download-zip.dialog.ts) (formerly Content Services)
+-   [`DownloadZipDialogComponent`](../../lib/core/src/lib/dialogs/download-zip/download-zip.dialog.ts) (formerly Content Services)
 -   [`NodeDownloadDirective`](../core/directives/node-download.directive.md) (formerly Content Services)
--   [`CommentsModule`](lib/core/src/lib/comments/comments.module.ts) (formerly Process Services)
+-   [`CommentsModule`](../../lib/core/src/lib/comments/comments.module.ts) (formerly Process Services)
 -   [`CommentListComponent`](../core/components/comment-list.component.md) (formerly Process Services)
 -   [`CommentsComponent`](../core/components/comments.component.md)  (formerly Process Services)
 
-Also, `CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](lib/core/src/lib/models/comment.model.ts). You should update both the name of the class and the import line in your code.
+Also, `CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/src/lib/models/comment.model.ts). You should update both the name of the class and the import line in your code.
 
 ## Renamed items
 
@@ -275,7 +275,7 @@ you should replace them with the new ones.
 
 ### Classes
 
-`CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](lib/core/src/lib/models/comment.model.ts)
+`CommentProcessModel` was moved from Process Services to Core and renamed as [`CommentModel`](../../lib/core/src/lib/models/comment.model.ts)
 
 ### Properties and methods
 

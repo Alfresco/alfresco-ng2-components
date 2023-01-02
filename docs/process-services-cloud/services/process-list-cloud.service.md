@@ -13,6 +13,11 @@ Searches processes.
 
 ### Methods
 
+-   **getAdminProcessByRequest**(requestNode: [`ProcessQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-cloud-query-request.model.ts), queryUrl?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Finds a process using an object with optional query properties in admin app.
+    -   _requestNode:_ [`ProcessQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-cloud-query-request.model.ts)  - Query object
+    -   _queryUrl:_ `string`  - (Optional) Query url
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Process information
 -   **getBasePath**(appName: `string`): `string`<br/>
 
     -   _appName:_ `string`  - 

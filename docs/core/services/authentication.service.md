@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-19
 ---
 
-# [Authentication Service](lib/core/src/lib/services/authentication.service.ts "Defined in authentication.service.ts")
+# [Authentication Service](../../../lib/core/src/lib/auth/services/authentication.service.ts "Defined in authentication.service.ts")
 
 Provides authentication to ACS and APS.
 
@@ -20,9 +20,6 @@ Provides authentication to ACS and APS.
 -   **getBearerExcludedUrls**(): `string[]`<br/>
     Gets the set of URLs that the token bearer is excluded from.
     -   **Returns** `string[]` - Array of URL strings
--   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
-    Gets information about the user currently logged into APS.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserRepresentation.md)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
@@ -93,9 +90,9 @@ Provides authentication to ACS and APS.
 -   **logout**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Logs the user out.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Response event called when logout is complete
--   **setRedirect**(url: [`RedirectionModel`](lib/core/src/lib/models/redirection.model.ts))<br/>
+-   **setRedirect**(url: [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
-    -   _url:_ [`RedirectionModel`](lib/core/src/lib/models/redirection.model.ts)  - URL to redirect to
+    -   _url:_ [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts)  - URL to redirect to
 -   **ssoImplicitLogin**()<br/>
     Logs the user in with SSO
 

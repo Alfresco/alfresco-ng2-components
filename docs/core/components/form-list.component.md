@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Form List Component](lib/process-services/src/lib/form/form-list/form-list.component.ts "Defined in form-list.component.ts")
+# [Form List Component](../../../lib/process-services/src/lib/form/form-list/form-list.component.ts "Defined in form-list.component.ts")
 
 Shows forms as a list.
 

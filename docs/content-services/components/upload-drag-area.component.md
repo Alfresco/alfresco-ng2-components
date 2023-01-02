@@ -75,7 +75,7 @@ as the drag/drop target:
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/core/events/file.event.ts)`>` | Emitted when an error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/core/src/lib/events/file.event.ts)`>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
 | updateFileVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |
 
@@ -87,7 +87,7 @@ You can intercept the upload process using the `beginUpload` event.
 
 The event has a type of [`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts) and provides the following APIs:
 
--   **files**: accesses the [`FileInfo`](lib/core/src/lib/utils/file-utils.ts) objects that are prepared for the upload
+-   **files**: accesses the [`FileInfo`](../../../lib/core/src/lib/common/utils/file-utils.ts) objects that are prepared for the upload
 -   **pauseUpload**: pauses the upload and performs additional tasks, like showing the confirmation dialog
 -   **resumeUpload**: resumes the upload process
 

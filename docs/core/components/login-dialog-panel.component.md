@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-10-02
 ---
 
-# [Login Dialog Panel component](lib/core/src/lib/login/components/login-dialog-panel.component.ts "Defined in login-dialog-panel.component.ts")
+# [Login Dialog Panel component](../../../lib/core/src/lib/login/components/login-dialog-panel.component.ts "Defined in login-dialog-panel.component.ts")
 
 Shows and manages a login dialog.
 
@@ -15,7 +15,7 @@ Shows and manages a login dialog.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login succeeds. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/src/lib/login/models/login-success.event.ts)`>` | Emitted when the login succeeds. |
 
 ## Details
 

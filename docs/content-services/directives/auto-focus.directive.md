@@ -16,5 +16,3 @@ Automatically focuses HTML element after content is initialized.
 ```
 
 ## Class members
-
-### Properties

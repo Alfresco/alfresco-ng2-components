@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-19
 ---
 
-# [Auth Guard SSO role service](lib/core/src/lib/services/auth-guard-sso-role.service.ts "Defined in auth-guard-sso-role.service.ts")
+# [Auth Guard SSO role service](../../../lib/core/src/lib/auth/guard/auth-guard-sso-role.service.ts "Defined in auth-guard-sso-role.service.ts")
 
 Checks the user roles of a user.
 
@@ -16,7 +16,8 @@ The [Auth Guard SSO role service](../../core/services/auth-guard-sso-role.servic
 to check the user has the right realms/client roles permission. This is typically used with the
 `canActivate` guard check in the route definition. The Auth Guard SSO is resposible to check if the JWT contains  Realm roles (realm_access) or Client roles (resource_access) based on the route configuration.
 
-*Realms role Example* 
+_Realms role Example_ 
+
 ```ts
 const appRoutes: Routes = [
     ...
@@ -33,8 +34,8 @@ const appRoutes: Routes = [
 If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Realms roles. Additionally, the user will not be able to access the resource when they have a role that is part of the excludedRoles array. 
 <br />**Notes**: An additional role ALFRESCO_ADMINISTRATORS can be used in the roles array, which will result in checking whether the logged in user has Content Admin capabilities or not, as this role is not part of the JWT token it will call a Content API to determine it.
 
-
 Client role Example
+
 ```ts
 const appRoutes: Routes = [
     ...
