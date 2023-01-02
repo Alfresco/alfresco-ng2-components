@@ -85,12 +85,12 @@ for more information about installing and using the source code.
 | [About Application Modules Component](core/components/about-application.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which ADF libraries and plugins an application is using. | [Source](../lib/core/src/lib/about/about-application-modules/about-application-modules.component.ts) |
 | [About GitHub Link Component](core/components/about-github-link.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of the application is running based on the latest GitHub commit, as well as the server settings for the application. | [Source](../lib/core/src/lib/about/about-github-link/about-github-link.component.ts) |
 | [About Product Version Component](core/components/about-product-version.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application. | [Source](../lib/core/src/lib/about/about-product-version/about-product-version.component.ts) |
-| [About Component](core/components/about.component.md) | Presentational component to display About information as a set of collapsible panels. | [Source](<>) |
+| [About Component](core/components/about.component.md) | Presentational component to display About information as a set of collapsible panels. | [Source](../lib/core/src/lib/about/about.component.ts) |
 | [Buttons Menu Component](core/components/buttons-menu.component.md) | Displays buttons on a responsive menu. | [Source](../lib/core/src/lib/buttons-menu/buttons-menu.component.ts) |
 | [Card View component](core/components/card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/src/lib/card-view/components/card-view/card-view.component.ts) |
 | [Comment list component](core/components/comment-list.component.md) | Shows a list of comments. | [Source](../lib/core/src/lib/comments/comment-list.component.ts) |
 | [Comments Component](core/components/comments.component.md) | Displays comments from users involved in a specified environment and allows an involved user to add a comment to a environment. | [Source](../lib/core/src/lib/comments/comments.component.ts) |
-| [Data Column Component](core/components/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/src/lib/data-column/data-column.component.ts) |
+| [Data Column Component](core/components/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/src/lib/datatable/data-column/data-column.component.ts) |
 | [DataTable component](core/components/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/src/lib/datatable/components/datatable/datatable.component.ts) |
 | [Empty Content Component](core/components/empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../lib/core/src/lib/templates/empty-content/empty-content.component.ts) |
 | [Empty list component](core/components/empty-list.component.md) | Displays a message indicating that a list is empty. | [Source](../lib/core/src/lib/datatable/components/empty-list/empty-list.component.ts) |
@@ -204,20 +204,21 @@ for more information about installing and using the source code.
 | [Comment Content service](core/services/comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/src/lib/services/comment-content.service.ts) |
 | [Comment Process service](core/services/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/src/lib/services/comment-process.service.ts) |
 | [Content service](core/services/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/src/lib/services/content.service.ts) |
-| [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/services/cookie.service.ts) |
+| [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
+| [DataTable service](core/services/datatable.service.md) |  | [Source](<>) |
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/src/lib/services/deleted-nodes-api.service.ts) |
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/src/lib/services/discovery-api.service.ts) |
 | [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/src/lib/services/download-zip.service.ts) |
 | [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/ecm-user.service.ts) |
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/src/lib/services/favorites-api.service.ts) |
-| [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
+| [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/src/lib/form/services/form-rendering.service.ts) |
 | [Form service](core/services/form.service.md) | Implements Process Services form methods | [Source](../lib/core/src/lib/form/services/form.service.ts) |
 | [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/src/lib/services/highlight-transform.service.ts) |
-| [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/core/src/lib/services/identity-group.service.ts) |
-| [Identity role service](core/services/identity-role.service.md) | Provides APIs for working with the Roles in Identity Services. | [Source](../lib/core/src/lib/services/identity-role.service.ts) |
-| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/core/src/lib/services/identity-user.service.ts) |
-| [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/src/lib/services/jwt-helper.service.ts) |
-| [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/src/lib/services/log.service.ts) |
+| [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/process-services-cloud/src/lib/group/services/identity-group.service.ts) |
+| [Identity role service](core/services/identity-role.service.md) | Provides APIs for working with the Roles in Identity Services. | [Source](../lib/core/src/lib/auth/services/identity-role.service.ts) |
+| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/process-services-cloud/src/lib/people/services/identity-user.service.ts) |
+| [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/src/lib/auth/services/jwt-helper.service.ts) |
+| [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/src/lib/common/services/log.service.ts) |
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/src/lib/services/login-dialog.service.ts) |
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/src/lib/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
@@ -229,12 +230,12 @@ for more information about installing and using the source code.
 | [Search Configuration service](core/services/search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/src/lib/services/search-configuration.service.ts) |
 | [Search service](core/services/search.service.md) | Accesses the Content Services Search API. | [Source](../lib/core/src/lib/services/search.service.ts) |
 | [Shared Links Api service](core/services/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/src/lib/services/shared-links-api.service.ts) |
-| [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/services/storage.service.ts) |
+| [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/common/services/storage.service.ts) |
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/src/lib/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/src/lib/services/translation.service.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/src/lib/services/upload.service.ts) |
 | [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/src/lib/services/user-access.service.ts) |
-| [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/services/user-preferences.service.ts) |
+| [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/common/services/user-preferences.service.ts) |
 
 ### Widgets
 
@@ -373,7 +374,7 @@ for more information about installing and using the source code.
 | [Rating service](content-services/services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/src/lib/social/services/rating.service.ts) |
 | [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/src/lib/search/services/search-filter.service.ts) |
 | [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/src/lib/search/services/search-query-builder.service.ts) |
-| [Sites service](content-services/services/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](<>) |
+| [Sites service](content-services/services/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/content-services/src/lib/services/sites.service.ts) |
 | [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/src/lib/tag/services/tag.service.ts) |
 | [Task Comments service](content-services/services/task-comments.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/task-comments/services/task-comments.service.ts) |
 

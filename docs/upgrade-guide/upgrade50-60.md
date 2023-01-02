@@ -24,8 +24,10 @@ project.
 -   [Library updates](#library-updates)
 -   [Breaking changes](#breaking-changes)
 -   [Deprecated items](#deprecated-items)
+    -   [DataColumnModule](#datacolumnmodule)
     -   [PaginationModel](#paginationmodel)
 -   [Relocated classes](#relocated-classes)
+    -   [Update Data-table or Document List after a node change](#update-data-table-or-document-list-after-a-node-change)
     -   [NodeNameTooltipPipe](#nodenametooltippipe)
     -   [nodeUpdated Subject](#nodeupdated-subject)
 -   [Renamed items](#renamed-items)
@@ -66,13 +68,12 @@ in 6.0. See also our
 For more information about the changes and links to the associated
 pull requests.
 
-[TODO ADD HERE the PRs ] 
-[`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md): Moved from ADF Core to ADF content services
-[LibraryFavoriteDirective](../../lib/content-services/src/lib/directives/library-favorite.directive.ts): Moved from ADF Core to ADF content services
-[LibraryMembershipDirective](../../lib/content-services/src/lib/directives/library-membership.directive.ts): Moved from ADF Core to ADF content services
-[NodeDeleteDirective](../content-services/directives/node-delete.directive.md): Moved from ADF Core to ADF content services
-[NodeFavoriteDirective](../content-services/directives/node-favorite.directive.md): Moved from ADF Core to ADF content services
-[NodeRestoreDirective](../content-services/directives/node-restore.directive.md): Moved from ADF Core to ADF content services
+[TODO ADD HERE the PRs ][`checkallowableoperationdirective`](../content-services/directives/check-allowable-operation.directive.md): Moved from ADF Core to ADF content services
+[`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts): Moved from ADF Core to ADF content services
+[`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts): Moved from ADF Core to ADF content services
+[`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md): Moved from ADF Core to ADF content services
+[`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md): Moved from ADF Core to ADF content services
+[`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md): Moved from ADF Core to ADF content services
 [TODO ADD HERE the PRs ] 
 
 Each section needs to contains:
@@ -82,31 +83,28 @@ How to fix it:
 
 ## Deprecated items
 
-
 ### DataColumnModule
 
-```DataColumnModule```  has been deprecated and moved in ```DataTableModule``` 
+[`DataColumnModule`](../../lib/core/src/lib/datatable/data-column/data-column.module.ts)  has been deprecated and moved in [`DataTableModule`](../../lib/core/src/lib/datatable/datatable.module.ts) 
 
 v6.0.0 and before:
-```
-@NgModule({
-    imports: [
-    ```
-    DataColumnModule,
-    DataTableModule
-    ```    
-])
-```
+
+    @NgModule({
+        imports: [
+        ```
+        DataColumnModule,
+        DataTableModule
+        ```    
+    ])
 
 v6.0.0 and after:
-```
-@NgModule({
-    imports: [
-    ```
-    DataTableModule,
-    ```    
-])
-```
+
+    @NgModule({
+        imports: [
+        ```
+        DataTableModule,
+        ```    
+    ])
 
 ### PaginationModel
 
@@ -133,7 +131,7 @@ v6.0.0 and after:
 
 ### NodeNameTooltipPipe
 
-[NodeNameTooltipPipe](../core/pipes/node-name-tooltip.pipe.md) has been moved in the `@alfresco/adf-content-services` in `ContentPipeModule`
+[`NodeNameTooltipPipe`](../core/pipes/node-name-tooltip.pipe.md) has been moved in the `@alfresco/adf-content-services` in [`ContentPipeModule`](../../lib/content-services/src/lib/pipes/content-pipe.module.ts)
 
 v6.0.0 and before:
 
@@ -155,7 +153,7 @@ v6.0.0 and after:
 
 ### nodeUpdated Subject
 
-The nodeUpdated [Subject](http://reactivex.io/documentation/subject.html) has been moved from [AlfrescoApiService](../core/services/alfresco-api.service.md) to [NodesApiService](../core/services/nodes-api.service.md)
+The nodeUpdated [`Subject`](http://reactivex.io/documentation/subject.html) has been moved from [`AlfrescoApiService`](../core/services/alfresco-api.service.md) to [`NodesApiService`](../core/services/nodes-api.service.md)
 
 v6.0.0 and before:
 

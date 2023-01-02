@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-12
 ---
 
-# [Data Column Component](../../../lib/core/src/lib/data-column/data-column.component.ts "Defined in data-column.component.ts")
+# [Data Column Component](../../../lib/core/src/lib/datatable/data-column/data-column.component.ts "Defined in data-column.component.ts")
 
 Defines column properties for DataTable, Tasklist, Document List and other components.
 
