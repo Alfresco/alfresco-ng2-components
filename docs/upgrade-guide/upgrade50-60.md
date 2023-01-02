@@ -89,10 +89,13 @@ How to fix it:
 ## Relocated classes
 
 | Class | Before | After |
-| ----- | ------ | ----- |
-| [`VersionCompatibilityService`](../../lib/content-services/src/lib/version-compatibility/version-compatibility.service.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`VersionCompatibilityDirective`](../content-services/directives/version-compatibility.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`SitesService`](../content-services/services/sites.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| --- | -- | --- |
+| `VersionCompatibilityService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `VersionCompatibilityDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `SearchService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `SearchConfigurationService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `AppsProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
 Following classes have been relocated:
 

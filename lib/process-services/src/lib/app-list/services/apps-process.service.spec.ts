@@ -16,10 +16,9 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { fakeApps } from '../mock/apps-service.mock';
+import { fakeApps } from '../mocks/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
