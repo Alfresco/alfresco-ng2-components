@@ -16,7 +16,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { LanguageItem } from './language-item.interface';
+import { LanguageItem } from '../common/services/language-item.interface';
 
 export interface LanguageServiceInterface {
 

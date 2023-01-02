@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
 import { UserProfileApi } from '@alfresco/js-api';

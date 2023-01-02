@@ -16,9 +16,8 @@
  */
 
 export * from './alfresco-api.mock';
-export * from './app-config.service.mock';
+export * from '../common/mock/app-config.service.mock';
 export * from './apps-service.mock';
-export * from './authentication.service.mock';
 export * from './bpm-user.service.mock';
 export * from './comment-process-service.mock';
 export * from './cookie.service.mock';
@@ -36,9 +35,5 @@ export * from './form/form-definition-visibility.mock';
 export * from './form/start-form.component.mock';
 export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';
-export * from './jwt-helper.service.spec';
-export * from './identity-group.mock';
-export * from './identity-user.mock';
-export * from './identity-group.service.mock';
-export * from './identity-user.service.mock';
+
 export * from './data-column.mock';

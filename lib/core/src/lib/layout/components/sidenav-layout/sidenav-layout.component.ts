@@ -29,7 +29,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { UserPreferencesService } from '../../../services/user-preferences.service';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';

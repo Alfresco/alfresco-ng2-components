@@ -21,7 +21,7 @@ import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.mod
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { StorageService } from '../../services/storage.service';
+import { StorageService } from '../../common/services/storage.service';
 import { Pagination } from '@alfresco/js-api';
 
 @Component({

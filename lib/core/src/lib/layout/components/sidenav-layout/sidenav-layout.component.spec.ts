@@ -25,7 +25,7 @@ import { MaterialModule } from '../../../material.module';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
-import { UserPreferencesService } from '../../../services/user-preferences.service';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';

@@ -18,7 +18,7 @@
 import moment from 'moment';
 import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferenceValues, UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

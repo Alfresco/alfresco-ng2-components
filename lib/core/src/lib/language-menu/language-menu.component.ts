@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { LanguageService } from '../services/language.service';
 import { Observable } from 'rxjs';
-import { LanguageItem } from '../services/language-item.interface';
+import { LanguageItem } from '../common/services/language-item.interface';
 
 @Component({
     selector: 'adf-language-menu',

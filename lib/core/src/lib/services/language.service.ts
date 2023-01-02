@@ -19,8 +19,8 @@ import { LanguageServiceInterface } from './language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { LanguageItem } from './language-item.interface';
-import { UserPreferencesService } from './user-preferences.service';
+import { LanguageItem } from '../common/services/language-item.interface';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 @Injectable({providedIn: 'root'})
 export class LanguageService implements LanguageServiceInterface {

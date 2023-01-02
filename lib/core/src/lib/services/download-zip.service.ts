@@ -18,7 +18,7 @@
 import { DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError } from 'rxjs/operators';
 

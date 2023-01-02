@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../services/log.service';
+import { LogService } from '../../common/services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import {

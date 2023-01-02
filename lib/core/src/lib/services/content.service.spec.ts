@@ -18,8 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from './content.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { StorageService } from './storage.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
+import { StorageService } from '../common/services/storage.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';

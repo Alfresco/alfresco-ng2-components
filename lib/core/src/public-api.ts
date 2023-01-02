@@ -46,12 +46,15 @@ export * from './lib/blank-page/index';
 export * from './lib/rich-text-editor/index';
 export * from './lib/snackbar-content/index';
 
-export * from './lib/utils/index';
+export * from './lib/common/utils/index';
 export * from './lib/interface/index';
 export * from './lib/models/index';
 export * from './lib/events/index';
 export * from './lib/mock/index';
 export * from './lib/testing';
+
+export * from './lib/auth';
+export * from './lib/common';
 
 export * from './lib/material.module';
 export * from './lib/core.module';

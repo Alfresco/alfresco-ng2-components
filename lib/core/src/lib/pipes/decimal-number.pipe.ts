@@ -18,7 +18,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { DecimalNumberModel } from '../models/decimal-number.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

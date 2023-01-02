@@ -17,13 +17,13 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
 import {
-  FormModel,
-  ContentLinkModel,
-  FormFieldValidator,
-  FormOutcomeEvent,
-  AuthenticationService,
-  TranslationService,
-  FormFieldModel
+    FormModel,
+    ContentLinkModel,
+    FormFieldValidator,
+    FormOutcomeEvent,
+    TranslationService,
+    FormFieldModel,
+    BpmUserService
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
@@ -134,13 +134,13 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   constructor(
     private taskListService: TaskListService,
-    private authService: AuthenticationService,
+    private bpmUserService: BpmUserService,
     private translationService: TranslationService
   ) {
   }
 
   ngOnInit() {
-    this.authService.getBpmLoggedUser().subscribe(user => {
+    this.bpmUserService.getCurrentUserInfo().subscribe(user => {
       this.currentLoggedUser = user;
     });
     this.loadTask(this.taskId);

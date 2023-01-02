@@ -17,9 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
+import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
+import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
+import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';

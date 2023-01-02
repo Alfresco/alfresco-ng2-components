@@ -27,7 +27,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { Subject } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { RequestPaginationModel } from '../models/request-pagination.model';
-import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { PaginationModel } from '../models/pagination.model';
 import { takeUntil } from 'rxjs/operators';
 

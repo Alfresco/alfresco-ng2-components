@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { catchError, combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 import {
     TaskActionsApi,

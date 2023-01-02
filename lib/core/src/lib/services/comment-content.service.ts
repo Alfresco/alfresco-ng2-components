@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
+import { LogService } from '../common/services/log.service';
 import { map, catchError } from 'rxjs/operators';
 import { CommentEntry, CommentsApi } from '@alfresco/js-api';
 import { CommentContentServiceInterface } from './comment-content.service.interface';

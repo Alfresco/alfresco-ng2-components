@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../auth/services/authentication.service';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';

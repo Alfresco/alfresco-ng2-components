@@ -21,8 +21,8 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { LogService } from './log.service';
-import { AuthenticationService } from './authentication.service';
+import { LogService } from '../common/services/log.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { ContentService } from './content.service';
 
 // eslint-disable-next-line no-shadow

@@ -31,7 +31,7 @@ import {
 } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
+import { LogService } from '../../common/services/log.service';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';

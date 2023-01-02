@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { ComponentTranslationModel } from '../models/component.model';
-import { ObjectUtils } from '../utils/object-utils';
+import { ObjectUtils } from '../common/utils/object-utils';
 import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable({

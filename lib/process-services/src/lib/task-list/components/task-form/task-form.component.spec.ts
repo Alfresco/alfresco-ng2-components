@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFormComponent } from './task-form.component';
 import {
-    AuthenticationService,
+    BpmUserService,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
@@ -63,7 +63,7 @@ describe('TaskFormComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
     let element: HTMLElement;
-    let authService: AuthenticationService;
+    let bpmUserService: BpmUserService;
     let getBpmLoggedUserSpy: jasmine.Spy;
 
     setupTestBed({
@@ -88,8 +88,8 @@ describe('TaskFormComponent', () => {
         spyOn(taskFormService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
-        authService = TestBed.inject(AuthenticationService);
-        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of(fakeUser));
+        bpmUserService = TestBed.inject(BpmUserService);
+        getBpmLoggedUserSpy = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(<any>fakeUser));
     });
 
     afterEach(async () => {
@@ -123,7 +123,12 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to complete assigned task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
+            getBpmLoggedUserSpy.and.returnValue(of({
+                id: 1001,
+                firstName: 'Wilbur',
+                lastName: 'Adams',
+                email: 'wilbur@app.activiti.com'
+            }));
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
@@ -166,14 +171,14 @@ describe('TaskFormComponent', () => {
 
         it('should fetch new task details when taskId changed', () => {
             const change = new SimpleChange('123', '456', true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({taskId: change});
             fixture.detectChanges();
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('123');
         });
 
         it('should NOT fetch new task details when taskId changed to null', async () => {
             const nullChange = new SimpleChange('123', null, true);
-            component.ngOnChanges({ taskId: nullChange });
+            component.ngOnChanges({taskId: nullChange});
             fixture.detectChanges();
             await fixture.whenStable();
             expect(getTaskDetailsSpy).not.toHaveBeenCalled();
@@ -551,7 +556,12 @@ describe('TaskFormComponent', () => {
     describe('Complete task', () => {
 
         it('Should be able to complete the assigned task in case process initiator not allowed to complete the task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({ id: 1002, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
+            getBpmLoggedUserSpy.and.returnValue(of({
+                id: 1002,
+                firstName: 'Wilbur',
+                lastName: 'Adams',
+                email: 'wilbur@app.activiti.com'
+            }));
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
 
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
@@ -574,7 +584,12 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to complete the task if process initiator allowed to complete the task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
+            getBpmLoggedUserSpy.and.returnValue(of({
+                id: 1001,
+                firstName: 'Wilbur',
+                lastName: 'Adams',
+                email: 'wilbur@app.activiti.com'
+            }));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
@@ -616,7 +631,12 @@ describe('TaskFormComponent', () => {
 
         it('Should be able to complete a task with candidates users if process initiator not allowed to complete the task', async () => {
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
+            getBpmLoggedUserSpy.and.returnValue(of({
+                id: 1001,
+                firstName: 'Wilbur',
+                lastName: 'Adams',
+                email: 'wilbur@app.activiti.com'
+            }));
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 
@@ -741,7 +761,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit error event in case claim task api fails', (done) => {
-            const mockError = { message: 'Api Failed' };
+            const mockError = {message: 'Api Failed'};
             spyOn(taskListService, 'claimTask').and.returnValue(throwError(mockError));
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
 
@@ -779,7 +799,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit error event in case unclaim task api fails', (done) => {
-            const mockError = { message: 'Api Failed' };
+            const mockError = {message: 'Api Failed'};
             spyOn(taskListService, 'unclaimTask').and.returnValue(throwError(mockError));
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
@@ -806,7 +826,7 @@ describe('TaskFormComponent', () => {
             spyOn(taskFormService, 'saveTaskForm').and.returnValue(of({}));
         });
 
-        it('[T14599423] Form in unassigned task is read-only',  async () => {
+        it('[T14599423] Form in unassigned task is read-only', async () => {
             getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
             fixture.detectChanges();
             await fixture.whenStable();
@@ -990,7 +1010,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should show only the Claim button as enabled before claiming a task without form', async () => {
-            const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null };
+            const claimableTaskDetailsWithoutFormMock = {...claimableTaskDetailsMock, formKey: null};
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
@@ -1010,7 +1030,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should show only Complete/Release buttons as enabled after claiming a task without form', async () => {
-            const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null };
+            const claimedTaskDetailsWithoutFormMock = {...claimedTaskDetailsMock, formKey: null};
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';

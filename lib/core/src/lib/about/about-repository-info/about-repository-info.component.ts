@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { ObjectUtils, StringUtils } from '../../utils';
+import { ObjectUtils, StringUtils } from '../../common/utils';
 import { LicenseData, StatusData } from '../interfaces';
 import { RepositoryInfo } from './repository-info.interface';
 

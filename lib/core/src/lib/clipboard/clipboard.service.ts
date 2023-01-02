@@ -17,7 +17,7 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { LogService } from '../services/log.service';
+import { LogService } from '../common/services/log.service';
 import { NotificationService } from '../notifications/services/notification.service';
 
 @Injectable({ providedIn: 'root' })

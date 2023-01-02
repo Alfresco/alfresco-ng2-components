@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ObjectUtils } from '../../utils';
+import { ObjectUtils } from '../../common/utils';
 import { DataRow } from './data-row.model';
 
 // Simple implementation of the DataRow interface.
