@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '@alfresco/adf-core';
+import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';

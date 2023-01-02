@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AppsProcessService, TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { AppsProcessService } from './services/apps-process.service';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';

@@ -17,7 +17,8 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';

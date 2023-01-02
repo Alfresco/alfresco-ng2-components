@@ -22,9 +22,9 @@ import {
 import {
     AppConfigService,
     AppConfigValues,
-    AppsProcessService,
     FormValues
 } from '@alfresco/adf-core';
+import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';

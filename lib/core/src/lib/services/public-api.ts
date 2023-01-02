@@ -17,7 +17,6 @@
 
 export * from './alfresco-api.service';
 export * from './content.service';
-export * from './apps-process.service';
 export * from './page-title.service';
 export * from './renditions.service';
 export * from './translation.service';

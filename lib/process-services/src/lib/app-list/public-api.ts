@@ -18,4 +18,6 @@
 export * from './apps-list.component';
 export * from './select-apps-dialog.component';
 
+export * from './services/apps-process.service';
+
 export * from './apps-list.module';

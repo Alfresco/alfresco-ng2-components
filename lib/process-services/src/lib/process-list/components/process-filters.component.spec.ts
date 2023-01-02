@@ -16,9 +16,10 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
+import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';

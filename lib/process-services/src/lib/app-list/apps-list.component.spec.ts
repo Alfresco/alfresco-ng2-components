@@ -18,7 +18,8 @@
 import { DebugElement, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { AppsProcessService } from './services/apps-process.service';
 import { of, throwError } from 'rxjs';
 
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
