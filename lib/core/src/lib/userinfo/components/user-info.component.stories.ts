@@ -25,8 +25,8 @@ import { UserInfoComponent } from './user-info.component';
 import { UserInfoModule } from '../userinfo.module';
 import { PeopleContentService } from './../../services/people-content.service';
 import { BpmUserService } from './../../services/bpm-user.service';
-import { IdentityUserService } from './../../services/identity-user.service';
-import { AuthenticationService } from './../../services/authentication.service';
+import { IdentityUserService } from '../../auth/services/identity-user.service';
+import { AuthenticationService } from '../../auth/services/authentication.service';
 import { AuthenticationServiceMock } from './mocks/authentication.service.mock';
 import {
     BpmUserServiceMock,

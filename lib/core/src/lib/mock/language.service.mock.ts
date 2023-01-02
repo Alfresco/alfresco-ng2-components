@@ -18,7 +18,7 @@
 import { LanguageServiceInterface } from '../services/language.service.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LanguageItem } from '../services/language-item.interface';
+import { LanguageItem } from '../common/services/language-item.interface';
 
 @Injectable()
 export class LanguageServiceMock implements LanguageServiceInterface {

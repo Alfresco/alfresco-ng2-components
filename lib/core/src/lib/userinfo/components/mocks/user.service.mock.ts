@@ -17,9 +17,11 @@
 
 import {
     BpmUserModel,
-    EcmUserModel,
-    IdentityUserModel
+    EcmUserModel
 } from './../../../models';
+import {
+    IdentityUserModel
+} from './../../../auth/models/identity-user.model';
 import { of } from 'rxjs';
 
 export class PeopleContentServiceMock {

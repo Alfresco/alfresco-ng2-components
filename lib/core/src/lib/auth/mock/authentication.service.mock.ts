@@ -17,12 +17,12 @@
 
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from '../auth/services/authentication.service';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { CookieService } from '../common/services/cookie.service';
-import { LogService } from '../common/services/log.service';
-import { StorageService } from '../common/services/storage.service';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { CookieService } from '../../common/services/cookie.service';
+import { LogService } from '../../common/services/log.service';
+import { StorageService } from '../../common/services/storage.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
