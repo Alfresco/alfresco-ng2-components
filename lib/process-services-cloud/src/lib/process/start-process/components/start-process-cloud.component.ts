@@ -280,9 +280,18 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     startProcess() {
         this.isLoading = true;
+        let payloadVariables: any;
+        if (this.variables) {
+            payloadVariables = this.variables;
+        }
+        if (this.hasForm()) {
+            payloadVariables = Object.assign(this.processPayloadCloud.variables, this.formCloud.values);
+        }
+
         const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
             name: this.processInstanceName.value,
-            processDefinitionKey: this.processPayloadCloud.processDefinitionKey
+            processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
+            variables: payloadVariables
         });
         this.startProcessCloudService.startProcess(this.appName, createPayload)
             .subscribe(
