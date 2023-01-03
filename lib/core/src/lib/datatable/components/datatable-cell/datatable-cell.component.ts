@@ -51,6 +51,7 @@ import { DataTableService } from '../../services/datatable.service';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
+    providers: [DataTableService],
     host: {class: 'adf-datatable-content-cell'}
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
