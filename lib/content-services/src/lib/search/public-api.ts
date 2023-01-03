@@ -37,8 +37,6 @@ export * from './services/search-configuration.service';
 
 export * from './mocks/search.service.mock';
 
-export * from './interfaces/search-configuration.interface';
-
 export * from './components/search.component';
 export * from './components/search-control.component';
 export * from './components/empty-search-result.component';

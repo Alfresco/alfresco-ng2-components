@@ -19,3 +19,5 @@ export * from './animations';
 export * from './search-text-input.component';
 export * from './search-trigger.directive';
 export * from './search-text-input.module';
+
+export * from './interfaces/search-configuration.interface';

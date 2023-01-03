@@ -16,7 +16,7 @@
  */
 
 import { SearchService } from '../services/search.service';
-import { SearchComponentInterface } from '../interfaces/search-configuration.interface';
+import { SearchComponentInterface } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     Component,

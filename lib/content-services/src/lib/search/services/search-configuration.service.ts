@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { QueryBody } from '@alfresco/js-api';
-import { SearchConfigurationInterface } from '../interfaces/search-configuration.interface';
+import { SearchConfigurationInterface } from '../../../../../core/src/lib/search-text/interfaces/search-configuration.interface';
 
 @Injectable({
     providedIn: 'root'
