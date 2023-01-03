@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
 import { setupTestBed } from '@alfresco/adf-core';
-import { CommentProcessService } from './services/comment-process.service';
+import { CommentProcessService } from '../../process-comments/services/comment-process.service';
 import { TaskListModule } from '../../task-list/task-list.module';
 
 import { exampleProcess, exampleProcessNoName, mockRunningProcess, processEnded } from './../../mock';
