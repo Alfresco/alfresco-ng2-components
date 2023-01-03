@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
 import moment, { Moment } from 'moment';
 
 @Injectable({

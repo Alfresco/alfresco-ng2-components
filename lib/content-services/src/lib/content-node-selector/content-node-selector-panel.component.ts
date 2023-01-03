@@ -52,7 +52,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { NodeEntryEvent } from '../document-list/components/node.event';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 

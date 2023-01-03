@@ -30,7 +30,7 @@ import {
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
-import { CardViewContentUpdateService } from '../../../services/card-view-content-update.service';
+import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 
 const DEFAULT_SEPARATOR = ', ';
 

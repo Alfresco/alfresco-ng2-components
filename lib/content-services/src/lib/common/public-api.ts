@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
-export * from './card-view-content-update.service';
-export * from './sites.service';
+export * from './services/favorites-api.service';
+export * from './services/card-view-content-update.service';
+export * from './services/sites.service';

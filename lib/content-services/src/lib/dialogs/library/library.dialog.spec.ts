@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { SiteEntry } from '@alfresco/js-api';
-import { SitesService } from '../../services/sites.service';
+import { SitesService } from '../../common/services/sites.service';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;

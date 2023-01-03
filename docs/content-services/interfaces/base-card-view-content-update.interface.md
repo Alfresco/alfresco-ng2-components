@@ -7,7 +7,7 @@ Last reviewed: 2022-11-25
 
 # [Base Card View Content Update interface](../../../lib/content-services/src/lib/interfaces/base-card-view-content-update.interface.ts "Defined in base-card-view-content-update.interface.ts")
 
-Specifies required properties and methods for [Card View Content Update service](../../../lib/content-services/src/lib/services/card-view-content-update.service.ts).
+Specifies required properties and methods for [Card View Content Update service](lib/content-services/src/lib/common/services/card-view-content-update.service.ts).
 Extends from [`BaseCardViewUpdate`](../../../lib/core/src/lib/card-view/interfaces/base-card-view-update.interface.ts).
 
 ## Basic usage

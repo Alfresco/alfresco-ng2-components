@@ -27,7 +27,7 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 @Injectable({
     providedIn: 'root'
