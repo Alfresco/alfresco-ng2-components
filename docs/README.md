@@ -229,8 +229,8 @@ for more information about installing and using the source code.
 | [Renditions service](core/services/renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/src/lib/services/renditions.service.ts) |
 | [Search Configuration service](core/services/search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/src/lib/services/search-configuration.service.ts) |
 | [Search service](core/services/search.service.md) | Accesses the Content Services Search API. | [Source](../lib/core/src/lib/services/search.service.ts) |
-| [Shared Links Api service](core/services/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/src/lib/services/shared-links-api.service.ts) |
-| [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/common/services/storage.service.ts) |
+| [Shared Links Api service](core/services/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](lib/content-services/src/lib/content-node-share/services/shared-links-api.service.ts) |
+| [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/services/storage.service.ts) |
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/src/lib/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/src/lib/services/translation.service.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/src/lib/services/upload.service.ts) |
