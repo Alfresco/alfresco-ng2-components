@@ -30,7 +30,6 @@ export * from './favorites-api.service';
 export * from './nodes-api.service';
 export * from './people-content.service';
 export * from './people-process.service';
-export * from '../../../../content-services/src/lib/content-node-share/services/shared-links-api.service';
 export * from './discovery-api.service';
 export * from './comment-process.service';
 export * from './comment-content.service';
