@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { mockError, fakeSearch } from '../mocks/search.service.mock';
 import { SearchService } from './search.service';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core'
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodePaging } from '@alfresco/js-api';
 
