@@ -15,8 +15,26 @@
  * limitations under the License.
  */
 
-export * from './process-comments.component';
+import { EcmUserModel } from '@alfresco/adf-core';
 
-export * from './services/comment-process.service';
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export * from './process-comments.module';
+export const testUser: EcmUserModel = {
+    id: '44',
+    email: 'test.user@hyland.com',
+    firstName: 'Test',
+    lastName: 'User',
+    company: {
+        organization: '',
+        address1: '',
+        address2: '',
+        address3: '',
+        postcode: '',
+        telephone: '',
+        fax: '',
+        email: ''
+    },
+    enabled: true,
+    isAdmin: undefined,
+    avatarId: '044'
+};
