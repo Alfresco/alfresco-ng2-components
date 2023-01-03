@@ -21,7 +21,7 @@ import { ObjectUtils } from '../common/utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
-import { OpenidConfiguration } from '../services/openid-configuration.interface';
+import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 
 /* spellchecker: disable */
 // eslint-disable-next-line no-shadow
