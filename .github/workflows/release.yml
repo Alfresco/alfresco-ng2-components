@@ -82,8 +82,6 @@ jobs:
           npm ci
           nx run cli:bundle
           nx run testing:bundle
-      # - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
-      # - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - uses: ./.github/actions/upload-cache-and-artifacts
 
   release-demoshell:
