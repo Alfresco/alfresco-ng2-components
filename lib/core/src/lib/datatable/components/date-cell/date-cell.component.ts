@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import {
     UserPreferencesService,
@@ -27,7 +27,6 @@ import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-date-cell',
-
     template: `
         <ng-container>
             <span
@@ -65,7 +64,7 @@ export class DateCellComponent extends DataTableCellComponent {
 
     constructor(
         userPreferenceService: UserPreferencesService,
-        dataTableService: DataTableService,
+        @Optional() dataTableService: DataTableService,
         appConfig: AppConfigService
     ) {
         super(dataTableService);

@@ -19,7 +19,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     Input,
-    OnInit,
+    OnInit, Optional,
     ViewEncapsulation
 } from '@angular/core';
 import { PathInfoEntity } from '@alfresco/js-api';
@@ -43,7 +43,7 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     @Input()
     link: any[];
 
-    constructor(dataTableService: DataTableService) {
+    constructor(@Optional() dataTableService: DataTableService) {
         super(dataTableService);
     }
 

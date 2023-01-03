@@ -127,7 +127,7 @@ v6.0.0 and after:
 | [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
-### Update Data-table or Document List after a node change
+### Update Data-table a data change
 
 v6.0.0 and after You will need to provide a ```DataTableService``` to update a row of your table.
 The model to update the DataTable require the ID of the row you want change and the new data Object of the row
@@ -140,6 +140,7 @@ DataRowUpdateModel {
 ```
 
 For example if your table use entry nodes you can pass:
+
 ```typescript
 this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
 ```

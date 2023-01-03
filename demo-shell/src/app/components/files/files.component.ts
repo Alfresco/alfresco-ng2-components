@@ -60,8 +60,7 @@ import {
     SharedLinksApiService,
     FormRenderingService,
     FileUploadEvent,
-    NodesApiService,
-    DataTableService
+    NodesApiService
 } from '@alfresco/adf-core';
 
 import {
@@ -92,8 +91,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     styleUrls: ['./files.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
-        {provide: FormRenderingService, useClass: ProcessFormRenderingService},
-        DataTableService
+        {provide: FormRenderingService, useClass: ProcessFormRenderingService}
     ]
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
@@ -269,7 +267,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private contentMetadataService: ContentMetadataService,
                 private sharedLinksApiService: SharedLinksApiService,
                 private dialogAspectListService: DialogAspectListService,
-                private dataTableService: DataTableService,
                 private nodeService: NodesApiService) {
     }
 
@@ -315,10 +312,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 }
             });
         }
-
-        this.nodeService.nodeUpdated.subscribe((node) => {
-            this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
-        });
 
         this.uploadService.fileUploadComplete
             .pipe(

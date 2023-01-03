@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DataTableService } from '../../services/datatable.service';
 
@@ -33,7 +33,7 @@ import { DataTableService } from '../../services/datatable.service';
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent {
-    constructor(dataTableService: DataTableService) {
+    constructor(@Optional() dataTableService: DataTableService) {
         super(dataTableService);
     }
 }
