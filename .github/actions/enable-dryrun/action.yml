@@ -1,0 +1,30 @@
+name: 'enable dryrun'
+description: 'check if must run pipeline in dryrun mode'
+
+inputs:
+  dry-run-flag:
+    description: 'enable dryrun'
+    required: false
+    type: boolean
+    default: true
+
+outputs:
+  dryrun:
+    description: "long sha of the tag"
+    value: ${{ steps.dryrun.outputs.dryrun }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: set dryrun flag to TRUE
+      shell: bash
+      id: dryrun
+      run: |
+          if [[ '${{ inputs.dry-run-flag }}' == 'true' ]]; then
+            echo "dryrun=--dryrun" >> $GITHUB_OUTPUT;
+            echo "enabling dryrun"
+          else
+            echo "dryrun=" >> $GITHUB_OUTPUT;
+            echo "dryrun NOT enabled"
+          fi

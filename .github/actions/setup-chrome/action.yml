@@ -1,0 +1,13 @@
+name: 'Install Google Chrome'
+description: 'Install Google Chrome'
+    
+runs:
+  using: "composite"
+  steps:
+      - name: Install google chrome
+        shell: bash
+        run: |
+            wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt install ./google-chrome-stable_current_amd64.deb
+            sudo ln -s /usr/bin/google-chrome /usr/bin/chrome
+            chrome --version

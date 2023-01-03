@@ -16,6 +16,7 @@ runs:
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
         TRAVIS_BRANCH=""
+        TAG_NPM=""
         REGEX="(repository|workflow)_dispatch"
         if [[ "${{ inputs.event_name }}" == "schedule"  ]]; then 
             EVENT_TYPE="cron";
@@ -29,6 +30,14 @@ runs:
         elif [[ "${{ inputs.event_name }}" =~ $REGEX ]]; then
             EVENT_TYPE="api";
         fi
+
+        if [[ GITHUB_REF_NAME == "master" ]]; then
+            TAG_NPM="latest"
+        fi
+        if [[ GITHUB_REF_NAME == "develop" ]]; then
+            TAG_NPM="alpha"
+        fi
+        echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
         echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
         echo "TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}" >> $GITHUB_ENV
         echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV

@@ -1,6 +1,13 @@
 name: "pull-request"
 
 on:
+  workflow_call:
+    inputs:
+      dry-run-release:
+        description: 'enable dry-run on artifact push'
+        required: false
+        type: boolean
+        default: true
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -49,7 +56,14 @@ env:
   SMART_RUNNER_PATH: ".protractor-smartrunner"
   S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   S3_BUILD_BUCKET: ${{ secrets.S3_BUILD_BUCKET }}
+  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
+  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
+  DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
+  DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
+  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
+  DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
+
 jobs:
   main:
     # long timeout required when cache has to be recreated
@@ -72,7 +86,7 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
-      - uses: ./.github/actions/upload-build-artifacts
+      - uses: ./.github/actions/upload-cache-and-artifacts
 
   playwright:
     timeout-minutes: 20
@@ -85,20 +99,13 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
-      - name: clean
-        run: |
-          rm -rf nxcache
-          rm -rf dist
-      - uses: ./.github/actions/download-build-artifacts
-      - name: build adf cli
-        run: |
-          nx build cli
+      - uses: ./.github/actions/download-cache-and-artifacts
       - name: Process Cloud Storybook Playwright
         run: |
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
-      - uses: ./.github/actions/upload-build-artifacts
+      - uses: ./.github/actions/upload-cache-and-artifacts
 
   e2e:
     timeout-minutes: 90
@@ -142,7 +149,7 @@ jobs:
             auth: "BASIC"
             check-cs-env: "true"
           - description: "Content: Upload and Versioning"
-            test-id: "content-services browser"
+            test-id: "content-services"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
@@ -230,11 +237,10 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           enable-cache: "true"
-      - name: clean
-        run: |
-          rm -rf nxcache
-          rm -rf dist
-      - uses: ./.github/actions/download-build-artifacts
+          enable-node-modules-cache: "true"
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - name: setup chrome
+        uses: ./.github/actions/setup-chrome
       - name: e2e
         uses: ./.github/actions/e2e
         with:

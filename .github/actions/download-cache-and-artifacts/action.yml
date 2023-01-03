@@ -1,0 +1,27 @@
+name: "Download build artifacts"
+description: "Download build artifacts"
+runs:
+  using: "composite"
+  steps:
+    - name: download and extract artifacts from s3
+      shell: bash
+      env:
+        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
+      run: |
+        packages=( dist nxcache node_modules )
+        for i in "${packages[@]}"; do
+          time aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
+          du -h $i.tar.gz
+          time tar xzf $i.tar.gz
+        done
+    - name: show files
+      shell: bash
+      run: |
+        pwd
+        ls -lha
+        echo "====DIST===="
+        find dist -maxdepth 1 -type d
+        echo "====NXCACHE===="
+        find nxcache -maxdepth 1 -type d
+        echo "====ADF===="
+        find node_modules/@alfresco/ -maxdepth 1 -type d

@@ -129,6 +129,7 @@ runs:
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
         GIT_HASH=$(echo $GIT_HASH | sed "s@'@@g")
         echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
+
     - name: run test with retries
       id: retry_run
       env:
@@ -136,6 +137,7 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+        
       uses: nick-fields/retry@v2.8.2
       with:
         timeout_minutes: 40
@@ -145,9 +147,15 @@ runs:
         command: |
           set -u;
           export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
-          echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
-          bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
-
+          echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"                     
+          if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
+            export DISPLAY=:99
+            chromedriver --url-base=/wd/hub &
+            sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional                           
+            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
+          else
+            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1          
+          fi
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
       if: always()
@@ -157,5 +165,3 @@ runs:
       run: |
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
         aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
-
-
