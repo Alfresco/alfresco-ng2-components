@@ -94,7 +94,6 @@ How to fix it:
 | `VersionCompatibilityDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `SearchService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `SearchConfigurationService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `AppsProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
 Following classes have been relocated:
