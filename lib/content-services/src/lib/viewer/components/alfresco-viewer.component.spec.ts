@@ -28,7 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, RenditionViewerService } from '@alfresco/adf-content-services';
 import {
-    AlfrescoApiService,
+    NodesApiService,
     CoreTestingModule,
     setupTestBed,
     EventMock,
@@ -140,7 +140,7 @@ describe('AlfrescoViewerComponent', () => {
     let fixture: ComponentFixture<AlfrescoViewerComponent>;
     let element: HTMLElement;
 
-    let alfrescoApiService: AlfrescoApiService;
+    let nodesApiService: NodesApiService;
     let dialog: MatDialog;
     let uploadService: UploadService;
     let extensionService: AppExtensionService;
@@ -177,7 +177,7 @@ describe('AlfrescoViewerComponent', () => {
         component = fixture.componentInstance;
 
         uploadService = TestBed.inject(UploadService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        nodesApiService = TestBed.inject(NodesApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
     });
@@ -325,15 +325,15 @@ describe('AlfrescoViewerComponent', () => {
 
         expect(component.fileName).toBe('file1');
 
-        alfrescoApiService.nodeUpdated.next({id: 'id1', name: 'file2'} as any);
+        nodesApiService.nodeUpdated.next({id: 'id1', name: 'file2'} as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file2');
 
-        alfrescoApiService.nodeUpdated.next({id: 'id1', name: 'file3'} as any);
+        nodesApiService.nodeUpdated.next({id: 'id1', name: 'file3'} as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file3');
 
-        alfrescoApiService.nodeUpdated.next({id: 'id2', name: 'file4'} as any);
+        nodesApiService.nodeUpdated.next({id: 'id2', name: 'file4'} as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file3');
         expect(component.nodeId).toBe('id1');
