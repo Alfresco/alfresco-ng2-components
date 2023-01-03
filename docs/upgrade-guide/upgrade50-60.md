@@ -119,15 +119,56 @@ v6.0.0 and after:
 | `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `SearchService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `AppsProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
 ### Update Data-table or Document List after a node change
 
--   [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md)
--   [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts)
--   [`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts)
--   [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md)
--   [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)
--   [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)
+v6.0.0 and after You will need to provide a ```DataTableService``` to update a row of your table.
+The model to update the DataTable require the ID of the row you want change and the new data Object of the row
+
+```typescript
+DataRowUpdateModel {
+    obj: any;
+    id: string;
+}
+```
+
+For example if your table use entry nodes you can pass:
+```typescript
+this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
+```
+
+As good practice is better to provide a DataTableService in the component where you are going to deliver the new object
+
+```typescript
+@Component({
+    selector: 'app-files-component',
+    templateUrl: './files.component.html',
+    styleUrls: ['./files.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        DataTableService
+    ]
+})
+export class FilesComponent implements OnInit {
+
+    constructor(private dataTableService: DataTableService,
+                private nodeService: NodesApiService) {
+    }
+    
+    ngOnInit() {
+        this.nodeService.nodeUpdated.subscribe((node) => {
+            this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
+        });
+    }
+
+```
 
 ### NodeNameTooltipPipe
 

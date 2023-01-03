@@ -19,9 +19,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataRowUpdateModel } from '../data/data-row-update.model';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class DataTableService {
 
     /**
