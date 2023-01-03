@@ -18,7 +18,8 @@
 import { Injectable } from '@angular/core';
 import { NodePaging, QueriesApi, QueryBody, ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
-import { AlfrescoApiService, SearchConfigurationService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { SearchConfigurationService } from './search-configuration.service';
 
 @Injectable({
     providedIn: 'root'
