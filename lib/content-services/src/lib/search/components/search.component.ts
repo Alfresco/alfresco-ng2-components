@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { SearchService, SearchComponentInterface } from '@alfresco/adf-core';
+import { SearchService } from '../services/search.service';
+import { SearchComponentInterface } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     Component,

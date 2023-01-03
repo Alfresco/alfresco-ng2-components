@@ -16,7 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';

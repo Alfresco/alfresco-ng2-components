@@ -18,7 +18,8 @@
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchService, setupTestBed, DataTableComponent, DataSorting } from '@alfresco/adf-core';
+import { setupTestBed, DataTableComponent, DataSorting } from '@alfresco/adf-core';
+import { SearchService  } from '../../../search/services/search.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';

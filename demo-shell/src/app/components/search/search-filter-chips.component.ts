@@ -18,8 +18,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchConfiguration, SearchForm, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { SearchService, ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
+import { SearchConfiguration, SearchForm, SearchQueryBuilderService, SearchService } from '@alfresco/adf-content-services';
+import { ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

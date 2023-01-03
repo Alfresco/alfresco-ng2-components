@@ -30,6 +30,12 @@ export * from './models/search-form.interface';
 
 export * from './search-query-service.token';
 export * from './services/search-header-query-builder.service';
+export * from './services/search-facet-filters.service';
+export * from './services/search-filter.service';
+export * from './services/search.service';
+export * from './services/search-configuration.service';
+
+export * from './mocks/search.service.mock';
 
 export * from './components/search.component';
 export * from './components/search-control.component';
@@ -41,7 +47,6 @@ export * from './components/search-check-list/search-check-list.component';
 export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-date-range/search-date-range.component';
 export * from './components/search-filter/search-filter.component';
-export * from './services/search-filter.service';
 export * from './components/search-filter-container/search-filter-container.component';
 export * from './components/search-number-range/search-number-range.component';
 export * from './components/search-radio/search-radio.component';
@@ -52,7 +57,6 @@ export * from './components/search-text/search-text.component';
 export * from './components/search-widget-container/search-widget-container.component';
 export * from './components/search-datetime-range/search-datetime-range.component';
 export * from './components/search-form/search-form.component';
-export * from './services/search-facet-filters.service';
 export * from './components/search-filter-chips/search-filter-chips.component';
 export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
 export * from './components/search-facet-field/search-facet-field.component';

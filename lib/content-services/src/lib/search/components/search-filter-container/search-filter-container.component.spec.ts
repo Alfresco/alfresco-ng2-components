@@ -18,7 +18,8 @@
 import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';

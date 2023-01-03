@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './authentication.interface';
 export * from './injection.tokens';
-export * from './search-configuration.interface';
