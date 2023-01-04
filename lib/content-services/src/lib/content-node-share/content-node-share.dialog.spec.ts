@@ -20,12 +20,12 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,
-    SharedLinksApiService,
     NodesApiService,
     NotificationService,
     RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
+import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment';
 import { ContentTestingModule } from '../testing/content.testing.module';

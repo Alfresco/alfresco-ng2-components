@@ -28,12 +28,12 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {
-    SharedLinksApiService,
     NodesApiService,
     ContentService,
     RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
+import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment';
