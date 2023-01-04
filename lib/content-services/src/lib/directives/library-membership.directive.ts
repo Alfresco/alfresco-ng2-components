@@ -28,7 +28,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
 import { LibraryMembershipErrorEvent} from '../interfaces/library-membership-error-event.interface';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 @Directive({
     selector: '[adf-library-membership]',

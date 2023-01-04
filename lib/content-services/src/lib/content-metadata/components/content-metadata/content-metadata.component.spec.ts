@@ -29,7 +29,7 @@ import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
-import { CardViewContentUpdateService } from '../../../services/card-view-content-update.service';
+import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;

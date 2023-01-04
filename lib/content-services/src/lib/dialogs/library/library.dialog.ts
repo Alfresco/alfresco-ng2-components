@@ -35,7 +35,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
-import { SitesService } from '../../services/sites.service';
+import { SitesService } from '../../common/services/sites.service';
 
 @Component({
     selector: 'adf-library-dialog',

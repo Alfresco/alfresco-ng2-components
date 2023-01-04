@@ -131,6 +131,8 @@ v6.0.0 and after:
 | [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 
 ### Update Data-table a data change
 

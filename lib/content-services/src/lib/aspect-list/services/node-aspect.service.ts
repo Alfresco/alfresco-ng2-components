@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { DialogAspectListService } from './dialog-aspect-list.service';
-import { CardViewContentUpdateService } from '../../services/card-view-content-update.service';
+import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
 
 @Injectable({
     providedIn: 'root'

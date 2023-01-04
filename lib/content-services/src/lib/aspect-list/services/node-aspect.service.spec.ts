@@ -23,7 +23,7 @@ import { EMPTY, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
 import { DialogAspectListService } from './dialog-aspect-list.service';
-import { CardViewContentUpdateService } from '../../services/card-view-content-update.service';
+import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
 
 describe('NodeAspectService', () => {
 

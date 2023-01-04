@@ -29,7 +29,7 @@ import { getFakeSitePaging,
 } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 const customSiteList = {
     list: {

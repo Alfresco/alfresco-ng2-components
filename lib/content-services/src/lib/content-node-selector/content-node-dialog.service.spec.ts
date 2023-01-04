@@ -25,7 +25,7 @@ import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeAction } from '../document-list/models/node-action.enum';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 const fakeNodeEntry = {
     entry: {

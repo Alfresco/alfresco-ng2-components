@@ -39,7 +39,7 @@ import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
