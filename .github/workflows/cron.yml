@@ -2,7 +2,10 @@ name: "cron schedule"
 
 on:
   schedule:
-    - cron: '0 11 * * *'  
+    - cron: '0 11 * * *'
+  push:
+    branches:
+      - AAE-11910-cron-dispatch
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
