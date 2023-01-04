@@ -20,7 +20,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import { setupTestBed, CommentProcessService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { CommentProcessService } from '../../process-comments/services/comment-process.service';
 import { TaskListModule } from '../../task-list/task-list.module';
 
 import { exampleProcess, exampleProcessNoName, mockRunningProcess, processEnded } from './../../mock';

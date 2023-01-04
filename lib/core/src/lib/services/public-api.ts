@@ -30,8 +30,6 @@ export * from './nodes-api.service';
 export * from './people-content.service';
 export * from './people-process.service';
 export * from './discovery-api.service';
-export * from './comment-process.service';
-export * from './comment-content.service';
 export * from './external-alfresco-api.service';
 export * from './download-zip.service';
 export * from './automation.service';

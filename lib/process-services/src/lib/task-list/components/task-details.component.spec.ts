@@ -25,11 +25,12 @@ import {
     FormOutcomeModel,
     setupTestBed,
     BpmUserService,
-    CommentProcessService, LogService,
+    LogService,
     UserProcessModel,
     PeopleProcessService,
     CommentModel
 } from '@alfresco/adf-core';
+import { CommentProcessService } from '../../process-comments/services/comment-process.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
