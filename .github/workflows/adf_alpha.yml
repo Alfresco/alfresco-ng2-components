@@ -1,0 +1,23 @@
+name: "alpha-adf"
+
+on:  
+  workflow_call:  
+  workflow_dispatch:
+    inputs:
+      cluster_operation:
+        description: trigger adf test
+        type: choice
+        required: true
+        options:
+          - TRIGGER_ALPHA_ADF          
+        default: TRIGGER_ALPHA_ADF
+
+jobs:
+  trigger_adf:
+    name: trigger adf test
+    runs-on: ubuntu-latest  
+    steps:     
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
