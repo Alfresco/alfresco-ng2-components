@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { CommentModel, CommentProcessService } from '@alfresco/adf-core';
+import { CommentModel } from '@alfresco/adf-core';
+import { CommentProcessService } from './services/comment-process.service';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';

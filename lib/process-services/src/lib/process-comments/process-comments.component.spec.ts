@@ -19,7 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
-import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { CommentProcessService } from './services/comment-process.service';
 
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';

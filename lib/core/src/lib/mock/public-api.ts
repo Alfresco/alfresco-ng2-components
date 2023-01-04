@@ -17,7 +17,6 @@
 
 export * from './alfresco-api.mock';
 export * from './bpm-user.service.mock';
-export * from './comment-process-service.mock';
 export * from './cookie.service.mock';
 export * from './ecm-user.service.mock';
 export * from './event.mock';

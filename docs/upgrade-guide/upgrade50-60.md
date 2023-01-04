@@ -207,12 +207,19 @@ v6.0.0 and after:
 
      this.nodesApiService.nodeUpdated.pipe .....
 
+### Comments component
+
+```adf-comments``` component is now a real presentational components. The `taskId` and `nodeId` has now renamed to `id`
+The ```adf-comments``` has now two specialization in :
+
+- ```adf-node-comments``` [Node Comments Componen](../content-services/components/node-comments.component.md)
+- ```adf-task-comments``` [Task Comments Component](../process-services/components/task-comments.component.md)
+
+
 ## Renamed items
 
 ### New Classes or Services
 
 ### Properties and methods
-
--   `<adf-comments>`: The `taskId` input has now been renamed as `id`
 
 ### Component selectors

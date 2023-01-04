@@ -15,12 +15,26 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-import { CommentModel } from '../models/comment.model';
+import { EcmUserModel } from '@alfresco/adf-core';
 
-export interface CommentProcessServiceInterface {
-    addTaskComment(taskId: string, message: string): Observable<CommentModel>;
-    getTaskComments(taskId: string): Observable<CommentModel[]>;
-    getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]>;
-    addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel>;
-}
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+
+export const testUser: EcmUserModel = {
+    id: '44',
+    email: 'test.user@hyland.com',
+    firstName: 'Test',
+    lastName: 'User',
+    company: {
+        organization: '',
+        address1: '',
+        address2: '',
+        address3: '',
+        postcode: '',
+        telephone: '',
+        fax: '',
+        email: ''
+    },
+    enabled: true,
+    isAdmin: undefined,
+    avatarId: '044'
+};

@@ -18,9 +18,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommentModel, UserProcessModel } from '../models';
-import { CommentProcessServiceInterface } from '../services/comment-process.service.interface';
-import { testUser, fakeUser1 } from '../mock/comment-content.mock';
+import { CommentModel, UserProcessModel } from '@alfresco/adf-core';
+import { CommentProcessServiceInterface } from '../interfaces/comment-process.service.interface';
+import { testUser, fakeUser1 } from '../mock/comment-process.mock';
 
 @Injectable()
 export class CommentProcessServiceMock implements CommentProcessServiceInterface {

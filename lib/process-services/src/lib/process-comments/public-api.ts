@@ -17,4 +17,6 @@
 
 export * from './process-comments.component';
 
+export * from './services/comment-process.service';
+
 export * from './process-comments.module';

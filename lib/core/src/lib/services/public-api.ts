@@ -31,8 +31,6 @@ export * from './people-content.service';
 export * from './people-process.service';
 export * from './shared-links-api.service';
 export * from './discovery-api.service';
-export * from './comment-process.service';
-export * from './comment-content.service';
 export * from './login-dialog.service';
 export * from './external-alfresco-api.service';
 export * from './download-zip.service';

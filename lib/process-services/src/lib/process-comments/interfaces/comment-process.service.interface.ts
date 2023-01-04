@@ -16,9 +16,11 @@
  */
 
 import { Observable } from 'rxjs';
-import { CommentModel } from '../models/comment.model';
+import { CommentModel } from '@alfresco/adf-core';
 
-export interface CommentContentServiceInterface {
-    addNodeComment(nodeId: string, message: string): Observable<CommentModel>;
-    getNodeComments(nodeId: string): Observable<CommentModel[]>;
+export interface CommentProcessServiceInterface {
+    addTaskComment(taskId: string, message: string): Observable<CommentModel>;
+    getTaskComments(taskId: string): Observable<CommentModel[]>;
+    getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]>;
+    addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel>;
 }
