@@ -25,7 +25,7 @@ import {
     IdentityUserQueryResponse,
     IdentityUserPasswordModel,
     IdentityJoinGroupRequestModel
-} from '../services/identity-user.service.interface';
+} from '../interfaces/identity-user.service.interface';
 import { mockIdentityGroups } from './identity-group.mock';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';

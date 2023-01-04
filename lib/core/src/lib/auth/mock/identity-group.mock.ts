@@ -17,7 +17,7 @@
 
 import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityJoinGroupRequestModel } from '../services/identity-user.service.interface';
+import { IdentityJoinGroupRequestModel } from '../interfaces/identity-user.service.interface';
 
 export const mockIdentityGroup1 = {
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []

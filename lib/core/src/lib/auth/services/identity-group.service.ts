@@ -27,7 +27,7 @@ import {
     IdentityGroupCountModel
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { IdentityGroupServiceInterface } from './identity-group.interface';
+import { IdentityGroupServiceInterface } from '../interfaces/identity-group.interface';
 import { OAuth2Service } from './oauth2.service';
 
 @Injectable({ providedIn: 'root' })
