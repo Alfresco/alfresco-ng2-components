@@ -2,10 +2,10 @@ name: "cron schedule"
 
 on:
   schedule:
-    - cron: '0 11 * * *'
+    - cron: '0 11 * * *' 
   push:
     branches:
-      - AAE-11910-cron-dispatch
+      - name: AAE-11910-cron-dispatch
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -54,13 +54,8 @@ env:
 jobs:
   run-e2e:
     name: run e2e
-    #uses: ./.github/workflows/pull-request.yml
-    #secrets: inherit
-    runs-on: ubuntu-latest
-    steps:
-      - name: call pull-request
-        id: pull_request
-        run: echo "pull-request.yml"        
+    uses: ./.github/workflows/pull-request.yml
+    secrets: inherit      
 
   npm-check-bundle:
     timeout-minutes: 10

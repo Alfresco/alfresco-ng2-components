@@ -24,5 +24,6 @@ jobs:
         - name: Trigger Alpha ADF child build
           shell: bash
           if: ${{ contains(github.event.head_commit.message, '[trigger adf]') || inputs.cluster_operation == 'TRIGGER_ALPHA_ADF' || github.ref_name == 'AAE-11910-cron-dispatch' }}
-          run: echo "adf alpha tests triggered succesfully"
-            #run: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
+          #run: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha -c $TRAVIS_COMMIT
+          run: echo "adf test triggered succesfully"
+          
