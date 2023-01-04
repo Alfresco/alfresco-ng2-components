@@ -79,4 +79,23 @@ runs:
           echo "S3_NODE_MODULES_CACHE_ID=$S3_NODE_MODULES_CACHE_ID";
           echo "S3_NODE_MODULES_CACHE_PATH=$S3_NODE_MODULES_CACHE_PATH";
         } >> $GITHUB_ENV
+
+    - name: order 69
+      shell: bash
+      if: ${{ env.ACT }}
+      run: |
+        echo "GIT_HASH=$GIT_HASH"
+        echo "BASE_HASH=$BASE_HASH"
+        echo "HEAD_HASH=$HEAD_HASH"
+        echo "HEAD_COMMIT_HASH=$HEAD_COMMIT_HASH"
+        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE"
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS"
+        echo "BUILD_OPTS=$BUILD_OPTS"
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS"
+        echo "CI_FORCE_RUN=$CI_FORCE_RUN"
+        echo "NODE_VERSION=$NODE_VERSION"
+        echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH"
+        echo "PACKAGE_LOCK_SHASUM=$PACKAGE_LOCK_SHASUM"
+        echo "S3_NODE_MODULES_CACHE_ID=$S3_NODE_MODULES_CACHE_ID"
+        echo "S3_NODE_MODULES_CACHE_PATH=$S3_NODE_MODULES_CACHE_PATH"
         while true; do echo "sleeping"; sleep 2; done
