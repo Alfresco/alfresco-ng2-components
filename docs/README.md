@@ -210,8 +210,8 @@ for more information about installing and using the source code.
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/src/lib/services/discovery-api.service.ts) |
 | [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/src/lib/services/download-zip.service.ts) |
 | [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/ecm-user.service.ts) |
-| [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/src/lib/services/favorites-api.service.ts) |
-| [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/src/lib/form/services/form-rendering.service.ts) |
+| [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](lib/content-services/src/lib/common/services/favorites-api.service.ts) |
+| [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](core/services/form.service.md) | Implements Process Services form methods | [Source](../lib/core/src/lib/form/services/form.service.ts) |
 | [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/src/lib/services/highlight-transform.service.ts) |
 | [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/process-services-cloud/src/lib/group/services/identity-group.service.ts) |
@@ -361,7 +361,7 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Card View Content Update Service](content-services/services/card-view-content-update.service.md) | Manages Card View properties in the content services environment. |  |
-| Implements BaseCardViewContentUpdate. | [Source](../lib/content-services/src/lib/services/card-view-content-update.service.ts) |  |
+| Implements BaseCardViewContentUpdate. | [Source](lib/content-services/src/lib/common/services/card-view-content-update.service.ts) |  |
 | [Content Node Dialog service](content-services/services/content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-dialog.service.ts) |
 | [Custom Resources service](content-services/services/custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../lib/content-services/src/lib/document-list/services/custom-resources.service.ts) |
 | [Document Actions service](content-services/services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-actions.service.ts) |

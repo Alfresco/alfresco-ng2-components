@@ -19,7 +19,7 @@ import { UpdateNotification, CardViewBaseItemModel, CardViewUpdateService } from
 import { MinimalNode } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BaseCardViewContentUpdate } from '../interfaces/base-card-view-content-update.interface';
+import { BaseCardViewContentUpdate } from '../../interfaces/base-card-view-content-update.interface';
 
 @Injectable({
   providedIn: 'root'

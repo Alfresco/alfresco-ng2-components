@@ -17,10 +17,8 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { setupTestBed } from '../testing/setup-test-bed';
+import { CoreTestingModule, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiService } from './alfresco-api.service';
 import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 

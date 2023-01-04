@@ -21,7 +21,7 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../auth/models/oauth-config.model';
 import { StorageService } from '../common/services/storage.service';
-import { OpenidConfiguration } from './openid-configuration.interface';
+import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 
 @Injectable({
     providedIn: 'root'

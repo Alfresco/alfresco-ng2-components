@@ -21,7 +21,7 @@ import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {TranslateService} from '@ngx-translate/core';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../common/services/sites.service';
 
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */

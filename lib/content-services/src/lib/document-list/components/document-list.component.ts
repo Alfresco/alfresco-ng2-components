@@ -45,7 +45,6 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService,
     DataRow,
     DataTableService,
     NodesApiService
@@ -63,6 +62,7 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { FilterSearch } from './../../search/models/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
+import { LockService } from '../services/lock.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
