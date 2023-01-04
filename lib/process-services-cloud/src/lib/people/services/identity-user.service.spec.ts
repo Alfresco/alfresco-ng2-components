@@ -17,8 +17,9 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, JwtHelperService, mockToken, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, JwtHelperService, setupTestBed } from '@alfresco/adf-core';
 import { IdentityUserService } from './identity-user.service';
+import { mockToken } from '../mock/jwt-helper.service.spec';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import {
     mockSearchUserByApp,

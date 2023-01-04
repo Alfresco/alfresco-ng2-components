@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { mockIdentityGroups, mockIdentityGroupsCount, mockIdentityRoles } from './identity-group.mock';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IdentityGroupServiceInterface } from '../services/identity-group.interface';
+import { IdentityGroupServiceInterface } from '../interfaces/identity-group.interface';
 import {
     IdentityGroupModel,
     IdentityGroupQueryResponse,
