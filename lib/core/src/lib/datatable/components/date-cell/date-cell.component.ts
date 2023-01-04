@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import {
     UserPreferencesService,
     UserPreferenceValues
 } from '../../../common/services/user-preferences.service';
-import { NodesApiService } from '../../../services/nodes-api.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil } from 'rxjs/operators';
+import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-date-cell',
-
     template: `
         <ng-container>
             <span
@@ -65,10 +64,10 @@ export class DateCellComponent extends DataTableCellComponent {
 
     constructor(
         userPreferenceService: UserPreferencesService,
-        nodesApiService: NodesApiService,
+        @Optional() dataTableService: DataTableService,
         appConfig: AppConfigService
     ) {
-        super(nodesApiService);
+        super(dataTableService);
 
         this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
         this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);

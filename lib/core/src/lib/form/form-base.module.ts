@@ -20,7 +20,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DataTableModule } from '../datatable/datatable.module';
-import { DataColumnModule } from '../data-column/data-column.module';
 import { PipeModule } from '../pipes/pipe.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -51,7 +50,6 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         TranslateModule,
         FormsModule,
         ReactiveFormsModule,
-        DataColumnModule,
         PipeModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,

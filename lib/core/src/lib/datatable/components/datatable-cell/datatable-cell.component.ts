@@ -21,14 +21,14 @@ import {
     Input,
     OnInit,
     ViewEncapsulation,
-    OnDestroy
+    OnDestroy, Optional
 } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NodesApiService } from '../../../services/nodes-api.service';
+import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-datatable-cell',
@@ -36,12 +36,12 @@ import { NodesApiService } from '../../../services/nodes-api.service';
     template: `
         <ng-container>
             <span *ngIf="copyContent; else defaultCell"
-                adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
-                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                [attr.aria-label]="value$ | async"
-                [title]="tooltip"
-                class="adf-datatable-cell-value"
-                >{{ value$ | async }}</span>
+                  adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
+                  [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
+                  [attr.aria-label]="value$ | async"
+                  [title]="tooltip"
+                  class="adf-datatable-cell-value"
+            >{{ value$ | async }}</span>
         </ng-container>
         <ng-template #defaultCell>
             <span
@@ -51,7 +51,7 @@ import { NodesApiService } from '../../../services/nodes-api.service';
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    host: {class: 'adf-datatable-content-cell'}
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */
@@ -78,25 +78,31 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     /** Custom resolver function which is used to parse dynamic column objects */
     @Input()
-    resolverFn: (row: DataRow, col: DataColumn) => any  = null;
+    resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(protected nodesApiService: NodesApiService) {}
+    constructor(@Optional() protected dataTableService: DataTableService) {
+    }
 
     ngOnInit() {
         this.updateValue();
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                if (this.row && node && node.id) {
-                    if (this.row['node'].entry.id === node.id) {
-                        this.row['node'].entry = node;
-                        this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', node);
-                        this.updateValue();
+        if(this.dataTableService) {
+            this.dataTableService.rowUpdate
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(data => {
+                    if (data && data.id) {
+                        if (this.row.id === data.id) {
+                            if (this.row.obj && data.obj) {
+                                this.row.obj = data.obj;
+                                this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', data.obj);
+
+                                this.updateValue();
+                            }
+                        }
                     }
-                }
-            });
+                });
+        }
     }
 
     protected updateValue() {

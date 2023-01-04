@@ -46,7 +46,9 @@ import {
     AlfrescoApiService,
     UserPreferenceValues,
     LockService,
-    DataRow
+    DataRow,
+    DataTableService,
+    NodesApiService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
@@ -72,7 +74,7 @@ import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
     providers:[{
         provide: ADF_DOCUMENT_PARENT_COMPONENT,
         useExisting: DocumentListComponent
-    }],
+    }, DataTableService],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
@@ -363,7 +365,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
+                private nodeService: NodesApiService,
+                private dataTableService: DataTableService,
                 private lockService: LockService) {
+
+        this.nodeService.nodeUpdated.subscribe((node) => {
+            this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
+        });
+
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))

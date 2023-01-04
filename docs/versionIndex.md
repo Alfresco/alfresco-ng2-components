@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.0.0](#v600)
 -   [v5.1.0](#v510)
 -   [v4.7.0](#v470)
 -   [v4.6.0](#v460)
@@ -39,6 +40,17 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v5.1.0
+
+<!--v600 start-->
+
+-   [Card view content update service](content-services/services/card-view-content-update.service.md)
+-   [Datatable service](core/services/datatable.service.md)
+-   [Node comments service](content-services/services/node-comments.service.md)
+-   [Task comments service](content-services/services/task-comments.service.md)
+
+<!--v600 end-->
 
 ## v5.1.0
 

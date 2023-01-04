@@ -19,12 +19,12 @@ import {
     ChangeDetectionStrategy,
     Component,
     Input,
-    OnInit,
+    OnInit, Optional,
     ViewEncapsulation
 } from '@angular/core';
 import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { NodesApiService } from '../../../services/nodes-api.service';
+import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-location-cell',
@@ -43,8 +43,8 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     @Input()
     link: any[];
 
-    constructor(nodesApiService: NodesApiService) {
-        super(nodesApiService);
+    constructor(@Optional() dataTableService: DataTableService) {
+        super(dataTableService);
     }
 
     /** @override */

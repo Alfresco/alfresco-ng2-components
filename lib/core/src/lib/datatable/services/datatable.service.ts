@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-export * from './data-column-list.component';
-export * from './data-column.component';
-export * from './data-column-header.component';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { DataRowUpdateModel } from '../data/data-row-update.model';
 
-export * from './data-column.module';
+@Injectable()
+export class DataTableService {
+
+    /**
+     * Publish/subscribe to events related to row updates.
+     */
+    rowUpdate = new Subject<DataRowUpdateModel>();
+}

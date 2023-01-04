@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input, Optional } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
-import { NodesApiService } from '../../../services/nodes-api.service';
+import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-json-cell',
@@ -45,9 +45,9 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
 
     constructor(
         private dialog: MatDialog,
-        nodesApiService: NodesApiService
+        @Optional() dataTableService: DataTableService
     ) {
-        super(nodesApiService);
+        super(dataTableService);
     }
 
     ngOnInit() {

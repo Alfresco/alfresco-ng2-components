@@ -15,15 +15,48 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, OnDestroy, Optional, EventEmitter, ViewChild, SimpleChanges, Output, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    EventEmitter,
+    ViewChild,
+    SimpleChanges,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry, NodeEntry } from '@alfresco/js-api';
 import {
-    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, FolderCreatedEvent, LogService, NotificationService,
-    UploadService, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent,
+    MinimalNodeEntity,
+    NodePaging,
+    Pagination,
+    MinimalNodeEntryEntity,
+    SiteEntry,
+    SearchEntry,
+    NodeEntry
+} from '@alfresco/js-api';
+import {
+    AlfrescoApiService,
+    AuthenticationService,
+    AppConfigService,
+    AppConfigValues,
+    ContentService,
+    FolderCreatedEvent,
+    LogService,
+    NotificationService,
+    UploadService,
+    DataRow,
+    UserPreferencesService,
+    PaginationComponent,
+    FormValues,
+    DisplayMode,
+    ShowHeaderMode,
+    InfinitePaginationComponent,
     SharedLinksApiService,
     FormRenderingService,
     FileUploadEvent,
@@ -58,7 +91,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     styleUrls: ['./files.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+        {provide: FormRenderingService, useClass: ProcessFormRenderingService}
     ]
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
@@ -80,9 +113,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     toolbarColor: ThemePalette;
 
     selectionModes = [
-        { value: 'none', viewValue: 'None' },
-        { value: 'single', viewValue: 'Single' },
-        { value: 'multiple', viewValue: 'Multiple' }
+        {value: 'none', viewValue: 'None'},
+        {value: 'single', viewValue: 'Single'},
+        {value: 'multiple', viewValue: 'Multiple'}
     ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -195,13 +228,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('documentList', { static: true })
+    @ViewChild('documentList', {static: true})
     documentList: DocumentListComponent;
 
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent, { static: true })
+    @ViewChild(InfinitePaginationComponent, {static: true})
     infinitePaginationComponent: InfinitePaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
@@ -281,31 +314,31 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.uploadService.fileUploadComplete
-        .pipe(
-            debounceTime(300),
-            scan((files, currentFile) => [...files, currentFile], []),
-            takeUntil(this.onDestroy$)
-        )
-        .subscribe((value: any[]) => {
-            let selectedNodes: NodeEntry[] = [];
+            .pipe(
+                debounceTime(300),
+                scan((files, currentFile) => [...files, currentFile], []),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((value: any[]) => {
+                let selectedNodes: NodeEntry[] = [];
 
-            if (this.preselectNodes) {
-                if (value && value.length > 0 ) {
-                    if (this.selectionMode === 'single') {
-                        selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
-                    } else {
-                        selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
+                if (this.preselectNodes) {
+                    if (value && value.length > 0) {
+                        if (this.selectionMode === 'single') {
+                            selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
+                        } else {
+                            selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
+                        }
+                        this.selectedNodes = [...selectedNodes];
                     }
-                    this.selectedNodes = [...selectedNodes];
                 }
-            }
 
-            this.onFileUploadEvent(value[0]);
-        });
+                this.onFileUploadEvent(value[0]);
+            });
 
         this.uploadService.fileUploadDeleted
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(value => this.onFileUploadEvent(value));
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(value => this.onFileUploadEvent(value));
 
         this.contentService.folderCreated
             .pipe(takeUntil(this.onDestroy$))
@@ -364,7 +397,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
-            return [{ entry: this.documentList.folderNode }];
+            return [{entry: this.documentList.folderNode}];
         } else {
             return [];
         }
@@ -464,7 +497,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, showComments, allowDownload },
+                data: {contentEntry, showComments, allowDownload},
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -475,7 +508,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onAspectUpdate(event: any) {
         this.dialogAspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
-            this.nodeService.updateNode(event.value.entry.id, {aspectNames : [...aspectList]}).subscribe(() => {
+            this.nodeService.updateNode(event.value.entry.id, {aspectNames: [...aspectList]}).subscribe(() => {
                 this.openSnackMessageInfo('Node Aspects Updated');
             });
         });
@@ -687,9 +720,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onFilterSelected(activeFilters: FilterSearch[]) {
         if (activeFilters.length) {
-           this.navigateToFilter(activeFilters);
+            this.navigateToFilter(activeFilters);
         } else {
-           this.clearFilterNavigation();
+            this.clearFilterNavigation();
         }
     }
 
@@ -705,7 +738,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             objectFromMap[filter.key] = paramValue;
         });
 
-        this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
+        this.router.navigate([], {relativeTo: this.route, queryParams: objectFromMap});
     }
 
     clearFilterNavigation() {
