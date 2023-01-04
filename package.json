@@ -69,7 +69,7 @@
     "@apollo/client": "^3.7.2",
     "@editorjs/editorjs": "2.26.4",
     "@editorjs/header": "2.7.0",
-    "@editorjs/list": "1.7.0",
+    "@editorjs/list": "1.8.0",
     "@editorjs/underline": "1.0.0",
     "@mat-datetimepicker/core": "^9.0.68",
     "@mat-datetimepicker/moment": "^9.0.68",
