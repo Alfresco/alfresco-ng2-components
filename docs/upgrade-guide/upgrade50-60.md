@@ -83,6 +83,10 @@ How to fix it:
 
 ## Deprecated items
 
+| Class | Before | After |
+| --- | -- | --- |
+| `LoginDialogService` | `@alfresco/adf-core`|
+
 ### DataColumnModule
 
 [`DataColumnModule`](../../lib/core/src/lib/datatable/data-column/data-column.module.ts)  has been deprecated and moved in [`DataTableModule`](../../lib/core/src/lib/datatable/datatable.module.ts) 
@@ -126,6 +130,7 @@ v6.0.0 and after:
 | [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 

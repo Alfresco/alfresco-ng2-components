@@ -57,7 +57,6 @@ import {
     DisplayMode,
     ShowHeaderMode,
     InfinitePaginationComponent,
-    SharedLinksApiService,
     FormRenderingService,
     FileUploadEvent,
     NodesApiService
@@ -71,7 +70,8 @@ import {
     LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
-    DialogAspectListService
+    DialogAspectListService,
+    SharedLinksApiService
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';

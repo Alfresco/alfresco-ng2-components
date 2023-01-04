@@ -19,4 +19,6 @@ export * from './content-node-share.settings';
 export * from './content-node-share.dialog';
 export * from './content-node-share.directive';
 
+export * from './services/shared-links-api.service';
+
 export * from './content-node-share.module';
