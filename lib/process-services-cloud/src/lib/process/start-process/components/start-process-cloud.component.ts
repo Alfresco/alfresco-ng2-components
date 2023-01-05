@@ -252,7 +252,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     isProcessFormValid(): boolean {
         if (this.hasForm() && this.isFormCloudLoaded) {
-            return this.formCloud.isValid || this.isLoading;
+            return (this.formCloud ? !Object.keys(this.formCloud.values).length : false) || this.formCloud?.isValid || this.isLoading;
         } else {
             return this.processForm.valid || this.isLoading;
         }
@@ -280,9 +280,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     startProcess() {
         this.isLoading = true;
+        let payloadVariables = {};
+        if (this.variables) {
+            payloadVariables = this.variables;
+        }
+        if (this.hasForm()) {
+            payloadVariables = Object.assign(payloadVariables, this.formCloud.values);
+        }
         const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
             name: this.processInstanceName.value,
-            processDefinitionKey: this.processPayloadCloud.processDefinitionKey
+            processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
+            variables: payloadVariables
         });
         this.startProcessCloudService.startProcess(this.appName, createPayload)
             .subscribe(
