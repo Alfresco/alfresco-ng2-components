@@ -2,7 +2,7 @@ name: "cron schedule"
 
 on:
   schedule:
-    - cron: '0 14 * * *' 
+    - cron: '0 15 * * *' 
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
