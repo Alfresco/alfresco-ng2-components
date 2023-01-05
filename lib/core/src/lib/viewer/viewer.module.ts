@@ -43,6 +43,7 @@ import { ViewerExtensionDirective } from './directives/viewer-extension.directiv
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { A11yModule } from '@angular/cdk/a11y';
+import { ViewerComponent } from './components/viewer.component';
 
 @NgModule({
     imports: [
@@ -73,7 +74,8 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent
+        ViewerToolbarActionsComponent,
+        ViewerComponent
     ],
     exports: [
         ViewerRenderComponent,
@@ -90,7 +92,8 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent
+        ViewerToolbarActionsComponent,
+        ViewerComponent
     ]
 })
 export class ViewerModule {
