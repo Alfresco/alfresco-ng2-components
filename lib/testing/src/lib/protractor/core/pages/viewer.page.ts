@@ -65,12 +65,12 @@ export class ViewerPage {
     activeTab = $('div[class*="mat-tab-label-active"]');
     toolbarSwitch = $('#adf-switch-toolbar');
     toolbar = $('#adf-alfresco-viewer-toolbar');
-    lastButton = $$('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
+    lastButton = $$('#adf-alfresco-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
     goBackSwitch = $('#adf-switch-goback');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
     openWithSwitch = $('#adf-switch-openwith');
-    openWith = $('#adf-viewer-openwith');
+    openWith = $('#adf-alfresco-viewer-openwith');
 
     moreActionsMenuSwitch = $('#adf-switch-moreactionsmenu');
     moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]');
@@ -89,7 +89,7 @@ export class ViewerPage {
     downloadButton = $('#adf-alfresco-viewer-download');
 
     printSwitch = $('#adf-switch-print');
-    printButton = $('#adf-viewer-print');
+    printButton = $('#adf-alfresco-viewer-print');
 
     allowSidebarSwitch = $('#adf-switch-allowsidebar');
     allowLeftSidebarSwitch = $('#adf-switch-allowLeftSidebar');
@@ -626,7 +626,7 @@ export class ViewerPage {
     }
 
     async checkOverlayViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-viewer-overlay-container"]'));
+        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-alfresco-viewer-overlay-container"]'));
     }
 
     async checkInlineViewerIsDisplayed(): Promise<void> {
