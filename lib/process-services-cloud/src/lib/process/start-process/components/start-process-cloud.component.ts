@@ -252,7 +252,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     isProcessFormValid(): boolean {
         if (this.hasForm() && this.isFormCloudLoaded) {
-            return this.formCloud?.isValid || this.isLoading;
+            return (this.formCloud ? !Object.keys(this.formCloud.values).length : false) || this.formCloud?.isValid || this.isLoading;
         } else {
             return this.processForm.valid || this.isLoading;
         }
