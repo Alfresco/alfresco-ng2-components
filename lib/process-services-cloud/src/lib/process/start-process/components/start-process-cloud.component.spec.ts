@@ -678,9 +678,11 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: firstChange });
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.appName = 'test app name';
+            component.variables = { correlationKey: 'AIyRfpxbBX' };
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
-                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey
+                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                variables: component.variables
             });
 
             fixture.detectChanges();
