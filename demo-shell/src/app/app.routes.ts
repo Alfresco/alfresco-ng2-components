@@ -56,10 +56,12 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { ForgotPasswordComponent } from 'lib/core/src/lib/forgot-password/forgot-password.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent },
     {
         path: 'settings',
         loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)

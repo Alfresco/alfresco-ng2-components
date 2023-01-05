@@ -10,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeopleApi, ClientBody } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-forgot-password',
+    selector: 'adf-forgot-password',
     templateUrl: './forgot-password.component.html',
     styleUrls: ['./forgot-password.component.scss']
 })
@@ -24,9 +25,11 @@ export class ForgotPasswordComponent implements OnInit {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private formBuilder: FormBuilder) { }
+        private formBuilder: FormBuilder,
+        private router: Router) { }
 
     ngOnInit(): void {
+        this.passwordResetStatus = false;
         this.forgotPasswordForm = this.formBuilder.group({
             userName: ['', [Validators.required]]
         });
@@ -50,4 +53,8 @@ export class ForgotPasswordComponent implements OnInit {
     isButtonDisabled(): boolean {
         return this.forgotPasswordForm.invalid || this.isSaveInProgress;
     }
+
+    close() {
+        this.router.navigate(['./login']);
+      }
 }
