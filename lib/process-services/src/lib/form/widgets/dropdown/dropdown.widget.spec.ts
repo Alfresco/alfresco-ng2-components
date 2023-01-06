@@ -126,8 +126,6 @@ describe('DropdownWidgetComponent', () => {
         expect(widget.field.options[1]).toBe(restFieldValue);
     });
 
-
-
     it('should not display required error for a non required dropdown when selecting the none option', async () => {
         widget.field.options = [
             { id: 'empty', name: 'Choose empty' },
