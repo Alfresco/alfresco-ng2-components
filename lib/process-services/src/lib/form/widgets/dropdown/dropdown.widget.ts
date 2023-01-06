@@ -27,6 +27,11 @@ import {
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
 
+export const DEFAULT_OPTION = {
+    id: 'empty',
+    name: 'Choose one...'
+};
+
 @Component({
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
@@ -119,7 +124,15 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
         return this.field.type === 'readonly';
     }
 
+    private isNoneValueSelected(value: string): boolean {
+        return value === undefined;
+    }
+
     showRequiredMessage(): boolean {
-        return (this.isInvalidFieldRequired() || this.field.value === 'empty') && this.isTouched();
+        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) && this.isTouched() ;
+    }
+
+    getDefaultOption(options: FormFieldOption[]): FormFieldOption {
+        return options.find((option: FormFieldOption) => option.id === DEFAULT_OPTION.id);
     }
 }

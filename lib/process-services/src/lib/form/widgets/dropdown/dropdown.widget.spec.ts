@@ -126,6 +126,82 @@ describe('DropdownWidgetComponent', () => {
         expect(widget.field.options[1]).toBe(restFieldValue);
     });
 
+
+
+    it('should not display required error for a non required dropdown when selecting the none option', async () => {
+        widget.field.options = [
+            { id: 'empty', name: 'Choose empty' },
+            ...fakeOptionList
+        ];
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        await openSelect();
+
+        const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+        widget.touched = true;
+        defaultOption.triggerEventHandler('click', null);
+        fixture.detectChanges();
+
+        const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+        expect(requiredErrorElement).toBeFalsy();
+    });
+
+    it('should not display required error when selecting a valid option for a required dropdown', async () => {
+        widget.field.required = true;
+        widget.field.options = [
+            { id: 'empty', name: 'Choose empty' },
+            ...fakeOptionList
+        ];
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        await openSelect();
+
+        const optionOne: any = fixture.debugElement.query(By.css('[id="opt_1"]'));
+        widget.touched = true;
+        optionOne.triggerEventHandler('click', null);
+        fixture.detectChanges();
+
+        const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
+        expect(requiredErrorElement).toBeFalsy();
+    });
+
+    it('should not have a value when switching from an available option to the None option', async () => {
+        widget.field.options = [
+            { id: 'empty', name: 'This is a mock none option' },
+            ...fakeOptionList
+        ];
+
+        widget.ngOnInit();
+        fixture.detectChanges();
+        await openSelect();
+
+        const optionOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
+        optionOne.triggerEventHandler('click', null);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        let selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
+
+        expect(selectedValueElement.nativeElement.innerText).toEqual('option_1');
+        expect(widget.fieldValue).toEqual('opt_1');
+
+        await openSelect();
+        const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+        defaultOption.triggerEventHandler('click', null);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const dropdownLabel = fixture.debugElement.query(By.css('.adf-dropdown-widget mat-label'));
+        selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
+
+        expect(dropdownLabel.nativeNode.innerText).toEqual('This is a mock none option');
+        expect(widget.fieldValue).toEqual(undefined);
+        expect(selectedValueElement).toBeFalsy();
+    });
+
     describe('when is required', () => {
 
         beforeEach(() => {
