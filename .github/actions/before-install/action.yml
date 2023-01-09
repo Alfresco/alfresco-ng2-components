@@ -20,7 +20,7 @@ runs:
       run: |
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${{ github.ref_name }} HEAD)";
+          echo "BASE_HASH=$(git merge-base origin/${{ github.ref }} HEAD)";
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}";
           echo "NX_CALCULATION_FLAGS=--all";
