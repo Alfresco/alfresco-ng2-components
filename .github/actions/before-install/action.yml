@@ -31,7 +31,7 @@ runs:
         } >> $GITHUB_ENV
 
     - name: PUSH on master/develop patch branch
-      if: "${{ inputs.event_name }} == 'push'"
+      if: "${{ github.event_name }} == 'push'"
       shell: bash
       run: |
         if [[ "${{ github.ref_name }}" =~ ^master(-patch.*)?$ ]]; then
@@ -55,18 +55,27 @@ runs:
         echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
     - name: PULL REQUEST
-      if: "${{ inputs.event_name }} == 'pull_request'"
+      if: ${{ github.event_name }} == pull_request
       shell: bash
+      env: 
+        EV_NAME: ${{ github.event_name }}
       run: |
-        echo "~~~ Working on PULL REQUEST ~~~"
+        echo "~~~ Working on PULL REQUEST : $EV_NAME ~~~"
         echo 'NX_CALCULATION_FLAGS=--base=origin/${{ github.ref_name }} --head=$HEAD_HASH' >> $GITHUB_ENV
         echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
     - name: SCHEDULE
-      if: "${{ inputs.event_name }} == 'schedule'"
+      if: ${{ github.event_name }} == schedule
       shell: bash
+      env: 
+        EV_NAME: ${{ github.event_name }}      
       run: |
-        echo "~~~ Working on SCHEDULE ~~~"
+        if [[ ${{ github.event_name }} == schedule ]]; then
+          echo "CORRECT BRANCH"
+        else
+          echo "WRONG BRANCH"
+        fi
+        echo "~~~ Working on SCHEDULE : $EV_NAME ~~~"
         echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
         echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
@@ -74,13 +83,16 @@ runs:
       shell: bash
       if: "contains(github.event.head_commit.message, '[affected:*]')"
       run: |
+        echo "Setting up CI jobs for affected:* flag."
         echo NX_CALCULATION_FLAGS="--all" >> $GITHUB_ENV
-        while true; do echo "sleeping"; sleep 2; done
+      # while true; do echo "sleeping"; sleep 2; done
 
     - name: ci:force flag parser
       shell: bash
       if: "contains(github.event.head_commit.message, '[ci:force]')"
-      run: echo CI_FORCE_RUN=true >> $GITHUB_ENV
+      run: 
+        echo "Forcing CI to run with commit flag"
+        echo CI_FORCE_RUN=true >> $GITHUB_ENV
 
     - name: order 66
       shell: bash
