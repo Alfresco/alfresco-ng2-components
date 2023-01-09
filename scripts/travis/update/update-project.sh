@@ -10,14 +10,15 @@ TEMP_GENERATOR_DIR=".tmp-generator";
 BRANCH_TO_CREATE="update-alfresco-dependencies"
 TOKEN=""
 PR_NUMBER=""
+DRY_RUN="false"
 
 show_help() {
     echo "Usage: create-updatebranch.sh"
     echo ""
     echo "-t or --token: Github ouath token"
     echo "-p or --pr: Originating jsapi PR number"
-    echo "-v or --version version to update"
-    echo "-c or --commit The commit that the current build is testing"
+    echo "-v or --version version to update"    
+    echo "-d or --dry-run: The script won't execute critical operation, just simulate them"
 }
 
 set_token() {
@@ -34,6 +35,12 @@ version() {
 
 set_commit() {
     COMMIT=$1
+}
+
+set_dryrun() {
+
+    DRY_RUN="true"
+
 }
 
 update_dependency() {
@@ -112,6 +119,7 @@ while [[ $1 == -* ]]; do
       -p|--pr) set_pr $2; shift; shift;;
       -v|--version)  version $2; shift 2;;
       -c|--commit) set_commit $2; shift 2;;
+      -d|--dry-run) set_dryrun $2; shift; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -133,9 +141,13 @@ isSameADFSha=$(node $BUILD_PIPELINE_DIR/adf-same-commit-verify.js --token=$TOKEN
 if [ "$isSameADFSha" = 'true' ]; then
         echo 'ADF sha is the same. No need to create another pr'
     else
-        update "generator-alfresco-adf-app"
-        update "alfresco-content-app"
-        update "alfresco-apps"
+        if [ "$DRY_RUN" = "false" ]; then
+            update "generator-alfresco-adf-app"
+            update "alfresco-content-app"
+            update "alfresco-apps"
+        else
+            echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app' and 'alfresco-apps'"
+        fi
 fi
 
 
