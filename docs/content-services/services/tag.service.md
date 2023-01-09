@@ -31,6 +31,10 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tag:_ `string`  - Name of the tag to remove
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
+-   **createTags**(tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>`<br/>
+    Creates tags.
+    -   _tags:_ `TagBody[]`  - List of tags to create.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>` - List of created tags.
 
 ## Details
 

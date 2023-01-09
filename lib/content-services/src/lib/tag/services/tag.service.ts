@@ -105,12 +105,14 @@ export class TagService {
         return observableRemove;
     }
 
-    createTags(tagsNames: string[]): Observable<TagEntry[]> {
-        const observableAdd$ = from(this.tagsApi.createTags(tagsNames.map((name) => {
-            const tagBody = new TagBody();
-            tagBody.tag = name;
-            return tagBody;
-        })));
+    /**
+     * Creates tags.
+     *
+     * @param tags list of tags to create.
+     * @returns Created tags.
+     */
+    createTags(tags: TagBody[]): Observable<TagEntry[]> {
+        const observableAdd$ = from(this.tagsApi.createTags(tags));
         observableAdd$.subscribe(
             (tagsEntries) => this.refresh.emit(tagsEntries),
             (err) => this.handleError(err)
