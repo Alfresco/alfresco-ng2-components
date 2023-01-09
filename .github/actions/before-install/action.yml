@@ -20,7 +20,7 @@ runs:
       run: |
         {
           echo "GIT_HASH=$(git rev-parse HEAD)";
-          echo "BASE_HASH=$(git merge-base origin/${{ github.ref }} HEAD)";
+          echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}";
           echo "NX_CALCULATION_FLAGS=--all";
@@ -62,13 +62,13 @@ runs:
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
     - name: PULL_REQUEST
-      if: ${{ github.event_name == 'pull_request' && github.ref_name == 'develop' }}
+      if: ${{ github.event_name == 'pull_request' }}
       shell: bash
       run: |
         echo "Setting up CI flags for Pull Request on develop branch"
-        NX_CALCULATION_FLAGS="--base=origin/${{ github.ref_name }} --head=$HEAD_HASH"
+        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-        BASE_HASH="origin/${{ github.ref_name }}"
+        BASE_HASH="origin/GITHUB_BASE_REF${}"
 
     - name: SCHEDULE
       if: ${{ github.event_name == 'schedule' }}
