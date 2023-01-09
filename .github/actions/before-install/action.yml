@@ -20,6 +20,9 @@ runs:
           echo COMMIT_MESSAGE=$(git log --format=%B -n 1 $HEAD_COMMIT_HASH | tr '*' '-' | tr '\n' ' ');
         } >> $GITHUB_ENV
 
+    - name: DEBUG
+      shell: bash
+      run: echo ${{ inputs.event_name }}
     - name: DEFAULT CONFIG
       shell: bash
       run: |
@@ -76,8 +79,6 @@ runs:
           echo "NODE_VERSION=$NODE_VERSION";
           echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH";
           echo "PACKAGE_LOCK_SHASUM=$PACKAGE_LOCK_SHASUM";
-          echo "S3_NODE_MODULES_CACHE_ID=$S3_NODE_MODULES_CACHE_ID";
-          echo "S3_NODE_MODULES_CACHE_PATH=$S3_NODE_MODULES_CACHE_PATH";
         } >> $GITHUB_ENV
 
     - name: order 69
@@ -96,6 +97,4 @@ runs:
         echo "NODE_VERSION=$NODE_VERSION"
         echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH"
         echo "PACKAGE_LOCK_SHASUM=$PACKAGE_LOCK_SHASUM"
-        echo "S3_NODE_MODULES_CACHE_ID=$S3_NODE_MODULES_CACHE_ID"
-        echo "S3_NODE_MODULES_CACHE_PATH=$S3_NODE_MODULES_CACHE_PATH"
         while true; do echo "sleeping"; sleep 2; done
