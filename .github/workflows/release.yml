@@ -131,6 +131,7 @@ jobs:
         with: 
           enable-cache: false
           enable-node-modules-cache: false
+          act: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/download-cache-and-artifacts
       - name: release Storybook docker
         run: |

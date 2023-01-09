@@ -6,7 +6,16 @@ inputs:
     required: false
     type: boolean
     default: 'true'
-    
+  enable-node-modules-cache:
+    description: 'enable caching for node modules'
+    required: false
+    type: boolean
+    default: 'true'    
+  act:
+    description: 'enable act debug'
+    required: false
+    type: boolean
+    default: 'false'
 runs:
   using: "composite"
   steps:
@@ -66,6 +75,8 @@ runs:
         uses: ./.github/actions/travis-env-var-facade
       - name: before install script
         uses: ./.github/actions/before-install
+        with:
+          act: ${{ inputs.act }}
       # sanitize nx calculation flags string
       - name: input validation for NX CALCULATION FLAGS
         shell: bash

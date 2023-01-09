@@ -1,5 +1,11 @@
 name: "before-install"
 description: "launch before_install.sh and then parse env vars"
+inputs:
+  act:
+    description: 'enable act debug'
+    required: false
+    type: boolean
+    default: 'false'
 runs:
   using: "composite"
   steps:
@@ -18,18 +24,13 @@ runs:
           echo "HEAD_HASH=HEAD";
           echo "HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}";
           echo COMMIT_MESSAGE=$(git log --format=%B -n 1 $HEAD_COMMIT_HASH | tr '*' '-' | tr '\n' ' ');
+          echo "NX_CALCULATION_FLAGS=--all";
+          echo "BUILD_OPTS=--configuration production";
+          echo CI_FORCE_RUN=false;
+          echo NODE_VERSION=$(node -v);
         } >> $GITHUB_ENV
 
-    - name: DEBUG
-      shell: bash
-      run: echo ${{ inputs.event_name }}
-    - name: DEFAULT CONFIG
-      shell: bash
-      run: |
-        echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
-        echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
-
-    - name: PUSH
+    - name: PUSH on master/develop patch branch
       if: "${{ inputs.event_name }} == 'push'"
       shell: bash
       run: |
@@ -43,16 +44,21 @@ runs:
             echo "Setting up CI jobs for develop patch version creation."
             echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
             echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
-        else
-            # into develop
-            echo "NX_CALCULATION_FLAGS=--base=$(git describe --tags $(git rev-list --tags --max-count=1)) --head=$HEAD_HASH" >> $GITHUB_ENV
-            echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
         fi
+
+    - name: PUSH on develop branch
+      if: "github.ref_name == 'develop'"
+      shell: bash
+      run: |
+        base=$(git describe --tags $(git rev-list --tags --max-count=1))
+        echo "NX_CALCULATION_FLAGS=--base=$base --head=$HEAD_HASH" >> $GITHUB_ENV
+        echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
     - name: PULL REQUEST
       if: "${{ inputs.event_name }} == 'pull_request'"
       shell: bash
       run: |
+        echo "~~~ Working on PULL REQUEST ~~~"
         echo 'NX_CALCULATION_FLAGS=--base=origin/${{ github.ref_name }} --head=$HEAD_HASH' >> $GITHUB_ENV
         echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
@@ -60,28 +66,23 @@ runs:
       if: "${{ inputs.event_name }} == 'schedule'"
       shell: bash
       run: |
+        echo "~~~ Working on SCHEDULE ~~~"
         echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
         echo "BUILD_OPTS=--configuration production" >> $GITHUB_ENV
 
-    - name: order 66
+    - name: affected:* flag parser
       shell: bash
+      if: "contains(github.event.head_commit.message, '[affected:*]')"
       run: |
-        source $GITHUB_WORKSPACE/scripts/ci/partials/_ci-flags-parser.sh 
-        NODE_VERSION=$(node -v)
-        S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$BUILD_ID"
-        PACKAGE_LOCK_SHASUM=$(shasum ./package-lock.json | cut -f 1 -d " ")
-        S3_NODE_MODULES_CACHE_ID=$(echo "$NODE_VERSION-$PACKAGE_LOCK_SHASUM" | shasum  | cut -f 1 -d " ")
-        S3_NODE_MODULES_CACHE_PATH="$S3_DBP_PATH/cache/node_modules/$S3_NODE_MODULES_CACHE_ID.tar.bz2"
-        
-        {
-          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
-          echo "CI_FORCE_RUN=$CI_FORCE_RUN";
-          echo "NODE_VERSION=$NODE_VERSION";
-          echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH";
-          echo "PACKAGE_LOCK_SHASUM=$PACKAGE_LOCK_SHASUM";
-        } >> $GITHUB_ENV
+        echo NX_CALCULATION_FLAGS="--all" >> $GITHUB_ENV
+        while true; do echo "sleeping"; sleep 2; done
 
-    - name: order 69
+    - name: ci:force flag parser
+      shell: bash
+      if: "contains(github.event.head_commit.message, '[ci:force]')"
+      run: echo CI_FORCE_RUN=true >> $GITHUB_ENV
+
+    - name: order 66
       shell: bash
       if: ${{ env.ACT }}
       run: |
