@@ -7,7 +7,7 @@
 
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
-                        [ngClass]="{ 'adf-property-read-only': !isEditable }"
+                        [ngClass]="{ 'adf-property-read-only': !isEditable,'adf-property-field-has-error': isEditable && hasErrors }"
                         [floatLabel]="'never'">
             <input matInput
                    *ngIf="!property.multiline"
