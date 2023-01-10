@@ -44,6 +44,16 @@ runs:
         echo CI_FORCE_RUN=true >> $GITHUB_ENV
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
+    - name: PULL_REQUEST event
+      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' }}
+      shell: bash
+      run: |
+        echo "Setting up CI flags for Pull Request event"
+        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
+        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
+        BASE_HASH="origin/${GITHUB_BASE_REF}"
+        echo "BREAK_ACTION=true" >> $GITHUB_ENV
+
     - name: RELEASE on master/develop patch branch
       if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
       shell: bash
@@ -59,15 +69,7 @@ runs:
           base=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "NX_CALCULATION_FLAGS=--base=$base --head=$HEAD_HASH" >> $GITHUB_ENV
         fi
-
-    - name: PULL_REQUEST event
-      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' }}
-      shell: bash
-      run: |
-        echo "Setting up CI flags for Pull Request event"
-        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
-        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
-        BASE_HASH="origin/${GITHUB_BASE_REF}"
+        echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
     - name: SCHEDULE event
       if: ${{ github.event_name == 'schedule' }}
