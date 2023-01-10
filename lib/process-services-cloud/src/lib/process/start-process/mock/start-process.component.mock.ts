@@ -256,7 +256,7 @@ export const fakeFormModelJson = {
     "fields": [{
         "id": "60b007f6-f838-458c-b4d4-43c69f355ef9", "name": "Label", "type": "container", "tab": null, "numberOfColumns": 1, "fields": {
             "1": [{
-                "id": "Dropdown0itfro", "name": "Dropdown", "type": "dropdown", "readOnly": false, "required": false, "colspan": 1, "rowspan": 1, "optionType": "manual", "options": [{ "id": "1", "name": "Label 1" }, { "id": "2", "name": "Label 2" }],
+                "id": "dropdown", "name": "Dropdown", "type": "dropdown", "readOnly": false, "required": false, "colspan": 1, "rowspan": 1, "optionType": "manual", "options": [{ "id": "1", "name": "Label 1" }, { "id": "2", "name": "Label 2" }],
                 "authName": null,
                 "restUrl": null,
                 "restResponsePath": null,
