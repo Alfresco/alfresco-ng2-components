@@ -77,12 +77,6 @@ runs:
         uses: ./.github/actions/before-install
         with:
           act: ${{ inputs.act }}
-      # sanitize nx calculation flags string
-      - name: input validation for NX CALCULATION FLAGS
-        shell: bash
-        run: |
-          export NX_CALCULATION_FLAGS=$(echo $NX_CALCULATION_FLAGS | sed "s@'@@g")
-          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
       - name: link nx executable
         run: sudo ln -s $(npm bin)/nx /usr/bin/nx
         shell: bash

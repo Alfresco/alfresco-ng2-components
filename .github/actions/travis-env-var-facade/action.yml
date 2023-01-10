@@ -32,9 +32,11 @@ runs:
         fi
 
         if [[ GITHUB_REF_NAME == "master" ]]; then
+            echo "Set up TAG_NPM to latest on master branch"
             TAG_NPM="latest"
         fi
         if [[ GITHUB_REF_NAME == "develop" ]]; then
+            echo "Set up TAG_NPM to alpha on develop branch"
             TAG_NPM="alpha"
         fi
         echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
