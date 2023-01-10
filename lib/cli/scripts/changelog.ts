@@ -92,8 +92,8 @@ function getCommits(options: DiffOptions): Array<Commit> {
         options.range,
         `--no-merges`,
         `--first-parent`,
-        `--invert-grep`,
-        `--author="${authorFilter}"`,
+        `--perl-regexp`,
+        `--author="^((?!${authorFilter}).*)$"`,
         // this format is needed to allow parsing all characters in the commit message and safely convert to JSON
         `--format="{ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }"`
     ];
