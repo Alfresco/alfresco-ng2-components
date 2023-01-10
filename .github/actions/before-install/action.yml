@@ -45,7 +45,7 @@ runs:
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
     - name: PULL_REQUEST event
-      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' }}
+      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
       shell: bash
       run: |
         echo "Setting up CI flags for Pull Request event"
