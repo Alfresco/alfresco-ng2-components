@@ -247,28 +247,54 @@ export const fakeStartFormNotValid = {
 };
 
 export const fakeFormModelJson = {
-    "id": "form-0d52227f-dfb8-4ed3-a492-cd26fd6062dd",
-    "name": "f",
-    "description": "",
-    "version": 0,
-    "standAlone": true,
-    "tabs": [],
-    "fields": [{
-        "id": "60b007f6-f838-458c-b4d4-43c69f355ef9", "name": "Label", "type": "container", "tab": null, "numberOfColumns": 1, "fields": {
-            "1": [{
-                "id": "dropdown", "name": "Dropdown", "type": "dropdown", "readOnly": false, "required": false, "colspan": 1, "rowspan": 1, "optionType": "manual", "options": [{ "id": "1", "name": "Label 1" }, { "id": "2", "name": "Label 2" }],
-                "authName": null,
-                "restUrl": null,
-                "restResponsePath": null,
-                "restIdProperty": null,
-                "restLabelProperty": null,
-                "selectionType": "single",
-                "visibilityCondition": null,
-                "params": { "existingColspan": 1, "maxColspan": 2 }, "rule": null
+    id: 'form-0d52227f-dfb8-4ed3-a492-cd26fd6062dd',
+    name: 'f',
+    description: '',
+    version: 0,
+    standAlone: true,
+    tabs: [],
+    fields: [{
+        id: '60b007f6-f838-458c-b4d4-43c69f355ef9',
+        name: 'Label',
+        type: 'container',
+        ab: null,
+        numberOfColumns: 1,
+        fields: {
+            1: [{
+                id: 'dropdown',
+                name: 'Dropdown',
+                type: 'dropdown',
+                readOnly: false,
+                required: false,
+                colspan: 1,
+                rowspan: 1,
+                optionType: 'manual',
+                options: [
+                    {
+                        id: '1',
+                        name: 'Label 1'
+                    },
+                    {
+                        id: '2',
+                        name: 'Label 2'
+                    }
+                ],
+                authName: null,
+                restUrl: null,
+                restResponsePath: null,
+                restIdProperty: null,
+                restLabelProperty: null,
+                selectionType: 'single',
+                visibilityCondition: null,
+                params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                },
+                rule: null
             }]
         }
     }],
-    "outcomes": [],
-    "metadata": {},
-    "variables": []
+    outcomes: [],
+    metadata: {},
+    variables: []
 }

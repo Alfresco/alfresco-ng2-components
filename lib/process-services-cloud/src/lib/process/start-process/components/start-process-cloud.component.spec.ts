@@ -728,7 +728,7 @@ describe('StartProcessCloudComponent', () => {
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.appName = 'test app name';
             component.variables = { correlationKey: 'AIyRfpxbBX' };
-            component.formCloud = new FormModel(fakeFormModelJson);
+            component.formCloud = new FormModel(JSON.stringify(fakeFormModelJson));
             component.formCloud.values = { dropdown: { id: '1', name: 'label 2' } };
 
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
