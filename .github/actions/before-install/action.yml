@@ -52,7 +52,7 @@ runs:
         NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
         {
           echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
-          echo "BASE_HASH="origin/${GITHUB_BASE_REF}";
+          echo "BASE_HASH=origin/${GITHUB_BASE_REF}";
           echo "BREAK_ACTION=true";
         } >> $GITHUB_ENV
 
