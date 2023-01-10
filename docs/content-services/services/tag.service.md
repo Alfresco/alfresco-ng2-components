@@ -27,9 +27,18 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - TagPaging object (defined in JS-API) containing the tags
 -   **removeTag**(nodeId: `string`, tag: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+        Removes a tag from a node.
+    - _nodeId:_ `string`  - ID of the target node
+    - _tag:_ `string`  - Name of the tag to remove
+    - **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
+    - -   **removeTag**(nodeId: `string`, tag: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+          Removes a tag from a node.
+    - _nodeId:_ `string`  - ID of the target node
+    - _tag:_ `string`  - Name of the tag to remove
+    - **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
+-   **deleteTag**(tagId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Removes a tag from a node.
-    -   _nodeId:_ `string`  - ID of the target node
-    -   _tag:_ `string`  - Name of the tag to remove
+    -   _tagId:_ `string`  - ID of the tag to remove
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
 -   **createTags**(tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>`<br/>
     Creates tags.

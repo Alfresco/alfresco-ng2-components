@@ -75,7 +75,7 @@ describe('TagService', () => {
             });
         });
 
-        it('delete tag should trigger a refresh event', async () => {
+        it('remove tag from a node should trigger a refresh event', async () => {
             await service.refresh.subscribe((res) => {
                 expect(res).toBeDefined();
             });
@@ -89,6 +89,14 @@ describe('TagService', () => {
             });
 
             service.addTag('fake-node-id', 'fake-tag');
+        });
+
+        it('delete tag should trigger a refresh event', async () => {
+            await service.refresh.subscribe((res) => {
+                expect(res).toBeDefined();
+            });
+
+            service.deleteTag('fake-tag-id');
         });
 
         describe('createTags', () => {
