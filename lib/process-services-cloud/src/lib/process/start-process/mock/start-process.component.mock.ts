@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
+    appVersion: '1',
     id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
     name: 'My Process Name',
     startDate: new Date('2018-10-30T15:45:24.136+0000'),
@@ -244,3 +245,30 @@ export const fakeStartFormNotValid = {
         }
     }
 };
+
+export const fakeFormModelJson = {
+    "id": "form-0d52227f-dfb8-4ed3-a492-cd26fd6062dd",
+    "name": "f",
+    "description": "",
+    "version": 0,
+    "standAlone": true,
+    "tabs": [],
+    "fields": [{
+        "id": "60b007f6-f838-458c-b4d4-43c69f355ef9", "name": "Label", "type": "container", "tab": null, "numberOfColumns": 1, "fields": {
+            "1": [{
+                "id": "Dropdown0itfro", "name": "Dropdown", "type": "dropdown", "readOnly": false, "required": false, "colspan": 1, "rowspan": 1, "optionType": "manual", "options": [{ "id": "1", "name": "Label 1" }, { "id": "2", "name": "Label 2" }],
+                "authName": null,
+                "restUrl": null,
+                "restResponsePath": null,
+                "restIdProperty": null,
+                "restLabelProperty": null,
+                "selectionType": "single",
+                "visibilityCondition": null,
+                "params": { "existingColspan": 1, "maxColspan": 2 }, "rule": null
+            }]
+        }
+    }],
+    "outcomes": [],
+    "metadata": {},
+    "variables": []
+}

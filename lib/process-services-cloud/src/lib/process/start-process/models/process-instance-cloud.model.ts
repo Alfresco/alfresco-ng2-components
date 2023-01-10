@@ -18,16 +18,23 @@
 import { ProcessInstanceVariable } from '../../../models/process-instance-variable.model';
 export interface ProcessInstanceCloud {
     appName?: string;
-    id?: string;
-    name?: string;
-    startDate?: Date;
-    initiator?: string;
-    status?: string;
+    appVersion?: string;
     businessKey?: string;
+    completedDate?: string;
+    id?: string;
+    initiator?: string;
     lastModified?: Date;
+    name?: string;
     parentId?: string;
     processDefinitionId?: string;
     processDefinitionKey?: string;
     processDefinitionName?: string;
+    processDefinitionVersion?: string;
+    serviceName?: string;
+    serviceFullName?: string;
+    serviceType?: string;
+    serviceVersion?: string;
+    startDate?: Date;
+    status?: string;
     variables?: ProcessInstanceVariable[];
 }

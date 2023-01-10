@@ -17,7 +17,7 @@
 
 import { SimpleChange, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { FormModel, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -35,7 +35,8 @@ import {
     fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition,
-    fakeSingleProcessDefinitionWithoutForm
+    fakeSingleProcessDefinitionWithoutForm,
+    fakeFormModelJson
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -674,15 +675,16 @@ describe('StartProcessCloudComponent', () => {
             expect(startButton).not.toBeNull();
         });
 
-        it('should call service with the correct parameters when button is clicked', async () => {
+        it('should call service with the correct parameters when button is clicked and variables are defined and formCloud is undefined', async () => {
             component.ngOnChanges({ appName: firstChange });
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.appName = 'test app name';
             component.variables = { correlationKey: 'AIyRfpxbBX' };
+            component.formCloud = null;
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
                 name: component.processInstanceName.value,
                 ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
-                variables: component.variables
+                variables: Object.assign(component.variables, component.formCloud)
             });
 
             fixture.detectChanges();
@@ -700,6 +702,79 @@ describe('StartProcessCloudComponent', () => {
 
         });
 
+        it('should call service with the correct parameters when variables and formCloud are both undefined', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processForm.controls['processInstanceName'].setValue('My Process 1');
+            component.appName = 'test app name';
+            component.variables = undefined;
+            component.formCloud = undefined;
+            const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
+                name: component.processInstanceName.value,
+                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                variables: {}
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+
+            startButton.triggerEventHandler('click', null);
+            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+        });
+
+        it('should call service with the correct parameters when variables and formCloud are both defined', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processForm.controls['processInstanceName'].setValue('My Process 1');
+            component.appName = 'test app name';
+            component.variables = { correlationKey: 'AIyRfpxbBX' };
+            component.formCloud = new FormModel(fakeFormModelJson);
+            component.formCloud.values = { Dropdown0itfro: { id: '1', name: 'label 2' } };
+
+            const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
+                name: component.processInstanceName.value,
+                ProcessDefinitionKey: component.processPayloadCloud.processDefinitionKey,
+                variables: Object.assign(component.variables, component.formCloud.values)
+            });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+
+            startButton.triggerEventHandler('click', null);
+            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+        });
+
+        it('should call service with the correct parameters when variables are undefined and formCloud is defined', fakeAsync(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnInit();
+            component.ngOnChanges({ appName: change });
+            component.processForm.controls['processDefinition'].setValue('process');
+            fixture.detectChanges();
+            tick(3000);
+            component.processDefinitionName = fakeProcessDefinitions[0].name;
+            component.setProcessDefinitionOnForm(fakeProcessDefinitions[0].name);
+            fixture.detectChanges();
+            tick(3000);
+
+            const processForm = fixture.nativeElement.querySelector('adf-cloud-form');
+            expect(component.hasForm()).toBeTruthy();
+            expect(processForm).not.toBeNull();
+
+            const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
+                name: component.processInstanceName.value,
+                processDefinitionKey: fakeProcessDefinitions[0].key,
+                variables: Object.assign({}, component.formCloud.values)
+            });
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+
+            startButton.triggerEventHandler('click', null);
+            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+        }));
 
         it('should output start event when process started successfully', () => {
             const emitSpy = spyOn(component.success, 'emit');
