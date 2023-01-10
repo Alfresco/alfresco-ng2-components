@@ -17,7 +17,9 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/automate-dependabot@ref
+      - uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@ref
+        with:
+          pattern: 1.0.0-alpha*
 # CACHE
       - name: Node cache
         id: node-cache
