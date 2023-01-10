@@ -44,8 +44,8 @@ runs:
         echo CI_FORCE_RUN=true >> $GITHUB_ENV
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
-    - name: PUSH on master/develop patch branch
-      if: ${{ env.BREAK_ACTION == false && github.event_name == 'push' }}
+    - name: RELEASE on master/develop patch branch
+      if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
       shell: bash
       run: |
         if [[ "${{ github.ref_name }}" =~ ^master(-patch.*)?$ ]]; then
