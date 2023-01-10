@@ -3,5 +3,5 @@
 set -e
 
 echo building $1
-npm install
+npm install --legacy-peer-deps
 npm run build $*
