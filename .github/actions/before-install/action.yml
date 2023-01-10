@@ -59,18 +59,17 @@ runs:
           base=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "NX_CALCULATION_FLAGS=--base=$base --head=$HEAD_HASH" >> $GITHUB_ENV
         fi
-        echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
-    - name: PULL_REQUEST
-      if: ${{ github.event_name == 'pull_request' }}
+    - name: PULL_REQUEST event
+      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' }}
       shell: bash
       run: |
-        echo "Setting up CI flags for Pull Request on develop branch"
+        echo "Setting up CI flags for Pull Request event"
         NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
         echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS" >> $GITHUB_ENV
         BASE_HASH="origin/${GITHUB_BASE_REF}"
 
-    - name: SCHEDULE
+    - name: SCHEDULE event
       if: ${{ github.event_name == 'schedule' }}
       shell: bash
       env: 
@@ -78,23 +77,3 @@ runs:
       run: |
         echo "Setting up CI to run on SCHEDULE"
         echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
-
-    - name: order 66
-      shell: bash
-      if: ${{ env.ACT }}
-      env: 
-        EVENT: ${{ toJson(github) }}
-      run: |
-        echo "GIT_HASH=$GIT_HASH"
-        echo "BASE_HASH=$BASE_HASH"
-        echo "HEAD_HASH=$HEAD_HASH"
-        echo "HEAD_COMMIT_HASH=$HEAD_COMMIT_HASH"
-        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE"
-        echo "BUILD_OPTS=$BUILD_OPTS"
-        echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS"
-        echo "CI_FORCE_RUN=$CI_FORCE_RUN"
-        echo "NODE_VERSION=$NODE_VERSION"
-        echo "S3_SMART_RUNNER_PATH=$S3_SMART_RUNNER_PATH"
-        echo "PACKAGE_LOCK_SHASUM=$PACKAGE_LOCK_SHASUM"
-        echo "CI_COMMIT_MSG=$CI_COMMIT_MSG"
-        while true; do echo "sleeping"; sleep 2; done
