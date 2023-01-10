@@ -297,4 +297,4 @@ export const fakeFormModelJson = {
     outcomes: [],
     metadata: {},
     variables: []
-}
+};
