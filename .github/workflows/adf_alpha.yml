@@ -67,7 +67,7 @@ jobs:
             fetch-depth: 0
         - name: Trigger Alpha ADF child build
           shell: bash
-          if: ${{ contains(github.event.head_commit.message, '[trigger adf]') || inputs.cluster_operation == 'TRIGGER_ALPHA_ADF' || github.event.schedule == '0 11 * * *'  }}
+          if: ${{ contains(github.event.head_commit.message, '[trigger adf]') || inputs.cluster_operation == 'TRIGGER_ALPHA_ADF' || github.event.schedule == '0 12 * * *'  }}
           run: |
             npm install github-api            
             ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GH_TOKEN -v alpha -c $TRAVIS_COMMIT -d
