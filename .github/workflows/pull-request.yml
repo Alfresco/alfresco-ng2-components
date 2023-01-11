@@ -113,9 +113,9 @@ jobs:
         uses: ./.github/actions/setup-chrome      
       - name: Run unit tests
         run: |
-        chromedriver --url-base=/wd/hub &
-        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional       
-        nx affected:test $NX_CALCULATION_FLAGS --exclude="${{ matrix.unit-tests.exclude }}"
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional       
+          nx affected:test $NX_CALCULATION_FLAGS --exclude="${{ matrix.unit-tests.exclude }}"
 
   build-libs:
     # long timeout required when cache has to be recreated
