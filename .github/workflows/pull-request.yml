@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-11940-npm-err-fix
+        default: true  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
