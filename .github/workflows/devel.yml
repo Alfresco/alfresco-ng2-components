@@ -52,13 +52,10 @@ env:
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
-  NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
-  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
 jobs:
   run-git-tag:
-    uses: ./.github/workflows/git-tag.yml
+    uses: ./.github/workflows/pull-request.yml
     secrets: inherit
     with:
       dry-run-release: true
