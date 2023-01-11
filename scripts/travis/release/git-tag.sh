@@ -15,7 +15,7 @@ GITHUB_REPO=https://$GITHUB_TOKEN:x-oauth-basic@github.com/Alfresco/alfresco-ng2
 git remote add origin $GITHUB_REPO
 
 if [[ "$1" == "--dryrun" ]]; then
-    echo "Dry run enabled. Nothing is changed";
+    echo "dry run: Pushing new tag ${VERSION}!"
 else
     echo "Pushing new tag ${VERSION}!"
     git push origin --tags
