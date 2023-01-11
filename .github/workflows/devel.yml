@@ -61,5 +61,5 @@ jobs:
     uses: ./.github/workflows/git-tag.yml
     secrets: inherit
     with:
-      dry-run-release: true
+      dry-run-release: false
 
