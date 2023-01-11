@@ -117,7 +117,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
+    @Input()
     taskFilter: T;
+
     changedTaskFilter: T;
 
     /** Emitted when a task filter property changes. */
@@ -145,8 +147,12 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const id = changes['id'];
-        if (id && id.currentValue !== id.previousValue) {
+        const { id, taskFilter } = changes;
+        if(taskFilter && taskFilter.currentValue?.processInstanceId !== taskFilter.previousValue?.processInstanceId){
+            this.taskFilterProperties = this.createAndFilterProperties();
+            this.taskFilterActions = this.createAndFilterActions();
+            this.buildForm(this.taskFilterProperties);
+        } else if (id && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilterAndBuildForm();
         }
     }
