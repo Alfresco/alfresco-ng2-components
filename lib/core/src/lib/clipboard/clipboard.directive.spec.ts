@@ -64,6 +64,14 @@ describe('ClipboardDirective', () => {
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
+
+    it('should notify copy target value on mouse enter event', () => {
+        spyOn(clipboardService, 'copyToClipboard');
+        fixture.nativeElement.querySelector('input').value = 'some value';
+        window.dispatchEvent(new KeyboardEvent('keydown', {code: 'Enter', key: 'Enter'}));
+
+        expect(clipboardService.copyToClipboard).toHaveBeenCalled();
+    });
 });
 
 describe('CopyClipboardDirective', () => {
@@ -123,6 +131,15 @@ describe('CopyClipboardDirective', () => {
         fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
         spanHTMLElement.dispatchEvent(new Event('click'));
+        tick();
+        fixture.detectChanges();
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
+    }));
+
+    it('should copy the content of element on mouse enter', fakeAsync(() => {
+        fixture.detectChanges();
+        spyOn(navigator.clipboard, 'writeText');
+        window.dispatchEvent(new KeyboardEvent('keydown', {code: 'Enter', key: 'Enter'}));
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
