@@ -17,7 +17,7 @@ git remote add origin $GITHUB_REPO
 if [[ "$1" == "--dryrun" ]]; then
     echo "dry run";
     git tag | grep "${VERSION}"
-    git checkout develop
+    git checkout origin/develop
 else
     echo "LIVE!"
     # git push origin --tags
