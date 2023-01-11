@@ -9,20 +9,15 @@ fi;
 echo "git tag -a ${VERSION} -m ${VERSION}"
 git config --local user.name "alfresco-build"
 git config --local user.email "build@alfresco.com"
-# git tag -a ${VERSION} -m "${VERSION} [ci skip] "
+git tag -a ${VERSION} -m "${VERSION} [ci skip] "
 git remote rm origin
 GITHUB_REPO=https://$GITHUB_TOKEN:x-oauth-basic@github.com/Alfresco/alfresco-ng2-components.git
 git remote add origin $GITHUB_REPO
 
 if [[ "$1" == "--dryrun" ]]; then
-    echo "dry run";
+    echo "Dry run enabled. Nothing is changed";
     git tag | grep "${VERSION}"
-    git switch -c AAE-12037-dev
-    touch dev.test
-    git add dev.test
-    git commit -m "add dev.test"
-    git push origin AAE-12037-dev
 else
-    echo "LIVE!"
-    # git push origin --tags
+    echo "Pushing new tag ${VERSION}!"
+    #git push origin --tags
 fi;
