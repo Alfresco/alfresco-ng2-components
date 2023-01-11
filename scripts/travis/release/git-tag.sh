@@ -1,6 +1,5 @@
 #!/bin/bash
 echo "ARG: $1"
-exit 0
 if [[  $TRAVIS_BRANCH == "master" ]]; then
     VERSION=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
 else

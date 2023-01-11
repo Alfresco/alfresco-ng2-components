@@ -84,6 +84,5 @@ jobs:
           node-version: 14
       - name: "Release tag"
         run: |
-          echo "DRYRUN: ${{ steps.set-dryrun.outputs.dryrun }}"
-          git fetch --all
+          git fetch --all --quiet
           TRAVIS_BRANCH=master; set -u; bash -x ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
