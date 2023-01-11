@@ -13,4 +13,11 @@ git tag -a ${VERSION} -m "${VERSION} [ci skip] "
 git remote rm origin
 GITHUB_REPO=https://$GITHUB_TOKEN:x-oauth-basic@github.com/Alfresco/alfresco-ng2-components.git
 git remote add origin $GITHUB_REPO
-git push origin --tags
+
+if [[ "$1" == "dryrun=--dryrun" ]]; then
+    echo "dry run";
+    git tag | grep "${VERSION}"
+else
+    echo "LIVE!"
+    # git push origin --tags
+fi;

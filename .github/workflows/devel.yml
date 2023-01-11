@@ -1,18 +1,10 @@
-name: "release"
+name: "devel"
 
 on:
-  workflow_call:
-    inputs:
-      dry-run-release:
-        description: 'enable dry-run on artifact push'
-        required: false
-        type: boolean
-        default: true
-
   push:
     branches:
-      - master
-      - master-patch-*
+      - "AAE-11817*"
+
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
@@ -65,25 +57,9 @@ env:
   GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
 jobs:
-  setup:
-    timeout-minutes: 20
-    name: "Release tag"
-    runs-on: ubuntu-22.04
-    env:
-      GITHUB_TOKEN: $GH_TOKEN
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with: 
-          dry-run-flag: ${{ inputs.dry-run-release }}    
-      - name: install NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-      - name: "Release tag"
-        run: |
-          while true; do echo "sleeping"; sleep 2; done
-          git fetch --all
-          set -u; bash -x ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+  run-git-tag:
+    uses: ./.github/workflows/git-tag.yml
+    secrets: inherit
+    with:
+      dry-run-release: true
+
