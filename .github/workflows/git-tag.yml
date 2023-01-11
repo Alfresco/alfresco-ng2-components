@@ -84,6 +84,5 @@ jobs:
           node-version: 14
       - name: "Release tag"
         run: |
-          while true; do echo "sleeping"; sleep 2; done
           git fetch --all
           set -u; bash -x ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
