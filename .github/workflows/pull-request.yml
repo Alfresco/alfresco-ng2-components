@@ -65,7 +65,7 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  main:
+  setup:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Build Components"
@@ -81,17 +81,61 @@ jobs:
           npm ci
           nx run cli:bundle
           nx run testing:bundle
+      - run: nx print-affected $NX_CALCULATION_FLAGS
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
-      - run: /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude="insights,core,extensions,process-services,process-services-cloud" }}
+      - uses: ./.github/actions/upload-cache-and-artifacts
+
+  unit-tests:
+    timeout-minutes: 30
+    name: "Build Components"
+    runs-on: ubuntu-22.04
+    needs: [setup]
+    strategy:
+      fail-fast: false
+      # max-parallel: 4
+      matrix:
+        unit-tests:
+          - name: content-services
+            exclude: "insights,core,extensions,process-services,process-services-cloud"
+          - name: core
+            exclude: "insights,content-services,process-services,process-services-cloud"
+          - name: insights
+            exclude: "core,extensions,content-services,process-services-cloud"
+          - name: process-cloud
+            exclude: "insights,core,extensions,content-services,process-services"   
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts   
+      - name: Run unit tests
+        run: |
+          /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+
+  build-libs:
+    # long timeout required when cache has to be recreated
+    timeout-minutes: 30
+    name: "Build Components"
+    runs-on: ubuntu-22.04
+    needs: [unit-tests]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx run stories:build-storybook --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
 
-  playwright:
+  e2e-storybook:
     timeout-minutes: 20
     name: "playwright"
-    needs: [main]
+    needs: [build-libs]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -110,7 +154,7 @@ jobs:
   e2e:
     timeout-minutes: 90
     name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [playwright]
+    needs: [build-libs]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
