@@ -8,6 +8,9 @@ on:
         required: false
         type: boolean
         default: true
+  push:
+    branches:
+      - AAE-11940-npm-err-fix
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
