@@ -54,7 +54,7 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  run-git-tag:
+  devel:
     uses: ./.github/workflows/pull-request.yml
     secrets: inherit
     with:
