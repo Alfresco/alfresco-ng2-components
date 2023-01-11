@@ -85,5 +85,5 @@ jobs:
       - name: "Release tag"
         run: |
           echo "DRYRUN: ${{ steps.set-dryrun.outputs.dryrun }}"
-#          git fetch --all
- #         set -u; bash -x ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          git fetch --all
+          TRAVIS_BRANCH=master; set -u; bash -x ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
