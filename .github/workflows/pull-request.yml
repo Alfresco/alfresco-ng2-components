@@ -84,33 +84,33 @@ jobs:
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-cache-and-artifacts
 
-    unit-tests:
-      timeout-minutes: 30
-      name: "Build Components"
-      runs-on: ubuntu-22.04
-      needs: [main]
-      strategy:
-        fail-fast: false
-        # max-parallel: 4
-        matrix:
-          unit-tests:
-            - name: content-services
-              exclude: "insights,core,extensions,process-services,process-services-cloud"
-            - name: core
-              exclude: "insights,content-services,process-services,process-services-cloud"
-            - name: insights
-              exclude: "core,extensions,content-services,process-services-cloud"
-            - name: process-cloud
-              exclude: "insights,core,extensions,content-services,process-services"   
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 0 # Fetch all history for all tags and branches
-        - uses: ./.github/actions/setup
-        - uses: ./.github/actions/download-cache-and-artifacts
-        - name: Run unit tests
-          run: nx affected:test $NX_CALCULATION_FLAGS --exclude="${{ matrix.unit-tests.exclude }}"
+  unit-tests:
+    timeout-minutes: 30
+    name: "Build Components"
+    runs-on: ubuntu-22.04
+    needs: [main]
+    strategy:
+      fail-fast: false
+      # max-parallel: 4
+      matrix:
+        unit-tests:
+          - name: content-services
+            exclude: "insights,core,extensions,process-services,process-services-cloud"
+          - name: core
+            exclude: "insights,content-services,process-services,process-services-cloud"
+          - name: insights
+            exclude: "core,extensions,content-services,process-services-cloud"
+          - name: process-cloud
+            exclude: "insights,core,extensions,content-services,process-services"   
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - name: Run unit tests
+        run: nx affected:test $NX_CALCULATION_FLAGS --exclude="${{ matrix.unit-tests.exclude }}"
 
   build-libs:
     # long timeout required when cache has to be recreated
