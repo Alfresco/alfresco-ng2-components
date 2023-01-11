@@ -16,8 +16,7 @@ git remote add origin $GITHUB_REPO
 
 if [[ "$1" == "--dryrun" ]]; then
     echo "Dry run enabled. Nothing is changed";
-    git tag | grep "${VERSION}"
 else
     echo "Pushing new tag ${VERSION}!"
-    #git push origin --tags
+    git push origin --tags
 fi;
