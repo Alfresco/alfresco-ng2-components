@@ -678,6 +678,17 @@
             }
           }
         },
+
+        "e2e-playwright": {
+          "executor": "nx:run-commands",
+              "options": {
+              "commands": [
+                  {
+                      "command": "$(npm bin)/playwright test --config='e2e-playwright/playwright.config.ts'"
+                  }
+              ]
+          }
+        },
         "spellcheck": {
           "executor": "nx:run-commands",
               "options": {

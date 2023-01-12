@@ -166,7 +166,7 @@ jobs:
         run: |
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
-          npx playwright test --config='e2e-playwright/playwright.config.ts' || exit 1
+          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
       - uses: ./.github/actions/upload-cache-and-artifacts
 
   e2e:
