@@ -27,6 +27,7 @@ import { TranslateLoaderService } from '../../../../services/translate-loader.se
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { By } from '@angular/platform-browser';
 
 describe('CheckboxWidgetComponent', () => {
 
@@ -111,16 +112,40 @@ describe('CheckboxWidgetComponent', () => {
             expect(checkbox.getAttribute('aria-checked')).toBe('false');
         });
 
-        it('should display tooltip when tooltip is set', async () => {
-            widget.field.tooltip = 'checkbox widget';
+        describe('when tooltip is set', () => {
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.BOOLEAN,
+                    tooltip: 'my custom tooltip'
+                });
+                fixture.detectChanges();
+            });
 
-            const checkbox = fixture.debugElement.nativeElement.querySelector('#check-id');
-            const tooltip = checkbox.getAttribute('ng-reflect-message');
+            it('should show tooltip', async () => {
+                const checkboxInput = fixture.nativeElement.querySelector('mat-checkbox');
+                checkboxInput.dispatchEvent(new Event('mouseenter'));
+                await fixture.whenStable();
+                fixture.detectChanges();
 
-            expect(tooltip).toEqual(widget.field.tooltip);
+                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+                expect(tooltipElement).toBeTruthy();
+                expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+              });
+
+            it('should hide tooltip', async () => {
+                const checkboxInput = fixture.nativeElement.querySelector('mat-checkbox');
+                checkboxInput.dispatchEvent(new Event('mouseenter'));
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                checkboxInput.dispatchEvent(new Event('mouseleave'));
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+                expect(tooltipElement).toBeFalsy();
+            });
         });
     });
 });

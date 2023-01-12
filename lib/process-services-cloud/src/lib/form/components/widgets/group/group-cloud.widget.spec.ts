@@ -21,6 +21,7 @@ import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('GroupCloudWidgetComponent', () => {
     let fixture: ComponentFixture<GroupCloudWidgetComponent>;
@@ -59,6 +60,42 @@ describe('GroupCloudWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(widget.validate).toBeTruthy();
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.GROUP,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const cloudGroupInput = element.querySelector('adf-cloud-group');
+            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const cloudGroupInput = element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
+            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            cloudGroupInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 
     describe('when is required', () => {

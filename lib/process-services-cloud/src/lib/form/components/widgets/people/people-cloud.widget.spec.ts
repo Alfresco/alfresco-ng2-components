@@ -23,6 +23,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
+import { By } from '@angular/platform-browser';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
@@ -86,6 +87,43 @@ describe('PeopleCloudWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(widget.validate).toBeTruthy();
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.PEOPLE,
+                tooltip: 'my custom tooltip',
+                value: [mockYorkshirePudding]
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            cloudPeopleInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 
     describe('when is required', () => {

@@ -24,6 +24,7 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
+import { By } from '@angular/platform-browser';
 
 describe('AmountWidgetComponent', () => {
 
@@ -79,6 +80,42 @@ describe('AmountWidgetComponent', () => {
 
         widget.ngOnInit();
         expect(widget.placeholder).toBe('1234');
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.AMOUNT,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const amountInput = fixture.nativeElement.querySelector('input');
+            amountInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const amountInput = fixture.nativeElement.querySelector('input');
+            amountInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            amountInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 
     describe('when is required', () => {
@@ -273,35 +310,6 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
         errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
-    });
-
-    it('should display tooltip when tooltip is set', async () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            required: true,
-            colspan: 2,
-            placeholder: 'Check Placeholder Text',
-            minValue: null,
-            maxValue: null,
-            visibilityCondition: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
-            },
-            enableFractions: false,
-            currency: '$',
-            tooltip: 'ammount widget'
-        });
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const ammountElement: any = fixture.nativeElement.querySelector('#TestAmount1');
-        const tooltip = ammountElement.getAttribute('ng-reflect-message');
-
-        expect(tooltip).toEqual(widget.field.tooltip);
     });
 
     describe('when form model has left labels', () => {
