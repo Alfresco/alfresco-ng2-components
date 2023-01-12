@@ -65,7 +65,7 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  setup:
+  setup:  
 
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
