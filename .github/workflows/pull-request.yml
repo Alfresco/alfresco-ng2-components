@@ -81,7 +81,7 @@ jobs:
         uses: kamatama41/get-pr-number-action@v0
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Show the number:
+      - name: Show the number
         shell: bash        
         run: | 
           echo "PR number is ${{ steps.action.outputs.number }}"         
