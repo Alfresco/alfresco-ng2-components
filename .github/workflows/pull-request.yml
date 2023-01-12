@@ -58,11 +58,11 @@ env:
   S3_BUILD_BUCKET: ${{ secrets.S3_BUILD_BUCKET }}
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
-  DOCKER_REPOSITORY_DOsetup: ${{ secrets.DOCKER_REPOSITORY_DOsetup }}
+  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
-  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOsetup }}/alfresco/storybook"
-  DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOsetup }}/alfresco/demo-shell"
+  DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
+  DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
   setup:
