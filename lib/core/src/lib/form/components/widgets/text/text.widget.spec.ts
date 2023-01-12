@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
 
 const enterValueInTextField = (element: HTMLInputElement, value: string) => {
     element.value = value;
@@ -175,23 +176,41 @@ describe('TextWidgetComponent', () => {
                 await fixture.whenStable();
                 expect(widget.field.isValid).toBe(false);
             });
+        });
 
-            it('should display tooltip when tooltip is set', async () => {
-                widget.field = new FormFieldModel(new FormModel(), {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
+        describe('when tooltip is set', () => {
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                     type: FormFieldTypes.TEXT,
-                    tooltip: 'text widget'
+                    tooltip: 'my custom tooltip'
                 });
-
                 fixture.detectChanges();
+            });
+
+            it('should show tooltip', async () => {
+                const textInput = fixture.nativeElement.querySelector('input');
+                textInput.dispatchEvent(new Event('mouseenter'));
                 await fixture.whenStable();
+                fixture.detectChanges();
 
-                const textElement: any = element.querySelector('#text-id');
-                const tooltip = textElement.getAttribute('ng-reflect-message');
+                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+                expect(tooltipElement).toBeTruthy();
+                expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+              });
 
-                expect(tooltip).toEqual(widget.field.tooltip);
+            it('should hide tooltip', async () => {
+                const textInput = fixture.nativeElement.querySelector('input');
+                textInput.dispatchEvent(new Event('mouseenter'));
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                textInput.dispatchEvent(new Event('mouseleave'));
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+                expect(tooltipElement).toBeFalsy();
             });
         });
 

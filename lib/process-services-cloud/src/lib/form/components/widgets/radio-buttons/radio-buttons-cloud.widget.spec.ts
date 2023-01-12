@@ -22,6 +22,7 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of, throwError } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
@@ -190,5 +191,43 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         expect(errorIcon.textContent).toBe('error_outline');
         expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.RADIO_BUTTONS,
+                tooltip: 'my custom tooltip',
+                optionType: 'manual',
+                options: restOption
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const radioButtonsInput = element.querySelector('mat-radio-button');
+            radioButtonsInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const radioButtonsInput = element.querySelector('mat-radio-button');
+            radioButtonsInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            radioButtonsInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 });

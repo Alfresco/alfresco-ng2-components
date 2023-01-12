@@ -472,18 +472,6 @@ describe('AttachFileCloudWidgetComponent', () => {
                 expect(widget.rootNodeId).toEqual('-my-');
                 expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false, true);
             });
-
-            it('should display tooltip when tooltip is set', async () => {
-                createUploadWidgetField(new FormModel(), 'attach-file-attach', [], onlyLocalParams);
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const attachElement = element.querySelector('#attach-file-attach');
-                const tooltip = attachElement.getAttribute('ng-reflect-message');
-
-                expect(tooltip).toEqual(widget.field.tooltip);
-            });
         });
     });
 
@@ -590,7 +578,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
         });
 
-        it('should preview file when show is clicked', async() => {
+        it('should preview file when show is clicked', async () => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
             await formService.formContentClicked.subscribe(
                 (fileClicked: any) => {
@@ -606,7 +594,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             showOption.click();
         });
 
-        it('should request form to be updated with metadata when retrieve is clicked', async() => {
+        it('should request form to be updated with metadata when retrieve is clicked', async () => {
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
             widget.field.value = [fakeNodeWithProperties];
             fixture.detectChanges();
@@ -670,7 +658,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
         });
 
-        it('should not be called onInit when widget has no value', async() => {
+        it('should not be called onInit when widget has no value', async () => {
             widget.ngOnInit();
 
             fixture.detectChanges();
@@ -678,7 +666,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should have been called onInit when widget only one file', async() => {
+        it('should have been called onInit when widget only one file', async () => {
             widget.field.value = [fakeNodeWithProperties];
             widget.ngOnInit();
 
@@ -689,7 +677,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called onInit when widget has more than one file', async() => {
+        it('should not be called onInit when widget has more than one file', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
 
             fixture.detectChanges();
@@ -697,7 +685,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should not be called on remove node if node removed is not the selected one', async() => {
+        it('should not be called on remove node if node removed is not the selected one', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
             widget.selectedNode = fakeNodeWithProperties;
 
@@ -709,7 +697,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should have been called on remove node if node removed is the selected one', async() => {
+        it('should have been called on remove node if node removed is the selected one', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
             widget.selectedNode = fakeNodeWithProperties;
             fixture.detectChanges();
@@ -722,7 +710,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(undefined, widget.field.id));
         });
 
-        it('should have been called on attach file when value was empty', async() => {
+        it('should have been called on attach file when value was empty', async () => {
             clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
@@ -732,7 +720,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called on attach file when has a file previously', async() => {
+        it('should not be called on attach file when has a file previously', async () => {
             widget.field.value = [fakeMinimalNode];
 
             clickOnAttachFileWidget('attach-file-alfresco');
@@ -899,5 +887,41 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(spyOnShowError).toHaveBeenCalledWith(mockError.value);
         });
 
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.UPLOAD,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const attachButton = fixture.nativeElement.querySelector('button');
+            attachButton.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const attachButton = fixture.nativeElement.querySelector('button');
+            attachButton.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            attachButton.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 });

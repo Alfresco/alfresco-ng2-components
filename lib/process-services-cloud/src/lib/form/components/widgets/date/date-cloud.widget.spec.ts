@@ -22,6 +22,7 @@ import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
+import { By } from '@angular/platform-browser';
 
 describe('DateWidgetComponent', () => {
 
@@ -180,25 +181,6 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
 
             expect(widget.field.isValid).toBeFalsy();
-        });
-
-        it('should display tooltip when tooltip is set', async () => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: 'aa',
-                type: 'date',
-                readOnly: 'false',
-                tooltip: 'date widget'
-            });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const dateElement = element.querySelector('#date-field-id');
-            const tooltip = dateElement.getAttribute('ng-reflect-message');
-
-            expect(tooltip).toEqual(widget.field.tooltip);
         });
     });
 
@@ -488,9 +470,77 @@ describe('DateWidgetComponent', () => {
                 expect(widget.field.maxValue).toEqual(expectedMaxValueString);
                 expect(widget.field.minValue).toEqual(expectedMinValueString);
             });
-
         });
-
     });
 
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATE,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const dateCloudInput = fixture.nativeElement.querySelector('input');
+            dateCloudInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const dateCloudInput = fixture.nativeElement.querySelector('input');
+            dateCloudInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            dateCloudInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
+    });
+
+    describe('when is required', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATE,
+                required: true
+            });
+        });
+
+        it('should be able to display label with asterisk', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+
+            expect(asterisk).toBeTruthy();
+            expect(asterisk.textContent).toEqual('*');
+        });
+
+        it('should be invalid after user interaction without typing', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dateCloudInput = fixture.nativeElement.querySelector('input');
+            dateCloudInput.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
+        });
+    });
 });

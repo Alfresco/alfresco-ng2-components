@@ -117,20 +117,6 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
         });
 
-        it('should display tooltip when tooltip is set', async () => {
-            widget.field.tooltip = 'dropdown widget';
-
-            widget.ngOnInit();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const dropDownElement: any = element.querySelector('#dropdown-id');
-            const tooltip = dropDownElement.getAttribute('ng-reflect-message');
-
-            expect(tooltip).toEqual(widget.field.tooltip);
-        });
-
         it('should load data from restUrl and populate options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
             widget.field.restUrl = 'https://fake-rest-url';
@@ -305,6 +291,42 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(dropdownLabel.nativeNode.innerText).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
             expect(selectedValueElement).toBeFalsy();
+        });
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DROPDOWN,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const dropdownInput = fixture.debugElement.query(By.css('mat-select')).nativeElement;
+            dropdownInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const dropdownInput = fixture.debugElement.query(By.css('mat-select')).nativeElement;
+            dropdownInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            dropdownInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
         });
     });
 

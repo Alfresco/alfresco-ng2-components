@@ -23,6 +23,7 @@ import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
+import { By } from '@angular/platform-browser';
 
 describe('MultilineTextWidgetComponentComponent', () => {
 
@@ -45,6 +46,42 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     it('should exist', () => {
         expect(widget).toBeDefined();
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.MULTILINE_TEXT,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const multilineTextarea = fixture.nativeElement.querySelector('textarea');
+            multilineTextarea.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const multilineTextarea = fixture.nativeElement.querySelector('textarea');
+            multilineTextarea.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            multilineTextarea.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 
     describe('when is required', () => {

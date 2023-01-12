@@ -25,6 +25,7 @@ import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
+import { By } from '@angular/platform-browser';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -106,6 +107,42 @@ describe('DateTimeWidgetComponent', () => {
         widget.onDateChanged(mockDate);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
+    describe('when tooltip is set', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATETIME,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const dateTimeInput = fixture.nativeElement.querySelector('input');
+            dateTimeInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            expect(tooltipElement).toBeTruthy();
+            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+          });
+
+        it('should hide tooltip', async () => {
+            const dateTimeInput = fixture.nativeElement.querySelector('input');
+            dateTimeInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            dateTimeInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            expect(tooltipElement).toBeFalsy();
+        });
     });
 
     describe('when is required', () => {
@@ -196,25 +233,6 @@ describe('DateTimeWidgetComponent', () => {
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeTruthy();
-        });
-
-        it('should display tooltip when tooltip is set', () => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false',
-                tooltip: 'datetime widget'
-            });
-
-            fixture.detectChanges();
-
-            const dateElement: any = element.querySelector('#date-field-id');
-            const tooltip = dateElement.getAttribute('ng-reflect-message');
-
-            expect(tooltip).toEqual(widget.field.tooltip);
         });
     });
 
