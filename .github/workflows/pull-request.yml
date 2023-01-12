@@ -68,8 +68,6 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  setup:
-
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
@@ -82,7 +80,7 @@ jobs:
           gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
           echo "PR not approved"
           exit 1
-
+  setup:
     # long timeout required when cache has to be recreated
     needs: [Check if PR is approved] 
     timeout-minutes: 30
