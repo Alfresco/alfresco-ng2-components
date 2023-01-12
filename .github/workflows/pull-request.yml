@@ -68,7 +68,7 @@ jobs:
   setup:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
-    name: "setup"
+    name: "Setup"
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -116,7 +116,7 @@ jobs:
   lint:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
-    name: "lint"
+    name: "Lint"
     runs-on: ubuntu-22.04
     needs: [setup]
     steps:
@@ -131,7 +131,7 @@ jobs:
   build-libs:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
-    name: "Build Components"
+    name: "Build libs"
     runs-on: ubuntu-22.04
     needs: [setup]
     steps:
