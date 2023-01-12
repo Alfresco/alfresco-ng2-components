@@ -1,4 +1,4 @@
-name: "alpha-adf"
+name: "upstream adf"
 
 on:  
   workflow_call:  
@@ -58,7 +58,7 @@ env:
 
 jobs:
   trigger_adf:
-    name: trigger adf test
+    name: trigger adf
     runs-on: ubuntu-latest  
     steps:     
         - name: Checkout repository
