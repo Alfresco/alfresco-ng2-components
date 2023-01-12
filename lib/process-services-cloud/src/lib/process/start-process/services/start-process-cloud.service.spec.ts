@@ -102,20 +102,6 @@ describe('StartProcessCloudService', () => {
             );
     });
 
-    it('should be able to create a new process instance without starting it', (done) => {
-        spyOn(service, 'createProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'CREATED' }));
-        service.createProcess('appName1', fakeProcessPayload)
-            .subscribe(
-                (res) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('fake-id');
-                    expect(res.name).toEqual('fake-name');
-                    expect(res.status).toEqual('CREATED');
-                    done();
-                }
-            );
-    });
-
     it('should transform the response into task variables', (done) => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
