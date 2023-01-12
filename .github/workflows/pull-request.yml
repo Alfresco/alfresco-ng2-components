@@ -87,7 +87,7 @@ jobs:
         shell: bash        
         run: |          
           echo "PR number is: ${{ steps.action.outputs.number }}"     
-          checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/${{ steps.action.outputs.number }}/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
+          checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
           if [[ $checkApproval ]]; then
             echo "PR approved"
           else
