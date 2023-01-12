@@ -29,6 +29,28 @@ export const mockAlfrescoApi: any = {
 
 export const mockTaskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
 
+export const mockTaskFilterWithProcessInstanceId1: any = { id: 'fakeId-1', processInstanceId: 'fakeProcessInstance-1', appName: 'fakeAppName', sort: 'startDate', order: 'DESC' };
+export const mockTaskFilterWithProcessInstanceId2: any = { ...mockTaskFilterWithProcessInstanceId1, processInstanceId: 'fakeProcessInstance-2' };
+export const mockTaskFilterWithProcessInstanceIdNull: any = { ...mockTaskFilterWithProcessInstanceId1, processInstanceId: null };
+
+export const mockTaskFilterProcessInstanceIdChange = new SimpleChange(
+    mockTaskFilterWithProcessInstanceId1,
+    mockTaskFilterWithProcessInstanceId2,
+    true
+);
+
+export const mockTaskFilterProcessInstanceIdNotChanged = new SimpleChange(
+    mockTaskFilterWithProcessInstanceId1,
+    mockTaskFilterWithProcessInstanceId1,
+    false
+);
+
+export const mockTaskFilterProcessInstanceIdChangeToNull = new SimpleChange(
+    mockTaskFilterWithProcessInstanceId1,
+    mockTaskFilterWithProcessInstanceIdNull,
+    false
+);
+
 export const mockDefaultTaskFilter = {
     name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
     id: 'filter-id',
