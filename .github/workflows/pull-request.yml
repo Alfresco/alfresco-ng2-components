@@ -89,7 +89,7 @@ jobs:
     timeout-minutes: 30
     name: "Unit tests"
     runs-on: ubuntu-22.04
-    needs: [setup]
+    needs: [main]
     strategy:
       fail-fast: false
       # max-parallel: 4
