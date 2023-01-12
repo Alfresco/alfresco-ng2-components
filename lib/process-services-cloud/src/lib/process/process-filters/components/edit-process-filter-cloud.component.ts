@@ -60,6 +60,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     role: string = '';
 
+    // comment
     /** Id of the process instance filter. */
     @Input()
     id: string;
