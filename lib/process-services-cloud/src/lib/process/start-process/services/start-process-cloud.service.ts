@@ -72,20 +72,6 @@ export class StartProcessCloudService extends BaseCloudService {
     }
 
     /**
-     * Starts an already created process using the process instance id.
-     *
-     * @param createdProcessInstanceId process instance id of the process previously created
-     * @returns Details of the process instance just started
-     */
-    startCreatedProcess(appName: string, createdProcessInstanceId: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
-        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${createdProcessInstanceId}/start`;
-
-        return this.post(url, payload).pipe(
-            map((result: any) => result.entry)
-        );
-    }
-
-    /**
      * Starts a process based on a process definition, name, form values or variables.
      *
      * @param appName name of the Application

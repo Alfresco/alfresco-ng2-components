@@ -28,19 +28,6 @@ describe('StartProcessCloudService', () => {
     let service: StartProcessCloudService;
     let alfrescoApiService: AlfrescoApiService;
 
-    const mock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve({
-                entry: {
-                    id: 'fake-id',
-                    name: 'fake-name',
-                    status: 'RUNNING'
-                }
-            })
-        },
-        isEcmLoggedIn: () => false
-    };
-
     setupTestBed({
         imports: [HttpClientModule]
     });
@@ -124,34 +111,6 @@ describe('StartProcessCloudService', () => {
                     expect(res.id).toEqual('fake-id');
                     expect(res.name).toEqual('fake-name');
                     expect(res.status).toEqual('CREATED');
-                    done();
-                }
-            );
-    });
-
-    it('should be able to start a created new process instance', (done) => {
-        spyOn(service, 'startCreatedProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'RUNNING' }));
-        service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
-            .subscribe(
-                (res) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('fake-id');
-                    expect(res.name).toEqual('fake-name');
-                    expect(res.status).toEqual('RUNNING');
-                    done();
-                }
-            );
-    });
-
-    it('should map the response when create a new process instance', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
-        service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
-            .subscribe(
-                (res) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('fake-id');
-                    expect(res.name).toEqual('fake-name');
-                    expect(res.status).toEqual('RUNNING');
                     done();
                 }
             );
