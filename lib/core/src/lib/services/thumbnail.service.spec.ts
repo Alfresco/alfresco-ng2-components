@@ -56,4 +56,8 @@ describe('ThumbnailService', () => {
         spyOn(service['contentApi'], 'getDocumentThumbnailUrl').and.returnValue('/fake-thumbnail.png');
         expect(service.getDocumentThumbnailUrl('some-id')).toContain('/fake-thumbnail.png');
     });
+
+    it('should return the correct icon for a mht file', () => {
+        expect(service.getMimeTypeIcon('multipart/related')).toContain('ft_ic_website.svg');
+    });
 });

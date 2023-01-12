@@ -160,7 +160,8 @@ export class ThumbnailService {
         filter: './assets/images/ft_ic_filter.svg',
         'save-as': './assets/images/save-as.svg',
         save: './assets/images/save.svg',
-        task: './assets/images/task.svg'
+        task: './assets/images/task.svg',
+        'multipart/related': './assets/images/ft_ic_website.svg'
     };
 
     _contentApi: ContentApi;
