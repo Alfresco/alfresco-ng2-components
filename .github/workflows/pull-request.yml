@@ -95,12 +95,16 @@ jobs:
       matrix:
         unit-tests:
           - name: content-services
+            description: content-services
             exclude: "insights,core,extensions,process-services,process-services-cloud"
           - name: core
+            description: core
             exclude: "insights,content-services,process-services,process-services-cloud"
           - name: insights
+            description: insights
             exclude: "core,extensions,content-services,process-services-cloud"
           - name: process-cloud
+            description: process-cloud
             exclude: "insights,core,extensions,content-services,process-services"   
     steps:
       - name: Checkout repository
