@@ -70,7 +70,21 @@ env:
 jobs:
   setup:
 
-    # long timeout required when cache has to be recreated    
+  check-if-pr-is-approved:
+    runs-on: ubuntu-22.04
+    steps:
+      - id: condval
+        name: Check if PR is approved
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash        
+        run: |           
+          gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
+          echo "PR not approved"
+          exit 1
+
+    # long timeout required when cache has to be recreated
+    needs: [Check if PR is approved] 
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
