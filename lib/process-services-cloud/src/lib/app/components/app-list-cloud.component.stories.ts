@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-// ss
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
