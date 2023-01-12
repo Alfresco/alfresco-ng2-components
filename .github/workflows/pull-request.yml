@@ -86,7 +86,7 @@ jobs:
 
   unit-tests:
     timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.description }}"
+    name: "Unit tests: ${{ matrix.unit-tests.name }}"
     runs-on: ubuntu-22.04
     needs: [setup]
     strategy:
