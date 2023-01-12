@@ -67,6 +67,10 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     id: string;
 
+    /** processInstanceId of the task filter. */
+    @Input()
+    processInstanceId: string;
+
     /** Toggles the title. */
     @Input()
     showTitle = true;
@@ -147,12 +151,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const { id, taskFilter } = changes;
-        if(taskFilter && taskFilter.currentValue?.processInstanceId !== taskFilter.previousValue?.processInstanceId){
-            this.taskFilterProperties = this.createAndFilterProperties();
-            this.taskFilterActions = this.createAndFilterActions();
-            this.buildForm(this.taskFilterProperties);
-        } else if (id && id.currentValue !== id.previousValue) {
+        const { id } = changes;
+        if (id && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilterAndBuildForm();
         }
     }
