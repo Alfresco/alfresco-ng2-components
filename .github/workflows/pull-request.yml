@@ -71,14 +71,20 @@ jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
-      - id: condval
-        name: Check if PR is approved
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0    
+      
+      - name: Check if PR is approved
+        id: action
+        uses: kamatama41/get-pr-number-action@v0
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show the number:
         shell: bash        
-        run: |          
-          echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_ENV
-          echo $pull_request_number
+        run: | 
+          echo "PR number is ${{ steps.action.outputs.number }}"         
           gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
           echo "PR not approved"
           exit 1
