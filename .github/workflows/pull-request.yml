@@ -153,7 +153,7 @@ jobs:
   e2e-storybook:
     timeout-minutes: 20
     name: "e2e: storybook"
-    needs: [build-libs]
+    needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -172,7 +172,7 @@ jobs:
   e2e:
     timeout-minutes: 90
     name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [build-libs]
+    needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
