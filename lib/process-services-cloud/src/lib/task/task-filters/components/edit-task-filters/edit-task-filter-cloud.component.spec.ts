@@ -49,11 +49,8 @@ import {
     mockDefaultTaskFilter,
     mockDueDateFilter,
     mockTaskFilterIdChange,
-    mockTaskFilterProcessInstanceIdChange,
-    mockTaskFilterProcessInstanceIdChangeToNull,
-    mockTaskFilterProcessInstanceIdNotChanged,
-    mockTaskFilterWithProcessInstanceId2,
-    mockTaskFilterWithProcessInstanceIdNull
+    mockTaskFilterResponse,
+    mockTaskFilterResponseWithProcessInstanceIdNull
 } from '../../mock/edit-task-filter-cloud.mock';
 import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
 import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
@@ -135,47 +132,66 @@ describe('EditTaskFilterCloudComponent', () => {
             return fixture.debugElement.query(By.css(cssSelector.processInstanceIdInput)).nativeElement;
         }
 
-        it('should set processInstanceId filter when processInstanceId changes', () => {
-            component.taskFilter = mockTaskFilterWithProcessInstanceId2;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
-            fixture.detectChanges();
-            component.ngOnChanges({ taskFilter: mockTaskFilterProcessInstanceIdChange});
-            fixture.detectChanges();
-            expandFilterPanel();
-            expect(getTaskFilterSpy).not.toHaveBeenCalled();
-            expect(getProcessInstanceIdInputElement().value).toEqual('fakeProcessInstance-2');
-        });
-
-        it('should processInstanceId filter be empty string if taskFilter processInstanceId change to null', () => {
-            component.taskFilter = mockTaskFilterWithProcessInstanceIdNull;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
-            fixture.detectChanges();
-            component.ngOnChanges({ taskFilter: mockTaskFilterProcessInstanceIdChangeToNull});
-            fixture.detectChanges();
-            expandFilterPanel();
-            expect(getTaskFilterSpy).not.toHaveBeenCalled();
-            expect(getProcessInstanceIdInputElement().value).toEqual('');
-        });
-
-        it('should processInstanceId filter be empty string if id of the task filter is changed', () => {
+        it('should set processInstanceId filter when id changes', async () => {
+            getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
+            component.processInstanceId = 'fakeProcessInstanceId';
             component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
+            await fixture.whenStable();
             expandFilterPanel();
-            expect(getTaskFilterSpy).toHaveBeenCalled();
+            expect(getProcessInstanceIdInputElement().value).toEqual('fakeProcessInstanceId');
+        });
+
+        it('should processInstanceId filter be empty string if processInstanceId is null', async () => {
+            getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponseWithProcessInstanceIdNull));
+            component.processInstanceId = null;
+            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            fixture.detectChanges();
+            component.ngOnChanges({ id: mockTaskFilterIdChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expandFilterPanel();
             expect(getProcessInstanceIdInputElement().value).toEqual('');
         });
 
-        it('should processInstanceId filter be empty string if id of the task filter is changed', () => {
+        it('should processInstanceId filter be empty string if processInstanceId is undefined', async () => {
+            getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponseWithProcessInstanceIdNull));
+            component.processInstanceId = undefined;
             component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
-            component.ngOnChanges({ id: mockTaskFilterIdChange, taskFilter: mockTaskFilterProcessInstanceIdNotChanged });
+            component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
+            await fixture.whenStable();
             expandFilterPanel();
-            expect(getTaskFilterSpy).toHaveBeenCalled();
             expect(getProcessInstanceIdInputElement().value).toEqual('');
         });
+
+        it('should processInstanceId filter be set with the processInstanceId from response if processInstanceId input is null', async () => {
+            getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
+            component.processInstanceId = null;
+            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            fixture.detectChanges();
+            component.ngOnChanges({ id: mockTaskFilterIdChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expandFilterPanel();
+            expect(getProcessInstanceIdInputElement().value).toEqual('fakeProcessInstanceIdFromResponse');
+        });
+
+        it('should processInstanceId filter be set with the processInstanceId from response if processInstanceId input is undefined', async () => {
+            getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
+            component.processInstanceId = undefined;
+            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            fixture.detectChanges();
+            component.ngOnChanges({ id: mockTaskFilterIdChange });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expandFilterPanel();
+            expect(getProcessInstanceIdInputElement().value).toEqual('fakeProcessInstanceIdFromResponse');
+        });
+
 
     });
 

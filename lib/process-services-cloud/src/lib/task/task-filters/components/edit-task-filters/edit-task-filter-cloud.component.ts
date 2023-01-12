@@ -192,7 +192,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                 type: 'text',
                 key: 'processInstanceId',
-                value: this.taskFilter.processInstanceId || ''
+                value: this.processInstanceId || this.taskFilter.processInstanceId || ''
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
