@@ -77,7 +77,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash        
         run: |
-          echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')         
+          echo PULL_NUMBER=$(echo "$GITHUB_REF" | awk -F / '{print $3}') >> $GITHUB_ENV        
           gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
           echo "PR not approved"
           exit 1
