@@ -86,7 +86,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash        
         run: |          
-          echo "PR number is: ${{ steps.action.outputs.number }}")      
+          echo "PR number is: ${{ steps.action.outputs.number }}"      
           gh api /repos/Alfresco/alfresco-ng2-components/pulls/${{ steps.action.outputs.number }}/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
           echo "PR not approved"
           exit 1
