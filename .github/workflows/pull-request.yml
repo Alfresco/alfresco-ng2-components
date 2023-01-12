@@ -83,7 +83,7 @@ jobs:
           exit 1
   setup:
     # long timeout required when cache has to be recreated
-    #needs: [Check if PR is approved] 
+    needs: [Check if PR is approved] 
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
