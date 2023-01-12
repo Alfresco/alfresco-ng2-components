@@ -75,6 +75,7 @@ update_js_dependency() {
 
 update() {
     NAME_REPO=$1
+    PKG_VERSION=$(npm view $PKG@$VERSION version)
     echo "Update dependencies $NAME_REPO"
 
     git clone https://$TOKEN@github.com/Alfresco/$NAME_REPO.git $TEMP_GENERATOR_DIR
@@ -106,7 +107,7 @@ update() {
         git push --force origin $BRANCH_TO_CREATE
     fi
 
-    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT
+    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PKG_VERSION} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT
 
     cd ..
     rm -rf $TEMP_GENERATOR_DIR

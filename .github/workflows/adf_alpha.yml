@@ -1,4 +1,4 @@
-name: "alpha-adf"
+name: "upstream adf"
 
 on:  
   workflow_call:  
@@ -20,7 +20,7 @@ env:
   TRAVIS_COMMIT: ${{ github.sha }}
   BUILD_ID: ${{ github.run_id }}
   TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
-  TRAVIS_BUILD_NUMBER: github-run-${{ github.run_id }}
+  TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
@@ -58,7 +58,7 @@ env:
 
 jobs:
   trigger_adf:
-    name: trigger adf test
+    name: trigger adf
     runs-on: ubuntu-latest  
     steps:     
         - name: Checkout repository
@@ -73,7 +73,8 @@ jobs:
         - name: Trigger Alpha ADF child build
           shell: bash
           if: ${{ contains(github.event.head_commit.message, '[trigger adf]') || inputs.cluster_operation == 'TRIGGER_ALPHA_ADF' || github.event.schedule == '0 12 * * *'  }}
-          run: |            
+          run: |
+            pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")        
             npm install github-api
             ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GH_TOKEN -v alpha -c $TRAVIS_COMMIT
           

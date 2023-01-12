@@ -7,7 +7,10 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true  
+        default: true
+  push:
+    branches:
+      - AAE-12046-pr-condition
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -66,7 +69,8 @@ env:
 
 jobs:
   setup:
-    # long timeout required when cache has to be recreated
+
+    # long timeout required when cache has to be recreated    
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
