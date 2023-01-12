@@ -77,7 +77,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash        
         run: |          
-          echo "pull_request_number=$(gh condval view --json number -q .number || echo "")" >> $GITHUB_ENV
+          echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_ENV
           echo ${{ steps.condval.outputs.pull_request_number }}
           gh api /repos/Alfresco/alfresco-ng2-components/pulls/8125/reviews | jq '.[] | select(.state == "APPROVED") | .user.login'                 
           echo "PR not approved"
