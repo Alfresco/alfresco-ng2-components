@@ -75,6 +75,7 @@ update_js_dependency() {
 
 update() {
     NAME_REPO=$1
+    PKG_VERSION=$(npm view $PKG@$VERSION version)
     echo "Update dependencies $NAME_REPO"
 
     git clone https://$TOKEN@github.com/Alfresco/$NAME_REPO.git $TEMP_GENERATOR_DIR
