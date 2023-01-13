@@ -7,7 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true  
+        default: true    
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -65,6 +65,7 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
+  if: ${{ !github.event.schedule == '0 12 * * *'  }}
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
@@ -82,8 +83,7 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-        shell: bash
-        if: ${{ !github.event.schedule == '0 12 * * *'  }}             
+        shell: bash                     
         run: |          
           echo "PR number is: ${{ steps.action.outputs.number }}" 
           prNumber=${{ steps.action.outputs.number }}    
