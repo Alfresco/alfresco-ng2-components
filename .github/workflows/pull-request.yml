@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-12046-pr-condition-approval       
+        default: true         
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
