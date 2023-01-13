@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-12046-pr-condition-approval
+        default: true  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -78,23 +75,23 @@ jobs:
       
       - name: Check if PR is approved
         id: action
+        uses: kamatama41/get-pr-number-action@v0
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show the number
         env: 
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-          GH_TOKEN: ${{ github.token }}          
+          GH_TOKEN: ${{ github.token }}
         shell: bash        
-        run: |
-          echo "$GITHUB_CONTEXT" >| extract_pr.json
-          cat extract_pr.json
-          prNumber=$(cat extract_pr.json | jq '.event.number') 
-          echo "PR number is: $prNumber"            
+        run: |          
+          echo "PR number is: ${{ steps.action.outputs.number }}" 
+          prNumber=${{ steps.action.outputs.number }}    
           checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
           if [[ $checkApproval ]]; then
             echo "PR approved"
-            rm extract_pr.json
           else
             echo "PR not approved"
             exit 1
-          fi   
+          fi  
 
   setup:
     # long timeout required when cache has to be recreated
