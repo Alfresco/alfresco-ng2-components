@@ -10,7 +10,7 @@ on:
         default: true
   push:
     branches:
-      - AAE-12046-pr-condition
+      - AAE-12046-pr-condition-approval
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
