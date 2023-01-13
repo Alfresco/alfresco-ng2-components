@@ -19,3 +19,4 @@ export * from './tree.module';
 export * from './models/tree-response.interface';
 export * from './models/tree-node.interface';
 export * from './services/tree.service';
+export * from './components/tree.component';
