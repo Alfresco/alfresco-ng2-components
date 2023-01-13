@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, setupTestBed } from '@alfresco/adf-core';
+import { LogService, setupTestBed, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -128,6 +128,8 @@ describe('TagService', () => {
                     spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
                 const name: string = 'test';
                 const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
+                const maxItems: number = 25;
+                spyOnProperty(TestBed.inject(UserPreferencesService), 'paginationSize').and.returnValue(maxItems);
                 sortingByName.field = 'cm:name';
                 sortingByName.ascending = true;
                 sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
@@ -139,7 +141,7 @@ describe('TagService', () => {
                     },
                     paging: {
                         skipCount: 0,
-                        maxItems: 100
+                        maxItems
                     },
                     sort: [sortingByName]
                 });

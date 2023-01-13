@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -49,7 +49,8 @@ export class TagService {
     refresh = new EventEmitter();
 
     constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+                private logService: LogService,
+                private userPreferencesService: UserPreferencesService) {
     }
 
     /**
@@ -150,7 +151,7 @@ export class TagService {
             },
             paging: {
                 skipCount,
-                maxItems: 100
+                maxItems: this.userPreferencesService.paginationSize
             },
             sort: [sortingByName]
         })).pipe(catchError((error) => this.handleError(error)));
