@@ -65,10 +65,10 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:  
-  check-if-pr-is-approved:
-    if: ${{ !github.event.schedule == '0 12 * * *'  }}
+  check-if-pr-is-approved:    
     runs-on: ubuntu-22.04
     steps:
+        if: ${{ !github.event.schedule == '0 12 * * *'  }}
       - name: Checkout repository        
         uses: actions/checkout@v3
         with: 
