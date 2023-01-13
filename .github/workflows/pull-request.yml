@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: tru
-  push:
-    branches:
-      - AAE-12046-pr-condition-approval     
+        default: true       
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -86,7 +83,7 @@ jobs:
         env: 
           GH_TOKEN: ${{ github.token }}
         shell: bash
-        if: ${{ !github.event.schedule == '0 12 * * *'  }}                   
+        if: ${{ !github.event_name == 'schedule'  }}                   
         run: |        
           echo "PR number is: ${{ steps.action.outputs.number }}" 
           prNumber=${{ steps.action.outputs.number }}    
