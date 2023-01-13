@@ -78,23 +78,22 @@ jobs:
       
       - name: Check if PR is approved
         id: action
-        uses: kamatama41/get-pr-number-action@v0
-        with: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Show the number
         env: 
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GH_TOKEN: ${{ github.token }}          
         shell: bash        
-        run: |          
-          echo "PR number is: ${{ steps.action.outputs.number }}" 
-          prNumber=${{ steps.action.outputs.number }}    
+        run: |
+          echo "$GITHUB_TOKEN" >> extract_pr.json
+          prNumber=$(cat extract_pr.json | jq '.event.number') 
+          echo "PR number is: $prNumber"            
           checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
           if [[ $checkApproval ]]; then
             echo "PR approved"
+            rm extract_pr.json
           else
             echo "PR not approved"
             exit 1
-          fi     
+          fi   
 
   setup:
     # long timeout required when cache has to be recreated
