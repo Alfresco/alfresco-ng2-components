@@ -83,7 +83,7 @@ jobs:
         env: 
           GH_TOKEN: ${{ github.token }}
         shell: bash
-        if: ${{ ! contains(github.event.schedule == '0 12 * * *'  }}             
+        if: ${{ !contains(github.event.schedule == '0 12 * * *'  }}             
         run: |          
           echo "PR number is: ${{ steps.action.outputs.number }}" 
           prNumber=${{ steps.action.outputs.number }}    
