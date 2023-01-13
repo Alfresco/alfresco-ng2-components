@@ -17,9 +17,18 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TagBody, TagPaging, TagEntry, TagsApi } from '@alfresco/js-api';
+import {
+    RequestQuery,
+    RequestSortDefinitionInner,
+    ResultSetPaging,
+    SearchApi,
+    TagBody,
+    TagEntry,
+    TagPaging,
+    TagsApi
+} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +41,8 @@ export class TagService {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
         return this._tagsApi;
     }
+
+    private searchApi: SearchApi = new SearchApi(this.apiService.getInstance());
 
     /** Emitted when tag information is updated. */
     @Output()
@@ -112,12 +123,37 @@ export class TagService {
      * @returns Created tags.
      */
     createTags(tags: TagBody[]): Observable<TagEntry[]> {
-        const observableAdd$ = from(this.tagsApi.createTags(tags));
+        const observableAdd$: Observable<TagEntry[]> = from(this.tagsApi.createTags(tags));
         observableAdd$.subscribe(
-            (tagsEntries) => this.refresh.emit(tagsEntries),
+            (tagsEntries: TagEntry[]) => this.refresh.emit(tagsEntries),
             (err) => this.handleError(err)
         );
         return observableAdd$;
+    }
+
+    /**
+     * Find tags which name contains searched name.
+     *
+     * @param name Value for name which should be used during searching tags.
+     * @param skipCount Specify how many first results should be skipped. Default 0.
+     * @returns Found tags which name contains searched name.
+     */
+    searchTags(name: string, skipCount: number = 0): Observable<ResultSetPaging> {
+        const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
+        sortingByName.field = 'cm:name';
+        sortingByName.ascending = true;
+        sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
+        return from(this.searchApi.search({
+            query: {
+                language: RequestQuery.LanguageEnum.Afts,
+                query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"${name}*"`
+            },
+            paging: {
+                skipCount,
+                maxItems: 100
+            },
+            sort: [sortingByName]
+        })).pipe(catchError((error) => this.handleError(error)));
     }
 
     private handleError(error: any) {
