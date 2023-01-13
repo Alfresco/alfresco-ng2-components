@@ -2,7 +2,10 @@ name: "cron schedule"
 
 on:
   schedule:
-    - cron: '0 12 * * *'  
+    - cron: '0 12 * * *'
+  push:
+    branches:
+      - AAE-12046-pr-condition-approval
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

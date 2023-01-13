@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-12046-pr-condition-approval
+        default: true  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -71,7 +68,7 @@ jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout repository
+      - name: Checkout repository        
         uses: actions/checkout@v3
         with: 
           fetch-depth: 0   
@@ -81,10 +78,12 @@ jobs:
         uses: kamatama41/get-pr-number-action@v0
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-        shell: bash        
+        shell: bash
+        if: ${{ ! contains(github.event.schedule == '0 12 * * *'  }}             
         run: |          
           echo "PR number is: ${{ steps.action.outputs.number }}" 
           prNumber=${{ steps.action.outputs.number }}    
