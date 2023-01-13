@@ -39,6 +39,7 @@ Manages tags in Content Services.
     Find tags which name contains searched name.
     -   _name:_ `string`  - Value for name which should be used during searching tags.
     -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
+    -   _maxItems:_ `number`  - Specify max number of returned tags. Default is specified by UserPreferencesService.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>` - Found tags which name contains searched name.
 
 ## Details

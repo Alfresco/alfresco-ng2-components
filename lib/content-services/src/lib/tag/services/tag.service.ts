@@ -137,9 +137,10 @@ export class TagService {
      *
      * @param name Value for name which should be used during searching tags.
      * @param skipCount Specify how many first results should be skipped. Default 0.
+     * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, skipCount: number = 0): Observable<ResultSetPaging> {
+    searchTags(name: string, skipCount: number = 0, maxItems = this.userPreferencesService.paginationSize): Observable<ResultSetPaging> {
         const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
         sortingByName.field = 'cm:name';
         sortingByName.ascending = true;
@@ -151,7 +152,7 @@ export class TagService {
             },
             paging: {
                 skipCount,
-                maxItems: this.userPreferencesService.paginationSize
+                maxItems
             },
             sort: [sortingByName]
         })).pipe(catchError((error) => this.handleError(error)));
