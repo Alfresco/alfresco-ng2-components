@@ -25,7 +25,8 @@ import {
     RequestQuery,
     RequestSortDefinitionInner,
     ResultSetPaging,
-    SearchApi, SearchRequest,
+    SearchApi,
+    SearchRequest,
     TagBody,
     TagEntry
 } from '@alfresco/js-api';
