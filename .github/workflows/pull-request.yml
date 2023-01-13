@@ -64,9 +64,9 @@ env:
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
-jobs:
-  if: ${{ !github.event.schedule == '0 12 * * *'  }}
+jobs:  
   check-if-pr-is-approved:
+    if: ${{ !github.event.schedule == '0 12 * * *'  }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository        
