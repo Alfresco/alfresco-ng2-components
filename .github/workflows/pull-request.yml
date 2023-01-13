@@ -84,6 +84,7 @@ jobs:
         shell: bash        
         run: |
           echo "$GITHUB_CONTEXT" >> extract_pr.json
+          ls extract_pr.json
           prNumber=$(cat extract_pr.json | jq '.event.number') 
           echo "PR number is: $prNumber"            
           checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
