@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-12046-pr-condition
+        default: true  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -68,8 +65,37 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  setup:
+  check-if-pr-is-approved:    
+    runs-on: ubuntu-22.04
+    steps:        
+      - name: Checkout repository        
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0  
+      
+      - name: Check if PR is approved
+        id: action
+        uses: kamatama41/get-pr-number-action@v0
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Show the number
+        env: 
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        if: ${{ github.event_name != 'schedule'  }}                   
+        run: |        
+          echo "PR number is: ${{ steps.action.outputs.number }}" 
+          prNumber=${{ steps.action.outputs.number }}    
+          checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
+          if [[ $checkApproval ]]; then
+            echo "PR approved"
+          else
+            echo "PR not approved yet"
+            exit 1
+          fi 
+
+  setup:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
     name: "Setup"
