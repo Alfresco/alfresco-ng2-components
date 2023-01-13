@@ -7,7 +7,10 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true    
+        default: tru
+  push:
+    branches:
+      - AAE-12046-pr-condition-approval     
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -67,8 +70,7 @@ env:
 jobs:  
   check-if-pr-is-approved:    
     runs-on: ubuntu-22.04
-    steps:
-        if: ${{ !github.event.schedule == '0 12 * * *'  }}
+    steps:        
       - name: Checkout repository        
         uses: actions/checkout@v3
         with: 
@@ -83,8 +85,9 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-        shell: bash                     
-        run: |          
+        shell: bash
+        if: ${{ !github.event.schedule == '0 12 * * *'  }}                   
+        run: |        
           echo "PR number is: ${{ steps.action.outputs.number }}" 
           prNumber=${{ steps.action.outputs.number }}    
           checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
