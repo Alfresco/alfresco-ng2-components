@@ -57,7 +57,7 @@ jobs:
     uses: ./.github/workflows/pull-request.yml
     secrets: inherit
 
-  adf-alpha-test:
-    name: trigger alpha test    
-    uses: ./.github/workflows/adf_alpha.yml
-    secrets: inherit
+  # adf-alpha-test:
+  #   name: trigger alpha test    
+  #   uses: ./.github/workflows/adf_alpha.yml
+  #   secrets: inherit
