@@ -138,7 +138,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isNoneValueSelected(value)) {
             this.resetRestApiErrorMessage();
-            this.addDefaultOption();
+            this.resetOptions();
             this.resetInvalidValue();
         } else {
             this.field.options = [];
@@ -196,8 +196,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return !!this.field.rule.entries.length;
     }
 
-    private addDefaultOption() {
-        this.field.options = [DEFAULT_OPTION];
+    private resetOptions() {
+        this.field.options = [];
         this.updateOptions();
     }
 
@@ -288,6 +288,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 }),
                 takeUntil(this.onDestroy$)
             );
+
+        // this.list$.subscribe(res => {
+        //     console.log(res);
+        // });
     }
 
     resetRestApiErrorMessage() {
