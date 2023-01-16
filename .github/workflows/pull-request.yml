@@ -82,7 +82,7 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-          DEVEL_FLAG: true #put it to true if you need to develop the pipeline
+          DEVEL_FLAG: true #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
         if: ${{ github.event_name != 'schedule' }}                   
         run: |
@@ -97,7 +97,7 @@ jobs:
               exit 1
             fi 
           else
-            echo "you are on your branch: skipping the check"
+            echo "you are on your branch: skipping the check. REMEMBER to put DEVEL_FLAG to FALSE before the final merge!"
           fi
 
   setup:
