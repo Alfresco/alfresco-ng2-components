@@ -64,4 +64,4 @@ jobs:
           fetch-depth: 1
       - uses: ./.github/actions/npm-check-bundle
         with:
-          branch_name: master
+          branch_name: develop
