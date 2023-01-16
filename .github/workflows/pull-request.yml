@@ -82,11 +82,11 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-          DEVEL: true #put it to false if you need to develop the pipeline
+          DEVEL: false #put it to true if you need to develop the pipeline
         shell: bash
         if: ${{ github.event_name != 'schedule' }}                   
         run: |
-          if [[ $DEVEL ]] ; then     
+          if [[ "$DEVEL" = false ]] ; then     
             echo "PR number is: ${{ steps.action.outputs.number }}" 
             prNumber=${{ steps.action.outputs.number }}    
             checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
