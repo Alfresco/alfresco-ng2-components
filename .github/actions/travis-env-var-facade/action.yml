@@ -18,7 +18,7 @@ runs:
       shell: bash
       run: |
         echo "input branch_name='${{ inputs.branch_name }}'"
-        echo "working on branch '$GITHUB_REF_NAME'"
+        echo "working on branch '${{ inputs.branch_name }}'"
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
         TRAVIS_BRANCH=""
@@ -37,11 +37,11 @@ runs:
             EVENT_TYPE="api";
         fi
 
-        if [[ $GITHUB_REF_NAME == "master" ]]; then
+        if [[ ${{ inputs.branch_name }} == "master" ]]; then
             echo "Set up TAG_NPM to latest on master branch"
             TAG_NPM="latest"
         fi
-        if [[ $GITHUB_REF_NAME == "develop" ]]; then
+        if [[ ${{ inputs.branch_name }} == "develop" ]]; then
             echo "Set up TAG_NPM to alpha on develop branch"
             TAG_NPM="alpha"
         fi
