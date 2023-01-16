@@ -17,6 +17,7 @@ runs:
     - name: Parse env global
       shell: bash
       run: |
+        echo "input branch_name='${{ inputs.branch_name }}'"
         echo "working on branch '$GITHUB_REF_NAME'"
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
