@@ -1,10 +1,11 @@
 name: 'Check NPM bundle'
 description: 'check npm bundle'
 
-outputs:
-  tag_sha:
-    description: "long sha of the tag"
-    value: ${{ steps.sha_out.outputs.tag_sha }}
+inputs:
+  branch_name:
+    description: "override GITHUB_REF_NAME"
+    required: false
+    default: $GITHUB_REF_NAME
 
 runs:
   using: "composite"
@@ -12,6 +13,8 @@ runs:
   steps:
     - name: load "TRAVIS_EVENT_TYPE"
       uses: ./.github/actions/travis-env-var-facade  
+      with:
+        branch_name: ${{ inputs.branch_name }}
     - name: check npm bundle
       shell: bash
       id: sha_out
