@@ -79,6 +79,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
+          enable-node-modules-cache: false      
       - name: install
         run: |
           npm ci
@@ -162,7 +165,7 @@ jobs:
         run: |
           set -u;
           ./scripts/travis/build/bumpversion.sh
-          nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell"
+          nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - name: release libraries
         run: ./scripts/travis/release/release-npm.sh ${{ steps.set-dryrun.outputs.dryrun }}

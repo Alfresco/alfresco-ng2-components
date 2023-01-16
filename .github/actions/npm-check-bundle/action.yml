@@ -1,19 +1,28 @@
 name: 'Check NPM bundle'
 description: 'check npm bundle'
 
-outputs:
-  tag_sha:
-    description: "long sha of the tag"
-    value: ${{ steps.sha_out.outputs.tag_sha }}
+inputs:
+  branch_name:
+    description: "override GITHUB_REF_NAME"
+    required: false
+    default: $GITHUB_REF_NAME
 
 runs:
   using: "composite"
 
   steps:
+    - name: load "TRAVIS_EVENT_TYPE"
+      uses: ./.github/actions/travis-env-var-facade  
+      with:
+        branch_name: ${{ inputs.branch_name }}
     - name: check npm bundle
       shell: bash
       id: sha_out
       run: |
-          ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          echo "check bundle on TAG_NPM='${TAG_NPM}' and ADF_VERSION='${ADF_VERSION}'"
-          ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+        if [[ -z $TAG_NPM ]]; then
+            echo "TAG_NPM not set, aborting"
+            exit 1
+        fi      
+        ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+        echo "check bundle on TAG_NPM='${TAG_NPM}' and ADF_VERSION='${ADF_VERSION}'"
+        ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
