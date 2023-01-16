@@ -43,9 +43,9 @@ runs:
 
     - name: set TAG_NPM to latest
       shell: bash
-      if: ${{ inputs.branch_name == master }}
+      if: ${{ inputs.branch_name }} == master
       run: echo "TAG_NPM=latest" >> $GITHUB_ENV
     - name: set TAG_NPM to alpha
       shell: bash
-      if: ${{ inputs.branch_name == develop }}
+      if: ${{ inputs.branch_name }} == develop
       run: echo "TAG_NPM=alpha" >> $GITHUB_ENV
