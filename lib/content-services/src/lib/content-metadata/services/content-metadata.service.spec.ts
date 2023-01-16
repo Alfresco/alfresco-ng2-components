@@ -32,15 +32,27 @@ const fakeNode: Node = {
     isFile: true,
     aspectNames: ['exif:exif'],
     nodeType: 'fn:fakenode',
-    createdByUser: {displayName: 'test-user'},
-    modifiedByUser: {displayName: 'test-user-modified'},
+    createdByUser: { displayName: 'test-user' },
+    modifiedByUser: { displayName: 'test-user-modified' },
     properties: []
 } as Node;
 
-const fakeContentNode: Node = { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } as Node;
+const fakeContentNode: Node = {
+    name: 'Node Action',
+    id: 'fake-id',
+    nodeType: 'cm:content',
+    isFile: true,
+    aspectNames: [
+        'rn:renditioned',
+        'cm:versionable',
+        'cm:titled',
+        'cm:auditable',
+        'cm:author',
+        'cm:thumbnailModification'
+    ]
+} as Node;
 
 describe('ContentMetaDataService', () => {
-
     let service: ContentMetadataService;
     let classesApi: ClassesApi;
     let appConfig: AppConfigService;
@@ -50,8 +62,20 @@ describe('ContentMetaDataService', () => {
         name: 'exif:exif',
         title: 'Exif',
         properties: {
-            'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
-            'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
+            'exif:1': {
+                title: 'exif:1:id',
+                name: 'exif:1',
+                dataType: '',
+                mandatory: false,
+                multiValued: false
+            },
+            'exif:2': {
+                title: 'exif:2:id',
+                name: 'exif:2',
+                dataType: '',
+                mandatory: false,
+                multiValued: false
+            }
         }
     };
 
@@ -59,15 +83,46 @@ describe('ContentMetaDataService', () => {
         name: 'cm:content',
         title: '',
         properties: {
-            'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
+            'cm:content': {
+                title: 'cm:content:id',
+                name: 'cm:content',
+                dataType: '',
+                mandatory: false,
+                multiValued: false
+            }
+        }
+    };
+
+    const versionableResponse: PropertyGroup = {
+        name: 'cm:versionable',
+        title: 'Versionable',
+        properties: {
+            'cm:autoVersion': {
+                title: 'Auto Version',
+                name: 'cm:autoVersion',
+                dataType: 'd:boolean',
+                mandatory: false,
+                multiValued: false
+            },
+            'cm:initialVersion': {
+                title: 'Initial Version',
+                name: 'cm:initialVersion',
+                dataType: 'd:boolean',
+                mandatory: false,
+                multiValued: false
+            },
+            'cm:versionType': {
+                title: 'Version Type',
+                name: 'cm:versionType',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
         }
     };
 
     setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
+        imports: [TranslateModule.forRoot(), ContentTestingModule]
     });
 
     const setConfig = (presetName, presetConfig) => {
@@ -81,58 +136,60 @@ describe('ContentMetaDataService', () => {
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
-        const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
+        const propertyDescriptorsService = TestBed.inject(
+            PropertyDescriptorsService
+        );
         classesApi = propertyDescriptorsService['classesApi'];
         appConfig = TestBed.inject(AppConfigService);
     });
 
     it('should return all the properties of the node', () => {
-        service.getBasicProperties(fakeNode).subscribe(
-            (res) => {
-                expect(res.length).toEqual(10);
-                expect(res[0].value).toEqual('Node');
-                expect(res[1].value).toBeFalsy();
-                expect(res[2].value).toBe('test-user');
-            }
-        );
+        service.getBasicProperties(fakeNode).subscribe((res) => {
+            expect(res.length).toEqual(10);
+            expect(res[0].value).toEqual('Node');
+            expect(res[1].value).toBeFalsy();
+            expect(res[2].value).toBe('test-user');
+        });
     });
 
     it('should return the content type property', () => {
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'} as any));
-
-        service.getContentTypeProperty(fakeNode).subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res).not.toBeNull();
-                expect(res.label).toBe('hello i am a weird content type');
-            }
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
+            of({ label: 'hello i am a weird content type' } as any)
         );
+
+        service.getContentTypeProperty(fakeNode).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.label).toBe('hello i am a weird content type');
+        });
     });
 
     it('should trigger the opening of the content type dialog', () => {
-        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of(true));
+        spyOn(
+            contentPropertyService,
+            'openContentTypeDialogConfirm'
+        ).and.returnValue(of(true));
 
-        service.openConfirmDialog(fakeNode).subscribe(
-            () => {
-                expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
-            }
-        );
+        service.openConfirmDialog(fakeNode).subscribe(() => {
+            expect(
+                contentPropertyService.openContentTypeDialogConfirm
+            ).toHaveBeenCalledWith('fn:fakenode');
+        });
     });
 
     describe('AspectOriented preset', () => {
-
         it('should return response with exif property', (done) => {
             setConfig('default', { 'exif:exif': '*' });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
-
-            service.getGroupedProperties(fakeNode).subscribe(
-                (res) => {
-                    expect(res.length).toEqual(1);
-                    expect(res[0].title).toEqual('Exif');
-                    done();
-                }
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(exifResponse)
             );
+
+            service.getGroupedProperties(fakeNode).subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Exif');
+                done();
+            });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
@@ -141,23 +198,40 @@ describe('ContentMetaDataService', () => {
         it('should filter the record options for node ', (done) => {
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
-
-            service.getGroupedProperties(fakeNode).subscribe(
-                (res) => {
-                    expect(res.length).toEqual(1);
-                    expect(res[0].title).toEqual('Exif');
-                    done();
-                }
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(exifResponse)
             );
+
+            service.getGroupedProperties(fakeNode).subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Exif');
+                done();
+            });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
-   });
+
+        it('should return response with versionable property', (done) => {
+            setConfig('default', {
+                includeAll: false,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            service.getGroupedProperties(fakeContentNode).subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Versionable');
+                done();
+            });
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+    });
 
     describe('LayoutOriented preset', () => {
-
         it('should return the node property', (done) => {
             const customLayoutOrientedScheme = [
                 {
@@ -174,15 +248,17 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(contentResponse)
+            );
 
-            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
-                (res) => {
+            service
+                .getGroupedProperties(fakeContentNode, 'custom')
+                .subscribe((res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
                     done();
-                }
-            );
+                });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
@@ -215,15 +291,17 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(contentResponse)
+            );
 
-            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
-                (res) => {
+            service
+                .getGroupedProperties(fakeContentNode, 'custom')
+                .subscribe((res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
                     done();
-                }
-            );
+                });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
@@ -247,22 +325,24 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
-
-            service.getGroupedProperties(fakeContentNode, 'custom').subscribe(
-                (res) => {
-                    expect(res.length).toEqual(0);
-                    done();
-                }
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(contentResponse)
             );
 
-            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            service
+                .getGroupedProperties(fakeContentNode, 'custom')
+                .subscribe((res) => {
+                    expect(res.length).toEqual(0);
+                    done();
+                });
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
         });
     });
 
     describe('Provided preset config', () => {
-       it('should create the metadata config on the fly when preset config is provided', (done) => {
+        it('should create the metadata config on the fly when preset config is provided', (done) => {
             const customLayoutOrientedScheme = [
                 {
                     id: 'app.content.metadata.customGroup',
@@ -288,17 +368,24 @@ describe('ContentMetaDataService', () => {
                 }
             ];
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(contentResponse)
+            );
 
-            service.getGroupedProperties(fakeContentNode, customLayoutOrientedScheme).subscribe(
-                (res) => {
+            service
+                .getGroupedProperties(
+                    fakeContentNode,
+                    customLayoutOrientedScheme
+                )
+                .subscribe((res) => {
                     expect(res.length).toEqual(1);
                     expect(res[0].title).toEqual('Properties');
                     expect(classesApi.getClass).toHaveBeenCalledTimes(1);
-                    expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+                    expect(classesApi.getClass).toHaveBeenCalledWith(
+                        'cm_content'
+                    );
                     done();
-                }
-            );
+                });
         });
     });
 });
