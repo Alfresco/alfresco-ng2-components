@@ -31,6 +31,16 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tag:_ `string`  - Name of the tag to remove
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
+-   **createTags**(tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>`<br/>
+    Creates tags.
+    -   _tags:_ `TagBody[]`  - List of tags to create.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>` - List of created tags.
+-   **searchTags**(name: `string`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>`<br/>
+    Find tags which name contains searched name.
+    -   _name:_ `string`  - Value for name which should be used during searching tags.
+    -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
+    -   _maxItems:_ `number`  - Specify max number of returned tags. Default is specified by UserPreferencesService.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>` - Found tags which name contains searched name.
 
 ## Details
 

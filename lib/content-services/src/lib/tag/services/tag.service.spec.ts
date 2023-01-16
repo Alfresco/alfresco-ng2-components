@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
+import { LogService, setupTestBed, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
-import { TagEntry } from '@alfresco/js-api';
+import {
+    RequestQuery,
+    RequestSortDefinitionInner,
+    ResultSetPaging,
+    SearchApi,
+    SearchRequest,
+    TagBody,
+    TagEntry
+} from '@alfresco/js-api';
 
 describe('TagService', () => {
 
@@ -69,6 +77,96 @@ describe('TagService', () => {
             });
 
             service.addTag('fake-node-id', 'fake-tag');
+        });
+
+        describe('createTags', () => {
+            it('should call createTags on tagsApi', () => {
+                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
+                const tag1: TagBody = new TagBody();
+                tag1.tag = 'Some tag 1';
+                const tag2: TagBody = new TagBody();
+                tag2.tag = 'Some tag 2';
+                const tags: TagBody[] = [tag1, tag2];
+                service.createTags(tags);
+                expect(service.tagsApi.createTags).toHaveBeenCalledWith(tags);
+            });
+
+            it('should emit refresh when tags creation is success', fakeAsync(() => {
+                const tags: TagEntry[] = [{
+                    entry: {
+                        id: 'Some id 1',
+                        tag: 'Some tag 1'
+                    }
+                }];
+                spyOn(service.refresh, 'emit');
+                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tags));
+                service.createTags([]);
+                tick();
+                expect(service.refresh.emit).toHaveBeenCalledWith(tags);
+            }));
+
+            it('should call error on logService when error occurs during tags creation', fakeAsync(() => {
+                const logService: LogService = TestBed.inject(LogService);
+                spyOn(logService, 'error');
+                const error: string = 'Some error';
+                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.reject(error));
+                service.createTags([]);
+                tick();
+                expect(logService.error).toHaveBeenCalledWith(error);
+            }));
+        });
+
+        describe('searchTags', () => {
+            let result: ResultSetPaging;
+
+            beforeEach(() => {
+                result = new ResultSetPaging();
+            });
+
+            it('should call search on searchApi with correct parameters', () => {
+                const searchSpy: jasmine.Spy<(queryBody: SearchRequest) => Promise<ResultSetPaging>> =
+                    spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
+                const name: string = 'test';
+                const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
+                const maxItems: number = 25;
+                spyOnProperty(TestBed.inject(UserPreferencesService), 'paginationSize').and.returnValue(maxItems);
+                sortingByName.field = 'cm:name';
+                sortingByName.ascending = true;
+                sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
+                service.searchTags(name);
+                expect(searchSpy).toHaveBeenCalledWith({
+                    query: {
+                        language: RequestQuery.LanguageEnum.Afts,
+                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"${name}*"`
+                    },
+                    paging: {
+                        skipCount: 0,
+                        maxItems
+                    },
+                    sort: [sortingByName]
+                });
+            });
+
+            it('should return observable which emits paging object for tags', (done) => {
+                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
+                service.searchTags('test').subscribe((tagsResult) => {
+                    expect(tagsResult).toBe(result);
+                    done();
+                });
+            });
+
+            it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
+                const logService: LogService = TestBed.inject(LogService);
+                spyOn(logService, 'error');
+                const error: string = 'Some error';
+                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.reject(error));
+                service.searchTags('test').subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
+            }));
         });
     });
 });
