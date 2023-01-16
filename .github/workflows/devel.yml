@@ -3,7 +3,7 @@ name: "devel"
 on:
   push:
     branches:
-      - AAE-12123*
+      - AAE-12123---env-var-interpolation-relese-dev
 
 env:
   BASE_REF: ${{ github.base_ref }}
