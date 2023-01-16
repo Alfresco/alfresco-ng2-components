@@ -3,7 +3,7 @@ name: "devel"
 on:
   push:
     branches:
-      - AAE-12057*
+      - AAE-12123*
 
 env:
   BASE_REF: ${{ github.base_ref }}
