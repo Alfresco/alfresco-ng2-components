@@ -288,10 +288,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 }),
                 takeUntil(this.onDestroy$)
             );
-
-        // this.list$.subscribe(res => {
-        //     console.log(res);
-        // });
     }
 
     resetRestApiErrorMessage() {
