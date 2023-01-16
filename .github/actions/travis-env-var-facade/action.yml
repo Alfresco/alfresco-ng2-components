@@ -36,16 +36,16 @@ runs:
         elif [[ "${{ inputs.event_name }}" =~ $REGEX ]]; then
             EVENT_TYPE="api";
         fi
-
-        if [[ ${{ inputs.branch_name }} == "master" ]]; then
-            echo "Set up TAG_NPM to latest on master branch"
-            TAG_NPM="latest"
-        fi
-        if [[ ${{ inputs.branch_name }} == "develop" ]]; then
-            echo "Set up TAG_NPM to alpha on develop branch"
-            TAG_NPM="alpha"
-        fi
-        echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
         echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
         echo "TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}" >> $GITHUB_ENV
         echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV
+
+
+    - name: set TAG_NPM to latest
+      shell: bash
+      if: ${{ inputs.branch_name }} == "master"
+      run: echo "TAG_NPM=latest" >> $GITHUB_ENV
+    - name: set TAG_NPM to alpha
+      shell: bash
+      if: ${{ inputs.branch_name }} == "develop"
+      run: echo "TAG_NPM=alpha" >> $GITHUB_ENV
