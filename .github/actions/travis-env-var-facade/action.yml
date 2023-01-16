@@ -10,7 +10,8 @@ inputs:
   branch_name:
     description: "override GITHUB_REF_NAME"
     required: false
-
+    default: $GITHUB_REF_NAME
+    
 runs:
   using: "composite"
   steps:
@@ -41,12 +42,6 @@ runs:
         echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV
 
 
-    - name: TAG_NPM not set
-      shell: bash
-      if: "${{ inputs.branch_name == '' }}"
-      run: | 
-        echo "TAG_NPM not set"
-        exit 1
     - name: set TAG_NPM to latest
       shell: bash
       if: "${{ inputs.branch_name == 'master' }}"
