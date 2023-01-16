@@ -10,6 +10,8 @@ runs:
   using: "composite"
 
   steps:
+    - name: load "TRAVIS_EVENT_TYPE"
+      uses: ./.github/actions/travis-env-var-facade  
     - name: check npm bundle
       shell: bash
       id: sha_out

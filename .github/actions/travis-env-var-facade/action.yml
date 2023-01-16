@@ -7,12 +7,17 @@ inputs:
     description: "override github.event_name"
     required: false
     default: ${{ github.event_name }}
+  branch_name:
+    description: "override GITHUB_REF_NAME"
+    required: false
+    default: $GITHUB_REF_NAME
 runs:
   using: "composite"
   steps:
     - name: Parse env global
       shell: bash
       run: |
+        echo "working on branch '$GITHUB_REF_NAME'"
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
         TRAVIS_BRANCH=""
