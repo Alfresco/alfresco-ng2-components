@@ -7,12 +7,18 @@ inputs:
     description: "override github.event_name"
     required: false
     default: ${{ github.event_name }}
+  branch_name:
+    description: "override GITHUB_REF_NAME"
+    required: false
+    default: $GITHUB_REF_NAME
+    
 runs:
   using: "composite"
   steps:
     - name: Parse env global
       shell: bash
       run: |
+        echo "input branch_name='${{ inputs.branch_name }}'"
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
         TRAVIS_BRANCH=""
@@ -30,16 +36,26 @@ runs:
         elif [[ "${{ inputs.event_name }}" =~ $REGEX ]]; then
             EVENT_TYPE="api";
         fi
-
-        if [[ $GITHUB_REF_NAME == "master" ]]; then
-            echo "Set up TAG_NPM to latest on master branch"
-            TAG_NPM="latest"
-        fi
-        if [[ $GITHUB_REF_NAME == "develop" ]]; then
-            echo "Set up TAG_NPM to alpha on develop branch"
-            TAG_NPM="alpha"
-        fi
-        echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
         echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
         echo "TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}" >> $GITHUB_ENV
         echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV
+        
+    - name: set TAG_NPM
+      shell: bash
+      run: |
+        VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
+        echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
+        if [[ ${{ inputs.branch_name }} =~ ^master(-patch.*)?$ ]]; then
+            # Pre-release versions
+            if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
+            then
+                TAG_NPM=next
+            # Stable major versions
+            else
+                TAG_NPM=latest
+            fi
+        fi
+        if [[ ${{ inputs.branch_name }} =~ ^develop(-patch.*)?$ ]]; then
+            TAG_NPM=alpha
+        fi
+        echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
