@@ -3,7 +3,7 @@ name: "devel"
 on:
   push:
     branches:
-      - AAE-12123---env-var-interpolation-relese-dev
+      - AAE-12123*
 
 env:
   BASE_REF: ${{ github.base_ref }}
@@ -58,7 +58,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
     steps:
-    
+
       - uses: ./.github/actions/npm-check-bundle
         # with:
         #   branch_name: 
