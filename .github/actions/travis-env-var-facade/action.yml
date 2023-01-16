@@ -10,7 +10,7 @@ inputs:
   branch_name:
     description: "override GITHUB_REF_NAME"
     required: false
-    default: $GITHUB_REF_NAME
+
 runs:
   using: "composite"
   steps:
@@ -49,3 +49,9 @@ runs:
       shell: bash
       if: "${{ inputs.branch_name == 'develop' }}"
       run: echo "TAG_NPM=alpha" >> $GITHUB_ENV
+    - name: TAG_NPM not set
+      shell: bash
+      if: "${{ inputs.branch_name == '' }}"
+      run: | 
+        echo "TAG_NPM not set"
+        exit 1
