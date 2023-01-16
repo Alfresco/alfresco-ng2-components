@@ -71,14 +71,15 @@ jobs:
       - name: Checkout repository        
         uses: actions/checkout@v3
         with: 
-          fetch-depth: 0   
+          fetch-depth: 0        
       
       - name: Check if PR is approved
         id: action
+        if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@v0
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
+        
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
