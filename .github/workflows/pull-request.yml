@@ -184,7 +184,7 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: |
-          rm -rf node_modules && npm install
+          rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
           nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
 
