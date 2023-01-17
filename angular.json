@@ -422,7 +422,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail && rm ./dist/libs/core/lib/prebuilt-themes/*.js"
+                      "command": "$(npm bin)/webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
                   }
               ]
           }
