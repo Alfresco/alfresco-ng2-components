@@ -183,7 +183,9 @@ jobs:
       - uses: ./.github/actions/download-cache-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
-      - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
+      - run: |
+          rm -rf node_modules && npm install
+          nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
 
   e2e-storybook:
