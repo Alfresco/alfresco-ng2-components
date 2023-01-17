@@ -993,6 +993,41 @@ describe('StartProcessCloudComponent', () => {
 
             expect(card).toBeTruthy();
         });
+
+        it('start process button should be enabled when isLoading is false', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.processDefinitionName = fakeProcessDefinitions[0].name;
+            component.ngOnInit();
+            component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
+            component.appName = 'test app name';
+            component.isLoading = false;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+            expect(component.disableStartButton()).toBeFalse();
+            const startBtn: HTMLButtonElement = startButton.nativeElement;
+            expect(startBtn.disabled).toBeFalse();
+        });
+
+        it('start process button should be disabled when isLoading is true', async () => {
+            component.ngOnChanges({ appName: firstChange });
+            component.processDefinitionList = fakeProcessDefinitions;
+            component.processDefinitionName = fakeProcessDefinitions[0].name;
+            component.ngOnInit();
+            component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
+            component.appName = 'test app name';
+            component.isLoading = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+            expect(component.disableStartButton()).toBeTrue();
+            const startBtn: HTMLButtonElement = startButton.nativeElement;
+            expect(startBtn.disabled).toBeTrue();
+        });
+
     });
 
     describe('cancel process', () => {
