@@ -42,6 +42,8 @@ describe('TreeComponent', () => {
 
     const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .mat-progress-spinner`);
 
+    const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .adf-icon`);
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -156,17 +158,19 @@ describe('TreeComponent', () => {
 
     it('should call correct server method on collapsing node', () => {
         component.refreshTree();
+        fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        component.expandCollapseNode(component.treeService.treeNodes[0]);
+        getExpandCollapseBtn(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
     });
 
     it('should call correct server method on expanding node', () => {
         component.refreshTree();
+        fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        component.expandCollapseNode(component.treeService.treeNodes[0]);
+        getExpandCollapseBtn(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
