@@ -1,6 +1,11 @@
 name: "Upload build artifacts"
 description: "Upload build artifacts"
-
+inputs:
+  packages:
+    description: 'packages to cache'
+    required: false
+    type: boolean
+    default: 'dist nxcache'
 runs:
   using: "composite"
   steps:
@@ -9,7 +14,7 @@ runs:
       env:
         REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
       run: |
-        packages=( dist nxcache node_modules )
+        packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
           time tar czf $i.tar.gz $i
           du -h $i.tar.gz

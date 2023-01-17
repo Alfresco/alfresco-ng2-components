@@ -7,7 +7,12 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true  
+        default: true
+      skip-pr-approve:
+        description: 'skip pr approve check'
+        required: false
+        type: boolean
+        default: false          
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -83,7 +88,7 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-          DEVEL_FLAG: false #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
+          DEVEL_FLAG: ${{ inputs.skip-pr-approve }} #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
         if: ${{ github.event_name != 'schedule' }}                   
         run: |
@@ -120,6 +125,8 @@ jobs:
           nx run testing:bundle
       - run: nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'
 
   unit-tests:
     timeout-minutes: 30
@@ -146,6 +153,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'      
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
@@ -163,6 +172,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'      
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
 
   build-libs:
@@ -178,11 +189,15 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'      
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
+        with:
+          packages: 'nxcache'      
 
   e2e-storybook:
     timeout-minutes: 20
@@ -196,12 +211,13 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'      
       - name: Process Cloud Storybook Playwright
         run: |
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-      - uses: ./.github/actions/upload-cache-and-artifacts
 
   e2e:
     timeout-minutes: 90
@@ -335,6 +351,8 @@ jobs:
           enable-cache: "true"
           enable-node-modules-cache: "true"
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'      
       - name: setup chrome
         uses: ./.github/actions/setup-chrome
       - name: e2e

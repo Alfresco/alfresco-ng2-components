@@ -36,23 +36,23 @@ runs:
           cache-name: node-cache
         with:
           path: |
-            ~/.npm
             nxcache
-            dist
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: nxcache-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
-            node-${{ runner.os }}-build-${{ env.cache-name }}-
-            node-${{ runner.os }}-build-
-            node-${{ runner.os }}-
+            nxcache-${{ runner.os }}-build-${{ env.cache-name }}-
+            nxcache-${{ runner.os }}-build-
+            nxcache-${{ runner.os }}-
       - name: Node Modules cache
-        id: node-modules-cache
+        id: node-modules-dist-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
         uses: actions/cache@v3
         env:
-          cache-name: node-modules-cache
+          cache-name: node-modules-dist-cache
         with:
           path: |
             node_modules
+            ~/.npm
+            dist
           key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
             node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
