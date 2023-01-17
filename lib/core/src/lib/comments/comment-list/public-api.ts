@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-export * from './comments.component';
+export * from './comment-list.component';
 
 export * from './interfaces/index';
 
-export * from './comments.module';
-
-export * from './comment-list/index';
+export * from './comment-list.module';

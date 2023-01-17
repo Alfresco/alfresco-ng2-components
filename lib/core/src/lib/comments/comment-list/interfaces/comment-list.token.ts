@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-export * from './comments.component';
+import { InjectionToken } from '@angular/core';
 
-export * from './interfaces/index';
-
-export * from './comments.module';
-
-export * from './comment-list/index';
+export const ADF_COMMENT_LIST_SERVICE = new InjectionToken('ADF_COMMENT_LIST_SERVICE');

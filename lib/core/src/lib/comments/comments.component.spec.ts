@@ -24,6 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
 import { ADF_COMMENTS_SERVICE, CommentsService } from './interfaces';
 import { of, throwError } from 'rxjs';
+import { ADF_COMMENT_LIST_SERVICE } from './comment-list/interfaces';
+import { CommentListServiceMock } from './comment-list/mocks/comment-list.service.mock';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -42,6 +44,10 @@ describe('CommentsComponent', () => {
             {
                 provide: ADF_COMMENTS_SERVICE,
                 useClass: CommentsServiceMock
+            },
+            {
+                provide: ADF_COMMENT_LIST_SERVICE,
+                useClass: CommentListServiceMock
             }
         ]
     });

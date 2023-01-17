@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-export * from './comments.component';
-
-export * from './interfaces/index';
-
-export * from './comments.module';
-
-export * from './comment-list/index';
+export interface CommentListService {
+    getUserImage(user: any): string;
+}

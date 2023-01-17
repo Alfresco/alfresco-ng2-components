@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-export * from './comments.component';
+import { CommentListService, PeopleContentService } from '@alfresco/adf-core';
+import { Injectable } from '@angular/core';
 
-export * from './interfaces/index';
+@Injectable({
+  providedIn: 'root'
+})
+export class ContentCommentListService implements CommentListService {
 
-export * from './comments.module';
+  constructor(private peopleContentService: PeopleContentService) { }
 
-export * from './comment-list/index';
+  getUserImage(user: string): string {
+    return this.peopleContentService.getUserProfileImage(user);
+  }
+}

@@ -25,8 +25,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatLineModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../pipes/pipe.module';
+import { CommentListModule } from './comment-list/comment-list.module';
 
-import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
 
 @NgModule({
@@ -39,14 +39,13 @@ import { CommentsComponent } from './comments.component';
         MatFormFieldModule,
         MatInputModule,
         MatListModule,
-        MatLineModule
+        MatLineModule,
+        CommentListModule
     ],
     declarations: [
-        CommentListComponent,
         CommentsComponent
     ],
     exports: [
-        CommentListComponent,
         CommentsComponent
     ]
 })
