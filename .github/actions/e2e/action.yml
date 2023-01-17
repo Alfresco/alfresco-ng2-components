@@ -155,13 +155,11 @@ runs:
           fi
 
     - name: upload artifacts on gh
-      id: upload_gh
-      env:
-        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
+      id: upload_gh      
       uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
-        path: $REMOTE_PATH
+        path: smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
         if-no-files-found: error
 
     - name: upload smartrunner tests results on s3 to cache tests
