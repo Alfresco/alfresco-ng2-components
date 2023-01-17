@@ -467,7 +467,14 @@ describe('ContentMetadataComponent', () => {
                 PropertyDescriptorsService
             );
             classesApi = propertyDescriptorsService['classesApi'];
-            expectedNode = { ...node, aspectNames: ['cm:versionable'], name: 'some-modified-value' };
+            expectedNode = { ...node, aspectNames: [
+                'rn:renditioned',
+                'cm:versionable',
+                'cm:titled',
+                'cm:auditable',
+                'cm:author',
+                'cm:thumbnailModification'
+            ], name: 'some-modified-value' };
 
             component.expanded = true;
             component.preset = 'default';
@@ -476,6 +483,67 @@ describe('ContentMetadataComponent', () => {
         it('should show Versionable with given content-metadata config', async () => {
             setContentMetadataConfig('default', {
                 includeAll: false,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+
+            expect(versionableProp).toBeTruthy();
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should show Versionable twice with given content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProps = fixture.debugElement.queryAll(By.css(`[data-automation-id="adf-metadata-group-Versionable"]`));
+
+            expect(versionableProps.length).toEqual(2);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should not show Versionable with given content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+
+            expect(versionableProp).toBeNull();
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should not show Versionable when excluded and included set in content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable',
                 'cm:versionable': '*'
             });
 

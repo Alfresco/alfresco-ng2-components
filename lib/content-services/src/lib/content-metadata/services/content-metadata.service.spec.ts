@@ -49,7 +49,10 @@ const fakeContentNode: Node = {
         'cm:auditable',
         'cm:author',
         'cm:thumbnailModification'
-    ]
+    ],
+    createdByUser: { displayName: 'test-user' },
+    modifiedByUser: { displayName: 'test-user-modified' },
+    properties: []
 } as Node;
 
 describe('ContentMetaDataService', () => {
@@ -178,41 +181,39 @@ describe('ContentMetaDataService', () => {
     });
 
     describe('AspectOriented preset', () => {
-        it('should return response with exif property', (done) => {
+        it('should return response with exif property', async () => {
             setConfig('default', { 'exif:exif': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(
                 Promise.resolve(exifResponse)
             );
 
-            service.getGroupedProperties(fakeNode).subscribe((res) => {
-                expect(res.length).toEqual(1);
-                expect(res[0].title).toEqual('Exif');
-                done();
-            });
+            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(1);
+            expect(groupedProperties[0].title).toEqual('Exif');
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
 
-        it('should filter the record options for node ', (done) => {
+        it('should filter the record options for node ', async () => {
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
             spyOn(classesApi, 'getClass').and.returnValue(
                 Promise.resolve(exifResponse)
             );
 
-            service.getGroupedProperties(fakeNode).subscribe((res) => {
-                expect(res.length).toEqual(1);
-                expect(res[0].title).toEqual('Exif');
-                done();
-            });
+            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(1);
+            expect(groupedProperties[0].title).toEqual('Exif');
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
 
-        it('should return response with versionable property', (done) => {
+        it('should return response with versionable property', async () => {
             setConfig('default', {
                 includeAll: false,
                 'cm:versionable': '*'
@@ -220,13 +221,62 @@ describe('ContentMetaDataService', () => {
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
 
-            service.getGroupedProperties(fakeContentNode).subscribe((res) => {
-                expect(res.length).toEqual(1);
-                expect(res[0].title).toEqual('Versionable');
-                done();
-            });
+            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(1);
+            expect(groupedProperties[0].title).toEqual('Versionable');
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should return response with versionable property twice', async () => {
+            setConfig('default', {
+                includeAll: true,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(2);
+            expect(groupedProperties[0].title).toEqual('Versionable');
+            expect(groupedProperties[1].title).toEqual('Versionable');
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should return response with versionable excluded', async () => {
+            setConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            expect(groupedProperties.length).toEqual(0);
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should return response with versionable visible when excluded and included set', async () => {
+            setConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable',
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            expect(groupedProperties.length).toEqual(1);
+            expect(groupedProperties[0].title).toEqual('Versionable');
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
     });
