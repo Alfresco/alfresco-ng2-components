@@ -7,10 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true
-  push:
-    branches:
-      - AAE-11884-tag-sha  
+        default: true  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -86,7 +83,7 @@ jobs:
       - name: Show the number
         env: 
           GH_TOKEN: ${{ github.token }}
-          DEVEL_FLAG: true #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
+          DEVEL_FLAG: false #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
         if: ${{ github.event_name != 'schedule' }}                   
         run: |
@@ -183,9 +180,8 @@ jobs:
       - uses: ./.github/actions/download-cache-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
-      - run: |
-          rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
-          nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
+      - run: rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
+      - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
 
   e2e-storybook:
