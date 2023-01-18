@@ -1004,11 +1004,11 @@ describe('StartProcessCloudComponent', () => {
             component.isLoading = false;
             fixture.detectChanges();
             await fixture.whenStable();
+
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
             expect(component.disableStartButton()).toBeFalse();
-            const startBtn: HTMLButtonElement = startButton.nativeElement;
-            expect(startBtn.disabled).toBeFalse();
+            expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeFalse();
         });
 
         it('start process button should be disabled when isLoading is true', async () => {
@@ -1021,11 +1021,11 @@ describe('StartProcessCloudComponent', () => {
             component.isLoading = true;
             fixture.detectChanges();
             await fixture.whenStable();
+
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
             expect(component.disableStartButton()).toBeTrue();
-            const startBtn: HTMLButtonElement = startButton.nativeElement;
-            expect(startBtn.disabled).toBeTrue();
+            expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeTrue();
         });
 
     });
