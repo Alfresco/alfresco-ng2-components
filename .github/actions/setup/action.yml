@@ -37,11 +37,11 @@ runs:
         with:
           path: |
             nxcache
-          key: nxcache-${{ env.GITHUB_REF_NAME }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: nxcache-${env.GITHUB_REF_NAME}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
-            nxcache-${{ env.GITHUB_REF_NAME }}-build-${{ env.cache-name }}-
-            nxcache-${{ env.GITHUB_REF_NAME }}-build-
-            nxcache-${{ env.GITHUB_REF_NAME }}-
+            nxcache-${env.GITHUB_REF_NAME}-build-${{ env.cache-name }}-
+            nxcache-${env.GITHUB_REF_NAME}-build-
+            nxcache-${env.GITHUB_REF_NAME}-
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
@@ -51,19 +51,19 @@ runs:
         with:
           path: |
             node_modules
-          key: .npm-${{ env.GITHUB_REF_NAME }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: .npm-${env.GITHUB_REF_NAME}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
-            node_modules-${{ env.GITHUB_REF_NAME }}-build-${{ env.cache-name }}-
-            node_modules-${{ env.GITHUB_REF_NAME }}-build-
-            node_modules-${{ env.GITHUB_REF_NAME }}-            
+            node_modules-${env.GITHUB_REF_NAME}-build-${{ env.cache-name }}-
+            node_modules-${env.GITHUB_REF_NAME}-build-
+            node_modules-${env.GITHUB_REF_NAME}-            
       - name: pip cache
         uses: actions/cache@v3
         if: ${{ inputs.enable-cache == 'true' }}
         with:
           path: ~/.cache/pip
-          key: ${{ env.GITHUB_REF_NAME }}-pip-
+          key: ${env.GITHUB_REF_NAME}-pip-
           restore-keys: |
-            ${{ env.GITHUB_REF_NAME }}
+            ${env.GITHUB_REF_NAME}
 # ENV LOAD
       - name: load .travis.yml env.global variables
         uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
