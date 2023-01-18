@@ -38,7 +38,7 @@ runs:
         with:
           path: |
             nxcache
-          key: nxcache-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: nxcache-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_long_sha }}
           restore-keys: |
             nxcache-${{ github.ref_name }}-build-${{ env.cache-name }}-
             nxcache-${{ github.ref_name }}-build-
