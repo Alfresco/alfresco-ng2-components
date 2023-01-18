@@ -24,6 +24,7 @@ import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
 
 describe('UnClaimTaskCloudDirective', () => {
 
@@ -79,6 +80,25 @@ describe('UnClaimTaskCloudDirective', () => {
         await fixture.whenStable();
         expect(taskCloudService.unclaimTask).toHaveBeenCalled();
         expect(fixture.componentInstance.onError).toHaveBeenCalledWith(error);
+    });
+
+    it('should DISABLE the button on task completion', () => {
+        spyOn(taskCloudService, 'unclaimTask').and.returnValue(of(taskClaimCloudMock));
+        const button = fixture.debugElement.query(By.css('button')).nativeElement;
+
+        button.click();
+
+        expect(taskCloudService.unclaimTask).toHaveBeenCalled();
+        expect(button.disabled).toBe(true);
+    });
+
+    it('should ENABLE the button on api failure', () => {
+        spyOn(taskCloudService, 'unclaimTask').and.throwError('process key not found');
+        const button = fixture.debugElement.query(By.css('button')).nativeElement;
+
+        button.click();
+
+        expect(button.disabled).toBeFalsy();
     });
 });
 

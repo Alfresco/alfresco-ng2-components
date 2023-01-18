@@ -28,7 +28,7 @@ import {
     TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { ESCAPE, H } from '@angular/cdk/keycodes';
+import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import {
@@ -1034,7 +1034,7 @@ describe('FormCloudComponent', () => {
         expect(formComponent.disableCompleteButton).toBeTrue();
     });
 
-    it('should ENABLE complete button when something goes wrong during completion process', (done) => {  
+    it('should ENABLE complete & save buttons when something goes wrong during completion process', (done) => {  
         const errorMessage = 'Something went wrong.';
         spyOn(formCloudService, 'completeTaskForm').and.callFake(() => throwError(errorMessage));
         
@@ -1049,6 +1049,7 @@ describe('FormCloudComponent', () => {
             next: _ => done.fail('expected an error, not data'),
             error: error  => {
               expect(error).toBe(errorMessage);
+              expect(formComponent.disableSaveButton).toBeFalse();
               expect(formComponent.disableCompleteButton).toBeFalse();
               done();
             }
