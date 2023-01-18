@@ -19,8 +19,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - run: echo "::notice starting setup :: start setup"
-        shell: bash
+
       - name: install NPM
         uses: actions/setup-node@v3
         with:
