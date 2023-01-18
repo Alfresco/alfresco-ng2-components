@@ -30,6 +30,7 @@ export * from './components/viewer-open-with.component';
 export * from './components/viewer-sidebar.component';
 export * from './components/viewer-toolbar.component';
 export * from './components/viewer-toolbar-actions.component';
+export * from './components/viewer-toolbar-custom-actions.component';
 export * from './components/viewer-render.component';
 export * from './components/viewer.component';
 
