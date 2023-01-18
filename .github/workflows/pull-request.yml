@@ -119,8 +119,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-cache: false
-          enable-node-modules-cache: false
+          enable-cache: true
+          enable-node-modules-cache: true
       - run: npm ci
       - run: nx run cli:bundle
       - run: nx run testing:bundle
