@@ -47,6 +47,13 @@ export class ClipboardDirective {
         this.copyToClipboard();
     }
 
+    @HostListener('keydown.enter', ['$event'])
+    handleKeyDown(event: KeyboardEvent){
+        event.preventDefault();
+        event.stopPropagation();
+        this.copyToClipboard();
+    }
+
     @HostListener('mouseenter')
     showTooltip() {
         if (this.placeholder) {
