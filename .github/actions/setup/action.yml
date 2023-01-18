@@ -22,6 +22,7 @@ runs:
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
       - run: exit 1
+        shell: bash
       - name: install NPM
         uses: actions/setup-node@v3
         with:
