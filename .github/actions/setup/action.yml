@@ -24,8 +24,7 @@ runs:
       - run: |
           echo ${{ github.ref_name }}
           echo ${{ env.GITHUB_REF_NAME }}
-          echo ${GITHUB_REF_NAME}
-          exit 1
+          echo ${{ github.ref_name }}
         shell: bash
       - name: install NPM
         uses: actions/setup-node@v3
@@ -45,11 +44,11 @@ runs:
         with:
           path: |
             nxcache
-          key: nxcache-${GITHUB_REF_NAME}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: nxcache-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
-            nxcache-${GITHUB_REF_NAME}-build-${{ env.cache-name }}-
-            nxcache-${GITHUB_REF_NAME}-build-
-            nxcache-${GITHUB_REF_NAME}-
+            nxcache-${{ github.ref_name }}-build-${{ env.cache-name }}-
+            nxcache-${{ github.ref_name }}-build-
+            nxcache-${{ github.ref_name }}-
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
@@ -59,19 +58,19 @@ runs:
         with:
           path: |
             node_modules
-          key: .npm-${GITHUB_REF_NAME}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: .npm-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
           restore-keys: |
-            node_modules-${GITHUB_REF_NAME}-build-${{ env.cache-name }}-
-            node_modules-${GITHUB_REF_NAME}-build-
-            node_modules-${GITHUB_REF_NAME}-            
+            node_modules-${{ github.ref_name }}-build-${{ env.cache-name }}-
+            node_modules-${{ github.ref_name }}-build-
+            node_modules-${{ github.ref_name }}-            
       - name: pip cache
         uses: actions/cache@v3
         if: ${{ inputs.enable-cache == 'true' }}
         with:
           path: ~/.cache/pip
-          key: ${GITHUB_REF_NAME}-pip-
+          key: ${{ github.ref_name }}-pip-
           restore-keys: |
-            ${GITHUB_REF_NAME}
+            ${{ github.ref_name }}
 # ENV LOAD
       - name: load .travis.yml env.global variables
         uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
