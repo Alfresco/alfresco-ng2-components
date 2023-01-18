@@ -74,11 +74,13 @@
                     </button>
                     <mat-menu #mnuOpenWith="matMenu"
                               [overlapTrigger]="false">
-                        <ng-content select="adf-alfresco-viewer-open-with"></ng-content>
+                        <ng-content select="adf-viewer-open-with"></ng-content>
                     </mat-menu>
                 </ng-container>
 
                 <adf-toolbar-divider></adf-toolbar-divider>
+
+                <ng-content select="adf-viewer-toolbar-custom-actions"></ng-content>
 
                 <button id="adf-alfresco-viewer-fullscreen"
                         *ngIf="viewerType !== 'media'"
@@ -116,7 +118,7 @@
                     </button>
                     <mat-menu #mnuMoreActions="matMenu"
                               [overlapTrigger]="false">
-                        <ng-content select="adf-alfresco-viewer-more-actions"></ng-content>
+                        <ng-content select="adf-viewer-more-actions"></ng-content>
                     </mat-menu>
                 </ng-container>
 
@@ -136,7 +138,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-content *ngIf="!sidebarRightTemplate"
-                                select="adf-alfresco-viewer-sidebar"></ng-content>
+                                select="adf-viewer-sidebar"></ng-content>
                 </div>
             </ng-container>
 
@@ -150,7 +152,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-content *ngIf="!sidebarLeftTemplate"
-                                select="adf-alfresco-viewer-sidebar"></ng-content>
+                                select="adf-viewer-sidebar"></ng-content>
                 </div>
             </ng-container>
 
@@ -161,7 +163,12 @@
                 [mimeType]="mimeType"
                 [fileName]="fileName"
                 [blobFile]="blobFile"
-                [readOnly]="readOnly">
+                [readOnly]="readOnly"
+                (submitFile)="onSubmitFile($event)"
+                [viewerType]="viewerType"
+                [isLoading]="isLoading"
+                [urlFile]="urlFile"
+                [tracks]="tracks">
             </adf-viewer-render>
 
         </div>

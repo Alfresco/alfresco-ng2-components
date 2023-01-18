@@ -38,6 +38,7 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import { Track } from '../models/viewer.model';
 
 @Component({
     selector: 'adf-viewer',
@@ -131,6 +132,25 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
     @Input()
     sidebarLeftTemplate: TemplateRef<any> = null;
 
+    /**
+     * Override Content view type.
+     * Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).
+     */
+    @Input()
+    viewerType: string = 'unknown';
+
+    /** Override loading status */
+    @Input()
+    isLoading = false;
+
+    /** Enable when where is possible the editing functionalities  */
+    @Input()
+    readOnly = true;
+
+    /** media subtitles for the media player*/
+    @Input()
+    tracks: Track[] = [];
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -143,13 +163,15 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
     @Output()
     close = new EventEmitter<boolean>();
 
+    /** Emitted when the img is submitted in the img viewer. */
+    @Output()
+    submitFile = new EventEmitter<Blob>();
+
     private onDestroy$ = new Subject<boolean>();
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    viewerType: any;
-    readOnly: boolean = true;
     mimeType: string;
 
     sidebarRightTemplateContext: { node: Node } = {node: null};
@@ -263,6 +285,10 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
                 container.msRequestFullscreen();
             }
         }
+    }
+
+    onSubmitFile(newImageBlob: Blob) {
+        this.submitFile.emit(newImageBlob);
     }
 
     ngOnDestroy() {

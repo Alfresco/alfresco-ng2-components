@@ -44,6 +44,7 @@ import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actio
 import { DirectiveModule } from '../directives/directive.module';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ViewerComponent } from './components/viewer.component';
+import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar-custom-actions.component';
 
 @NgModule({
     imports: [
@@ -75,7 +76,8 @@ import { ViewerComponent } from './components/viewer.component';
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent,
-        ViewerComponent
+        ViewerComponent,
+        ViewerToolbarCustomActionsComponent
     ],
     exports: [
         ViewerRenderComponent,
@@ -93,7 +95,8 @@ import { ViewerComponent } from './components/viewer.component';
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent,
-        ViewerComponent
+        ViewerComponent,
+        ViewerToolbarCustomActionsComponent
     ]
 })
 export class ViewerModule {

@@ -19,9 +19,7 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChild,
-    ElementRef,
     EventEmitter,
-    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -40,10 +38,11 @@ import {
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
     ViewerSidebarComponent,
+    ViewerToolbarActionsComponent,
     ViewerToolbarComponent,
     ViewUtilService
 } from '@alfresco/adf-core';
-import { fromEvent, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
     ContentApi,
     Node,
@@ -57,7 +56,7 @@ import {
 } from '@alfresco/js-api';
 import { RenditionViewerService } from '../services/rendition-viewer.service';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -75,11 +74,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @ContentChild(ViewerSidebarComponent)
     sidebar: ViewerSidebarComponent;
 
-    @ContentChild(ViewerOpenWithComponent)
-    mnuOpenWith: ViewerOpenWithComponent;
+    @ContentChild(ViewerToolbarActionsComponent)
+    toolbarActions: ViewerToolbarActionsComponent;
 
     @ContentChild(ViewerMoreActionsComponent)
-    mnuMoreActions: ViewerMoreActionsComponent;
+    moreActions: ViewerMoreActionsComponent;
+
+    @ContentChild(ViewerOpenWithComponent)
+    openWith: ViewerOpenWithComponent;
 
     /** Node Id of the file to load. */
     @Input()
@@ -180,10 +182,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     close = new EventEmitter<boolean>();
 
     private onDestroy$ = new Subject<boolean>();
-    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
     private cacheBusterNumber: number;
-    private closeViewer = true;
 
     versionEntry: VersionEntry;
     isLoading: boolean;
@@ -228,7 +228,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private contentService: ContentService,
-                private el: ElementRef,
                 private uploadService: UploadService,
                 public dialog: MatDialog,
                 private cdr: ChangeDetectorRef) {
@@ -243,31 +242,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                     this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
-        this.closeOverlayManager();
-    }
-
-    private closeOverlayManager() {
-        this.dialog.afterOpened.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.closeViewer = false);
-
-        this.dialog.afterAllClosed.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.closeViewer = true);
-
-        this.keyDown$.pipe(
-            skipWhile(() => !this.overlayMode),
-            filter((e: KeyboardEvent) => e.keyCode === 27),
-            takeUntil(this.onDestroy$)
-        ).subscribe((event: KeyboardEvent) => {
-            event.preventDefault();
-
-            if (this.closeViewer) {
-                this.onClose();
-            }
-        });
     }
 
     private async onNodeUpdated(node: Node) {
@@ -406,19 +380,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.cacheBusterNumber = Date.now();
     }
 
-    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
-        this.navigateBefore.next(event);
-    }
-
-    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
-        this.navigateNext.next(event);
-    }
-
     /**
      * close the viewer
      */
     onClose() {
-        this.showViewer = false;
         this.close.emit(this.showViewer);
     }
 
@@ -448,6 +413,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
+    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
+        this.navigateBefore.next(event);
+    }
+
+    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
+        this.navigateNext.next(event);
+    }
+
     isSourceDefined(): boolean {
         return !!(this.nodeId || this.sharedLinkId);
     }
@@ -462,59 +435,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setupNode();
             } else if (this.sharedLinkId) {
                 this.setupSharedLink();
-            }
-        }
-    }
-
-    toggleRightSidebar() {
-        this.showRightSidebar = !this.showRightSidebar;
-    }
-
-    toggleLeftSidebar() {
-        this.showLeftSidebar = !this.showLeftSidebar;
-    }
-
-    @HostListener('document:keyup', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
-        if (event && event.defaultPrevented) {
-            return;
-        }
-
-        const key = event.keyCode;
-
-        // Left arrow
-        if (key === 37 && this.canNavigateBefore) {
-            event.preventDefault();
-            this.onNavigateBeforeClick(event);
-        }
-
-        // Right arrow
-        if (key === 39 && this.canNavigateNext) {
-            event.preventDefault();
-            this.onNavigateNextClick(event);
-        }
-
-        // Ctrl+F
-        if (key === 70 && event.ctrlKey) {
-            event.preventDefault();
-            this.enterFullScreen();
-        }
-    }
-
-    /**
-     * Triggers full screen mode with a main content area displayed.
-     */
-    enterFullScreen(): void {
-        const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
-        if (container) {
-            if (container.requestFullscreen) {
-                container.requestFullscreen();
-            } else if (container.webkitRequestFullscreen) {
-                container.webkitRequestFullscreen();
-            } else if (container.mozRequestFullScreen) {
-                container.mozRequestFullScreen();
-            } else if (container.msRequestFullscreen) {
-                container.msRequestFullscreen();
             }
         }
     }
