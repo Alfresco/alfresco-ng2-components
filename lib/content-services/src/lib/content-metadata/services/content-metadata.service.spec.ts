@@ -78,6 +78,20 @@ describe('ContentMetaDataService', () => {
                 dataType: '',
                 mandatory: false,
                 multiValued: false
+            },
+            'exif:pixelXDimension': {
+                title: 'Image Width',
+                name: 'exif:pixelXDimension',
+                dataType: 'd:int',
+                mandatory: false,
+                multiValued: false
+            },
+            'exif:pixelYDimension': {
+                title: 'Image Height',
+                name: 'exif:pixelYDimension',
+                dataType: 'd:int',
+                mandatory: false,
+                multiValued: false
             }
         }
     };
@@ -278,6 +292,58 @@ describe('ContentMetaDataService', () => {
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should return response with exif visible even when includeAll is set to false', async () => {
+            setConfig('default', {
+                includeAll: false,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(exifResponse)
+            );
+
+            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(1);
+            expect(groupedProperties[0].title).toEqual('Exif');
+            expect(groupedProperties[0].properties.length).toEqual(2);
+            expect(groupedProperties[0].properties[0].label).toEqual('Image Width');
+            expect(groupedProperties[0].properties[1].label).toEqual('Image Height');
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+        });
+
+        it('should return response with exif visible twice when includeAll is set to true', async () => {
+            setConfig('default', {
+                includeAll: true,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(
+                Promise.resolve(exifResponse)
+            );
+
+            const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
+
+            expect(groupedProperties.length).toEqual(2);
+            expect(groupedProperties[0].title).toEqual('Exif');
+            expect(groupedProperties[1].title).toEqual('Exif');
+            expect(groupedProperties[0].properties.length).toEqual(4);
+            expect(groupedProperties[1].properties.length).toEqual(2);
+
+            expect(groupedProperties[0].properties[0].label).toEqual('exif:1:id');
+            expect(groupedProperties[0].properties[1].label).toEqual('exif:2:id');
+            expect(groupedProperties[0].properties[2].label).toEqual('Image Width');
+            expect(groupedProperties[0].properties[3].label).toEqual('Image Height');
+
+            expect(groupedProperties[1].properties[0].label).toEqual('Image Width');
+            expect(groupedProperties[1].properties[1].label).toEqual('Image Height');
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(2);
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
     });
 

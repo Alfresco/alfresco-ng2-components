@@ -453,6 +453,41 @@ describe('ContentMetadataComponent', () => {
             }
         };
 
+        const exifResponse: PropertyGroup = {
+            name: 'exif:exif',
+            title: 'Exif',
+            properties: {
+                'exif:1': {
+                    title: 'exif:1:id',
+                    name: 'exif:1',
+                    dataType: '',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:2': {
+                    title: 'exif:2:id',
+                    name: 'exif:2',
+                    dataType: '',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:pixelXDimension': {
+                    title: 'Image Width',
+                    name: 'exif:pixelXDimension',
+                    dataType: 'd:int',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:pixelYDimension': {
+                    title: 'Image Height',
+                    name: 'exif:pixelYDimension',
+                    dataType: 'd:int',
+                    mandatory: false,
+                    multiValued: false
+                }
+            }
+        };
+
         const setContentMetadataConfig = (presetName, presetConfig) => {
             appConfig.config['content-metadata'] = {
                 presets: {
@@ -467,14 +502,23 @@ describe('ContentMetadataComponent', () => {
                 PropertyDescriptorsService
             );
             classesApi = propertyDescriptorsService['classesApi'];
-            expectedNode = { ...node, aspectNames: [
-                'rn:renditioned',
-                'cm:versionable',
-                'cm:titled',
-                'cm:auditable',
-                'cm:author',
-                'cm:thumbnailModification'
-            ], name: 'some-modified-value' };
+            expectedNode = {
+                ...node,
+                aspectNames: [
+                    'rn:renditioned',
+                    'cm:versionable',
+                    'cm:titled',
+                    'cm:auditable',
+                    'cm:author',
+                    'cm:thumbnailModification',
+                    'exif:exif'
+                ],
+                name: 'some-modified-value',
+                properties: {
+                    'exif:pixelXDimension': 1024,
+                    'exif:pixelYDimension': 1024
+                }
+            };
 
             component.expanded = true;
             component.preset = 'default';
@@ -514,7 +558,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProps = fixture.debugElement.queryAll(By.css(`[data-automation-id="adf-metadata-group-Versionable"]`));
+            const versionableProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
 
             expect(versionableProps.length).toEqual(2);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -559,6 +603,56 @@ describe('ContentMetadataComponent', () => {
 
             expect(versionableProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should show Exif even when includeAll is set to false', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: false,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const exifProp = queryDom(fixture, 'Exif');
+
+            expect(exifProp).toBeTruthy();
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+
+            exifProp.nativeElement.click();
+
+            const pixelXDimentionElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-label-properties.exif:pixelXDimension"]'));
+            expect(pixelXDimentionElement).toBeTruthy();
+            expect(pixelXDimentionElement.nativeElement.textContent.trim()).toEqual('Image Width');
+
+            const pixelYDimentionElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-label-properties.exif:pixelYDimension"]'));
+            expect(pixelYDimentionElement).toBeTruthy();
+            expect(pixelYDimentionElement.nativeElement.textContent.trim()).toEqual('Image Height');
+        });
+
+        it('should show Exif twice when includeAll is set to true', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const exifProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Exif"]'));
+
+            expect(exifProps.length).toEqual(2);
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
     });
 
