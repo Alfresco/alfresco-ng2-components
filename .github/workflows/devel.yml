@@ -59,5 +59,4 @@ jobs:
     secrets: inherit
     with:
       dry-run-release: true
-      skip-pr-approve: true
 
