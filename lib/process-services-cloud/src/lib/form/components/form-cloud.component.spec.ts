@@ -28,7 +28,7 @@ import {
     TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { ESCAPE } from '@angular/cdk/keycodes';
+import { ESCAPE, H } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import {
@@ -1017,6 +1017,96 @@ describe('FormCloudComponent', () => {
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
         expect(radioFieldById.value).toBe('option_2');
+    });
+
+    it('should DISABLE save button on [save] outcome click', () => {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.SAVE_OUTCOME_ID,
+            name: 'Save',
+            isSystem: true
+        });
+        formComponent.form = formModel;
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+        expect(formComponent.disableCompleteButton).toBeFalse();
+    });
+
+    it('should ENABLE save button when something goes wrong during form save', (done) => {  
+        const errorMessage = 'Something went wrong.';
+        spyOn(formCloudService, 'saveTaskForm').and.callFake(() => throwError(errorMessage));
+        
+        formCloudService.saveTaskForm('test-app', '123', '333-444', '123', {
+            pfx_property_one: 'testValue',
+            pfx_property_two: true,
+            pfx_property_three: 'opt_1',
+            pfx_property_four: 'option_2',
+            pfx_property_five: 'orange',
+            pfx_property_none: 'no_form_field'
+        }).subscribe({
+            next: _ => done.fail('expected an error, not data'),
+            error: error  => {
+              expect(error).toBe(errorMessage);
+              expect(formComponent.disableSaveButton).toBeFalse();
+              done();
+            }
+          });
+    });
+
+    it('should disable complete & save buttons on [complete] outcome click', () => {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.COMPLETE_OUTCOME_ID,
+            name: 'COMPLETE',
+            isSystem: true
+        });
+        formComponent.form = formModel;
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+        expect(formComponent.disableCompleteButton).toBeTrue();
+    });
+
+    it('should ENABLE complete button when something goes wrong during completion process', (done) => {  
+        const errorMessage = 'Something went wrong.';
+        spyOn(formCloudService, 'completeTaskForm').and.callFake(() => throwError(errorMessage));
+        
+        formCloudService.completeTaskForm('test-app', '123', '333-444', '123', {
+            pfx_property_one: 'testValue',
+            pfx_property_two: true,
+            pfx_property_three: 'opt_1',
+            pfx_property_four: 'option_2',
+            pfx_property_five: 'orange',
+            pfx_property_none: 'no_form_field'
+        }, 'Complete', 123).subscribe({
+            next: _ => done.fail('expected an error, not data'),
+            error: error  => {
+              expect(error).toBe(errorMessage);
+              expect(formComponent.disableCompleteButton).toBeFalse();
+              done();
+            }
+          });
+    });
+
+    it('should ENABLE save button on keydown event when complete button is still enabled', () => {
+        const event = new KeyboardEvent('keydown', { keyCode: H });
+        formComponent.disableCompleteButton = false;
+
+        fixture.debugElement.triggerEventHandler('keydown', event);
+
+        expect(formComponent.disableSaveButton).toBeFalse();
+    });
+
+    it('should NOT ENABLE save button on keydown event when complete button is already disabled', () => {
+        const event = new KeyboardEvent('keydown', { keyCode: H });
+        formComponent.disableCompleteButton = true;
+
+        fixture.debugElement.triggerEventHandler('keydown', event);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
     });
 
     describe('form validations', () => {

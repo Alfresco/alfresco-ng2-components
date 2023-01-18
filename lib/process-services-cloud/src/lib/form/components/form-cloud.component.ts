@@ -134,6 +134,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     @HostListener('keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
+        this.disableSaveButton = this.disableCompleteButton;
         event.cancelBubble = true;
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { TaskCloudService } from '../services/task-cloud.service';
 
@@ -44,6 +44,8 @@ export class ClaimTaskCloudDirective implements OnInit {
     invalidParams: string[] = [];
 
     constructor(
+        private readonly el: ElementRef,
+        private readonly renderer : Renderer2,
         private taskListService: TaskCloudService,
         private identityUserService: IdentityUserService) { }
 
@@ -85,11 +87,13 @@ export class ClaimTaskCloudDirective implements OnInit {
     private async claimTask() {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         try {
+            this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
             const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
             if (result) {
                 this.success.emit(result);
             }
         } catch (error) {
+            this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
             this.error.emit(error);
         }
     }

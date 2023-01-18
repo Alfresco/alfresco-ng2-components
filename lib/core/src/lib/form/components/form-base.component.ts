@@ -169,11 +169,14 @@ export abstract class FormBaseComponent {
 
             if (outcome.isSystem) {
                 if (outcome.id === FormBaseComponent.SAVE_OUTCOME_ID) {
+                    this.disableSaveButton = true;
                     this.saveTaskForm();
                     return true;
                 }
 
                 if (outcome.id === FormBaseComponent.COMPLETE_OUTCOME_ID) {
+                    this.disableSaveButton = true;
+                    this.disableCompleteButton = true;
                     this.completeTaskForm();
                     return true;
                 }
@@ -201,6 +204,8 @@ export abstract class FormBaseComponent {
     }
 
     handleError(err: any): any {
+        this.disableSaveButton = false;
+        this.disableCompleteButton = false;
         this.error.emit(err);
     }
 
