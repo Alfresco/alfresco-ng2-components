@@ -169,7 +169,6 @@ export abstract class FormBaseComponent {
 
             if (outcome.isSystem) {
                 if (outcome.id === FormBaseComponent.SAVE_OUTCOME_ID) {
-                    this.disableSaveButton = true;
                     this.saveTaskForm();
                     return true;
                 }
