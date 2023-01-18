@@ -121,11 +121,9 @@ jobs:
         with: 
           enable-cache: true
           enable-node-modules-cache: true
-      - name: install
-        run: |
-          npm ci
-          nx run cli:bundle
-          nx run testing:bundle
+      - run: npm ci
+      - run: nx run cli:bundle
+      - run: nx run testing:bundle
       - run: nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
