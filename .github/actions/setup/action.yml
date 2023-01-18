@@ -19,12 +19,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Dump context
-        uses: crazy-max/ghaction-dump-context@v1
-      - run: |
-          echo ${{ github.ref_name }}
-          echo ${{ env.GITHUB_REF_NAME }}
-          echo ${{ github.ref_name }}
         shell: bash
       - name: install NPM
         uses: actions/setup-node@v3
