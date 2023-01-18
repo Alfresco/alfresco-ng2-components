@@ -21,7 +21,10 @@ runs:
   steps:
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
-      - run: exit 1
+      - run: |
+          echo ${{ github.ref_name }}
+          echo ${{ GITHUB_REF_NAME }}
+          exit 1
         shell: bash
       - name: install NPM
         uses: actions/setup-node@v3
