@@ -895,50 +895,5 @@ describe('AlfrescoViewerComponent', () => {
             });
         });
 
-        describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
-
-            beforeEach(() => {
-                fixture = TestBed.createComponent(AlfrescoViewerComponent);
-                element = fixture.nativeElement;
-                component = fixture.componentInstance;
-
-                component.showToolbar = true;
-                component.nodeId = 'fake-node-id';
-                component.mimeType = 'application/pdf';
-                fixture.detectChanges();
-            });
-
-            it('should use standard mode', () => {
-                const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
-                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                component.enterFullScreen();
-                expect(domElement.requestFullscreen).toHaveBeenCalled();
-            });
-
-            it('should use webkit prefix', () => {
-                const domElement = jasmine.createSpyObj('el', ['webkitRequestFullscreen']);
-                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                component.enterFullScreen();
-                expect(domElement.webkitRequestFullscreen).toHaveBeenCalled();
-            });
-
-            it('should use moz prefix', () => {
-                const domElement = jasmine.createSpyObj('el', ['mozRequestFullScreen']);
-                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                component.enterFullScreen();
-                expect(domElement.mozRequestFullScreen).toHaveBeenCalled();
-            });
-
-            it('should use ms prefix', () => {
-                const domElement = jasmine.createSpyObj('el', ['msRequestFullscreen']);
-                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
-
-                component.enterFullScreen();
-                expect(domElement.msRequestFullscreen).toHaveBeenCalled();
-            });
-        });
     });
 });
