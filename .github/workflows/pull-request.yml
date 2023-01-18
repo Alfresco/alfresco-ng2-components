@@ -118,6 +118,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: true
+          enable-node-modules-cache: true
       - name: install
         run: |
           npm ci
@@ -152,6 +155,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
+          enable-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist nxcache node_modules'      
@@ -171,10 +177,18 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
+          enable-node-modules-cache: true
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist nxcache node_modules'      
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
+
+      #####NOT POSSIBLE AS ALREADY UPDATED BY BUILD-LIBS
+      # - uses: ./.github/actions/upload-cache-and-artifacts
+      #   with:
+      #     packages: 'nxcache'
 
   build-libs:
     # long timeout required when cache has to be recreated
@@ -188,6 +202,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
+          enable-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist nxcache node_modules'      
@@ -209,6 +226,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
+        with: 
+          enable-cache: false
+          enable-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist nxcache node_modules'      
@@ -347,8 +367,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
         with:
-          enable-cache: "true"
-          enable-node-modules-cache: "true"
+          enable-cache: true
+          enable-node-modules-cache: true
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist nxcache node_modules'      
