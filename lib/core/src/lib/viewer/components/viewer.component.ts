@@ -151,6 +151,10 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
     @Input()
     tracks: Track[] = [];
 
+    /** MIME type of the file content (when not determined by the filename extension). */
+    @Input()
+    mimeType: string;
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -171,8 +175,6 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
-
-    mimeType: string;
 
     sidebarRightTemplateContext: { node: Node } = {node: null};
     sidebarLeftTemplateContext: { node: Node } = {node: null};
