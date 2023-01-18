@@ -159,7 +159,7 @@ runs:
       uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
-        path: ./e2e.tar.gz
+        path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
         if-no-files-found: error
 
     - name: upload smartrunner tests results on s3 to cache tests
