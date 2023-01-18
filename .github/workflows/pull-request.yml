@@ -196,7 +196,7 @@ jobs:
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
-          packages: 'dist nxcache'      
+          packages: 'dist nxcache'
 
   e2e-storybook:
     timeout-minutes: 20

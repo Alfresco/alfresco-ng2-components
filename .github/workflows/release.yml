@@ -88,6 +88,8 @@ jobs:
           nx run cli:bundle
           nx run testing:bundle
       - uses: ./.github/actions/upload-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'
 
   release-demoshell:
     needs: [setup]
@@ -109,6 +111,8 @@ jobs:
           enable-cache: false
           enable-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts     
+        with:
+          packages: 'dist nxcache node_modules'
       - name: release Demoshell docker
         run: |
           nx build demoshell --configuration production
@@ -136,6 +140,8 @@ jobs:
           enable-node-modules-cache: false
           act: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'
       - name: release Storybook docker
         run: |
           nx run stories:build-storybook --configuration ci
@@ -161,6 +167,8 @@ jobs:
         with: 
           dry-run-flag: ${{ inputs.dry-run-release }}          
       - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          packages: 'dist nxcache node_modules'
       - name: build libraries
         run: |
           set -u;
