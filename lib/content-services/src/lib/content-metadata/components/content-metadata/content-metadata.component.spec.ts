@@ -605,6 +605,30 @@ describe('ContentMetadataComponent', () => {
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
+        it('should not show aspects excluded in content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: ['cm:versionable', 'cm:auditable']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+            expect(versionableProp).toBeNull();
+
+            const auditableProp = queryDom(fixture, 'Auditable');
+            expect(auditableProp).toBeNull();
+
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_auditable');
+        });
+
         it('should show Exif even when includeAll is set to false', async () => {
             setContentMetadataConfig('default', {
                 includeAll: false,

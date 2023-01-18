@@ -294,6 +294,22 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
+        it('should not show aspects excluded in content-metadata config', async () => {
+            setConfig('default', {
+                includeAll: true,
+                exclude: ['cm:versionable', 'cm:auditable']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
+            expect(groupedProperties.length).toEqual(0);
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_auditable');
+        });
+
         it('should return response with exif visible even when includeAll is set to false', async () => {
             setConfig('default', {
                 includeAll: false,
