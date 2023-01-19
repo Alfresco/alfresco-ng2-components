@@ -220,7 +220,7 @@ jobs:
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
-          packages: 'dist'
+          packages: 'dist node_modules'
 
   e2e-storybook:
     timeout-minutes: 20
@@ -238,7 +238,7 @@ jobs:
           enable-global-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'
+          packages: 'dist node_modules'
       - name: Process Cloud Storybook Playwright
         run: |
           npx playwright install chromium
@@ -374,11 +374,11 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
         with:
-          enable-global-nx-cache: true
-          enable-global-node-modules-cache: true
+          enable-global-nx-cache: false
+          enable-global-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'      
+          packages: 'dist node_modules'
       - name: setup chrome
         uses: ./.github/actions/setup-chrome
       - name: e2e
