@@ -33,11 +33,12 @@ runs:
     - name: tar and upload persistent artifacts
       shell: bash
       env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ hashFiles('**/package-lock.json') }} }}"
+        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ hashFiles('**/package-lock.json') }}"
       run: |
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
+        echo "pushing to $REMOTE_PATH"
         packages=( $(echo ${{ inputs.persistent-packages }}) )
         for i in "${packages[@]}"; do
           time tar czf $i.tar.gz $i
