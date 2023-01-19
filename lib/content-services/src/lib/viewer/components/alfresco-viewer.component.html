@@ -1,5 +1,5 @@
 <adf-viewer
-    [showViewer]="showViewer"
+    [(showViewer)]="showViewer"
     [allowGoBack]="allowGoBack"
     [showToolbar]="showToolbar"
     [overlayMode]="overlayMode"
@@ -21,7 +21,7 @@
     [readOnly]="readOnly"
     (navigateBefore)="onNavigateBeforeClick($event)"
     (navigateNext)="onNavigateNextClick($event)"
-    (close)="onClose()"
+    (showViewerChange)="onClose()"
     (submitFile)="onSubmitFile($event)">
 
     <adf-viewer-toolbar *ngIf="toolbar">

@@ -165,7 +165,7 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
 
     /** Emitted when the viewer close */
     @Output()
-    close = new EventEmitter<boolean>();
+    showViewerChange = new EventEmitter<boolean>();
 
     /** Emitted when the img is submitted in the img viewer. */
     @Output()
@@ -233,7 +233,7 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
      */
     onClose() {
         this.showViewer = false;
-        this.close.emit(this.showViewer);
+        this.showViewerChange.emit(this.showViewer);
     }
 
     toggleRightSidebar() {

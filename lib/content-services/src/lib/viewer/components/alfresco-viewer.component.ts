@@ -179,7 +179,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Emitted when the viewer close */
     @Output()
-    close = new EventEmitter<boolean>();
+    showViewerChange = new EventEmitter<boolean>();
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -384,7 +384,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
      * close the viewer
      */
     onClose() {
-        this.close.emit(this.showViewer);
+        this.showViewerChange.emit(this.showViewer);
     }
 
     onPrintContent(event: MouseEvent) {
