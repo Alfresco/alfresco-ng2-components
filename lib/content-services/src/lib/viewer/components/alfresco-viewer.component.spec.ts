@@ -730,7 +730,7 @@ describe('AlfrescoViewerComponent', () => {
                 });
 
                 it('should header be present if is overlay mode', () => {
-                    expect(element.querySelector('.adf-alfresco-viewer-toolbar')).not.toBeNull();
+                    expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
                 });
 
                 it('should Name File be present if is overlay mode ', (done) => {
@@ -738,7 +738,7 @@ describe('AlfrescoViewerComponent', () => {
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#adf-alfresco-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                        expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
                         done();
                     });
                 });
@@ -747,18 +747,18 @@ describe('AlfrescoViewerComponent', () => {
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('.adf-alfresco-viewer-close-button')).not.toBeNull();
+                        expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
                         done();
                     });
                 });
 
                 it('should Click on close button hide the viewer', (done) => {
-                    const closeButton: any = element.querySelector('.adf-alfresco-viewer-close-button');
+                    const closeButton: any = element.querySelector('.adf-viewer-close-button');
                     closeButton.click();
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
                         done();
                     });
                 });
@@ -769,7 +769,7 @@ describe('AlfrescoViewerComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
                         done();
                     });
                 });
@@ -785,7 +785,7 @@ describe('AlfrescoViewerComponent', () => {
                     dialogRef.afterClosed().subscribe(() => {
                         EventMock.keyDown(27);
                         fixture.detectChanges();
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
                         done();
                     });
 
@@ -793,7 +793,7 @@ describe('AlfrescoViewerComponent', () => {
 
                     document.body.dispatchEvent(event);
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-alfresco-viewer-content')).not.toBeNull();
+                    expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
                 });
             });
 
@@ -810,7 +810,7 @@ describe('AlfrescoViewerComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).not.toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
                         done();
                     });
                 });
@@ -837,7 +837,7 @@ describe('AlfrescoViewerComponent', () => {
                 component.showViewer = false;
 
                 fixture.detectChanges();
-                expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
         });
 

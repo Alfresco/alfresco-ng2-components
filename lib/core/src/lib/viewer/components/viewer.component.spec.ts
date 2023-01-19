@@ -428,7 +428,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should header be present if is overlay mode', () => {
-                    expect(element.querySelector('.adf-alfresco-viewer-toolbar')).not.toBeNull();
+                    expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
@@ -436,22 +436,22 @@ describe('ViewerComponent', () => {
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
-                    expect(element.querySelector('#adf-alfresco-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
                 });
 
                 it('should Close button be present if overlay mode', async () => {
                     fixture.detectChanges();
                     await fixture.whenStable();
-                    expect(element.querySelector('.adf-alfresco-viewer-close-button')).not.toBeNull();
+                    expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
                 });
 
                 it('should Click on close button hide the viewer', async () => {
-                    const closeButton: any = element.querySelector('.adf-alfresco-viewer-close-button');
+                    const closeButton: any = element.querySelector('.adf-viewer-close-button');
                     closeButton.click();
                     fixture.detectChanges();
 
                     await fixture.whenStable();
-                    expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                    expect(element.querySelector('.adf-viewer-content')).toBeNull();
                 });
 
                 it('should Esc button hide the viewer', async () => {
@@ -460,7 +460,7 @@ describe('ViewerComponent', () => {
                     fixture.detectChanges();
 
                     await fixture.whenStable();
-                    expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                    expect(element.querySelector('.adf-viewer-content')).toBeNull();
                 });
 
                 it('should not close the viewer on Escape event if dialog was opened', (done) => {
@@ -474,7 +474,7 @@ describe('ViewerComponent', () => {
                     dialogRef.afterClosed().subscribe(() => {
                         EventMock.keyDown(27);
                         fixture.detectChanges();
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
                         done();
                     });
 
@@ -482,7 +482,7 @@ describe('ViewerComponent', () => {
 
                     document.body.dispatchEvent(event);
                     fixture.detectChanges();
-                    expect(element.querySelector('.adf-alfresco-viewer-content')).not.toBeNull();
+                    expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
                 });
             });
 
@@ -499,7 +499,7 @@ describe('ViewerComponent', () => {
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
-                        expect(element.querySelector('.adf-alfresco-viewer-content')).not.toBeNull();
+                        expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
                         done();
                     });
                 });
@@ -516,7 +516,7 @@ describe('ViewerComponent', () => {
                 component.showViewer = false;
 
                 fixture.detectChanges();
-                expect(element.querySelector('.adf-alfresco-viewer-content')).toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
         });
 
