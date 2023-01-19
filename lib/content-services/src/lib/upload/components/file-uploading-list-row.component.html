@@ -37,6 +37,7 @@
         </span>
 
         <mat-icon *ngIf="toggleIcon.isToggled"
+            aria-hidden="false"
             class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel">
             clear
         </mat-icon>
@@ -51,6 +52,7 @@
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.UPLOAD_SUCCESSFUL' | translate }}">
 
         <mat-icon
+            aria-hidden="false"
             class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
             check_circle
         </mat-icon>
@@ -64,6 +66,7 @@
         >
         <mat-icon
             mat-list-icon
+            aria-hidden="false"
             class="adf-file-uploading-row__status--done">
             check_circle
         </mat-icon>
@@ -81,12 +84,14 @@
         [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.STOP_FILE' | translate: { file: file.name }">
         <mat-icon
             *ngIf="!toggleIconCancel.isToggled"
+            aria-hidden="false"
             class="adf-file-uploading-row__status adf-file-uploading-row__status--pending">
             schedule
         </mat-icon>
 
         <mat-icon
             *ngIf="toggleIconCancel.isToggled"
+            aria-hidden="false"
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
         </mat-icon>
@@ -98,6 +103,7 @@
         *ngIf="isUploadError()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
         <mat-icon mat-list-icon
+            aria-hidden="false"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
             [matTooltip]="file.errorCode | adfFileUploadError">
             report_problem
