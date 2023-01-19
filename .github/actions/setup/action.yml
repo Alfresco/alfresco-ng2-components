@@ -1,12 +1,12 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
+  enable-global-nx-cache:
     description: 'enable caching'
     required: false
     type: boolean
     default: 'true'
-  enable-node-modules-cache:
+  enable-global-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
     type: boolean
@@ -31,7 +31,7 @@ runs:
 # CACHE
       - name: Node cache
         id: node-cache
-        if: ${{ inputs.enable-cache == 'true' }}
+        if: ${{ inputs.enable-global-nx-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: node-cache
@@ -45,7 +45,7 @@ runs:
             nxcache-${{ github.ref_name }}-
       - name: Node Modules cache
         id: node-modules-cache
-        if: ${{ inputs.enable-node-modules-cache == 'true' }}
+        if: ${{ inputs.enable-global-node-modules-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: node-modules-cache
@@ -59,7 +59,7 @@ runs:
             node_modules-${{ github.ref_name }}-            
       - name: pip cache
         uses: actions/cache@v3
-        if: ${{ inputs.enable-cache == 'true' }}
+        if: ${{ inputs.enable-global-nx-cache == 'true' }}
         with:
           path: ~/.cache/pip
           key: ${{ github.ref_name }}-pip-
