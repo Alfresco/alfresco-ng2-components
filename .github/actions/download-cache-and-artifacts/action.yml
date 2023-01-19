@@ -28,8 +28,8 @@ runs:
         pwd
         ls -lha
         echo "====DIST===="
-        find dist -maxdepth 1 -type d
+        find dist -maxdepth 1 -type d || true
         echo "====NXCACHE===="
-        find nxcache -maxdepth 1 -type d
+        find nxcache -maxdepth 1 -type d || true
         echo "====ADF===="
-        find node_modules/@alfresco/ -maxdepth 1 -type d
+        find node_modules/@alfresco/ -maxdepth 1 -type d || true
