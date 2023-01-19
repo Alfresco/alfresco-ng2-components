@@ -34,17 +34,24 @@ runs:
     - name: download and extract persistent artifacts from s3
       shell: bash
       run: |
-        HASH=$(md5sum package-lock.json | cut -f 1 -d " ")
+        HASH=$(cat package-lock.json | shasum -a 512 | cut -d ' ' -f 1)
         REMOTE_PATH="alfresco-ng2-components/build-cache/${HASH}"
-        echo remote path $REMOTE_PATH
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
-        fi      
+        fi
+        echo "remote path $REMOTE_PATH"
         packages=( $(echo ${{ inputs.persistent-packages }}) )
         for i in "${packages[@]}"; do
-          time aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
-          du -h $i.tar.gz
-          time tar xzf $i.tar.gz
+          REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
+          cache_exists=$(aws s3 ls $REMOTE_FILE_PATH)
+          if [ -n "$exists" ]; then
+            time aws s3 cp --no-progress REMOTE_FILE_PATH $i.tar.gz
+            du -h $i.tar.gz
+            time tar xzf $i.tar.gz
+          else
+            echo "file not found $REMOTE_FILE_PATH. continue."
+          fi        
+
         done        
     - name: show files
       shell: bash

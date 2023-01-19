@@ -33,7 +33,7 @@ runs:
     - name: tar and upload persistent artifacts
       shell: bash
       run: |
-        HASH=$(md5sum package-lock.json | cut -f 1 -d " ")
+        HASH=$(cat package-lock.json | shasum -a 512 | cut -d ' ' -f 1)
         REMOTE_PATH="alfresco-ng2-components/build-cache/${HASH}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
