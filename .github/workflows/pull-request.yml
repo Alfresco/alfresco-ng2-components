@@ -121,11 +121,7 @@ jobs:
         id: setup
         with: 
           enable-global-nx-cache: false
-          enable-global-node-modules-cache: true
-      - name: show files
-        run: |
-          echo "====NODE MODULES===="
-          find node_modules -maxdepth 1 -type d || true           
+          enable-global-node-modules-cache: true       
       - name: run ci
         if: steps.setup.outputs.cache-hit != 'true'          
         run: npm ci
@@ -173,15 +169,8 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-global-nx-cache: true
-          enable-global-node-modules-cache: false
+          enable-global-node-modules-cache: true
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
-      - name: show files
-        run: |
-          echo "====NODE MODULES===="
-          find node_modules -maxdepth 1 -type d || true          
-      # - uses: ./.github/actions/download-cache-and-artifacts
-      #   with:
-      #     packages: 'node_modules'
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
@@ -200,7 +189,7 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-global-nx-cache: true
-          enable-global-node-modules-cache: false
+          enable-global-node-modules-cache: true
           cache-key-suffix: lint
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
@@ -220,7 +209,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
+          enable-global-nx-cache: true
           enable-global-node-modules-cache: true
           cache-key-suffix: build-libs
       # - uses: ./.github/actions/download-cache-and-artifacts
@@ -249,7 +238,7 @@ jobs:
           enable-global-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'      
+          packages: 'dist nxcache node_modules'
       - name: Process Cloud Storybook Playwright
         run: |
           npx playwright install chromium
