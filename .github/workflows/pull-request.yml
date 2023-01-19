@@ -158,11 +158,10 @@ jobs:
         with: 
           enable-global-nx-cache: true
           enable-global-node-modules-cache: false
-          cache-key-suffix: unit-tests
-      - uses: ./.github/actions/download-cache-and-artifacts
-        with:
-          # packages: 'dist node_modules' 
-          packages: 'dist' 
+          cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
+      # - uses: ./.github/actions/download-cache-and-artifacts
+      #   with:
+      #     packages: 'node_modules'
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}

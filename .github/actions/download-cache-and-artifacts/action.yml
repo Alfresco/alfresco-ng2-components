@@ -34,4 +34,4 @@ runs:
         echo "====ADF===="
         find node_modules/@alfresco/ -maxdepth 1 -type d || true
         echo "====NX===="
-        find node_modules/nx/ -maxdepth 1 -type d || true        
+        find node_modules/nx/ -maxdepth 1 -type d || true
