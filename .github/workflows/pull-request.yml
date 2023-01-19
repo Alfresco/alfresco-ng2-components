@@ -118,16 +118,18 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
+        id: setup
         with: 
           enable-global-nx-cache: false
           enable-global-node-modules-cache: true
-      - run: npm ci
+      - name: run ci
+        if: steps.setup.outputs.cache-hit != 'true'          
+        run: npm ci
       - run: nx run cli:bundle
       - run: nx run testing:bundle
-      - run: nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'
+          packages: 'dist node_modules'
 
   unit-tests:
     timeout-minutes: 30
@@ -156,9 +158,10 @@ jobs:
         with: 
           enable-global-nx-cache: false
           enable-global-node-modules-cache: false
+          cache-key-suffix: unit-tests
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'      
+          packages: 'dist nxcache node_modules' 
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
@@ -176,17 +179,13 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: true
+          enable-global-nx-cache: true
+          enable-global-node-modules-cache: false
+          cache-key-suffix: lint
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'dist nxcache node_modules'      
+          packages: 'node_modules'      
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
-
-      #####NOT POSSIBLE AS ALREADY UPDATED BY BUILD-LIBS
-      # - uses: ./.github/actions/upload-cache-and-artifacts
-      #   with:
-      #     packages: 'nxcache'
 
   build-libs:
     # long timeout required when cache has to be recreated
@@ -202,16 +201,17 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
-      - uses: ./.github/actions/download-cache-and-artifacts
-        with:
-          packages: 'dist nxcache node_modules'      
+          enable-global-node-modules-cache: true
+          cache-key-suffix: build-libs
+      # - uses: ./.github/actions/download-cache-and-artifacts
+      #   with:
+      #     packages: 'node_modules'      
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
-          packages: 'dist nxcache'
+          packages: 'dist'
 
   e2e-storybook:
     timeout-minutes: 20
