@@ -61,9 +61,9 @@ jobs:
       dry-run-release: true
       skip-pr-approve: true
       
-  release:
-    uses: ./.github/workflows/release.yml
-    secrets: inherit
-    with:
-      dry-run-release: true
+  # release:
+  #   uses: ./.github/workflows/release.yml
+  #   secrets: inherit
+  #   with:
+  #     dry-run-release: true
 

@@ -171,6 +171,10 @@ jobs:
           enable-global-nx-cache: true
           enable-global-node-modules-cache: false
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
+      - name: show files
+        run: |
+          echo "====NX===="
+          find node_modules/nx/ -maxdepth 1 -type d || true          
       # - uses: ./.github/actions/download-cache-and-artifacts
       #   with:
       #     packages: 'node_modules'
