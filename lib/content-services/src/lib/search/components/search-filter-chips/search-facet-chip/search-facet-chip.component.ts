@@ -46,7 +46,6 @@ export class SearchFacetChipComponent {
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-            this.focusTrap.focusInitialElement();
         }
     }
 
