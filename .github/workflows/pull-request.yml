@@ -156,12 +156,12 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
+          enable-global-nx-cache: true
           enable-global-node-modules-cache: false
           cache-key-suffix: unit-tests
-      - uses: ./.github/actions/download-cache-and-artifacts
-        with:
-          packages: 'dist nxcache node_modules' 
+      # - uses: ./.github/actions/download-cache-and-artifacts
+      #   with:
+      #     packages: 'dist node_modules' 
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
