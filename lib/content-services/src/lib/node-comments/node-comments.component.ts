@@ -16,11 +16,17 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ADF_COMMENTS_SERVICE } from '@alfresco/adf-core';
+import { NodeCommentsService } from './services/node-comments.service';
 
 @Component({
     selector: 'adf-node-comments',
     templateUrl: './node-comments.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [{
+        provide: ADF_COMMENTS_SERVICE,
+        useClass: NodeCommentsService
+    }]
 })
 export class NodeCommentsComponent {
     @Input()

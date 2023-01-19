@@ -18,8 +18,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskCommentsComponent } from './task-comments.component';
-import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
-import { NodeCommentsService } from '@alfresco/adf-content-services';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -27,12 +26,6 @@ import { NodeCommentsService } from '@alfresco/adf-content-services';
         CoreModule
     ],
     declarations: [TaskCommentsComponent],
-    exports: [TaskCommentsComponent],
-    providers: [
-        {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: NodeCommentsService
-        }
-    ]
+    exports: [TaskCommentsComponent]
 })
 export class TaskCommentsModule {}
