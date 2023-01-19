@@ -27,7 +27,7 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@master
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@v1.29.0
 # CACHE
       - name: Node cache
         id: node-cache
@@ -52,7 +52,7 @@ runs:
         with:
           path: |
             node_modules
-          key: .npm-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: .npm-${{ github.ref_name }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_long_sha }}
           restore-keys: |
             node_modules-${{ github.ref_name }}-build-${{ env.cache-name }}-
             node_modules-${{ github.ref_name }}-build-
