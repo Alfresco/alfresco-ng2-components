@@ -6,12 +6,12 @@ inputs:
     required: false
     type: string
     default: ''
-  enable-global-nx-cache:
+  use-gh-nx-cache:
     description: 'enable caching'
     required: false
     type: boolean
     default: 'true'
-  enable-global-node-modules-cache:
+  use-gh-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
     type: boolean
@@ -36,7 +36,7 @@ runs:
 # CACHE
       - name: NX cache
         id: nx-cache
-        if: ${{ inputs.enable-global-nx-cache == 'true' }}
+        if: ${{ inputs.use-gh-nx-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: nx-cache
@@ -49,7 +49,7 @@ runs:
             nxcache-
       - name: Node Modules cache
         id: node-modules-cache
-        if: ${{ inputs.enable-global-node-modules-cache == 'true' }}
+        if: ${{ inputs.use-gh-node-modules-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: node-modules-cache

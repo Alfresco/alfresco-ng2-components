@@ -80,8 +80,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
       - name: install
         run: |
           npm ci
@@ -108,8 +108,8 @@ jobs:
           dry-run-flag: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts     
         with:
           packages: 'dist nxcache node_modules'
@@ -136,8 +136,8 @@ jobs:
           dry-run-flag: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
           act: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
@@ -160,8 +160,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with: 

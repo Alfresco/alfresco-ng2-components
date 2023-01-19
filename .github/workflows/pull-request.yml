@@ -120,8 +120,8 @@ jobs:
       - uses: ./.github/actions/setup
         id: setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: true       
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: true       
       - name: run ci
         if: steps.setup.outputs.cache-hit != 'true'          
         run: npm ci
@@ -168,13 +168,20 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: true
-          enable-global-node-modules-cache: true
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: true
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
+      - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          persistent-packages: 'nxcache'
+          cache-key-suffix: ${{ matrix.unit-tests.name }}
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
-
+      - uses: ./.github/actions/upload-cache-and-artifacts
+        with:
+          persistent-packages: 'nxcache'
+          cache-key-suffix: ${{ matrix.unit-tests.name }}
   lint:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
@@ -188,14 +195,17 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: true
-          enable-global-node-modules-cache: true
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: true
           cache-key-suffix: lint
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          packages: 'node_modules'      
+          packages: 'node_modules'
+          persistent-packages: 'nxcache'
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
-
+      - uses: ./.github/actions/upload-cache-and-artifacts
+        with:
+          persistent-packages: 'nxcache'
   build-libs:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
@@ -209,18 +219,19 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: true
-          enable-global-node-modules-cache: true
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: true
           cache-key-suffix: build-libs
-      # - uses: ./.github/actions/download-cache-and-artifacts
-      #   with:
-      #     packages: 'node_modules'      
+      - uses: ./.github/actions/download-cache-and-artifacts
+        with:
+          persistent-packages: 'nxcache'
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           packages: 'dist node_modules'
+          persistent-packages: 'nxcache'
 
   e2e-storybook:
     timeout-minutes: 20
@@ -234,8 +245,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
         with: 
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist node_modules'
@@ -374,8 +385,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
         with:
-          enable-global-nx-cache: false
-          enable-global-node-modules-cache: false
+          use-gh-nx-cache: false
+          use-gh-node-modules-cache: false
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'dist node_modules'

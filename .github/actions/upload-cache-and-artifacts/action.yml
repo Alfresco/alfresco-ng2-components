@@ -5,19 +5,44 @@ inputs:
     description: 'packages to cache'
     required: false
     type: boolean
-    default: 'dist nxcache'
+    default: 'dist'
+  persistent-packages:
+    description: 'cache key'
+    required: false
+    type: string
+    default: 'nxcache'
+  cache-key-suffix:
+    description: 'cache key suffix'
+    required: false
+    type: string
+    default: ''
 runs:
   using: "composite"
   steps:
     - name: tar and upload artifacts
       shell: bash
       env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
+       REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"
       run: |
         packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
           time tar czf $i.tar.gz $i
           du -h $i.tar.gz
+          time aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
+        done
+    - name: tar and upload persistent artifacts
+      shell: bash
+      env:
+        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ hashFiles('**/package-lock.json') }} }}"
+      run: |
+        if [ -n "${{ inputs.cache-key-suffix }}" ]; then
+          REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
+        fi
+        packages=( $(echo ${{ inputs.persistent-packages }}) )
+        for i in "${packages[@]}"; do
+          time tar czf $i.tar.gz $i
+          du -h $i.tar.gz
+          echo "pushing persistent cache"
           time aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
         done
 
