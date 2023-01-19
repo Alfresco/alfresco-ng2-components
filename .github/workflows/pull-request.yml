@@ -130,6 +130,18 @@ jobs:
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           packages: 'dist node_modules'
+      - name: show files
+        run: |
+          pwd
+          ls -lha
+          echo "====DIST===="
+          find dist -maxdepth 1 -type d || true
+          echo "====NXCACHE===="
+          find nxcache -maxdepth 1 -type d || true
+          echo "====ADF===="
+          find node_modules/@alfresco/ -maxdepth 1 -type d || true
+          echo "====NX===="
+          find node_modules/nx/ -maxdepth 1 -type d || true
 
   unit-tests:
     timeout-minutes: 30

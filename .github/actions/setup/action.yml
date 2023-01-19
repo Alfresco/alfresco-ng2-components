@@ -43,10 +43,10 @@ runs:
         with:
           path: |
             nxcache
-          key: nxcache-${{ github.ref_name }}-${{ inputs.cache-key-suffix }}-${{ hashFiles('**/package-lock.json') }}
+          key: nxcache-${{ inputs.cache-key-suffix }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            nxcache-${{ github.ref_name }}-build-${{ inputs.cache-key-suffix }}
-            nxcache-${{ github.ref_name }}-
+            nxcache-build-${{ inputs.cache-key-suffix }}
+            nxcache-
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-global-node-modules-cache == 'true' }}
