@@ -162,7 +162,7 @@ jobs:
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           # packages: 'dist node_modules' 
-          packages: 'node_modules' 
+          packages: 'dist' 
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
