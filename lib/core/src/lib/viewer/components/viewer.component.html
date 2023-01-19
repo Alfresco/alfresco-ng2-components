@@ -1,15 +1,15 @@
 <div *ngIf="showViewer"
-     class="adf-alfresco-viewer-container"
-     [class.adf-alfresco-viewer-overlay-container]="overlayMode"
-     [class.adf-alfresco-viewer-inline-container]="!overlayMode">
+     class="adf-viewer-container"
+     [class.adf-viewer-overlay-container]="overlayMode"
+     [class.adf-viewer-inline-container]="!overlayMode">
 
-    <div class="adf-alfresco-viewer-content"
+    <div class="adf-viewer-content"
          fxLayout="column"
          [cdkTrapFocus]="overlayMode"
          cdkTrapFocusAutoCapture>
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
-            <adf-toolbar id="adf-alfresco-viewer-toolbar" class="adf-alfresco-viewer-toolbar">
+            <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
 
                     <ng-container *ngIf="allowLeftSidebar">
@@ -25,7 +25,7 @@
                     </ng-container>
 
                     <button *ngIf="allowGoBack"
-                            class="adf-alfresco-viewer-close-button"
+                            class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                             mat-icon-button
@@ -36,7 +36,7 @@
                 </adf-toolbar-title>
 
                 <div fxFlex="1 1 auto"
-                     class="adf-alfresco-viewer__file-title">
+                     class="adf-viewer__file-title">
                     <button *ngIf="allowNavigate && canNavigateBefore"
                             data-automation-id="adf-toolbar-pref-file"
                             mat-icon-button
@@ -45,12 +45,12 @@
                             (click)="onNavigateBeforeClick($event)">
                         <mat-icon>navigate_before</mat-icon>
                     </button>
-                    <img class="adf-alfresco-viewer__mimeicon"
+                    <img class="adf-viewer__mimeicon"
                          [alt]="mimeType"
                          [src]="mimeType | adfMimeTypeIcon"
                          data-automation-id="adf-file-thumbnail">
-                    <span class="adf-alfresco-viewer__display-name"
-                          id="adf-alfresco-viewer-display-name">{{ fileName }}</span>
+                    <span class="adf-viewer__display-name"
+                          id="adf-viewer-display-name">{{ fileName }}</span>
                     <button *ngIf="allowNavigate && canNavigateNext"
                             data-automation-id="adf-toolbar-next-file"
                             mat-icon-button
@@ -65,7 +65,7 @@
 
                 <ng-container *ngIf="mnuOpenWith"
                               data-automation-id='adf-toolbar-custom-btn'>
-                    <button id="adf-alfresco-viewer-openwith"
+                    <button id="adf-viewer-openwith"
                             mat-button
                             [matMenuTriggerFor]="mnuOpenWith"
                             data-automation-id="adf-toolbar-open-with">
@@ -82,7 +82,7 @@
 
                 <ng-content select="adf-viewer-toolbar-custom-actions"></ng-content>
 
-                <button id="adf-alfresco-viewer-fullscreen"
+                <button id="adf-viewer-fullscreen"
                         *ngIf="viewerType !== 'media'"
                         mat-icon-button
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate"
@@ -108,7 +108,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="mnuMoreActions">
-                    <button id="adf-alfresco-viewer-moreactions"
+                    <button id="adf-viewer-moreactions"
                             mat-icon-button
                             [matMenuTriggerFor]="mnuMoreActions"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate"
@@ -129,8 +129,8 @@
              fxFlex="1 1 auto">
 
             <ng-container *ngIf="allowRightSidebar && showRightSidebar">
-                <div class="adf-alfresco-viewer__sidebar"
-                     [ngClass]="'adf-alfresco-viewer__sidebar__right'"
+                <div class="adf-viewer__sidebar"
+                     [ngClass]="'adf-viewer__sidebar__right'"
                      fxFlexOrder="4"
                      id="adf-right-sidebar">
                     <ng-container *ngIf="sidebarRightTemplate">
@@ -143,8 +143,8 @@
             </ng-container>
 
             <ng-container *ngIf="allowLeftSidebar && showLeftSidebar">
-                <div class="adf-alfresco-viewer__sidebar"
-                     [ngClass]="'adf-alfresco-viewer__sidebar__left'"
+                <div class="adf-viewer__sidebar"
+                     [ngClass]="'adf-viewer__sidebar__left'"
                      fxFlexOrder="1"
                      id="adf-left-sidebar">
                     <ng-container *ngIf="sidebarLeftTemplate">

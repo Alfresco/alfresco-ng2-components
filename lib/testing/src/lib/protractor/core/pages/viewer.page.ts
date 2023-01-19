@@ -29,7 +29,7 @@ export class ViewerPage {
     togglePage = new TogglePage();
 
     closeButton = $('button[data-automation-id="adf-toolbar-back"]');
-    fileName = $('#adf-alfresco-viewer-display-name');
+    fileName = $('#adf-viewer-display-name');
     infoButton = $('button[data-automation-id="adf-toolbar-sidebar"]');
     leftSideBarButton = $('button[data-automation-id="adf-toolbar-left-sidebar"]');
     previousPageButton = $('#viewer-previous-page-button');
@@ -64,13 +64,13 @@ export class ViewerPage {
     imgViewer = $('adf-img-viewer');
     activeTab = $('div[class*="mat-tab-label-active"]');
     toolbarSwitch = $('#adf-switch-toolbar');
-    toolbar = $('#adf-alfresco-viewer-toolbar');
-    lastButton = $$('#adf-alfresco-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
+    toolbar = $('#adf-viewer-toolbar');
+    lastButton = $$('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
     goBackSwitch = $('#adf-switch-goback');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
     openWithSwitch = $('#adf-switch-openwith');
-    openWith = $('#adf-alfresco-viewer-openwith');
+    openWith = $('#adf-viewer-openwith');
 
     moreActionsMenuSwitch = $('#adf-switch-moreactionsmenu');
     moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]');
@@ -626,7 +626,7 @@ export class ViewerPage {
     }
 
     async checkOverlayViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-alfresco-viewer-overlay-container"]'));
+        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-viewer-overlay-container"]'));
     }
 
     async checkInlineViewerIsDisplayed(): Promise<void> {
