@@ -122,6 +122,10 @@ jobs:
         with: 
           enable-global-nx-cache: false
           enable-global-node-modules-cache: true
+      - name: show files
+        run: |
+          echo "====NODE MODULES===="
+          find node_modules -maxdepth 1 -type d || true           
       - name: run ci
         if: steps.setup.outputs.cache-hit != 'true'          
         run: npm ci
@@ -173,7 +177,7 @@ jobs:
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
       - name: show files
         run: |
-          echo "====NX===="
+          echo "====NODE MODULES===="
           find node_modules -maxdepth 1 -type d || true          
       # - uses: ./.github/actions/download-cache-and-artifacts
       #   with:
