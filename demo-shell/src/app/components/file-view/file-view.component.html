@@ -1,7 +1,7 @@
 <ng-container *ngIf="nodeId">
 
     <adf-alfresco-viewer
-        (close)="onViewerClosed()"
+        (showViewerChange)="onViewerClosed()"
         [nodeId]="nodeId"
         [versionId]="versionId"
         [showRightSidebar]="showRightSidebar"
@@ -376,7 +376,7 @@
         [showToolbar]="showToolbar"
         [allowRightSidebar]="allowRightSidebar"
         [allowLeftSidebar]="allowLeftSidebar"
-        (close)="onViewerClosed()"
+        (showViewerChange)="onViewerClosed()"
         [sidebarLeftTemplate]="sidebarLeftTemplate"
         [sidebarRightTemplate]="sidebarRightTemplate">
 
