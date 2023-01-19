@@ -23,7 +23,7 @@ runs:
     - name: download and extract artifacts from s3
       shell: bash
       env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
+        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"
       run: |
         packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
@@ -33,10 +33,9 @@ runs:
         done
     - name: download and extract persistent artifacts from s3
       shell: bash
-      env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ hashFiles('**/package-lock.json') }}"      
       run: |
-        echo using hashfile '${{ hashFiles("**/package-lock.json") }}'
+        HASH=$(md5sum package-lock.json | cut -f 1 -d " ")
+        REMOTE_PATH="alfresco-ng2-components/build-cache/${HASH}"
         echo remote path $REMOTE_PATH
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
