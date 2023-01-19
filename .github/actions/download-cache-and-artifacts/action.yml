@@ -1,5 +1,13 @@
 name: "Download build artifacts"
 description: "Download build artifacts"
+
+inputs:
+  packages:
+    description: 'packages to cache'
+    required: false
+    type: string
+    default: 'dist nxcache'
+
 runs:
   using: "composite"
   steps:
@@ -8,7 +16,7 @@ runs:
       env:
         REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
       run: |
-        packages=( dist nxcache node_modules )
+        packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
           time aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
           du -h $i.tar.gz
@@ -20,8 +28,10 @@ runs:
         pwd
         ls -lha
         echo "====DIST===="
-        find dist -maxdepth 1 -type d
+        find dist -maxdepth 1 -type d || true
         echo "====NXCACHE===="
-        find nxcache -maxdepth 1 -type d
+        find nxcache -maxdepth 1 -type d || true
         echo "====ADF===="
-        find node_modules/@alfresco/ -maxdepth 1 -type d
+        find node_modules/@alfresco/ -maxdepth 1 -type d || true
+        echo "====NX===="
+        find node_modules/nx/ -maxdepth 1 -type d || true

@@ -1,12 +1,17 @@
 name: 'Setup'
 description: 'Initialize cache, env var load'
 inputs:
-  enable-cache:
+  cache-key-suffix:
+    description: 'suffix for cache key'
+    required: false
+    type: string
+    default: ''
+  enable-global-nx-cache:
     description: 'enable caching'
     required: false
     type: boolean
     default: 'true'
-  enable-node-modules-cache:
+  enable-global-node-modules-cache:
     description: 'enable caching for node modules'
     required: false
     type: boolean
@@ -19,6 +24,7 @@ inputs:
 runs:
   using: "composite"
   steps:
+
       - name: install NPM
         uses: actions/setup-node@v3
         with:
@@ -28,44 +34,31 @@ runs:
         id: tag-sha
         uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@v1.29.0
 # CACHE
-      - name: Node cache
-        id: node-cache
-        if: ${{ inputs.enable-cache == 'true' }}
+      - name: NX cache
+        id: nx-cache
+        if: ${{ inputs.enable-global-nx-cache == 'true' }}
         uses: actions/cache@v3
         env:
-          cache-name: node-cache
+          cache-name: nx-cache
         with:
           path: |
-            ~/.npm
             nxcache
-            dist
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: nxcache-${{ github.ref_name }}-${{ inputs.cache-key-suffix }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node-${{ runner.os }}-build-${{ env.cache-name }}-
-            node-${{ runner.os }}-build-
-            node-${{ runner.os }}-
+            nxcache-${{ github.ref_name }}-build-${{ inputs.cache-key-suffix }}
+            nxcache-${{ github.ref_name }}-
       - name: Node Modules cache
         id: node-modules-cache
-        if: ${{ inputs.enable-node-modules-cache == 'true' }}
+        if: ${{ inputs.enable-global-node-modules-cache == 'true' }}
         uses: actions/cache@v3
         env:
           cache-name: node-modules-cache
         with:
           path: |
             node_modules
-          key: .npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ steps.tag-sha.outputs.tag_sha }}
+          key: ${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
-            node_modules-${{ runner.os }}-build-
-            node_modules-${{ runner.os }}-            
-      - name: pip cache
-        uses: actions/cache@v3
-        if: ${{ inputs.enable-cache == 'true' }}
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-
-          restore-keys: |
-            ${{ runner.os }}
+            ${{ env.cache-name }}-
 # ENV LOAD
       - name: load .travis.yml env.global variables
         uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
