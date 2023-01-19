@@ -36,7 +36,7 @@ runs:
       env:
         REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ hashFiles('**/package-lock.json') }}"      
       run: |
-      echo "using hashfile: ${{ hashFiles('**/package-lock.json') }}"
+        echo "using hashfile: ${{ hashFiles('**/package-lock.json') }}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi      
