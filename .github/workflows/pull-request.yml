@@ -113,8 +113,6 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [check-if-pr-is-approved]
     steps:
-      - name: Dump context
-        uses: crazy-max/ghaction-dump-context@v1
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
