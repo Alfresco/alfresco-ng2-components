@@ -99,7 +99,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
     }
 
     /**
-     * Gets parent node of given node. If provided node doesn't have parent it return undefined.
+     * Gets parent node of given node. If node with parentNodeId is not found it returns undefined.
      *
      * @param parentNodeId Id of a parent node to be found
      * @returns parent node or undefined when not found

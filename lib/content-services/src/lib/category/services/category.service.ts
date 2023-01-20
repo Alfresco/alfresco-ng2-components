@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { CategoriesApi, CategoryPaging } from '@alfresco/js-api';
+import { CategoriesApi, CategoryBody, CategoryEntry, CategoryPaging } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -34,12 +34,44 @@ export class CategoryService {
     /**
      * Get subcategories of a given parent category
      *
-     * @param parentNodeId The identifier of a parent category.
+     * @param parentCategoryId The identifier of a parent category.
      * @param skipCount Number of top categories to skip.
      * @param maxItems Maximum number of subcategories returned from Observable.
      * @return Observable<CategoryPaging>
      */
-    public getSubcategories(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
-        return from(this.categoriesApi.getSubcategories(parentNodeId ?? '-root-', {skipCount, maxItems}));
+    getSubcategories(parentCategoryId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
+        return from(this.categoriesApi.getSubcategories(parentCategoryId ?? '-root-', {skipCount, maxItems}));
+    }
+
+    /**
+     * Creates subcategory under category with provided categoryId
+     *
+     * @param parentCategoryId The identifier of a parent category.
+     * @param payload Created category body
+     * @return Observable<CategoryEntry>
+     */
+    createSubcategory(parentCategoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
+        return from(this.categoriesApi.createSubcategory(parentCategoryId, [payload], {}));
+    }
+
+    /**
+     * Updates category
+     *
+     * @param categoryId The identifier of a category.
+     * @param payload Updated category body
+     * @return Observable<CategoryEntry>
+     */
+    updateCategory(categoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
+        return from(this.categoriesApi.updateCategory(categoryId, payload, {}));
+    }
+
+    /**
+     * Deletes category
+     *
+     * @param categoryId The identifier of a category.
+     * @return Observable<void>
+     */
+    deleteCategory(categoryId: string): Observable<void> {
+        return from(this.categoriesApi.deleteCategory(categoryId));
     }
 }
