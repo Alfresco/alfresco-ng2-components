@@ -162,6 +162,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowPrint = false;
 
+    /** Toggles the 'Full Screen' feature. */
+    @Input()
+    allowFullScreen = true;
+
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarRightTemplate: TemplateRef<any> = null;

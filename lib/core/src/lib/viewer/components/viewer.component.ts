@@ -84,6 +84,10 @@ export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
     @Input()
     allowGoBack = true;
 
+    /** Toggles the 'Full Screen' feature. */
+    @Input()
+    allowFullScreen = true;
+
     /** Hide or show the toolbar */
     @Input()
     showToolbar = true;
@@ -284,16 +288,18 @@ export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
      * Triggers full screen mode with a main content area displayed.
      */
     enterFullScreen(): void {
-        const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
-        if (container) {
-            if (container.requestFullscreen) {
-                container.requestFullscreen();
-            } else if (container.webkitRequestFullscreen) {
-                container.webkitRequestFullscreen();
-            } else if (container.mozRequestFullScreen) {
-                container.mozRequestFullScreen();
-            } else if (container.msRequestFullscreen) {
-                container.msRequestFullscreen();
+        if (this.allowFullScreen) {
+            const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
+            if (container) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.mozRequestFullScreen) {
+                    container.mozRequestFullScreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
             }
         }
     }

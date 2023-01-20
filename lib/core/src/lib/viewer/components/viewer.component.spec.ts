@@ -532,6 +532,16 @@ describe('ViewerComponent', () => {
                 fixture.detectChanges();
             });
 
+            it('should request only if enabled', () => {
+                const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
+                spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
+
+                component.allowFullScreen = false;
+                component.enterFullScreen();
+
+                expect(domElement.requestFullscreen).not.toHaveBeenCalled();
+            });
+
             it('should use standard mode', () => {
                 const domElement = jasmine.createSpyObj('el', ['requestFullscreen']);
                 spyOn(fixture.nativeElement, 'querySelector').and.returnValue(domElement);
