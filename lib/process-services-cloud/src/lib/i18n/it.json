@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Avvia processo",
           "CANCEL": "Annulla"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Pulsante del menu a discesa per la selezione del processo"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni di processo, verifica di disporre dell'accesso.",

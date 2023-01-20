@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Proces starten",
           "CANCEL": "Annuleren"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Knop van vervolgkeuzemenu voor selecteren van processen"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",

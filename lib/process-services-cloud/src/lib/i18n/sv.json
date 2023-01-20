@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Starta process",
           "CANCEL": "Avbryt"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "RULLGARDINSKNAPP för val av process"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",

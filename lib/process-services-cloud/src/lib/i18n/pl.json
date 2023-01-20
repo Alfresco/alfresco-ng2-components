@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Rozpocznij proces",
           "CANCEL": "Anuluj"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "PRZYCISK menu rozwijanego wyboru procesu"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Nie można wczytać definicji procesu. Sprawdź, czy masz dostęp.",
