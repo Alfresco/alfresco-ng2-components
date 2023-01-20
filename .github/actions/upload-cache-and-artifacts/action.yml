@@ -25,10 +25,10 @@ runs:
         packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
           echo "processing $i"
-          time tar czf $i.tar.gz $i
+          tar czf $i.tar.gz $i
           echo "package size: $(du -h $i.tar.gz)"
           echo "uploading current run artifacts to ${REMOTE_PATH}/$i.tar.gz"
-          time aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
+          aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
         done
     - name: tar and upload persistent cache artifacts
       shell: bash
@@ -40,10 +40,10 @@ runs:
         fi
         packages=( $(echo ${{ inputs.persistent-packages }}) )
         for i in "${packages[@]}"; do
-          time tar czf $i.tar.gz $i
+          tar czf $i.tar.gz $i
           du -h $i.tar.gz
           echo "pushing persistent cache to $REMOTE_PATH"
-          time aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
+          aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
         done
 
 
