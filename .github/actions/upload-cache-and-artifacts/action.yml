@@ -23,8 +23,9 @@ runs:
        REMOTE_PATH: "adf/build-cache/${{ github.run_id }}"
       run: |
         for i in '${{ inputs.packages }}'; do
+          echo "processing $i"
           time tar czf $i.tar.gz $i
-          du -h $i.tar.gz
+          echo "package size: $(du -h $i.tar.gz)"
           echo "uploading current run artifacts to ${REMOTE_PATH}/$i.tar.gz"
           time aws s3 cp --no-progress $i.tar.gz s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz
         done
