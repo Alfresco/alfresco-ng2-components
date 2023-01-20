@@ -6,12 +6,10 @@ inputs:
     description: 'packages to cache'
     required: false
     type: string
-    default: 'dist nxcache'
   persistent-packages:
     description: 'cache key'
     required: false
     type: string
-    default: 'nxcache'
   cache-key-suffix:
     description: 'cache key suffix'
     required: false
@@ -25,8 +23,7 @@ runs:
       env:
         REMOTE_PATH: "adf/build-cache/${{ github.run_id }}"
       run: |
-        packages=( $(echo ${{ inputs.packages }}) )
-        for i in "${packages[@]}"; do
+        for i in '${{ inputs.packages }}'; do
           echo "downloading current run cache artifacts from ${REMOTE_PATH}/$i.tar.gz"
           time aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
           du -h $i.tar.gz
@@ -40,8 +37,7 @@ runs:
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
-        packages=( $(echo ${{ inputs.persistent-packages }}) )
-        for i in "${packages[@]}"; do
+        for i in '${{ inputs.persistent-packages }}'; do
           REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
           cache_exists=$(aws s3 ls $REMOTE_FILE_PATH > /dev/null)
           if [ $cache_exists  -eq 0 ]; then

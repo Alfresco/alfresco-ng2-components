@@ -5,12 +5,10 @@ inputs:
     description: 'packages to cache'
     required: false
     type: boolean
-    default: 'dist'
   persistent-packages:
     description: 'cache key'
     required: false
     type: string
-    default: 'nxcache'
   cache-key-suffix:
     description: 'cache key suffix'
     required: false
@@ -24,8 +22,7 @@ runs:
       env:
        REMOTE_PATH: "adf/build-cache/${{ github.run_id }}"
       run: |
-        packages=( $(echo ${{ inputs.packages }}) )
-        for i in "${packages[@]}"; do
+        for i in '${{ inputs.packages }}'; do
           time tar czf $i.tar.gz $i
           du -h $i.tar.gz
           echo "uploading current run artifacts to ${REMOTE_PATH}/$i.tar.gz"
@@ -39,8 +36,7 @@ runs:
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
-        packages=( $(echo ${{ inputs.persistent-packages }}) )
-        for i in "${packages[@]}"; do
+        for i in '${{ inputs.persistent-packages }}'; do
           time tar czf $i.tar.gz $i
           du -h $i.tar.gz
           echo "pushing persistent cache to $REMOTE_PATH"
