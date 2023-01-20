@@ -2,11 +2,11 @@ name: "Upload build artifacts"
 description: "Upload build artifacts"
 inputs:
   packages:
-    description: 'packages to cache'
+    description: 'packages to cache across the current run'
     required: false
-    type: boolean
+    type: string
   persistent-packages:
-    description: 'cache key'
+    description: 'packages to cache in s3'
     required: false
     type: string
   cache-key-suffix:
@@ -33,7 +33,7 @@ runs:
     - name: tar and upload persistent cache artifacts
       shell: bash
       run: |
-        HASH=$(cat package-lock.json | shasum | head -c 40)
+        HASH=$(cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40)
         REMOTE_PATH="adf/build-cache/${HASH}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
