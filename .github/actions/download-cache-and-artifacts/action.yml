@@ -44,7 +44,7 @@ runs:
           set +e; aws s3 ls $REMOTE_FILE_PATH > /dev/null; set -e
           if [ $? -eq 0 ]; then
             echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
-            aws s3 cp --no-progress REMOTE_FILE_PATH $i.tar.gz
+            aws s3 cp --no-progress $REMOTE_FILE_PATH $i.tar.gz
             echo "package $i size: $(du -h $i.tar.gz)"
             tar xzf $i.tar.gz
           else
