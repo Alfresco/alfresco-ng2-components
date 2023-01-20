@@ -33,16 +33,19 @@ runs:
     - name: download and extract persistent cache artifacts from s3
       shell: bash
       run: |
-        cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40
         HASH=$(cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40)
         REMOTE_PATH="adf/build-cache/${HASH}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
+        echo "A"
         packages=( $(echo ${{ inputs.persistent-packages }}) )
+        echo "B"
         for i in "${packages[@]}"; do
+          echo "C-$i"
           REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
           cache_exists=$(aws s3 ls $REMOTE_FILE_PATH > /dev/null)
+          echo "D-$i"
           if [ $cache_exists  -eq 0 ]; then
             echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
             aws s3 cp --no-progress REMOTE_FILE_PATH $i.tar.gz
