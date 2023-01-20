@@ -43,7 +43,7 @@ runs:
           REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
           set +e; cache_exists=$(aws s3 ls $REMOTE_FILE_PATH > /dev/null); set -e
           echo "D-$i"
-          if [ aws s3 ls $REMOTE_FILE_PATH > /dev/null -eq 0 ]; then
+          if [ $cache_exists -eq 0 ]; then
             echo "E-$i"
             echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
             echo "F-$i"
