@@ -130,24 +130,12 @@ jobs:
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           packages: 'dist node_modules'
-      - name: show files
-        run: |
-          pwd
-          ls -lha
-          echo "====DIST===="
-          find dist -maxdepth 1 -type d || true
-          echo "====NXCACHE===="
-          find nxcache -maxdepth 1 -type d || true
-          echo "====ADF===="
-          find node_modules/@alfresco/ -maxdepth 1 -type d || true
-          echo "====NX===="
-          find node_modules/nx/ -maxdepth 1 -type d || true
 
   unit-tests:
     timeout-minutes: 30
     name: "Unit tests: ${{ matrix.unit-tests.name }}"
     runs-on: ubuntu-22.04
-    # needs: [setup]
+    needs: [setup]
     strategy:
       fail-fast: false
       # max-parallel: 4
@@ -174,14 +162,14 @@ jobs:
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           persistent-packages: 'nxcache'
-          cache-key-suffix: ${{ matrix.unit-tests.name }}
+          persistent-packages-key-suffix: ${{ github.ref_name }}/${{ matrix.unit-tests.name }}
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           persistent-packages: 'nxcache'
-          cache-key-suffix: ${{ matrix.unit-tests.name }}
+          persistent-packages-key-suffix: ${{ github.ref_name }}/${{ matrix.unit-tests.name }}
   lint:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
@@ -197,7 +185,7 @@ jobs:
         with: 
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
-          cache-key-suffix: lint
+          cache-key-suffix: ${{ github.ref_name }}-lint
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
           packages: 'node_modules'
@@ -206,6 +194,7 @@ jobs:
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           persistent-packages: 'nxcache'
+          persistent-packages-key-suffix: ${{ github.ref_name }}-lint
 
   build-libs:
     # long timeout required when cache has to be recreated
@@ -227,6 +216,8 @@ jobs:
         with:
           packages: 'node_modules'
           persistent-packages: 'nxcache'
+          persistent-packages-key-suffix: ${{ github.ref_name }}-build-libs
+
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
@@ -234,6 +225,7 @@ jobs:
         with:
           packages: 'dist node_modules'
           persistent-packages: 'nxcache'
+          persistent-packages-key-suffix: ${{ github.ref_name }}-build-libs
 
   e2e-storybook:
     timeout-minutes: 20

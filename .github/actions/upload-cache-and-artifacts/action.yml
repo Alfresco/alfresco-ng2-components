@@ -36,7 +36,7 @@ runs:
         HASH=$(cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40)
         REMOTE_PATH="adf/build-cache/${HASH}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
-          REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
+          REMOTE_PATH="${REMOTE_PATH}/${{ inputs.cache-key-suffix }}"
         fi
         packages=( $(echo ${{ inputs.persistent-packages }}) )
         for i in "${packages[@]}"; do
