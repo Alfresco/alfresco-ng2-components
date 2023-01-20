@@ -43,16 +43,11 @@ runs:
           REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
           set +e; aws s3 ls $REMOTE_FILE_PATH > /dev/null; set -e
           if [ $? -eq 0 ]; then
-            echo "E-$i"
             echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
-            echo "F-$i"
-            aws s3 cp --no-progress REMOTE_FILE_PATH .
-            echo "G-$i"
+            aws s3 cp --no-progress REMOTE_FILE_PATH $i.tar.gz
             echo "package $i size: $(du -h $i.tar.gz)"
-            echo "H-$i"
             tar xzf $i.tar.gz
           else
-            echo "I-$i"
             echo "persistent cache artifact file not found on $REMOTE_FILE_PATH. continue."
           fi        
 
