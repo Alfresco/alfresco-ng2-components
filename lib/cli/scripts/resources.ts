@@ -32,49 +32,101 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser'] }
         ]
     },
-    CANDIDATE_BASE_APP: {
-        name: 'candidatebaseapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
-        processes: {
-            candidateUserProcess: 'candidateuserprocess',
-            candidateGroupProcess: 'candidategroupprocess',
-            anotherCandidateGroupProcess: 'anothercandidategroup',
-            uploadFileProcess: 'uploadfileprocess',
-            processwithstarteventform: 'processwithstarteventform',
-            processwithjsonfilemapping: 'processwithjsonfilemapping',
-            assigneeProcess: 'assigneeprocess',
-            errorStartEventProcess: {
-                process_name: 'errorstartevent',
-                error_id: 'Error_END_EVENT',
-                error_code: '123'
-            },
-            errorBoundaryEventProcess: {
-                process_name: 'errorboundaryevent',
-                error_id: 'Error_END_EVENT',
-                error_code: '567'
-            },
-            errorExclusiveGateProcess: {
-                process_name: 'errorexclusivegate',
-                error_id: 'Error_OK',
-                error_code: '200'
-            }
-        },
-        forms: {
-            starteventform: 'starteventform',
-            formtotestvalidations: 'formtotestvalidations',
-            uploadfileform: 'uploadfileform',
-            inputform: 'inputform',
-            outputform: 'outputform'
-        },
+    CONNECTOR_REGRESSION: {
+        name: 'connectore-regression',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/connector-regression.zip?raw=true`,
         security: [
             { role: 'APPLICATION_MANAGER', groups: [], users: ['manageruser'] },
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser', 'salesuser'] }
         ],
-        tasks: {
-            uploadFileTask: 'UploadFileTask',
-            candidateUserTask: 'candidateUserTask'
-        }
+        variables: {
+            connectors: {
+              aspose: {},
+              calendar: {
+                TEAMS_CLIENT_ID: "",
+                TEAMS_CLIENT_SECRET: "",
+                TEAMS_SCOPE: "https://graph.microsoft.com/.default",
+                TEAMS_USERNAME: "",
+                TEAMS_PASSWORD: "",
+                TEAMS_TENANT: ""
+              },
+              comprehend: {
+                AWS_ACCESS_KEY_ID: "adasd",
+                AWS_SECRET_KEY: "sada",
+                AWS_S3_BUCKET: "aae-data",
+                AWS_REGION: "sdada",
+                AWS_COMPREHEND_ROLE_ARN: "dsada"
+              },
+              content: {},
+              "docusign-connector": {
+                DOCUSIGN_ACCOUNT_ID: "asdasd",
+                DOCUSIGN_CLIENT_ID: "adsada",
+                DOCUSIGN_IMPERSONATED_USER_ID: "dadadasd",
+                DOCUSIGN_AUTH_SERVER: "account-d.docusign.com",
+                DOCUSIGN_JWT_LIFETIME: "3600",
+                DOCUSIGN_RSA_KEY: "adsada",
+                DOCUSIGN_DEFAULT_EMAIL_SUBJECT: "Please sign your contract",
+                DOCUSIGN_DEFAULT_SIGNHERE_LABEL: "SignHereTab",
+                DOCUSIGN_DEFAULT_TIMEOUT: "3600",
+                DOCUSIGN_POLL_SLEEP: "30000"
+              },
+              lambda: {
+                AWS_LAMBDA_AWS_ACCESS_KEY: "sdada",
+                AWS_LAMBDA_AWS_SECRET_KEY: "sdad",
+                AWS_LAMBDA_AWS_REGION: "adsada"
+              },
+              mariadb: {
+                DB_USERNAME: "root",
+                DB_PASSWORD: "adminadmin",
+                DB_NAME: "employees",
+                MARIADB_HOST: "",
+                MARIADB_PORT: "3306",
+                DB_DATASOURCE: "jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${DB_NAME}",
+                DB_DRIVER_CLASS_NAME: "org.mariadb.jdbc.Driver"
+              },
+              rekognition: {
+                AWS_ACCESS_KEY_ID: "saddasda",
+                AWS_SECRET_KEY: "sdadsada",
+                AWS_S3_BUCKET: "aae-data",
+                AWS_REGION: "asdadsad"
+              },
+              rest: { EVENT_NOT_MATCH_STATUS: "404" },
+              "salesforce-connector": {
+                SALESFORCE_CLIENT_ID: "",
+                SALESFORCE_CLIENT_SECRET: "asdad",
+                SALESFORCE_USERNAME: "build_user@alfresco.com",
+                SALESFORCE_PASSWORD: "asdsada",
+                SALESFORCE_SECURITY_TOKEN: "sdadsa",
+                SALESFORCE_URL_LOGIN: "https://login.salesforce.com/services/oauth2/token",
+                SALESFORCE_SOAP_URL_LOGIN: "https://login.salesforce.com/services/Soap/c/45.0",
+                SALESFORCE_VERSION: "45.0"
+              },
+              slack: { SLACK_SIGNING_SECRET: "vito", SLACK_BOT_TOKEN: "albano" },
+              teams: {
+                TEAMS_CLIENT_ID: "",
+                TEAMS_CLIENT_SECRET: "",
+                TEAMS_SCOPE: "https://graph.microsoft.com/.default",
+                TEAMS_USERNAME: "",
+                TEAMS_PASSWORD: "",
+                TEAMS_TENANT: ""
+              },
+              textract: {
+                AWS_ACCESS_KEY_ID: "",
+                AWS_SECRET_KEY: "sdadasda",
+                AWS_S3_BUCKET: "aae-data",
+                AWS_REGION: "sdadsad"
+              },
+              transcribe: {
+                AWS_ACCESS_KEY_ID: "",
+                AWS_SECRET_KEY: "",
+                AWS_S3_BUCKET: "aae-bucket",
+                AWS_REGION: "",
+                AWS_TRANSCRIBE_LANGUAGES: ""
+              },
+              twilio: { TWILIO_ACCOUNT: "dadsadas", TWILIO_TOKEN: "dadasda" }
+            }
+          }
     },
     SIMPLE_APP: {
         name: 'simpleapp',
@@ -204,7 +256,6 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
         infrastructure: {connectors: {restconnector: {}}, bridges: {}}
-    }
 };
 
 export const ACTIVITI_APPS: any = {
