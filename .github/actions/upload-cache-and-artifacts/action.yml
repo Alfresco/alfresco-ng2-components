@@ -22,7 +22,8 @@ runs:
       env:
        REMOTE_PATH: "adf/build-cache/${{ github.run_id }}"
       run: |
-        for i in ( '${{ inputs.packages }}' ); do
+        packages=( $(echo ${{ inputs.packages }}) )
+        for i in "${packages[@]}"; do
           echo "processing $i"
           time tar czf $i.tar.gz $i
           echo "package size: $(du -h $i.tar.gz)"
@@ -37,7 +38,8 @@ runs:
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
-        for i in ( '${{ inputs.persistent-packages }}' ); do
+        packages=( $(echo ${{ inputs.persistent-packages }}) )
+        for i in "${packages[@]}"; do
           time tar czf $i.tar.gz $i
           du -h $i.tar.gz
           echo "pushing persistent cache to $REMOTE_PATH"
