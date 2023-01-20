@@ -26,6 +26,7 @@ import {
     OnInit,
     Output,
     TemplateRef,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import {
@@ -35,6 +36,7 @@ import {
     NodesApiService,
     Track,
     UploadService,
+    ViewerComponent,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
     ViewerSidebarComponent,
@@ -67,6 +69,9 @@ import { filter, takeUntil } from 'rxjs/operators';
     providers: [ViewUtilService]
 })
 export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
+
+    @ViewChild('adfViewer')
+    adfViewer: ViewerComponent<{node: Node}>;
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;

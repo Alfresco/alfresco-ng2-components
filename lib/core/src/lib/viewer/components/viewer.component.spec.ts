@@ -129,8 +129,8 @@ class ViewerWithCustomMoreActionsComponent {
 
 describe('ViewerComponent', () => {
 
-    let component: ViewerComponent;
-    let fixture: ComponentFixture<ViewerComponent>;
+    let component: ViewerComponent<any>;
+    let fixture: ComponentFixture<ViewerComponent<any>>;
     let element: HTMLElement;
     let dialog: MatDialog;
 

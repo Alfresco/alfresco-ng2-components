@@ -48,7 +48,7 @@ import { Track } from '../models/viewer.model';
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
-export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
+export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -155,6 +155,18 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
     @Input()
     mimeType: string;
 
+    /**
+     * Context object available for binding by the local sidebarRightTemplate with let declarations.
+     */
+    @Input()
+    sidebarRightTemplateContext: T = null;
+
+    /**
+     * Context object available for binding by the local sidebarLeftTemplate with let declarations.
+     */
+    @Input()
+    sidebarLeftTemplateContext: T = null;
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -175,9 +187,6 @@ export class ViewerComponent implements OnDestroy, OnChanges, OnInit {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
-
-    sidebarRightTemplateContext: { node: Node } = {node: null};
-    sidebarLeftTemplateContext: { node: Node } = {node: null};
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
