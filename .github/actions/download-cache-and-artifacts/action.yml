@@ -33,7 +33,7 @@ runs:
     - name: download and extract persistent cache artifacts from s3
       shell: bash
       run: |
-
+        cat $GITHUB_WORKSPACE/package-lock.json
         HASH=$(cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40)
         REMOTE_PATH="adf/build-cache/${HASH}"
         if [ -n "${{ inputs.cache-key-suffix }}" ]; then
