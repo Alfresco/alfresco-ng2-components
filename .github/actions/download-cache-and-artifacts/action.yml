@@ -39,9 +39,10 @@ runs:
           REMOTE_PATH="${REMOTE_PATH}-${{ inputs.cache-key-suffix }}"
         fi
         packages=( $(echo ${{ inputs.persistent-packages }}) )
+        set +e;
         for i in "${packages[@]}"; do
           REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
-          set +e; aws s3 ls $REMOTE_FILE_PATH > /dev/null; set -e
+          aws s3 ls $REMOTE_FILE_PATH > /dev/null
           if [ $? -eq 0 ]; then
             echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
             aws s3 cp --no-progress $REMOTE_FILE_PATH $i.tar.gz
@@ -49,8 +50,8 @@ runs:
             tar xzf $i.tar.gz
           else
             echo "persistent cache artifact file not found on $REMOTE_FILE_PATH. continue."
-          fi        
-
+          fi
+          set -e;
         done        
     - name: show files
       shell: bash
