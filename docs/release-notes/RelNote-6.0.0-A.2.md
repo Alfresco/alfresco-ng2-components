@@ -1,5 +1,5 @@
 ---
-Title: Release notes v6.0.0-A.1
+Title: Release notes v6.0.0-A.2
 ---
 
 # Alfresco Application Development Framework (ADF) version 6.0.0-A.2 Release Note
