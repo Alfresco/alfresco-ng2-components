@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Zahájit proces",
           "CANCEL": "Zrušit"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "TLAČÍTKO rozbalovacího seznamu výběru procesu"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",

@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Start proces",
           "CANCEL": "Annuller"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "KNAP dropdown valgproces"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Der kunne ikke indlæses nogen procesdefinitioner. Kontrollér, om du har adgang til dem.",

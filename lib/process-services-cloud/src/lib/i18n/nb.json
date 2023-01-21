@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Start prosess",
           "CANCEL": "Avbryt"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Velg Rullegardin for prosess-KNAPP"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",

@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Käynnistä prosessi",
           "CANCEL": "Peruuta"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Valitse prosessi -pudotusvalikon PAINIKE"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prosessimääritelmien lataaminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",

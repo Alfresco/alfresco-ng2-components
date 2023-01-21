@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "启动流程",
           "CANCEL": "取消"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "选择流程下拉按钮"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",

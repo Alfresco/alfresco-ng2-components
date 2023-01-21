@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "プロセスの開始",
           "CANCEL": "キャンセル"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "選択プロセスのドロップダウンメニューオプションボタン"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",

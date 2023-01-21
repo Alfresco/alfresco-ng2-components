@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Iniciar processo",
           "CANCEL": "Cancelar"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Botão do menu suspenso para selecionar processo"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições do processo, verifique se você tem acesso.",
