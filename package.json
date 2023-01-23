@@ -75,7 +75,7 @@
     "@mat-datetimepicker/moment": "^9.0.68",
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "6.4.22",
-    "apollo-angular": "^4.0.1",
+    "apollo-angular": "^4.2.0",
     "chart.js": "2.9.4",
     "cropperjs": "1.5.13",
     "dotenv-expand": "^5.1.0",
