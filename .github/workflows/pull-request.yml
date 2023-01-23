@@ -157,7 +157,7 @@ jobs:
       - uses: ./.github/actions/setup
         with: 
           use-gh-nx-cache: false
-          use-gh-node-modules-cache: true
+          use-gh-node-modules-cache: false
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
