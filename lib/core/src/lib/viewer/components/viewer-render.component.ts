@@ -142,14 +142,13 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges() {
-        this.isLoading = true;
+        this.isLoading = !this.blobFile && !this.urlFile;
 
         if (this.blobFile) {
             this.setUpBlobData();
         } else if (this.urlFile) {
             this.setUpUrlFile();
         }
-        this.isLoading = false;
     }
 
     private setUpBlobData() {

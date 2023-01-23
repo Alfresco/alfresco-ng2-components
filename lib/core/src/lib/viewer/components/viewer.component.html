@@ -83,7 +83,7 @@
                 <ng-content select="adf-viewer-toolbar-custom-actions"></ng-content>
 
                 <button id="adf-viewer-fullscreen"
-                        *ngIf="viewerType !== 'media' && allowFullScreen"
+                        *ngIf="allowFullScreen"
                         mat-icon-button
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate"
                         title="{{ 'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate }}"
@@ -166,7 +166,6 @@
                 [readOnly]="readOnly"
                 (submitFile)="onSubmitFile($event)"
                 [viewerType]="viewerType"
-                [isLoading]="isLoading"
                 [urlFile]="urlFile"
                 [tracks]="tracks">
             </adf-viewer-render>

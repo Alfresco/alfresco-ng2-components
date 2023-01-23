@@ -32,7 +32,6 @@ import {
 } from '@angular/core';
 import {  fromEvent, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewUtilService } from '../services/view-util.service';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
@@ -45,10 +44,9 @@ import { Track } from '../models/viewer.model';
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: {class: 'adf-viewer'},
-    encapsulation: ViewEncapsulation.None,
-    providers: [ViewUtilService]
+    encapsulation: ViewEncapsulation.None
 })
-export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
+export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -143,10 +141,6 @@ export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
     @Input()
     viewerType: string = 'unknown';
 
-    /** Override loading status */
-    @Input()
-    isLoading = false;
-
     /** Enable when where is possible the editing functionalities  */
     @Input()
     readOnly = true;
@@ -155,7 +149,6 @@ export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
     @Input()
     tracks: Track[] = [];
 
-    /** MIME type of the file content (when not determined by the filename extension). */
     @Input()
     mimeType: string;
 
@@ -193,15 +186,14 @@ export class ViewerComponent<T> implements OnDestroy, OnChanges, OnInit {
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
     constructor(private el: ElementRef,
-                public dialog: MatDialog,
-                private viewUtilService: ViewUtilService) {
+                public dialog: MatDialog) {
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges){
         const { blobFile } = changes;
-        if (blobFile?.currentValue) {
+
+        if(blobFile?.currentValue){
             this.mimeType = blobFile.currentValue.type;
-            this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.mimeType);
         }
     }
 

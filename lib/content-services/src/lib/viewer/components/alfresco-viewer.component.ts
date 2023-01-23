@@ -195,7 +195,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     private cacheBusterNumber: number;
 
     versionEntry: VersionEntry;
-    isLoading: boolean;
     urlFileContent: string;
     viewerType: any;
     fileName: string;
@@ -256,10 +255,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     private async onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
-            this.isLoading = true;
 
             await this.setUpNodeFile(node);
-            this.isLoading = false;
         }
     }
 
@@ -273,9 +270,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         try {
             const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);
             await this.setUpSharedLinkFile(sharedLinkEntry);
-            this.isLoading = false;
         } catch (error) {
-            this.isLoading = false;
             this.logService.error('This sharedLink does not exist');
             this.invalidSharedLink.next();
             this.viewerType = 'invalid-link';
@@ -288,21 +283,16 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
-                this.isLoading = false;
             } else {
                 await this.setUpNodeFile(this.nodeEntry.entry);
-                this.isLoading = false;
                 this.cdr.detectChanges();
             }
         } catch (error) {
-            this.isLoading = false;
             this.logService.error('This node does not exist');
         }
     }
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
-        this.isLoading = true;
-
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
 
         if (versionData && versionData.content) {
@@ -338,8 +328,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         } else if (this.viewerType === 'media') {
             this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
         }
-
-        this.isLoading = false;
 
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
