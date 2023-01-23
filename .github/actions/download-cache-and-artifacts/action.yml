@@ -1,27 +1,66 @@
 name: "Download build artifacts"
 description: "Download build artifacts"
+
+inputs:
+  packages:
+    description: 'packages to cache across the current run'
+    required: false
+    type: string
+  persistent-packages:
+    description: 'packages to cache in s3'
+    required: false
+    type: string
+  packages-key-suffix:
+    description: 'cache key suffix'
+    required: false
+    type: string
+    default: ''    
 runs:
   using: "composite"
   steps:
-    - name: download and extract artifacts from s3
+    - name: download and extract current run cache artifacts from s3
       shell: bash
       env:
-        REMOTE_PATH: "alfresco-ng2-components/build-cache/${{ github.run_id }}"      
+        REMOTE_PATH: "adf/build-cache/${{ github.run_id }}"
       run: |
-        packages=( dist nxcache node_modules )
+        packages=( $(echo ${{ inputs.packages }}) )
         for i in "${packages[@]}"; do
-          time aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
+          echo "downloading current run cache artifacts from ${REMOTE_PATH}/$i.tar.gz"
+          aws s3 cp --no-progress s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz $i.tar.gz
           du -h $i.tar.gz
-          time tar xzf $i.tar.gz
+          tar xzf $i.tar.gz
         done
+    - name: download and extract persistent cache artifacts from s3
+      shell: bash
+      run: |
+        HASH=$(cat $GITHUB_WORKSPACE/package-lock.json | shasum | head -c 40)
+        REMOTE_PATH="adf/build-cache/${HASH}"
+        if [ -n "${{ inputs.packages-key-suffix }}" ]; then
+          REMOTE_PATH="${REMOTE_PATH}/${{ inputs.packages-key-suffix }}"
+        fi
+        packages=( $(echo ${{ inputs.persistent-packages }}) )
+        set +e;
+        for i in "${packages[@]}"; do
+          REMOTE_FILE_PATH="s3://${S3_BUILD_BUCKET_SHORT_NAME}/${REMOTE_PATH}/$i.tar.gz"
+          aws s3 ls $REMOTE_FILE_PATH > /dev/null
+          if [ $? -eq 0 ]; then
+            echo "downloading persistent cache artifacts from $REMOTE_FILE_PATH"
+            aws s3 cp --no-progress $REMOTE_FILE_PATH $i.tar.gz
+            echo "package $i size: $(du -h $i.tar.gz)"
+            tar xzf $i.tar.gz
+          else
+            echo "persistent cache artifact file not found on $REMOTE_FILE_PATH. continue."
+          fi
+          set -e;
+        done        
     - name: show files
       shell: bash
       run: |
-        pwd
-        ls -lha
         echo "====DIST===="
-        find dist -maxdepth 1 -type d
+        find dist -maxdepth 1 -type d || true
         echo "====NXCACHE===="
-        find nxcache -maxdepth 1 -type d
+        find nxcache -maxdepth 1 -type d || true
         echo "====ADF===="
-        find node_modules/@alfresco/ -maxdepth 1 -type d
+        find node_modules/@alfresco/ -maxdepth 1 -type d || true
+        echo "====NX===="
+        find node_modules/nx/ -maxdepth 1 -type d || true
