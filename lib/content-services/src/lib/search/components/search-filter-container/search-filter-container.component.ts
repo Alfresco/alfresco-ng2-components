@@ -35,6 +35,7 @@ import { SearchCategory } from '../../models/search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { FilterSearch } from '../../models/filter-search.interface';
 
 @Component({
     selector: 'adf-search-filter-container',
@@ -119,7 +120,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     }
 
     isActive(): boolean {
-        return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
+        return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.columnKey) > -1;
     }
 
     onMenuOpen() {
