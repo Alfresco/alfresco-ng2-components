@@ -121,7 +121,7 @@ jobs:
         id: setup
         with: 
           use-gh-nx-cache: false
-          use-gh-node-modules-cache: true       
+          use-gh-node-modules-cache: false       
       - name: run ci
         if: steps.setup.outputs.cache-hit != 'true'          
         run: npm ci
