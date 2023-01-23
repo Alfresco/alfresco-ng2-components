@@ -114,10 +114,12 @@ function getCommits(options: DiffOptions): Array<Commit> {
         log = log.substring(0, log.length - 1);
     }
 
-    return log.split('\n').map(str => JSON.parse(str) as Commit).filter(commit => {
-        const filterRegex = RegExp(authorFilter);
-        return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
-    });
+    return log.split('\n').map(str => JSON.parse(str) as Commit).filter(commit => commitAuthorAllowed(commit, authorFilter));
+}
+
+function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
+    const filterRegex = RegExp(authorFilter);
+    return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
 }
 
 export default function main(_args: string[], workingDir: string) {
