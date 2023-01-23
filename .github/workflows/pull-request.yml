@@ -161,15 +161,16 @@ jobs:
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          persistent-packages: 'nxcache node_modules'
-          packages-key-suffix: ${{ github.ref_name }}/${{ matrix.unit-tests.name }}
+          packages: 'node_modules'
+          persistent-packages: 'nxcache'
+          packages-key-suffix: ${{ matrix.unit-tests.name }}
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
       - uses: ./.github/actions/upload-cache-and-artifacts
         with:
           persistent-packages: 'nxcache'
-          packages-key-suffix: ${{ github.ref_name }}/${{ matrix.unit-tests.name }}
+          packages-key-suffix: ${{ matrix.unit-tests.name }}
  
   lint:
     # long timeout required when cache has to be recreated
