@@ -161,7 +161,7 @@ jobs:
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
       - uses: ./.github/actions/download-cache-and-artifacts
         with:
-          persistent-packages: 'nxcache'
+          persistent-packages: 'nxcache node_modules'
           packages-key-suffix: ${{ github.ref_name }}/${{ matrix.unit-tests.name }}
       - name: Run unit tests
         run: |
