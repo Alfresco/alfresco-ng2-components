@@ -75,6 +75,17 @@
         margin: auto;
         max-height: 100px;
         max-width: 300px;
+
+        .mat-progress-bar {
+            max-width: 300px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* stylelint-disable-next-line property-no-vendor-prefix */
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
     }
 
     &__toolbar {
