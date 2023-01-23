@@ -86,3 +86,10 @@ jobs:
         run: |
           git fetch --all --quiet
           TRAVIS_BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+
+  release:
+    need: setup
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      dry-run-release: false
