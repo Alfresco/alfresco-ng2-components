@@ -23,7 +23,7 @@
      fxFlexOrder="1"
      fxFlex="1 1 auto">
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
-        <div class="adf-viewer-render-content-container" [ngSwitch]="internalViewerType">
+        <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
             <ng-container *ngSwitchCase="'external'">
                 <adf-preview-extension
                     *ngIf="!!externalViewer"

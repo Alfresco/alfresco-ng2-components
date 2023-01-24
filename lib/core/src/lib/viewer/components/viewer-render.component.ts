@@ -66,11 +66,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     fileName: string;
 
-    /** Override Content view type.
-     Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).*/
-    @Input()
-    viewerType: string = 'unknown';
-
     /** Override loading status */
     @Input()
     isLoading = false;
@@ -97,8 +92,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extension: string;
-    internalViewerType: string;
     internalFileName: string;
+    viewerType: string = 'unknown';
 
     /**
      * Returns a list of the active Viewer content extensions.
@@ -153,7 +148,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     private setUpBlobData() {
         this.internalFileName = this.fileName;
-        this.internalViewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
+        this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
 
         this.extensionChange.emit(this.blobFile.type);
         this.scrollTop();
@@ -162,7 +157,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     private setUpUrlFile() {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
-        this.internalViewerType = this.viewerType === 'unknown' ? this.viewUtilService.getViewerType(this.extension, this.mimeType) : this.viewerType;
+        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType);
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();

@@ -106,8 +106,8 @@ describe('ViewerComponent', () => {
             await fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
-            expect(fixtureDouble.componentInstance.viewer1.internalViewerType).toBe('pdf');
-            expect(fixtureDouble.componentInstance.viewer2.internalViewerType).toBe('unknown');
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('unknown');
 
             fixtureDouble.componentInstance.urlFileViewer1 = 'fake-test-file.pdf';
             fixtureDouble.componentInstance.urlFileViewer2 = 'fake-test-file-two.png';
@@ -118,8 +118,8 @@ describe('ViewerComponent', () => {
             fixtureDouble.componentInstance.viewer1.ngOnChanges();
             fixtureDouble.componentInstance.viewer2.ngOnChanges();
 
-            expect(fixtureDouble.componentInstance.viewer1.internalViewerType).toBe('pdf');
-            expect(fixtureDouble.componentInstance.viewer2.internalViewerType).toBe('image');
+            expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
+            expect(fixtureDouble.componentInstance.viewer2.viewerType).toBe('image');
         });
     });
 
@@ -144,7 +144,7 @@ describe('ViewerComponent', () => {
 
             expect(component.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
-            expect(component.internalViewerType).toBe('external');
+            expect(component.viewerType).toBe('external');
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         });
 
@@ -197,7 +197,7 @@ describe('ViewerComponent', () => {
 
             expect(component.externalExtensions.includes('*')).toBe(true);
             expect(component.externalViewer).toBe(extension);
-            expect(component.internalViewerType).toBe('external');
+            expect(component.viewerType).toBe('external');
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         });
 

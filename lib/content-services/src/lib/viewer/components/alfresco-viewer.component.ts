@@ -196,7 +196,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     versionEntry: VersionEntry;
     urlFileContent: string;
-    viewerType: any;
     fileName: string;
     mimeType: string;
     nodeEntry: NodeEntry;
@@ -273,7 +272,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         } catch (error) {
             this.logService.error('This sharedLink does not exist');
             this.invalidSharedLink.next();
-            this.viewerType = 'invalid-link';
+            this.mimeType = 'invalid-link';
+            this.urlFileContent = 'invalid-file';
         }
     }
 
@@ -288,72 +288,81 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.cdr.detectChanges();
             }
         } catch (error) {
+            this.urlFileContent = 'invalid-node';
             this.logService.error('This node does not exist');
         }
     }
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
+
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
+        let mimeType;
+        let urlFileContent;
 
         if (versionData && versionData.content) {
-            this.mimeType = versionData.content.mimeType;
+            mimeType = versionData.content.mimeType;
         } else if (nodeData.content) {
-            this.mimeType = nodeData.content.mimeType;
+            mimeType = nodeData.content.mimeType;
         }
 
         const currentFileVersion = this.nodeEntry?.entry?.properties && this.nodeEntry.entry.properties['cm:versionLabel'] ?
             encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel']) : encodeURI('1.0');
 
-        this.urlFileContent = versionData ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
+        urlFileContent = versionData ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
             this.contentApi.getContentUrl(this.nodeId);
-        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
-            this.urlFileContent + '&' + currentFileVersion;
+        urlFileContent = this.cacheBusterNumber ? urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
+            urlFileContent + '&' + currentFileVersion;
 
         const fileExtension = this.viewUtilService.getFileExtension(versionData ? versionData.name : nodeData.name);
         this.fileName = versionData ? versionData.name : nodeData.name;
-        this.viewerType = this.viewUtilService.getViewerType(fileExtension, this.mimeType);
+        const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
-        if (this.viewerType === 'unknown') {
+        if (viewerType === 'unknown') {
             if (versionData) {
                 ({
-                    url: this.urlFileContent,
-                    viewerType: this.viewerType
+                    url: urlFileContent,
+                    mimeType
                 } = await this.renditionViewerService.getNodeRendition(nodeData.id, versionData.id));
             } else {
                 ({
-                    url: this.urlFileContent,
-                    viewerType: this.viewerType
+                    url: urlFileContent,
+                    mimeType
                 } = await this.renditionViewerService.getNodeRendition(nodeData.id));
             }
-        } else if (this.viewerType === 'media') {
+        } else if (viewerType === 'media') {
             this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
         }
 
+        console.log('viewerType ======>>>>>' , viewerType)
+        this.mimeType = mimeType;
+        this.urlFileContent = urlFileContent;
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
     }
 
     private async setUpSharedLinkFile(details: any) {
-        this.mimeType = details.entry.content.mimeType;
+        let mimeType = details.entry.content.mimeType;
         const fileExtension = this.viewUtilService.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
-        this.urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-        this.viewerType = this.viewUtilService.getViewerType(fileExtension, this.mimeType);
+        let urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+        const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
-        if (this.viewerType === 'unknown') {
+        if (viewerType === 'unknown') {
             ({
-                url: this.urlFileContent,
-                viewerType: this.viewerType
+                url: urlFileContent,
+                mimeType
             } = await this.getSharedLinkRendition(this.sharedLinkId));
         }
+        this.mimeType = mimeType;
+        this.urlFileContent = urlFileContent;
     }
 
-    private async getSharedLinkRendition(sharedId: string): Promise<{ url: string; viewerType: string }> {
+    private async getSharedLinkRendition(sharedId: string): Promise<{ url: string; mimeType: string }> {
         try {
             const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-                return {url: urlFileContent, viewerType: 'pdf'};
+                return {url: urlFileContent, mimeType: 'application/pdf'};
             }
         } catch (error) {
             this.logService.error(error);
@@ -361,7 +370,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
-                    return {url: urlFileContent, viewerType: 'image'};
+                    return {url: urlFileContent, mimeType: 'image/png'};
 
                 }
             } catch (renditionError) {

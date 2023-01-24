@@ -134,13 +134,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     sidebarLeftTemplate: TemplateRef<any> = null;
 
-    /**
-     * Override Content view type.
-     * Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).
-     */
-    @Input()
-    viewerType: string = 'unknown';
-
     /** Enable when where is possible the editing functionalities  */
     @Input()
     readOnly = true;

@@ -32,7 +32,7 @@ import {
     CoreTestingModule,
     setupTestBed,
     EventMock,
-    FileModel, UploadService
+    FileModel, UploadService, ViewUtilService
 } from '@alfresco/adf-core';
 import { throwError } from 'rxjs';
 import { Component } from '@angular/core';
@@ -144,6 +144,8 @@ describe('AlfrescoViewerComponent', () => {
     let dialog: MatDialog;
     let uploadService: UploadService;
     let extensionService: AppExtensionService;
+    let renditionService: RenditionViewerService;
+    let viewUtilService: ViewUtilService;
 
     setupTestBed({
         imports: [
@@ -163,7 +165,8 @@ describe('AlfrescoViewerComponent', () => {
         providers: [
             {
                 provide: RenditionViewerService, useValue: {
-                    getNodeRendition: () => throwError('thrown')
+                    getNodeRendition: () => throwError('thrown'),
+                    generateMediaTracksRendition: () => {}
                 }
             },
             {provide: Location, useClass: SpyLocation},
@@ -180,6 +183,8 @@ describe('AlfrescoViewerComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
+        renditionService = TestBed.inject(RenditionViewerService);
+        viewUtilService = TestBed.inject(ViewUtilService);
     });
 
     afterEach(() => {
@@ -190,13 +195,16 @@ describe('AlfrescoViewerComponent', () => {
     describe('Extension Type Test', () => {
 
 
-        it('should use external viewer to display node by id', fakeAsync(() => {
+       it('should use external viewer to display node by id', fakeAsync(() => {
             const extension: ViewerExtensionRef = {
                 component: 'custom.component',
                 id: 'custom.component.id',
                 fileExtension: '*'
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
+            spyOn(renditionService, 'getNodeRendition');
+            spyOn(renditionService, 'generateMediaTracksRendition');
+            spyOn(viewUtilService, 'getViewerType').and.returnValue('external');
 
             fixture = TestBed.createComponent(AlfrescoViewerComponent);
             element = fixture.nativeElement;
@@ -211,7 +219,8 @@ describe('AlfrescoViewerComponent', () => {
             tick(100);
 
             expect(component.nodesApi.getNode).toHaveBeenCalled();
-            expect(component.viewerType).toBe('external');
+            expect(renditionService.getNodeRendition).not.toHaveBeenCalled();
+            expect(renditionService.generateMediaTracksRendition).not.toHaveBeenCalled();
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         }));
 
