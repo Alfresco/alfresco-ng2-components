@@ -48,6 +48,7 @@ import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
+import { EcmUserInfoModule } from './ecm-user-info/ecm-user-info.module';
 
 @NgModule({
     imports: [
@@ -62,6 +63,7 @@ import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
         DialogModule,
         SearchModule,
         DocumentListModule,
+        EcmUserInfoModule,
         UploadModule,
         MaterialModule,
         SitesDropdownModule,
@@ -98,6 +100,7 @@ import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
         TagModule,
         WebScriptModule,
         DocumentListModule,
+        EcmUserInfoModule,
         UploadModule,
         SearchModule,
         SitesDropdownModule,
