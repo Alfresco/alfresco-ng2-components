@@ -1,0 +1,21 @@
+<ng-container>
+    <adf-ecm-user-info 
+        *ngIf="mode ===userInfoMode.CONTENT || userInfoMode.CONTENT_SSO"
+        [ecmUser]="ecmUser$ | async"
+        [identityUser]="identityUser$ | async"
+        [isLoggedIn]="isLoggedIn"
+        [mode]="mode"
+    ></adf-ecm-user-info>
+    <adf-identity-user-info 
+        *ngIf="userInfoMode.SSO"
+        [identityUser]="identityUser$ | async"
+        [isLoggedIn]="isLoggedIn"
+    ></adf-identity-user-info>
+    <adf-bpm-user-info 
+        *ngIf="mode ===userInfoMode.PROCESS || userInfoMode.ALL"
+        [bpmUser]="bpmUser$ | async"
+        [ecmUser]="ecmUser$ | async"
+        [isLoggedIn]="isLoggedIn"
+        [mode]="mode"
+    ></adf-bpm-user-info>
+</ng-container>

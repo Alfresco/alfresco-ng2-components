@@ -115,6 +115,7 @@ import localeSv from '@angular/common/locales/sv';
 import { setupAppNotifications } from './services/app-notifications-factory';
 import { AppNotificationsService } from './services/app-notifications.service';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -159,6 +160,7 @@ registerLocaleData(localeSv);
         AppComponent,
         LogoutComponent,
         AppLayoutComponent,
+        UserInfoComponent,
         HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
