@@ -64,6 +64,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.module';
 
 @NgModule({
     imports: [
@@ -74,6 +75,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
+        IdentityUserInfoModule,
         DirectiveModule,
         DownloadZipDialogModule,
         FormsModule,
@@ -118,6 +120,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         DownloadZipDialogModule,
         ClipboardModule,
         FormsModule,
+        IdentityUserInfoModule,
         ReactiveFormsModule,
         UserInfoModule,
         MaterialModule,

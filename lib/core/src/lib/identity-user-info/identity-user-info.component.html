@@ -1,0 +1,45 @@
+<div 
+    id="userinfo_container" 
+    [class.adf-userinfo-name-right]="showOnRight" 
+    (keyup)="onKeyPress($event)"
+    class="adf-userinfo-container" 
+    *ngIf="isLoggedIn"
+>
+    <span *ngIf="showName" id="adf-userinfo-identity-name-display" class="adf-userinfo-name">
+        {{identityUser | fullName}}
+    </span>
+    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button"
+            data-automation-id="adf-user-profile">
+        <div class="adf-userinfo-button-profile" id="user-profile">
+            <div id="identity-user-image">
+                <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+            </div>
+        </div>
+    </button>
+    <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY"
+              [overlapTrigger]="false" class="adf-userinfo-menu">
+        <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0" role="menuitem"
+                       class="adf-userinfo-tab adf-hide-tab">
+            <mat-tab id="identity-panel" role="dialog">
+                <mat-card class="adf-userinfo-card">
+                    <mat-card-header class="adf-userinfo-card-header"
+                                     [style.background-image]="'url(' + bpmBackgroundImage + ')'">
+                        <div class="adf-userinfo-title" id="identity-username">{{identityUser | fullName}}</div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="adf-userinfo-supporting-text">
+                            <div class="adf-userinfo-detail">
+                                <span id="identity-full-name"
+                                      class="adf-userinfo__detail-title">{{identityUser | fullName}}</span>
+                                <span class="adf-userinfo__detail-profile"
+                                      id="identity-email"> {{identityUser.email}} </span>
+                                <a class="adf-userinfo__detail-profile" href="#/profile">
+                                      {{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-menu>
+</div>
