@@ -333,7 +333,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
         }
 
-        console.log('viewerType ======>>>>>' , viewerType)
         this.mimeType = mimeType;
         this.urlFileContent = urlFileContent;
         this.sidebarRightTemplateContext.node = nodeData;
