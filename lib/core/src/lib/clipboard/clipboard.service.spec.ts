@@ -69,7 +69,9 @@ describe('ClipboardService', () => {
     });
 
     it('should notify copy to clipboard with message', () => {
+        spyOn(navigator.clipboard, 'writeText');
         spyOn(notificationService, 'openSnackMessage');
+
         inputElement.value = 'some text';
 
         clipboardService.copyToClipboard(inputElement, 'success');
