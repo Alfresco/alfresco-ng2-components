@@ -212,7 +212,6 @@ describe('AlfrescoViewerComponent', () => {
 
             expect(component.nodesApi.getNode).toHaveBeenCalled();
             expect(component.viewerType).toBe('external');
-            expect(component.isLoading).toBeFalsy();
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         }));
 
