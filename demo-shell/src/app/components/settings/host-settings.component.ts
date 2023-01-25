@@ -17,9 +17,8 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, OauthConfigModel } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, OauthConfigModel, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
-import { AuthenticationService } from '../services/authentication.service';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
 
