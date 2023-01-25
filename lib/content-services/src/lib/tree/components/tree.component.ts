@@ -56,7 +56,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
 
     /** Load more suffix for load more button */
     @Input()
-    public loadMoreSuffix: string
+    public loadMoreSuffix: string;
 
     /** Icon shown when node has children and is collapsed. By default set to chevron_right */
     @Input()
