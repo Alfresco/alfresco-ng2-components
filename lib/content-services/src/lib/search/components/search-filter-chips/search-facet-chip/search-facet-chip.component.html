@@ -6,6 +6,7 @@
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"
+          (keydown.escape)="onEscKeydown()"
           [attr.title]="facetField.displayValue$ | async"
           #menuTrigger="matMenuTrigger">
 

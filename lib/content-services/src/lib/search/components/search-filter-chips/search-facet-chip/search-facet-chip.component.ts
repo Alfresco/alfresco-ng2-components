@@ -65,6 +65,16 @@ export class SearchFacetChipComponent {
     }
 
     onEnterKeydown(): void {
-        this.menuTrigger.openMenu();
+        if (!this.menuTrigger.menuOpen) {
+            this.menuTrigger.openMenu();
+        } else {
+            this.menuTrigger.closeMenu();
+        }
+    }
+
+    onEscKeydown() {
+        if (this.menuTrigger.menuOpen) {
+            this.menuTrigger.closeMenu();
+        }
     }
 }
