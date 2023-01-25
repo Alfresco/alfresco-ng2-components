@@ -18,7 +18,7 @@
 import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
+import { OauthConfigModel } from '../auth/models/oauth-config.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApiLoaderService) {

@@ -62,10 +62,10 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { AuthBearerInterceptor } from './services/auth-bearer.interceptor';
+import { AuthBearerInterceptor } from './auth/authentication-interceptor/auth-bearer.interceptor';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
-import { StorageService } from './services/storage.service';
+import { StorageService } from './common/services/storage.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 import { AlfrescoApiServiceWithAngularBasedHttpClient } from './api-factories/alfresco-api-service-with-angular-based-http-client';
 

@@ -21,7 +21,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../common/services/storage.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { DemoForm } from '../mock/form/demo-form.mock';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Injectable({
     providedIn: 'root'
