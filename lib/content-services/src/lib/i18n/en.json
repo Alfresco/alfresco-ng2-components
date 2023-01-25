@@ -466,7 +466,7 @@
     }
   },
   "ADF-TREE": {
-    "LOAD-MORE-BUTTON": "Load more"
+    "LOAD-MORE-BUTTON": "Load more {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {

@@ -178,7 +178,7 @@ describe('TreeComponent', () => {
         component.refreshTree();
         fixture.detectChanges();
         spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(singleNode)}));
-        const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button')).nativeElement;
+        const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button adf-icon')).nativeElement;
         const appendSpy = spyOn(component.treeService, 'appendNodes').and.callThrough();
         loadMoreBtn.dispatchEvent(new Event('click'));
         fixture.whenStable();

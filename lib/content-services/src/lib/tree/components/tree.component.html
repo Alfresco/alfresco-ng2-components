@@ -17,23 +17,25 @@
                 *matTreeNodeDef="let node when isLoadMoreNode"
                 matTreeNodePadding>
                 <div class="adf-tree-expand-collapse-container">
-                    <button class="adf-group-tree-expand-collapse-button" mat-icon-button disabled>
+                    <button class="adf-tree-load-more-button" mat-icon-button>
                         <mat-progress-spinner
                             color="primary"
                             mode="indeterminate"
                             [diameter]="24"
-                            *ngIf="node.isLoading">
+                            *ngIf="node.isLoading; else loadMoreIcon">
                         </mat-progress-spinner>
+                        <ng-template #loadMoreIcon>
+                            <adf-icon
+                                [value]="'chevron_right'"
+                                (click)="loadMoreSubnodes(node)">
+                            </adf-icon>
+                        </ng-template>
                     </button>
                 </div>
-
-                <div class="adf-group-tree-cell">
-                    <button class="adf-tree-load-more-button"
-                        mat-raised-button
-                        color="primary"
-                        (click)="loadMoreSubnodes(node)">
-                        {{'ADF-TREE.LOAD-MORE-BUTTON' | translate}}
-                    </button>
+                <div class="adf-tree-cell">
+                    <span class="adf-tree-cell-value">
+                        {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
+                    </span>
                 </div>
             </mat-tree-node>
             <mat-tree-node
