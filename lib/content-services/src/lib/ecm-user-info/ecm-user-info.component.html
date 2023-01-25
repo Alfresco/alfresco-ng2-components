@@ -40,7 +40,7 @@
               [overlapTrigger]="false" class="adf-userinfo-menu">
         <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0" role="menuitem"
                        class="adf-userinfo-tab adf-hide-tab">
-            <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
+            <mat-tab label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode === userInfoMode.CONTENT">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
