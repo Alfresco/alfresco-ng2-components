@@ -318,16 +318,15 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
         if (viewerType === 'unknown') {
+            let nodeRendition;
             if (versionData) {
-                ({
-                    url: urlFileContent,
-                    mimeType
-                } = await this.renditionViewerService.getNodeRendition(nodeData.id, versionData.id));
+                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id, versionData.id);
             } else {
-                ({
-                    url: urlFileContent,
-                    mimeType
-                } = await this.renditionViewerService.getNodeRendition(nodeData.id));
+                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id);
+            }
+            if(nodeRendition){
+                urlFileContent = nodeRendition.url;
+                mimeType = nodeRendition.mimeType;
             }
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
