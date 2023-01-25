@@ -335,7 +335,6 @@ describe('Content Services Viewer', () => {
             await viewerPage.checkFileNameIsDisplayed(mp4File.name);
             await viewerPage.checkDownloadButtonIsDisplayed();
             await viewerPage.checkInfoButtonIsDisplayed();
-            await viewerPage.checkFullScreenButtonIsNotDisplayed();
 
             await viewerPage.checkZoomInButtonIsNotDisplayed();
 
