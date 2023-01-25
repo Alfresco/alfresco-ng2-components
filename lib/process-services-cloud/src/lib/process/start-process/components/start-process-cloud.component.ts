@@ -391,7 +391,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.onDestroy$.complete();
     }
 
-    disableStartButton() {
+    disableStartButton(): boolean {
         return !this.appName || !this.processDefinition.valid || this.isLoading;
     }
 }
