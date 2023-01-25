@@ -3,7 +3,7 @@
         <div class="adf-tree-row adf-tree-header">
             <div class="adf-tree-cell adf-tree-cell-header" data-automation-id="tree-header-display-name">
                 <span class="adf-tree-cell-value">
-                    {{ displayName | translate}}
+                    {{ displayName | translate }}
                 </span>
             </div>
         </div>
@@ -93,7 +93,7 @@
                     <mat-menu #menu="matMenu">
                         <ng-template
                             [ngTemplateOutlet]="nodeActionsMenuTemplate"
-                            [ngTemplateOutletContext]="{node: node}">
+                            [ngTemplateOutletContext]="{ node: node }">
                     </ng-template>
                     </mat-menu>
                 </div>

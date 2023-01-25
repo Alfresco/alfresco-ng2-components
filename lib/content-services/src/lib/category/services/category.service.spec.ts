@@ -18,18 +18,20 @@
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { CategoryBody, CategoryEntry, CategoryPaging } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { CategoryService } from 'lib/content-services/src/public-api';
+import { CategoryService } from './category.service';
 
 describe('CategoryService', () => {
-  let categoryService: CategoryService;
-  const fakeParentCategoryId = 'testParentId';
-  const fakeCategoriesResponse: CategoryPaging = {list: {pagination: {}, entries: []}};
-  const fakeCategoryEntry: CategoryEntry = {entry: {id: 'testId', name: 'testName'}};
-  const fakeCategoryBody: CategoryBody = {name: 'updatedName'};
+    let categoryService: CategoryService;
+    const fakeParentCategoryId = 'testParentId';
+    const fakeCategoriesResponse: CategoryPaging = { list: { pagination: {}, entries: [] }};
+    const fakeCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testName' }};
+    const fakeCategoryBody: CategoryBody = { name: 'updatedName' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [
+                CoreTestingModule
+            ]
         });
 
         categoryService = TestBed.inject(CategoryService);

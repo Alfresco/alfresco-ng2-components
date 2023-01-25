@@ -210,7 +210,7 @@ describe('TreeComponent', () => {
         });
 
         it('should update selection when leaf node is selected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(treeNodesMock)}));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesMock) }));
             fixture.detectChanges();
             const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
             nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
@@ -218,7 +218,7 @@ describe('TreeComponent', () => {
         });
 
         it('should update selection of each child node when parent node is selected and deselected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded)}));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
             const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
             nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
@@ -232,7 +232,7 @@ describe('TreeComponent', () => {
         });
 
         it('parent node should have intermediate state when not all subnodes are selected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded)}));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
             const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
             nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
@@ -246,7 +246,7 @@ describe('TreeComponent', () => {
             fixture.detectChanges();
             const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
             nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(singleNode)}));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
             component.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<TreeNode>) => {
                 expect(selectionChange.added.length).toEqual(1);
                 expect(selectionChange.added[0].id).toEqual(singleNode[0].id);

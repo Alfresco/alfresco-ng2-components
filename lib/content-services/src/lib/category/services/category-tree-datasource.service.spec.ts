@@ -17,7 +17,7 @@
 
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { CategoryService } from '../public-api';
+import { CategoryService } from '../services/category.service';
 import { CategoryTreeDatasourceService } from './category-tree-datasource.service';
 import { CategoryServiceMock } from '../mock/category-mock.service';
 import { TreeNodeType, TreeResponse } from '../../tree';
@@ -28,8 +28,12 @@ describe('CategoryTreeDatasourceService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{provide: CategoryService, useClass: CategoryServiceMock}]
+            imports: [
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: CategoryService, useClass: CategoryServiceMock }
+            ]
         });
 
         categoryTreeDatasourceService = TestBed.inject(CategoryTreeDatasourceService);

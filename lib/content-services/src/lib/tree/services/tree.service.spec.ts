@@ -19,14 +19,23 @@ import { TreeService } from './tree.service';
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { TreeNode } from '../models/tree-node.interface';
-import { treeNodesMock, treeNodesChildrenMock, treeNodesMockExpanded, treeNodesChildrenMockExpanded, treeNodesNoChildrenMock, singleNode } from '../mock/tree-node.mock';
+import {
+    treeNodesMock,
+    treeNodesChildrenMock,
+    treeNodesMockExpanded,
+    treeNodesChildrenMockExpanded,
+    treeNodesNoChildrenMock,
+    singleNode
+} from '../mock/tree-node.mock';
 
 describe('TreeService', () => {
     let service: TreeService<TreeNode>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [
+                CoreTestingModule
+            ]
         });
         service = TestBed.inject(TreeService);
     });
