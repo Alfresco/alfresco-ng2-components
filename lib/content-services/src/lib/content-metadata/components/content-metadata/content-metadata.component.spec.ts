@@ -18,18 +18,20 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MinimalNode, Node } from '@alfresco/js-api';
+import { ClassesApi, MinimalNode, Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
     CardViewBaseItemModel, CardViewComponent, NodesApiService,
-    LogService, setupTestBed
+    LogService, setupTestBed, AppConfigService
 } from '@alfresco/adf-core';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
+import { PropertyGroup } from '../../interfaces/property-group.interface';
+import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -414,6 +416,267 @@ describe('ContentMetadataComponent', () => {
 
         it('should have displayDefaultProperties input param as true by default', () => {
             expect(component.displayDefaultProperties).toBe(true);
+        });
+    });
+
+
+    describe('Display properties with aspect oriented config', () => {
+        let appConfig: AppConfigService;
+        let classesApi: ClassesApi;
+        let expectedNode: MinimalNode;
+
+        const versionableResponse: PropertyGroup = {
+            name: 'cm:versionable',
+            title: 'Versionable',
+            properties: {
+                'cm:autoVersion': {
+                    title: 'Auto Version',
+                    name: 'cm:autoVersion',
+                    dataType: 'd:boolean',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'cm:initialVersion': {
+                    title: 'Initial Version',
+                    name: 'cm:initialVersion',
+                    dataType: 'd:boolean',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'cm:versionType': {
+                    title: 'Version Type',
+                    name: 'cm:versionType',
+                    dataType: 'd:text',
+                    mandatory: false,
+                    multiValued: false
+                }
+            }
+        };
+
+        const exifResponse: PropertyGroup = {
+            name: 'exif:exif',
+            title: 'Exif',
+            properties: {
+                'exif:1': {
+                    title: 'exif:1:id',
+                    name: 'exif:1',
+                    dataType: '',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:2': {
+                    title: 'exif:2:id',
+                    name: 'exif:2',
+                    dataType: '',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:pixelXDimension': {
+                    title: 'Image Width',
+                    name: 'exif:pixelXDimension',
+                    dataType: 'd:int',
+                    mandatory: false,
+                    multiValued: false
+                },
+                'exif:pixelYDimension': {
+                    title: 'Image Height',
+                    name: 'exif:pixelYDimension',
+                    dataType: 'd:int',
+                    mandatory: false,
+                    multiValued: false
+                }
+            }
+        };
+
+        const setContentMetadataConfig = (presetName, presetConfig) => {
+            appConfig.config['content-metadata'] = {
+                presets: {
+                    [presetName]: presetConfig
+                }
+            };
+        };
+
+        beforeEach(() => {
+            appConfig = TestBed.inject(AppConfigService);
+            const propertyDescriptorsService = TestBed.inject(
+                PropertyDescriptorsService
+            );
+            classesApi = propertyDescriptorsService['classesApi'];
+            expectedNode = {
+                ...node,
+                aspectNames: [
+                    'rn:renditioned',
+                    'cm:versionable',
+                    'cm:titled',
+                    'cm:auditable',
+                    'cm:author',
+                    'cm:thumbnailModification',
+                    'exif:exif'
+                ],
+                name: 'some-modified-value',
+                properties: {
+                    'exif:pixelXDimension': 1024,
+                    'exif:pixelYDimension': 1024
+                }
+            };
+
+            component.expanded = true;
+            component.preset = 'default';
+        });
+
+        it('should show Versionable with given content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: false,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+
+            expect(versionableProp).toBeTruthy();
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should show Versionable twice with given content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
+
+            expect(versionableProps.length).toEqual(2);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should not show Versionable with given content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+
+            expect(versionableProp).toBeNull();
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should not show Versionable when excluded and included set in content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: 'cm:versionable',
+                'cm:versionable': '*'
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+
+            expect(versionableProp).toBeTruthy();
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+        });
+
+        it('should not show aspects excluded in content-metadata config', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                exclude: ['cm:versionable', 'cm:auditable']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const versionableProp = queryDom(fixture, 'Versionable');
+            expect(versionableProp).toBeNull();
+
+            const auditableProp = queryDom(fixture, 'Auditable');
+            expect(auditableProp).toBeNull();
+
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_auditable');
+        });
+
+        it('should show Exif even when includeAll is set to false', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: false,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const exifProp = queryDom(fixture, 'Exif');
+
+            expect(exifProp).toBeTruthy();
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+
+            exifProp.nativeElement.click();
+
+            const pixelXDimentionElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-label-properties.exif:pixelXDimension"]'));
+            expect(pixelXDimentionElement).toBeTruthy();
+            expect(pixelXDimentionElement.nativeElement.textContent.trim()).toEqual('Image Width');
+
+            const pixelYDimentionElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-label-properties.exif:pixelYDimension"]'));
+            expect(pixelYDimentionElement).toBeTruthy();
+            expect(pixelYDimentionElement.nativeElement.textContent.trim()).toEqual('Image Height');
+        });
+
+        it('should show Exif twice when includeAll is set to true', async () => {
+            setContentMetadataConfig('default', {
+                includeAll: true,
+                'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
+            });
+
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            fixture.detectChanges();
+
+            await component.groupedProperties$.toPromise();
+            fixture.detectChanges();
+
+            const exifProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Exif"]'));
+
+            expect(exifProps.length).toEqual(2);
+            expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
         });
     });
 
