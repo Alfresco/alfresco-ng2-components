@@ -79,10 +79,10 @@ function getCommits(options: DiffOptions): Array<Commit> {
     let authorFilter = (options.exclude || '')
         .split(',')
         .map(str => str.trim().replace(/\\/g, ''))
-        .join('\|');
+        .join('|');
 
     if (!authorFilter) {
-        authorFilter = `bot\|Alfresco Build User`;
+        authorFilter = `bot|Alfresco Build User`;
     }
 
 
