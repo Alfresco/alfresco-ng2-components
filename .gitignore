@@ -30,3 +30,6 @@ out-tsc
 e2e-result-*
 licenses.txt
 .DS_Store
+.angular
+nxcache
+.vscode/settings.json
