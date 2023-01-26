@@ -28,8 +28,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
     public treeNodesSource = new BehaviorSubject<T[]>([]);
 
     get treeNodes(): T[] {
-        // eslint-disable-next-line rxjs/no-subject-value
-        return this.treeNodesSource.getValue();
+        return this.treeControl.dataNodes;
     }
 
     set treeNodes(nodes: T[]) {
@@ -40,6 +39,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
     constructor() {
         super();
         this.treeControl = new FlatTreeControl<T>(node => node.level, node => node.hasChildren);
+        this.treeNodes = [];
     }
 
     public abstract getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<T>>;

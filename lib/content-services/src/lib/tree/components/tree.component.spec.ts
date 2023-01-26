@@ -225,7 +225,6 @@ describe('TreeComponent', () => {
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeTrue();
             expect(component.descendantsAllSelected(component.treeService.treeNodes[0])).toBeTrue();
 
-            //deselect
             nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeFalse();
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[0])).toBeFalse();
