@@ -12,7 +12,7 @@ on:
         description: 'skip pr approve check'
         required: false
         type: boolean
-        default: false          
+        default: false
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -70,38 +70,38 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  check-if-pr-is-approved:    
+  check-if-pr-is-approved:
     runs-on: ubuntu-22.04
-    steps:        
-      - name: Checkout repository        
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v3
-        with: 
-          fetch-depth: 0        
-      
+        with:
+          fetch-depth: 0
+
       - name: Check if PR is approved
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@v0
-        with: 
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        
+
       - name: Show the number
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
           DEVEL_FLAG: ${{ inputs.skip-pr-approve }} #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
-        if: ${{ github.event_name != 'schedule' }}                   
+        if: ${{ github.event_name != 'schedule' }}
         run: |
-          if [[ "$DEVEL_FLAG" = false ]] ; then     
-            echo "PR number is: ${{ steps.action.outputs.number }}" 
-            prNumber=${{ steps.action.outputs.number }}    
-            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
+          if [[ "$DEVEL_FLAG" = false ]] ; then
+            echo "PR number is: ${{ steps.action.outputs.number }}"
+            prNumber=${{ steps.action.outputs.number }}
+            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo "PR approved"
             else
               echo "PR not approved yet"
               exit 1
-            fi 
+            fi
           else
             echo "you are on your branch: skipping the check. REMEMBER to put DEVEL_FLAG to FALSE before the final merge!"
           fi
@@ -119,15 +119,15 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
         id: setup
-        with: 
+        with:
           use-gh-nx-cache: false
-          use-gh-node-modules-cache: false       
+          use-gh-node-modules-cache: false
       - name: run ci
-        if: steps.setup.outputs.cache-hit != 'true'          
+        if: steps.setup.outputs.cache-hit != 'true'
         run: npm ci
       - run: nx run cli:bundle
       - run: nx run testing:bundle
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-job-artifacts
         with:
           packages: 'dist node_modules'
 
@@ -155,11 +155,11 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-        with: 
+        with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
           cache-key-suffix: unit-tests-${{ matrix.unit-tests.name }}
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-job-artifacts
         with:
           packages: 'node_modules'
           persistent-packages: 'nxcache'
@@ -167,11 +167,11 @@ jobs:
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-job-artifacts
         with:
           persistent-packages: 'nxcache'
           packages-key-suffix: ${{ matrix.unit-tests.name }}
- 
+
   lint:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
@@ -184,16 +184,16 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-        with: 
+        with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
           cache-key-suffix: ${{ github.ref_name }}-lint
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-job-artifacts
         with:
           packages: 'node_modules'
           persistent-packages: 'nxcache'
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-job-artifacts
         with:
           persistent-packages: 'nxcache'
           packages-key-suffix: ${{ github.ref_name }}-lint
@@ -210,11 +210,11 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-        with: 
+        with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
           cache-key-suffix: build-libs
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-job-artifacts
         with:
           packages: 'node_modules'
           persistent-packages: 'nxcache'
@@ -223,7 +223,7 @@ jobs:
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-job-artifacts
         with:
           packages: 'dist node_modules'
           persistent-packages: 'nxcache'
@@ -240,10 +240,10 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
-        with: 
+        with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-job-artifacts
         with:
           packages: 'dist node_modules'
       - name: Process Cloud Storybook Playwright
@@ -383,7 +383,7 @@ jobs:
         with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-job-artifacts
         with:
           packages: 'dist node_modules'
       - name: setup chrome
