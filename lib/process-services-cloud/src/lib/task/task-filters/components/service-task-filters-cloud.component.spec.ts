@@ -62,7 +62,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
 
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -84,7 +84,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -96,7 +96,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
 
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -114,7 +114,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(filters[2].nativeElement.innerText).toContain('FakeMyServiceTasks2');
     });
 
-    it('should emit an error with a bad response', async() => {
+    it('should emit an error with a bad response', async () => {
         const mockErrorFilterList = {
             error: 'wrong request'
         };
@@ -127,7 +127,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
             expect(err).toBeDefined();
         });
 
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
         fixture.detectChanges();
     });
 

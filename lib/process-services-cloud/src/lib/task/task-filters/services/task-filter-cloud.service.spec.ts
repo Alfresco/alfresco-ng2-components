@@ -74,14 +74,14 @@ describe('TaskFilterCloudService', () => {
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create task filter key by using appName and the username', async() => {
+    it('should create task filter key by using appName and the username', async () => {
         await service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(getCurrentUserInfoSpy).toHaveBeenCalled();
         });
     });
 
-    it('should create default task filters if there are no task filter preferences', async() => {
+    it('should create default task filters if there are no task filter preferences', async () => {
         getPreferencesSpy.and.returnValue(of(fakeEmptyTaskCloudPreferenceList));
         await service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -106,7 +106,7 @@ describe('TaskFilterCloudService', () => {
         expect(createPreferenceSpy).toHaveBeenCalled();
     });
 
-    it('should return the task filters if filters available', async() => {
+    it('should return the task filters if filters available', async () => {
         await service.getTaskListFilters('fakeAppName').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -130,10 +130,10 @@ describe('TaskFilterCloudService', () => {
         expect(getPreferencesSpy).toHaveBeenCalled();
     });
 
-    it('should create the task filters if the user preference does not have task filters', async() => {
+    it('should create the task filters if the user preference does not have task filters', async () => {
         getPreferencesSpy.and.returnValue(of(fakePreferenceWithNoTaskFilterPreference));
 
-        await service.getTaskListFilters('fakeAppName').subscribe( (res) => {
+        await service.getTaskListFilters('fakeAppName').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -156,7 +156,7 @@ describe('TaskFilterCloudService', () => {
 
     });
 
-    it('should return filter by task filter id', async() => {
+    it('should return filter by task filter id', async () => {
         await service.getTaskFilterById('fakeAppName', '2').subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -168,7 +168,7 @@ describe('TaskFilterCloudService', () => {
         expect(getPreferenceByKeySpy).toHaveBeenCalled();
     });
 
-    it('should add task filter if filter is not exist in the filters', async() => {
+    it('should add task filter if filter is not exist in the filters', async () => {
         getPreferenceByKeySpy.and.returnValue(of([]));
         await service.getTaskFilterById('fakeAppName', '2').subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -180,7 +180,7 @@ describe('TaskFilterCloudService', () => {
         });
     });
 
-    it('should update filter', async() => {
+    it('should update filter', async () => {
         createPreferenceSpy.and.returnValue(of(fakeTaskCloudFilters));
         await service.updateFilter(fakeTaskFilter).subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -192,7 +192,7 @@ describe('TaskFilterCloudService', () => {
         });
     });
 
-    it('should create task filter when trying to update in case filter is not exist in the filters', async() => {
+    it('should create task filter when trying to update in case filter is not exist in the filters', async () => {
         getPreferenceByKeySpy.and.returnValue(of([]));
         await service.updateFilter(fakeTaskFilter).subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -213,7 +213,7 @@ describe('TaskFilterCloudService', () => {
         expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
     });
 
-    it('should return engine event task subscription', async() => {
+    it('should return engine event task subscription', async () => {
         spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(taskCloudEngineEventsMock));
 
         await service.getTaskNotificationSubscription('myAppName').subscribe((res: TaskCloudEngineEvent[]) => {
@@ -233,7 +233,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
-        imports: [ HttpClientTestingModule, ApolloModule ],
+        imports: [HttpClientTestingModule, ApolloModule],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
@@ -247,7 +247,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
-    it('should create default task filters if there are no task filter preferences', async() => {
+    it('should create default task filters if there are no task filter preferences', async () => {
         const appName = 'fakeAppName';
         await service.getTaskListFilters(appName).subscribe((res: TaskFilterCloudModel[]) => {
             expect(res.length).toEqual(3);
