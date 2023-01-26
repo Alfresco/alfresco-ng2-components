@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-
-export interface AbstractAuthentication {
-    TYPE: string;
-    alfrescoApi: any;
-
-    login(username: string, password: string): Observable<any>;
-
-    logout(): Observable<any>;
-
-    isLoggedIn(): boolean ;
-
-    getTicket(): string;
-
-    saveTicket(ticket: any): void;
-}
+export * from './auth-routing.module';
+export * from './auth.module';
+export * from './auth.service';
+export * from './oidc-auth.guard';
+export * from './redirect-auth.service';
+export * from './view/authentication-confirmation/authentication-confirmation.component';

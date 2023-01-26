@@ -19,14 +19,14 @@ import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { OauthConfigModel } from './models/oauth-config.model';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { BaseAuthenticationService } from '../services/base-authentication.service';
-import { CookieService } from '../common/services/cookie.service';
-import { JwtHelperService } from './services/jwt-helper.service';
-import { LogService } from '../common/services/log.service';
-import { AuthConfigService } from './auth-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { CookieService } from '../../common/services/cookie.service';
+import { JwtHelperService } from '../services/jwt-helper.service';
+import { LogService } from '../../common/services/log.service';
+import { AuthConfigService } from '../oidc/auth-config.service';
 import { AuthService } from './auth.service';
 
 @Injectable({

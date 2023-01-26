@@ -59,4 +59,4 @@ export * from './lib/common';
 
 export * from './lib/material.module';
 export * from './lib/core.module';
-export { AuthModule } from './lib/auth/auth.module';
+export { AuthModule } from './lib/auth/oidc/auth.module';
