@@ -35,7 +35,8 @@ import { AuthConfigService, configureAuth } from './services/auth-config.service
         {
             provide: APP_INITIALIZER,
             useFactory: configureAuth,
-            deps: [ AuthConfigService ]
+            deps: [ AuthConfigService ],
+            multi: true
         },
         // TODO: CANARY: This is temporary, we are reproviding ADF's AuthenticationService with our own implementation to work with the new auth library
         // TODO: But we need definitely need a cleaner solution for this. Which means, first we need to make the apis capable of handling multiple http clients

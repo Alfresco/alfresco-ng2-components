@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '@alfresco/adf-core/common';
 import { AppConfigService, AppConfigValues } from '@alfresco/adf-core/config';
 
-export const configureAuth = (oidcAuthentication: AuthConfigService) => () => oidcAuthentication.init();
+export const configureAuth = (oidcAuthentication: AuthConfigService) => () => oidcAuthentication.load();
 
 @Injectable()
 export class AuthConfigService {
@@ -37,8 +37,7 @@ export class AuthConfigService {
         private router: Router
     ) {}
 
-    public init() {
-        debugger;
+    public load() {
         this.appConfigService.onLoad
             .pipe(take(1))
             .toPromise()
@@ -64,18 +63,4 @@ export class AuthConfigService {
     isCodeFlow(): boolean {
         return this._authConfig.responseType === 'code';
     }
-
-    // private getAuthConfig(codeFlow = false): AuthConfig {
-    //     const oauth2: OauthConfigModel = Object.assign({});
-    //     return {
-    //         issuer: oauth2.host,
-    //         loginUrl: `${oauth2.host}/protocol/openid-connect/auth`,
-    //         silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
-    //         redirectUri: window.location.origin + oauth2.redirectUri,
-    //         postLogoutRedirectUri: window.location.origin + oauth2.redirectUriLogout,
-    //         clientId: oauth2.clientId,
-    //         scope: oauth2.scope,
-    //         ...(codeFlow ? { responseType: 'code' } : {})
-    //     };
-    // }
 }

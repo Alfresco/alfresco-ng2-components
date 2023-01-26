@@ -135,12 +135,17 @@ registerLocaleData(localeFi);
 registerLocaleData(localeDa);
 registerLocaleData(localeSv);
 
-debugger;
-
 @NgModule({
     imports: [
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        MaterialModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+
         ...(environment.oidc ?
             [
                 // Initial navigation must be disabled when we use the OIDC package with HashLocationStrategy, check its documentation
@@ -165,12 +170,7 @@ debugger;
                 CoreModule.forRoot({ authByJsApi: true })
             ]
         ),
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientModule,
-        MaterialModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
+
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),

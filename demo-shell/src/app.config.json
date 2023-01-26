@@ -19,8 +19,8 @@
     "issuer": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
     "loginUrl": "{protocol}//{hostname}{:port}/auth/realms/alfresco/protocol/openid-connect/auth",
     "silentRefreshRedirectUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
-    "redirectUri": "/",
-    "postLogoutRedirectUri": "#/logout",
+    "redirectUri": "{protocol}//{hostname}{:port}/",
+    "postLogoutRedirectUri": "{protocol}//{hostname}{:port}/#/logout",
     "clientId": "alfresco",
     "scope": "openid profile email",
     "responseType": "code"

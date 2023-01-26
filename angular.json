@@ -251,6 +251,9 @@
             },
             "e2e": {
               "browserTarget": "demoshell:build:e2e"
+            },
+            "canary": {
+              "browserTarget": "demoshell:build:canary"
             }
           }
         },

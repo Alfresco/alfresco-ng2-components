@@ -151,7 +151,6 @@ const defaultConfig: LegacyMonolithCoreModuleConfig = {
 })
 export class CoreModule {
     static forRoot(config: LegacyMonolithCoreModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
-        debugger;
         return {
             ngModule: CoreModule,
             providers: [
