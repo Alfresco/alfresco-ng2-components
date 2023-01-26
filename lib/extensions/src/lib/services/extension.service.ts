@@ -118,9 +118,9 @@ export class ExtensionService {
      * Gets features by key.
      *
      * @param key Key string, using dot notation
-     * @returns Features array found by key
+     * @returns Feature found by key
      */
-    getFeature(key: string): any[] {
+    getFeature<T = any[]>(key: string): T {
         const properties: string[] = Array.isArray(key) ? [key] : key.split('.');
         return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];
     }
