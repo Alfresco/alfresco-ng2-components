@@ -44,7 +44,7 @@ export class UnClaimTaskCloudDirective implements OnInit {
 
     constructor(
         private readonly el: ElementRef,
-        private readonly renderer : Renderer2,
+        private readonly renderer: Renderer2,
         private taskListService: TaskCloudService) { }
 
     ngOnInit() {

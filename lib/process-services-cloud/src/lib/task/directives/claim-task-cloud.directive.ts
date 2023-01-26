@@ -45,7 +45,7 @@ export class ClaimTaskCloudDirective implements OnInit {
 
     constructor(
         private readonly el: ElementRef,
-        private readonly renderer : Renderer2,
+        private readonly renderer: Renderer2,
         private taskListService: TaskCloudService,
         private identityUserService: IdentityUserService) { }
 
