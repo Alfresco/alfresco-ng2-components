@@ -204,6 +204,14 @@
                 }
               ]
             },
+            "canary": {
+              "fileReplacements": [
+                {
+                  "replace": "demo-shell/src/environments/environment.ts",
+                  "with": "demo-shell/src/environments/environment.canary.ts"
+                }
+              ]
+            },
             "e2e": {
               "budgets": [
                 {

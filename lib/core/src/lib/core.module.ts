@@ -64,6 +64,14 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
+interface LegacyMonolithCoreModuleConfig {
+    authByJsApi: boolean;
+}
+
+const defaultConfig: LegacyMonolithCoreModuleConfig = {
+    authByJsApi: true
+};
+
 @NgModule({
     imports: [
         TranslateModule,
@@ -142,21 +150,20 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot(config: LegacyMonolithCoreModuleConfig = defaultConfig): ModuleWithProviders<CoreModule> {
+        debugger;
         return {
             ngModule: CoreModule,
             providers: [
                 TranslateStore,
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: startupServiceFactory,
-                    deps: [
-                        AlfrescoApiService
-                    ],
-                    multi: true
-                },
+                ...(config.authByJsApi ?
+                    [{
+                        provide: APP_INITIALIZER,
+                        useFactory: startupServiceFactory,
+                        deps: [ AlfrescoApiService ], multi: true
+                }] : []),
                 {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,

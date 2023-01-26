@@ -22,5 +22,6 @@
 
 export const environment = {
   production: false,
-  e2e: false
+  e2e: false,
+  oidc: false
 };

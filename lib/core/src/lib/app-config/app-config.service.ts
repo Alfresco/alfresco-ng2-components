@@ -28,6 +28,7 @@ import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.int
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
     PROVIDERS = 'providers',
+    AUTH_CONFIG = 'authentication',
     OAUTHCONFIG = 'oauth2',
     ECMHOST = 'ecmHost',
     BASESHAREURL = 'baseShareUrl',

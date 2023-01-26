@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-export const environment = {
-  production: false,
-  e2e: true,
-  oidc: false
-};
+import { StorageService } from '../common';
+import { AppConfigService, AppConfigValues } from './app-config.service';
+
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+    return () => appConfigService.load().then(() => {
+        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+    });
+}

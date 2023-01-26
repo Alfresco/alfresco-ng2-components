@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
-export * from './authentication';
-export * from './authentication-interceptor/authentication.interceptor';
+export * from './lib/authentication';
+export * from './lib/authentication-interceptor/authentication.interceptor';
+export * from './lib/auth.module';

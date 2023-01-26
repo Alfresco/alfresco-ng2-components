@@ -29,7 +29,8 @@ import {
     DebugAppConfigService,
     CoreModule,
     CoreAutomationService,
-    AuthBearerInterceptor
+    AuthBearerInterceptor,
+    AppConfigModule
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
@@ -115,6 +116,7 @@ import localeSv from '@angular/common/locales/sv';
 import { setupAppNotifications } from './services/app-notifications-factory';
 import { AppNotificationsService } from './services/app-notifications.service';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { AuthModule } from '@alfresco/adf-core/auth';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -133,18 +135,42 @@ registerLocaleData(localeFi);
 registerLocaleData(localeDa);
 registerLocaleData(localeSv);
 
+debugger;
+
 @NgModule({
     imports: [
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
+        ...(environment.oidc ?
+            [
+                // Initial navigation must be disabled when we use the OIDC package with HashLocationStrategy, check its documentation
+                RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy', initialNavigation: 'disabled' }),
+
+                // With this, we bypass the legacy behaviour, and won't load the app config and don't initialize the JS API
+                CoreModule.forRoot({ authByJsApi: false }),
+
+                // So, instead, we need to load the app config. hence the forRoot() method:
+                AppConfigModule.forRoot(),
+
+                // and here we need to initialize the auth module
+                AuthModule
+
+                // And finally, we can initialize the api services to wotk with the new authentication
+                // TODO: new form of AlfrescoApiService, which is compatible with the new authentication
+            ]:
+            // CANARY: remove this when we can use the new authentication
+            // ------------------------------------------------------------------
+            [
+                RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
+                CoreModule.forRoot({ authByJsApi: true })
+            ]
+        ),
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
         FormsModule,
         HttpClientModule,
         MaterialModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),

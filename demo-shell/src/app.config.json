@@ -15,6 +15,16 @@
   "upload": {
     "threads": 1
   },
+  "authentication": {
+    "issuer": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
+    "loginUrl": "{protocol}//{hostname}{:port}/auth/realms/alfresco/protocol/openid-connect/auth",
+    "silentRefreshRedirectUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
+    "redirectUri": "/",
+    "postLogoutRedirectUri": "#/logout",
+    "clientId": "alfresco",
+    "scope": "openid profile email",
+    "responseType": "code"
+  },
   "oauth2": {
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
     "clientId": "alfresco",
