@@ -75,7 +75,7 @@ describe('FormCloudComponent', () => {
         selector: 'adf-cloud-custom-widget',
         template: '<div></div>'
     })
-        // eslint-disable-next-line @angular-eslint/component-class-suffix
+    // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }
@@ -1034,10 +1034,10 @@ describe('FormCloudComponent', () => {
         expect(formComponent.disableCompleteButton).toBeTrue();
     });
 
-    it('should ENABLE complete & save buttons when something goes wrong during completion process', (done) => {  
+    it('should ENABLE complete & save buttons when something goes wrong during completion process', (done) => {
         const errorMessage = 'Something went wrong.';
         spyOn(formCloudService, 'completeTaskForm').and.callFake(() => throwError(errorMessage));
-        
+
         formCloudService.completeTaskForm('test-app', '123', '333-444', '123', {
             pfx_property_one: 'testValue',
             pfx_property_two: true,
@@ -1047,13 +1047,13 @@ describe('FormCloudComponent', () => {
             pfx_property_none: 'no_form_field'
         }, 'Complete', 123).subscribe({
             next: _ => done.fail('expected an error, not data'),
-            error: error  => {
-              expect(error).toBe(errorMessage);
-              expect(formComponent.disableSaveButton).toBeFalse();
-              expect(formComponent.disableCompleteButton).toBeFalse();
-              done();
+            error: error => {
+                expect(error).toBe(errorMessage);
+                expect(formComponent.disableSaveButton).toBeFalse();
+                expect(formComponent.disableCompleteButton).toBeFalse();
+                done();
             }
-          });
+        });
     });
 
     describe('form validations', () => {

@@ -45,7 +45,7 @@ export class CompleteTaskDirective implements OnInit {
     constructor(
         private readonly el: ElementRef,
         private readonly renderer: Renderer2,
-        private readonly taskListService: TaskCloudService,
+        private readonly taskListService: TaskCloudService
     ) { }
 
     ngOnInit() {
