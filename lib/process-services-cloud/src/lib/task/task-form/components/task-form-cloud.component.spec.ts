@@ -85,6 +85,10 @@ describe('TaskFormCloudComponent', () => {
         component = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('Complete button', () => {
 
         beforeEach(() => {
@@ -285,57 +289,62 @@ describe('TaskFormCloudComponent', () => {
         beforeEach(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
+            fixture.detectChanges();
         });
 
-        it('should emit cancelClick when cancel button is clicked', (done) => {
-            component.cancelClick.subscribe(() => {
-                done();
-            });
+        it('should emit cancelClick when cancel button is clicked', async () => {
+            spyOn(component.cancelClick,'emit').and.stub();
 
             fixture.detectChanges();
             const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
+            cancelBtn.triggerEventHandler('click', {});
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            cancelBtn.nativeElement.click();
+            expect(component.cancelClick.emit).toHaveBeenCalledOnceWith('task1');
         });
 
-        it('should emit taskCompleted when task is completed', (done) => {
+        it('should emit taskCompleted when task is completed', async () => {
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
-
-            component.taskCompleted.subscribe(() => {
-                done();
-            });
+            spyOn(component.taskCompleted, 'emit').and.stub();
 
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
-            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
 
-            completeBtn.nativeElement.click();
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+            completeBtn.triggerEventHandler('click', {});
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.taskCompleted.emit).toHaveBeenCalledOnceWith('task1');
         });
 
-        it('should emit taskClaimed when task is claimed', (done) => {
+        it('should emit taskClaimed when task is claimed', async () => {
             spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
+            spyOn(component.taskClaimed, 'emit').and.stub();
             taskDetails.status = TASK_CREATED_STATE;
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             getTaskSpy.and.returnValue(of(taskDetails));
 
-            component.taskClaimed.subscribe(() => {
-                done();
-            });
-
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            claimBtn.triggerEventHandler('click', {});
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            claimBtn.nativeElement.click();
+            expect(component.taskClaimed.emit).toHaveBeenCalledOnceWith('task1');
         });
 
-        it('should emit error when error occurs', (done) => {
-            component.error.subscribe(() => {
-                done();
-            });
+        it('should emit error when error occurs', async () => {
+            spyOn(component.error, 'emit').and.stub();
 
             component.onError({});
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.error.emit).toHaveBeenCalled();
         });
 
         it('should reload when task is completed', () => {

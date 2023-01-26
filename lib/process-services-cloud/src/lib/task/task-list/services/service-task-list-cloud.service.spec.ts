@@ -132,39 +132,43 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
         });
 
-        it('should throw an exeption and execute logService error if appName is null', () => {
+        it('should throw an exeption and execute logService error if appName is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = [null, 'executionId_1', 'flowNodeId_1'] as const;
             service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
                 expect(error).toEqual(expectedErrorMessage);
                 expect(logServiceErrorSpy).toHaveBeenCalled();
+                done();
             });
         });
 
-        it('should throw an exeption and execute logService error if executionId is null', () => {
+        it('should throw an exeption and execute logService error if executionId is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = ['fakeName', null, 'flowNodeId_1'] as const;
             service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
                 expect(error).toEqual(expectedErrorMessage);
                 expect(logServiceErrorSpy).toHaveBeenCalled();
+                done();
             });
         });
 
-        it('should throw an exeption and execute logService error if flowNodeId is null', () => {
+        it('should throw an exeption and execute logService error if flowNodeId is null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = ['fakeName', 'executionId_1', null] as const;
             service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
                 expect(error).toEqual(expectedErrorMessage);
                 expect(logServiceErrorSpy).toHaveBeenCalled();
+                done();
             });
         });
 
-        it('should throw an exeption and execute logService error if appName, executionId and flowNodeId are null', () => {
+        it('should throw an exeption and execute logService error if appName, executionId and flowNodeId are null', (done) => {
             const expectedErrorMessage = 'Appname/executionId/flowNodeId not configured';
             const params = [null, null, null] as const;
             service.replayServiceTaskRequest(...params).toPromise().catch((error) => {
                 expect(error).toEqual(expectedErrorMessage);
                 expect(logServiceErrorSpy).toHaveBeenCalled();
+                done();
             });
         });
     });

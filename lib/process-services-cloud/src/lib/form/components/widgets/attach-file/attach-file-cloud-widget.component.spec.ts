@@ -218,12 +218,12 @@ describe('AttachFileCloudWidgetComponent', () => {
         expect(element.querySelector('#file-1155-icon')).not.toBeNull();
     });
 
-    it('should be able to set label property for Attach File widget', () => {
+    it('should be able to set label property for Attach File widget', async () => {
         createUploadWidgetField(new FormModel(), 'attach-file', [], onlyLocalParams, false, 'Label', true);
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('label').innerText).toEqual('Label');
-        });
+        await fixture.whenStable();
+
+        expect(element.querySelector('label').innerText).toEqual('Label');
     });
 
     it('should reset the custom models when the component gets destroyed', () => {

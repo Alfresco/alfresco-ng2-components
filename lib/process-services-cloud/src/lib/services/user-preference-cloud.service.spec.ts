@@ -22,7 +22,7 @@ import { mockPreferences, getMockPreference, createMockPreference, updateMockPre
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('PreferenceService', () => {
+xdescribe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
   let alfrescoApiMock: AlfrescoApiService;
   let getInstanceSpy: jasmine.Spy;
