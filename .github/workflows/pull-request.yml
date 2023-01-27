@@ -7,7 +7,7 @@ on:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
-        default: true  
+        default: true
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -65,38 +65,38 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
 jobs:
-  check-if-pr-is-approved:    
+  check-if-pr-is-approved:
     runs-on: ubuntu-22.04
-    steps:        
-      - name: Checkout repository        
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v3
-        with: 
-          fetch-depth: 0        
-      
+        with:
+          fetch-depth: 0
+
       - name: Check if PR is approved
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@v0
-        with: 
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        
+
       - name: Show the number
-        env: 
+        env:
           GH_TOKEN: ${{ github.token }}
           DEVEL_FLAG: false #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
-        if: ${{ github.event_name != 'schedule' }}                   
+        if: ${{ github.event_name != 'schedule' }}
         run: |
-          if [[ "$DEVEL_FLAG" = false ]] ; then     
-            echo "PR number is: ${{ steps.action.outputs.number }}" 
-            prNumber=${{ steps.action.outputs.number }}    
-            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')                
+          if [[ "$DEVEL_FLAG" = false ]] ; then
+            echo "PR number is: ${{ steps.action.outputs.number }}"
+            prNumber=${{ steps.action.outputs.number }}
+            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo "PR approved"
             else
               echo "PR not approved yet"
               exit 1
-            fi 
+            fi
           else
             echo "you are on your branch: skipping the check. REMEMBER to put DEVEL_FLAG to FALSE before the final merge!"
           fi
@@ -135,7 +135,7 @@ jobs:
             exclude: "insights,core,extensions,process-services,process-services-cloud"
           - name: core
             exclude: "insights,content-services,process-services,process-services-cloud"
-          - name: insights
+          - name: insights and process-services
             exclude: "core,extensions,content-services,process-services-cloud"
           - name: process-cloud
             exclude: "insights,core,extensions,content-services,process-services"
