@@ -19,14 +19,15 @@ import { FormModel } from '../core/form.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from '../../../services/form.service';
-import { FileViewerWidgetComponent } from './file-viewer.widget';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { BaseViewerWidgetComponent } from './base-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-describe('FileViewerWidgetComponent', () => {
+describe('BaseViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
-    let widget: FileViewerWidgetComponent;
+    let widget: BaseViewerWidgetComponent;
     let formServiceStub: Partial<FormService>;
-    let fixture: ComponentFixture<FileViewerWidgetComponent>;
+    let fixture: ComponentFixture<BaseViewerWidgetComponent>;
 
     const fakePngAnswer: any = {
         id: '1933',
@@ -46,14 +47,15 @@ describe('FileViewerWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                CoreTestingModule,
                 TranslateModule.forRoot()
             ],
-            declarations: [ FileViewerWidgetComponent ],
+            declarations: [ BaseViewerWidgetComponent ],
             providers: [ { provide: FormService, useValue: formServiceStub } ]
           });
 
         formServiceStub = TestBed.inject(FormService);
-        fixture = TestBed.createComponent(FileViewerWidgetComponent);
+        fixture = TestBed.createComponent(BaseViewerWidgetComponent);
         widget = fixture.componentInstance;
     });
 
