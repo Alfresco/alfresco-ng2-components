@@ -35,6 +35,11 @@ Manages tags in Content Services.
     Creates tags.
     -   _tags:_ `TagBody[]`  - List of tags to create.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>` - List of created tags.
+-   **updateTag**(tagId: `string`, tagBody: `TagBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>`<br/>
+    Updates a tag.
+    -   _tagId:_ `string`  - The identifier of a tag.
+    -   _tagBody:_ `TagBody`  - The updated tag.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>` - Updated tag.
 -   **searchTags**(name: `string`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>`<br/>
     Find tags which name contains searched name.
     -   _name:_ `string`  - Value for name which should be used during searching tags.

@@ -133,6 +133,22 @@ export class TagService {
     }
 
     /**
+     * Update a tag
+     *
+     * @param tagId The identifier of a tag.
+     * @param tagBody The updated tag.
+     * @returns Updated tag.
+     */
+    updateTag(tagId: string, tagBody: TagBody): Observable<TagEntry> {
+        const observableUpdate$: Observable<TagEntry> = from(this.tagsApi.updateTag(tagId, tagBody));
+        observableUpdate$.subscribe(
+            (tagEntry: TagEntry) => this.refresh.emit(tagEntry),
+            (err) => this.handleError(err)
+        );
+        return observableUpdate$;
+    }
+
+    /**
      * Find tags which name contains searched name.
      *
      * @param name Value for name which should be used during searching tags.

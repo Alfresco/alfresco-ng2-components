@@ -168,5 +168,46 @@ describe('TagService', () => {
                 tick();
             }));
         });
+
+        describe('updateTag', () => {
+            const tag: TagEntry = {
+                entry: {
+                    tag: 'fake-tag',
+                    id: 'fake-node-id'
+                }
+            };
+            const tagBody: TagBody = {tag: 'updated-tag'};
+            const updatedTag: TagEntry = {
+                entry: {
+                    ...tagBody,
+                    id: 'fake-node-id'
+                }
+            };
+
+            it('should call updateTag on tagsApi', () => {
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
+
+                service.updateTag(tag.entry.id, tagBody);
+                expect(service.tagsApi.updateTag).toHaveBeenCalledWith(tag.entry.id, tagBody);
+            });
+
+            it('should emit refresh when tag updated successfully', fakeAsync(() => {
+                spyOn(service.refresh, 'emit');
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
+                service.updateTag(tag.entry.id, tagBody);
+                tick();
+                expect(service.refresh.emit).toHaveBeenCalledWith(updatedTag);
+            }));
+
+            it('should call error on logService when error occurs during tag update', fakeAsync(() => {
+                const logService: LogService = TestBed.inject(LogService);
+                spyOn(logService, 'error');
+                const error: string = 'Some error';
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.reject(error));
+                service.updateTag(tag.entry.id, tagBody);
+                tick();
+                expect(logService.error).toHaveBeenCalledWith(error);
+            }));
+        });
     });
 });
