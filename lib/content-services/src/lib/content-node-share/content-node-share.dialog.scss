@@ -68,14 +68,13 @@
     }
 
     @media screen and (max-width: 380px) {
+        .mat-dialog-container {
+            padding: 0 15px;
+        }
 
         .mat-dialog-actions {
             margin-bottom: 0px;
             padding: 2px 0;
-        }
-
-        .mat-dialog-content {
-            max-height: 52vh;
         }
 
         .mat-form-field-suffix {
