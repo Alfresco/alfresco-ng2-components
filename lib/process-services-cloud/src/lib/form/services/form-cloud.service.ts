@@ -37,7 +37,7 @@ import { FormCloudServiceInterface } from './form-cloud.service.interface';
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
 
-    private _uploadApi;
+    private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;

@@ -56,7 +56,7 @@ export class DialogAspectListService {
             width,
             role: 'dialog',
             disableClose: true
-        }).afterClosed().subscribe(() => DialogAspectListService.focusOnClose(selectorAutoFocusedOnClose));
+        }).afterClosed().subscribe(() => this.focusOnClose(selectorAutoFocusedOnClose));
         this.overlayContainer.getContainerElement().setAttribute('role', 'main');
     }
 
@@ -65,7 +65,7 @@ export class DialogAspectListService {
         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
     }
 
-    private static focusOnClose(selectorAutoFocusedOnClose: string): void {
+    private focusOnClose(selectorAutoFocusedOnClose: string): void {
         if (selectorAutoFocusedOnClose) {
             document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
         }

@@ -42,7 +42,7 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
-    _groupsApi: GroupsApi;
+    private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
         return this._groupsApi;

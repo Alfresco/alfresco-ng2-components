@@ -24,7 +24,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 })
 export class GroupService {
 
-    _groupsApi: GroupsApi;
+    private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
         return this._groupsApi;

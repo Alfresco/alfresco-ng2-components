@@ -26,7 +26,7 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class AppsProcessService {
 
-    _appsApi: RuntimeAppDefinitionsApi;
+    private _appsApi: RuntimeAppDefinitionsApi;
     get appsApi(): RuntimeAppDefinitionsApi {
         this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
         return this._appsApi;

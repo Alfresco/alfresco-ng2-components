@@ -31,13 +31,13 @@ import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 })
 export class ProcessCloudContentService {
 
-    private _uploadApi;
+    private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
-    private _authenticationApi;
+    private _authenticationApi: AuthenticationApi;
     get authenticationApi(): AuthenticationApi {
         this._authenticationApi = this._authenticationApi ?? new AuthenticationApi(this.apiService.getInstance());
         return this._authenticationApi;

@@ -42,7 +42,7 @@ import { SearchForm } from '../models/search-form.interface';
 })
 export abstract class BaseQueryBuilderService {
 
-    _searchApi: SearchApi;
+    private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
         return this._searchApi;

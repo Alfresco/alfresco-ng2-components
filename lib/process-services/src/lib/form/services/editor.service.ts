@@ -29,7 +29,7 @@ export class EditorService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _editorApi: FormModelsApi;
+    private _editorApi: FormModelsApi;
     get editorApi(): FormModelsApi {
         this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
         return this._editorApi;

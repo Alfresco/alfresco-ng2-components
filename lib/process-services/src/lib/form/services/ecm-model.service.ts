@@ -30,7 +30,7 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
-    _customModelApi: CustomModelApi;
+    private _customModelApi: CustomModelApi;
     get customModelApi(): CustomModelApi {
         this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
         return this._customModelApi;
