@@ -1,6 +1,6 @@
 ---
 Title: Tree component
-Added: v6.0.0-A.1
+Added: v6.0.0.0
 Status: Active
 Last reviewed: 2023-01-25
 ---
@@ -29,15 +29,14 @@ Shows the nodes in tree structure, each node containing children is collapsible/
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| emptyContentTemplate | `TemplateRef` |  | Template that will  be rendered when no nodes are loaded. |
-| nodeActionsMenuTemplate | `TemplateRef` |  | Template that will  be rendered when context menu for given node is opened. |
+| emptyContentTemplate | `TemplateRef` |  | Template that will be rendered when no nodes are loaded. |
+| nodeActionsMenuTemplate | `TemplateRef` |  | Template that will be rendered when context menu for given node is opened. |
 | stickyHeader | `boolean` | false | If set to true header will be sticky. |
 | selectableNodes | `boolean` | false | If set to true nodes will be selectable. |
 | displayName | `string` | | Display name for tree title. |
 | loadMoreSuffix | `string` | | Suffix added to `Load more` string inside load more node. |
 | expandIcon | `string` | `chevron_right` | Icon shown when node is collapsed. |
-| collapseIcon | `string` | `expand_more` | Icon showed when ndoe is expanded. |
-| treeNodesSelection | `SelectionModel<T>` | | Selection model with selected tree nodes. |
+| collapseIcon | `string` | `expand_more` | Icon showed when node is expanded. |
 
 
 ### Events
@@ -60,7 +59,7 @@ Next create custom datasource service extending [`TreeService`](../../../lib/con
 
 ```ts
 @Injectable({...})
-export class CustomTreeDatasourceService extends TreeService<TreeNode>  {
+export class CustomTreeDatasourceService extends TreeService<TreeNode> {
     ...
     public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<TreeNode>> {
         ...

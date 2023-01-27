@@ -1,6 +1,6 @@
 ---
 Title: Category service
-Added: v6.0.0-A.1
+Added: v6.0.0.0
 Status: Active
 Last reviewed: 2023-01-25
 ---
@@ -26,7 +26,7 @@ Manages categories in Content Services.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing the category
 -   **updateCategory**(categoryId: `string`, payload: [`CategoryBody`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
     Updates category.
-    -   categoryId:_ `string`  - Identifier of a category
+    -   _categoryId:_ `string`  - Identifier of a category
     -   _payload:_ [`CategoryBody`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)  - Created category body
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing the category
 -   **deleteCategory**(categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
