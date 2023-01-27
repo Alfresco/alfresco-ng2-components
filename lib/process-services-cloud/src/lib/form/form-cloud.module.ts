@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import { ContentMetadataModule, ContentNodeSelectorModule, UploadModule } from '@alfresco/adf-content-services';
+import { ContentMetadataModule, ContentModule, ContentNodeSelectorModule, UploadModule } from '@alfresco/adf-content-services';
 
 import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
@@ -39,6 +39,7 @@ import { PropertiesViewerWidgetComponent } from './components/widgets/properties
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
+import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
         PeopleCloudModule,
         GroupCloudModule,
         ContentMetadataModule,
-        UploadModule
+        UploadModule,
+        ContentModule
     ],
     declarations: [
         FormCloudComponent,
@@ -67,7 +69,8 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
         GroupCloudWidgetComponent,
         PropertiesViewerWrapperComponent,
         PropertiesViewerWidgetComponent,
-        FilePropertiesTableCloudComponent
+        FilePropertiesTableCloudComponent,
+        FileViewerWidgetComponent
     ],
     exports: [
         FormCloudComponent,
@@ -80,7 +83,9 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
-        PropertiesViewerWidgetComponent
+        PropertiesViewerWidgetComponent,
+        ContentModule,
+        FileViewerWidgetComponent
     ]
 })
 export class FormCloudModule {

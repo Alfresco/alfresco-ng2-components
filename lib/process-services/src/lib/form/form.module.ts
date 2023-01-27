@@ -31,11 +31,14 @@ import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-butto
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module';
+import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
+import { ContentModule } from '@alfresco/adf-content-services';
 
 @NgModule({
     imports: [
         DynamicTableModule,
         CoreModule,
+        ContentModule,
         MaterialModule
     ],
     declarations: [
@@ -50,7 +53,8 @@ import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module
         FormListComponent,
         RadioButtonsWidgetComponent,
         DropdownWidgetComponent,
-        TypeaheadWidgetComponent
+        TypeaheadWidgetComponent,
+        FileViewerWidgetComponent
     ],
     exports: [
         FormComponent,
@@ -61,7 +65,8 @@ import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module
         RadioButtonsWidgetComponent,
         TypeaheadWidgetComponent,
         DropdownWidgetComponent,
-        FormListComponent
+        FormListComponent,
+        FileViewerWidgetComponent
     ]
 })
 export class FormModule {

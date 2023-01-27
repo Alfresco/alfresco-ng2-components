@@ -26,6 +26,7 @@ import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-butto
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DocumentWidgetComponent } from './widgets/document/document.widget';
 import { AttachFileWidgetComponent } from './widgets/content-widget/attach-file-widget.component';
+import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
 
 describe('ProcessFormRenderingService', () => {
 
@@ -98,6 +99,12 @@ describe('ProcessFormRenderingService', () => {
         const resolver = service.getComponentTypeResolver(FormFieldTypes.DYNAMIC_TABLE);
         const type = resolver(null);
         expect(type).toBe(DynamicTableWidgetComponent);
+    });
+
+    it('should resolve File Viewer widget for file viewer', () => {
+        const resolver = service.getComponentTypeResolver(FormFieldTypes.ALFRESCO_FILE_VIEWER);
+        const type = resolver(null);
+        expect(type).toBe(FileViewerWidgetComponent);
     });
 
 });
