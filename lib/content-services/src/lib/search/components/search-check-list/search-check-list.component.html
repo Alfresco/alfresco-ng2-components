@@ -1,19 +1,20 @@
 <div class="checklist">
-    <mat-checkbox
-        *ngFor="let option of options"
-        [checked]="option.checked"
-        (keydown.enter)="option.checked = !option.checked"
-        [attr.data-automation-id]="'checkbox-' + (option.name)"
-        [attr.aria-label]="option.name | translate"
-        (change)="changeHandler($event, option)"
-        class="adf-facet-filter">
-        <div matTooltip="{{ option.name | translate }}"
-            matTooltipPosition="right"
-            class="facet-name">
-            {{ option.name | translate }}
-        </div>
-
-    </mat-checkbox>
+    <fieldset>
+        <mat-checkbox
+            *ngFor="let option of options"
+            [checked]="option.checked"
+            (keydown.enter)="option.checked = !option.checked"
+            [attr.data-automation-id]="'checkbox-' + (option.name)"
+            [attr.aria-label]="option.name | translate"
+            (change)="changeHandler($event, option)"
+            class="adf-facet-filter">
+            <div matTooltip="{{ option.name | translate }}"
+                matTooltipPosition="right"
+                class="facet-name">
+                {{ option.name | translate }}
+            </div>
+        </mat-checkbox>
+    </fieldset>
 </div>
 
 <div class="adf-facet-buttons" *ngIf="options.fitsPage && !settings?.hideDefaultAction">
