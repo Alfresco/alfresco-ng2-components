@@ -34,7 +34,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
-    _auditApi: AuditApi;
+    private _auditApi: AuditApi;
     get auditApi(): AuditApi {
         this._auditApi = this._auditApi ?? new AuditApi(this.apiService.getInstance());
         return this._auditApi;

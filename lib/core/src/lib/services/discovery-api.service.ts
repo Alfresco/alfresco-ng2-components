@@ -85,7 +85,7 @@ export class DiscoveryApiService {
 
         return from(systemPropertiesApi.getProperties())
             .pipe(
-                map((res) => {
+                map((res: any) => {
                     if ('string' === typeof (res)) {
                         throw new Error('Not valid response');
                     }

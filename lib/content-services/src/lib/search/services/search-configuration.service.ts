@@ -24,9 +24,6 @@ import { SearchConfigurationInterface } from '@alfresco/adf-core';
 })
 export class SearchConfigurationService implements SearchConfigurationInterface {
 
-    constructor() {
-    }
-
     /**
      * Generates a QueryBody object with custom search parameters.
      *

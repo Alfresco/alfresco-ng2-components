@@ -29,7 +29,7 @@ export class ProcessDefinitionService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _processDefinitionsApi: ProcessDefinitionsApi;
+    private _processDefinitionsApi: ProcessDefinitionsApi;
     get processDefinitionsApi(): ProcessDefinitionsApi {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;

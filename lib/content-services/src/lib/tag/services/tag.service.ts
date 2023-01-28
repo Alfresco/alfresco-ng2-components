@@ -33,16 +33,19 @@ import {
 @Injectable({
     providedIn: 'root'
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class TagService {
 
-    _tagsApi: TagsApi;
+    private _tagsApi: TagsApi;
     get tagsApi(): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
         return this._tagsApi;
     }
 
-    private searchApi: SearchApi = new SearchApi(this.apiService.getInstance());
+    private _searchApi: SearchApi;
+    get searchApi(): SearchApi {
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
+    }
 
     /** Emitted when tag information is updated. */
     @Output()

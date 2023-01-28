@@ -38,13 +38,13 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;

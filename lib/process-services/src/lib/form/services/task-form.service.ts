@@ -29,7 +29,7 @@ export class TaskFormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _taskFormsApi: TaskFormsApi;
+    private _taskFormsApi: TaskFormsApi;
     get taskFormsApi(): TaskFormsApi {
         this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
         return this._taskFormsApi;

@@ -30,7 +30,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 })
 export class NewVersionUploaderService {
 
-    _versionsApi: VersionsApi;
+    private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;

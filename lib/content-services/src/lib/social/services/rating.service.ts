@@ -27,7 +27,7 @@ import { RatingServiceInterface } from './rating.service.interface';
 })
 export class RatingService implements RatingServiceInterface {
 
-    _ratingsApi: RatingsApi;
+    private _ratingsApi: RatingsApi;
     get ratingsApi(): RatingsApi {
         this._ratingsApi = this._ratingsApi ?? new RatingsApi(this.apiService.getInstance());
         return this._ratingsApi;

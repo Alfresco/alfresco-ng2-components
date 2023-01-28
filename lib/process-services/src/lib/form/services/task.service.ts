@@ -29,7 +29,7 @@ export class TaskService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _taskApi: TasksApi;
+    private _taskApi: TasksApi;
     get taskApi(): TasksApi {
         this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
         return this._taskApi;

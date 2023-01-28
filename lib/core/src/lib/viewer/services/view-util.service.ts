@@ -72,19 +72,19 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
-    _renditionsApi: RenditionsApi;
+    private _renditionsApi: RenditionsApi;
     get renditionsApi(): RenditionsApi {
         this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
         return this._renditionsApi;
     }
 
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    _versionsApi: VersionsApi;
+    private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;

@@ -25,8 +25,6 @@ import {
     RequestQuery,
     RequestSortDefinitionInner,
     ResultSetPaging,
-    SearchApi,
-    SearchRequest,
     TagBody,
     TagEntry
 } from '@alfresco/js-api';
@@ -34,6 +32,8 @@ import {
 describe('TagService', () => {
 
     let service: TagService;
+    let logService: LogService;
+    let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
         imports: [
@@ -44,10 +44,13 @@ describe('TagService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(TagService);
-        spyOn(service['tagsApi'], 'deleteTagFromNode').and.returnValue(
+        logService = TestBed.inject(LogService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
+
+        spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(
             Promise.resolve({})
         );
-        spyOn(service['tagsApi'], 'createTagForNode').and.returnValue(
+        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(
             Promise.resolve(new TagEntry({}))
         );
     });
@@ -82,11 +85,11 @@ describe('TagService', () => {
         describe('createTags', () => {
             it('should call createTags on tagsApi', () => {
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
-                const tag1: TagBody = new TagBody();
+                const tag1 = new TagBody();
                 tag1.tag = 'Some tag 1';
-                const tag2: TagBody = new TagBody();
+                const tag2 = new TagBody();
                 tag2.tag = 'Some tag 2';
-                const tags: TagBody[] = [tag1, tag2];
+                const tags = [tag1, tag2];
                 service.createTags(tags);
                 expect(service.tagsApi.createTags).toHaveBeenCalledWith(tags);
             });
@@ -106,9 +109,8 @@ describe('TagService', () => {
             }));
 
             it('should call error on logService when error occurs during tags creation', fakeAsync(() => {
-                const logService: LogService = TestBed.inject(LogService);
                 spyOn(logService, 'error');
-                const error: string = 'Some error';
+                const error = 'Some error';
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.reject(error));
                 service.createTags([]);
                 tick();
@@ -124,15 +126,16 @@ describe('TagService', () => {
             });
 
             it('should call search on searchApi with correct parameters', () => {
-                const searchSpy: jasmine.Spy<(queryBody: SearchRequest) => Promise<ResultSetPaging>> =
-                    spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
-                const name: string = 'test';
-                const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
-                const maxItems: number = 25;
-                spyOnProperty(TestBed.inject(UserPreferencesService), 'paginationSize').and.returnValue(maxItems);
+                const searchSpy = spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                const name = 'test';
+                const maxItems = 25;
+                spyOnProperty(userPreferencesService, 'paginationSize').and.returnValue(maxItems);
+
+                const sortingByName = new RequestSortDefinitionInner();
                 sortingByName.field = 'cm:name';
                 sortingByName.ascending = true;
                 sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
+
                 service.searchTags(name);
                 expect(searchSpy).toHaveBeenCalledWith({
                     query: {
@@ -148,7 +151,8 @@ describe('TagService', () => {
             });
 
             it('should return observable which emits paging object for tags', (done) => {
-                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+
                 service.searchTags('test').subscribe((tagsResult) => {
                     expect(tagsResult).toBe(result);
                     done();
@@ -156,10 +160,9 @@ describe('TagService', () => {
             });
 
             it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
-                const logService: LogService = TestBed.inject(LogService);
                 spyOn(logService, 'error');
                 const error: string = 'Some error';
-                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.reject(error));
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
                 service.searchTags('test').subscribe({
                     error: () => {
                         expect(logService.error).toHaveBeenCalledWith(error);
@@ -200,9 +203,8 @@ describe('TagService', () => {
             }));
 
             it('should call error on logService when error occurs during tag update', fakeAsync(() => {
-                const logService: LogService = TestBed.inject(LogService);
                 spyOn(logService, 'error');
-                const error: string = 'Some error';
+                const error = 'Some error';
                 spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.reject(error));
                 service.updateTag(tag.entry.id, tagBody);
                 tick();

@@ -29,7 +29,7 @@ export class ModelService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _modelsApi: ModelsApi;
+    private _modelsApi: ModelsApi;
     get modelsApi(): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
         return this._modelsApi;

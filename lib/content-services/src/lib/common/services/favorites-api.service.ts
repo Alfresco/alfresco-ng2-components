@@ -26,7 +26,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
-    _favoritesApi: FavoritesApi;
+    private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
         return this._favoritesApi;
