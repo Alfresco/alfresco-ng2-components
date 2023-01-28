@@ -43,7 +43,7 @@ export class TagService {
 
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
-        this._searchApi = this.searchApi ?? new SearchApi(this.apiService.getInstance());
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
