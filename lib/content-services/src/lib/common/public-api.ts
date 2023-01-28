@@ -18,3 +18,4 @@
 export * from './services/favorites-api.service';
 export * from './services/card-view-content-update.service';
 export * from './services/sites.service';
+export * from './interface/search-configuration.interface';

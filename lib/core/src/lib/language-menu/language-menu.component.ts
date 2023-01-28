@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from './service/language.service';
 import { Observable } from 'rxjs';
 import { LanguageItem } from '../common/services/language-item.interface';
 

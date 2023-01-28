@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { TranslationService } from '../services/translation.service';
+import { TranslationService } from '../translation/translation.service';
 
 export interface LangChangeEvent {
     lang: string;

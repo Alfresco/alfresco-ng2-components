@@ -16,14 +16,14 @@
  */
 
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { CoreTestingModule } from '../../../../core/src/lib/testing/core.testing.module';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { setupTestBed } from '../testing/setup-test-bed';
+import { UserPreferencesService } from '../../../../core/src/lib/common/services/user-preferences.service';
+import { setupTestBed } from '../../../../core/src/lib/testing/setup-test-bed';
 
 describe('SearchTextInputComponent', () => {
 

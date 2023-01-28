@@ -20,8 +20,8 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';
 import { Direction } from '@angular/cdk/bidi';
 import { searchAnimation } from './animations';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from '../models/search-text-input.model';
+import { UserPreferencesService } from '@alfresco/adf-core';
+import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from './models/search-text-input.model';
 
 @Component({
     selector: 'adf-search-text-input',

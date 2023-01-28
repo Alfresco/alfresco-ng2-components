@@ -20,6 +20,11 @@ export * from './services/log.service';
 export * from './services/storage.service';
 export * from './services/user-preferences.service';
 export * from './services/language-item.interface';
+export * from './services/dynamic-component-mapper.service';
+export * from './services/highlight-transform.service';
+export * from './services/page-title.service';
+export * from './services/thumbnail.service';
+export * from './services/sort-by-category.service';
 
 export * from './models/log-levels.model';
 

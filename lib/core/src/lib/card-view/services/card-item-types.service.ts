@@ -22,7 +22,7 @@ import { CardViewTextItemComponent } from '../components/card-view-textitem/card
 import { CardViewSelectItemComponent } from '../components/card-view-selectitem/card-view-selectitem.component';
 import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card-view-boolitem.component';
 import { CardViewKeyValuePairsItemComponent } from '../components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewArrayItemComponent } from '../components/card-view-arrayitem/card-view-arrayitem.component';
 
 @Injectable({

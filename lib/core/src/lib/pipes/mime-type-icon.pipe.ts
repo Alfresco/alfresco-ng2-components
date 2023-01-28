@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { ThumbnailService } from '../services/thumbnail.service';
+import { ThumbnailService } from '../common/services/thumbnail.service';
 
 @Pipe({
     name: 'adfMimeTypeIcon'

@@ -30,7 +30,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { TranslationService } from '../../../services/translation.service';
+import { TranslationService } from '../../../translation/translation.service';
 
 @Component({
     providers: [

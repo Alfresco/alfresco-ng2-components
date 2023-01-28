@@ -41,10 +41,10 @@ export * from './lib/clipboard/index';
 export * from './lib/dialogs/index';
 export * from './lib/icon/index';
 export * from './lib/notifications/index';
-export * from './lib/search-text/index';
 export * from './lib/blank-page/index';
 export * from './lib/rich-text-editor/index';
 export * from './lib/snackbar-content/index';
+export * from './lib/translation/index';
 
 export * from './lib/common/utils/index';
 export * from './lib/interface/index';

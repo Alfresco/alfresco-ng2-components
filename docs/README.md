@@ -113,7 +113,7 @@ for more information about installing and using the source code.
 | The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/src/lib/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/src/lib/pagination/pagination.component.ts) |
 | [Rich Text Editor component](core/components/rich-text-editor.md) | Wrap Editor.js element to show a Rich Text editor allows to add formatted text. | [Source](../lib/core/src/lib/rich-text-editor/rich-text-editor.component.ts) |
-| [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](../lib/core/src/lib/search-text/search-text-input.component.ts) |
+| [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](lib/content-services/src/lib/search-text/search-text-input.component.ts) |
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/src/lib/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/src/lib/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Snackbar Content Component](core/components/snackbar-content.component.md) | Custom content for Snackbar which allows use icon as action. | [Source](../lib/core/src/lib/snackbar-content/snackbar-content.component.ts) |
@@ -213,7 +213,7 @@ for more information about installing and using the source code.
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](lib/content-services/src/lib/common/services/favorites-api.service.ts) |
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](core/services/form.service.md) | Implements Process Services form methods | [Source](../lib/core/src/lib/form/services/form.service.ts) |
-| [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/src/lib/services/highlight-transform.service.ts) |
+| [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](lib/core/src/lib/common/services/highlight-transform.service.ts) |
 | [Identity Group service](core/services/identity-group.service.md) | Performs CRUD operations on identity groups. | [Source](../lib/process-services-cloud/src/lib/group/services/identity-group.service.ts) |
 | [Identity role service](core/services/identity-role.service.md) | Provides APIs for working with the Roles in Identity Services. | [Source](../lib/core/src/lib/auth/services/identity-role.service.ts) |
 | [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users and performs CRUD operations on identity users. | [Source](../lib/process-services-cloud/src/lib/people/services/identity-user.service.ts) |
@@ -222,7 +222,7 @@ for more information about installing and using the source code.
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/src/lib/services/login-dialog.service.ts) |
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/src/lib/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
-| [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](../lib/core/src/lib/services/page-title.service.ts) |
+| [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](lib/core/src/lib/common/services/page-title.service.ts) |
 | [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/people-content.service.ts) |
 | [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/src/lib/services/people-process.service.ts) |
 | [Process Content Service](core/services/process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../lib/process-services/src/lib/form/services/process-content.service.ts) |
@@ -231,8 +231,8 @@ for more information about installing and using the source code.
 | [Search service](core/services/search.service.md) | Accesses the Content Services Search API. | [Source](../lib/core/src/lib/services/search.service.ts) |
 | [Shared Links Api service](core/services/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](lib/content-services/src/lib/content-node-share/services/shared-links-api.service.ts) |
 | [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/services/storage.service.ts) |
-| [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/src/lib/services/thumbnail.service.ts) |
-| [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/src/lib/services/translation.service.ts) |
+| [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](lib/core/src/lib/common/services/thumbnail.service.ts) |
+| [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](lib/core/src/lib/translation/translation.service.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/src/lib/services/upload.service.ts) |
 | [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/src/lib/services/user-access.service.ts) |
 | [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/common/services/user-preferences.service.ts) |

@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Pagination } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
+import { PaginationModel } from '../../models/pagination.model';
 
 export interface IdentityUserQueryResponse {
 
     entries: IdentityUserModel[];
-    pagination: Pagination;
+    pagination: PaginationModel;
 }
 
 export interface IdentityUserPasswordModel {

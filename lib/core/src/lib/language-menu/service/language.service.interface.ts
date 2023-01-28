@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { NodeEntry } from '@alfresco/js-api';
+import { Observable } from 'rxjs';
+import { LanguageItem } from '../../common/services/language-item.interface';
 
-export interface FolderCreatedEvent {
+export interface LanguageServiceInterface {
 
-    name: string;
-    relativePath?: string;
-    parentId?: string;
-    node?: NodeEntry;
-
+    languages$: Observable<LanguageItem[]>;
+    changeLanguage(language: LanguageItem): void;
+    setLanguages(items: LanguageItem[]): void;
 }

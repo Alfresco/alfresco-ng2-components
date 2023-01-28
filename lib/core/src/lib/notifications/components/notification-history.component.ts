@@ -22,7 +22,7 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../common/services/storage.service';
-import { Pagination } from '@alfresco/js-api';
+import { PaginationModel } from '../../models/pagination.model';
 
 @Component({
     selector: 'adf-notification-history',
@@ -53,7 +53,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
     paginatedNotifications = [];
-    pagination: Pagination;
+    pagination: PaginationModel;
 
     constructor(
         private notificationService: NotificationService,

@@ -24,14 +24,14 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
-import { TranslationService } from '../services/translation.service';
+import { TranslationService } from '../translation/translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
 import { CookieService } from '../common/services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
-import { directionalityConfigFactory } from '../services/directionality-config-factory';
-import { DirectionalityConfigService } from '../services/directionality-config.service';
+import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
+import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 
 @NgModule({
     imports: [

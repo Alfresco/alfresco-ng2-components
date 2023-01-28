@@ -21,7 +21,7 @@ import { LanguageMenuComponent } from './language-menu.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from './service/language.service';
 
 describe('LanguageMenuComponent', () => {
 

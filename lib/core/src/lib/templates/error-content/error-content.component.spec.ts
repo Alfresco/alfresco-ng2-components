@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../translation/translation.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';

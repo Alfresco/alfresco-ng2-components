@@ -15,12 +15,4 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-import { LanguageItem } from '../common/services/language-item.interface';
-
-export interface LanguageServiceInterface {
-
-    languages$: Observable<LanguageItem[]>;
-    changeLanguage(language: LanguageItem): void;
-    setLanguages(items: LanguageItem[]): void;
-}
+export * from './public-api';
