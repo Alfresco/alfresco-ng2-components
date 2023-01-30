@@ -222,10 +222,15 @@ The ```adf-comments``` has now two specialization in :
 - ```adf-node-comments``` [Node Comments Componen](../content-services/components/node-comments.component.md)
 - ```adf-task-comments``` [Task Comments Component](../process-services/components/task-comments.component.md)
 
+### ViewerComponent
+From v.6.0.0 and after [`ViewerComponent`](../../docs/core/components/viewer.component.md) no longer show content from ACS, so instead of taking `nodeId` as `@Input`, it takes `blobFile` and `urlFile`. For more details check the [`PR`](https://github.com/Alfresco/alfresco-ng2-components/pull/7992).
+If you need to display content from ACS you can use instead the new [`AlfrescoViewerComponent`](../../docs/content-services/components/alfresco-viewer.component.md)
 
 ## Renamed items
 
 ### New Classes or Services
+- [`AlfrescoViewerComponent`](../../docs/content-services/components/alfresco-viewer.component.md)
+- [`ViewerRenderComponent`](../..docs/core/components/viewer-render.component.md) 
 
 ### Properties and methods
 
