@@ -117,12 +117,13 @@ export class ExtensionService {
     /**
      * Gets features by key.
      *
-     * @param key Key string, using dot notation
-     * @returns Features array found by key
+     * @param key Key string using dot notation or array of strings
+     * @param defaultValue Default value returned if feature is not found, default is empty array
+     * @returns Feature found by key
      */
-    getFeature(key: string): any[] {
-        const properties: string[] = Array.isArray(key) ? [key] : key.split('.');
-        return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];
+    getFeature<T = any[]>(key: string | string[], defaultValue: any = []): T {
+        const properties: string[] = Array.isArray(key) ? key : key.split('.');
+        return properties.reduce((prev, curr) => prev && prev[curr], this.features) || defaultValue;
     }
 
     getElements<T extends ExtensionElement>(key: string, fallback: Array<T> = []): Array<T> {
