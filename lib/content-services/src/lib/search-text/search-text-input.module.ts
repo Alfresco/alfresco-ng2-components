@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchTriggerDirective } from './search-trigger.directive';
-import { MaterialModule } from "../material.module";
+import { MaterialModule } from '../material.module';
 
 @NgModule({
     declarations: [

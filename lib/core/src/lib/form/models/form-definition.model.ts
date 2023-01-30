@@ -17,7 +17,7 @@
 
 import { FormSaveRepresentation } from '@alfresco/js-api';
 
-export class FormDefinitionModel extends FormSaveRepresentation {z
+export class FormDefinitionModel extends FormSaveRepresentation {
     reusable: boolean = false;
     newVersion: boolean = false;
     formRepresentation: any;
