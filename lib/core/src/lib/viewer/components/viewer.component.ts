@@ -38,13 +38,15 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 import { Track } from '../models/viewer.model';
+import { ViewUtilService } from '../services/view-util.service';
 
 @Component({
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: {class: 'adf-viewer'},
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
@@ -179,15 +181,22 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
     constructor(private el: ElementRef,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private viewUtilsService: ViewUtilService
+               ) {
     }
 
     ngOnChanges(changes: SimpleChanges){
-        const { blobFile } = changes;
+        const { blobFile, urlFile } = changes;
 
         if(blobFile?.currentValue){
             this.mimeType = blobFile.currentValue.type;
         }
+
+        if(urlFile?.currentValue){
+            this.fileName = this.fileName ? this.fileName : this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
+        }
+
     }
 
     ngOnInit(): void {

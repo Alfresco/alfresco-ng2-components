@@ -26,7 +26,8 @@ import {
     CoreTestingModule,
     setupTestBed,
     EventMock,
-    ViewerComponent
+    ViewerComponent,
+    ViewUtilService
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
 
@@ -133,6 +134,7 @@ describe('ViewerComponent', () => {
     let fixture: ComponentFixture<ViewerComponent<any>>;
     let element: HTMLElement;
     let dialog: MatDialog;
+    let viewUtilService: ViewUtilService;
 
     setupTestBed({
         imports: [
@@ -160,6 +162,7 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         dialog = TestBed.inject(MatDialog);
+        viewUtilService = TestBed.inject(ViewUtilService);
         component.fileName = 'test-file.pdf';
     });
 
@@ -176,6 +179,32 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(mockSimpleChanges);
 
             expect(component.mimeType).toBe('image/png');
+        });
+
+    });
+
+    describe('File Name Test', () => {
+
+        it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
+            component.fileName = '';
+            spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
+            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();
+
+            expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fakeFileName.jpeg');
+        });
+
+        it('should set fileName providing fileName input', () => {
+            component.fileName = 'testFileName.jpg';
+            spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
+            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+
+            component.ngOnChanges(mockSimpleChanges);
+            fixture.detectChanges();fixture.detectChanges();
+
+            expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('testFileName.jpg');
         });
 
     });
