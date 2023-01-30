@@ -57,6 +57,43 @@ describe('ExtensionService', () => {
         expect(service.setup).toHaveBeenCalledWith(blankConfig);
     });
 
+    describe('getFeature', () => {
+        it('should return array if seached feature is an array', async () => {
+            const searchedArrayFeature = [{ test: 'test' }];
+
+            service.setup({
+                ...blankConfig,
+                features: {
+                    searchedArrayFeature
+                }
+            });
+
+            const requestedFeatue = service.getFeature('searchedArrayFeature');
+            expect(requestedFeatue).toEqual(searchedArrayFeature);
+        });
+
+        it('should return object if seached feature is an object', async () => {
+            const searchedObjectFeature: { test: string } = { test: 'test' };
+            service.setup({
+                ...blankConfig,
+                features: {
+                    searchedObjectFeature
+                }
+            });
+
+            const requestedFeatue = service.getFeature<{ test: string }>('searchedObjectFeature');
+            expect(requestedFeatue).toEqual(searchedObjectFeature);
+        });
+
+        it('should return default value if feature is not found', async () => {
+            const defaultValue = {};
+            service.setup(blankConfig);
+
+            const requestedFeatue = service.getFeature<{ test: string }>('searchedFeature', defaultValue);
+            expect(requestedFeatue).toEqual(defaultValue);
+        });
+    });
+
     it('should raise warning if setting up with missing config', () => {
         spyOn(console, 'warn').and.stub();
 
