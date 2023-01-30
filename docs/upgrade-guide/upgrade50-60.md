@@ -133,6 +133,8 @@ v6.0.0 and after:
 | `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `SearchConfigurationInterface` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+
 
 ### Update Data-table a data change
 
