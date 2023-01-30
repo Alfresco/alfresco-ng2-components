@@ -21,8 +21,7 @@ import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
     setupTestBed,
-    UserPreferencesService,
-    SearchTextInputComponent
+    UserPreferencesService
 } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
@@ -30,6 +29,7 @@ import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SearchTextInputComponent } from '../../search-text/search-text-input.component';
 
 @Component({
     template: `
