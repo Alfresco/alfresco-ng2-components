@@ -85,7 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           DEVEL_FLAG: false #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
         shell: bash
-        if: ${{ github.event_name != 'schedule' }}
+        if: ${{ github.event_name != 'schedule' || github.actor != 'dependabot[bot]' }}
         run: |
           if [[ "$DEVEL_FLAG" = false ]] ; then
             echo "PR number is: ${{ steps.action.outputs.number }}"
