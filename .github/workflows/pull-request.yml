@@ -75,7 +75,7 @@ jobs:
 
       - name: Check if PR is approved
         id: action
-        if: ${{ github.event_name != 'schedule' }}
+        if: ${{ github.event_name != 'schedule' || github.actor != 'dependabot[bot]'  }}
         uses: kamatama41/get-pr-number-action@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
