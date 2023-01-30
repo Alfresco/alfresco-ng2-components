@@ -23,7 +23,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } fro
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthenticationService } from '../../auth/services/authentication.service';
 import { OauthConfigModel } from '../../auth/models/oauth-config.model';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../translation/translation.service';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 

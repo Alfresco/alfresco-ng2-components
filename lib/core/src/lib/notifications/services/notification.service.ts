@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../translation/translation.service';
 import { Subject } from 'rxjs';
 import { NotificationModel } from '../models/notification.model';
 import { info, warning, error } from '../helpers/notification.factory';

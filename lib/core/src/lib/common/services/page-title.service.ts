@@ -17,8 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { AppConfigService } from '../app-config/app-config.service';
-import { TranslationService } from './translation.service';
+import { AppConfigService } from '../../app-config/app-config.service';
+import { TranslationService } from '../../translation/translation.service';
 
 @Injectable({
     providedIn: 'root'

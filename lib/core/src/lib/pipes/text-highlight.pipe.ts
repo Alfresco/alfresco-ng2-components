@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { HighlightTransformService, HighlightTransformResult } from '../services/highlight-transform.service';
+import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Pipe({
     name: 'highlight'

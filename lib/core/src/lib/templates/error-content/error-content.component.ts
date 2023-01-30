@@ -23,7 +23,7 @@ import {
     OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../translation/translation.service';
 @Component({
     selector: 'adf-error-content',
     templateUrl: './error-content.component.html',

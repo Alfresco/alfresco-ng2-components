@@ -19,14 +19,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError as observableThrowError, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Pagination } from '@alfresco/js-api';
+import { PaginationModel } from '../../models/pagination.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { LogService } from '../../common/services/log.service';
 
 export interface IdentityRoleResponseModel {
     entries: IdentityRoleModel[];
-    pagination: Pagination;
+    pagination: PaginationModel;
   }
 
 @Injectable({

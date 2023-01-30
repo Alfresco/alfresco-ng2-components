@@ -17,7 +17,7 @@
 
 import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { Directionality, Direction } from '@angular/cdk/bidi';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
+import { UserPreferencesService } from './user-preferences.service';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({

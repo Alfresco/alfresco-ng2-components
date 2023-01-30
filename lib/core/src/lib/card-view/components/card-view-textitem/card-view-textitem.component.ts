@@ -21,7 +21,7 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { TranslationService } from '../../../services/translation.service';
+import { TranslationService } from '../../../translation/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';

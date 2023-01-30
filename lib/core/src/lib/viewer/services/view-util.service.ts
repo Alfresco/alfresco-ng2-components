@@ -21,7 +21,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../common/services/log.service';
 import { Subject } from 'rxjs';
 import { Track } from '../models/viewer.model';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../translation/translation.service';
 
 @Injectable({
     providedIn: 'root'

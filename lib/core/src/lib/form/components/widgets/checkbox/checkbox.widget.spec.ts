@@ -23,7 +23,7 @@ import { CheckboxWidgetComponent } from './checkbox.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../../form-base.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateLoaderService } from '../../../../services/translate-loader.service';
+import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';

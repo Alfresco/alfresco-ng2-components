@@ -16,14 +16,12 @@
  */
 
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { CoreTestingModule, UserPreferencesService, setupTestBed } from '@alfresco/adf-core';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { setupTestBed } from '../testing/setup-test-bed';
 
 describe('SearchTextInputComponent', () => {
 

@@ -16,7 +16,7 @@
  */
 
 import { CardViewItem } from '../interfaces/card-view-item.interface';
-import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
+import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewSelectItemProperties, CardViewSelectItemOption } from '../interfaces/card-view.interfaces';
 import { Observable, of } from 'rxjs';

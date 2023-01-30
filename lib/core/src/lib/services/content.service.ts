@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ContentApi, MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
-import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { LogService } from '../common/services/log.service';
@@ -27,7 +26,14 @@ import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 import { DownloadService } from './download.service';
-import { ThumbnailService } from './thumbnail.service';
+import { ThumbnailService } from '../common/services/thumbnail.service';
+
+export interface FolderCreatedEvent {
+    name: string;
+    relativePath?: string;
+    parentId?: string;
+    node?: NodeEntry;
+}
 
 @Injectable({
     providedIn: 'root'

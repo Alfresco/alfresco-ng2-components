@@ -16,7 +16,7 @@
  */
 
 import { CardViewItem } from '../interfaces/card-view-item.interface';
-import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
+import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewDateItemModel } from './card-view-dateitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 

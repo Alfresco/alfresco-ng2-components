@@ -47,15 +47,14 @@ import { DownloadZipDialogModule } from './dialogs/download-zip/download-zip.dia
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
-import { TranslationService } from './services/translation.service';
+import { TranslationService } from './translation/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
-import { TranslateLoaderService } from './services/translate-loader.service';
+import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { directionalityConfigFactory } from './services/directionality-config-factory';
-import { DirectionalityConfigService } from './services/directionality-config.service';
-import { SearchTextModule } from './search-text/search-text-input.module';
+import { directionalityConfigFactory } from './common/services/directionality-config-factory';
+import { DirectionalityConfigService } from './common/services/directionality-config.service';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
@@ -95,7 +94,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         IconModule,
         SortingPickerModule,
         NotificationHistoryModule,
-        SearchTextModule,
         BlankPageModule,
         LegacyApiClientModule,
         AlfrescoJsClientsModule,
@@ -136,7 +134,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         SortingPickerModule,
         IconModule,
         NotificationHistoryModule,
-        SearchTextModule,
         BlankPageModule,
         RichTextEditorModule
     ]
