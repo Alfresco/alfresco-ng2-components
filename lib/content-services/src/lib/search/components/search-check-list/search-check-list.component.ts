@@ -40,6 +40,7 @@ export interface SearchListOption {
 export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     id: string;
+    name: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;

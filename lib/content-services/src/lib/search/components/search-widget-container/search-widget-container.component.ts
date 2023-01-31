@@ -46,6 +46,9 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     id: string;
 
     @Input()
+    name: string;
+
+    @Input()
     selector: string;
 
     @Input()
@@ -87,6 +90,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     private setupWidget(ref: ComponentRef<any>) {
         if (ref && ref.instance) {
             ref.instance.id = this.id;
+            ref.instance.name = this.name;
             ref.instance.settings = {...this.settings};
             ref.instance.context = this.queryBuilder;
             if (this.value) {

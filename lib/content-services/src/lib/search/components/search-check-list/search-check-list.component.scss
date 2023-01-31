@@ -1,4 +1,4 @@
-.adf-search-check-list > div {
+.adf-search-check-list > fieldset {
     display: flex;
     flex-direction: column;
 
@@ -23,6 +23,15 @@
             white-space: nowrap;
         }
     }
+}
+
+.adf-search-check-list {
+    &-title {
+        font-size: 1.1em;
+        padding-bottom: 5px;
+        color: var(--theme-text-bold-color);
+    }
+
 }
 
 fieldset {

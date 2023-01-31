@@ -26,9 +26,9 @@
              (keydown.tab)="$event.stopPropagation();">
             <div (click)="$event.stopPropagation()"
                  class="adf-filter-container">
-                <div class="adf-filter-title">{{ category?.name | translate }}</div>
                 <adf-search-widget-container (keypress)="onKeyPressed($event, menuTrigger)"
                                              [id]="category?.id"
+                                             [name]="category?.name"
                                              [selector]="category?.component?.selector"
                                              [settings]="category?.component?.settings"
                                              [value]="initialValue">
