@@ -1,11 +1,18 @@
 <fieldset>
     <legend class="adf-search-check-list-title">{{ name | translate }}</legend>
-    <mat-checkbox *ngFor="let option of options" [checked]="option.checked"
-        (keydown.enter)="option.checked = !option.checked" [attr.data-automation-id]="'checkbox-' + (option.name)"
-        [attr.aria-label]="option.name | translate" (change)="changeHandler($event, option)" class="adf-facet-filter">
-        <div matTooltip="{{ option.name | translate }}" matTooltipPosition="right" class="facet-name">
-            {{ option.name | translate }}
-        </div>
+    <mat-checkbox
+    *ngFor="let option of options"
+    [checked]="option.checked"
+    (keydown.enter)="option.checked = !option.checked"
+    [attr.data-automation-id]="'checkbox-' + (option.name)"
+    [attr.aria-label]="option.name | translate"
+    (change)="changeHandler($event, option)"
+    class="adf-facet-filter">
+    <div matTooltip="{{ option.name | translate }}"
+    matTooltipPosition="right"
+    class="facet-name">
+    {{ option.name | translate }}
+    </div>
     </mat-checkbox>
 </fieldset>
 
@@ -16,14 +23,20 @@
 </div>
 
 <div class="adf-facet-buttons" *ngIf="!options.fitsPage">
-    <button mat-icon-button title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}" (click)="clear()">
+    <button mat-icon-button
+        title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
+        (click)="clear()">
         <mat-icon>clear</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="options.canShowLessItems" title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
+    <button mat-icon-button
+        *ngIf="options.canShowLessItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}"
         (click)="options.showLessItems()">
         <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="options.canShowMoreItems" title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
+    <button mat-icon-button
+        *ngIf="options.canShowMoreItems"
+        title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}"
         (click)="options.showMoreItems()">
         <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
