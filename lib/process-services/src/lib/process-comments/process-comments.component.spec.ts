@@ -47,7 +47,7 @@ describe('ProcessCommentsComponent', () => {
         component = fixture.componentInstance;
         commentProcessService = TestBed.inject(CommentProcessService);
 
-        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(of(mockProcessInstanceComments));
+        getCommentsSpy = spyOn(commentProcessService, 'get').and.returnValue(of(mockProcessInstanceComments));
     });
 
     it('should load comments when processInstanceId specified', () => {

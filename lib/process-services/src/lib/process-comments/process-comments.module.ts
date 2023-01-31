@@ -19,10 +19,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ADF_COMMENT_LIST_SERVICE, CoreModule } from '@alfresco/adf-core';
+import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
 
 import { ProcessCommentsComponent } from './process-comments.component';
-import { ProcessCommentListService } from './services/process-comment-list.service';
+import { CommentProcessService } from './services/comment-process.service';
 
 @NgModule({
     imports: [
@@ -40,8 +40,8 @@ import { ProcessCommentListService } from './services/process-comment-list.servi
     ],
     providers: [
         {
-            provide: ADF_COMMENT_LIST_SERVICE,
-            useClass: ProcessCommentListService
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: CommentProcessService
         }
     ]
 })

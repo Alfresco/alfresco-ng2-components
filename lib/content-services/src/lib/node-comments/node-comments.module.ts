@@ -20,11 +20,9 @@ import { CommonModule } from '@angular/common';
 import { NodeCommentsComponent } from './node-comments.component';
 import {
     ADF_COMMENTS_SERVICE,
-    ADF_COMMENT_LIST_SERVICE,
     CoreModule
 } from '@alfresco/adf-core';
 import { NodeCommentsService } from './services/node-comments.service';
-import { ContentCommentListService } from './services/content-comment-list.service';
 
 @NgModule({
     imports: [CommonModule, CoreModule],
@@ -34,10 +32,6 @@ import { ContentCommentListService } from './services/content-comment-list.servi
         {
             provide: ADF_COMMENTS_SERVICE,
             useClass: NodeCommentsService
-        },
-        {
-            provide: ADF_COMMENT_LIST_SERVICE,
-            useClass: ContentCommentListService
         }
     ]
 })

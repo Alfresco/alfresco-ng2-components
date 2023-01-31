@@ -76,7 +76,7 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     add(): void {
         if (this.message && this.message.trim() && !this.beingAdded) {
             this.beingAdded = true;
-            this.commentProcessService.addProcessInstanceComment(this.processInstanceId, this.message)
+            this.commentProcessService.add(this.processInstanceId, this.message)
                 .subscribe(
                     (res: CommentModel) => {
                         this.comments.unshift(res);
@@ -107,7 +107,7 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     private getProcessInstanceComments(processInstanceId: string): void {
         this.resetComments();
         if (processInstanceId) {
-            this.commentProcessService.getProcessInstanceComments(processInstanceId).subscribe(
+            this.commentProcessService.get(processInstanceId).subscribe(
                 (res: CommentModel[]) => {
                     res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
                         const date1 = new Date(comment1.created);

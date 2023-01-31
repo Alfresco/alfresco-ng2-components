@@ -23,15 +23,15 @@ import { By } from '@angular/platform-browser';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ADF_COMMENT_LIST_SERVICE } from './interfaces/comment-list.token';
 import {
-    CommentListServiceMock,
     commentUserNoPictureDefined,
     commentUserPictureDefined,
     mockCommentOne,
     mockCommentTwo,
     testUser
-} from './mocks/comment-list.service.mock';
+} from './mocks/comment-list.mock';
+import { CommentListServiceMock } from './mocks/comment-list.service.mock';
+import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 describe('CommentListComponent', () => {
 
@@ -47,7 +47,7 @@ describe('CommentListComponent', () => {
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         providers: [
             {
-                provide: ADF_COMMENT_LIST_SERVICE,
+                provide: ADF_COMMENTS_SERVICE,
                 useClass: CommentListServiceMock
             }
         ]

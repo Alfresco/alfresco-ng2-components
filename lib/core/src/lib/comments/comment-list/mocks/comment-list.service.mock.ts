@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '../../../models/comment.model';
-import { UserProcessModel } from '../../../models/user-process.model';
-import { CommentListService } from '../interfaces/comment-list-service.interfce';
+import { CommentsService } from '../../interfaces/comments-service.interface';
 
-export class CommentListServiceMock implements CommentListService {
+export class CommentListServiceMock implements Partial<CommentsService> {
 
     constructor() {}
 
@@ -27,55 +25,3 @@ export class CommentListServiceMock implements CommentListService {
         return 'mock-user-image-path';
     }
 }
-
-export const testUser = new UserProcessModel({
-    id: '1',
-    firstName: 'Test',
-    lastName: 'User',
-    email: 'tu@domain.com'
-});
-
-export const mockCommentOne = new CommentModel({
-    id: 1,
-    message: 'Test Comment',
-    created: new Date(),
-    createdBy: testUser
-});
-
-export const mockCommentTwo = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: testUser
-});
-
-export const commentUserPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        emailNotificationsEnabled: true,
-        company: {},
-        id: 'fake-email@dom.com',
-        avatarId: '001-001-001'
-    }
-});
-
-export const commentUserNoPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        emailNotificationsEnabled: true,
-        company: {},
-        id: 'fake-email@dom.com'
-    }
-});

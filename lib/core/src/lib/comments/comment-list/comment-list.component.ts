@@ -20,7 +20,8 @@ import { CommentModel } from '../../models/comment.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ADF_COMMENT_LIST_SERVICE, CommentListService } from './interfaces';
+import { CommentsService } from '../interfaces/comments-service.interface';
+import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 @Component({
     selector: 'adf-comment-list',
@@ -44,7 +45,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        @Inject(ADF_COMMENT_LIST_SERVICE) private commentListService: CommentListService,
+        @Inject(ADF_COMMENTS_SERVICE) private commentsService: Partial<CommentsService>,
         public userPreferenceService: UserPreferencesService
     ) {
     }
@@ -88,6 +89,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
     }
 
     getUserImage(user: any): string {
-        return this.commentListService.getUserImage(user);
+        return this.commentsService.getUserImage(user);
     }
 }

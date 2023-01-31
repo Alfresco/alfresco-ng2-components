@@ -20,7 +20,7 @@ import { Observable, of } from 'rxjs';
 import { CommentsService } from '../interfaces';
 import { testUser } from './comments.stories.mock';
 
-export class CommentsServiceStoriesMock implements CommentsService {
+export class CommentsServiceStoriesMock implements Partial<CommentsService> {
 
     constructor() {}
 

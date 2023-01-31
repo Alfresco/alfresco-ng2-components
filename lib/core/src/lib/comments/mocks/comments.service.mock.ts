@@ -19,7 +19,7 @@ import { CommentModel, EcmUserModel } from '../../models';
 import { Observable, of } from 'rxjs';
 import { CommentsService } from '../interfaces';
 
-export class CommentsServiceMock implements CommentsService {
+export class CommentsServiceMock implements Partial<CommentsService> {
 
     constructor() {}
 
