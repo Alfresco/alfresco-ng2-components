@@ -33,4 +33,12 @@
             padding: 0;
         }
     }
+
+    .mat-icon-button {
+        color: var(--adf-toolbar-icon-color);
+
+        &.mat-button-disabled.mat-button-disabled {
+            color: var(--adf-toolbar-disabled-icon-color);
+        }
+    }
 }

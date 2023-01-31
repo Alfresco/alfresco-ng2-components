@@ -1,16 +1,20 @@
 .adf-search-container {
     overflow: hidden !important;
+
+    .adf-search-button {
+        color: var(--adf-search-text-input);
+    }
 }
 
 .adf-search-button {
     left: -13px;
 }
 
-[dir='rtl'] .adf-search-button {
+[dir="rtl"] .adf-search-button {
     right: -13px;
 }
 
-[dir='ltr'] .adf-search-button {
+[dir="ltr"] .adf-search-button {
     left: -13px;
 }
 
