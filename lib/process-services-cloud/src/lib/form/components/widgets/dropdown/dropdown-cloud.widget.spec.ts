@@ -501,10 +501,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await openSelect('child-dropdown-id');
 
-                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                expect(widget.field.options).toEqual([{ id: 'empty', name: 'Choose one...' }]);
-                expect(defaultOption.context.value).toBe(undefined);
-                expect(defaultOption.context.viewValue).toBe('Choose one...');
+                expect(widget.field.options).toEqual([]);
             });
 
             it('should fetch the options from a rest url for a linked dropdown', async () => {
@@ -631,10 +628,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await openSelect('child-dropdown-id');
 
-                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                expect(widget.field.options).toEqual([{ id: 'empty', name: 'Choose one...' }]);
-                expect(defaultOption.context.value).toBe(undefined);
-                expect(defaultOption.context.viewValue).toBe('Choose one...');
+                expect(widget.field.options).toEqual([]);
             });
 
             describe('Manual - On parent value changes (chain)', () => {
