@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, CommentModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, CommentModel, CommentsService, PeopleContentService } from '@alfresco/adf-core';
 import { CommentEntry, CommentsApi, Comment } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
@@ -24,7 +24,7 @@ import { map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class NodeCommentsService {
+export class NodeCommentsService implements CommentsService {
 
   private _commentsApi: CommentsApi;
   get commentsApi(): CommentsApi {
@@ -34,7 +34,8 @@ export class NodeCommentsService {
 
   constructor(
     private apiService: AlfrescoApiService,
-    private logService: LogService
+    private logService: LogService,
+    private peopleContentService: PeopleContentService
   ) {}
 
   /**
@@ -98,5 +99,9 @@ export class NodeCommentsService {
   private handleError(error: any) {
     this.logService.error(error);
     return throwError(error || 'Server error');
+  }
+
+  getUserImage(user: string): string {
+    return this.peopleContentService.getUserProfileImage(user);
   }
 }

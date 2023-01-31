@@ -21,4 +21,5 @@ import { CommentModel } from '../../models/comment.model';
 export interface CommentsService {
     get(id: string): Observable<CommentModel[]>;
     add(id: string, message: string): Observable<CommentModel>;
+    getUserImage(user: any): string;
 }

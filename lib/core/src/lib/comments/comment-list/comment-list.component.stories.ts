@@ -16,11 +16,11 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
+import { CoreStoryModule } from '../../testing/core.story.module';
 import { CommentListComponent } from './comment-list.component';
-import { CommentsModule } from './comments.module';
-import { commentsTaskData, commentsNodeData } from './mocks/comments.stories.mock';
-import { EcmUserService } from '../services';
+import { CommentsModule } from '../comments.module';
+import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
+import { EcmUserService } from '../../services';
 
 export default {
     component: CommentListComponent,

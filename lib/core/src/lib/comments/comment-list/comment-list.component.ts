@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { CommentModel } from '../models/comment.model';
-import { EcmUserService } from '../services/ecm-user.service';
-import { PeopleProcessService } from '../services/people-process.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
+import { CommentModel } from '../../models/comment.model';
+import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommentsService } from '../interfaces/comments-service.interface';
+import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 @Component({
     selector: 'adf-comment-list',
@@ -44,9 +44,10 @@ export class CommentListComponent implements OnInit, OnDestroy {
     currentLocale;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public peopleProcessService: PeopleProcessService,
-                public ecmUserService: EcmUserService,
-                public userPreferenceService: UserPreferencesService) {
+    constructor(
+        @Inject(ADF_COMMENTS_SERVICE) private commentsService: Partial<CommentsService>,
+        public userPreferenceService: UserPreferencesService
+    ) {
     }
 
     ngOnInit() {
@@ -88,14 +89,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
     }
 
     getUserImage(user: any): string {
-        if (this.isAContentUsers(user)) {
-            return this.ecmUserService.getUserProfileImage(user.avatarId);
-        } else {
-            return this.peopleProcessService.getUserImage(user);
-        }
-    }
-
-    private isAContentUsers(user: any): boolean {
-        return user.avatarId;
+        return this.commentsService.getUserImage(user);
     }
 }

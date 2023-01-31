@@ -17,33 +17,35 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatLineModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { PipeModule } from '../../pipes/pipe.module';
 
-import { ProcessCommentsComponent } from './process-comments.component';
-import { CommentProcessService } from './services/comment-process.service';
+import { CommentListComponent } from './comment-list.component';
 
 @NgModule({
     imports: [
+        PipeModule,
         FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
         CommonModule,
-        CoreModule
+        TranslateModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatListModule,
+        MatLineModule
     ],
     declarations: [
-        ProcessCommentsComponent
+        CommentListComponent
     ],
     exports: [
-        ProcessCommentsComponent
-    ],
-    providers: [
-        {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: CommentProcessService
-        }
+        CommentListComponent
     ]
 })
-export class ProcessCommentsModule {
+export class CommentListModule {
 }

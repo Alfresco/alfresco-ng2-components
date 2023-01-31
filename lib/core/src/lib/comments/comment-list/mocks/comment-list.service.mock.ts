@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-export * from './comments.component';
+import { CommentsService } from '../../interfaces/comments-service.interface';
 
-export * from './interfaces/index';
+export class CommentListServiceMock implements Partial<CommentsService> {
 
-export * from './comments.module';
+    constructor() {}
 
-export * from './comment-list/index';
+    getUserImage(_user: any): string {
+        return 'mock-user-image-path';
+    }
+}

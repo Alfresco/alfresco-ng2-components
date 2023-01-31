@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-import { CommentModel } from '@alfresco/adf-core';
+export * from './comment-list.component';
 
-export interface CommentProcessServiceInterface {
-    addTaskComment(taskId: string, message: string): Observable<CommentModel>;
-    getTaskComments(taskId: string): Observable<CommentModel[]>;
-    getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]>;
-    addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel>;
-}
+export * from './comment-list.module';

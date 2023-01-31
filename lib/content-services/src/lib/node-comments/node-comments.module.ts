@@ -21,10 +21,7 @@ import { NodeCommentsComponent } from './node-comments.component';
 import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule
-    ],
+    imports: [CommonModule, CoreModule],
     declarations: [NodeCommentsComponent],
     exports: [NodeCommentsComponent]
 })

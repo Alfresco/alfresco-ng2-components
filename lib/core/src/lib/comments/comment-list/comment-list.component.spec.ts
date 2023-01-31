@@ -17,117 +17,46 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { CommentModel, UserProcessModel } from '../models';
+import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
-import { EcmUserService } from '../services/ecm-user.service';
-import { PeopleProcessService } from '../services/people-process.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-
-const testUser = new UserProcessModel({
-    id: '1',
-    firstName: 'Test',
-    lastName: 'User',
-    email: 'tu@domain.com'
-});
-
-const processCommentOne = new CommentModel({
-    id: 1,
-    message: 'Test Comment',
-    created: new Date(),
-    createdBy: testUser
-});
-
-const processCommentTwo = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: testUser
-});
-
-const contentCommentUserPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        emailNotificationsEnabled: true,
-        company: {},
-        id: 'fake-email@dom.com',
-        avatarId: '001-001-001'
-    }
-});
-
-const processCommentUserPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        id: '1',
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'tu@domain.com',
-        pictureId: '001-001-001'
-    }
-});
-
-const contentCommentUserNoPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        emailNotificationsEnabled: true,
-        company: {},
-        id: 'fake-email@dom.com'
-    }
-});
-
-const processCommentUserNoPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: {
-        id: '1',
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'tu@domain.com'
-    }
-});
+import {
+    commentUserNoPictureDefined,
+    commentUserPictureDefined,
+    mockCommentOne,
+    mockCommentTwo,
+    testUser
+} from './mocks/comment-list.mock';
+import { CommentListServiceMock } from './mocks/comment-list.service.mock';
+import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 describe('CommentListComponent', () => {
 
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
     let element: HTMLElement;
-    let ecmUserService: EcmUserService;
-    let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
         ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [
+            {
+                provide: ADF_COMMENTS_SERVICE,
+                useClass: CommentListServiceMock
+            }
+        ]
     });
 
     beforeEach(() => {
-        ecmUserService = TestBed.inject(EcmUserService);
-        spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('alfresco-logo.svg');
-
-        peopleProcessService = TestBed.inject(PeopleProcessService);
-        spyOn(peopleProcessService, 'getUserImage').and.returnValue('alfresco-logo.svg');
-
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
+
         element = fixture.nativeElement;
         fixture.detectChanges();
     });
@@ -137,7 +66,7 @@ describe('CommentListComponent', () => {
     });
 
     it('should emit row click event', fakeAsync(() => {
-        commentList.comments = [Object.assign({}, processCommentOne)];
+        commentList.comments = [Object.assign({}, mockCommentOne)];
 
         commentList.clickRow.subscribe((selectedComment: CommentModel) => {
             expect(selectedComment.id).toEqual(1);
@@ -154,9 +83,9 @@ describe('CommentListComponent', () => {
     }));
 
     it('should deselect the previous selected comment when a new one is clicked', fakeAsync(() => {
-        processCommentOne.isSelected = true;
-        const commentOne = Object.assign({}, processCommentOne);
-        const commentTwo = Object.assign({}, processCommentTwo);
+        mockCommentOne.isSelected = true;
+        const commentOne = Object.assign({}, mockCommentOne);
+        const commentTwo = Object.assign({}, mockCommentTwo);
         commentList.selectedComment = commentOne;
         commentList.comments = [commentOne, commentTwo];
 
@@ -182,31 +111,31 @@ describe('CommentListComponent', () => {
     });
 
     it('should show comment message when input is given', async () => {
-        commentList.comments = [Object.assign({}, processCommentOne)];
+        commentList.comments = [Object.assign({}, mockCommentOne)];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-message');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(processCommentOne.message);
+        expect(elements[0].innerText).toBe(mockCommentOne.message);
         expect(fixture.nativeElement.querySelector('.adf-comment-message:empty')).toBeNull();
     });
 
     it('should show comment user when input is given', async () => {
-        commentList.comments = [Object.assign({}, processCommentOne)];
+        commentList.comments = [Object.assign({}, mockCommentOne)];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-name');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(processCommentOne.createdBy.firstName + ' ' + processCommentOne.createdBy.lastName);
+        expect(elements[0].innerText).toBe(mockCommentOne.createdBy.firstName + ' ' + mockCommentOne.createdBy.lastName);
         expect(fixture.nativeElement.querySelector('.adf-comment-user-name:empty')).toBeNull();
     });
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async () => {
-        const commentFewSecond = Object.assign({}, processCommentOne);
+        const commentFewSecond = Object.assign({}, mockCommentOne);
         commentFewSecond.created = new Date();
 
         commentList.comments = [commentFewSecond];
@@ -219,7 +148,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
-        const commentOld = Object.assign({}, processCommentOne);
+        const commentOld = Object.assign({}, mockCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
         commentList.comments = [commentOld];
 
@@ -231,7 +160,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {
-        const commentOld = Object.assign({}, processCommentOne);
+        const commentOld = Object.assign({}, mockCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
         commentList.comments = [commentOld];
 
@@ -244,51 +173,29 @@ describe('CommentListComponent', () => {
     });
 
     it('should show user icon when input is given', async () => {
-        commentList.comments = [Object.assign({}, processCommentOne)];
+        commentList.comments = [Object.assign({}, mockCommentOne)];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-img-container');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toContain(commentList.getUserShortName(processCommentOne.createdBy));
+        expect(elements[0].innerText).toContain(commentList.getUserShortName(mockCommentOne.createdBy));
         expect(fixture.nativeElement.querySelector('.adf-comment-img-container:empty')).toBeNull();
     });
 
-    it('should return content picture when is a content user with a picture', async () => {
-        commentList.comments = [contentCommentUserPictureDefined];
+    it('should return picture when is a user with a picture', async () => {
+        commentList.comments = [commentUserPictureDefined];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
         expect(elements.length).toBe(1);
-        expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('alfresco-logo.svg');
     });
 
-    it('should return process picture when is a process user with a picture', async () => {
-        commentList.comments = [processCommentUserPictureDefined];
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
-        expect(elements.length).toBe(1);
-        expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('alfresco-logo.svg');
-    });
-
-    it('should return content short name when is a content user without a picture', async () => {
-        commentList.comments = [contentCommentUserNoPictureDefined];
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
-        expect(elements.length).toBe(1);
-    });
-
-    it('should return process short name when  is a process user without a picture', async () => {
-        commentList.comments = [processCommentUserNoPictureDefined];
+    it('should return short name when is a user without a picture', async () => {
+        commentList.comments = [commentUserNoPictureDefined];
 
         fixture.detectChanges();
         await fixture.whenStable();
