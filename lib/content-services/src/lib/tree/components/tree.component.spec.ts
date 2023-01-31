@@ -17,7 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
+import { CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded } from '../mock/tree-node.mock';
@@ -43,6 +43,11 @@ describe('TreeComponent', () => {
     const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .mat-progress-spinner`);
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .adf-icon`);
+
+    const tickCheckbox = (index: number) => {
+        const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+        nodeCheckboxes[index].nativeElement.dispatchEvent(new Event('change'));
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -133,7 +138,7 @@ describe('TreeComponent', () => {
 
     it('should emit pagination when nodes are loaded', (done) => {
         component.treeService.treeNodes = Array.from(treeNodesMockExpanded);
-        component.paginationChanged.subscribe((pagination: PaginationModel) => {
+        component.paginationChanged.subscribe((pagination) => {
             expect(pagination.skipCount).toBe(0);
             expect(pagination.maxItems).toBe(userPreferenceService.paginationSize);
             done();
@@ -212,20 +217,18 @@ describe('TreeComponent', () => {
         it('should update selection when leaf node is selected', () => {
             spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesMock) }));
             fixture.detectChanges();
-            const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
+            tickCheckbox(0);
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeTrue();
         });
 
         it('should update selection of each child node when parent node is selected and deselected', () => {
             spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
-            const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
+            tickCheckbox(0);
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeTrue();
             expect(component.descendantsAllSelected(component.treeService.treeNodes[0])).toBeTrue();
 
-            nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
+            tickCheckbox(0);
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeFalse();
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[0])).toBeFalse();
         });
@@ -233,9 +236,8 @@ describe('TreeComponent', () => {
         it('parent node should have intermediate state when not all subnodes are selected', () => {
             spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
-            const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
-            nodeCheckboxes[2].nativeElement.dispatchEvent(new Event('change'));
+            tickCheckbox(0);
+            tickCheckbox(2);
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[0])).toBeTrue();
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[1])).toBeTrue();
         });
@@ -243,8 +245,7 @@ describe('TreeComponent', () => {
         it('should select loaded nodes when parent node is selected', (done) => {
             component.refreshTree();
             fixture.detectChanges();
-            const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            nodeCheckboxes[0].nativeElement.dispatchEvent(new Event('change'));
+            tickCheckbox(0);
             spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
             component.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<TreeNode>) => {
                 expect(selectionChange.added.length).toEqual(1);

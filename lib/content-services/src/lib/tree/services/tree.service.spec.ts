@@ -110,7 +110,7 @@ describe('TreeService', () => {
         expect(parentNode.id).toEqual(treeNodesMockExpanded[0].id);
     });
 
-    it('should return undefined when node has no parennt', () => {
+    it('should return undefined when node has no parent', () => {
         service.treeNodes = treeNodesMockExpanded;
         const parentNode: TreeNode = service.getParentNode(treeNodesMockExpanded[0].parentId);
         expect(parentNode).toBeUndefined();
@@ -124,5 +124,25 @@ describe('TreeService', () => {
     it('should return false if tree is not empty', () => {
         service.treeNodes = treeNodesMock;
         expect(service.isEmpty()).toBeFalse();
+    });
+
+    it('should be able to remove node', () => {
+        service.treeNodes = Array.from(treeNodesMock);
+        const removedNodeId = service.treeNodes[0].id;
+        service.removeNode(service.treeNodes[0]);
+        expect(service.treeNodes.length).toEqual(1);
+        expect(service.treeNodes[0].id).not.toEqual(removedNodeId);
+    });
+
+    it('should return node children', () => {
+        service.treeNodes = Array.from(treeNodesMockExpanded);
+        const children = service.getChildren(service.treeNodes[0]);
+        expect(children.length).toEqual(3);
+    });
+
+    it('should return empty array for node without children', () => {
+        service.treeNodes = Array.from(treeNodesMock);
+        const children = service.getChildren(service.treeNodes[0]);
+        expect(children.length).toEqual(0);
     });
 });

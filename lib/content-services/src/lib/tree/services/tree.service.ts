@@ -51,7 +51,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
      * @param subNodes List of nodes that will be added as children of expanded node
      */
     public expandNode(nodeToExpand: T, subNodes: T[]): void {
-        if (nodeToExpand.hasChildren) {
+        if (nodeToExpand != null && subNodes != null && nodeToExpand.hasChildren) {
             const index: number = this.treeNodes.indexOf(nodeToExpand);
             this.treeNodes.splice(index + 1, 0, ...subNodes);
             nodeToExpand.isLoading = false;
@@ -65,7 +65,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
      * @param nodeToCollapse Node to be collapsed
      */
     public collapseNode(nodeToCollapse: T): void {
-        if (nodeToCollapse.hasChildren) {
+        if (nodeToCollapse != null && nodeToCollapse.hasChildren) {
             const children: T[] = this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId);
             children.forEach((child: T) => {
                 this.collapseInnerNode(child);
@@ -81,12 +81,34 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
      * @param subNodes List of nodes that will be added as children of expanded node
      */
     public appendNodes(nodeToAppend: T, subNodes: T[]): void {
-        const lastChild: T = this.treeNodes.filter((treeNode: T) => nodeToAppend.id === treeNode.parentId).pop();
-        const index: number = this.treeNodes.indexOf(lastChild);
-        const children: number = this.treeControl.getDescendants(lastChild).length;
-        this.treeNodes.splice(index + children + 1, 0, ...subNodes);
-        nodeToAppend.isLoading = false;
-        this.treeNodesSource.next(this.treeNodes);
+        if (nodeToAppend != null && subNodes != null) {
+            const lastChild: T = this.treeNodes.filter((treeNode: T) => nodeToAppend.id === treeNode.parentId).pop();
+            const index: number = this.treeNodes.indexOf(lastChild);
+            const children: number = this.treeControl.getDescendants(lastChild).length;
+            this.treeNodes.splice(index + children + 1, 0, ...subNodes);
+            nodeToAppend.isLoading = false;
+            this.treeNodesSource.next(this.treeNodes);
+        }
+    }
+
+    /**
+     * Removes provided node from the tree
+     *
+     * @param node Node to be removed
+     */
+    public removeNode(node: T): void {
+        this.treeNodes.splice(this.treeNodes.indexOf(node), 1);
+    }
+
+    /**
+     * Gets children of the node
+     *
+     * @param parentNode Parent node
+     *
+     * @returns children of parent node
+     */
+    public getChildren(parentNode: T): T[] {
+        return this.treeNodes.filter((treeNode: T) => treeNode.parentId === parentNode.id);
     }
 
     /**
@@ -118,10 +140,9 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
         const index: number = this.treeNodes.indexOf(nodeToCollapse);
         this.treeNodes.splice(index, 1);
         if (nodeToCollapse.hasChildren) {
-            const children: T[] = this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId);
-            children.forEach((child: T) => {
-                this.collapseInnerNode(child);
-            });
+            this.treeNodes
+                .filter((node: T) => nodeToCollapse.id === node.parentId)
+                .forEach((child: T) => this.collapseInnerNode(child));
         }
     }
 }

@@ -166,8 +166,8 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
     public loadMoreSubnodes(node: T): void {
         node.isLoading = true;
         const parentNode: T = this.treeService.getParentNode(node.parentId);
-        this.treeService.treeNodes.splice(this.treeService.treeNodes.indexOf(node), 1);
-        const loadedChildren: number = this.treeService.treeNodes.filter((treeNode: T) => treeNode.parentId === parentNode.id).length;
+        this.treeService.removeNode(node);
+        const loadedChildren: number = this.treeService.getChildren(parentNode).length;
         this.treeService.getSubNodes(parentNode.id, loadedChildren, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
             this.treeService.appendNodes(parentNode, response.entries);
             this.paginationChanged.emit(response.pagination);
@@ -188,7 +188,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
      */
     public onNodeSelected(node: T): void {
         this.treeNodesSelection.toggle(node);
-        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter((descendant: T) => descendant.nodeType !== TreeNodeType.LoadMoreNode);
+        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         if (descendants.length > 0) {
             this.treeNodesSelection.isSelected(node) ? this.treeNodesSelection.select(...descendants) : this.treeNodesSelection.deselect(...descendants);
         }
@@ -202,7 +202,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
      * @returns boolean
      */
     public descendantsAllSelected(node: T): boolean {
-        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter((descendant: T) => descendant.nodeType !== TreeNodeType.LoadMoreNode);
+        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         return descendants.length > 0 && descendants.every((descendant: T) => this.treeNodesSelection.isSelected(descendant));
     }
 
@@ -213,7 +213,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
      * @returns boolean
      */
     public descendantsPartiallySelected(node: T): boolean {
-        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter((descendant: T) => descendant.nodeType !== TreeNodeType.LoadMoreNode);
+        const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         return descendants.length > 0 && !this.descendantsAllSelected(node) && descendants.some((descendant: T) => this.treeNodesSelection.isSelected(descendant));
     }
 
@@ -237,14 +237,18 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
 
     private onTreeSelectionChange(selectionChange: SelectionChange<T>): void {
         selectionChange.removed.forEach((unselectedNode: T) => {
-            if (unselectedNode.nodeType !== TreeNodeType.LoadMoreNode) {
+            if (this.isRegularNode(unselectedNode)) {
                 this.nodeCheckboxes.find((checkbox: MatCheckbox) => checkbox.id === unselectedNode.id).checked = false;
             }
         });
         selectionChange.added.forEach((selectedNode: T) => {
-            if (selectedNode.nodeType !== TreeNodeType.LoadMoreNode) {
+            if (this.isRegularNode(selectedNode)) {
                 this.nodeCheckboxes.find((checkbox: MatCheckbox) => checkbox.id === selectedNode.id).checked = true;
             }
         });
+    }
+
+    private isRegularNode(node: T): boolean {
+        return node.nodeType !== TreeNodeType.LoadMoreNode;
     }
 }
