@@ -1,12 +1,12 @@
 <form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
     <mat-form-field>
+        <mat-label>{{ 'SEARCH.FILTER.RANGE.SELECT-FROM-DATE' | translate }}</mat-label>
         <input matInput
                 (input)="forcePlaceholder($event)"
                 [formControl]="from"
                 [errorStateMatcher]="matcher"
                 placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
                 [attr.aria-label]="'SEARCH.FILTER.RANGE.FROM-DATE' | translate"
-                [attr.title]="'SEARCH.FILTER.RANGE.FROM-DATE' | translate"
                 [matDatepicker]="fromDatepicker"
                 [max]="fromMaxDate"
                 (dateChange)="onChangedHandler($event, from)"
@@ -19,13 +19,13 @@
     </mat-form-field>
 
     <mat-form-field>
+        <mat-label>{{ 'SEARCH.FILTER.RANGE.SELECT-TO-DATE' | translate }}</mat-label>
         <input matInput
                 (input)="forcePlaceholder($event)"
                 [formControl]="to"
                 [errorStateMatcher]="matcher"
                 placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
                 [attr.aria-label]="'SEARCH.FILTER.RANGE.TO-DATE' | translate"
-                [attr.title]="'SEARCH.FILTER.RANGE.TO-DATE' | translate"
                 [matDatepicker]="toDatepicker"
                 [min]="from.value"
                 [max]="maxDate"
