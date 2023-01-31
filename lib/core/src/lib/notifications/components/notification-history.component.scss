@@ -28,6 +28,8 @@
         &-message,
         &-no-message {
             font-size: var(--theme-body-1-font-size) !important;
+            white-space: normal !important;
+            overflow: visible !important;
         }
 
         &-date {
