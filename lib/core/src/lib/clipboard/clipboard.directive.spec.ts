@@ -65,7 +65,7 @@ describe('ClipboardDirective', () => {
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
 
-    it('should notify copy target value on mouse enter event', () => {
+    it('should notify copy target value on keydown event', () => {
         spyOn(clipboardService, 'copyToClipboard');
         fixture.nativeElement.querySelector('input').value = 'some value';
         fixture.nativeElement.querySelector('button').dispatchEvent(new KeyboardEvent('keydown', {code: 'Enter', key: 'Enter'}));
@@ -137,7 +137,7 @@ describe('CopyClipboardDirective', () => {
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');
     }));
 
-    it('should copy the content of element on mouse enter', fakeAsync(() => {
+    it('should copy the content of element on keydown event', fakeAsync(() => {
         const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
