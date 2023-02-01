@@ -2,14 +2,13 @@
 Title: Viewer component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-03-25
+Last reviewed: 2023-01-30
 ---
 
 # [Viewer component](../../../lib/core/src/lib/viewer/components/viewer.component.ts "Defined in viewer.component.ts")
 
-Displays content from an ACS repository.
+Displays content from blob file or url file.
 
-See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 ## Contents
 
@@ -23,22 +22,21 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
-    -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
-    -   [Printing](#printing)
 -   [See also](#see-also)
 
 ## Basic usage
 
-Using with node id:
+Using with blob file:
 
 ```html
 <adf-viewer 
     [showViewer]="true" 
     [overlayMode]="true" 
-    [nodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+    [blobFile]="blobFile"
+    [fileName]="'filename.pdf'">
 </adf-viewer>
 ```
 
@@ -47,22 +45,9 @@ Using with file url:
 ```html
 <adf-viewer 
     [overlayMode]="true" 
-    [urlFile]="'filename.pdf'">
+    [urlFile]="'https://fileUrl.com/filename.pdf'">
 </adf-viewer>
 ```
-
-Using with shared link:
-
-```html
-<adf-viewer
-    [overlayMode]="true" 
-    [sharedLinkId]="'WWDg_afiTU6lHEgr4fAbQA'">
-</adf-viewer>
-```
-
-Note that if you have a URL which contains a shared link ID, you should extract the
-ID portion and use it with the `sharedLinkId` property rather than using the whole
-URL with `urlFile`.
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
@@ -81,41 +66,30 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
-| allowPrint | `boolean` | false | Toggles printing. |
 | allowRightSidebar | `boolean` | false | Allow the right sidebar. |
-| allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
 | blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
 | fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
-| nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
 | showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
-| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
-| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
+| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded data. |
+| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded data. |
+| tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| versionId | `string` | null | Version Id of the file to load. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
-| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/src/lib/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/src/lib/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
+| submitFile | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer. |
 
 ## Keyboard shortcuts
 
@@ -128,50 +102,13 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ## Details
 
-### Integrating with the Document List component
-
-Below is the most simple integration of the Viewer and
-[Document List](../../content-services/components/document-list.component.md) components within your custom component:
-
-```html
-<adf-document-list
-    currentFolderId="-my-"
-    (preview)="showPreview($event)">
-</adf-document-list>
-
-<adf-viewer
-    [(showViewer)]="showViewer"
-    [overlayMode]="true"
-    [nodeId]="nodeId">
-</adf-viewer>
-```
-
-The component controller class implementation might look like the following:
-
-```ts
-export class OverlayViewerComponent {
-
-    @Input()
-    showViewer: boolean = false;
-
-    nodeId: string;
-
-    showPreview(event) {
-        if (event.value.entry.isFile) {
-            this.nodeId = event.value.entry.id;
-            this.showViewer = true;
-        }
-    }
-}
-```
-
 ### Custom file parameters
 
-You can provide custom file parameters, for example a value for the `mimeType` or `displayName` when using URL values that have no file names or extensions:
+You can provide custom file parameters, for example a value for the `mimeType` or `fileName` when using URL values that have no file names or extensions:
 
 ```html
 <adf-viewer
-    [displayName]="fileName"
+    [fileName]="fileName"
     [allowGoBack]="false"
     [mimeType]="mimeType"
     [urlFile]="fileUrl">
@@ -222,12 +159,6 @@ The [Viewer component](viewer.component.md) consists of separate Views that hand
     -   \*.webm
     -   \*.ogg
 
-### Content Renditions
-
-For those extensions and mime types that cannot be natively displayed in the browser, the Viewer will try to fetch the corresponding rendition using the [renditions service api](../services/renditions.service.md).
-
-For the full list of supported types please refer to: [File types that support preview and thumbnail generation](http://docs.alfresco.com/5.2/references/valid-transformations-preview.html).
-
 ### Configuring PDF.js library
 
 Configure your webpack-enabled application with the PDF.js library as follows.
@@ -277,7 +208,7 @@ the [Viewer component](viewer.component.md). Below is an example that shows how 
 to handle 3D data files:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-viewer [urlFile]="urlFile">
     
     <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
         <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
@@ -296,7 +227,7 @@ Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file
 You can define multiple `adf-viewer-extension` templates if required:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-viewer [urlFile]="urlFile">
 
     <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
         <ng-template let-urlFileContent="urlFileContent">
@@ -377,55 +308,13 @@ transclusion, which will display all content placed inside the `<adf-viewer-side
 </adf-viewer>
 ```
 
-The second way to customize the sidebar is to use template injection but note that this only works
-when using the viewer with `nodeId`.
-
-```html
-<ng-template let-node="node" #sidebarTemplate>
-    <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
-</ng-template>
-<adf-viewer [allowRightSidebar]="true" [sidebarRightTemplate]="sidebarTemplate"></adf-viewer>
-```
-
-#### Custom thumbnails
-
-The PDF viewer comes with its own default list of thumbnails but you can replace this
-by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
-instance.
-
-![PDF thumbnails](../../docassets/images/pdf-thumbnails.png)
-
-Provide the custom template as in the following example:
-
-```javascript
-import { Component, Input } from '@angular/core';
-
-@Component({
-    selector: 'custom-thumbnails',
-    template: '<p> Custom Thumbnails Component </p>'
-})
-export class CustomThumbnailsComponent {
-    @Input() pdfViewer: any;
-
-    ...
-}
-```
-
-```html
-<ng-template #customThumbnailsTemplate let-pdfViewer="viewer">
-    <custom-thumbnails [pdfViewer]="pdfViewer"></custom-thumbnails>
-</ng-template>
-
-<adf-viewer [thumbnailsTemplate]="customThumbnailsTemplate"></adf-viewer>
-```
-
 #### Custom "Open With" menu
 
 You can enable a custom "Open With" menu by providing at least one action inside the
 `adf-viewer-open-with` tag:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-viewer [urlFile]="urlFile">
 
     <adf-viewer-open-with>
         <button mat-menu-item>
@@ -452,7 +341,7 @@ You can enable a custom "Open With" menu by providing at least one action inside
 You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
 
 ```html
-<adf-viewer [nodeId]="nodeId">
+<adf-viewer [urlFile]="urlFile">
 
     <adf-viewer-more-actions>
         <button mat-menu-item>
@@ -490,21 +379,6 @@ In the same way you can set a default zoom scaling value for the image viewer by
 }
 
 By default the viewer's zoom scaling is set to 100%.
-
-### Printing
-
-You can configure the Viewer to let the user print the displayed content. The
-component will show a "Print" button if the `allowPrint` property is set to
-true.
-
-```html
-<adf-viewer [allowPrint]="true">
-    ...
-</adf-viewer>
-```
-
-You can also use the `print` event to get notification when the user prints some
-content.
 
 ## See also
 

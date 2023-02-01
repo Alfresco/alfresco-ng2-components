@@ -48,6 +48,7 @@ import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
+import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 
 @NgModule({
     imports: [
@@ -79,7 +80,8 @@ import { SearchTextModule } from './search-text/search-text-input.module';
         VersionCompatibilityModule,
         NodeCommentsModule,
         TreeModule,
-        SearchTextModule
+        SearchTextModule,
+        AlfrescoViewerModule
     ],
     providers: [
         {
@@ -115,7 +117,8 @@ import { SearchTextModule } from './search-text/search-text-input.module';
         VersionCompatibilityModule,
         NodeCommentsModule,
         TreeModule,
-        SearchTextModule
+        SearchTextModule,
+        AlfrescoViewerModule
     ]
 })
 export class ContentModule {

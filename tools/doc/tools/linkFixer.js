@@ -18,7 +18,7 @@ function processDocs(mdCache, aggData) {
 }
 exports.processDocs = processDocs;
 function fixUrls(tree, docFilePath, linkSet, selector) {
-    var linksInDoc = unist_util_select_1.selectAll(selector, tree);
+    var linksInDoc = (0, unist_util_select_1.selectAll)(selector, tree);
     var errors = [];
     linksInDoc.forEach(function (linkElem) {
         var origFullUrlPath = path.resolve(path.dirname(docFilePath), linkElem.url);
@@ -34,14 +34,14 @@ function fixUrls(tree, docFilePath, linkSet, selector) {
             !fs.existsSync(origFullUrlPath)) {
             var newUrl = linkSet.update(origFullUrlPath) || origFullUrlPath;
             linkElem.url = path.relative(path.dirname(docFilePath), newUrl).replace(/\\/g, '/') + anchor;
-            errors.push("Bad link: " + origFullUrlPath + "\nReplacing with " + linkElem.url);
+            errors.push("Bad link: ".concat(origFullUrlPath, "\nReplacing with ").concat(linkElem.url));
         } /*else {
             console.log(`Link OK: ${origFullUrlPath}`);
         }
         */
     });
     if (errors.length > 0) {
-        showMessages("File: " + docFilePath + ":", errors);
+        showMessages("File: ".concat(docFilePath, ":"), errors);
     }
 }
 function showMessages(groupName, messages) {
@@ -81,7 +81,7 @@ var LinkSet = /** @class */ (function () {
                 return candidates[0];
             }
             else {
-                console.log("Multiple candidates for " + oldUrl);
+                console.log("Multiple candidates for ".concat(oldUrl));
                 return '';
             }
         }

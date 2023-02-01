@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { FormModel } from '../core/form.model';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormService } from '../../../services/form.service';
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormModel, FormService, FormFieldModel } from '@alfresco/adf-core';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();

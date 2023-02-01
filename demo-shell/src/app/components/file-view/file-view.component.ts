@@ -45,7 +45,6 @@ export class FileViewComponent implements OnInit {
     customPreset: string = null;
     displayDefaultProperties = true;
     showToolbar = true;
-    displayName = null;
     urlFile = null;
     allowGoBack = true;
     openWith = false;
@@ -55,7 +54,6 @@ export class FileViewComponent implements OnInit {
     allowLeftSidebar = true;
     moreActions = true;
     moreActionsMenu = false;
-    customName = false;
     fileUrlSwitch = false;
     showLeftSidebar = null;
     showRightSidebar = false;
@@ -65,8 +63,9 @@ export class FileViewComponent implements OnInit {
     showTabWithIconAndLabel = false;
     desiredAspect: string = null;
     showAspect: string = null;
-    content: Blob;
     name: string;
+    fileName: string;
+    blobFile: Blob;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -93,9 +92,9 @@ export class FileViewComponent implements OnInit {
                     },
                     () => this.router.navigate(['/files', id])
                 );
-            } else if (this.preview.content) {
-                this.content = this.preview.content;
-                this.displayName = this.preview.name;
+            } else if (this.preview?.content) {
+                this.blobFile = this.preview.content;
+                this.fileName = this.preview.name;
             }
         });
     }
@@ -104,7 +103,7 @@ export class FileViewComponent implements OnInit {
         this.preview.showResource(this.nodeId, versionId);
     }
 
-    onViewerVisibilityChanged() {
+    onViewerClosed() {
         const primaryUrl = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].toString();
         this.router.navigateByUrl(primaryUrl);
     }
@@ -180,14 +179,6 @@ export class FileViewComponent implements OnInit {
 
     toggleShowTabWithIconAndLabel() {
         this.showTabWithIconAndLabel = !this.showTabWithIconAndLabel;
-    }
-
-    toggleCustomName() {
-        this.customName = !this.customName;
-
-        if (!this.customName) {
-            this.displayName = null;
-        }
     }
 
     toggleFileUrl() {

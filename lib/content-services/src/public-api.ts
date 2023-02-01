@@ -44,5 +44,6 @@ export * from './lib/common/index';
 export * from './lib/tree/index';
 export * from './lib/category/index';
 export * from './lib/search-text/index';
+export * from './lib/viewer/index';
 
 export * from './lib/content.module';

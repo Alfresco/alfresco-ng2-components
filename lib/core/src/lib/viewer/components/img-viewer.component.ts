@@ -25,8 +25,8 @@ import {
     Output,
     EventEmitter, AfterViewInit, ViewChild, HostListener, OnDestroy
 } from '@angular/core';
-import { ContentService } from '../../services/content.service';
 import { AppConfigService } from '../../app-config/app-config.service';
+import { UrlService } from '../../services/url.service';
 import Cropper from 'cropperjs';
 
 @Component({
@@ -51,7 +51,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     blobFile: Blob;
 
     @Input()
-    nameFile: string;
+    fileName: string;
 
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
@@ -74,12 +74,12 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     constructor(
         private appConfigService: AppConfigService,
-        private contentService: ContentService) {
+        private urlService: UrlService) {
         this.initializeScaling();
     }
 
     initializeScaling() {
-        const scaling = this.appConfigService.get<number>('adf-viewer.image-viewer-scaling', undefined) / 100;
+        const scaling = this.appConfigService.get<number>('adf-viewer-render.image-viewer-scaling', undefined) / 100;
         if (scaling) {
             this.scale = scaling;
         }
@@ -140,7 +140,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
-            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
+            this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }
         if (!this.urlFile && !this.blobFile) {

@@ -29,7 +29,7 @@ import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
-import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
+import { BaseViewerWidgetComponent } from './base-viewer/base-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './display-rich-text/display-rich-text.widget';
 
 // core
@@ -49,7 +49,7 @@ export * from './amount/amount.widget';
 export * from './error/error.component';
 export * from './date-time/date-time.widget';
 export * from './json/json.widget';
-export * from './file-viewer/file-viewer.widget';
+export * from './base-viewer/base-viewer.widget';
 export * from './display-rich-text/display-rich-text.widget';
 export * from './text/text-mask.component';
 
@@ -66,7 +66,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     ErrorWidgetComponent,
     DateTimeWidgetComponent,
     JsonWidgetComponent,
-    FileViewerWidgetComponent,
+    BaseViewerWidgetComponent,
     DisplayRichTextWidgetComponent
 ];
 

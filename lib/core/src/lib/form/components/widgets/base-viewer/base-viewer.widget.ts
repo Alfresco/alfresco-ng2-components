@@ -22,9 +22,9 @@ import { WidgetComponent } from '../widget.component';
  /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'file-viewer-widget',
-    templateUrl: './file-viewer.widget.html',
-    styleUrls: ['./file-viewer.widget.scss'],
+    selector: 'base-viewer-widget',
+    templateUrl: './base-viewer.widget.html',
+    styleUrls: ['./base-viewer.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -38,7 +38,7 @@ import { WidgetComponent } from '../widget.component';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class FileViewerWidgetComponent extends WidgetComponent implements OnInit {
+export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {
     constructor(formService: FormService) {
         super(formService);
     }

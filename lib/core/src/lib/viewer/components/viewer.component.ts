@@ -16,45 +16,39 @@
  */
 
 import {
-    Component, ContentChild, EventEmitter, HostListener, ElementRef,
-    Input, OnChanges, Output, TemplateRef,
-    ViewEncapsulation, OnInit, OnDestroy, ChangeDetectorRef
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    TemplateRef,
+    ViewEncapsulation
 } from '@angular/core';
-import {
-    SharedLinkEntry,
-    Node,
-    Version,
-    RenditionEntry,
-    NodeEntry,
-    VersionEntry,
-    SharedlinksApi, VersionsApi, NodesApi, ContentApi
-} from '@alfresco/js-api';
-import { BaseEvent } from '../../events';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../common/services/log.service';
-import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
-import { ViewerOpenWithComponent } from './viewer-open-with.component';
-import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { fromEvent, Subject } from 'rxjs';
-import { ViewUtilService } from '../services/view-util.service';
-import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import {  fromEvent, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentService } from '../../services/content.service';
-import { UploadService } from '../../services/upload.service';
-import { FileModel } from '../../models';
-import { NodesApiService } from '../../services/nodes-api.service';
+import { ViewerToolbarComponent } from './viewer-toolbar.component';
+import { ViewerOpenWithComponent } from './viewer-open-with.component';
+import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
+import { ViewerSidebarComponent } from './viewer-sidebar.component';
+import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import { Track } from '../models/viewer.model';
+import { ViewUtilService } from '../services/view-util.service';
 
 @Component({
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
-    host: { class: 'adf-viewer' },
+    host: {class: 'adf-viewer'},
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
-export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
+export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -74,62 +68,35 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     urlFile = '';
 
-    /** Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`).
-     * Used when `urlFile` has no filename and extension.
-     */
-    @Input()
-    urlFileViewer: string = null;
-
     /** Loads a Blob File */
     @Input()
     blobFile: Blob;
 
-    /** Node Id of the file to load. */
+    /** Override Content filename. */
     @Input()
-    nodeId: string = null;
+    fileName: string;
 
-    /** Version Id of the file to load. */
+    /** Hide or show the viewer */
     @Input()
-    versionId: string = null;
+    showViewer = true;
 
-    /** Shared link id (to display shared file). */
+    /** Allows `back` navigation */
     @Input()
-    sharedLinkId: string = null;
+    allowGoBack = true;
+
+    /** Toggles the 'Full Screen' feature. */
+    @Input()
+    allowFullScreen = true;
+
+    /** Hide or show the toolbar */
+    @Input()
+    showToolbar = true;
 
     /** If `true` then show the Viewer as a full page over the current content.
      * Otherwise fit inside the parent div.
      */
     @Input()
     overlayMode = false;
-
-    /** Hide or show the viewer */
-    @Input()
-    showViewer = true;
-
-    /** Hide or show the toolbar */
-    @Input()
-    showToolbar = true;
-
-    /** Specifies the name of the file when it is not available from the URL. */
-    @Input()
-    displayName: string;
-
-    /** @deprecated 3.2.0 */
-    /** Allows `back` navigation */
-    @Input()
-    allowGoBack = true;
-
-    /** Toggles downloading. */
-    @Input()
-    allowDownload = true;
-
-    /** Toggles printing. */
-    @Input()
-    allowPrint = false;
-
-    /** Toggles the 'Full Screen' feature. */
-    @Input()
-    allowFullScreen = true;
 
     /** Toggles before/next navigation. You can use the arrow buttons to navigate
      * between documents in the collection.
@@ -153,10 +120,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowRightSidebar = false;
 
-    /** Toggles PDF thumbnails. */
-    @Input()
-    allowThumbnails = true;
-
     /** Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. */
     @Input()
     showRightSidebar = false;
@@ -173,39 +136,28 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     sidebarLeftTemplate: TemplateRef<any> = null;
 
-    /** The template for the pdf thumbnails. */
+    /** Enable when where is possible the editing functionalities  */
     @Input()
-    thumbnailsTemplate: TemplateRef<any> = null;
+    readOnly = true;
 
-    /** MIME type of the file content (when not determined by the filename extension). */
+    /** media subtitles for the media player*/
+    @Input()
+    tracks: Track[] = [];
+
     @Input()
     mimeType: string;
 
-    /** Content filename. */
-    @Input()
-    fileName: string;
-
-    /** Number of times the Viewer will retry fetching content Rendition.
-     * There is a delay of at least one second between attempts.
+    /**
+     * Context object available for binding by the local sidebarRightTemplate with let declarations.
      */
     @Input()
-    maxRetries = 30;
+    sidebarRightTemplateContext: T = null;
 
-    /** Emitted when user clicks the 'Back' button. */
-    @Output()
-    goBack = new EventEmitter<BaseEvent<any>>();
-
-    /** Emitted when user clicks the 'Print' button. */
-    @Output()
-    print = new EventEmitter<BaseEvent<any>>();
-
-    /** Emitted when the viewer is shown or hidden. */
-    @Output()
-    showViewerChange = new EventEmitter<boolean>();
-
-    /** Emitted when the filename extension changes. */
-    @Output()
-    extensionChange = new EventEmitter<string>();
+    /**
+     * Context object available for binding by the local sidebarLeftTemplate with let declarations.
+     */
+    @Input()
+    sidebarLeftTemplateContext: T = null;
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
@@ -215,377 +167,64 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     navigateNext = new EventEmitter<MouseEvent | KeyboardEvent>();
 
-    /** Emitted when the shared link used is not valid. */
+    /** Emitted when the viewer close */
     @Output()
-    invalidSharedLink = new EventEmitter();
+    showViewerChange = new EventEmitter<boolean>();
 
-    viewerType = 'unknown';
-    isLoading = false;
-    nodeEntry: NodeEntry;
-    versionEntry: VersionEntry;
-
-    extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
-    urlFileContent: string;
-    otherMenu: any;
-    extension: string;
-    sidebarRightTemplateContext: { node: Node } = { node: null };
-    sidebarLeftTemplateContext: { node: Node } = { node: null };
-    fileTitle: string;
-
-    /**
-     * Returns a list of the active Viewer content extensions.
-     */
-    get viewerExtensions(): ViewerExtensionRef[] {
-        return this.extensionService.getViewerExtensions();
-    }
-
-    /**
-     * Provides a list of file extensions supported by external plugins.
-     */
-    get externalExtensions(): string[] {
-        return this.viewerExtensions.map(ext => ext.fileExtension);
-    }
-
-    private _externalViewer: ViewerExtensionRef;
-    get externalViewer(): ViewerExtensionRef {
-        if (!this._externalViewer) {
-            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
-        }
-
-        return this._externalViewer;
-    }
-
-    readOnly = true;
-
-    private cacheBusterNumber: number;
-    cacheTypeForContent = '';
-
-    // Extensions that are supported by the Viewer without conversion
-    private extensions = {
-        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
-        media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
-        pdf: ['pdf']
-    };
-
-    // Mime types that are supported by the Viewer without conversion
-    private mimeTypes = {
-        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
-        pdf: ['application/pdf'],
-        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
-        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
-    };
+    /** Emitted when the img is submitted in the img viewer. */
+    @Output()
+    submitFile = new EventEmitter<Blob>();
 
     private onDestroy$ = new Subject<boolean>();
-    private shouldCloseViewer = true;
+
+    private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
-
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService,
-                private nodesApiService: NodesApiService,
-                private viewUtilService: ViewUtilService,
-                private logService: LogService,
-                private extensionService: AppExtensionService,
-                private contentService: ContentService,
-                private uploadService: UploadService,
-                private el: ElementRef,
+    constructor(private el: ElementRef,
                 public dialog: MatDialog,
-                private cdr: ChangeDetectorRef) {
-        viewUtilService.maxRetries = this.maxRetries;
+                private viewUtilsService: ViewUtilService
+               ) {
     }
 
-    isSourceDefined(): boolean {
-        return !!(this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId);
+    ngOnChanges(changes: SimpleChanges){
+        const { blobFile, urlFile } = changes;
+
+        if(blobFile?.currentValue){
+            this.mimeType = blobFile.currentValue.type;
+        }
+
+        if(urlFile?.currentValue){
+            this.fileName = this.fileName ? this.fileName : this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
+        }
+
     }
 
-    ngOnInit() {
-        this.nodesApiService.nodeUpdated.pipe(
-            filter((node) => node && node.id === this.nodeId &&
-                (node.name !== this.fileName ||
-                    this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))),
-            takeUntil(this.onDestroy$)
-        ).subscribe((node) => this.onNodeUpdated(node));
-
-        this.viewUtilService.viewerTypeChange.pipe(takeUntil(this.onDestroy$)).subscribe((type: string) => {
-            this.viewerType = type;
-        });
-
-        this.viewUtilService.urlFileContentChange.pipe(takeUntil(this.onDestroy$)).subscribe((content: string) => {
-            this.urlFileContent = content;
-        });
-
+    ngOnInit(): void {
         this.closeOverlayManager();
-        this.cacheTypeForContent = '';
     }
 
-    private getNodeVersionProperty(node: Node): string {
-        return node?.properties['cm:versionLabel'] ?? '';
-    }
+    private closeOverlayManager() {
+        this.dialog.afterOpened.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.closeViewer = false);
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
+        this.dialog.afterAllClosed.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.closeViewer = true);
 
-    private onNodeUpdated(node: Node) {
-        if (node && node.id === this.nodeId) {
-            this.cacheTypeForContent = 'no-cache';
-            this.generateCacheBusterNumber();
-            this.isLoading = true;
-            this.setUpNodeFile(node).then(() => {
-                this.isLoading = false;
-            });
-        }
-    }
+        this.keyDown$.pipe(
+            skipWhile(() => !this.overlayMode),
+            filter((e: KeyboardEvent) => e.keyCode === 27),
+            takeUntil(this.onDestroy$)
+        ).subscribe((event: KeyboardEvent) => {
+            event.preventDefault();
 
-    ngOnChanges() {
-        if (this.showViewer) {
-            if (!this.isSourceDefined()) {
-                throw new Error('A content source attribute value is missing.');
+            if (this.closeViewer) {
+                this.onClose();
             }
-            this.isLoading = true;
-
-            if (this.blobFile) {
-                this.setUpBlobData();
-                this.isLoading = false;
-            } else if (this.urlFile) {
-                this.setUpUrlFile();
-                this.isLoading = false;
-            } else if (this.nodeId) {
-                this.setupNode();
-            } else if (this.sharedLinkId) {
-                this.setupSharedLink();
-            }
-        }
-    }
-
-    private setupSharedLink() {
-        this.allowGoBack = false;
-
-        this.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-            (sharedLinkEntry: SharedLinkEntry) => {
-                this.setUpSharedLinkFile(sharedLinkEntry);
-                this.isLoading = false;
-            },
-            () => {
-                this.isLoading = false;
-                this.logService.error('This sharedLink does not exist');
-                this.invalidSharedLink.next();
-            });
-    }
-
-    private setupNode() {
-        this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
-            (node: NodeEntry) => {
-                this.nodeEntry = node;
-                if (this.versionId) {
-                    this.versionsApi.getVersion(this.nodeId, this.versionId).then(
-                        (version: VersionEntry) => {
-                            this.versionEntry = version;
-                            this.setUpNodeFile(node.entry, version.entry).then(() => {
-                                this.isLoading = false;
-                            });
-                        }
-                    );
-                } else {
-                    this.setUpNodeFile(node.entry).then(() => {
-                        this.isLoading = false;
-                        this.cdr.detectChanges();
-                    });
-                }
-            },
-            () => {
-                this.isLoading = false;
-                this.logService.error('This node does not exist');
-            }
-        );
-    }
-
-    private setUpBlobData() {
-        this.fileTitle = this.getDisplayName('Unknown');
-        this.mimeType = this.blobFile.type;
-        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-
-        this.allowDownload = false;
-        // TODO: wrap blob into the data url and allow downloading
-
-        this.extensionChange.emit(this.mimeType);
-        this.scrollTop();
-    }
-
-    private setUpUrlFile() {
-        const filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-        this.fileTitle = this.getDisplayName(filenameFromUrl);
-        this.extension = this.getFileExtension(filenameFromUrl);
-        this.urlFileContent = this.urlFile;
-        this.fileName = this.displayName;
-        this.viewerType = this.urlFileViewer || this.getViewerType(this.extension, this.mimeType);
-
-        this.extensionChange.emit(this.extension);
-        this.scrollTop();
-    }
-
-    private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
-        this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
-
-        if (versionData && versionData.content) {
-            this.mimeType = versionData.content.mimeType;
-        } else if (nodeData.content) {
-            this.mimeType = nodeData.content.mimeType;
-        }
-
-        this.fileTitle = this.getDisplayName(versionData ? versionData.name : nodeData.name);
-
-        const currentFileVersion = this.nodeEntry?.entry?.properties && this.nodeEntry.entry.properties['cm:versionLabel'] ?
-            encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel']) : encodeURI('1.0');
-
-        this.urlFileContent = versionData ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
-            this.contentApi.getContentUrl(this.nodeId);
-        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
-            this.urlFileContent + '&' + currentFileVersion;
-
-        this.extension = this.getFileExtension(versionData ? versionData.name : nodeData.name);
-        this.fileName = versionData ? versionData.name : nodeData.name;
-        this.viewerType = this.getViewerType(this.extension, this.mimeType);
-
-        if (this.viewerType === 'unknown') {
-            if (versionData) {
-                await this.viewUtilService.displayNodeRendition(nodeData.id, versionData.id);
-            } else {
-                await this.viewUtilService.displayNodeRendition(nodeData.id);
-            }
-        }
-
-        this.extensionChange.emit(this.extension);
-        this.sidebarRightTemplateContext.node = nodeData;
-        this.sidebarLeftTemplateContext.node = nodeData;
-        this.scrollTop();
-    }
-
-    private getViewerType(extension: string, mimeType: string): string {
-        let viewerType = this.getViewerTypeByExtension(extension);
-
-        if (viewerType === 'unknown') {
-            viewerType = this.getViewerTypeByMimeType(mimeType);
-        }
-
-        return viewerType;
-    }
-
-    private setUpSharedLinkFile(details: any) {
-        this.mimeType = details.entry.content.mimeType;
-        this.fileTitle = this.getDisplayName(details.entry.name);
-        this.extension = this.getFileExtension(details.entry.name);
-        this.fileName = details.entry.name;
-        this.urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-        this.viewerType = this.getViewerType(this.extension, this.mimeType);
-
-        if (this.viewerType === 'unknown') {
-            this.displaySharedLinkRendition(this.sharedLinkId);
-        }
-
-        this.extensionChange.emit(this.extension);
-    }
-
-    toggleSidebar() {
-        this.showRightSidebar = !this.showRightSidebar;
-        if (this.showRightSidebar && this.nodeId) {
-            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] })
-                .then((nodeEntry: NodeEntry) => {
-                    this.sidebarRightTemplateContext.node = nodeEntry.entry;
-                });
-        }
-    }
-
-    toggleLeftSidebar() {
-        this.showLeftSidebar = !this.showLeftSidebar;
-        if (this.showRightSidebar && this.nodeId) {
-            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] })
-                .then((nodeEntry: NodeEntry) => {
-                    this.sidebarLeftTemplateContext.node = nodeEntry.entry;
-                });
-        }
-    }
-
-    private getDisplayName(name) {
-        return this.displayName || name;
-    }
-
-    scrollTop() {
-        window.scrollTo(0, 1);
-    }
-
-    getViewerTypeByMimeType(mimeType: string) {
-        if (mimeType) {
-            mimeType = mimeType.toLowerCase();
-
-            const editorTypes = Object.keys(this.mimeTypes);
-            for (const type of editorTypes) {
-                if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
-                    return type;
-                }
-            }
-        }
-        return 'unknown';
-    }
-
-    getViewerTypeByExtension(extension: string): string {
-        if (extension) {
-            extension = extension.toLowerCase();
-        }
-
-        if (this.isExternalViewer()) {
-            return 'external';
-        }
-
-        if (this.isCustomViewerExtension(extension)) {
-            return 'custom';
-        }
-
-        if (this.extensions.image.indexOf(extension) >= 0) {
-            return 'image';
-        }
-
-        if (this.extensions.media.indexOf(extension) >= 0) {
-            return 'media';
-        }
-
-        if (this.extensions.text.indexOf(extension) >= 0) {
-            return 'text';
-        }
-
-        if (this.extensions.pdf.indexOf(extension) >= 0) {
-            return 'pdf';
-        }
-
-        return 'unknown';
-    }
-
-    onBackButtonClick() {
-        this.close();
+        });
     }
 
     onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
@@ -599,64 +238,19 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * close the viewer
      */
-    close() {
-        if (this.otherMenu) {
-            this.otherMenu.hidden = false;
-        }
+    onClose() {
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
     }
 
-    /**
-     * get File name from url
-     *
-     * @param  url - url file
-     */
-    getFilenameFromUrl(url: string): string {
-        const anchor = url.indexOf('#');
-        const query = url.indexOf('?');
-        const end = Math.min(
-            anchor > 0 ? anchor : url.length,
-            query > 0 ? query : url.length);
-        return url.substring(url.lastIndexOf('/', end) + 1, end);
+    toggleRightSidebar() {
+        this.showRightSidebar = !this.showRightSidebar;
     }
 
-    /**
-     * Get file extension from the string.
-     * Supports the URL formats like:
-     * http://localhost/test.jpg?cache=1000
-     * http://localhost/test.jpg#cache=1000
-     *
-     * @param fileName - file name
-     */
-    getFileExtension(fileName: string): string {
-        if (fileName) {
-            const match = fileName.match(/\.([^\./\?\#]+)($|\?|\#)/);
-            return match ? match[1] : null;
-        }
-        return null;
+    toggleLeftSidebar() {
+        this.showLeftSidebar = !this.showLeftSidebar;
     }
 
-    private isExternalViewer(): boolean {
-        return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
-    }
-
-    isCustomViewerExtension(extension: string): boolean {
-        const extensions = this.externalExtensions || [];
-
-        if (extension && extensions.length > 0) {
-            extension = extension.toLowerCase();
-            return extensions.flat().indexOf(extension) >= 0;
-        }
-
-        return false;
-    }
-
-    /**
-     * Keyboard event listener
-     *
-     * @param  event
-     */
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (event && event.defaultPrevented) {
@@ -684,17 +278,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    printContent() {
-        if (this.allowPrint) {
-            const args = new BaseEvent();
-            this.print.next(args);
-
-            if (!args.defaultPrevented) {
-                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
-            }
-        }
-    }
-
     /**
      * Triggers full screen mode with a main content area displayed.
      */
@@ -715,82 +298,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async displaySharedLinkRendition(sharedId: string) {
-        try {
-            const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
-            if (rendition.entry.status.toString() === 'CREATED') {
-                this.viewerType = 'pdf';
-                this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-            }
-        } catch (error) {
-            this.logService.error(error);
-            try {
-                const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
-                if (rendition.entry.status.toString() === 'CREATED') {
-                    this.viewerType = 'image';
-                    this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
-                }
-            } catch (renditionError) {
-                this.logService.error(renditionError);
-            }
-        }
-    }
-
-    checkExtensions(extensionAllowed) {
-        if (typeof extensionAllowed === 'string') {
-            return this.extension.toLowerCase() === extensionAllowed.toLowerCase();
-        } else if (extensionAllowed.length > 0) {
-            return extensionAllowed.find((currentExtension) => this.extension.toLowerCase() === currentExtension.toLowerCase());
-        }
-    }
-
     onSubmitFile(newImageBlob: Blob) {
-        if (this?.nodeEntry?.entry?.id && !this.readOnly) {
-            const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
-            const newFile = new FileModel(
-                newImageFile,
-                {
-                    majorVersion: false,
-                    newVersion: true,
-                    parentId: this?.nodeEntry?.entry?.parentId,
-                    nodeType: this?.nodeEntry?.entry?.content?.mimeType
-                },
-                this?.nodeEntry?.entry?.id
-            );
-            this.uploadService.addToQueue(...[newFile]);
-            this.uploadService.uploadFilesInTheQueue();
-        }
+        this.submitFile.emit(newImageBlob);
     }
 
-    onUnsupportedFile() {
-        this.viewerType = 'unknown';
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
-    private closeOverlayManager() {
-        this.dialog.afterOpened.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.shouldCloseViewer = false);
-
-        this.dialog.afterAllClosed.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.shouldCloseViewer = true);
-
-        this.keyDown$.pipe(
-            skipWhile(() => !this.overlayMode),
-            filter((e: KeyboardEvent) => e.keyCode === 27),
-            takeUntil(this.onDestroy$)
-        ).subscribe((event: KeyboardEvent) => {
-            event.preventDefault();
-
-            if (this.shouldCloseViewer) {
-                this.close();
-            }
-        });
-    }
-
-    private generateCacheBusterNumber() {
-        this.cacheBusterNumber = Date.now();
-    }
 }

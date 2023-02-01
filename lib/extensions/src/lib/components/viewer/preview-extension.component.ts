@@ -27,7 +27,6 @@ import {
     OnChanges
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
-import { Node } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-preview-extension',
@@ -50,10 +49,6 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     /** File extension (.jpg, .png, etc) for the viewer. */
     @Input()
     extension: string;
-
-    /** Node containing the content to display. */
-    @Input()
-    node: Node;
 
     private componentRef: ComponentRef<any>;
 
@@ -95,7 +90,6 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef && this.componentRef.instance) {
             const instance = this.componentRef.instance;
 
-            instance.node = this.node;
             instance.url = this.url;
             instance.extension = this.extension;
         }
