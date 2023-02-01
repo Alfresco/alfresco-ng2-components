@@ -21,7 +21,8 @@ import { from, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
     RequestQuery,
-    RequestSortDefinitionInner, ResultSetContextFacetQueries,
+    RequestSortDefinitionInner,
+    ResultSetContextFacetQueries,
     ResultSetPaging,
     SearchApi,
     TagBody,
