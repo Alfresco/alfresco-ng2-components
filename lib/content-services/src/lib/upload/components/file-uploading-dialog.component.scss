@@ -82,7 +82,7 @@
 [adfUploadDialogLeft] .adf-upload-dialog { left: 25px; }
 [adfUploadDialogRight] .adf-upload-dialog { right: 25px; }
 
-@media screen and (min-width: 380px) and (max-width: 600px) {
+@media screen and (min-width: 380px) and (max-width: 768px) {
     .adf-upload-dialog {
         width: 60%;
     }
