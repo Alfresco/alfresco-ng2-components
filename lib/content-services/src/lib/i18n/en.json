@@ -465,6 +465,9 @@
       "ARIA_LABEL": "Toggle {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Load more {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Create Library",

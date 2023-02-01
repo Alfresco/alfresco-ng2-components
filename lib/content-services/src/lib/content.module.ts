@@ -46,6 +46,7 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
+import { TreeModule } from './tree/tree.module';
 import { SearchTextModule } from './search-text/search-text-input.module';
 
 @NgModule({
@@ -77,6 +78,7 @@ import { SearchTextModule } from './search-text/search-text-input.module';
         AspectListModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
+        TreeModule,
         SearchTextModule
     ],
     providers: [
@@ -112,6 +114,7 @@ import { SearchTextModule } from './search-text/search-text-input.module';
         ContentTypeModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
+        TreeModule,
         SearchTextModule
     ]
 })

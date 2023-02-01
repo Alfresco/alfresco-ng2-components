@@ -27,6 +27,7 @@
     "CSRF",
     "datacolumn",
     "datarow",
+    "Datasource",
     "datatable",
     "dateitem",
     "datepicker",
