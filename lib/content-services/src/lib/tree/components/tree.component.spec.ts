@@ -47,7 +47,7 @@ describe('TreeComponent', () => {
     const tickCheckbox = (index: number) => {
         const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
         nodeCheckboxes[index].nativeElement.dispatchEvent(new Event('change'));
-    }
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
