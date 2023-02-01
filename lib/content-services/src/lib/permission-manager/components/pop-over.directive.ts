@@ -30,6 +30,7 @@ import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overla
 import { TemplatePortal } from '@angular/cdk/portal';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 @Directive({
     selector: '[adf-pop-over]',
@@ -50,10 +51,13 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     private destroy$ = new Subject();
     private overlayRef!: OverlayRef;
 
+    private focusTrap: ConfigurableFocusTrap;
+
     constructor(
         private element: ElementRef,
         private overlay: Overlay,
-        private vcr: ViewContainerRef
+        private vcr: ViewContainerRef,
+        private focusTrapFactory: ConfigurableFocusTrapFactory
     ) { }
 
     ngOnInit(): void {
@@ -61,7 +65,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.element.nativeElement.addEventListener('click', () => this.attachOverlay());
+        this.element.nativeElement.addEventListener('click', () => this.toggleOverlay());
         this.element.nativeElement.addEventListener('keydown', this.preventDefaultForEnter);
     }
 
@@ -100,13 +104,28 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @HostListener('keyup.enter')
+    private toggleOverlay(): void {
+        if (!this.overlayRef.hasAttached()) {
+            this.attachOverlay();
+        } else {
+            console.log('inside detach condition')
+            this.detachOverlay();
+        }
+    }
+
     private attachOverlay(): void {
         if (!this.overlayRef.hasAttached()) {
             const periodSelectorPortal = new TemplatePortal(this.popOver, this.vcr);
 
             this.overlayRef.attach(periodSelectorPortal);
             this._open = true;
-            this.overlayRef.overlayElement.querySelector<HTMLElement>(this.autofocusedElementSelector).focus();
+            if (this.autofocusedElementSelector) {
+                this.overlayRef.overlayElement.querySelector<HTMLElement>(this.autofocusedElementSelector).focus();
+            }
+
+            if (this.popOver && !this.focusTrap) {
+                this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
+            }
         }
     }
 
@@ -115,6 +134,10 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         if (this.overlayRef.hasAttached()) {
             this.overlayRef.detach();
             this._open = false;
+
+            this.focusTrap.destroy();
+            this.focusTrap = null;
+
             this.element.nativeElement.focus();
         }
     }
