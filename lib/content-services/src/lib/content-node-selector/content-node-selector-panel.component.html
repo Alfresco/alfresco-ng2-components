@@ -26,8 +26,6 @@
         *ngIf="showDropdownSiteList"
         class="full-width"
         (change)="siteChanged($event)"
-        [placeholder]="'NODE_SELECTOR.SELECT_LOCATION' | translate"
-        [attr.title]="'NODE_SELECTOR.SELECT_LOCATION' | translate"
         [hideMyFiles]="dropdownHideMyFiles"
         [siteList]="dropdownSiteList"
         [value]="startSiteGuid"
