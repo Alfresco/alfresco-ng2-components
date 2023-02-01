@@ -79,9 +79,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-        with: 
+        with:
           enable-cache: false
-          enable-node-modules-cache: false      
+          enable-node-modules-cache: false
       - name: install
         run: |
           npm ci
@@ -102,13 +102,13 @@ jobs:
       - run: git fetch --all
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
-        with: 
+        with:
           dry-run-flag: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/setup
-        with: 
+        with:
           enable-cache: false
           enable-node-modules-cache: false
-      - uses: ./.github/actions/download-cache-and-artifacts     
+      - uses: ./.github/actions/download-cache-and-artifacts
       - name: release Demoshell docker
         run: |
           nx build demoshell --configuration production
@@ -128,10 +128,10 @@ jobs:
       - run: git fetch --all
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
-        with: 
+        with:
           dry-run-flag: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/setup
-        with: 
+        with:
           enable-cache: false
           enable-node-modules-cache: false
           act: ${{ inputs.dry-run-release }}
@@ -139,7 +139,7 @@ jobs:
       - name: release Storybook docker
         run: |
           nx run stories:build-storybook --configuration ci
-          . ./scripts/travis/release/docker-tag.sh  
+          . ./scripts/travis/release/docker-tag.sh
           ./scripts/travis/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-npm:
@@ -153,14 +153,25 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-        with: 
+        with:
           enable-cache: false
           enable-node-modules-cache: false
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
-        with: 
-          dry-run-flag: ${{ inputs.dry-run-release }}          
+        with:
+          dry-run-flag: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/download-cache-and-artifacts
+      - name: check PR number
+        id: action
+        uses: kamatama41/get-pr-number-action@v0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: save PR number
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          echo "PR_NUMBER=${{ steps.action.outputs.number }}" >> $GITHUB_ENV
       - name: build libraries
         run: |
           set -u;
