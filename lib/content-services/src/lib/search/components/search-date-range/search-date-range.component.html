@@ -1,6 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
     <mat-form-field>
-        <mat-label>{{ 'SEARCH.FILTER.RANGE.SELECT-FROM-DATE' | translate }}</mat-label>
         <input matInput
                 (input)="forcePlaceholder($event)"
                 [formControl]="from"
@@ -19,7 +18,6 @@
     </mat-form-field>
 
     <mat-form-field>
-        <mat-label>{{ 'SEARCH.FILTER.RANGE.SELECT-TO-DATE' | translate }}</mat-label>
         <input matInput
                 (input)="forcePlaceholder($event)"
                 [formControl]="to"
