@@ -40,6 +40,13 @@ export class ClipboardDirective {
                 public viewContainerRef: ViewContainerRef,
                 private resolver: ComponentFactoryResolver) {}
 
+    @HostListener('click', ['$event'])
+    handleClickEvent(event: MouseEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.copyToClipboard();
+    }
+
     @HostListener('mouseenter')
     showTooltip() {
         if (this.placeholder) {
@@ -54,12 +61,7 @@ export class ClipboardDirective {
         this.viewContainerRef.remove();
     }
 
-    @HostListener('click', ['$event'])
-    @HostListener('keydown.enter', ['$event'])
-    copyToClipboard(event: MouseEvent | KeyboardEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-
+    private copyToClipboard() {
         const isValidTarget = this.clipboardService.isTargetValid(this.target);
 
         if (isValidTarget) {
