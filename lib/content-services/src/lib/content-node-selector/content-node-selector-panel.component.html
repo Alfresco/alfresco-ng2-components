@@ -26,6 +26,7 @@
         *ngIf="showDropdownSiteList"
         class="full-width"
         (change)="siteChanged($event)"
+        [placeholder]="'NODE_SELECTOR.SELECT_LIBRARY'"
         [hideMyFiles]="dropdownHideMyFiles"
         [siteList]="dropdownSiteList"
         [value]="startSiteGuid"
