@@ -81,12 +81,10 @@
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                        <div>
-                            <div *ngIf="ecmUser.avatarId; else initialTemplate"
-                                 class="adf-userinfo-profile-container adf-hide-small">
-                                <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
-                                     alt="ecm-profile-image" [src]="getEcmAvatar(ecmUser.avatarId)"/>
-                            </div>
+                        <div *ngIf="ecmUser.avatarId; else initialTemplate"
+                                class="adf-userinfo-profile-container adf-hide-small">
+                            <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
+                                    alt="ecm-profile-image" [src]="getEcmAvatar(ecmUser.avatarId)"/>
                         </div>
                         <ng-template #initialTemplate>
                             <div

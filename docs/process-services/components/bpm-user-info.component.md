@@ -1,6 +1,6 @@
 ---
 Title: Bpm User Info component
-Added: v5.1.0
+Added: v6.0.0
 Status: Active
 Last reviewed: 2023-01-24
 ---
