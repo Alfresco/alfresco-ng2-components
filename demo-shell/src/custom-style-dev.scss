@@ -1,21 +1,37 @@
 @use '@angular/material' as mat;
-@import '../../lib/core/src/lib/styles/index';
+@use 'sass:map';
+@import "../../lib/core/src/lib/styles/index";
 @include mat.core($alfresco-typography);
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
 $warn: mat.define-palette($alfresco-warn);
+$primary-contrast: mat.get-color-from-palette($primary, "contrast");
 $theme: mat.define-light-theme(
     (
         color: (
             primary: $primary,
             accent: $accent,
-        )
+        ),
     )
 );
 
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
+
+$background: map.get($theme, background);
+$foreground: map.get($theme, foreground);
+$defaults: (
+    --adf-icon-color: mat.get-color-from-palette($primary-contrast, 100),
+    --adf-disabled-icon-color:
+        mat.get-color-from-palette($foreground, disabled-button),
+);
+
+:root {
+    @each $name, $value in $defaults {
+        #{$name}: #{$value};
+    }
+}
 
 body,
 html {

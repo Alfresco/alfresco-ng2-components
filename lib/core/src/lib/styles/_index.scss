@@ -145,10 +145,7 @@
         --theme-colors-mat-grey-dark:
             mat.get-color-from-palette(mat.$grey-palette, A400),
         --theme-colors-mag-grey-light:
-            mat.get-color-from-palette(mat.$grey-palette, 50),
-        --adf-search-text-input: "inherit",
-        --adf-toolbar-icon-color: "inherit",
-        --adf-toolbar-disabled-icon-color: "inherit"
+            mat.get-color-from-palette(mat.$grey-palette, 50)
     );
 
     // propagates SCSS variables into the CSS variables scope
