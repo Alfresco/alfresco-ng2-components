@@ -24,9 +24,15 @@ import { throwError } from 'rxjs';
 import {
     RequestQuery,
     RequestSortDefinitionInner,
+    ResultSetContext,
+    ResultSetContextFacetQueries,
     ResultSetPaging,
+    ResultSetPagingList,
+    Tag,
     TagBody,
-    TagEntry
+    TagEntry,
+    TagPaging,
+    TagPagingList
 } from '@alfresco/js-api';
 
 describe('TagService', () => {
@@ -140,7 +146,7 @@ describe('TagService', () => {
                 expect(searchSpy).toHaveBeenCalledWith({
                     query: {
                         language: RequestQuery.LanguageEnum.Afts,
-                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"${name}*"`
+                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"*${name}*"`
                     },
                     paging: {
                         skipCount: 0,
@@ -209,6 +215,130 @@ describe('TagService', () => {
                 service.updateTag(tag.entry.id, tagBody);
                 tick();
                 expect(logService.error).toHaveBeenCalledWith(error);
+            }));
+        });
+
+        describe('getCountersForTags', () => {
+            let result: ResultSetPaging;
+            const tag1 = 'tag 1';
+
+            beforeEach(() => {
+                result = new ResultSetPaging();
+                result.list = new ResultSetPagingList();
+                result.list.context = new ResultSetContext();
+                const facetQuery = new ResultSetContextFacetQueries();
+                facetQuery.count = 2;
+                facetQuery.label = tag1;
+                facetQuery.filterQuery = `TAG:"${tag1}"`;
+                result.list.context.facetQueries = [facetQuery];
+            });
+
+            it('should call search on searchApi with correct parameters', () => {
+                const tag2 = 'tag 2';
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+
+                service.getCountersForTags([tag1, tag2]);
+                expect(service.searchApi.search).toHaveBeenCalledWith({
+                    query: {
+                        language: RequestQuery.LanguageEnum.Afts,
+                        query: `*`
+                    },
+                    facetQueries: [{
+                        query: `TAG:"${tag1}"`,
+                        label: tag1
+                    }, {
+                        query: `TAG:"${tag2}"`,
+                        label: tag2
+                    }]
+                });
+            });
+
+            it('should return observable which emits facet queries with counters for tags', (done) => {
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBe(result.list.context.facetQueries);
+                    done();
+                });
+            });
+
+            it('should return observable which emits undefined if context is not present', (done) => {
+                result.list.context = undefined;
+
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBeUndefined();
+                    done();
+                });
+            });
+
+            it('should return observable which emits undefined if list is not present', (done) => {
+                result.list = undefined;
+
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBeUndefined();
+                    done();
+                });
+            });
+
+            it('should call error on logService when error occurs during fetching counters for tags', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error = 'Some error';
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
+
+                service.getCountersForTags([tag1]).subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
+            }));
+        });
+
+        describe('findTagByName', () => {
+            let tagPaging: TagPaging;
+            const tagName = 'some tag';
+
+            beforeEach(() => {
+                tagPaging = new TagPaging();
+            });
+
+            it('should call listTags on tagsApi', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(tagPaging));
+
+                service.findTagByName(tagName);
+
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    name: tagName
+                });
+            });
+
+            it('should return observable which emits found tag', (done) => {
+                tagPaging.list = new TagPagingList();
+                const tag = new TagEntry();
+                tag.entry = new Tag();
+                tag.entry.id = 'some id';
+                tag.entry.tag = tagName;
+                tagPaging.list.entries = [tag];
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(tagPaging));
+
+                service.findTagByName(tagName).subscribe((result) => {
+                    expect(result).toBe(tag);
+                    done();
+                });
+            });
+
+            it('should call error on logService when error occurs during fetching tag for name', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error = 'Some error';
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
+
+                service.findTagByName(tagName).subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
             }));
         });
     });
