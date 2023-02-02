@@ -31,7 +31,6 @@ import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
-import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
@@ -80,7 +79,6 @@ import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.
         DownloadZipDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -122,7 +120,6 @@ import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.
         FormsModule,
         IdentityUserInfoModule,
         ReactiveFormsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
