@@ -16,7 +16,7 @@
  */
 
 export const environment = {
-  production: false,
-  e2e: true,
-  oidc: false
+  production: true,
+  e2e: false,
+  oidc: true
 };
