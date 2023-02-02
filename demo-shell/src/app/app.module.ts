@@ -140,7 +140,7 @@ registerLocaleData(localeSv);
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
-        AuthModule.forRoot({ useHash: true }),
+        ...(environment.oidc ? [AuthModule.forRoot({ useHash: true })] : []),
         FormsModule,
         HttpClientModule,
         MaterialModule,
