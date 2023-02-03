@@ -16,7 +16,6 @@
  */
 
 export * from './services/view-util.service';
-export * from './components/viewer.component';
 export * from './components/img-viewer.component';
 export * from './components/media-player.component';
 export * from './components/pdf-viewer-password-dialog';
@@ -31,6 +30,8 @@ export * from './components/viewer-open-with.component';
 export * from './components/viewer-sidebar.component';
 export * from './components/viewer-toolbar.component';
 export * from './components/viewer-toolbar-actions.component';
+export * from './components/viewer-toolbar-custom-actions.component';
+export * from './components/viewer-render.component';
 export * from './components/viewer.component';
 
 export * from './directives/viewer-extension.directive';

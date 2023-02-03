@@ -28,7 +28,7 @@ import { PeopleApi } from '@alfresco/js-api';
 })
 export class EcmUserService {
 
-    _peopleApi: PeopleApi;
+    private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
         return this._peopleApi;

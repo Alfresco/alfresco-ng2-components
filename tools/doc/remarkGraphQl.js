@@ -13,11 +13,11 @@ var tree = remark()
     .use(frontMatter, ['yaml'])
     .parse(docSrc);
 tree = removePosInfo(tree);
-var schema = graphql_1.buildSchema(MQ.schema);
+var schema = (0, graphql_1.buildSchema)(MQ.schema);
 var root = {
     document: function () { return new MQ.Root(tree); }
 };
 var query = "\n    {\n        document {\n          metadata(key: \"Status\")\n          heading {\n            link {\n              text {\n                value\n              }\n            }\n          }\n          paragraph {\n            plaintext\n          }\n        }\n    }\n";
-graphql_1.graphql(schema, query, root).then(function (response) {
+(0, graphql_1.graphql)(schema, query, root).then(function (response) {
     console.log(JSON.stringify(response));
 });

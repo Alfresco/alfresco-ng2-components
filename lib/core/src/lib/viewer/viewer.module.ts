@@ -38,11 +38,13 @@ import { ViewerMoreActionsComponent } from './components/viewer-more-actions.com
 import { ViewerOpenWithComponent } from './components/viewer-open-with.component';
 import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
 import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
-import { ViewerComponent } from './components/viewer.component';
+import { ViewerRenderComponent } from './components/viewer-render.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { A11yModule } from '@angular/cdk/a11y';
+import { ViewerComponent } from './components/viewer.component';
+import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar-custom-actions.component';
 
 @NgModule({
     imports: [
@@ -60,7 +62,7 @@ import { A11yModule } from '@angular/cdk/a11y';
     ],
     declarations: [
         PdfPasswordDialogComponent,
-        ViewerComponent,
+        ViewerRenderComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,
@@ -73,10 +75,12 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent
+        ViewerToolbarActionsComponent,
+        ViewerComponent,
+        ViewerToolbarCustomActionsComponent
     ],
     exports: [
-        ViewerComponent,
+        ViewerRenderComponent,
         ImgViewerComponent,
         TxtViewerComponent,
         MediaPlayerComponent,
@@ -90,7 +94,9 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerSidebarComponent,
         ViewerOpenWithComponent,
         ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent
+        ViewerToolbarActionsComponent,
+        ViewerComponent,
+        ViewerToolbarCustomActionsComponent
     ]
 })
 export class ViewerModule {

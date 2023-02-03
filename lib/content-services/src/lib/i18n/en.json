@@ -260,7 +260,9 @@
         "FROM": "From",
         "TO": "To",
         "FROM-DATE": "From",
-        "TO-DATE": "To"
+        "TO-DATE": "To",
+        "SELECT-FROM-DATE": "Select From Date",
+        "SELECT-TO-DATE": "Select To Date"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Required value",
@@ -464,6 +466,9 @@
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Toggle {{ name }}"
     }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Load more {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {

@@ -35,12 +35,25 @@ Manages tags in Content Services.
     Creates tags.
     -   _tags:_ `TagBody[]`  - List of tags to create.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry[]>` - List of created tags.
+-   **updateTag**(tagId: `string`, tagBody: `TagBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>`<br/>
+    Updates a tag.
+    -   _tagId:_ `string`  - The identifier of a tag.
+    -   _tagBody:_ `TagBody`  - The updated tag.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>` - Updated tag.
 -   **searchTags**(name: `string`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>`<br/>
     Find tags which name contains searched name.
     -   _name:_ `string`  - Value for name which should be used during searching tags.
     -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
     -   _maxItems:_ `number`  - Specify max number of returned tags. Default is specified by UserPreferencesService.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>` - Found tags which name contains searched name.
+-   **getCountersForTags**(tags: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetContextFacetQueries[]>`<br/>
+    Get usage counters for passed tags.
+    -   _tags:_ `string[]`  - Array of tags names for which there should be returned counters.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetContextFacetQueries[]>` - Array of usage counters for specified tags.
+-   **findTagByName**(name: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>`<br/>
+    Find tag which name matches exactly to passed name.
+    -   _name:_ `string`  - Value for name which should be used during finding exact tag.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>` - Found tag which name matches exactly to passed name.
 
 ## Details
 

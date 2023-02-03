@@ -24,6 +24,7 @@ import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.m
 import { TaskCloudService } from '../services/task-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
 
 describe('CompleteTaskDirective', () => {
 
@@ -83,6 +84,25 @@ describe('CompleteTaskDirective', () => {
         await fixture.whenStable();
         expect(taskCloudService.completeTask).toHaveBeenCalled();
         expect(fixture.componentInstance.onError).toHaveBeenCalledWith(error);
+    });
+
+    it('should DISABLE the button on task completion', () => {
+        spyOn(taskCloudService, 'completeTask').and.returnValue(of(taskCompleteCloudMock));
+        const button = fixture.debugElement.query(By.css('button')).nativeElement;
+
+        button.click();
+
+        expect(taskCloudService.completeTask).toHaveBeenCalled();
+        expect(button.disabled).toBe(true);
+    });
+
+    it('should ENABLE the button on api failure', () => {
+        spyOn(taskCloudService, 'completeTask').and.throwError('process key not found');
+        const button = fixture.debugElement.query(By.css('button')).nativeElement;
+
+        button.click();
+
+        expect(button.disabled).toBeFalsy();
     });
 });
 

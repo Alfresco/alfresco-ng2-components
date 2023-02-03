@@ -24,16 +24,22 @@ import { throwError } from 'rxjs';
 import {
     RequestQuery,
     RequestSortDefinitionInner,
+    ResultSetContext,
+    ResultSetContextFacetQueries,
     ResultSetPaging,
-    SearchApi,
-    SearchRequest,
+    ResultSetPagingList,
+    Tag,
     TagBody,
-    TagEntry
+    TagEntry,
+    TagPaging,
+    TagPagingList
 } from '@alfresco/js-api';
 
 describe('TagService', () => {
 
     let service: TagService;
+    let logService: LogService;
+    let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
         imports: [
@@ -44,10 +50,13 @@ describe('TagService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(TagService);
-        spyOn(service['tagsApi'], 'deleteTagFromNode').and.returnValue(
+        logService = TestBed.inject(LogService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
+
+        spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(
             Promise.resolve({})
         );
-        spyOn(service['tagsApi'], 'createTagForNode').and.returnValue(
+        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(
             Promise.resolve(new TagEntry({}))
         );
     });
@@ -82,11 +91,11 @@ describe('TagService', () => {
         describe('createTags', () => {
             it('should call createTags on tagsApi', () => {
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
-                const tag1: TagBody = new TagBody();
+                const tag1 = new TagBody();
                 tag1.tag = 'Some tag 1';
-                const tag2: TagBody = new TagBody();
+                const tag2 = new TagBody();
                 tag2.tag = 'Some tag 2';
-                const tags: TagBody[] = [tag1, tag2];
+                const tags = [tag1, tag2];
                 service.createTags(tags);
                 expect(service.tagsApi.createTags).toHaveBeenCalledWith(tags);
             });
@@ -106,9 +115,8 @@ describe('TagService', () => {
             }));
 
             it('should call error on logService when error occurs during tags creation', fakeAsync(() => {
-                const logService: LogService = TestBed.inject(LogService);
                 spyOn(logService, 'error');
-                const error: string = 'Some error';
+                const error = 'Some error';
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.reject(error));
                 service.createTags([]);
                 tick();
@@ -124,20 +132,21 @@ describe('TagService', () => {
             });
 
             it('should call search on searchApi with correct parameters', () => {
-                const searchSpy: jasmine.Spy<(queryBody: SearchRequest) => Promise<ResultSetPaging>> =
-                    spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
-                const name: string = 'test';
-                const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
-                const maxItems: number = 25;
-                spyOnProperty(TestBed.inject(UserPreferencesService), 'paginationSize').and.returnValue(maxItems);
+                const searchSpy = spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                const name = 'test';
+                const maxItems = 25;
+                spyOnProperty(userPreferencesService, 'paginationSize').and.returnValue(maxItems);
+
+                const sortingByName = new RequestSortDefinitionInner();
                 sortingByName.field = 'cm:name';
                 sortingByName.ascending = true;
                 sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
+
                 service.searchTags(name);
                 expect(searchSpy).toHaveBeenCalledWith({
                     query: {
                         language: RequestQuery.LanguageEnum.Afts,
-                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"${name}*"`
+                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"*${name}*"`
                     },
                     paging: {
                         skipCount: 0,
@@ -148,7 +157,8 @@ describe('TagService', () => {
             });
 
             it('should return observable which emits paging object for tags', (done) => {
-                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.resolve(result));
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+
                 service.searchTags('test').subscribe((tagsResult) => {
                     expect(tagsResult).toBe(result);
                     done();
@@ -156,11 +166,174 @@ describe('TagService', () => {
             });
 
             it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
-                const logService: LogService = TestBed.inject(LogService);
                 spyOn(logService, 'error');
                 const error: string = 'Some error';
-                spyOn(SearchApi.prototype, 'search').and.returnValue(Promise.reject(error));
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
                 service.searchTags('test').subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
+            }));
+        });
+
+        describe('updateTag', () => {
+            const tag: TagEntry = {
+                entry: {
+                    tag: 'fake-tag',
+                    id: 'fake-node-id'
+                }
+            };
+            const tagBody: TagBody = {tag: 'updated-tag'};
+            const updatedTag: TagEntry = {
+                entry: {
+                    ...tagBody,
+                    id: 'fake-node-id'
+                }
+            };
+
+            it('should call updateTag on tagsApi', () => {
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
+
+                service.updateTag(tag.entry.id, tagBody);
+                expect(service.tagsApi.updateTag).toHaveBeenCalledWith(tag.entry.id, tagBody);
+            });
+
+            it('should emit refresh when tag updated successfully', fakeAsync(() => {
+                spyOn(service.refresh, 'emit');
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
+                service.updateTag(tag.entry.id, tagBody);
+                tick();
+                expect(service.refresh.emit).toHaveBeenCalledWith(updatedTag);
+            }));
+
+            it('should call error on logService when error occurs during tag update', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error = 'Some error';
+                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.reject(error));
+                service.updateTag(tag.entry.id, tagBody);
+                tick();
+                expect(logService.error).toHaveBeenCalledWith(error);
+            }));
+        });
+
+        describe('getCountersForTags', () => {
+            let result: ResultSetPaging;
+            const tag1 = 'tag 1';
+
+            beforeEach(() => {
+                result = new ResultSetPaging();
+                result.list = new ResultSetPagingList();
+                result.list.context = new ResultSetContext();
+                const facetQuery = new ResultSetContextFacetQueries();
+                facetQuery.count = 2;
+                facetQuery.label = tag1;
+                facetQuery.filterQuery = `TAG:"${tag1}"`;
+                result.list.context.facetQueries = [facetQuery];
+            });
+
+            it('should call search on searchApi with correct parameters', () => {
+                const tag2 = 'tag 2';
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+
+                service.getCountersForTags([tag1, tag2]);
+                expect(service.searchApi.search).toHaveBeenCalledWith({
+                    query: {
+                        language: RequestQuery.LanguageEnum.Afts,
+                        query: `*`
+                    },
+                    facetQueries: [{
+                        query: `TAG:"${tag1}"`,
+                        label: tag1
+                    }, {
+                        query: `TAG:"${tag2}"`,
+                        label: tag2
+                    }]
+                });
+            });
+
+            it('should return observable which emits facet queries with counters for tags', (done) => {
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBe(result.list.context.facetQueries);
+                    done();
+                });
+            });
+
+            it('should return observable which emits undefined if context is not present', (done) => {
+                result.list.context = undefined;
+
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBeUndefined();
+                    done();
+                });
+            });
+
+            it('should return observable which emits undefined if list is not present', (done) => {
+                result.list = undefined;
+
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                service.getCountersForTags([tag1]).subscribe((counters) => {
+                    expect(counters).toBeUndefined();
+                    done();
+                });
+            });
+
+            it('should call error on logService when error occurs during fetching counters for tags', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error = 'Some error';
+                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
+
+                service.getCountersForTags([tag1]).subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
+            }));
+        });
+
+        describe('findTagByName', () => {
+            let tagPaging: TagPaging;
+            const tagName = 'some tag';
+
+            beforeEach(() => {
+                tagPaging = new TagPaging();
+            });
+
+            it('should call listTags on tagsApi', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(tagPaging));
+
+                service.findTagByName(tagName);
+
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    name: tagName
+                });
+            });
+
+            it('should return observable which emits found tag', (done) => {
+                tagPaging.list = new TagPagingList();
+                const tag = new TagEntry();
+                tag.entry = new Tag();
+                tag.entry.id = 'some id';
+                tag.entry.tag = tagName;
+                tagPaging.list.entries = [tag];
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(tagPaging));
+
+                service.findTagByName(tagName).subscribe((result) => {
+                    expect(result).toBe(tag);
+                    done();
+                });
+            });
+
+            it('should call error on logService when error occurs during fetching tag for name', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error = 'Some error';
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
+
+                service.findTagByName(tagName).subscribe({
                     error: () => {
                         expect(logService.error).toHaveBeenCalledWith(error);
                     }

@@ -16,7 +16,7 @@
  */
 
 import { CardViewItem } from '../interfaces/card-view-item.interface';
-import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
+import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewTextItemModel } from './card-view-textitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 import { CardViewItemFloatValidator } from '../validators/card-view.validators';

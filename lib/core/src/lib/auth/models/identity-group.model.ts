@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from '@alfresco/js-api';
+import { PaginationModel } from '../../models/pagination.model';
 
 export interface IdentityGroupModel {
     id?: string;
@@ -35,7 +35,7 @@ export interface IdentityGroupSearchParam {
 export interface IdentityGroupQueryResponse {
 
     entries: IdentityGroupModel[];
-    pagination: Pagination;
+    pagination: PaginationModel;
 }
 
 export interface IdentityGroupQueryCloudRequestModel {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
@@ -42,7 +42,11 @@ export class CompleteTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskCloudService) {}
+    constructor(
+        private readonly el: ElementRef,
+        private readonly renderer: Renderer2,
+        private readonly taskListService: TaskCloudService
+    ) { }
 
     ngOnInit() {
         this.validateInputs();
@@ -72,11 +76,13 @@ export class CompleteTaskDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
+            this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
             const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();
             if (result) {
                 this.success.emit(result);
             }
         } catch (error) {
+            this.renderer.removeAttribute(this.el.nativeElement, 'disabled');
             this.error.emit(error);
         }
 

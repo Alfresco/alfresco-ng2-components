@@ -30,7 +30,7 @@ var client = new graphql_request_1.GraphQLClient('https://api.github.com/graphql
 });
 var query = "query commitHistory($path: String) {\n  repository(name: \"alfresco-ng2-components\", owner: \"alfresco\") {\n    ref(qualifiedName: \"development\") {\n      target {\n        ... on Commit {\n          history(first: 15, path: $path) {\n            nodes {\n              pushedDate\n              message\n            }\n          }\n        }\n      }\n    }\n  }\n}";
 var docFiles = getDocFilePaths(docsFolderPath);
-var docNames = rxjs_1.of(docFiles);
+var docNames = (0, rxjs_1.of)(docFiles);
 console.log("'Name','Review date','Commits since review','Score'");
 docNames.subscribe(function (docs) {
     docs.forEach(function (x) {
@@ -48,7 +48,7 @@ docNames.subscribe(function (docs) {
             if (numUsefulCommits > 0) {
                 var dateString = lastReviewDate.format('YYYY-MM-DD');
                 var score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
-                console.log("'" + key + "','" + dateString + "','" + numUsefulCommits + "','" + score + "'");
+                console.log("'".concat(key, "','").concat(dateString, "','").concat(numUsefulCommits, "','").concat(score, "'"));
             }
         });
     });

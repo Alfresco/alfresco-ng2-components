@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FormRenderingService } from '@alfresco/adf-core';
+import { FormFieldTypes, FormRenderingService } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
@@ -24,6 +24,7 @@ import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget
 import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 import { PropertiesViewerWidgetComponent } from './widgets/properties-viewer/properties-viewer.widget';
 import { RadioButtonsCloudWidgetComponent } from './widgets/radio-buttons/radio-buttons-cloud.widget';
+import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -33,13 +34,14 @@ export class CloudFormRenderingService extends FormRenderingService {
         super();
 
         this.register({
-            upload: () => AttachFileCloudWidgetComponent,
-            dropdown: () => DropdownCloudWidgetComponent,
-            date: () => DateCloudWidgetComponent,
-            people: () => PeopleCloudWidgetComponent,
-            'functional-group': () => GroupCloudWidgetComponent,
-            'properties-viewer': () => PropertiesViewerWidgetComponent,
-            'radio-buttons': () => RadioButtonsCloudWidgetComponent
+            [FormFieldTypes.UPLOAD]: () => AttachFileCloudWidgetComponent,
+            [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent,
+            [FormFieldTypes.DATE]: () => DateCloudWidgetComponent,
+            [FormFieldTypes.PEOPLE]: () => PeopleCloudWidgetComponent,
+            [FormFieldTypes.FUNCTIONAL_GROUP]: () => GroupCloudWidgetComponent,
+            [FormFieldTypes.PROPERTIES_VIEWER]: () => PropertiesViewerWidgetComponent,
+            [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
+            [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent
         }, true);
     }
 }

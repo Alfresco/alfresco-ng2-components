@@ -17,5 +17,4 @@
 
 export * from './base.event';
 export * from './base-ui.event';
-export * from './folder-created.event';
 export * from './file.event';

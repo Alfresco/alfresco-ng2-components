@@ -46,6 +46,9 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
+import { TreeModule } from './tree/tree.module';
+import { SearchTextModule } from './search-text/search-text-input.module';
+import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 
 @NgModule({
     imports: [
@@ -75,7 +78,10 @@ import { NodeCommentsModule } from './node-comments/node-comments.module';
         ContentTypeModule,
         AspectListModule,
         VersionCompatibilityModule,
-        NodeCommentsModule
+        NodeCommentsModule,
+        TreeModule,
+        SearchTextModule,
+        AlfrescoViewerModule
     ],
     providers: [
         {
@@ -109,7 +115,10 @@ import { NodeCommentsModule } from './node-comments/node-comments.module';
         AspectListModule,
         ContentTypeModule,
         VersionCompatibilityModule,
-        NodeCommentsModule
+        NodeCommentsModule,
+        TreeModule,
+        SearchTextModule,
+        AlfrescoViewerModule
     ]
 })
 export class ContentModule {

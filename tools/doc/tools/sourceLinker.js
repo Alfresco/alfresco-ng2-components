@@ -16,7 +16,7 @@ function processDocs(mdCache, aggData) {
         var className = ngHelpers.ngNameToClassName(fileBaseName, aggData.config.typeNameExceptions);
         var classInfo = aggData.classInfo[className];
         var sourcePath = classInfo ? classInfo.sourcePath : '';
-        var titleHeading = unist_util_select_1.select('heading[depth=1]:first-of-type', tree);
+        var titleHeading = (0, unist_util_select_1.select)('heading[depth=1]:first-of-type', tree);
         var relDocPath = pathname.substring(pathname.indexOf('docs'));
         var srcUrl = fixRelSrcUrl(relDocPath, sourcePath);
         if (titleHeading && titleHeading.children[0] && titleHeading.children[0].type === 'text') {
@@ -24,14 +24,14 @@ function processDocs(mdCache, aggData) {
             titleHeading.children[0] = {
                 type: 'link',
                 url: srcUrl,
-                title: "Defined in " + path.basename(sourcePath),
+                title: "Defined in ".concat(path.basename(sourcePath)),
                 children: [titleText]
             };
         }
         else if ((titleHeading && titleHeading.children[0].type === 'link') && sourcePath) {
             var linkElem = titleHeading.children[0];
             linkElem.url = srcUrl, // `../../${sourcePath}`;
-                linkElem.title = "Defined in " + path.basename(sourcePath);
+                linkElem.title = "Defined in ".concat(path.basename(sourcePath));
         }
     });
 }

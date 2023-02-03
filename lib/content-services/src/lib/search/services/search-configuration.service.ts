@@ -17,15 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { QueryBody } from '@alfresco/js-api';
-import { SearchConfigurationInterface } from '@alfresco/adf-core';
+import { SearchConfigurationInterface } from '../../common/interface/search-configuration.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchConfigurationService implements SearchConfigurationInterface {
-
-    constructor() {
-    }
 
     /**
      * Generates a QueryBody object with custom search parameters.

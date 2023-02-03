@@ -65,7 +65,15 @@ env:
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
 jobs:
+
+  release:
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      dry-run-release: false
+
   setup:
+    needs: release
     timeout-minutes: 20
     name: "Release tag"
     runs-on: ubuntu-22.04
@@ -86,3 +94,4 @@ jobs:
         run: |
           git fetch --all --quiet
           TRAVIS_BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+

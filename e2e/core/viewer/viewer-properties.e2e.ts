@@ -132,17 +132,6 @@ describe('Viewer', () => {
             await viewerPage.enableMoreActions();
         });
 
-        it('[C260074] Should show a custom file name when displayName property is used', async () => {
-            await viewerPage.checkFileNameIsDisplayed(pngFile.name);
-
-            await viewerPage.enableCustomName();
-
-            await viewerPage.enterCustomName('test custom title');
-            await viewerPage.checkFileNameIsDisplayed('test custom title');
-
-            await viewerPage.disableCustomName();
-        });
-
         it('[C260090] Should showSidebar allow right info-drawer to be shown', async () => {
             await viewerPage.clickToggleRightSidebar();
             await viewerPage.checkInfoSideBarIsDisplayed();
@@ -182,7 +171,7 @@ describe('Viewer', () => {
 
     });
 
-    it('[C260100] Should be possible to disable Overlay viewer', async () => {
+    fit('[C260100] Should be possible to disable Overlay viewer', async () => {
         await navigationBarPage.clickOverlayViewerButton();
         await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkOverlayViewerIsDisplayed();

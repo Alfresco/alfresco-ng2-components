@@ -38,13 +38,13 @@ var PropInfo = /** @class */ (function () {
                         }
                     }
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Warning: Input \"" + sourceData.name + "\" has no doc text.");
+                        _this.errorMessages.push("Warning: Input \"".concat(sourceData.name, "\" has no doc text."));
                     }
                 }
                 if (dec.name === 'Output') {
                     _this.isOutput = true;
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Warning: Output \"" + sourceData.name + "\" has no doc text.");
+                        _this.errorMessages.push("Warning: Output \"".concat(sourceData.name, "\" has no doc text."));
                     }
                 }
             });
@@ -77,9 +77,9 @@ var ParamInfo = /** @class */ (function () {
         if (this.isOptional) {
             this.combined += '?';
         }
-        this.combined += ": `" + this.type + "`";
+        this.combined += ": `".concat(this.type, "`");
         if (this.defaultValue !== '') {
-            this.combined += " = `" + this.defaultValue + "`";
+            this.combined += " = `".concat(this.defaultValue, "`");
         }
     }
     return ParamInfo;
@@ -93,7 +93,7 @@ var MethodSigInfo = /** @class */ (function () {
         this.docText = sourceData.summary || '';
         this.docText = this.docText.replace(/[\n\r]+/g, ' ').trim();
         if (!this.docText && this.name.indexOf('service') > 0) {
-            this.errorMessages.push("Warning: method \"" + sourceData.name + "\" has no doc text.");
+            this.errorMessages.push("Warning: method \"".concat(sourceData.name, "\" has no doc text."));
         }
         this.returnType = sourceData.syntax['return'].type || '';
         this.returnType = this.returnType.toString().replace(/\s/g, '');
@@ -103,7 +103,7 @@ var MethodSigInfo = /** @class */ (function () {
             this.returnsSomething = false;
         }
         if (this.returnsSomething && !this.returnDocText && this.name.indexOf('service') > 0) {
-            this.errorMessages.push("Warning: Return value of method \"" + sourceData.name + "\" has no doc text.");
+            this.errorMessages.push("Warning: Return value of method \"".concat(sourceData.name, "\" has no doc text."));
         }
         this.isDeprecated = false;
         if (sourceData.tags) {
@@ -118,7 +118,7 @@ var MethodSigInfo = /** @class */ (function () {
         if (sourceData.syntax.parameters) {
             sourceData.syntax.parameters.forEach(function (rawParam) {
                 if (rawParam.name && !rawParam.description && !rawParam.name.startWith('on')) {
-                    _this.errorMessages.push("Warning: parameter \"" + rawParam.name + "\" of method \"" + sourceData.name + "\" has no doc text.");
+                    _this.errorMessages.push("Warning: parameter \"".concat(rawParam.name, "\" of method \"").concat(sourceData.name, "\" has no doc text."));
                 }
                 var param = new ParamInfo(rawParam);
                 _this.params.push(param);

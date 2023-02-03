@@ -20,7 +20,7 @@
     "moment": "2.29.2",
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
-    "rxjs": "^6.6.3",
+    "rxjs": "^6.6.6",
     "typedoc": "^0.15.0",
     "typescript": "3.9.8",
     "unist-util-select": "2.0.0"

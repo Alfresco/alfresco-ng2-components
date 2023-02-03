@@ -18,21 +18,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NodeCommentsComponent } from './node-comments.component';
-import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
-import { NodeCommentsService } from './services/node-comments.service';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule
-    ],
+    imports: [CommonModule, CoreModule],
     declarations: [NodeCommentsComponent],
-    exports: [NodeCommentsComponent],
-    providers: [
-        {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: NodeCommentsService
-        }
-    ]
+    exports: [NodeCommentsComponent]
 })
 export class NodeCommentsModule {}

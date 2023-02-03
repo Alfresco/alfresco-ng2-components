@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Prozess starten",
           "CANCEL": "Abbrechen"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Schaltfläche für den Dropdown zur Prozessauswahl"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",

@@ -18,32 +18,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommentModel, UserProcessModel } from '@alfresco/adf-core';
-import { CommentProcessServiceInterface } from '../interfaces/comment-process.service.interface';
-import { testUser, fakeUser1 } from '../mock/comment-process.mock';
+import { CommentModel, UserProcessModel, CommentsService } from '@alfresco/adf-core';
+import { fakeUser1 } from '../mock/comment-process.mock';
 
 @Injectable()
-export class CommentProcessServiceMock implements CommentProcessServiceInterface {
+export class CommentProcessServiceMock implements Partial<CommentsService> {
     private comments: CommentModel [] = [];
 
-    addTaskComment(taskId: string, message: string): Observable<CommentModel> {
-        const comment = new CommentModel({
-            id: taskId,
-            message: message,
-            created: new Date(),
-            createdBy: testUser,
-            isSelected: false
-        });
-        this.comments.push(comment);
-
-        return of(comment);
-    }
-
-    getTaskComments(_taskId: string): Observable<CommentModel[]> {
-        return of(this.comments);
-    }
-
-    getProcessInstanceComments(_processInstanceId: string): Observable<CommentModel[]> {
+    get(_id: string): Observable<CommentModel[]> {
         const user = new UserProcessModel(fakeUser1);
 
         this.comments.push(new CommentModel({
@@ -56,7 +38,7 @@ export class CommentProcessServiceMock implements CommentProcessServiceInterface
         return of(this.comments);
     }
 
-    addProcessInstanceComment(_processInstanceId: string, _message: string): Observable<CommentModel> {
+    add(_id: string, _message: string): Observable<CommentModel> {
         return from(this.comments).pipe(
             map((response) => new CommentModel({
                 id: response.id,

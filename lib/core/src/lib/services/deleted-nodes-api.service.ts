@@ -28,13 +28,13 @@ import { catchError } from 'rxjs/operators';
 })
 export class DeletedNodesApiService {
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    _trashcanApi: TrashcanApi;
+    private _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
         return this._trashcanApi;

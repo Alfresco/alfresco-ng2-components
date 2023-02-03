@@ -71,8 +71,9 @@
         </button>
 
         <div class="adf-pdf-viewer__toolbar-page-selector">
-            <span>{{ 'ADF_VIEWER.PAGE_LABEL.SHOWING' | translate }}</span>
+            <label for="page-selector">{{ 'ADF_VIEWER.PAGE_LABEL.SHOWING' | translate }}</label>
             <input #page
+                   id="page-selector"
                    type="text"
                    data-automation-id="adf-page-selector"
                    pattern="-?[0-9]*(\.[0-9]+)?"
@@ -82,7 +83,7 @@
             <span>{{ 'ADF_VIEWER.PAGE_LABEL.OF' | translate }} {{ totalPages }}</span>
         </div>
 
-        <div class="adf-viewer__toolbar-page-scale" data-automation-id="adf-page-scale">
+        <div class="adf-pdf-viewer__toolbar-page-scale" data-automation-id="adf-page-scale">
             {{ currentScaleText }}
         </div>
 
@@ -106,6 +107,7 @@
 
         <button
             id="viewer-scale-page-button"
+            role="button" aria-pressed="true"
             title="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
             mat-icon-button

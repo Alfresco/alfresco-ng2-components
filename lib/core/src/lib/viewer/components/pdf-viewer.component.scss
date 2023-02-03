@@ -1,8 +1,3 @@
-.adf-viewer-content-container {
-    width: 100%;
-    height: 100%;
-}
-
 .adf-pdf-viewer {
     width: 100%;
     height: 100%;
@@ -19,6 +14,35 @@
         height: 100%;
         width: 190px;
         background-color: rgba(0, 0, 0, 0.12);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        .adf-info-drawer-layout {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: #e6e6e6;
+        }
+
+        .adf-info-drawer-layout-header {
+            margin-bottom: 0;
+        }
+
+        .adf-info-drawer-layout-content {
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .adf-info-drawer-content {
+            height: 100%;
+        }
+
+        .adf-info-drawer-layout-content > *:last-child {
+            height: 100%;
+            overflow: hidden;
+        }
     }
 
     .adf-thumbnails-template {
@@ -51,6 +75,17 @@
         margin: auto;
         max-height: 100px;
         max-width: 300px;
+
+        .mat-progress-bar {
+            max-width: 300px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* stylelint-disable-next-line property-no-vendor-prefix */
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
     }
 
     &__toolbar {
@@ -86,6 +121,18 @@
                 outline-width: 1px;
                 outline-color: gray;
             }
+        }
+
+        &-page-scale {
+            cursor: default;
+            width: 79px;
+            height: 24px;
+            font-size: var(--theme-body-1-font-size);
+            border: 1px solid var(--theme-border-color);
+            text-align: center;
+            line-height: 24px;
+            margin-left: 4px;
+            margin-right: 4px;
         }
     }
 }

@@ -24,9 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm, fakeViewerForm } from '../../mock/form.mock';
-import { Node } from '@alfresco/js-api';
-import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
+import { fakeMetadataForm } from '../../mock/form.mock';
 import { CoreTestingModule, setupTestBed } from '../../../../testing';
 
 describe('FormModel', () => {
@@ -607,39 +605,6 @@ describe('FormModel', () => {
             expect(form.values['pfx_property_seven']).toBeNull();
             expect(form.values['pfx_property_eight']).toBeNull();
 
-        });
-    });
-
-    describe('setNodeIdValueForViewersLinkedToUploadWidget', () => {
-        const fakeNodeWithProperties: Node = {
-            id: 'fake-properties',
-            name: 'fake-properties-name',
-            content: {
-                mimeType: 'application/pdf'
-            },
-            properties: {
-                'pfx:property_one': 'testValue',
-                'pfx:property_two': true
-            }
-        } as Node;
-        let form: FormModel;
-
-        it('should set the node id to the viewers linked to the upload widget in the event', () => {
-            form = new FormModel(fakeMetadataForm);
-            const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'content_form_nodes');
-
-            form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
-
-            expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBe(fakeNodeWithProperties.id);
-        });
-
-        it('should not set the node id to the viewers when they are not linked', () => {
-            form = new FormModel(fakeViewerForm);
-            const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'upload_widget');
-
-            form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
-
-            expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBeNull();
         });
     });
 });

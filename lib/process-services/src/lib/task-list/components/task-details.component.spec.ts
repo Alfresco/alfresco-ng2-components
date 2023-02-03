@@ -30,7 +30,6 @@ import {
     PeopleProcessService,
     CommentModel
 } from '@alfresco/adf-core';
-import { CommentProcessService } from '../../process-comments/services/comment-process.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
@@ -45,6 +44,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskService } from '../../form/services/task.service';
 import { TaskFormService } from '../../form/services/task-form.service';
+import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
 
 const fakeUser = new UserProcessModel({
     id: 'fake-id',
@@ -71,7 +71,7 @@ describe('TaskDetailsComponent', () => {
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
     let logService: LogService;
-    let commentProcessService: CommentProcessService;
+    let taskCommentsService: TaskCommentsService;
     let peopleProcessService: PeopleProcessService;
     let bpmUserService: BpmUserService;
 
@@ -102,9 +102,9 @@ describe('TaskDetailsComponent', () => {
 
         getTasksSpy = spyOn(taskListService, 'getTasks').and.returnValue(of(tasksMock));
         assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
-        commentProcessService = TestBed.inject(CommentProcessService);
+        taskCommentsService = TestBed.inject(TaskCommentsService);
 
-        spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
+        spyOn(taskCommentsService, 'get').and.returnValue(of([
             new CommentModel({ message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
             new CommentModel({ message: 'Test2', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
             new CommentModel({ message: 'Test3', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } })

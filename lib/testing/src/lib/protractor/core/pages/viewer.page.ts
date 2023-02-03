@@ -86,10 +86,10 @@ export class ViewerPage {
     pdfPageLoaded = $('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer');
 
     downloadSwitch = $('#adf-switch-download');
-    downloadButton = $('#adf-viewer-download');
+    downloadButton = $('#adf-alfresco-viewer-download');
 
     printSwitch = $('#adf-switch-print');
-    printButton = $('#adf-viewer-print');
+    printButton = $('#adf-alfresco-viewer-print');
 
     allowSidebarSwitch = $('#adf-switch-allowsidebar');
     allowLeftSidebarSwitch = $('#adf-switch-allowLeftSidebar');

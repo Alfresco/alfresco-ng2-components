@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
+import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../common/services/dynamic-component-mapper.service';
 import { Injectable, Type } from '@angular/core';
 import * as widgets from '../components/widgets';
 
@@ -39,7 +39,7 @@ export class FormRenderingService extends DynamicComponentMapper {
         json: DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
         readonly: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
         datetime:  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
-        'file-viewer': DynamicComponentResolver.fromType(widgets.FileViewerWidgetComponent),
+        'base-viewer': DynamicComponentResolver.fromType(widgets.BaseViewerWidgetComponent),
         'display-rich-text': DynamicComponentResolver.fromType(widgets.DisplayRichTextWidgetComponent)
     };
 }

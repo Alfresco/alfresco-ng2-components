@@ -18,10 +18,11 @@
 import { AlfrescoApiService, LogService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import {
     RequestQuery,
     RequestSortDefinitionInner,
+    ResultSetContextFacetQueries,
     ResultSetPaging,
     SearchApi,
     TagBody,
@@ -33,16 +34,19 @@ import {
 @Injectable({
     providedIn: 'root'
 })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class TagService {
 
-    _tagsApi: TagsApi;
+    private _tagsApi: TagsApi;
     get tagsApi(): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
         return this._tagsApi;
     }
 
-    private searchApi: SearchApi = new SearchApi(this.apiService.getInstance());
+    private _searchApi: SearchApi;
+    get searchApi(): SearchApi {
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
+    }
 
     /** Emitted when tag information is updated. */
     @Output()
@@ -133,6 +137,22 @@ export class TagService {
     }
 
     /**
+     * Update a tag
+     *
+     * @param tagId The identifier of a tag.
+     * @param tagBody The updated tag.
+     * @returns Updated tag.
+     */
+    updateTag(tagId: string, tagBody: TagBody): Observable<TagEntry> {
+        const observableUpdate$: Observable<TagEntry> = from(this.tagsApi.updateTag(tagId, tagBody));
+        observableUpdate$.subscribe(
+            (tagEntry: TagEntry) => this.refresh.emit(tagEntry),
+            (err) => this.handleError(err)
+        );
+        return observableUpdate$;
+    }
+
+    /**
      * Find tags which name contains searched name.
      *
      * @param name Value for name which should be used during searching tags.
@@ -140,7 +160,8 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, skipCount: number = 0, maxItems: number = this.userPreferencesService.paginationSize): Observable<ResultSetPaging> {
+    searchTags(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
+        maxItems = maxItems || this.userPreferencesService.paginationSize;
         const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
         sortingByName.field = 'cm:name';
         sortingByName.ascending = true;
@@ -148,7 +169,7 @@ export class TagService {
         return from(this.searchApi.search({
             query: {
                 language: RequestQuery.LanguageEnum.Afts,
-                query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"${name}*"`
+                query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"*${name}*"`
             },
             paging: {
                 skipCount,
@@ -156,6 +177,41 @@ export class TagService {
             },
             sort: [sortingByName]
         })).pipe(catchError((error) => this.handleError(error)));
+    }
+
+    /**
+     * Get usage counters for passed tags.
+     *
+     * @param tags Array of tags names for which there should be returned counters.
+     * @returns Array of usage counters for specified tags.
+     */
+    getCountersForTags(tags: string[]): Observable<ResultSetContextFacetQueries[]> {
+        return from(this.searchApi.search({
+            query: {
+                language: RequestQuery.LanguageEnum.Afts,
+                query: `*`
+            },
+            facetQueries: tags.map((tag) => ({
+                query: `TAG:"${tag}"`,
+                label: tag
+            }))
+        })).pipe(
+            map((paging) => paging.list?.context?.facetQueries),
+            catchError((error) => this.handleError(error))
+        );
+    }
+
+    /**
+     * Find tag which name matches exactly to passed name.
+     *
+     * @param name Value for name which should be used during finding exact tag.
+     * @returns Found tag which name matches exactly to passed name.
+     */
+    findTagByName(name: string): Observable<TagEntry> {
+        return this.getAllTheTags({ name }).pipe(
+            map((result) => result.list.entries[0]),
+            catchError((error) => this.handleError(error))
+        );
     }
 
     private handleError(error: any) {

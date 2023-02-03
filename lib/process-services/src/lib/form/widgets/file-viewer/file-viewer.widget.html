@@ -1,0 +1,7 @@
+<div class="adf-file-viewer-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
+    [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
+            *ngIf="isRequired()">*</span></label>
+    <adf-alfresco-viewer [nodeId]="field.value" [showViewer]="field.value" [allowGoBack]="false"></adf-alfresco-viewer>
+    <error-widget [error]="field.validationSummary"></error-widget>
+</div>

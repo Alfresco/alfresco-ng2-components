@@ -33,19 +33,19 @@ import { GroupModel } from '../form';
 })
 export class PeopleProcessService {
 
-    _taskActionsApi: TaskActionsApi;
+    private _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {
         this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
         return this._taskActionsApi;
     }
 
-    _userApi: UsersApi;
+    private _userApi: UsersApi;
     get userApi(): UsersApi {
         this._userApi = this._userApi ?? new UsersApi(this.apiService.getInstance());
         return this._userApi;
     }
 
-    _groupsApi: ActivitiGroupsApi;
+    private _groupsApi: ActivitiGroupsApi;
     get groupsApi(): ActivitiGroupsApi {
         this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
         return this._groupsApi;

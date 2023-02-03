@@ -1,0 +1,19 @@
+file-viewer-widget {
+    height: 100%;
+    width: 100%;
+
+    .adf-file-viewer-widget {
+        height: 100%;
+        width: 100%;
+
+        adf-viewer.adf-viewer {
+            position: relative;
+
+            .adf-viewer-container {
+                .adf-viewer-content > div {
+                    height: 90vh;
+                }
+            }
+        }
+    }
+}

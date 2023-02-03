@@ -75,7 +75,7 @@ describe('FormCloudComponent', () => {
         selector: 'adf-cloud-custom-widget',
         template: '<div></div>'
     })
-        // eslint-disable-next-line @angular-eslint/component-class-suffix
+    // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
         typeId = 'CustomWidget';
     }
@@ -1017,6 +1017,43 @@ describe('FormCloudComponent', () => {
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
         expect(radioFieldById.value).toBe('option_2');
+    });
+
+    it('should disable complete & save buttons on [complete] outcome click', () => {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.COMPLETE_OUTCOME_ID,
+            name: 'COMPLETE',
+            isSystem: true
+        });
+        formComponent.form = formModel;
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+        expect(formComponent.disableCompleteButton).toBeTrue();
+    });
+
+    it('should ENABLE complete & save buttons when something goes wrong during completion process', (done) => {
+        const errorMessage = 'Something went wrong.';
+        spyOn(formCloudService, 'completeTaskForm').and.callFake(() => throwError(errorMessage));
+
+        formCloudService.completeTaskForm('test-app', '123', '333-444', '123', {
+            pfx_property_one: 'testValue',
+            pfx_property_two: true,
+            pfx_property_three: 'opt_1',
+            pfx_property_four: 'option_2',
+            pfx_property_five: 'orange',
+            pfx_property_none: 'no_form_field'
+        }, 'Complete', 123).subscribe({
+            next: _ => done.fail('expected an error, not data'),
+            error: error => {
+                expect(error).toBe(errorMessage);
+                expect(formComponent.disableSaveButton).toBeFalse();
+                expect(formComponent.disableCompleteButton).toBeFalse();
+                done();
+            }
+        });
     });
 
     describe('form validations', () => {

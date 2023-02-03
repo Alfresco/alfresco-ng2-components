@@ -78,11 +78,11 @@ function getRemote(workingDir: string): string {
 function getCommits(options: DiffOptions): Array<Commit> {
     let authorFilter = (options.exclude || '')
         .split(',')
-        .map(str => str.trim())
-        .join('\|');
+        .map(str => str.trim().replace(/\\/g, ''))
+        .join('|');
 
     if (!authorFilter) {
-        authorFilter = `bot\|Alfresco Build User`;
+        authorFilter = `bot|Alfresco Build User`;
     }
 
 
@@ -92,8 +92,6 @@ function getCommits(options: DiffOptions): Array<Commit> {
         options.range,
         `--no-merges`,
         `--first-parent`,
-        `--perl-regexp`,
-        `--author="^((?!${authorFilter}).*)$"`,
         // this format is needed to allow parsing all characters in the commit message and safely convert to JSON
         `--format="{ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }"`
     ];
@@ -113,10 +111,15 @@ function getCommits(options: DiffOptions): Array<Commit> {
     // https://stackoverflow.com/a/13928240/14644447
     log = log.trim().replace(/"/gm, '\\"').replace(/\^@\^/gm, '"');
     if (log.endsWith(',')) {
-        log = log.substring (0, log.length - 1);
+        log = log.substring(0, log.length - 1);
     }
 
-    return log.split('\n').map(str => JSON.parse(str) as Commit);
+    return log.split('\n').map(str => JSON.parse(str) as Commit).filter(commit => commitAuthorAllowed(commit, authorFilter));
+}
+
+function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
+    const filterRegex = RegExp(authorFilter);
+    return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
 }
 
 export default function main(_args: string[], workingDir: string) {
@@ -124,7 +127,7 @@ export default function main(_args: string[], workingDir: string) {
         .description('Generate changelog report for two branches of git repository')
         .version('0.0.1', '-v, --version')
         .usage('changelog [options]')
-        .option('-r, --range <range>', 'Commit range, e.g. master..develop', 'master..develop')
+        .option('-r, --range <range>', 'Commit range, e.g. origin/master..develop', 'origin/qmaster..develop')
         .option('-d, --dir <dir>', 'Working directory (default: working directory)')
         .option('-m, --max <number>', 'Limit the number of commits to output')
         .option('-o, --output <dir>', 'Output directory, will use console output if not defined')

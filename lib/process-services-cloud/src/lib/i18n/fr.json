@@ -39,7 +39,8 @@
         "ACTION": {
           "START": "Démarrer le processus",
           "CANCEL": "Annuler"
-        }
+        },
+        "SELECT_PROCESS_DROPDOWN": "Bouton du menu déroulant pour sélectionner le processus"
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",

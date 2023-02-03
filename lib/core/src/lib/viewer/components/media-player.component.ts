@@ -18,13 +18,12 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { Track } from '../models/viewer.model';
-import { ViewUtilService } from '../services/view-util.service';
 
 @Component({
     selector: 'adf-media-player',
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
-    host: { class: 'adf-media-player' },
+    host: {class: 'adf-media-player'},
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
@@ -39,31 +38,24 @@ export class MediaPlayerComponent implements OnChanges {
     mimeType: string;
 
     @Input()
-    nameFile: string;
+    fileName: string;
 
-    @Input()
-    nodeId: string;
-
+    /** media subtitles for the media player*/
     @Input()
     tracks: Track[] = [];
 
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private contentService: ContentService, private viewUtils: ViewUtilService) {
+    constructor(private contentService: ContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
-        const nodeId = changes['nodeId'];
 
         if (blobFile && blobFile.currentValue) {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
             return;
-        }
-
-        if (nodeId && nodeId.currentValue) {
-            this.viewUtils.generateMediaTracks(this.nodeId).then((tracks) => this.tracks = tracks);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -71,7 +63,7 @@ export class MediaPlayerComponent implements OnChanges {
         }
     }
 
-    onMediaPlayerError() {
-        this.error.emit();
+    onMediaPlayerError(event: any) {
+        this.error.emit(event);
     }
 }

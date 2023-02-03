@@ -1,340 +1,382 @@
-<ng-container *ngIf="nodeId || content">
+<ng-container *ngIf="nodeId">
 
-    <ng-template let-node="node" #sidebarRightTemplate>
-        <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
-
-            <adf-info-drawer-tab label="APP.INFO_DRAWER.COMMENTS">
-                <adf-node-comments 
-                    [nodeId]="nodeId" 
-                    [readOnly]="!isCommentEnabled"
-                >
-                </adf-node-comments>
-            </adf-info-drawer-tab>
-
-            <adf-info-drawer-tab label="APP.INFO_DRAWER.PROPERTIES">
-                <adf-content-metadata-card *ngIf="isPreset" [node]="node"
-                                           [multi]="multi"
-                                           [preset]="customPreset"
-                                           [readOnly]="isReadOnly"
-                                           [displayAspect]="showAspect"
-                                           [displayDefaultProperties]="displayDefaultProperties"
-                                           [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
-
-                <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
-                                           [multi]="multi"
-                                           [readOnly]="isReadOnly"
-                                           [displayAspect]="showAspect"
-                                           [displayDefaultProperties]="displayDefaultProperties"
-                                           [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-metadata-default-properties"
-                        [color]="'primary'"
-                        (change)="toggleDisplayProperties()"
-                        [checked]="displayDefaultProperties">
-                        Display Default Properties
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-metadata-empty"
-                        [color]="'primary'"
-                        (change)="toggleEmptyMetadata()"
-                        [checked]="displayEmptyMetadata">
-                        Display Empty Metadata
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-metadata-multi"
-                        [color]="'primary'"
-                        (change)="toggleMulti()"
-                        [checked]="multi">
-                        Multi accordion
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-metadata-readonly"
-                        [color]="'primary'"
-                        (change)="toggleReadOnly()"
-                        [checked]="isReadOnly">
-                        Read Only
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-toggle-custom-preset"
-                        [color]="'primary'"
-                        (change)="togglePreset()"
-                        [checked]="isPreset">
-                        Custom preset
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-
-                    <mat-form-field floatPlaceholder="float">
-                        <input matInput
-                               placeholder="Display Aspect"
-                               [(ngModel)]="desiredAspect">
-                    </mat-form-field>
-
-                    <button mat-raised-button (click)="applyAspect()" color="primary">
-                        Apply Aspect
-                    </button>
-                </p>
-
-                <p class="toggle">
-                    <ng-container *ngIf="isPreset">
-                        <mat-form-field floatPlaceholder="float">
-                            <input matInput
-                                   placeholder="Custom Preset"
-                                   [(ngModel)]="customPreset"
-                                   data-automation-id="adf-text-custom-preset">
-                        </mat-form-field>
-
-                        <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()" color="primary">
-                            Apply
-                        </button>
-
-                    </ng-container>
-                </p>
-
-            </adf-info-drawer-tab>
-
-            <adf-info-drawer-tab label="APP.INFO_DRAWER.VERSIONS">
-                <mat-card>
-                    <mat-card-content>
-                        <adf-version-manager [node]="node"
-                                             (uploadError)="onUploadError($event)"
-                                             (viewVersion)="onViewVersion($event)">
-                        </adf-version-manager>
-                    </mat-card-content>
-                </mat-card>
-            </adf-info-drawer-tab>
-        </adf-info-drawer>
-    </ng-template>
-
-
-    <ng-template let-node="node" #sidebarLeftTemplate>
-        <adf-info-drawer [title]="'Viewer Options'">
-
-            <adf-info-drawer-tab label="Settings">
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-custoname"
-                        [color]="'primary'"
-                        (change)="toggleCustomName()"
-                        [checked]="customName">
-                        Custom Name
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <ng-container *ngIf="customName">
-                        <mat-form-field floatLabel="never">
-                            <input matInput
-                                   placeholder="Custom Name"
-                                   [(ngModel)]="displayName"
-                                   data-automation-id="adf-text-custom-name">
-                        </mat-form-field>
-                    </ng-container>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-fileurl"
-                        [color]="'primary'"
-                        (change)="toggleFileUrl()"
-                        [checked]="fileUrlSwitch">
-                        Url File
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <ng-container *ngIf="fileUrlSwitch">
-                        <mat-form-field floatPlaceholder="float">
-                            <input matInput
-                                   placeholder="Url File"
-                                   [(ngModel)]="urlFile"
-                                   data-automation-id="adf-text-file-url">
-                        </mat-form-field>
-                    </ng-container>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-toolbar"
-                        [color]="'primary'"
-                        (change)="toggleShowToolbar()"
-                        [checked]="showToolbar">
-                        Show Toolbar
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-goback"
-                        [color]="'primary'"
-                        (change)="toggleAllowGoBack()"
-                        [checked]="allowGoBack">
-                        Allow GoBack
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-openwith"
-                        [color]="'primary'"
-                        (change)="toggleOpenWith()"
-                        [checked]="openWith">
-                        Open With
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-moreactions"
-                        [color]="'primary'"
-                        (change)="toggleOpenMoreActions()"
-                        [checked]="moreActions">
-                        More Actions
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-moreactionsmenu"
-                        [color]="'primary'"
-                        (change)="toggleMoreActionsMenu()"
-                        [checked]="moreActionsMenu">
-                        More Actions Menu
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-download"
-                        [color]="'primary'"
-                        (change)="toggleAllowDownload()"
-                        [checked]="allowDownload">
-                        Allow Download
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-print"
-                        [color]="'primary'"
-                        (change)="toggleAllowPrint()"
-                        [checked]="allowPrint">
-                        Allow Print
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-allowsidebar"
-                        [color]="'primary'"
-                        (change)="toggleAllowRightSidebar()"
-                        [checked]="allowRightSidebar">
-                        Allow Right Sidebar
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-switch-allowLeftSidebar"
-                        [color]="'primary'"
-                        (change)="toggleAllowLeftSidebar()"
-                        [checked]="allowLeftSidebar">
-                        Allow Left Sidebar
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-toggle-custom-toolbar"
-                        [color]="'primary'"
-                        (change)="toggleToolbar()"
-                        [checked]="customToolbar">
-                        Custom Toolbar
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-tab-with-icon"
-                        [color]="'primary'"
-                        (change)="toggleShowTabWithIcon()"
-                        [checked]="showTabWithIcon">
-                        Show tab with icon
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
-                        id="adf-icon-and-label-tab"
-                        [color]="'primary'"
-                        (change)="toggleShowTabWithIconAndLabel()"
-                        [checked]="showTabWithIconAndLabel">
-                        Show tab with icon and label
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()"
-                            color="primary">
-                        Toggle Right Sidebar
-                    </button>
-                </p>
-
-                <p class="toggle">
-                    <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()"
-                            color="primary">
-                        Hide Left Sidebar
-                    </button>
-                </p>
-
-            </adf-info-drawer-tab>
-
-            <adf-info-drawer-tab
-                *ngIf="showTabWithIcon"
-                [label]=""
-                [icon]="'face'"
-                data-automation-id="adf-settings-tab">
-            </adf-info-drawer-tab>
-
-            <adf-info-drawer-tab
-                *ngIf="showTabWithIconAndLabel"
-                [label]="'Comments'"
-                [icon]="'comment'"
-                data-automation-id="adf-settings-tab">
-            </adf-info-drawer-tab>
-        </adf-info-drawer>
-    </ng-template>
-
-    <adf-viewer
-        [blobFile]="content"
+    <adf-alfresco-viewer
+        (showViewerChange)="onViewerClosed()"
         [nodeId]="nodeId"
         [versionId]="versionId"
         [showRightSidebar]="showRightSidebar"
         [showLeftSidebar]="showLeftSidebar"
         [allowGoBack]="allowGoBack"
-        [displayName]="displayName"
         [showToolbar]="showToolbar"
         [allowPrint]="allowPrint"
         [allowDownload]="allowDownload"
         [allowRightSidebar]="allowRightSidebar"
         [allowLeftSidebar]="allowLeftSidebar"
-        [urlFile]="urlFile"
-        (showViewerChange)="onViewerVisibilityChanged()"
+        [sidebarLeftTemplate]="sidebarLeftTemplate"
+        [sidebarRightTemplate]="sidebarRightTemplate">
+
+        <adf-viewer-toolbar *ngIf="customToolbar" data-automation-id="adf-viewer-custom-toolbar">
+            <h1>My custom toolbar</h1>
+        </adf-viewer-toolbar>
+
+        <adf-viewer-toolbar-actions *ngIf="moreActions">
+            <button mat-icon-button id="adf-viewer-time">
+                <mat-icon>alarm</mat-icon>
+            </button>
+            <button mat-icon-button id="adf-viewer-upload">
+                <mat-icon>backup</mat-icon>
+            </button>
+            <button mat-icon-button id="adf-viewer-bug">
+                <mat-icon>bug_report</mat-icon>
+            </button>
+        </adf-viewer-toolbar-actions>
+
+        <adf-viewer-more-actions *ngIf="moreActionsMenu">
+            <button mat-menu-item id="adf-viewer-more-menu-alarm">
+                <mat-icon>alarm</mat-icon>
+                <span>Alarm</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-backup">
+                <mat-icon>backup</mat-icon>
+                <span>Backup</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-bug">
+                <mat-icon>bug_report</mat-icon>
+                <span>Bug report</span>
+            </button>
+        </adf-viewer-more-actions>
+
+        <ng-container *ngIf="openWith">
+            <adf-viewer-open-with>
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Option 1</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>voicemail</mat-icon>
+                    <span>Option 2</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span>Option 3</span>
+                </button>
+            </adf-viewer-open-with>
+        </ng-container>
+    </adf-alfresco-viewer>
+
+</ng-container>
+
+
+<ng-template let-node="node" #sidebarRightTemplate>
+    <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
+
+        <adf-info-drawer-tab label="APP.INFO_DRAWER.COMMENTS">
+            <adf-node-comments
+                [nodeId]="nodeId"
+                [readOnly]="!isCommentEnabled"
+            >
+            </adf-node-comments>
+        </adf-info-drawer-tab>
+
+        <adf-info-drawer-tab label="APP.INFO_DRAWER.PROPERTIES">
+            <adf-content-metadata-card *ngIf="isPreset" [node]="node"
+                                       [multi]="multi"
+                                       [preset]="customPreset"
+                                       [readOnly]="isReadOnly"
+                                       [displayAspect]="showAspect"
+                                       [displayDefaultProperties]="displayDefaultProperties"
+                                       [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+            <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
+                                       [multi]="multi"
+                                       [readOnly]="isReadOnly"
+                                       [displayAspect]="showAspect"
+                                       [displayDefaultProperties]="displayDefaultProperties"
+                                       [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-metadata-default-properties"
+                    [color]="'primary'"
+                    (change)="toggleDisplayProperties()"
+                    [checked]="displayDefaultProperties">
+                    Display Default Properties
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-metadata-empty"
+                    [color]="'primary'"
+                    (change)="toggleEmptyMetadata()"
+                    [checked]="displayEmptyMetadata">
+                    Display Empty Metadata
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-metadata-multi"
+                    [color]="'primary'"
+                    (change)="toggleMulti()"
+                    [checked]="multi">
+                    Multi accordion
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-metadata-readonly"
+                    [color]="'primary'"
+                    (change)="toggleReadOnly()"
+                    [checked]="isReadOnly">
+                    Read Only
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-toggle-custom-preset"
+                    [color]="'primary'"
+                    (change)="togglePreset()"
+                    [checked]="isPreset">
+                    Custom preset
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+
+                <mat-form-field floatPlaceholder="float">
+                    <input matInput
+                           placeholder="Display Aspect"
+                           [(ngModel)]="desiredAspect">
+                </mat-form-field>
+
+                <button mat-raised-button (click)="applyAspect()" color="primary">
+                    Apply Aspect
+                </button>
+            </p>
+
+            <p class="toggle">
+                <ng-container *ngIf="isPreset">
+                    <mat-form-field floatPlaceholder="float">
+                        <input matInput
+                               placeholder="Custom Preset"
+                               [(ngModel)]="customPreset"
+                               data-automation-id="adf-text-custom-preset">
+                    </mat-form-field>
+
+                    <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()" color="primary">
+                        Apply
+                    </button>
+
+                </ng-container>
+            </p>
+
+        </adf-info-drawer-tab>
+
+        <adf-info-drawer-tab label="APP.INFO_DRAWER.VERSIONS">
+            <mat-card>
+                <mat-card-content>
+                    <adf-version-manager [node]="node"
+                                         (uploadError)="onUploadError($event)"
+                                         (viewVersion)="onViewVersion($event)">
+                    </adf-version-manager>
+                </mat-card-content>
+            </mat-card>
+        </adf-info-drawer-tab>
+    </adf-info-drawer>
+</ng-template>
+
+<ng-template #sidebarLeftTemplate>
+    <adf-info-drawer [title]="'Viewer Options'">
+
+        <adf-info-drawer-tab label="Settings">
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-fileurl"
+                    [color]="'primary'"
+                    (change)="toggleFileUrl()"
+                    [checked]="fileUrlSwitch">
+                    Url File
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <ng-container *ngIf="fileUrlSwitch">
+                    <mat-form-field floatPlaceholder="float">
+                        <input matInput
+                               placeholder="Url File"
+                               [(ngModel)]="urlFile"
+                               data-automation-id="adf-text-file-url">
+                    </mat-form-field>
+                </ng-container>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-toolbar"
+                    [color]="'primary'"
+                    (change)="toggleShowToolbar()"
+                    [checked]="showToolbar">
+                    Show Toolbar
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-goback"
+                    [color]="'primary'"
+                    (change)="toggleAllowGoBack()"
+                    [checked]="allowGoBack">
+                    Allow GoBack
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-openwith"
+                    [color]="'primary'"
+                    (change)="toggleOpenWith()"
+                    [checked]="openWith">
+                    Open With
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-moreactions"
+                    [color]="'primary'"
+                    (change)="toggleOpenMoreActions()"
+                    [checked]="moreActions">
+                    More Actions
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-moreactionsmenu"
+                    [color]="'primary'"
+                    (change)="toggleMoreActionsMenu()"
+                    [checked]="moreActionsMenu">
+                    More Actions Menu
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-download"
+                    [color]="'primary'"
+                    (change)="toggleAllowDownload()"
+                    [checked]="allowDownload">
+                    Allow Download
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-print"
+                    [color]="'primary'"
+                    (change)="toggleAllowPrint()"
+                    [checked]="allowPrint">
+                    Allow Print
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-allowsidebar"
+                    [color]="'primary'"
+                    (change)="toggleAllowRightSidebar()"
+                    [checked]="allowRightSidebar">
+                    Allow Right Sidebar
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-switch-allowLeftSidebar"
+                    [color]="'primary'"
+                    (change)="toggleAllowLeftSidebar()"
+                    [checked]="allowLeftSidebar">
+                    Allow Left Sidebar
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-toggle-custom-toolbar"
+                    [color]="'primary'"
+                    (change)="toggleToolbar()"
+                    [checked]="customToolbar">
+                    Custom Toolbar
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-tab-with-icon"
+                    [color]="'primary'"
+                    (change)="toggleShowTabWithIcon()"
+                    [checked]="showTabWithIcon">
+                    Show tab with icon
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <mat-slide-toggle
+                    id="adf-icon-and-label-tab"
+                    [color]="'primary'"
+                    (change)="toggleShowTabWithIconAndLabel()"
+                    [checked]="showTabWithIconAndLabel">
+                    Show tab with icon and label
+                </mat-slide-toggle>
+            </p>
+
+            <p class="toggle">
+                <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()"
+                        color="primary">
+                    Toggle Right Sidebar
+                </button>
+            </p>
+
+            <p class="toggle">
+                <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()"
+                        color="primary">
+                    Hide Left Sidebar
+                </button>
+            </p>
+
+        </adf-info-drawer-tab>
+
+        <adf-info-drawer-tab
+            *ngIf="showTabWithIcon"
+            [label]=""
+            [icon]="'face'"
+            data-automation-id="adf-settings-tab">
+        </adf-info-drawer-tab>
+
+        <adf-info-drawer-tab
+            *ngIf="showTabWithIconAndLabel"
+            [label]="'Comments'"
+            [icon]="'comment'"
+            data-automation-id="adf-settings-tab">
+        </adf-info-drawer-tab>
+    </adf-info-drawer>
+</ng-template>
+
+<ng-container *ngIf="blobFile">
+    <adf-viewer
+        [blobFile]="blobFile"
+        [fileName]="fileName"
+        [showRightSidebar]="showRightSidebar"
+        [showLeftSidebar]="showLeftSidebar"
+        [allowGoBack]="allowGoBack"
+        [showToolbar]="showToolbar"
+        [allowRightSidebar]="allowRightSidebar"
+        [allowLeftSidebar]="allowLeftSidebar"
+        (showViewerChange)="onViewerClosed()"
         [sidebarLeftTemplate]="sidebarLeftTemplate"
         [sidebarRightTemplate]="sidebarRightTemplate">
 
@@ -386,36 +428,5 @@
             </adf-viewer-open-with>
         </ng-container>
 
-        <!--
-        <adf-viewer-extension [supportedExtensions]="['json']">
-            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
-            <h1>JSON VIEWER</h1>
-            </ng-template>
-        </adf-viewer-extension>
-        -->
-
-        <!--
-        <adf-viewer-extension [supportedExtensions]="['png']">
-            <ng-template>
-            <h1>PNG Viewer</h1>
-            </ng-template>
-        </adf-viewer-extension>
-        -->
-
-        <!--
-        <adf-viewer-extension [supportedExtensions]="['pdf']">
-            <ng-template>
-            <h1>PDF Viewer</h1>
-            </ng-template>
-        </adf-viewer-extension>
-        -->
-
-        <!--
-        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-            <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-            </ng-template>
-        </extension-viewer>
-        -->
     </adf-viewer>
 </ng-container>

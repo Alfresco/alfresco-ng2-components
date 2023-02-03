@@ -1,0 +1,98 @@
+$tree-row-height: 56px !default;
+$tree-header-font-size: 12px !default;
+
+.adf-tree-sticky-header {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    mat-tree {
+        overflow-y: scroll;
+    }
+}
+
+.adf-tree-row,
+.adf-tree-load-more-row {
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition-property: background-color;
+    border-bottom: 1px solid var(--theme-border-color);
+    min-height: $tree-row-height;
+    cursor: pointer;
+    user-select: none;
+
+    .adf-tree-expand-collapse-container {
+        min-width: 55px;
+    }
+
+    &:hover {
+        background-color: var(--theme-bg-hover-color);
+
+        .adf-tree-actions {
+            display: flex;
+        }
+    }
+
+    &:focus {
+        background-color: var(--theme-bg-hover-color);
+        outline-offset: -1px;
+        outline: 1px solid var(--theme-accent-color-a200);
+    }
+
+    .adf-tree-expand-collapse-button,
+    .adf-tree-load-more-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px;
+    }
+
+    .adf-tree-cell {
+        color: var(--theme-text-fg-color);
+        width: 100%;
+
+        .adf-tree-cell-value {
+            display: block;
+            padding: 10px;
+            word-break: break-word;
+        }
+    }
+}
+
+.adf-tree-header {
+    display: flex;
+    width: fit-content;
+    min-width: 100%;
+    box-sizing: border-box;
+
+    .adf-tree-cell-header {
+        cursor: pointer;
+        position: relative;
+        vertical-align: bottom;
+        text-overflow: ellipsis;
+        font-weight: bold;
+        line-height: 24px;
+        letter-spacing: 0;
+        min-height: $tree-row-height !important;
+        font-size: $tree-header-font-size;
+        color: var(--theme-text-fg-color);
+        box-sizing: border-box;
+        padding-top: 12px !important;
+
+        &:focus {
+            outline-offset: -1px;
+            outline: 1px solid var(--theme-accent-color-a200);
+        }
+    }
+}
+
+.adf-tree-loading-spinner-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

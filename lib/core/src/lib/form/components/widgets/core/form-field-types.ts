@@ -39,7 +39,9 @@ export class FormFieldTypes {
     static DOCUMENT: string = 'document';
     static DATETIME: string = 'datetime';
     static ATTACH_FOLDER: string = 'select-folder';
-    static FILE_VIEWER: string = 'file-viewer';
+    static PROPERTIES_VIEWER: string = 'properties-viewer';
+    static ALFRESCO_FILE_VIEWER: string = 'file-viewer';
+    static VIEWER: string = 'base-viewer';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

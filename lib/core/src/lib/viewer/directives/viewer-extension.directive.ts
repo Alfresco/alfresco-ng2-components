@@ -16,7 +16,7 @@
  */
 
 import { AfterContentInit, ContentChild, Directive, Input, TemplateRef, OnDestroy } from '@angular/core';
-import { ViewerComponent } from '../components/viewer.component';
+import { ViewerRenderComponent } from '../components/viewer-render.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -41,7 +41,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewerComponent: ViewerComponent) {
+    constructor(private viewerComponent: ViewerRenderComponent) {
     }
 
     ngAfterContentInit() {

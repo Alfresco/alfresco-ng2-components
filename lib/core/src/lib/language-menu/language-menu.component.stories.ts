@@ -21,7 +21,7 @@ import { CoreStoryModule } from '../testing/core.story.module';
 import { LanguageMenuModule } from './language-menu.module';
 import { LanguageMenuComponent } from './language-menu.component';
 
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {

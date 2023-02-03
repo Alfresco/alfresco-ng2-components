@@ -2,10 +2,10 @@
 Title: Comment list component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-14
+Last reviewed: 2023-01-10
 ---
 
-# [Comment list component](../../../lib/core/src/lib/comments/comment-list.component.ts "Defined in comment-list.component.ts")
+# [Comment list component](../../../lib/core/src/lib/comments/comment-list/comment-list.component.ts "Defined in comment-list.component.ts")
 
 Shows a list of comments.
 

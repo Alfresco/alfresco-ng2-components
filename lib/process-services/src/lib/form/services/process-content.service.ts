@@ -29,7 +29,7 @@ export class ProcessContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    _contentApi: ActivitiContentApi;
+    private _contentApi: ActivitiContentApi;
     get contentApi(): ActivitiContentApi {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;

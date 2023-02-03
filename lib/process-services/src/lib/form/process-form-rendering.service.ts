@@ -29,6 +29,7 @@ import { RadioButtonsWidgetComponent } from './widgets/radio-buttons/radio-butto
 import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DynamicTableWidgetComponent } from './widgets/dynamic-table/dynamic-table.widget';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
+import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +47,8 @@ export class ProcessFormRenderingService extends FormRenderingService {
             [FormFieldTypes.DOCUMENT]: () => DocumentWidgetComponent,
             [FormFieldTypes.PEOPLE]: () =>  PeopleWidgetComponent,
             [FormFieldTypes.FUNCTIONAL_GROUP]:  () => FunctionalGroupWidgetComponent,
-            [FormFieldTypes.DYNAMIC_TABLE]:  () => DynamicTableWidgetComponent
+            [FormFieldTypes.DYNAMIC_TABLE]:  () => DynamicTableWidgetComponent,
+            [FormFieldTypes.ALFRESCO_FILE_VIEWER]:  () => FileViewerWidgetComponent
         }, true);
     }
 }

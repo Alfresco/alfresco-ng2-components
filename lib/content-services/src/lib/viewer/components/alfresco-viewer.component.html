@@ -1,0 +1,71 @@
+<adf-viewer
+    #adfViewer
+    [(showViewer)]="showViewer"
+    [allowGoBack]="allowGoBack"
+    [showToolbar]="showToolbar"
+    [overlayMode]="overlayMode"
+    [allowNavigate]="allowNavigate"
+    [canNavigateBefore]="canNavigateBefore"
+    [canNavigateNext]="canNavigateNext"
+    [allowLeftSidebar]="allowLeftSidebar"
+    [allowRightSidebar]="allowRightSidebar"
+    [showRightSidebar]="showRightSidebar"
+    [showLeftSidebar]="showLeftSidebar"
+    [allowFullScreen]="allowFullScreen"
+    [sidebarRightTemplate]="sidebarRightTemplate"
+    [sidebarLeftTemplate]="sidebarLeftTemplate"
+    [sidebarRightTemplateContext]="sidebarRightTemplateContext"
+    [sidebarLeftTemplateContext]="sidebarLeftTemplateContext"
+    [fileName]="fileName"
+    [mimeType]="mimeType"
+    [urlFile]="urlFileContent"
+    [tracks]="tracks"
+    [readOnly]="readOnly"
+    (navigateBefore)="onNavigateBeforeClick($event)"
+    (navigateNext)="onNavigateNextClick($event)"
+    (showViewerChange)="onClose()"
+    (submitFile)="onSubmitFile($event)">
+
+    <adf-viewer-toolbar *ngIf="toolbar">
+        <ng-content select="adf-viewer-toolbar"></ng-content>
+    </adf-viewer-toolbar>
+
+    <adf-viewer-toolbar-actions *ngIf="toolbarActions">
+        <ng-content select="adf-viewer-toolbar-actions"></ng-content>
+    </adf-viewer-toolbar-actions>
+
+    <adf-viewer-more-actions *ngIf="moreActions">
+        <ng-content select="adf-viewer-more-actions"></ng-content>
+    </adf-viewer-more-actions>
+
+    <adf-viewer-open-with *ngIf="openWith">
+        <ng-content select="adf-viewer-open-with"></ng-content>
+    </adf-viewer-open-with>
+
+    <adf-viewer-sidebar *ngIf="sidebar">
+        <ng-content select="adf-viewer-sidebar"></ng-content>
+    </adf-viewer-sidebar>
+
+    <adf-viewer-toolbar-custom-actions>
+        <button id="adf-alfresco-viewer-download"
+                *ngIf="allowDownload"
+                mat-icon-button
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
+                title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
+                data-automation-id="adf-toolbar-download"
+                [adfNodeDownload]="nodeEntry"
+                [version]="versionEntry">
+            <mat-icon>file_download</mat-icon>
+        </button>
+
+        <button id="adf-alfresco-viewer-print"
+                *ngIf="allowPrint"
+                mat-icon-button
+                [attr.aria-label]="'ADF_VIEWER.ACTIONS.PRINT' | translate"
+                title="{{ 'ADF_VIEWER.ACTIONS.PRINT' | translate }}"
+                data-automation-id="adf-toolbar-print"
+                (click)="onPrintContent($event)">
+            <mat-icon>print</mat-icon>
+        </button>
+    </adf-viewer-toolbar-custom-actions>
+</adf-viewer>
