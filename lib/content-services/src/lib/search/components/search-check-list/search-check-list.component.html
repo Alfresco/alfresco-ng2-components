@@ -1,8 +1,13 @@
 <fieldset>
     <legend class="adf-search-check-list-title">{{ name | translate }}</legend>
-    <mat-checkbox *ngFor="let option of options" [checked]="option.checked"
-        (keydown.enter)="option.checked = !option.checked" [attr.data-automation-id]="'checkbox-' + (option.name)"
-        [attr.aria-label]="option.name | translate" (change)="changeHandler($event, option)" class="adf-facet-filter">
+    <mat-checkbox
+        *ngFor="let option of options"
+        [checked]="option.checked"
+        (keydown.enter)="option.checked = !option.checked"
+        [attr.data-automation-id]="'checkbox-' + (option.name)"
+        [attr.aria-label]="option.name | translate"
+        (change)="changeHandler($event, option)"
+        class="adf-facet-filter">
         <div matTooltip="{{ option.name | translate }}" matTooltipPosition="right" class="facet-name">
             {{ option.name | translate }}
         </div>
