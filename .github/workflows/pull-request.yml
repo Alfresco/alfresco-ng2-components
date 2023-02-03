@@ -89,10 +89,8 @@ jobs:
           skip_check: "false"
         run: |
           if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by dependabot or alfresco-build\033[0m"
+            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
             skip_check="true"
-          else
-            echo -e "\033[31mCommit not by dependabot or alfresco-build. This requires PR approval\033[0m"
           fi
 
           if [ "${{ github.event_name }}" == "schedule" ]; then
@@ -117,251 +115,251 @@ jobs:
             fi
           fi
 
-  # setup:
-  #   # long timeout required when cache has to be recreated
-  #   timeout-minutes: 30
-  #   name: "Setup"
-  #   runs-on: ubuntu-22.04
-  #   needs: [check-if-pr-is-approved]
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all tags and branches
-  #     - uses: ./.github/actions/setup
-  #     - name: install
-  #       run: |
-  #         npm ci
-  #         nx run cli:bundle
-  #         nx run testing:bundle
-  #     - run: nx print-affected $NX_CALCULATION_FLAGS
-  #     - uses: ./.github/actions/upload-cache-and-artifacts
+  setup:
+    # long timeout required when cache has to be recreated
+    timeout-minutes: 30
+    name: "Setup"
+    runs-on: ubuntu-22.04
+    needs: [check-if-pr-is-approved]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - name: install
+        run: |
+          npm ci
+          nx run cli:bundle
+          nx run testing:bundle
+      - run: nx print-affected $NX_CALCULATION_FLAGS
+      - uses: ./.github/actions/upload-cache-and-artifacts
 
-  # unit-tests:
-  #   timeout-minutes: 30
-  #   name: "Unit tests: ${{ matrix.unit-tests.name }}"
-  #   runs-on: ubuntu-22.04
-  #   needs: [setup]
-  #   strategy:
-  #     fail-fast: false
-  #     # max-parallel: 4
-  #     matrix:
-  #       unit-tests:
-  #         - name: content-services
-  #           exclude: "insights,core,extensions,process-services,process-services-cloud"
-  #         - name: core
-  #           exclude: "insights,content-services,process-services,process-services-cloud"
-  #         - name: insights and process-services
-  #           exclude: "core,extensions,content-services,process-services-cloud"
-  #         - name: process-cloud
-  #           exclude: "insights,core,extensions,content-services,process-services"
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all tags and branches
-  #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - name: Run unit tests
-  #       run: |
-  #         /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+  unit-tests:
+    timeout-minutes: 30
+    name: "Unit tests: ${{ matrix.unit-tests.name }}"
+    runs-on: ubuntu-22.04
+    needs: [setup]
+    strategy:
+      fail-fast: false
+      # max-parallel: 4
+      matrix:
+        unit-tests:
+          - name: content-services
+            exclude: "insights,core,extensions,process-services,process-services-cloud"
+          - name: core
+            exclude: "insights,content-services,process-services,process-services-cloud"
+          - name: insights and process-services
+            exclude: "core,extensions,content-services,process-services-cloud"
+          - name: process-cloud
+            exclude: "insights,core,extensions,content-services,process-services"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - name: Run unit tests
+        run: |
+          /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
 
-  # lint:
-  #   # long timeout required when cache has to be recreated
-  #   timeout-minutes: 30
-  #   name: "Lint"
-  #   runs-on: ubuntu-22.04
-  #   needs: [setup]
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all tags and branches
-  #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - run: nx affected --target=lint $NX_CALCULATION_FLAGS
+  lint:
+    # long timeout required when cache has to be recreated
+    timeout-minutes: 30
+    name: "Lint"
+    runs-on: ubuntu-22.04
+    needs: [setup]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - run: nx affected --target=lint $NX_CALCULATION_FLAGS
 
-  # build-libs:
-  #   # long timeout required when cache has to be recreated
-  #   timeout-minutes: 30
-  #   name: "Build libs"
-  #   runs-on: ubuntu-22.04
-  #   needs: [setup]
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all tags and branches
-  #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - run: nx affected:build $NX_CALCULATION_FLAGS --prod
-  #     - run: nx build demoshell --configuration production
-  #     - run: rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
-  #     - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
-  #     - uses: ./.github/actions/upload-cache-and-artifacts
+  build-libs:
+    # long timeout required when cache has to be recreated
+    timeout-minutes: 30
+    name: "Build libs"
+    runs-on: ubuntu-22.04
+    needs: [setup]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all tags and branches
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - run: nx affected:build $NX_CALCULATION_FLAGS --prod
+      - run: nx build demoshell --configuration production
+      - run: rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
+      - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
+      - uses: ./.github/actions/upload-cache-and-artifacts
 
-  # e2e-storybook:
-  #   timeout-minutes: 20
-  #   name: "e2e: storybook"
-  #   needs: [build-libs, lint, unit-tests]
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all
-  #     - uses: ./.github/actions/setup
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - name: Process Cloud Storybook Playwright
-  #       run: |
-  #         npx playwright install chromium
-  #         sudo sysctl -w fs.inotify.max_user_watches=524288
-  #         npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-  #     - uses: ./.github/actions/upload-cache-and-artifacts
+  e2e-storybook:
+    timeout-minutes: 20
+    name: "e2e: storybook"
+    needs: [build-libs, lint, unit-tests]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - name: Process Cloud Storybook Playwright
+        run: |
+          npx playwright install chromium
+          sudo sysctl -w fs.inotify.max_user_watches=524288
+          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
+      - uses: ./.github/actions/upload-cache-and-artifacts
 
-  # e2e:
-  #   timeout-minutes: 90
-  #   name: "e2e: ${{ matrix.e2e-test.description }}"
-  #   needs: [build-libs, lint, unit-tests]
-  #   runs-on: ubuntu-22.04
-  #   strategy:
-  #     fail-fast: false
-  #     # max-parallel: 4
-  #     matrix:
-  #       e2e-test:
-  #         - description: "Core"
-  #           test-id: "core"
-  #           folder: "core"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           check-cs-env: "true"
-  #           check-ps-env: "true"
-  #         - description: "Content: Components"
-  #           test-id: "content-services"
-  #           folder: "content-services/components"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Content: Directives"
-  #           test-id: "content-services"
-  #           folder: "content-services/directives"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Content: Document List"
-  #           test-id: "content-services"
-  #           folder: "content-services/document-list"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Content: Metadata"
-  #           test-id: "content-services"
-  #           folder: "content-services/metadata"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Content: Upload and Versioning"
-  #           test-id: "content-services"
-  #           folder: "content-services/upload"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Search"
-  #           test-id: "content-services"
-  #           folder: "search"
-  #           provider: "ECM"
-  #           auth: "BASIC"
-  #           check-cs-env: "true"
-  #         - description: "Process: Form"
-  #           test-id: "process-services"
-  #           folder: "process-services/form"
-  #           provider: "BPM"
-  #           auth: "OAUTH"
-  #           check-ps-env: "true"
-  #           check-external-cs-env: "true"
-  #         - description: "Process: Process"
-  #           test-id: "process-services"
-  #           folder: "process-services/process"
-  #           provider: "BPM"
-  #           auth: "OAUTH"
-  #           check-ps-env: "true"
-  #           check-external-cs-env: "true"
-  #         - description: "Process: Tasks"
-  #           test-id: "process-services"
-  #           folder: "process-services/tasks"
-  #           provider: "BPM"
-  #           auth: "OAUTH"
-  #           check-ps-env: "true"
-  #           check-external-cs-env: "true"
-  #         - description: "Process: Widget"
-  #           test-id: "process-services"
-  #           folder: "process-services/widgets"
-  #           provider: "BPM"
-  #           auth: "OAUTH"
-  #           check-ps-env: "true"
-  #           check-external-cs-env: "true"
-  #         - description: "Process Cloud: Form"
-  #           test-id: "process-services-cloud"
-  #           folder: "process-services-cloud/form-field"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           apa-proxy: true
-  #           check-cs-env: "true"
-  #           check-ps-cloud-env: "true"
-  #         - description: "Process Cloud: People"
-  #           test-id: "process-services-cloud"
-  #           folder: "process-services-cloud/people"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           apa-proxy: true
-  #           check-cs-env: "true"
-  #           check-ps-cloud-env: "true"
-  #         - description: "Process Cloud: Process"
-  #           test-id: "process-services-cloud"
-  #           folder: "process-services-cloud/process"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           apa-proxy: true
-  #           check-cs-env: "true"
-  #           check-ps-cloud-env: "true"
-  #         - description: "Process Cloud: Start Task"
-  #           test-id: "process-services-cloud"
-  #           folder: "process-services-cloud/start-task"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           apa-proxy: true
-  #           check-cs-env: "true"
-  #           check-ps-cloud-env: "true"
-  #         - description: "Process Cloud: Tasks List"
-  #           test-id: "process-services-cloud"
-  #           folder: "process-services-cloud/task-list"
-  #           provider: "ALL"
-  #           auth: "OAUTH"
-  #           apa-proxy: true
-  #           check-cs-env: "true"
-  #           check-ps-cloud-env: "true"
+  e2e:
+    timeout-minutes: 90
+    name: "e2e: ${{ matrix.e2e-test.description }}"
+    needs: [build-libs, lint, unit-tests]
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      # max-parallel: 4
+      matrix:
+        e2e-test:
+          - description: "Core"
+            test-id: "core"
+            folder: "core"
+            provider: "ALL"
+            auth: "OAUTH"
+            check-cs-env: "true"
+            check-ps-env: "true"
+          - description: "Content: Components"
+            test-id: "content-services"
+            folder: "content-services/components"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Content: Directives"
+            test-id: "content-services"
+            folder: "content-services/directives"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Content: Document List"
+            test-id: "content-services"
+            folder: "content-services/document-list"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Content: Metadata"
+            test-id: "content-services"
+            folder: "content-services/metadata"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Content: Upload and Versioning"
+            test-id: "content-services"
+            folder: "content-services/upload"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Search"
+            test-id: "content-services"
+            folder: "search"
+            provider: "ECM"
+            auth: "BASIC"
+            check-cs-env: "true"
+          - description: "Process: Form"
+            test-id: "process-services"
+            folder: "process-services/form"
+            provider: "BPM"
+            auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"
+          - description: "Process: Process"
+            test-id: "process-services"
+            folder: "process-services/process"
+            provider: "BPM"
+            auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"
+          - description: "Process: Tasks"
+            test-id: "process-services"
+            folder: "process-services/tasks"
+            provider: "BPM"
+            auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"
+          - description: "Process: Widget"
+            test-id: "process-services"
+            folder: "process-services/widgets"
+            provider: "BPM"
+            auth: "OAUTH"
+            check-ps-env: "true"
+            check-external-cs-env: "true"
+          - description: "Process Cloud: Form"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/form-field"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
+          - description: "Process Cloud: People"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/people"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
+          - description: "Process Cloud: Process"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/process"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
+          - description: "Process Cloud: Start Task"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/start-task"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
+          - description: "Process Cloud: Tasks List"
+            test-id: "process-services-cloud"
+            folder: "process-services-cloud/task-list"
+            provider: "ALL"
+            auth: "OAUTH"
+            apa-proxy: true
+            check-cs-env: "true"
+            check-ps-cloud-env: "true"
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for all
-  #     - uses: ./.github/actions/setup
-  #       with:
-  #         enable-cache: "true"
-  #         enable-node-modules-cache: "true"
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - name: setup chrome
-  #       uses: ./.github/actions/setup-chrome
-  #     - name: e2e
-  #       uses: ./.github/actions/e2e
-  #       with:
-  #         e2e-test-id: ${{ matrix.e2e-test.test-id }}
-  #         e2e-test-folder: ${{ matrix.e2e-test.folder }}
-  #         e2e-test-provider: ${{ matrix.e2e-test.provider }}
-  #         e2e-test-auth: ${{ matrix.e2e-test.auth }}
-  #         check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
-  #         check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
-  #         check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
-  #         check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
-  #         apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all
+      - uses: ./.github/actions/setup
+        with:
+          enable-cache: "true"
+          enable-node-modules-cache: "true"
+      - uses: ./.github/actions/download-cache-and-artifacts
+      - name: setup chrome
+        uses: ./.github/actions/setup-chrome
+      - name: e2e
+        uses: ./.github/actions/e2e
+        with:
+          e2e-test-id: ${{ matrix.e2e-test.test-id }}
+          e2e-test-folder: ${{ matrix.e2e-test.folder }}
+          e2e-test-provider: ${{ matrix.e2e-test.provider }}
+          e2e-test-auth: ${{ matrix.e2e-test.auth }}
+          check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
+          check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
+          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
+          check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
+          apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
