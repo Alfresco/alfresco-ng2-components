@@ -1,8 +1,6 @@
 <mat-toolbar
     [color]="color"
-    [style.background-color]="color"
-    role="heading"
-    aria-level="1">
+    [style.background-color]="color">
     <button
         *ngIf="showSidenavToggle && position === 'start'"
         id="adf-sidebar-toggle-start"
@@ -26,7 +24,7 @@
         />
     </a>
 
-    <span
+    <h1
         role="link"
         [attr.aria-label]="title | translate"
         [routerLink]="redirectUrl"
@@ -34,7 +32,7 @@
         fxShow
         fxHide.lt-sm="true"
         class="adf-app-title"
-        >{{ title }}</span>
+        >{{ title }}</h1>
     <ng-content></ng-content>
 
     <button
