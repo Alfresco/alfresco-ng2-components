@@ -82,7 +82,7 @@ jobs:
         uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: mock check
+      - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
