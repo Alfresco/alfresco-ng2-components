@@ -56,6 +56,7 @@ import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
 import { DirectionalityConfigService } from './common/services/directionality-config.service';
+import { SearchTextModule } from './search-text/search-text-input.module';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
@@ -96,6 +97,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         IconModule,
         SortingPickerModule,
         NotificationHistoryModule,
+        SearchTextModule,
         BlankPageModule,
         LegacyApiClientModule,
         AlfrescoJsClientsModule,
@@ -137,6 +139,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         SortingPickerModule,
         IconModule,
         NotificationHistoryModule,
+        SearchTextModule,
         BlankPageModule,
         RichTextEditorModule
     ]
