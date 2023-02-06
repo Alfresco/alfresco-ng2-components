@@ -17,16 +17,5 @@
 
 export * from './alfresco-api.service';
 export * from './content.service';
-export * from './renditions.service';
-export * from './upload.service';
-export * from './deleted-nodes-api.service';
-export * from './nodes-api.service';
 export * from './people-content.service';
 export * from './people-process.service';
-export * from './discovery-api.service';
-export * from './download-zip.service';
-export * from './download.service';
-export * from './bpm-user.service';
-export * from './ecm-user.service';
-export * from './user-access.service';
-export * from './user-info-resolver.service';

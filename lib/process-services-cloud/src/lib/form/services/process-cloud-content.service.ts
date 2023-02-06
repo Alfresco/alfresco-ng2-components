@@ -22,7 +22,7 @@ import {
     AlfrescoApiService,
     LogService,
     ContentService,
-    DownloadService
+    DownloadService, NodesApiService
 } from '@alfresco/adf-core';
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
@@ -46,7 +46,7 @@ export class ProcessCloudContentService {
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
-        public contentService: ContentService,
+        private nodesApiService: NodesApiService,
         private downloadService: DownloadService
     ) {
     }
@@ -68,11 +68,11 @@ export class ProcessCloudContentService {
     }
 
     getRawContentNode(nodeId: string): Observable<Blob> {
-        return this.contentService.getNodeContent(nodeId);
+        return this.nodesApiService.getNodeContent(nodeId);
     }
 
     downloadNodeContent(blob: Blob, fileName: string): void {
-        this.contentService.downloadBlob(blob, fileName);
+        this.downloadService.downloadBlob(blob, fileName);
     }
 
     async downloadFile(nodeId: string) {

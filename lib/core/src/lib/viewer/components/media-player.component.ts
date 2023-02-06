@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { ContentService } from '../../services/content.service';
 import { Track } from '../models/viewer.model';
+import { UrlService } from '../../common/services/url.service';
 
 @Component({
     selector: 'adf-media-player',
@@ -47,14 +47,14 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private contentService: ContentService) {
+    constructor(private urlService: UrlService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile && blobFile.currentValue) {
-            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
+            this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }
 

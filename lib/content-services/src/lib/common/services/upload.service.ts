@@ -18,16 +18,14 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Minimatch } from 'minimatch';
 import { Subject } from 'rxjs';
-import { AppConfigService } from '../app-config/app-config.service';
 import {
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
     FileUploadErrorEvent,
-    FileUploadEvent
-} from '../events/file.event';
-import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { DiscoveryApiService } from './discovery-api.service';
+    FileUploadEvent,
+    FileModel, FileUploadProgress, FileUploadStatus,
+    AppConfigService, AlfrescoApiService, DiscoveryApiService
+} from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
 import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 
@@ -85,7 +83,7 @@ export class UploadService {
         private discoveryApiService: DiscoveryApiService) {
 
         this.discoveryApiService.ecmProductInfo$.pipe(filter(info => !!info))
-            .subscribe(({ status }) => {
+            .subscribe(({status}) => {
                 this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
             });
     }
@@ -238,7 +236,7 @@ export class UploadService {
         if (file.id) {
             return this.nodesApi.updateNodeContent(file.id, file.file as any, opts);
         } else {
-            const nodeBody = { ... file.options };
+            const nodeBody = {...file.options};
             delete nodeBody['versioningEnabled'];
 
             return this.uploadApi.uploadFile(
@@ -275,13 +273,13 @@ export class UploadService {
             .on('abort', () => {
                 this.onUploadAborted(file);
                 if (successEmitter) {
-                    successEmitter.emit({ value: 'File aborted' });
+                    successEmitter.emit({value: 'File aborted'});
                 }
             })
             .on('error', (err) => {
                 this.onUploadError(file, err);
                 if (errorEmitter) {
-                    errorEmitter.emit({ value: 'Error file uploaded' });
+                    errorEmitter.emit({value: 'Error file uploaded'});
                 }
             })
             .on('success', (data) => {
@@ -293,12 +291,12 @@ export class UploadService {
                         this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
                     }
                     if (successEmitter) {
-                        successEmitter.emit({ value: 'File deleted' });
+                        successEmitter.emit({value: 'File deleted'});
                     }
                 } else {
                     this.onUploadComplete(file, data);
                     if (successEmitter) {
-                        successEmitter.emit({ value: data });
+                        successEmitter.emit({value: data});
                     }
                 }
             })
@@ -416,7 +414,7 @@ export class UploadService {
     }
 
     private deleteAbortedNode(nodeId: string) {
-        this.nodesApi.deleteNode(nodeId, { permanent: true })
+        this.nodesApi.deleteNode(nodeId, {permanent: true})
             .then(() => (this.abortedFile = undefined));
     }
 

@@ -18,5 +18,9 @@
 export * from './services/favorites-api.service';
 export * from './services/card-view-content-update.service';
 export * from './services/sites.service';
+export * from './services/rendition.service';
+export * from './services/upload.service';
+export * from './services/nodes-api.service';
+export * from './services/discovery-api.service';
 
-export * from './interfaces/search-configuration.interface';
+export * from './interface/search-configuration.interface';

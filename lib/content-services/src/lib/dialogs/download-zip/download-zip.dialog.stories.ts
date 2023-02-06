@@ -16,22 +16,17 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../../testing/core.story.module';
+import { AlfrescoApiService, ContentService, NodesApiService } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
-import {
-    AlfrescoApiService,
-    ContentService,
-    DownloadZipService,
-    NodesApiService
-} from '../../services';
 import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
 import {
     AlfrescoApiServiceMock,
     ContentApiMock,
     DownloadZipMockService,
     NodesApiMock
-} from '../../mock/download-zip-service.mock';
+} from './mock/download-zip-service.mock';
 import { DownloadZipDialogModule } from './download-zip.dialog.module';
+import { DownloadZipService } from './service/download-zip.service';
 
 export default {
     component: DownloadZipDialogStorybookComponent,
@@ -39,7 +34,6 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [
-                CoreStoryModule,
                 DownloadZipDialogModule,
                 MatButtonModule
             ],

@@ -28,6 +28,7 @@ import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { LibraryDialogComponent } from './library/library.dialog';
 import { ContentDirectiveModule } from '../directives';
+import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { ContentDirectiveModule } from '../directives';
         ReactiveFormsModule,
         MatMomentDatetimeModule,
         MatDatetimepickerModule,
-        ContentDirectiveModule
+        ContentDirectiveModule,
+        DownloadZipDialogModule
     ],
     declarations: [
         FolderDialogComponent,

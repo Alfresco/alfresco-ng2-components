@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { PipeModule } from '../../pipes/pipe.module';
+import { PipeModule } from '@alfresco/adf-core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';

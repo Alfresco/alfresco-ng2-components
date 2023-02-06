@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Discovery Api service](../../../lib/core/src/lib/services/discovery-api.service.ts "Defined in discovery-api.service.ts")
+# [Discovery Api service](lib/content-services/src/lib/common/services/discovery-api.service.ts "Defined in discovery-api.service.ts")
 
 Gets version and license information for Process Services and Content Services.
 

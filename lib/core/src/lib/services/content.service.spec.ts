@@ -82,21 +82,6 @@ describe('ContentService', () => {
         });
     });
 
-    it('should return a valid thumbnail URL', (done) => {
-        authService.login('fake-username', 'fake-password').subscribe(() => {
-            expect(contentService.getDocumentThumbnailUrl(node))
-                .toContain('/ecm/alfresco/api/-default-/public/alfresco' +
-                    '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=fake-post-ticket');
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 201,
-            contentType: 'application/json',
-            responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-        });
-    });
-
     describe('AllowableOperations', () => {
 
         it('should hasAllowableOperations be false if allowableOperation is not present in the node', () => {

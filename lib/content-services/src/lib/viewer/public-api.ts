@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './services/rendition-viewer.service';
 export * from './components/alfresco-viewer.component';
 
 export * from './alfresco-viewer.module';

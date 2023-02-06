@@ -135,7 +135,7 @@ for more information about installing and using the source code.
 | [Highlight directive](core/directives/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/src/lib/directives/highlight.directive.ts) |
 | [Infinite Select Scroll directive](core/directives/infinite-select-scroll.directive.md) | Load more options to select component if API returns more items | [Source](../lib/core/src/lib/directives/infinite-select-scroll.directive.ts) |
 | [Logout directive](core/directives/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/src/lib/directives/logout.directive.ts) |
-| [Node Download directive](core/directives/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/core/src/lib/directives/node-download.directive.ts) |
+| [Node Download directive](core/directives/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](lib/content-services/src/lib/directives/node-download.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/src/lib/directives/upload.directive.ts) |
 
 ### Dialogs
@@ -207,8 +207,8 @@ for more information about installing and using the source code.
 | [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
 | [DataTable service](core/services/datatable.service.md) |  | [Source](<>) |
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/src/lib/services/deleted-nodes-api.service.ts) |
-| [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/src/lib/services/discovery-api.service.ts) |
-| [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/src/lib/services/download-zip.service.ts) |
+| [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](lib/content-services/src/lib/common/services/discovery-api.service.ts) |
+| [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](lib/content-services/src/lib/dialogs/download-zip/service/download-zip.service.ts) |
 | [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/ecm-user.service.ts) |
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](lib/content-services/src/lib/common/services/favorites-api.service.ts) |
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
@@ -220,7 +220,7 @@ for more information about installing and using the source code.
 | [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/src/lib/auth/services/jwt-helper.service.ts) |
 | [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/src/lib/common/services/log.service.ts) |
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/src/lib/services/login-dialog.service.ts) |
-| [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/src/lib/services/nodes-api.service.ts) |
+| [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](lib/content-services/src/lib/common/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](lib/core/src/lib/common/services/page-title.service.ts) |
 | [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/people-content.service.ts) |
@@ -233,8 +233,8 @@ for more information about installing and using the source code.
 | [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/services/storage.service.ts) |
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](lib/core/src/lib/common/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](lib/core/src/lib/translation/translation.service.ts) |
-| [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/core/src/lib/services/upload.service.ts) |
-| [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/src/lib/services/user-access.service.ts) |
+| [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](lib/content-services/src/lib/common/services/upload.service.ts) |
+| [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](lib/core/src/lib/auth/services/user-access.service.ts) |
 | [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/common/services/user-preferences.service.ts) |
 
 ### Widgets

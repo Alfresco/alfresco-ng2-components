@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Upload Service](../../../lib/core/src/lib/services/upload.service.ts "Defined in upload.service.ts")
+# [Upload Service](lib/content-services/src/lib/common/services/upload.service.ts "Defined in upload.service.ts")
 
 Provides access to various APIs related to file upload features.
 

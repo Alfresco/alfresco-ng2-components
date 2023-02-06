@@ -18,7 +18,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { zipNode, downloadEntry } from '../../mock/download-zip-data.mock';
+import { zipNode, downloadEntry } from './mock/download-zip-data.mock';
 
 @Component({
     selector: 'adf-download-zip-dialog-storybook',

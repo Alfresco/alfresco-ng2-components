@@ -77,10 +77,10 @@ export class PeopleContentService {
      */
     getPerson(personId: string): Observable<EcmUserModel> {
         return from(this.peopleApi.getPerson(personId))
-        .pipe(
-            map((personEntry) => new EcmUserModel(personEntry.entry)),
-            tap( user => this.currentUser = user),
-            catchError((error) => this.handleError(error)));
+            .pipe(
+                map((personEntry) => new EcmUserModel(personEntry.entry)),
+                tap(user => this.currentUser = user),
+                catchError((error) => this.handleError(error)));
     }
 
     getCurrentPerson(): Observable<EcmUserModel> {
@@ -99,11 +99,11 @@ export class PeopleContentService {
         return this.getPerson('-me-');
     }
 
-     /**
-      * Used to know if the current user has the admin capability
-      *
-      * @returns true or false
-      */
+    /**
+     * Used to know if the current user has the admin capability
+     *
+     * @returns true or false
+     */
     isCurrentUserAdmin(): boolean {
         return this.currentUser?.isAdmin() ?? false;
     }
@@ -122,7 +122,7 @@ export class PeopleContentService {
      * @returns Response containing pagination and list of entries
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const requestQueryParams = { skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems };
+        const requestQueryParams = {skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems};
         const orderBy = this.buildOrderArray(requestQuery?.sorting);
         if (orderBy.length) {
             requestQueryParams['orderBy'] = orderBy;
@@ -173,7 +173,7 @@ export class PeopleContentService {
      * @param avatarId Target avatar
      * @returns Image URL
      */
-     getUserProfileImage(avatarId: string): string {
+    getUserProfileImage(avatarId: string): string {
         return this.contentService.getContentUrl(avatarId);
     }
 

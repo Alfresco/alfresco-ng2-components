@@ -24,9 +24,10 @@ import { catchError, combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/ope
 import {
     TaskActionsApi,
     UsersApi,
-    ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi
+    ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi, UserProfileApi
 } from '@alfresco/js-api';
 import { GroupModel } from '../form';
+import { BpmUserModel } from "../models";
 
 @Injectable({
     providedIn: 'root'
@@ -51,8 +52,36 @@ export class PeopleProcessService {
         return this._groupsApi;
     }
 
+    private _profileApi: UserProfileApi;
+    get profileApi(): UserProfileApi {
+        this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
+        return this._profileApi;
+    }
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    /**
+     * Gets information about the current user.
+     *
+     * @returns User information object
+     */
+    getCurrentUserInfo(): Observable<BpmUserModel> {
+        return from(this.profileApi.getProfile())
+            .pipe(
+                map((userRepresentation) => new BpmUserModel(userRepresentation)),
+                catchError((err) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Gets the current user's profile image as a URL.
+     *
+     * @returns URL string
+     */
+    getCurrentUserProfileImage(): string {
+        return this.profileApi.getProfilePictureUrl();
     }
 
     /**

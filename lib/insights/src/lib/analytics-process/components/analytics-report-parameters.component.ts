@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, LogService } from '@alfresco/adf-core';
+import { DownloadService, LogService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -106,7 +106,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     constructor(private analyticsService: AnalyticsService,
                 private formBuilder: UntypedFormBuilder,
                 private logService: LogService,
-                private contentService: ContentService,
+                private downloadService: DownloadService,
                 private dialog: MatDialog) {
     }
 
@@ -296,7 +296,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
                 const blob: Blob = new Blob([data], { type: 'text/csv' });
-                this.contentService.downloadBlob(blob, paramQuery.reportName + '.csv');
+                this.downloadService.downloadBlob(blob, paramQuery.reportName + '.csv');
             });
     }
 

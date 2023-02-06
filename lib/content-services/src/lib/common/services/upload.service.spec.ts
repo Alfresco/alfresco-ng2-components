@@ -17,16 +17,10 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadStatus } from '../models/file.model';
-import { AppConfigModule } from '../app-config/app-config.module';
+import { FileModel, FileUploadStatus, AppConfigModule, DiscoveryApiService, AppConfigService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
-import { AppConfigService } from '../app-config/app-config.service';
-
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
-import { DiscoveryApiService } from './discovery-api.service';
 import { BehaviorSubject } from 'rxjs';
 
 declare let jasmine: any;

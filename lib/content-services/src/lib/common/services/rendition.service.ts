@@ -22,7 +22,7 @@ import { AlfrescoApiService , LogService, Track,TranslationService, ViewUtilServ
 @Injectable({
     providedIn: 'root'
 })
-export class RenditionViewerService {
+export class RenditionService {
 
     static TARGET = '_new';
 
@@ -82,8 +82,8 @@ export class RenditionViewerService {
 
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
-        return (renditionExists && type !== RenditionViewerService.ContentGroup.IMAGE) ?
-            this.contentApi.getRenditionUrl(nodeId, RenditionViewerService.ContentGroup.PDF) :
+        return (renditionExists && type !== RenditionService.ContentGroup.IMAGE) ?
+            this.contentApi.getRenditionUrl(nodeId, RenditionService.ContentGroup.PDF) :
             this.contentApi.getContentUrl(nodeId, false);
     }
 
@@ -230,20 +230,20 @@ export class RenditionViewerService {
     }
 
     async generateMediaTracksRendition(nodeId: string): Promise<Track[]> {
-        return this.isRenditionAvailable(nodeId, RenditionViewerService.SUBTITLES_RENDITION_NAME)
+        return this.isRenditionAvailable(nodeId, RenditionService.SUBTITLES_RENDITION_NAME)
             .then((value) => {
                 const tracks = [];
                 if (value) {
                     tracks.push({
                         kind: 'subtitles',
-                        src: this.contentApi.getRenditionUrl(nodeId, RenditionViewerService.SUBTITLES_RENDITION_NAME),
+                        src: this.contentApi.getRenditionUrl(nodeId, RenditionService.SUBTITLES_RENDITION_NAME),
                         label: this.translateService.instant('ADF_VIEWER.SUBTITLES')
                     });
                 }
                 return tracks;
             })
             .catch((err) => {
-                this.logService.error('Error while retrieving ' + RenditionViewerService.SUBTITLES_RENDITION_NAME + ' rendition');
+                this.logService.error('Error while retrieving ' + RenditionService.SUBTITLES_RENDITION_NAME + ' rendition');
                 this.logService.error(err);
                 return [];
             });
@@ -262,10 +262,10 @@ export class RenditionViewerService {
      * This URL should be one that can be rendered in the browser, for example PDF, Image, or Text
      */
     printFile(url: string, type: string): void {
-        const pwa = window.open(url, RenditionViewerService.TARGET);
+        const pwa = window.open(url, RenditionService.TARGET);
         if (pwa) {
             // Because of the way chrome focus and close image window vs. pdf preview window
-            if (type === RenditionViewerService.ContentGroup.IMAGE) {
+            if (type === RenditionService.ContentGroup.IMAGE) {
                 pwa.onfocus = () => {
                     setTimeout(() => {
                         pwa.close();
@@ -290,12 +290,12 @@ export class RenditionViewerService {
         const nodeId = objectId;
         const type: string = this.viewUtilsService.getViewerTypeByMimeType(mimeType);
 
-        this.getRendition(nodeId, RenditionViewerService.ContentGroup.PDF)
+        this.getRendition(nodeId, RenditionService.ContentGroup.PDF)
             .then((value) => {
                 const url: string = this.getRenditionUrl(nodeId, type, (!!value));
-                const printType = (type === RenditionViewerService.ContentGroup.PDF
-                    || type === RenditionViewerService.ContentGroup.TEXT)
-                    ? RenditionViewerService.ContentGroup.PDF : type;
+                const printType = (type === RenditionService.ContentGroup.PDF
+                    || type === RenditionService.ContentGroup.TEXT)
+                    ? RenditionService.ContentGroup.PDF : type;
                 this.printFile(url, printType);
             })
             .catch((err) => {

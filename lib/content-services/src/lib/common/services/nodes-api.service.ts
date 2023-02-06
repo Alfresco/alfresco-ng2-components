@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
 import { Subject, from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
+import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
+import { UserPreferencesService } from '../../../../../core/src/lib/common/services/user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
-import { NodeMetadata } from '../models/node-metadata.model';
+import { NodeMetadata } from '../../../../../core/src/lib/models/node-metadata.model';
 
 @Injectable({
     providedIn: 'root'
@@ -196,6 +196,19 @@ export class NodesApiService {
         }
 
         return this.createNodeInsideRoot(name || this.generateUuid(), nodeType, properties, path);
+    }
+
+    /**
+     * Gets content for the given node.
+     *
+     * @param nodeId ID of the target node
+     * @returns Content data
+     */
+    getNodeContent(nodeId: string): Observable<any> {
+        return from(this.nodesApi.getNodeContent(nodeId))
+            .pipe(
+                catchError((err) => throwError(err))
+            );
     }
 
     /**

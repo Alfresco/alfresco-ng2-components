@@ -16,7 +16,6 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { EcmUserService } from '../services';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { CommentsModule } from './comments.module';
@@ -31,7 +30,7 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
             providers: [
-                { provide: EcmUserService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
+                { provide: CommentsService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
         })

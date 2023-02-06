@@ -29,6 +29,7 @@ import { LibraryMembershipDirective } from './library-membership.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
+import { NodeDownloadDirective } from './node-download.directive';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { NodeRestoreDirective } from './node-restore.directive';
         LibraryMembershipDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        NodeRestoreDirective
+        NodeRestoreDirective,
+        NodeDownloadDirective
     ],
     exports: [
         NodeLockDirective,
@@ -57,7 +59,8 @@ import { NodeRestoreDirective } from './node-restore.directive';
         LibraryMembershipDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        NodeRestoreDirective
+        NodeRestoreDirective,
+        NodeDownloadDirective
     ]
 })
 export class ContentDirectiveModule {

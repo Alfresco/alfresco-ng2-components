@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, LogService, ContentLinkModel, FormService } from '@alfresco/adf-core';
+import { UrlService, LogService, ContentLinkModel, FormService, DownloadService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -56,7 +56,8 @@ export class ContentWidgetComponent implements OnChanges {
 
     constructor(protected formService: FormService,
                 private logService: LogService,
-                private contentService: ContentService,
+                private downloadService: DownloadService,
+                private urlService: UrlService,
                 private processContentService: ProcessContentService) {
     }
 
@@ -95,7 +96,7 @@ export class ContentWidgetComponent implements OnChanges {
             if (observable) {
                 observable.subscribe(
                     (response: Blob) => {
-                        this.content.thumbnailUrl = this.contentService.createTrustedUrl(response);
+                        this.content.thumbnailUrl = this.urlService.createTrustedUrl(response);
                         this.thumbnailLoaded.emit(this.content.thumbnailUrl);
                     },
                     (error) => {
@@ -130,7 +131,7 @@ export class ContentWidgetComponent implements OnChanges {
      */
     download(content: ContentLinkModel): void {
         this.processContentService.getFileRawContent(content.id).subscribe(
-            (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
+            (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (error) => {
                 this.error.emit(error);
             }

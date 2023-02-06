@@ -23,15 +23,15 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserAccessService } from '../../services/user-access.service';
-import { UserContentAccessService } from '../../services/user-content-access.service';
+import { UserAccessService } from '../services/user-access.service';
+import { PeopleContentService } from '../../services/people-content.service';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
-    let userContentAccessService: UserContentAccessService;
+    let peopleContentService: PeopleContentService;
     let userAccessService: UserAccessService;
 
     setupTestBed({
@@ -46,7 +46,7 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
-        userContentAccessService = TestBed.inject(UserContentAccessService);
+        peopleContentService = TestBed.inject(PeopleContentService);
         userAccessService = TestBed.inject(UserAccessService);
         userAccessService.resetAccess();
     });
@@ -181,7 +181,7 @@ describe('Auth Guard SSO role service', () => {
     describe('Content Admin', () => {
 
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
-            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(true));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(true);
 
             spyUserAccess([], {});
 
@@ -192,7 +192,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should not give access to a content section (ALFRESCO_ADMINISTRATORS) when the user does not have content admin capability', async () => {
-            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(false);
 
             spyUserAccess([], {});
 
@@ -203,7 +203,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
-            const isCurrentAdminSpy = spyOn(userContentAccessService, 'isCurrentUserAdmin').and.stub();
+            const isCurrentAdminSpy = spyOn(peopleContentService, 'isCurrentUserAdmin').and.stub();
             spyUserAccess([], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -235,7 +235,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should canActivate be true when the user has none of the excluded role and is not a content admin', async () => {
-            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(false);
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -245,7 +245,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should canActivate be false if the user is a content admin but has one of the excluded roles', async () => {
-            spyOn(userContentAccessService, 'isCurrentUserAdmin').and.returnValue(Promise.resolve(false));
+            spyOn(peopleContentService, 'isCurrentUserAdmin').and.returnValue(false);
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();

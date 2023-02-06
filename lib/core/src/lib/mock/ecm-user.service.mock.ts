@@ -15,19 +15,7 @@
  * limitations under the License.
  */
 
-import { EcmCompanyModel } from '../models/ecm-company.model';
 import { PersonEntry, Person, PersonPaging } from '@alfresco/js-api';
-
-export const fakeEcmCompany: EcmCompanyModel = {
-    organization: 'company-fake-name',
-    address1: 'fake-address-1',
-    address2: 'fake-address-2',
-    address3: 'fake-address-3',
-    postcode: 'fAk1',
-    telephone: '00000000',
-    fax: '11111111',
-    email: 'fakeCompany@fake.com'
-};
 
 export const fakeEcmUser = {
     id: 'fake-id',

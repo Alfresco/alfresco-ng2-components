@@ -29,6 +29,7 @@ export * from './services/identity-user.service';
 export * from './services/identity-group.service';
 export * from './services/jwt-helper.service';
 export * from './services/oauth2.service';
+export * from './services/user-access.service';
 
 export * from './interfaces/identity-user.service.interface';
 export * from './interfaces/identity-group.interface';

@@ -15,8 +15,5 @@
  * limitations under the License.
  */
 
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
 export * from './edit-json/edit-json.dialog';
 export * from './edit-json/edit-json.dialog.module';

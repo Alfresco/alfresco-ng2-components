@@ -56,7 +56,7 @@ import {
     VersionEntry,
     VersionsApi
 } from '@alfresco/js-api';
-import { RenditionViewerService } from '../services/rendition-viewer.service';
+import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -231,14 +231,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(private apiService: AlfrescoApiService,
                 private nodesApiService: NodesApiService,
-                private renditionViewerService: RenditionViewerService,
+                private renditionService: RenditionService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private contentService: ContentService,
                 private uploadService: UploadService,
                 public dialog: MatDialog,
                 private cdr: ChangeDetectorRef) {
-        renditionViewerService.maxRetries = this.maxRetries;
+        renditionService.maxRetries = this.maxRetries;
 
     }
 
@@ -320,16 +320,16 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (viewerType === 'unknown') {
             let nodeRendition;
             if (versionData) {
-                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id, versionData.id);
+                nodeRendition = await this.renditionService.getNodeRendition(nodeData.id, versionData.id);
             } else {
-                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id);
+                nodeRendition = await this.renditionService.getNodeRendition(nodeData.id);
             }
             if(nodeRendition){
                 urlFileContent = nodeRendition.url;
                 mimeType = nodeRendition.mimeType;
             }
         } else if (viewerType === 'media') {
-            this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
+            this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
         }
 
         this.mimeType = mimeType;
@@ -394,7 +394,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     onPrintContent(event: MouseEvent) {
         if (this.allowPrint) {
             if (!event.defaultPrevented) {
-                this.renditionViewerService.printFileGeneric(this.nodeId, this.mimeType);
+                this.renditionService.printFileGeneric(this.nodeId, this.mimeType);
             }
         }
     }

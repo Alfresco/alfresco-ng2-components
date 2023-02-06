@@ -30,7 +30,6 @@ import { Observable, Subject } from 'rxjs';
 import {
     NodesApiService,
     ContentService,
-    RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
 import { SharedLinksApiService } from './services/shared-links-api.service';
@@ -39,6 +38,7 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
+import { RenditionService } from '../common/services/rendition.service';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -79,7 +79,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
-        private renditionService: RenditionsService,
+        private renditionService: RenditionService,
         @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
     ) {}
 
@@ -187,7 +187,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.isDisabled = true;
 
         this.sharedLinksApiService.createSharedLinks(nodeId).subscribe(
-            (sharedLink: SharedLinkEntry) => {
+            async (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
                     if (this.data.node.entry.properties) {
@@ -199,9 +199,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     }
                     this.isDisabled = false;
                     this.isFileShared = true;
-                    this.renditionService
-                        .generateRenditionForNode(this.data.node.entry.id)
-                        .subscribe(() => {});
+                    await this.renditionService.getNodeRendition(this.data.node.entry.id);
 
                     this.updateForm();
                 }

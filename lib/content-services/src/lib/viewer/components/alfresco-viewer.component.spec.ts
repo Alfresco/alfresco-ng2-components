@@ -26,7 +26,7 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
-import { AlfrescoViewerComponent, RenditionViewerService } from '@alfresco/adf-content-services';
+import { AlfrescoViewerComponent, RenditionService } from '@alfresco/adf-content-services';
 import {
     NodesApiService,
     CoreTestingModule,
@@ -145,7 +145,7 @@ describe('AlfrescoViewerComponent', () => {
     let dialog: MatDialog;
     let uploadService: UploadService;
     let extensionService: AppExtensionService;
-    let renditionService: RenditionViewerService;
+    let renditionService: RenditionService;
     let viewUtilService: ViewUtilService;
 
     setupTestBed({
@@ -165,7 +165,7 @@ describe('AlfrescoViewerComponent', () => {
         ],
         providers: [
             {
-                provide: RenditionViewerService, useValue: {
+                provide: RenditionService, useValue: {
                     getNodeRendition: () => throwError('thrown'),
                     generateMediaTracksRendition: () => {}
                 }
@@ -184,7 +184,7 @@ describe('AlfrescoViewerComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
         dialog = TestBed.inject(MatDialog);
         extensionService = TestBed.inject(AppExtensionService);
-        renditionService = TestBed.inject(RenditionViewerService);
+        renditionService = TestBed.inject(RenditionService);
         viewUtilService = TestBed.inject(ViewUtilService);
     });
 

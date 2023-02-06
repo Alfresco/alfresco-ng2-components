@@ -20,9 +20,7 @@ import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
 import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 
-import { BpmProductVersionModel } from '../models/product-version.model';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from '../auth/services/authentication.service';
+import { BpmProductVersionModel, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
