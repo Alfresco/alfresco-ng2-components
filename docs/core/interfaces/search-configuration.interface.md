@@ -4,7 +4,7 @@ Added: v2.1.0
 Status: Active
 ---
 
-# [Search Configuration interface](lib/content-services/src/lib/common/interface/search-configuration.interface.ts "Defined in search-configuration.interface.ts")
+# [Search Configuration interface](../../../lib/core/src/lib/common/interface/search-configuration.interface.ts "Defined in search-configuration.interface.ts")
 
 Provides fine control of parameters to a search.
 

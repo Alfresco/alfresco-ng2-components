@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER, SearchTextModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -47,7 +47,6 @@ import { VersionCompatibilityService } from './version-compatibility/version-com
 import { ContentPipeModule } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
-import { SearchTextModule } from './search-text/search-text-input.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 
 @NgModule({

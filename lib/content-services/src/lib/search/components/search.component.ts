@@ -16,7 +16,6 @@
  */
 
 import { SearchService } from '../services/search.service';
-import { SearchComponentInterface } from '../../common/interface/search-configuration.interface';
 import {
     AfterContentInit,
     Component,
@@ -34,6 +33,7 @@ import {
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { SearchComponentInterface } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search',
