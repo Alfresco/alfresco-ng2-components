@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, SearchTextModule } from '@alfresco/adf-core';
 
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
@@ -47,7 +47,6 @@ import { SearchFacetFieldComponent } from './components/search-facet-field/searc
 import { SearchWidgetChipComponent } from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
 import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
 import { ResetSearchDirective } from './components/reset-search.directive';
-import { SearchTextModule } from '../search-text/search-text-input.module';
 
 @NgModule({
     imports: [

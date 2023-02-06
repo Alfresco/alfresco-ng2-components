@@ -15,14 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { QueryBody } from '@alfresco/js-api';
-import { SearchConfigurationInterface } from '../../common/interfaces/search-configuration.interface';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class SearchConfigurationService implements SearchConfigurationInterface {
+export interface SearchConfigurationInterface {
 
     /**
      * Generates a QueryBody object with custom search parameters.
@@ -32,21 +27,6 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
      * @param skipCount The offset of the start of the page within the results list
      * @returns Query body defined by the parameters
      */
-    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
-        const defaultQueryBody: QueryBody = {
-            query: {
-                query: searchTerm ? `'${searchTerm}*' OR name:'${searchTerm}*'` : searchTerm
-            },
-            include: ['path', 'allowableOperations'],
-            paging: {
-                maxItems: maxResults,
-                skipCount
-            },
-            filterQueries: [
-                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
-                { query: 'NOT cm:creator:System' }]
-        };
+    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody;
 
-        return defaultQueryBody;
-    }
 }

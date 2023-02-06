@@ -28,6 +28,8 @@ export * from './services/sort-by-category.service';
 
 export * from './models/log-levels.model';
 
+export * from './interface/search-component.interface';
+
 export * from './mock/app-config.service.mock';
 
 export * from './utils';
