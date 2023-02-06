@@ -30,12 +30,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {
-    AlfrescoApiService, ContentService,
-    FileModel,
+    AlfrescoApiService,
     LogService,
-    NodesApiService,
     Track,
-    UploadService,
     ViewerComponent,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
@@ -59,6 +56,10 @@ import {
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, takeUntil } from 'rxjs/operators';
+import { ContentService } from '../../common/services/content.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel } from '../../common/models/file.model';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -71,7 +72,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     @ViewChild('adfViewer')
-    adfViewer: ViewerComponent<{node: Node}>;
+    adfViewer: ViewerComponent<{ node: Node }>;
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -324,7 +325,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             } else {
                 nodeRendition = await this.renditionService.getNodeRendition(nodeData.id);
             }
-            if(nodeRendition){
+            if (nodeRendition) {
                 urlFileContent = nodeRendition.url;
                 mimeType = nodeRendition.mimeType;
             }

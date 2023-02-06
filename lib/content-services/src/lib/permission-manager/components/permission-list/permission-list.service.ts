@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AllowableOperationsEnum, ContentService, NodesApiService, NotificationService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -26,6 +26,9 @@ import { PermissionDisplayModel } from '../../models/permission.model';
 import { NodePermissionsModel } from '../../models/member.model';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { NodePermissionDialogService } from '../../services/node-permission-dialog.service';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
+import { ContentService } from '../../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 
 const SITE_MANAGER_ROLE = 'SiteManager';
 

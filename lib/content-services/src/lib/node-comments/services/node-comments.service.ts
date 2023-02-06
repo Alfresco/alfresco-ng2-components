@@ -19,14 +19,13 @@ import {
     AlfrescoApiService,
     LogService,
     CommentModel,
-    CommentsService,
-    PeopleContentService,
-    ContentService
+    CommentsService
 } from '@alfresco/adf-core';
 import { CommentEntry, CommentsApi, Comment } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { ContentService } from  '../../common/services/content.service';
 
 @Injectable({
   providedIn: 'root'

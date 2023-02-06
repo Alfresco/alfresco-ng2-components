@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { EcmUserModel, IdentityUserModel, PeopleContentService, UserInfoMode } from '@alfresco/adf-core';
+import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
+import { EcmUserModel } from '../common/models/ecm-user.model';
+import { PeopleContentService } from '../common/services/people-content.service';
 
 @Component({
     selector: 'adf-ecm-user-info',

@@ -17,8 +17,10 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
-import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
+import { ContentService } from '../../common/services/content.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',

@@ -31,14 +31,13 @@ import {
     UserPreferencesService,
     UserPreferenceValues,
     InfinitePaginationComponent, PaginatedComponent,
-    NodesApiService,
-    UploadService,
-    FileUploadCompleteEvent,
-    FileUploadDeleteEvent,
     AppConfigService,
     DataSorting,
     ShowHeaderMode
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
+import { UploadService } from '../common/services/upload.service';
+import { FileUploadCompleteEvent, FileUploadDeleteEvent } from '../common/events/file.event';
 import { UntypedFormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';

@@ -19,7 +19,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { EcmUserModel } from '@alfresco/adf-core';
+import { EcmUserModel } from '../../../common/models/ecm-user.model';
 
 @Component({
     selector: 'adf-user-name-column',

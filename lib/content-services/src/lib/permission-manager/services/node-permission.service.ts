@@ -17,10 +17,10 @@
 
 import {
     AlfrescoApiService,
-    NodesApiService,
-    TranslationService,
-    EcmUserModel
+    TranslationService
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { EcmUserModel } from '../../common/models/ecm-user.model';
 import {
     Group,
     GroupMemberEntry,

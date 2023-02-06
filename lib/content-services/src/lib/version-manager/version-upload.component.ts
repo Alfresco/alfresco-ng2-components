@@ -17,9 +17,11 @@
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Node, Version } from '@alfresco/js-api';
-import { ContentService, FileUploadErrorEvent, FileUploadEvent, UploadService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ContentService } from '../common/services/content.service';
+import { UploadService } from '../common/services/upload.service';
+import { FileUploadErrorEvent, FileUploadEvent } from '../common/events/file.event';
 
 @Component({
     selector: 'adf-version-upload',

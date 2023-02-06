@@ -21,7 +21,7 @@ import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from
 import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService } from '../common/services/content.service';
 
 const DIALOG_WIDTH: number = 400;
 

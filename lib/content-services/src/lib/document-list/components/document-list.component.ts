@@ -22,9 +22,9 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
+import { ContentService } from '../../common/services/content.service';
 
 import {
-    ContentService,
     DataCellEvent,
     DataColumn,
     DataRowActionEvent,
