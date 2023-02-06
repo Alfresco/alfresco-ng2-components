@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { NodePaging } from '@alfresco/js-api';
 import { ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
+
+interface NodePagingList {
+    entries?: any[];
+}
+
+interface NodePaging {
+    list?: NodePagingList;
+}
 
 export interface SearchComponentInterface {
 
