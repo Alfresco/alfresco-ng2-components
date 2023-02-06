@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
+// import { NodePaging } from '@alfresco/js-api';
 import { ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
+interface Node {
+    id: string;
+}
+
+interface NodeEntry {
+    entry: Node;
+}
+
 interface NodePagingList {
-    entries?: any[];
+    entries?: NodeEntry[];
 }
 
 interface NodePaging {
