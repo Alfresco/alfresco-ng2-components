@@ -1,18 +1,18 @@
 ---
-Title: Ecm User Info component
+Title: Process User Info component
 Added: v6.0.0
 Status: Active
 Last reviewed: 2023-01-24
 ---
 
-# [Ecm User Info component](../../../lib/content-services/src/lib/ecm-user-info/ecm-user-info.component.ts "Defined in ecmuser-info.component.ts")
+# [Process User Info component](../../../lib/process-services/src/lib/process-user-info/process-user-info.component.ts "Defined in process-user-info.component.ts")
 
-Shows user information for `CONTENT` and `CONTENT_SSO` mode.
+Shows user information for `PROCESS` and `ALL` mode.
 
 ## Basic usage
 
 ```html
-<adf-ecm-user-info></adf-ecm-user-info>
+<adf-process-user-info></adf-process-user-info>
 ```
 
 ## Class members
@@ -22,11 +22,11 @@ Shows user information for `CONTENT` and `CONTENT_SSO` mode.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | isLoggedIn | `boolean` | Is user logged in |
-| ecmUser | `EcmUserModel` | Ecm user model. |
-| identityUser | `IdentityUserModel` | Identity user model. |
-| mode | `UserInfoMode` | `UserInfoMode.CONTENT` | current mode. |
+| bpmUser | `BpmUserModel` | Bpm user model. |
+| ecmUser | `EpmUserModel` | Ecm user model. |
+| mode | `UserInfoMode` | `UserInfoMode.PROCESS` | current mode. |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
-| ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
+| BpmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
 | namePosition | `string` | "right" | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |
