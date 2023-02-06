@@ -1327,6 +1327,15 @@
           "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
           "sortable": true,
           "format": "timeAgo"
+        },
+        {
+          "id": "description",
+          "key": "description",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.DESCRIPTION",
+          "sortable": false,
+          "draggable": false,
+          "isHidden": true
         }
       ]
     }
