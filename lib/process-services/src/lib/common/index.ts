@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from '../auth/models/identity-user.model';
-
-export type User = (IdentityUserModel) & { displayName?: string } & { username?: string };
+export * from './public-api';

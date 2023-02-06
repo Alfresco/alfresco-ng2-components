@@ -23,10 +23,11 @@ import {
     FileUploadDeleteEvent,
     FileUploadErrorEvent,
     FileUploadEvent,
-    FileModel, FileUploadProgress, FileUploadStatus,
-    AppConfigService, AlfrescoApiService, DiscoveryApiService
-} from '@alfresco/adf-core';
+} from '../events/file.event'
+import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model'
+import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
+import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;

@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Bpm User model](../../../lib/core/src/lib/models/bpm-user.model.ts "Defined in bpm-user.model.ts")
+# [Bpm User model](lib/process-services/src/lib/common/models/bpm-user.model.ts "Defined in bpm-user.model.ts")
 
 Contains information about a Process Services user.
 

@@ -160,11 +160,11 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/src/lib/models/bpm-user.model.ts) |
-| [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/src/lib/models/ecm-user.model.ts) |
+| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](lib/process-services/src/lib/common/models/bpm-user.model.ts) |
+| [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](lib/content-services/src/lib/common/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/src/lib/form/components/widgets/core/form-field.model.ts) |
 | [Product Version model](core/models/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/src/lib/models/product-version.model.ts) |
-| [User Process model](core/models/user-process.model.md) | Represents a Process Services user. | [Source](../lib/core/src/lib/models/user-process.model.ts) |
+| [User Process model](core/models/user-process.model.md) | Represents a Process Services user. | [Source](lib/process-services/src/lib/common/models/user-process.model.ts) |
 
 ### Pipes
 
@@ -203,12 +203,12 @@ for more information about installing and using the source code.
 | [Clipboard service](core/services/clipboard.service.md) | Copies text to the clipboard. | [Source](../lib/core/src/lib/clipboard/clipboard.service.ts) |
 | [Comment Content service](core/services/comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/src/lib/services/comment-content.service.ts) |
 | [Comment Process service](core/services/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/core/src/lib/services/comment-process.service.ts) |
-| [Content service](core/services/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/core/src/lib/services/content.service.ts) |
+| [Content service](core/services/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](lib/content-services/src/lib/common/services/content.service.ts) |
 | [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
 | [DataTable service](core/services/datatable.service.md) |  | [Source](<>) |
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/src/lib/services/deleted-nodes-api.service.ts) |
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](lib/content-services/src/lib/common/services/discovery-api.service.ts) |
-| [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](lib/content-services/src/lib/dialogs/download-zip/service/download-zip.service.ts) |
+| [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](lib/content-services/src/lib/dialogs/download-zip/services/download-zip.service.ts) |
 | [Ecm User service](core/services/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/ecm-user.service.ts) |
 | [Favorites Api service](core/services/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](lib/content-services/src/lib/common/services/favorites-api.service.ts) |
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
@@ -223,8 +223,8 @@ for more information about installing and using the source code.
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](lib/content-services/src/lib/common/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](lib/core/src/lib/common/services/page-title.service.ts) |
-| [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/core/src/lib/services/people-content.service.ts) |
-| [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/src/lib/services/people-process.service.ts) |
+| [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](lib/content-services/src/lib/common/services/people-content.service.ts) |
+| [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](lib/process-services/src/lib/common/services/people-process.service.ts) |
 | [Process Content Service](core/services/process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../lib/process-services/src/lib/form/services/process-content.service.ts) |
 | [Renditions service](core/services/renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/src/lib/services/renditions.service.ts) |
 | [Search Configuration service](core/services/search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/src/lib/services/search-configuration.service.ts) |

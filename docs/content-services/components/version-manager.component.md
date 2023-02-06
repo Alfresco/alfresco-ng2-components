@@ -40,7 +40,7 @@ Displays the version history of a node with the ability to upload a new version.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | uploadCancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when an cancelling during upload. |
-| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/core/src/lib/events/file.event.ts)`>` | Emitted when an error occurs during upload. |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](lib/content-services/src/lib/common/events/file.event.ts)`>` | Emitted when an error occurs during upload. |
 | uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>` | Emitted when a file is uploaded successfully. |
 | viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version. |
 

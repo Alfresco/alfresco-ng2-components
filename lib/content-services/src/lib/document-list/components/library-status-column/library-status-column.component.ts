@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';

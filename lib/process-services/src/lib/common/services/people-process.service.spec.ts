@@ -16,10 +16,9 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '../models';
+import { UserProcessModel } from '../models/user-process.model';
 import { PeopleProcessService } from './people-process.service';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;

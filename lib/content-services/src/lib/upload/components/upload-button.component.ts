@@ -16,13 +16,16 @@
  */
 
 import {
-    ContentService, EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, TranslationService, UploadService, AllowableOperationsEnum
+    EXTENDIBLE_COMPONENT, FileUtils,
+    LogService, TranslationService,
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
+import { UploadService } from '../../common/services/upload.service';
+import { ContentService } from '../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';

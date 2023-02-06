@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
-import { DownloadZipService } from './service/download-zip.service';
+import { DownloadZipService } from './services/download-zip.service';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 

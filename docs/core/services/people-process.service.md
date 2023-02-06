@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-05
 ---
 
-# [People Process service](../../../lib/core/src/lib/services/people-process.service.ts "Defined in people-process.service.ts")
+# [People Process service](lib/process-services/src/lib/common/services/people-process.service.ts "Defined in people-process.service.ts")
 
 Gets information about Process Services users.
 

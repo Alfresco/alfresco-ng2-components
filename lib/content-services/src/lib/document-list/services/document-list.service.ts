@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService, ContentService, LogService, PaginationModel
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { ContentService } from '../../common/services/content.service';
 
 import { Injectable } from '@angular/core';
 import { NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';

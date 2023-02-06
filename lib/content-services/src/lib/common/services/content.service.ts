@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core';
 import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from '../auth/services/authentication.service';
+import { AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 

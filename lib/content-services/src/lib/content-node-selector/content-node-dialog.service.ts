@@ -17,9 +17,11 @@
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ContentService, ThumbnailService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { ThumbnailService, TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
+import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
+import { ContentService } from '../common/services/content.service';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';

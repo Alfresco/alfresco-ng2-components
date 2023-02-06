@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-13
 ---
 
-# [Content service](../../../lib/core/src/lib/services/content.service.ts "Defined in content.service.ts")
+# [Content service](lib/content-services/src/lib/common/services/content.service.ts "Defined in content.service.ts")
 
 Accesses app-generated data objects via URLs and file downloads.
 
@@ -42,15 +42,15 @@ Accesses app-generated data objects via URLs and file downloads.
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: `Node`, allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/src/lib/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
+-   **hasAllowableOperations**(node: `Node`, allowableOperation: [`AllowableOperationsEnum`](lib/content-services/src/lib/common/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
     -   _node:_ `Node`  - Node to check allowableOperations
-    -   _allowableOperation:_ [`AllowableOperationsEnum`](../../../lib/core/src/lib/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _allowableOperation:_ [`AllowableOperationsEnum`](lib/content-services/src/lib/common/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
--   **hasPermissions**(node: `Node`, permission: [`PermissionsEnum`](../../../lib/core/src/lib/models/permissions.enum.ts)`|string`, userId?: `string`): `boolean`<br/>
+-   **hasPermissions**(node: `Node`, permission: [`PermissionsEnum`](lib/content-services/src/lib/common/models/permissions.enum.ts)`|string`, userId?: `string`): `boolean`<br/>
     Checks if the user has permission on that node
     -   _node:_ `Node`  - Node to check permissions
-    -   _permission:_ [`PermissionsEnum`](../../../lib/core/src/lib/models/permissions.enum.ts)`|string`  - Required permission type
+    -   _permission:_ [`PermissionsEnum`](lib/content-services/src/lib/common/models/permissions.enum.ts)`|string`  - Required permission type
     -   _userId:_ `string`  - (Optional) Optional current user id will be taken by default
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 

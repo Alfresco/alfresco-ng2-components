@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { VersionInfo, RepositoryInfo } from '@alfresco/js-api';
-import { DiscoveryApiService } from '@alfresco/adf-core';
+import { DiscoveryApiService } from '../common/services/discovery-api.service';
 
 @Injectable({
     providedIn: 'root'

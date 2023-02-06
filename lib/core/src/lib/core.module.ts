@@ -43,7 +43,6 @@ import { NotificationHistoryModule } from './notifications/notification-history.
 import { BlankPageModule } from './blank-page/blank-page.module';
 
 import { DirectiveModule } from './directives/directive.module';
-import { DownloadZipDialogModule } from '../../../content-services/src/lib/dialogs/download-zip/download-zip.dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
@@ -86,7 +85,6 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         CommonModule,
         IdentityUserInfoModule,
         DirectiveModule,
-        DownloadZipDialogModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
@@ -124,7 +122,6 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         PipeModule,
         CommonModule,
         DirectiveModule,
-        DownloadZipDialogModule,
         ClipboardModule,
         FormsModule,
         IdentityUserInfoModule,

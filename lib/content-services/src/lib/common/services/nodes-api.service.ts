@@ -18,10 +18,9 @@
 import { Injectable } from '@angular/core';
 import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
 import { Subject, from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from '../../../../../core/src/lib/services/alfresco-api.service';
-import { UserPreferencesService } from '../../../../../core/src/lib/common/services/user-preferences.service';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
-import { NodeMetadata } from '../../../../../core/src/lib/models/node-metadata.model';
+import { NodeMetadata } from '../models/node-metadata.model';
 
 @Injectable({
     providedIn: 'root'

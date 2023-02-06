@@ -26,7 +26,7 @@ import {
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { takeUntil } from 'rxjs/operators';
 

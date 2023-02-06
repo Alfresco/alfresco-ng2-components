@@ -17,8 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
-import { ApplicationAccessModel } from '../../models/application-access.model';
-import { UserAccessModel } from '../../models/user-access.model';
+import { ApplicationAccessModel } from '../models/application-access.model';
+import { UserAccessModel } from '../models/user-access.model';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { OAuth2Service } from './oauth2.service';
 import { catchError } from 'rxjs/operators';

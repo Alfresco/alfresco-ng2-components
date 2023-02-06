@@ -17,12 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AuthenticationService, AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { LogService } from '../common/services/log.service';
-import { AuthenticationService } from '../auth/services/authentication.service';
 import { ContentService } from './content.service';
 
 // eslint-disable-next-line no-shadow

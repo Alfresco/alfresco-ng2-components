@@ -26,7 +26,7 @@ import {
     NodesApiMock
 } from './mock/download-zip-service.mock';
 import { DownloadZipDialogModule } from './download-zip.dialog.module';
-import { DownloadZipService } from './service/download-zip.service';
+import { DownloadZipService } from './services/download-zip.service';
 
 export default {
     component: DownloadZipDialogStorybookComponent,

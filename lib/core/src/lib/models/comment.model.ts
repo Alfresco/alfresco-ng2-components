@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { EcmUserModel } from './ecm-user.model';
+import { User } from "./general-user.model";
 
 export class CommentModel {
     id: number;
     message: string;
     created: Date;
-    createdBy: EcmUserModel;
+    createdBy: User;
     isSelected: boolean;
 
     constructor(obj?: any) {

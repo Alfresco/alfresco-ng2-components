@@ -24,14 +24,12 @@ import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserAccessService } from '../services/user-access.service';
-import { PeopleContentService } from '../../services/people-content.service';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
-    let peopleContentService: PeopleContentService;
     let userAccessService: UserAccessService;
 
     setupTestBed({
@@ -46,7 +44,6 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
-        peopleContentService = TestBed.inject(PeopleContentService);
         userAccessService = TestBed.inject(UserAccessService);
         userAccessService.resetAccess();
     });

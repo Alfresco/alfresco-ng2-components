@@ -66,10 +66,10 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of child items from the folder
--   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/src/lib/models/node-metadata.model.ts)`>`<br/>
+-   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](lib/content-services/src/lib/common/models/node-metadata.model.ts)`>`<br/>
     Get the metadata and the nodeType for a nodeId cleaned by the prefix.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/src/lib/models/node-metadata.model.ts)`>` - Node metadata
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](lib/content-services/src/lib/common/models/node-metadata.model.ts)`>` - Node metadata
 -   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore

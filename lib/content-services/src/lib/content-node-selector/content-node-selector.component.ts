@@ -17,9 +17,11 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService, UploadService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService} from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-
+import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
+import { ContentService } from '../common/services/content.service';
+import { UploadService } from '../common/services/upload.service';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeEntryEvent } from '../document-list/components/node.event';
 import { NodeAction } from '../document-list/models/node-action.enum';

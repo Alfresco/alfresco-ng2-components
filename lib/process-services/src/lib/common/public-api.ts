@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from '../auth/models/identity-user.model';
+export * from './services/people-process.service';
 
-export type User = (IdentityUserModel) & { displayName?: string } & { username?: string };
+export * from './models/bpm-user.model';
+export * from './models/user-process.model';

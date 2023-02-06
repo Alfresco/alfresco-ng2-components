@@ -20,13 +20,13 @@ import {
     DataRow,
     DataSorting,
     DataTableAdapter,
-    ThumbnailService,
-    ContentService
+    ThumbnailService
 } from '@alfresco/adf-core';
 import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
 import { RowFilter } from './row-filter.model';
+import { ContentService } from '../../common/services/content.service';
 
 export const ERR_ROW_NOT_FOUND: string = 'Row not found';
 export const ERR_COL_NOT_FOUND: string = 'Column not found';

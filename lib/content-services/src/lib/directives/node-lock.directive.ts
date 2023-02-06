@@ -19,7 +19,8 @@
 
 import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
+import { ContentService } from '../common/services/content.service';
+import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 
 @Directive({

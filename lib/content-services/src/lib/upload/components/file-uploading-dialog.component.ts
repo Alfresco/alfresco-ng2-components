@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus, UploadService, UserPreferencesService, FileUploadDeleteEvent, FileUploadCompleteEvent } from '@alfresco/adf-core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
 import { takeUntil, delay } from 'rxjs/operators';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel, FileUploadStatus } from '../../common/models/file.model';
+import { FileUploadDeleteEvent, FileUploadCompleteEvent } from '../../common/events/file.event';
 
 @Component({
     selector: 'adf-file-uploading-dialog',

@@ -16,6 +16,3 @@
  */
 
 export * from './alfresco-api.service';
-export * from './content.service';
-export * from './people-content.service';
-export * from './people-process.service';
