@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommentModel, EcmUserModel } from '../../models';
+import { CommentModel, User } from '../../models';
 import { Observable, of } from 'rxjs';
 import { CommentsService } from '../interfaces';
 
@@ -57,7 +57,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as User,
             isSelected: false
         } as CommentModel,
         {
@@ -84,7 +84,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as User,
             isSelected: false
         } as CommentModel,
         {
@@ -111,7 +111,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as User,
             isSelected: false
         } as CommentModel
     ]),
@@ -139,7 +139,7 @@ export const commentsResponseMock = {
             id: 'hruser',
             email: 'test',
             isAdmin: () => false
-        } as EcmUserModel,
+        } as User,
         isSelected: false
     } as CommentModel)
 };

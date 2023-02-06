@@ -18,12 +18,15 @@
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
-    FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, UserPreferencesService
+    setupTestBed, UserPreferencesService
 } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel } from '../../common/models/file.model';
+import { FileUploadCompleteEvent, FileUploadErrorEvent } from '../../common/events/file.event';
 
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;

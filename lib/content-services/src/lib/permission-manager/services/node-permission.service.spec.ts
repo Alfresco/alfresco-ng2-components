@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { SearchService } from '../../search/services/search.service';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of, throwError } from 'rxjs';
@@ -26,6 +26,7 @@ import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNode
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 describe('NodePermissionService', () => {
 

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ContentService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
+import { ContentService } from '../common/services/content.service';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import {

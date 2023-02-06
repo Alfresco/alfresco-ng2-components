@@ -21,7 +21,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
+import { FileModel } from '../common/models/file.model';
+import { FileUploadEvent } from '../common/events/file.event';
+import { ContentService } from '../common/services/content.service';
+import { UploadService } from '../common/services/upload.service';
+
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';

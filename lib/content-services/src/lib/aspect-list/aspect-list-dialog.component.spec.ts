@@ -25,7 +25,7 @@ import { AspectListDialogComponentData } from './aspect-list-dialog-data.interfa
 import { AspectListService } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
 import { AspectEntry, MinimalNode } from '@alfresco/js-api';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
 
 const aspectListMock: AspectEntry[] = [{
     entry: {

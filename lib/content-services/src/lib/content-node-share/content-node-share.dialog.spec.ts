@@ -20,11 +20,12 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,
-    NodesApiService,
     NotificationService,
-    RenditionsService,
     AppConfigService
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
+import { RenditionService } from '../common/services/rendition.service';
+
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment';
@@ -38,7 +39,7 @@ describe('ShareDialogComponent', () => {
         openSnackMessage: jasmine.createSpy('openSnackMessage')
     };
     let sharedLinksApiService: SharedLinksApiService;
-    let renditionService: RenditionsService;
+    let renditionService: RenditionService;
     let nodesApiService: NodesApiService;
     let fixture: ComponentFixture<ShareDialogComponent>;
     let component: ShareDialogComponent;
@@ -63,7 +64,7 @@ describe('ShareDialogComponent', () => {
 
         matDialog = TestBed.inject(MatDialog);
         sharedLinksApiService = TestBed.inject(SharedLinksApiService);
-        renditionService = TestBed.inject(RenditionsService);
+        renditionService = TestBed.inject(RenditionService);
         nodesApiService = TestBed.inject(NodesApiService);
         appConfigService = TestBed.inject(AppConfigService);
 

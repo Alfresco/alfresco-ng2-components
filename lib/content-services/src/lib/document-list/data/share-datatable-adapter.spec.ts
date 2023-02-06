@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentService } from '../../common/services/content.service';
 
 describe('ShareDataTableAdapter', () => {
 

@@ -16,11 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, UploadService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel } from '../../common/models/file.model';
 
 const getFakeShareDataRow = (allowableOperations = ['delete', 'update', 'create']) => ({
     obj: {

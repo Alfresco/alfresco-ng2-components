@@ -22,9 +22,10 @@ import { ClassesApi, MinimalNode, Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
-    CardViewBaseItemModel, CardViewComponent, NodesApiService,
+    CardViewBaseItemModel, CardViewComponent,
     LogService, setupTestBed, AppConfigService
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';

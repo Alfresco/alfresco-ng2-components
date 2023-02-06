@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, DiscoveryApiService, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { DiscoveryApiService } from '../common/services/discovery-api.service';
 import { VersionCompatibilityService } from './version-compatibility.service';
 
 describe('VersionCompatibilityService', () => {

@@ -17,13 +17,15 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
+import { UploadService } from '../../common/services/upload.service';
+import { ContentService } from '../../common/services/content.service';
+import { FileUploadErrorEvent } from '../../common/events/file.event';
 
 describe('UploadButtonComponent', () => {
 

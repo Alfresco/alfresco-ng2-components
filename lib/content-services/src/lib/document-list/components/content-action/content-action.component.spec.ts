@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ContentService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
@@ -28,6 +28,7 @@ import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentService } from '../../../common/services/content.service';
 
 describe('ContentAction', () => {
     let documentList: DocumentListComponent;

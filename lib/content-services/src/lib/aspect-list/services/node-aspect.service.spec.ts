@@ -18,7 +18,8 @@
 import { MinimalNode } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EMPTY, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';

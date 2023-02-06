@@ -16,7 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';

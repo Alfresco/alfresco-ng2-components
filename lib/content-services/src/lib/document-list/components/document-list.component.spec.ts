@@ -27,9 +27,10 @@ import {
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService,
-    ContentService
+    ThumbnailService
 } from '@alfresco/adf-core';
+import { ContentService } from '../../common/services/content.service';
+
 import { Subject, of, throwError } from 'rxjs';
 import {
     FileNode,
