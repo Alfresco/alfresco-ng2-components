@@ -22,7 +22,6 @@ import {
     OnInit, Optional,
     ViewEncapsulation
 } from '@angular/core';
-import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DataTableService } from '../../services/datatable.service';
 
@@ -50,7 +49,7 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
     /** @override */
     ngOnInit() {
         if (this.column && this.column.key && this.row && this.data) {
-            const path: PathInfoEntity = this.data.getValue(
+            const path: any = this.data.getValue(
                 this.row,
                 this.column,
                 this.resolverFn

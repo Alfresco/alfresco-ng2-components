@@ -32,5 +32,5 @@ export * from './events';
 export * from './form-base.module';
 
 export * from './models/form-rules.model';
-export * from './models/form-definition.model';
+export * from '../../../../process-services/src/lib/form/model/form-definition.model';
 export * from './models/task-process-variable.model';

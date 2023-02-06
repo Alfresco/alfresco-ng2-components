@@ -74,6 +74,10 @@ export class ContentService {
         return null;
     }
 
+    async getDocumentThumbnailUrl(nodeId: string, attachment?: boolean, ticket?: string): Promise<string> {
+        return this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+    }
+
     /**
      * Checks if the user has permission on that node
      *

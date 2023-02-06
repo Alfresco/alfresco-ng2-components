@@ -19,8 +19,6 @@
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { ContentApi, NodeEntry } from '@alfresco/js-api';
 
 const DEFAULT_ICON = './assets/images/ft_ic_miscellaneous.svg';
 
@@ -163,45 +161,13 @@ export class ThumbnailService {
         'multipart/related': './assets/images/ft_ic_website.svg'
     };
 
-    private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
             matIconRegistry.addSvgIcon(key, url);
             matIconRegistry.addSvgIconInNamespace('adf', key, url);
         });
-    }
-
-    /**
-     * Gets a thumbnail URL for the given document node.
-     *
-     * @param node Node or Node ID to get URL for.
-     * @param attachment Toggles whether to retrieve content as an attachment for download
-     * @param ticket Custom ticket to use for authentication
-     * @returns URL string
-     */
-    getDocumentThumbnailUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
-        let resultUrl: string;
-
-        if (node) {
-            let nodeId: string;
-
-            if (typeof node === 'string') {
-                nodeId = node;
-            } else if (node.entry) {
-                nodeId = node.entry.id;
-            }
-
-            resultUrl = this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
-        }
-
-        return resultUrl || DEFAULT_ICON;
     }
 
     /**

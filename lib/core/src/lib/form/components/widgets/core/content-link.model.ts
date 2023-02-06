@@ -17,9 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
- import { RelatedContentRepresentation } from '@alfresco/js-api';
-
- export class ContentLinkModel implements RelatedContentRepresentation {
+ export class ContentLinkModel {
 
     contentAvailable: boolean;
     created: Date;
