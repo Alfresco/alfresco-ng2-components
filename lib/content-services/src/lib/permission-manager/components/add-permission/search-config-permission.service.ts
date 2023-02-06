@@ -16,8 +16,8 @@
  */
 
 import { QueryBody } from '@alfresco/js-api';
-import { SearchConfigurationInterface } from '@alfresco/adf-core';
 import { Injectable, Optional, Inject, InjectionToken } from '@angular/core';
+import { SearchConfigurationInterface } from '../../../common/interfaces/search-configuration.interface';
 
 export const SEARCH_QUERY_TOKEN = new InjectionToken<QueryProvider>('Alfresco Search Query Token');
 export interface QueryProvider {
