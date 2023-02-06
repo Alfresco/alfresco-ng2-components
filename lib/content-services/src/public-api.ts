@@ -20,7 +20,7 @@ export * from './lib/social/index';
 export * from './lib/tag/index';
 export * from './lib/webscript/index';
 export * from './lib/document-list/index';
-export * from './lib/ecm-user-info/index';
+export * from './lib/content-user-info/index';
 export * from './lib/upload/index';
 export * from './lib/search/index';
 export * from './lib/site-dropdown/index';

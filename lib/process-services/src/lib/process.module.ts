@@ -32,7 +32,7 @@ import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
-import { BpmUserInfoModule } from './bpm-user-info/bpm-user-info.module';
+import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
 
 @NgModule({
     imports: [
@@ -46,7 +46,7 @@ import { BpmUserInfoModule } from './bpm-user-info/bpm-user-info.module';
         TaskListModule,
         TaskCommentsModule,
         AppsListModule,
-        BpmUserInfoModule,
+        ProcessUserInfoModule,
         AttachmentModule,
         PeopleModule,
         FormModule,
@@ -71,7 +71,7 @@ import { BpmUserInfoModule } from './bpm-user-info/bpm-user-info.module';
         TaskListModule,
         TaskCommentsModule,
         AppsListModule,
-        BpmUserInfoModule,
+        ProcessUserInfoModule,
         AttachmentModule,
         PeopleModule,
         FormModule,

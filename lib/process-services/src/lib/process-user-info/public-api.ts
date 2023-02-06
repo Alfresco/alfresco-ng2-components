@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './bpm-user-info.component';
+export * from './process-user-info.component';
 
-export * from './bpm-user-info.module';
+export * from './process-user-info.module';

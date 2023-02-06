@@ -21,12 +21,12 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-bpm-user-info',
-    templateUrl: './bpm-user-info.component.html',
-    styleUrls: ['./bpm-user-info.component.scss'],
+    selector: 'adf-process-user-info',
+    templateUrl: './process-user-info.component.html',
+    styleUrls: ['./process-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class BpmUserInfoComponent implements OnDestroy {
+export class ProcessUserInfoComponent implements OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 

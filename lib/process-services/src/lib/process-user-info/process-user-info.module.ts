@@ -17,16 +17,16 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EcmUserInfoComponent } from './ecm-user-info.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '@alfresco/adf-core';
+import { ProcessUserInfoComponent } from './process-user-info.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipeModule } from '@alfresco/adf-core';
 
 @NgModule({
-    declarations: [EcmUserInfoComponent],
+    declarations: [ProcessUserInfoComponent],
     imports: [
         CommonModule,
         MatButtonModule,
@@ -36,6 +36,6 @@ import { MatCardModule } from '@angular/material/card';
         TranslateModule,
         PipeModule
     ],
-    exports: [EcmUserInfoComponent]
+    exports: [ProcessUserInfoComponent]
 })
-export class EcmUserInfoModule {}
+export class ProcessUserInfoModule {}

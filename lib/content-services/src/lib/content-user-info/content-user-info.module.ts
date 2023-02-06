@@ -17,16 +17,16 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BpmUserInfoComponent } from './bpm-user-info.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
+import { ContentUserInfoComponent } from './content-user-info.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-    declarations: [BpmUserInfoComponent],
+    declarations: [ContentUserInfoComponent],
     imports: [
         CommonModule,
         MatButtonModule,
@@ -36,6 +36,6 @@ import { PipeModule } from '@alfresco/adf-core';
         TranslateModule,
         PipeModule
     ],
-    exports: [BpmUserInfoComponent]
+    exports: [ContentUserInfoComponent]
 })
-export class BpmUserInfoModule {}
+export class ContentUserInfoModule {}

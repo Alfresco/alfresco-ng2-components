@@ -29,13 +29,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { BpmUserInfoComponent } from './bpm-user-info.component';
+import { ProcessUserInfoComponent } from './process-user-info.component';
 
-describe('BpmUserInfoComponent', () => {
+describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
 
-    let component: BpmUserInfoComponent;
-    let fixture: ComponentFixture<BpmUserInfoComponent>;
+    let component: ProcessUserInfoComponent;
+    let fixture: ComponentFixture<ProcessUserInfoComponent>;
     let element: HTMLElement;
 
     const openUserInfo = () => {
@@ -60,7 +60,7 @@ describe('BpmUserInfoComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(BpmUserInfoComponent);
+        fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 

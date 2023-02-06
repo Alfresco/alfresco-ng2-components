@@ -31,7 +31,7 @@ import { By, DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
-import { EcmUserInfoComponent } from './ecm-user-info.component';
+import { ContentUserInfoComponent } from './content-user-info.component';
 
 class FakeSanitizer extends DomSanitizer {
 
@@ -64,11 +64,11 @@ class FakeSanitizer extends DomSanitizer {
     }
 }
 
-describe('EcmUserInfoComponent', () => {
+describe('ContentUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
 
-    let component: EcmUserInfoComponent;
-    let fixture: ComponentFixture<EcmUserInfoComponent>;
+    let component: ContentUserInfoComponent;
+    let fixture: ComponentFixture<ContentUserInfoComponent>;
     let element: HTMLElement;
 
     const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
@@ -97,7 +97,7 @@ describe('EcmUserInfoComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(EcmUserInfoComponent);
+        fixture = TestBed.createComponent(ContentUserInfoComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 

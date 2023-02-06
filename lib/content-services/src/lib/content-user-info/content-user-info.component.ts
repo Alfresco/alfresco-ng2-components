@@ -21,12 +21,12 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-ecm-user-info',
-    templateUrl: './ecm-user-info.component.html',
-    styleUrls: ['./ecm-user-info.component.scss'],
+    selector: 'adf-content-user-info',
+    templateUrl: './content-user-info.component.html',
+    styleUrls: ['./content-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class EcmUserInfoComponent implements OnDestroy {
+export class ContentUserInfoComponent implements OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 

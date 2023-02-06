@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './ecm-user-info.component';
+export * from './content-user-info.component';
 
-export * from './ecm-user-info.module';
+export * from './content-user-info.module';
