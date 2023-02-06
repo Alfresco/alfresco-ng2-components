@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-// import { NodePaging } from '@alfresco/js-api';
 import { ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
