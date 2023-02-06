@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
+    SearchTextInputComponent,
     setupTestBed,
     UserPreferencesService
 } from '@alfresco/adf-core';
@@ -29,7 +30,6 @@ import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchTextInputComponent } from '../../search-text/search-text-input.component';
 
 @Component({
     template: `
