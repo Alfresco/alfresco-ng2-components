@@ -21,9 +21,9 @@ import { catchError, map } from 'rxjs/operators';
 import {
     AlfrescoApiService,
     LogService,
-    ContentService,
-    DownloadService, NodesApiService
+    DownloadService
 } from '@alfresco/adf-core';
+import { ContentService, NodesApiService } from '@alfresco/adf-content-services';
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
 @Injectable({
@@ -47,6 +47,7 @@ export class ProcessCloudContentService {
         private apiService: AlfrescoApiService,
         private logService: LogService,
         private nodesApiService: NodesApiService,
+        private contentService: ContentService,
         private downloadService: DownloadService
     ) {
     }
@@ -57,7 +58,7 @@ export class ProcessCloudContentService {
     ): Observable<Node> {
 
         return from(
-            this.uploadApi.uploadFile(file, '', nodeId, '', { overwrite: true })
+            this.uploadApi.uploadFile(file, '', nodeId, '', {overwrite: true})
         ).pipe(
             map((res: any) => ({
                 ...res.entry,

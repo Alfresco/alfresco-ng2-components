@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-    NodesApiService,
     setupTestBed
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,7 +24,7 @@ import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper.co
 import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
 import { fakeNodeWithProperties } from '../../../../mocks/attach-file-cloud-widget.mock';
-import { BasicPropertiesService } from '@alfresco/adf-content-services';
+import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let component: PropertiesViewerWrapperComponent;

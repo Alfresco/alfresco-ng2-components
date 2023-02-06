@@ -28,12 +28,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, RenditionService } from '@alfresco/adf-content-services';
 import {
-    NodesApiService,
     CoreTestingModule,
     setupTestBed,
     EventMock,
-    FileModel, UploadService, ViewUtilService
+    ViewUtilService
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel } from '../../common/models/file.model';
 import { throwError } from 'rxjs';
 import { Component } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';

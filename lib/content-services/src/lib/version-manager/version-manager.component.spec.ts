@@ -18,11 +18,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { Node, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodesApiService } from '../common/services/nodes-api.service';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;

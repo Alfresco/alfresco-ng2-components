@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, User, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
@@ -48,7 +48,7 @@ class CustomTaskListComponent {
     @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
 
-    getFullName(person: EcmUserModel): string {
+    getFullName(person: User): string {
         return `${person.firstName} ${person.lastName}`;
     }
 }

@@ -19,9 +19,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { VersionUploadComponent } from './version-upload.component';
-import { ContentService, setupTestBed, UploadService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
+import { UploadService } from '../common/services/upload.service';
+import { ContentService } from '../common/services/content.service';
 
 describe('VersionUploadComponent', () => {
     let component: VersionUploadComponent;
