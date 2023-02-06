@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { UserProcessModel, TranslationService, PeopleProcessService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { getDisplayUser } from '../../helpers/get-display-user';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 
 @Component({
     selector: 'adf-people-search-field',

@@ -17,9 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { CommentModel, UserProcessModel, AlfrescoApiService, LogService, CommentsService, PeopleProcessService } from '@alfresco/adf-core';
+import { CommentModel, AlfrescoApiService, LogService, CommentsService } from '@alfresco/adf-core';
 import { map, catchError } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
+import { PeopleProcessService } from '../../common/services/people-process.service';
+import { UserProcessModel } from '../../common/models/user-process.model';
 
 @Injectable({
     providedIn: 'root'

@@ -27,6 +27,7 @@ import { MaterialModule } from '../material.module';
 import { A11yModule } from '@angular/cdk/a11y';
 import { AlfrescoViewerComponent } from './components/alfresco-viewer.component';
 import { CoreModule } from '@alfresco/adf-core';
+import { ContentDirectiveModule } from '../directives';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { CoreModule } from '@alfresco/adf-core';
         ReactiveFormsModule,
         FlexLayoutModule,
         A11yModule,
-        ExtensionsModule
+        ExtensionsModule,
+        ContentDirectiveModule
     ],
     declarations: [
         AlfrescoViewerComponent

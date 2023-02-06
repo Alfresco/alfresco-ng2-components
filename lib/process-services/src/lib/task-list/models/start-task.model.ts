@@ -18,7 +18,7 @@
 /**
  * This object represent of the StartTaskModel.
  */
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel } from '../../common/models/user-process.model';
 
 export class StartTaskModel {
 

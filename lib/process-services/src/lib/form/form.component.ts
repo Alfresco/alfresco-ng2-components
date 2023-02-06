@@ -38,8 +38,6 @@ import {
     FormOutcomeEvent,
     FormValues,
     ContentLinkModel,
-    NodesApiService,
-    FormDefinitionModel,
     TaskProcessVariableModel
 } from '@alfresco/adf-core';
 import { from, Observable, of, Subject } from 'rxjs';
@@ -50,6 +48,8 @@ import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { NodesApiService } from '@alfresco/adf-content-services';
+import { FormDefinitionModel } from './model/form-definition.model';
 
 @Component({
     selector: 'adf-form',

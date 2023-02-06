@@ -16,7 +16,7 @@
  */
 
 import {
-    LogService, UserPreferencesService, UserPreferenceValues, UserProcessModel, FormFieldModel, FormModel,
+    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel,
     MOMENT_DATE_FORMATS, MomentDateAdapter
 } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
@@ -28,6 +28,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { UserProcessModel } from '../../common/models/user-process.model';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;

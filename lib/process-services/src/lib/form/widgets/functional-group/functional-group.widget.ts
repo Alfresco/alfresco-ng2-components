@@ -18,10 +18,11 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, GroupModel, PeopleProcessService, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { UntypedFormControl } from '@angular/forms';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 @Component({
     selector: 'functional-group-widget',

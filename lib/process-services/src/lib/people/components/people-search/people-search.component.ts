@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';

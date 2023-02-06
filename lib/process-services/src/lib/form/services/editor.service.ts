@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormDefinitionModel, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { FormModelsApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
+import { FormDefinitionModel } from '../model/form-definition.model';
 
 @Injectable({
     providedIn: 'root'

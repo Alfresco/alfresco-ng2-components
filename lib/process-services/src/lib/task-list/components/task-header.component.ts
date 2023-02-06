@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
-    BpmUserService,
     CardViewDateItemModel,
     CardViewMapItemModel,
     CardViewTextItemModel,
@@ -28,6 +27,7 @@ import {
     CardViewItemLengthValidator
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { PeopleProcessService } from '../../common/services/people-process.service';
 import { TaskDescriptionValidator } from '../validators/task-description.validator';
 
 @Component({
@@ -66,7 +66,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     private currentUserId: number;
 
-    constructor(private bpmUserService: BpmUserService,
+    constructor(private bpmUserService: PeopleProcessService,
                 private translationService: TranslationService,
                 private appConfig: AppConfigService) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');

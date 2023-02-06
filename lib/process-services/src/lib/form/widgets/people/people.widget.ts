@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserProcessModel, PeopleProcessService, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -28,6 +28,8 @@ import {
     switchMap,
     tap
 } from 'rxjs/operators';
+import { UserProcessModel } from '../../../common/models/user-process.model';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 @Component({
     selector: 'people-widget',

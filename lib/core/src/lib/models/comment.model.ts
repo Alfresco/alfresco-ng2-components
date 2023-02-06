@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { User } from "./general-user.model";
+import { User } from './general-user.model';
 
 export class CommentModel {
     id: number;

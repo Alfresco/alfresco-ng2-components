@@ -21,12 +21,12 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     AppConfigService,
     AppConfigValues,
-    ContentService,
     DownloadService,
     FormService,
     LogService,
     ThumbnailService
 } from '@alfresco/adf-core';
+import { ContentService } from '@alfresco/adf-content-services';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
 import {
     AlfrescoEndpointRepresentation,

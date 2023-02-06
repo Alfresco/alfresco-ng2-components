@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { BpmUserModel, BpmUserService, EcmUserModel, PeopleContentService, UserInfoMode } from '@alfresco/adf-core';
+import { UserInfoMode } from '@alfresco/adf-core';
+import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
+import { PeopleProcessService } from '../common/services/people-process.service';
+import { BpmUserModel } from '../common/models/bpm-user.model';
 
 @Component({
     selector: 'adf-process-user-info',
@@ -72,7 +75,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private bpmUserService: BpmUserService, private peopleContentService: PeopleContentService) {
+    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {
     }
 
     ngOnDestroy(): void {
@@ -95,7 +98,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
     }
 
     getBpmUserImage(): string {
-        return this.bpmUserService.getCurrentUserProfileImage();
+        return this.peopleProcessService.getCurrentUserProfileImage();
     }
 
     getEcmAvatar(avatarId: string): string {

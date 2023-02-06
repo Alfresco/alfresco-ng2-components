@@ -30,6 +30,8 @@ export * from './process-form-rendering.service';
 
 export * from './events/validate-dynamic-table-row.event';
 
+export * from './model/form-definition.model';
+
 
 export * from './form-list/form-list.component';
 export * from './form.component';
