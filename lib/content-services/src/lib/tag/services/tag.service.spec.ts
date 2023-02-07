@@ -22,12 +22,15 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
 import {
+    Pagination,
     RequestQuery,
     RequestSortDefinitionInner,
+    ResultNode,
     ResultSetContext,
     ResultSetContextFacetQueries,
     ResultSetPaging,
     ResultSetPagingList,
+    ResultSetRowEntry,
     Tag,
     TagBody,
     TagEntry,
@@ -129,6 +132,13 @@ describe('TagService', () => {
 
             beforeEach(() => {
                 result = new ResultSetPaging();
+                result.list = new ResultSetPagingList();
+                const tag = new ResultSetRowEntry();
+                tag.entry = new ResultNode();
+                tag.entry.id = 'some id';
+                tag.entry.name = 'some name';
+                result.list.entries = [tag];
+                result.list.pagination = new Pagination();
             });
 
             it('should call search on searchApi with correct parameters', () => {
@@ -156,14 +166,22 @@ describe('TagService', () => {
                 });
             });
 
-            it('should return observable which emits paging object for tags', (done) => {
+            it('should return observable which emits paging object for tags', fakeAsync(() => {
                 spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
 
                 service.searchTags('test').subscribe((tagsResult) => {
-                    expect(tagsResult).toBe(result);
-                    done();
+                    const tagPaging = new TagPaging();
+                    tagPaging.list = new TagPagingList();
+                    const tagEntry = new TagEntry();
+                    tagEntry.entry = new Tag();
+                    tagEntry.entry.id = 'some id';
+                    tagEntry.entry.tag = 'some name';
+                    tagPaging.list.entries = [tagEntry];
+                    tagPaging.list.pagination = new Pagination();
+                    expect(tagsResult).toEqual(tagPaging);
                 });
-            });
+                tick();
+            }));
 
             it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
                 spyOn(logService, 'error');

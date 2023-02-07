@@ -23,11 +23,12 @@ import {
     RequestQuery,
     RequestSortDefinitionInner,
     ResultSetContextFacetQueries,
-    ResultSetPaging,
     SearchApi,
+    Tag,
     TagBody,
     TagEntry,
     TagPaging,
+    TagPagingList,
     TagsApi
 } from '@alfresco/js-api';
 
@@ -160,7 +161,7 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
+    searchTags(name: string, skipCount = 0, maxItems?: number): Observable<TagPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
         const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
         sortingByName.field = 'cm:name';
@@ -176,7 +177,19 @@ export class TagService {
                 maxItems
             },
             sort: [sortingByName]
-        })).pipe(catchError((error) => this.handleError(error)));
+        })).pipe(map((resultSetPaging) => {
+            const tagPaging = new TagPaging();
+            tagPaging.list = new TagPagingList();
+            tagPaging.list.pagination = resultSetPaging.list.pagination;
+            tagPaging.list.entries = resultSetPaging.list.entries.map((resultEntry) => {
+                const tagEntry = new TagEntry();
+                tagEntry.entry = new Tag();
+                tagEntry.entry.tag = resultEntry.entry.name;
+                tagEntry.entry.id = resultEntry.entry.id;
+                return tagEntry;
+            })
+            return tagPaging;
+        }), catchError((error) => this.handleError(error)));
     }
 
     /**
