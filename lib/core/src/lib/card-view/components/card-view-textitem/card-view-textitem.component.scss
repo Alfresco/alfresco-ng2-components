@@ -3,19 +3,12 @@
         font-size: var(--theme-subheading-2-font-size);
         width: 16px;
         height: 16px;
-        color: var(--adf-card-view-text-color);
     }
 
     &-textitem-action.mat-icon-button {
         width: 20px;
         height: 20px;
         line-height: 20px;
-        color: var(--adf-card-view-text-color);
-    }
-
-    &-textitem-action:hover,
-    &-textitem-action:focus {
-        color: var(--theme-text-fg-color);
     }
 
     &-update-icon {
@@ -172,7 +165,6 @@
         }
 
         .adf-property-clear-value {
-            color: var(--adf-card-view-text-color);
             display: inline;
         }
 

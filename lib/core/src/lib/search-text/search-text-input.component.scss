@@ -24,14 +24,6 @@
     }
 
     &-input-form-field-divider {
-        .mat-form-field-underline {
-            background-color: var(--adf-search-input-bg-color);
-
-            .mat-form-field-ripple {
-                background-color: var(--adf-search-input-bg-color);
-            }
-        }
-
         font-size: var(--theme-subheading-2-font-size);
     }
 }

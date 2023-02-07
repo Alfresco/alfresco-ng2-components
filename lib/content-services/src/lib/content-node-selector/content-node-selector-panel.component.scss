@@ -39,12 +39,7 @@ h2.adf-search-results-label {
             width: 100%;
 
             &-icon {
-                color: var(--adf-node-selector-icon-color);
                 cursor: pointer;
-
-                &:hover {
-                    color: var(--theme-fg-base-color);
-                }
             }
         }
 
@@ -72,22 +67,6 @@ h2.adf-search-results-label {
         &-breadcrumb {
             .adf-dropdown-breadcrumb-trigger {
                 outline: none;
-
-                .mat-icon {
-                    color: var(--adf-node-selector-base-color);
-
-                    &:hover {
-                        color: var(--adf-node-selector-base-bold-color);
-                    }
-                }
-
-                &:focus .mat-icon {
-                    color: var(--theme-primary-color);
-                }
-            }
-
-            .adf-dropdown-breadcrumb-item-chevron {
-                color: var(--adf-node-selector-base-color);
             }
         }
 
