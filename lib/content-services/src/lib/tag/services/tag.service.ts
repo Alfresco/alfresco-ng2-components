@@ -187,7 +187,7 @@ export class TagService {
                 tagEntry.entry.tag = resultEntry.entry.name;
                 tagEntry.entry.id = resultEntry.entry.id;
                 return tagEntry;
-            })
+            });
             return tagPaging;
         }), catchError((error) => this.handleError(error)));
     }
