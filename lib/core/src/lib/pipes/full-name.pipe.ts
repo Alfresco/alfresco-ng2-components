@@ -16,16 +16,16 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from '../models/general-user.model';
+import { UserLike } from './user-like.interface';
 
 @Pipe({ name: 'fullName' })
 export class FullNamePipe implements PipeTransform {
 
-    transform(user: User): string {
+    transform(user: UserLike): string {
         return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
     }
 
-    buildFullName(user: User): string {
+    buildFullName(user: UserLike): string {
         const fullName: string[] = [];
 
         fullName.push(user?.firstName);
@@ -34,7 +34,7 @@ export class FullNamePipe implements PipeTransform {
         return fullName.join(' ').trim();
     }
 
-    buildFromUsernameOrEmail(user: User): string {
+    buildFromUsernameOrEmail(user: UserLike): string {
         return (user?.username || user?.email) ?? '' ;
     }
 }
