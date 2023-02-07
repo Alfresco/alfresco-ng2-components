@@ -74,6 +74,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     afterEach(() => {
+        queryBuilder.removeActiveFilter(mockCategory.columnKey);
         fixture.destroy();
     });
 
