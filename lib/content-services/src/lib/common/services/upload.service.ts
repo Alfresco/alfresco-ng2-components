@@ -22,9 +22,9 @@ import {
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
     FileUploadErrorEvent,
-    FileUploadEvent,
-} from '../events/file.event'
-import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model'
+    FileUploadEvent
+} from '../events/file.event';
+import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';

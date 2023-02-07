@@ -35,4 +35,4 @@ export * from './models/node-metadata.model';
 export * from './models/permissions.enum';
 export * from './models/allowable-operations.enum';
 
-export * from './interface/search-configuration.interface';
+export * from './interfaces/search-configuration.interface';

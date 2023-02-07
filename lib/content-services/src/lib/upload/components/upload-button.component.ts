@@ -17,7 +17,7 @@
 
 import {
     EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, TranslationService,
+    LogService, TranslationService
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
