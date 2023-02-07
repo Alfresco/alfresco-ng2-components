@@ -66,7 +66,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     private currentUserId: number;
 
-    constructor(private bpmUserService: PeopleProcessService,
+    constructor(private peopleProcessService: PeopleProcessService,
                 private translationService: TranslationService,
                 private appConfig: AppConfigService) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
@@ -328,7 +328,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * Loads current bpm userId
      */
     private loadCurrentBpmUserId(): void {
-        this.bpmUserService.getCurrentUserInfo().subscribe((res) => {
+        this.peopleProcessService.getCurrentUserInfo().subscribe((res) => {
             this.currentUserId = res ? +res.id : null;
         });
     }

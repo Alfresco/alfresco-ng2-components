@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFormComponent } from './task-form.component';
 import {
-    BpmUserService,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
@@ -53,6 +52,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -63,7 +63,7 @@ describe('TaskFormComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
     let element: HTMLElement;
-    let bpmUserService: BpmUserService;
+    let peopleProcessService: PeopleProcessService;
     let getBpmLoggedUserSpy: jasmine.Spy;
 
     setupTestBed({
@@ -88,8 +88,8 @@ describe('TaskFormComponent', () => {
         spyOn(taskFormService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
-        bpmUserService = TestBed.inject(BpmUserService);
-        getBpmLoggedUserSpy = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(<any>fakeUser));
+        peopleProcessService = TestBed.inject(PeopleProcessService);
+        getBpmLoggedUserSpy = spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(<any>fakeUser));
     });
 
     afterEach(async () => {

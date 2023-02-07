@@ -30,10 +30,9 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormService, WidgetVisibilityService, ContainerModel, fakeForm,
-    setupTestBed,
-    NodeMetadata, NodesApiService
+    FormService, WidgetVisibilityService, ContainerModel, fakeForm, setupTestBed
 } from '@alfresco/adf-core';
+import{ NodeMetadata, NodesApiService } from '@alfresco/adf-content-services';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';

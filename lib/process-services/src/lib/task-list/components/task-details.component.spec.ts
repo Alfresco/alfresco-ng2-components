@@ -24,10 +24,7 @@ import {
     FormOutcomeEvent,
     FormOutcomeModel,
     setupTestBed,
-    BpmUserService,
     LogService,
-    UserProcessModel,
-    PeopleProcessService,
     CommentModel
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -45,6 +42,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskService } from '../../form/services/task.service';
 import { TaskFormService } from '../../form/services/task-form.service';
 import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
+import { UserProcessModel } from '../../common/models/user-process.model';
+import { PeopleProcessService } from '../../common/services/people-process.service';
 
 const fakeUser = new UserProcessModel({
     id: 'fake-id',
@@ -73,7 +72,6 @@ describe('TaskDetailsComponent', () => {
     let logService: LogService;
     let taskCommentsService: TaskCommentsService;
     let peopleProcessService: PeopleProcessService;
-    let bpmUserService: BpmUserService;
 
     setupTestBed({
         imports: [
@@ -86,8 +84,7 @@ describe('TaskDetailsComponent', () => {
     beforeEach(() => {
         logService = TestBed.inject(LogService);
 
-        bpmUserService = TestBed.inject(BpmUserService);
-        spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(<any>{ email: 'fake-email' }));
+        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(<any>{ email: 'fake-email' }));
 
         taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));

@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
@@ -35,6 +35,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
 import { TaskRepresentation, TaskUpdateRepresentation } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { UserProcessModel } from '../../common/models/user-process.model';
 
 declare let jasmine: any;
 

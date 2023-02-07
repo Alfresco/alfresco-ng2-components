@@ -17,19 +17,17 @@
 
 import {
     CoreTestingModule,
-    fakeBpmUser,
-    BpmUserModel,
     setupTestBed,
-    fakeEcmUser,
-    fakeEcmUserNoImage,
     UserInfoMode
 } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { fakeBpmUser } from './mocks/bpm-user.service.mock';
 
 import { ProcessUserInfoComponent } from './process-user-info.component';
+import { BpmUserModel } from '../common/models/bpm-user.model';
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
@@ -136,7 +134,6 @@ describe('ProcessUserInfoComponent', () => {
 
         beforeEach(async () => {
             component.bpmUser = fakeBpmUser;
-            component.ecmUser = fakeEcmUser as any;
             component.isLoggedIn = true;
             component.mode = UserInfoMode.ALL;
         });
@@ -191,14 +188,6 @@ describe('ProcessUserInfoComponent', () => {
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#logged-user-img')).toBeDefined();
             expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual(profilePictureUrl);
-        });
-
-        it('should show the ecm initials if the ecm user has no image', async () => {
-            component.ecmUser = fakeEcmUserNoImage as any;
-            await whenFixtureReady();
-
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('ff');
         });
 
         it('should show the tabs for the env', async () => {

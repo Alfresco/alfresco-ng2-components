@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { PeopleSearchComponent } from './people-search.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
