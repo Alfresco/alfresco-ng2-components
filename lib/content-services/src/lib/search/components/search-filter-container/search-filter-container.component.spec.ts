@@ -150,6 +150,32 @@ describe('SearchFilterContainerComponent', () => {
         expect(eventRaised).toBe(true);
     });
 
+    it('should hide the red dot after the filter is cleared', async () => {
+        const badge: HTMLElement = fixture.nativeElement.querySelector(`[data-automation-id="filter-menu-button"] .mat-badge-content`);
+        expect(window.getComputedStyle(badge).display).toBe('none');
+
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
+        const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
+        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(window.getComputedStyle(badge).display).not.toBe('none');
+
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
+        clearButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(window.getComputedStyle(badge).display).toBe('none');
+    });
+
     describe('Accessibility', () => {
 
         it('should set up a focus trap on the filter when the menu is opened', async () => {
