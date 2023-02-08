@@ -136,6 +136,12 @@ jobs:
           # node v14.15.4
           # npm 6.14.10
           # nvm 0.39.2
+      - name: Debug on failure
+        uses: mxschmitt/action-tmate@v3
+        with:
+          timeout-minutes: 60
+          limit-access-to-actor: true
+
       - run: nx run cli:bundle
       - run: nx run testing:bundle
       - uses: ./.github/actions/upload-job-artifacts
