@@ -15,7 +15,7 @@ inputs:
     description: 'enable caching for node modules'
     required: false
     type: boolean
-    default: 'true'    
+    default: 'true'
   act:
     description: 'enable act debug'
     required: false
@@ -28,7 +28,7 @@ runs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 14.15.4
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
