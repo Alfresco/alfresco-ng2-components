@@ -994,11 +994,19 @@ describe('StartProcessCloudComponent', () => {
             expect(card).toBeTruthy();
         });
 
-        it('start process button should be enabled when isLoading is false', async () => {
+    });
+
+    describe('start button', () => {
+        beforeEach(() => {
+            component.name = 'NewProcess 1';
+            component.appName = 'myApp';
             component.ngOnChanges({ appName: firstChange });
             component.processDefinitionList = fakeProcessDefinitions;
             component.processDefinitionName = fakeProcessDefinitions[0].name;
-            component.ngOnInit();
+        });
+
+        it('start process button should be enabled when isLoading is false', async () => {
+            fixture.detectChanges();
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
             component.isLoading = false;
@@ -1012,10 +1020,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('start process button should be disabled when isLoading is true', async () => {
-            component.ngOnChanges({ appName: firstChange });
-            component.processDefinitionList = fakeProcessDefinitions;
-            component.processDefinitionName = fakeProcessDefinitions[0].name;
-            component.ngOnInit();
+            fixture.detectChanges();
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
             component.isLoading = true;
@@ -1027,7 +1032,6 @@ describe('StartProcessCloudComponent', () => {
             expect(component.disableStartButton()).toBeTrue();
             expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeTrue();
         });
-
     });
 
     describe('cancel process', () => {
