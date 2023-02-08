@@ -78,14 +78,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if PR is approved
+      - name: get PR number
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Show the number
+      - name: check approved
         env:
           GH_TOKEN: ${{ github.token }}
           DEVEL_FLAG: ${{ inputs.skip-pr-approve }} #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
@@ -122,9 +122,20 @@ jobs:
         with:
           use-gh-nx-cache: false
           use-gh-node-modules-cache: false
+
       - name: run ci
         if: steps.setup.outputs.cache-hit != 'true'
         run: npm ci
+      - name: display node settings
+        run: |
+          node --version
+          npm --version
+          nvm --version || true
+          npx nx -- version || true
+          # travis config
+          # node v14.15.4
+          # npm 6.14.10
+          # nvm 0.39.2
       - run: nx run cli:bundle
       - run: nx run testing:bundle
       - uses: ./.github/actions/upload-job-artifacts
@@ -400,4 +411,3 @@ jobs:
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
-
