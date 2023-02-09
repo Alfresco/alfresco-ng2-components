@@ -153,6 +153,17 @@ runs:
           else
             bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1          
           fi
+
+    - name: upload artifacts on gh
+      id: upload_gh
+      env:
+        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
+      uses: actions/upload-artifact@v3
+      with: 
+        name: my-artifact
+        path: $REMOTE_PATH
+        if-no-files-found: error
+
     - name: upload smartrunner tests results on s3 to cache tests
       shell: bash
       if: always()

@@ -8,11 +8,17 @@ on:
         required: false
         type: boolean
         default: true
+<<<<<<< HEAD
       devel:
         description: 'devel'
         required: false
         type: string
         default: false
+=======
+  push:
+    branches:
+      - AAE-12192-upload-artifacts
+>>>>>>> 7fb2c3f98 (fix conflict)
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
