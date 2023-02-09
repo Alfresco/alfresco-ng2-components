@@ -185,7 +185,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isSelectedValueInOptions(): boolean {
-        return [...this.field.options].map(option => option.id).includes(this.fieldValue);
+        if (Array.isArray(this.fieldValue)) {
+            const optionIdList = [...this.field.options].map(option => option.id);
+            const fieldValueId = this.fieldValue.map(valueOption => valueOption.id);
+            return fieldValueId.every(valueOptionId => optionIdList.includes(valueOptionId));
+        } else {
+            return [...this.field.options].map(option => option.id).includes(this.fieldValue);
+        }
     }
 
     get fieldValue(): string {
