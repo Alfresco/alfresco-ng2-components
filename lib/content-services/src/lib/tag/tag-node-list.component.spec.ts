@@ -34,11 +34,17 @@ describe('TagNodeList', () => {
                 skipCount: 0,
                 maxItems: 100
             },
-            entries: [{
-                entry: {tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
-            }, {entry: {tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                entry: {tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
-            }]
+            entries: [
+                {
+                    entry: {tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
+                },
+                {
+                    entry: {tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'}
+                },
+                {
+                    entry: {tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
+                }
+            ]
         }
     };
 
@@ -62,14 +68,13 @@ describe('TagNodeList', () => {
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        component.nodeId = 'fake-node-id';
         fixture.detectChanges();
     });
 
     describe('Rendering tests', () => {
 
         it('Tag list relative a single node should be rendered', async () => {
-            component.nodeId = 'fake-node-id';
-
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -84,8 +89,6 @@ describe('TagNodeList', () => {
         });
 
         it('Tag list click on delete button should delete the tag', async () => {
-            component.nodeId = 'fake-node-id';
-
             spyOn(tagService, 'removeTag').and.returnValue(of(true));
 
             component.ngOnChanges();
@@ -99,7 +102,6 @@ describe('TagNodeList', () => {
         });
 
         it('Should not show the delete tag button if showDelete is false', async () => {
-            component.nodeId = 'fake-node-id';
             component.showDelete = false;
 
             component.ngOnChanges();
@@ -111,7 +113,6 @@ describe('TagNodeList', () => {
         });
 
         it('Should show the delete tag button if showDelete is true', async () => {
-            component.nodeId = 'fake-node-id';
             component.showDelete = true;
 
             component.ngOnChanges();
@@ -120,6 +121,67 @@ describe('TagNodeList', () => {
 
             const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
             expect(deleteButton).not.toBeNull();
+        });
+
+        it('should not render view more button by default', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const viewMoreButton = element.querySelector('.adf-view-more-button');
+            const tagChips = element.querySelectorAll('.adf-tag-chips');
+            expect(viewMoreButton).toBeNull();
+            expect(tagChips.length).toBe(3);
+        });
+    });
+
+    describe('Limit tags display', () => {
+        beforeEach(async () => {
+            component.limitTagsDisplayed = true;
+            element.style.maxWidth = '200px';
+            component.tagsEntries = dataTag.list.entries;
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
+
+        it('should render view more button when limiting is enabled', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const viewMoreButton = element.querySelector('.adf-view-more-button');
+            const tagChips = element.querySelectorAll('.adf-tag-chips');
+            expect(viewMoreButton).not.toBeNull();
+            expect(tagChips.length).toBe(component.tagsEntries.length);
+        });
+
+        it('should not render view more button when limiting is enabled and all tags fits into container', async () => {
+            element.style.maxWidth = '800px';
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const viewMoreButton = element.querySelector('.adf-view-more-button');
+            const tagChips = element.querySelectorAll('.adf-tag-chips');
+            expect(viewMoreButton).toBeNull();
+            expect(tagChips.length).toBe(3);
+        });
+
+        it('should display all tags when view more button is clicked', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            let viewMoreButton: HTMLButtonElement = element.querySelector('.adf-view-more-button');
+            let tagChips = element.querySelectorAll('.adf-tag-chips');
+            viewMoreButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            viewMoreButton = element.querySelector('.adf-view-more-button');
+            tagChips = element.querySelectorAll('.adf-tag-chips');
+            expect(viewMoreButton).toBeNull();
+            expect(tagChips.length).toBe(3);
         });
     });
 });

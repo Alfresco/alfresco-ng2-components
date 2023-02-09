@@ -27,9 +27,23 @@ Shows tags for a node.
 | ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | The identifier of a node. |
 | showDelete | `boolean` | true | Show delete button |
+| limitTagsDisplayed | `boolean` | false | Should limit number of tags displayed to as much as fits into container |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is selected. |
+
+## Details
+### Limit number of tags displayed initially
+
+To limit number of tags initially displayed set `limitTagsDisplayed` to `true`.
+
+```html
+<adf-tag-node-list 
+    [nodeId]="nodeId"
+    [limitTagsDisplayed]="true">
+</adf-tag-node-list>
+```
+Now when tag chips will exceed the size of the container number of displayed chips will be limited to as much as fits together with view more button. At least one tag will always be displayed, when one tag and view more button won't fit into one line the button will be displayed under the tag.
