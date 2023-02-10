@@ -169,4 +169,4 @@ runs:
       # description: always upload newer results
       run: |
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
-        aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
+        aws s3 cp "${SMART_RUNNER_PATH}/${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
