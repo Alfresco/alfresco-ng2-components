@@ -714,8 +714,8 @@ describe('FormFieldModel', () => {
             ]
         });
         field.updateForm();
-        expect(form.values['dropdown_field']['fake-id-property']).toEqual('opt1');
-        expect(form.values['dropdown_field']['fake-label-property']).toEqual('Option 1');
+        expect(form.values['dropdown_field'].id).toEqual('opt1');
+        expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
 
     it('dropdown field type should be formatted on id and name properties if rest properties are not set', () => {
@@ -760,8 +760,8 @@ describe('FormFieldModel', () => {
             ]
         });
         field.updateForm();
-        expect(form.values['radio_bananan_field']['banana']).toEqual('opt1');
-        expect(form.values['radio_bananan_field']['banLabel']).toEqual('Option 1');
+        expect(form.values['radio_bananan_field'].id).toEqual('opt1');
+        expect(form.values['radio_bananan_field'].name).toEqual('Option 1');
     });
 
     it('radio button field rest type should appear with id / name properties when rest properties are not configured', () => {
