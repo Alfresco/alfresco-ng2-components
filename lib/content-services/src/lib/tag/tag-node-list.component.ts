@@ -83,7 +83,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         this.results
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
-                if (this.limitTagsDisplayed) {
+                if (this.limitTagsDisplayed && this.tagsEntries.length > 0) {
                     this.calculateTagsToDisplay();
                 }
         });
