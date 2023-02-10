@@ -41,8 +41,8 @@ export class AppsProcessCloudService {
      * @param role to filter the apps
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
-        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, role);
+    getDeployedApplicationsByStatus(status: string, role?: string, envKey?: string): Observable<ApplicationInstanceModel[]> {
+        return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, role, envKey);
     }
 
     hasDeployedApps(): boolean {
@@ -58,12 +58,12 @@ export class AppsProcessCloudService {
         this.deployedApps = apps;
     }
 
-    private getApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
+    private getApplicationsByStatus(status: string, role?: string, envKey?: string): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
-        const path = this.getApplicationUrl();
+        const path = this.getApplicationUrl(envKey);
         const pathParams = {};
         const queryParams = { status, roles : role, sort: 'name' };
         const headerParams = {};
@@ -80,8 +80,10 @@ export class AppsProcessCloudService {
             );
     }
 
-    private getApplicationUrl(): string {
-        return `${this.appConfigService.get('bpmHost')}/deployment-service/v1/applications`;
+    private getApplicationUrl(envKey?: string): string {
+        let contextRoot = this.appConfigService.get('bpmHost', '');
+        contextRoot = contextRoot.split('://').join(`://${envKey ? 'hxps-' + envKey + '.' : ''}`);
+        return `${contextRoot}/deployment-service/v1/applications`;
     }
 
     private handleError(error?: any) {
