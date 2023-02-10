@@ -17,7 +17,7 @@
 
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { of, empty } from 'rxjs';
+import { of } from 'rxjs';
 import {
     setupTestBed,
     NotificationService,
@@ -51,9 +51,14 @@ describe('ShareDialogComponent', () => {
             ContentTestingModule
         ],
         providers: [
-            { provide: NotificationService, useValue: notificationServiceMock },
-            { provide: MatDialogRef, useValue: { close: () => {}} },
-            { provide: MAT_DIALOG_DATA, useValue: {} }
+            {provide: NotificationService, useValue: notificationServiceMock},
+            {
+                provide: MatDialogRef, useValue: {
+                    close: () => {
+                    }
+                }
+            },
+            {provide: MAT_DIALOG_DATA, useValue: {}}
         ]
     });
 
@@ -118,9 +123,9 @@ describe('ShareDialogComponent', () => {
 
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
-            entry: { id: 'sharedId', sharedId: 'sharedId' }
+            entry: {id: 'sharedId', sharedId: 'sharedId'}
         }));
-        spyOn(renditionService, 'generateRenditionForNode').and.returnValue(empty());
+        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({url: '', mimeType: ''}));
 
         component.data = {
             node,
@@ -130,16 +135,16 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
-        expect(renditionService.generateRenditionForNode).toHaveBeenCalled();
+        expect(renditionService.getNodeRendition).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
-            entry: { id: 'sharedId', sharedId: 'sharedId' }
+            entry: {id: 'sharedId', sharedId: 'sharedId'}
         }));
-        spyOn(renditionService, 'generateRenditionForNode').and.returnValue(empty());
+        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({url: '', mimeType: ''}));
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -159,7 +164,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        spyOn(matDialog, 'open').and.returnValue({beforeClosed: () => of(false)} as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -180,7 +185,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
+        spyOn(matDialog, 'open').and.returnValue({beforeClosed: () => of(true)} as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -200,7 +205,7 @@ describe('ShareDialogComponent', () => {
     }));
 
     it('should not unshare file when confirmation dialog returns false', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        spyOn(matDialog, 'open').and.returnValue({beforeClosed: () => of(false)} as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -259,7 +264,7 @@ describe('ShareDialogComponent', () => {
         await fixture.whenStable();
 
         expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            properties: { 'qshare:expiryDate': null }
+            properties: {'qshare:expiryDate': null}
         });
 
         expect(
@@ -298,10 +303,10 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         fixture.nativeElement
-        .querySelector(
-            'mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
-        )
-        .dispatchEvent(new MouseEvent('click'));
+            .querySelector(
+                'mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
+            )
+            .dispatchEvent(new MouseEvent('click'));
 
         fixture.componentInstance.form.controls['time'].setValue(date);
         fixture.detectChanges();
@@ -309,7 +314,7 @@ describe('ShareDialogComponent', () => {
         tick(100);
 
         expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            properties: { 'qshare:expiryDate': date.utc().format() }
+            properties: {'qshare:expiryDate': date.utc().format()}
         });
     }));
 
@@ -337,7 +342,7 @@ describe('ShareDialogComponent', () => {
             tick(500);
 
             expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-                    properties: { 'qshare:expiryDate': date.endOf('day').utc().format() }
+                properties: {'qshare:expiryDate': date.endOf('day').utc().format()}
             });
         }));
 
@@ -355,7 +360,7 @@ describe('ShareDialogComponent', () => {
             tick(100);
 
             expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-                    properties: { 'qshare:expiryDate': date.utc().format() }
+                properties: {'qshare:expiryDate': date.utc().format()}
             });
         }));
     });

@@ -23,7 +23,6 @@ import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { FileModel } from '../common/models/file.model';
 import { FileUploadEvent } from '../common/events/file.event';
-import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 
 import { of } from 'rxjs';
@@ -35,6 +34,8 @@ import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { SitesService } from '../common/services/sites.service';
+import { NodesApiService } from '../common/services/nodes-api.service';
+import { ContentService } from '../common/services/content.service';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -107,7 +108,8 @@ describe('ContentNodeSelectorComponent', () => {
             }
         });
 
-        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+        const nodesApiService = TestBed.inject(NodesApiService);
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
 
         component.data.showLocalUploadButton = true;
         component.hasAllowableOperations = true;
