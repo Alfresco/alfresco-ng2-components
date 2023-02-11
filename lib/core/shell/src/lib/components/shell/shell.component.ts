@@ -16,13 +16,13 @@
  */
 
 import { AppConfigService, SidenavLayoutComponent } from '@alfresco/adf-core';
-import { Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { filter, takeUntil, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
-import { SHELL_APP_SERVICE, ShellAppService } from '../../services/shell-app.service';
+import { SHELL_APP_SERVICE, ShellAppService, SHELL_NAVBAR_MIN_WIDTH, SHELL_NAVBAR_MAX_WIDTH } from '../../services/shell-app.service';
 
 @Component({
   selector: 'app-shell',
@@ -41,14 +41,21 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
   expandedSidenav: boolean;
   minimizeSidenav = false;
   hideSidenav = false;
+  sidenavMin: number;
+  sidenavMax: number;
   direction: Directionality;
 
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
     private breakpointObserver: BreakpointObserver,
-    @Inject(SHELL_APP_SERVICE) private shellService: ShellAppService
-  ) {}
+    @Inject(SHELL_APP_SERVICE) private shellService: ShellAppService,
+    @Optional() @Inject(SHELL_NAVBAR_MIN_WIDTH) navBarMinWidth: number,
+    @Optional() @Inject(SHELL_NAVBAR_MAX_WIDTH) navbarMaxWidth: number
+  ) {
+    this.sidenavMin = navBarMinWidth ?? 70;
+    this.sidenavMax = navbarMaxWidth ?? 320;
+  }
 
   ngOnInit() {
     this.isSmallScreen$ = this.breakpointObserver.observe(['(max-width: 600px)']).pipe(map((result) => result.matches));

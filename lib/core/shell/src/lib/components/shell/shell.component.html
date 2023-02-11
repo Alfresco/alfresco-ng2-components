@@ -1,7 +1,7 @@
 <adf-sidenav-layout
   #layout
-  [sidenavMin]="70"
-  [sidenavMax]="320"
+  [sidenavMin]="sidenavMin"
+  [sidenavMax]="sidenavMax"
   [stepOver]="600"
   [hideSidenav]="hideSidenav"
   [expandedSidenav]="expandedSidenav"
@@ -28,7 +28,7 @@
       >
         <adf-dynamic-component
           id="app.layout.sidenav"
-          [data]="{ mode: layout.isMenuMinimized ? 'collapsed' : 'expanded'}"
+          [data]="{ layout, mode: layout.isMenuMinimized ? 'collapsed' : 'expanded'}"
         >
         </adf-dynamic-component>
       </div>
