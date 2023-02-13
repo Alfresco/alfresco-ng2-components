@@ -13,7 +13,7 @@
         *ngIf="limitTagsDisplayed"
         class="adf-view-more-button"
         [class.adf-hidden-btn]="!calculationsDone"
-        (click)="displayAllTags()"
+        (click)="displayAllTags($event)"
         >{{ 'TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedTagsCount} }}
     </button>
 </div>

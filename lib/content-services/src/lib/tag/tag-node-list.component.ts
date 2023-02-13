@@ -34,6 +34,7 @@ import { MatChip } from '@angular/material/chips';
     encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** The identifier of a node. */
     @Input()
     nodeId: string;
@@ -109,7 +110,9 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         });
     }
 
-    displayAllTags(): void {
+    displayAllTags(event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
         this.limitTagsDisplayed = false;
         this.refreshTag();
     }
