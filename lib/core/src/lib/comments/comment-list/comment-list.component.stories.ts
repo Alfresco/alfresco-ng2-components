@@ -20,6 +20,7 @@ import { CoreStoryModule } from '../../testing/core.story.module';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsModule } from '../comments.module';
 import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
+import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 
 export default {
     component: CommentListComponent,
@@ -28,7 +29,7 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
             providers: [
-                { provide: CommentsService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } }
+                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } }
             ]
         })
     ],

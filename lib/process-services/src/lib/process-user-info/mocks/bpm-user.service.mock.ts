@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { BpmUserModel } from '../../common/models/bpm-user.model';
 
 export const fakeBpmUserNoImage = {

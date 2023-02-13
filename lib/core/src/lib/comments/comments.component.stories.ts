@@ -30,7 +30,7 @@ export default {
         moduleMetadata({
             imports: [CoreStoryModule, CommentsModule],
             providers: [
-                { provide: CommentsService, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
+                { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
         })
