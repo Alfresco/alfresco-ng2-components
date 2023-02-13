@@ -158,7 +158,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
      * @param ticket Custom ticket to use for authentication
      * @returns URL string
      */
-    private async getDocumentThumbnailUrl(node: NodeEntry, attachment?: boolean, ticket?: string): Promise<string> {
+    private getDocumentThumbnailUrl(node: NodeEntry, attachment?: boolean, ticket?: string): string {
         let resultUrl: string;
 
         if (node) {
@@ -170,7 +170,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 nodeId = node.entry.id;
             }
 
-            resultUrl = await this.contentService.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+            resultUrl = this.contentService.getDocumentThumbnailUrl(nodeId, attachment, ticket);
         }
 
         return resultUrl || this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);

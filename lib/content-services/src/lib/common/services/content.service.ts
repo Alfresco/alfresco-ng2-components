@@ -73,7 +73,7 @@ export class ContentService {
         return null;
     }
 
-    async getDocumentThumbnailUrl(nodeId: string, attachment?: boolean, ticket?: string): Promise<string> {
+    getDocumentThumbnailUrl(nodeId: string, attachment?: boolean, ticket?: string): string {
         return this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
     }
 

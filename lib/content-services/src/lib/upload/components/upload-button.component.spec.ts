@@ -388,7 +388,7 @@ describe('UploadButtonComponent', () => {
         it('should not call uploadFiles for node with other permissions', () => {
             component.rootFolderId = 'nodeId';
 
-            fakeNodeWithNoPermission.entry.allowableOperations = ['other'];
+            fakeNodeWithNoPermission.allowableOperations = ['other'];
 
             spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission.entry));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });

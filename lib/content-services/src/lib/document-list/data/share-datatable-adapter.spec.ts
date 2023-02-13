@@ -42,7 +42,7 @@ describe('ShareDataTableAdapter', () => {
         contentService = TestBed.inject(ContentService);
         thumbnailService = TestBed.inject(ThumbnailService);
 
-        spyOn(contentService, 'getDocumentThumbnailUrl').and.returnValue(Promise.resolve(imageUrl));
+        spyOn(contentService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 
     it('should use client sorting by default', () => {
@@ -268,7 +268,6 @@ describe('ShareDataTableAdapter', () => {
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
-        expect(contentService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
     });
 
     it('should resolve fallback file icon for unknown node', () => {

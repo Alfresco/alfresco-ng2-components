@@ -83,6 +83,7 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         logService = TestBed.inject(LogService);
+        peopleProcessService = TestBed.inject(PeopleProcessService);
 
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(<any>{ email: 'fake-email' }));
 
