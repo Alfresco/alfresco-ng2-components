@@ -2,8 +2,8 @@
 
 | branch | status |
 | --- | --- |
-| master | [![Build Status](https://travis-ci.com/Alfresco/alfresco-ng2-components.svg?branch=master)](https://travis-ci.com/Alfresco/alfresco-ng2-components) |
-| develop | [![Build Status](https://travis-ci.com/Alfresco/alfresco-ng2-components.svg?branch=develop)](https://travis-ci.com/Alfresco/alfresco-ng2-components) |
+| master | [![git-tag](https://github.com/Alfresco/alfresco-ng2-components/actions/workflows/git-tag.yml/badge.svg)](https://github.com/Alfresco/alfresco-ng2-components/actions/workflows/git-tag.yml) |
+| develop | [![cron schedule](https://github.com/Alfresco/alfresco-ng2-components/actions/workflows/cron.yml/badge.svg)](https://github.com/Alfresco/alfresco-ng2-components/actions/workflows/cron.yml)|
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eb873741da403bb3284778102372e7)](https://www.codacy.com/app/Alfresco/alfresco-ng2-components?utm_source=github.com&utm_medium=referral&utm_content=Alfresco/alfresco-ng2-components&utm_campaign=badger)
 [![Join the chat at https://gitter.im/Alfresco/alfresco-ng2-components](https://badges.gitter.im/Alfresco/alfresco-ng2-components.svg)](https://gitter.im/Alfresco/alfresco-ng2-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -39,8 +39,8 @@ ADF Libraries list:
 - [Insights](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/insights)
 - [Process Service Cloud](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services-cloud)
 - [Process service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services)
-- [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories) 
-    
+- [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories)
+
 ## Demo Application
 
 A separate application showcasing integration of components can be found
@@ -49,7 +49,7 @@ The app has examples of basic interaction for both APS and ACS components.
 
 ## Yeoman generators
 
-To speed up the development of your ADF application, use the 
+To speed up the development of your ADF application, use the
 [Yeoman Generator](https://github.com/Alfresco/generator-ng2-alfresco-app).
 This will create a full working project with all the right libraries and tools.
 
@@ -69,6 +69,6 @@ All components are supported in the following browsers:
 |Edge       	   |13, 14     	    |
 |Internet Explorer |11     	        |
 
-* Due to a [known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880) in Firefox, the Alfresco Upload Component does not currently support folder upload functionality on Firefox.    
+* Due to a [known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880) in Firefox, the Alfresco Upload Component does not currently support folder upload functionality on Firefox.
 
 See the [Browser Support](BROWSER-SUPPORT.md) article for more details.

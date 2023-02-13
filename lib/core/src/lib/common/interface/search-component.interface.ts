@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { QueryBody, NodePaging } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
 import { ElementRef } from '@angular/core';
+import { Subject } from 'rxjs';
 
-export interface SearchConfigurationInterface {
+interface Node {
+    id: string;
+}
 
-    /**
-     * Generates a QueryBody object with custom search parameters.
-     *
-     * @param searchTerm Term text to search for
-     * @param maxResults Maximum number of search results to show in a page
-     * @param skipCount The offset of the start of the page within the results list
-     * @returns Query body defined by the parameters
-     */
-    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody;
+interface NodeEntry {
+    entry: Node;
+}
 
+interface NodePagingList {
+    entries?: NodeEntry[];
+}
+
+interface NodePaging {
+    list?: NodePagingList;
 }
 
 export interface SearchComponentInterface {

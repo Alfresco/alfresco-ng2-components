@@ -8,6 +8,11 @@ on:
         required: false
         type: boolean
         default: true
+      devel:
+        description: 'devel'
+        required: false
+        type: string
+        default: false
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -64,41 +69,50 @@ env:
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
 
+
 jobs:
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
       - name: Check if PR is approved
         id: action
-        if: ${{ github.event_name != 'schedule' || github.actor != 'dependabot[bot]' || github.actor != 'alfresco-build' }}
-        uses: kamatama41/get-pr-number-action@v0
+        if: ${{ github.event_name != 'schedule' }}
+        uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Show the number
+      - name: check if pr is approved
         env:
+          DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
-          DEVEL_FLAG: false #put it to true if you need to develop the pipeline on your own branch. before the final merge put it to false
-        shell: bash
-        if: ${{ github.event_name != 'schedule' || github.actor != 'dependabot[bot]' || github.actor != 'alfresco-build' }}
+          skip_check: "false"
         run: |
-          if [[ "$DEVEL_FLAG" = false ]] ; then
-            echo "PR number is: ${{ steps.action.outputs.number }}"
+          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
+            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
+            skip_check="true"
+          fi
+
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            echo -e "\033[32mSchedule event\033[0m"
+            skip_check="true"
+          fi
+
+          if [[ "$DEVEL_FLAG" == "true" ]]; then
+            echo -e "\033[32mDevel flag\033[0m"
+            skip_check="true"
+          fi
+
+          if [ "$skip_check" == "false" ]; then
+            echo "Checking PR approval"
             prNumber=${{ steps.action.outputs.number }}
             checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
-              echo "PR approved"
+              echo -e "\033[32mPR approved\033[0m"
             else
-              echo "PR not approved yet"
+              echo -e "\033[31mPR NOT approved\033[0m"
               exit 1
             fi
-          else
-            echo "you are on your branch: skipping the check. REMEMBER to put DEVEL_FLAG to FALSE before the final merge!"
           fi
 
   setup:
@@ -180,7 +194,6 @@ jobs:
       - uses: ./.github/actions/download-cache-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
-      - run: rm -f /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/node_modules/.ngcc_lock_file
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
       - uses: ./.github/actions/upload-cache-and-artifacts
 
@@ -349,4 +362,3 @@ jobs:
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
-#

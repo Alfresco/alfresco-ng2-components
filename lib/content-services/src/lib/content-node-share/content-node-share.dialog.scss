@@ -66,4 +66,19 @@
     .mat-form-field-flex {
         align-items: center;
     }
+
+    @media screen and (max-width: 380px) {
+        .mat-dialog-container {
+            padding: 0 15px;
+        }
+
+        .mat-dialog-actions {
+            margin-bottom: 0;
+            padding: 2px 0;
+        }
+
+        .mat-form-field-suffix {
+            padding-left: 8px;
+        }
+    }
 }

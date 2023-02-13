@@ -465,6 +465,96 @@ describe('DropdownCloudWidgetComponent', () => {
                 { id: 'opt_2', name: 'option_2' }
             ]);
         });
+
+        it('should show preselected option for rest options', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown',
+                readOnly: 'false',
+                restUrl: 'https://fake-rest-url',
+                optionType : 'rest',
+                selectionType: 'multiple',
+                value: [
+                    { id: 'opt_3', name: 'option_3' },
+                    { id: 'opt_4', name: 'option_4' }
+                ]
+            });
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
+                {
+                    id: 'opt_1',
+                    name: 'option_1'
+                },
+                {
+                    id: 'opt_2',
+                    name: 'option_2'
+                },
+                {
+                    id: 'opt_3',
+                    name: 'option_3'
+                },
+                {
+                    id: 'opt_4',
+                    name: 'option_4'
+                }
+            ] as any));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
+            expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_3, option_4');
+
+            await openSelect('#dropdown-id');
+
+            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
+            expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
+                .toEqual(['option_3', 'option_4']);
+        });
+
+        it('should support multiple options for rest options', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown',
+                readOnly: 'false',
+                restUrl: 'https://fake-rest-url',
+                optionType : 'rest',
+                selectionType: 'multiple'
+            });
+
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
+                {
+                    id: 'opt_1',
+                    name: 'option_1'
+                },
+                {
+                    id: 'opt_2',
+                    name: 'option_2'
+                },
+                {
+                    id: 'opt_3',
+                    name: 'option_3'
+                },
+                {
+                    id: 'opt_4',
+                    name: 'option_4'
+                }
+            ] as any));
+
+            fixture.detectChanges();
+            await openSelect('#dropdown-id');
+
+            const optionOne = fixture.debugElement.query(By.css('[id="opt_2"]'));
+            const optionTwo = fixture.debugElement.query(By.css('[id="opt_4"]'));
+            optionOne.triggerEventHandler('click', null);
+            optionTwo.triggerEventHandler('click', null);
+            expect(widget.field.value).toEqual([
+                { id: 'opt_2', name: 'option_2' },
+                { id: 'opt_4', name: 'option_4' }
+            ]);
+        });
     });
 
     describe('Linked Dropdown', () => {

@@ -85,13 +85,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     isChecked(option: FormFieldOption): boolean {
         if (this.field.value && typeof this.field.value === 'object') {
-            let id = 'id';
-            let name = 'name';
-            if (this.field.restUrl) {
-                id = this.field.restIdProperty ?? 'id';
-                name = this.field.restLabelProperty ?? 'name';
-            }
-            return this.field.value[id] === option.id || this.field.value[name] === option.name;
+            return this.field.value['id'] === option.id || this.field.value['name'] === option.name;
         }
         return this.field.value === option.id;
     }

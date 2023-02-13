@@ -75,7 +75,7 @@ export class PermissionContainerComponent implements OnChanges {
         this.updateAll.emit(role);
     }
 
-    removePermission(event: MouseEvent, permissionRow: PermissionDisplayModel) {
+    removePermission(event: Event, permissionRow: PermissionDisplayModel) {
         event.stopPropagation();
         this.delete.emit(permissionRow);
     }

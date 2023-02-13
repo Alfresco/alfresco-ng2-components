@@ -16,23 +16,11 @@
     "skipLibCheck": true,
     "strictNullChecks": false,
     "target": "es2018",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "baseUrl": ".",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "node"
-    ],
-    "paths": {
-    }
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "paths": {}
   },
-  "exclude": [
-    "dist/**/*",
-    "./build.ts",
-    "node_modules/**/*"
-  ]
+  "exclude": ["dist/**/*", "./build.ts", "node_modules"]
 }
