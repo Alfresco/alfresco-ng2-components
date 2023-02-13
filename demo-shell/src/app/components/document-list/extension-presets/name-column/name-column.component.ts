@@ -26,7 +26,7 @@ import {
 } from '@angular/core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-content-services';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

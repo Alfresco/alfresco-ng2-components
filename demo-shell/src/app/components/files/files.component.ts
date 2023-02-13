@@ -45,11 +45,8 @@ import {
     AuthenticationService,
     AppConfigService,
     AppConfigValues,
-    ContentService,
-    FolderCreatedEvent,
     LogService,
     NotificationService,
-    UploadService,
     DataRow,
     UserPreferencesService,
     PaginationComponent,
@@ -57,12 +54,13 @@ import {
     DisplayMode,
     ShowHeaderMode,
     InfinitePaginationComponent,
-    FormRenderingService,
-    FileUploadEvent,
-    NodesApiService
+    FormRenderingService
 } from '@alfresco/adf-core';
 
 import {
+    ContentService,
+    FolderCreatedEvent,
+    UploadService,
     DocumentListComponent,
     PermissionStyleModel,
     UploadFilesEvent,
@@ -71,6 +69,8 @@ import {
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
+    FileUploadEvent,
+    NodesApiService,
     SharedLinksApiService
 } from '@alfresco/adf-content-services';
 
