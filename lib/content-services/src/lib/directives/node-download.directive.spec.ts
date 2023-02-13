@@ -22,7 +22,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { setupTestBed, AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContentDirectiveModule } from "@alfresco/adf-content-services";
+import { ContentDirectiveModule } from '@alfresco/adf-content-services';
 
 @Component({
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'

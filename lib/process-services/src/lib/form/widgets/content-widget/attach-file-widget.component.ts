@@ -26,8 +26,7 @@ import {
     LogService,
     ThumbnailService
 } from '@alfresco/adf-core';
-import { ContentService } from '@alfresco/adf-content-services';
-import { ContentNodeDialogService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import {
     AlfrescoEndpointRepresentation,
     Node,
