@@ -60,7 +60,7 @@ runs:
       run: |
         set -u;
         mkdir -p "${SMART_RUNNER_PATH}"
-        if [[ $(aws s3 ls "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then
+        if [[ $(aws s3 ls "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}") ]]; then
           echo "downloading test files"
           aws s3 cp "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" .;
           tar xzf ${{ inputs.e2e-tar-name }};
