@@ -48,7 +48,7 @@ declare const pdfjsViewer: any;
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],
-    host: { class: 'adf-pdf-viewer' },
+    host: {class: 'adf-pdf-viewer'},
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
@@ -99,7 +99,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingTask: any;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
-    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    pdfThumbnailsContext: { viewer: any } = {viewer: null};
     randomPdfId: string;
 
     get currentScaleText(): string {
@@ -156,29 +156,30 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (blobFile && blobFile.currentValue) {
             const reader = new FileReader();
             reader.onload = async () => {
-                const any: any = {
+                const pdfOptions = {
                     ...this.pdfjsDefaultOptions,
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
-                this.executePdf(any);
+                this.executePdf(pdfOptions);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            const any: any = {
+            let pdfOptions = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
             if (this.cacheType) {
-                any.httpHeaders = {
+                // @ts-ignore
+                pdfOptions.httpHeaders = {
                     'Cache-Control': this.cacheType
                 };
             }
-            this.executePdf(any);
+            this.executePdf(pdfOptions);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -511,7 +512,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.dialog
             .open(PdfPasswordDialogComponent, {
                 width: '400px',
-                data: { reason }
+                data: {reason}
             })
             .afterClosed().subscribe((password) => {
             if (password) {

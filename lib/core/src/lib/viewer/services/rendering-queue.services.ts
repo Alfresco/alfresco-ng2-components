@@ -128,7 +128,7 @@ export class RenderingQueueServices {
         return null;
     }
 
-    hasViewer() : boolean {
+    hasViewer(): boolean {
         return !!this.pdfViewer;
     }
 
@@ -160,7 +160,7 @@ export class RenderingQueueServices {
                 break;
             case this.renderingStates.INITIAL:
                 this.highestPriorityPage = view.renderingId;
-                const continueRendering = function() {
+                const continueRendering = function () {
                     this.renderHighestPriority();
                 }.bind(this);
                 view.draw().then(continueRendering, continueRendering);
