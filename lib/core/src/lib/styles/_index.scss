@@ -4,7 +4,9 @@
 /* stylelint-disable scss/no-global-function-names */
 /* stylelint-disable scss/at-import-partial-extension */
 @import './default-class';
-@import './theming';
+@import '../styles/colors';
+@import '../styles/mixins';
+
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
 @import './snackbar.theme';
@@ -21,6 +23,7 @@
     $warn: map-get($theme, warn);
     $accent: map-get($theme, accent);
     $primary: map-get($theme, primary);
+    $typography: map-get($theme, typography);
 
     // map SCSS variables to expose as CSS variables
     $defaults: (
@@ -81,20 +84,20 @@
         --theme-unselected-chip-bg-color: mat.get-color-from-palette($background, unselected-chip),
         --theme-status-bar-bg-color: mat.get-color-from-palette($background, status-bar),
         // fonts
-        --theme-font-family: mat.font-family($alfresco-typography),
-        --theme-body-1-font-size: mat.font-size($alfresco-typography, body-1),
-        --theme-body-2-font-size: mat.font-size($alfresco-typography, body-2),
-        --theme-body-1-line-height: mat.line-height($alfresco-typography, body-1),
-        --theme-display-1-font-size: mat.font-size($alfresco-typography, display-1),
-        --theme-display-3-font-size: mat.font-size($alfresco-typography, display-3),
-        --theme-display-4-font-size: mat.font-size($alfresco-typography, display-4),
-        --theme-caption-font-size: mat.font-size($alfresco-typography, caption),
-        --theme-title-font-size: mat.font-size($alfresco-typography, title),
-        --theme-subheading-1-font-size: mat.font-size($alfresco-typography, subheading-1),
-        --theme-subheading-2-font-size: mat.font-size($alfresco-typography, subheading-2),
-        --theme-button-font-size: mat.font-size($alfresco-typography, button),
-        --theme-headline-font-size: mat.font-size($alfresco-typography, headline),
-        --theme-headline-line-height: mat.line-height($alfresco-typography, headline),
+        --theme-font-family: mat.font-family($typography),
+        --theme-body-1-font-size: mat.font-size($typography, body-1),
+        --theme-body-2-font-size: mat.font-size($typography, body-2),
+        --theme-body-1-line-height: mat.line-height($typography, body-1),
+        --theme-display-1-font-size: mat.font-size($typography, display-1),
+        --theme-display-3-font-size: mat.font-size($typography, display-3),
+        --theme-display-4-font-size: mat.font-size($typography, display-4),
+        --theme-caption-font-size: mat.font-size($typography, caption),
+        --theme-title-font-size: mat.font-size($typography, title),
+        --theme-subheading-1-font-size: mat.font-size($typography, subheading-1),
+        --theme-subheading-2-font-size: mat.font-size($typography, subheading-2),
+        --theme-button-font-size: mat.font-size($typography, button),
+        --theme-headline-font-size: mat.font-size($typography, headline),
+        --theme-headline-line-height: mat.line-height($typography, headline),
 
         --theme-adf-icon-1-font-size: map-get($custom-css-variables, 'theme-adf-icon-1-font-size'),
         --theme-adf-picture-1-font-size: map-get($custom-css-variables, 'theme-adf-picture-1-font-size'),

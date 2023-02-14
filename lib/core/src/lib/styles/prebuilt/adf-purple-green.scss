@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 @import '../theming';
 @import './all-theme';
-@include mat.core($alfresco-typography);
+@include mat.core();
 
 $primary: mat.define-palette(mat.$purple-palette, 700, 500, 800);
 $accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
@@ -12,7 +12,8 @@ $theme: mat.define-dark-theme(
         color: (
             primary: $primary,
             accent: $accent,
-        )
+        ),
+        typography:$alfresco-typography
     )
 );
 
