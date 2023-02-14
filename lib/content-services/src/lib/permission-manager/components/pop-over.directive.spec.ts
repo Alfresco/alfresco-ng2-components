@@ -23,7 +23,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
     template: `
-        <div [adf-pop-over]="popOver" [autofocusedElementSelector]="'#test'" [target]="target" #target tabindex="0">
+        <div [adf-pop-over]="popOver" [autofocusedElementSelector]="'#test'" [target]="target" #target tabindex="0" [panelClass]="'adf-popover-test'">
         </div>
         <ng-template #popOver>
             <div id="test" tabindex="0"></div>
@@ -79,5 +79,29 @@ describe('PopOverDirective', () => {
             key: 'Escape'
         }));
         expect(popOverTrigger).not.toEqual(document.activeElement);
+    });
+
+    it('should open pop over on enter key press if pop over is not open', () => {
+        const popOverTrigger = fixture.debugElement.query(By.directive(PopOverDirective)).nativeElement;
+        fixture.detectChanges();
+        popOverTrigger.dispatchEvent(new KeyboardEvent('keyup', {
+            key: 'Enter'
+        }));
+        fixture.detectChanges();
+        const popOverPanel = document.querySelector('.adf-popover-test');
+        expect(popOverPanel).toBeDefined();
+    });
+
+    it('should close pop over on enter key press if pop over is open', () => {
+        const popOverTrigger = fixture.debugElement.query(By.directive(PopOverDirective)).nativeElement;
+        fixture.detectChanges();
+        popOverTrigger.click();
+        fixture.detectChanges();
+        popOverTrigger.dispatchEvent(new KeyboardEvent('keyup', {
+            key: 'Enter'
+        }));
+        fixture.detectChanges();
+        const popOverPanel = document.querySelector('.adf-popover-test');
+        expect(popOverPanel).toBeNull();
     });
 });

@@ -544,5 +544,8 @@
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} selected"
   },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "View {{ count }} more"
+  },
   "swsdp": "Sample: Web Site Design Project"
 }

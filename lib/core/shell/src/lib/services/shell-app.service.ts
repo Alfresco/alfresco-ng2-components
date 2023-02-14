@@ -34,3 +34,5 @@ export interface ShellAppService {
 export const SHELL_APP_SERVICE = new InjectionToken<ShellAppService>('SHELL_APP_SERVICE');
 
 export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivate & CanActivateChild>('SHELL_AUTH_TOKEN');
+export const SHELL_NAVBAR_MIN_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MIN_WIDTH');
+export const SHELL_NAVBAR_MAX_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MAX_WIDTH');

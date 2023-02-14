@@ -44,6 +44,7 @@ import { ExtensionService } from '../../services/extension.service';
       .adf-dynamic-column {
         display: flex;
         align-items: center;
+        width: inherit;
       }
     `
   ]
