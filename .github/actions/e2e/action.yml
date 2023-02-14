@@ -60,9 +60,9 @@ runs:
       run: |
         set -u;
         mkdir -p "${SMART_RUNNER_PATH}"
-        if [[ $(aws s3 ls "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then
+        if [[ $(aws s3 ls "s3://${S3_BUILD_BUCKET_SHORT_NAME}/adf/${REMOTE_PATH}" > /dev/null; echo $?) -eq 0 ]]; then
           echo "downloading test files"
-          aws s3 cp "${S3_BUILD_BUCKET}/adf/${REMOTE_PATH}" .;
+          aws s3 cp "s3://${S3_BUILD_BUCKET_SHORT_NAME}/adf/${REMOTE_PATH}" .;
           tar xzf ${{ inputs.e2e-tar-name }};
         else
           echo "nothing to download";
@@ -161,7 +161,7 @@ runs:
         name: e2e-artifact-output
         path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
 
-    - name: upload smartrunner tests results on s3 to cache tests
+    - name: upload smart-runner tests results on s3 to cache tests
       shell: bash
       if: always()
       env:
@@ -169,4 +169,4 @@ runs:
       # description: always upload newer results
       run: |
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
-        aws s3 cp "${{ inputs.e2e-tar-name }}" "${S3_BUILD_BUCKET}/adf/$REMOTE_PATH"
+        aws s3 cp "${{ inputs.e2e-tar-name }}" "s3://${S3_BUILD_BUCKET_SHORT_NAME}/adf/${REMOTE_PATH}"

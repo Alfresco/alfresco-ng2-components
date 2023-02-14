@@ -60,7 +60,6 @@ env:
   HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
   SMART_RUNNER_PATH: ".protractor-smartrunner"
   S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
-  S3_BUILD_BUCKET: ${{ secrets.S3_BUILD_BUCKET }}
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
