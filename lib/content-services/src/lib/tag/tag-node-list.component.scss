@@ -1,7 +1,31 @@
 .adf-tag-node-list {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: inherit;
+
+    &.adf-flex-column {
+        flex-direction: column;
+    }
+
+    .adf-view-more-button {
+        margin: 4px;
+        color: var(--theme-text-color);
+    }
+
+    .adf-full-width {
+        width: 100%;
+    }
+
+    .adf-hidden-btn {
+        visibility: hidden;
+    }
+
     .adf-tag-chips {
         color: var(--theme-primary-color-default-contrast);
         background-color: var(--theme-primary-color);
+        height: auto;
+        word-break: break-word;
     }
 
     .adf-tag-chips-delete {
