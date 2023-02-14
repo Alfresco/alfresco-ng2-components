@@ -221,7 +221,7 @@ export class TagService {
      * @returns Found tag which name matches exactly to passed name.
      */
     findTagByName(name: string): Observable<TagEntry> {
-        return this.getAllTheTags({name}).pipe(
+        return this.getAllTheTags({ name }).pipe(
             map((result) => result.list.entries[0]),
             catchError((error) => this.handleError(error))
         );
