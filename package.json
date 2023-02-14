@@ -130,7 +130,7 @@
     "cspell": "^5.5.1",
     "css-loader": "^6.7.1",
     "dotenv": "16.0.3",
-    "editorjs-text-color-plugin": "1.13.1",
+    "editorjs-text-color-plugin": "2.0.2",
     "eslint": "^8.30.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-import": "2.26.0",
