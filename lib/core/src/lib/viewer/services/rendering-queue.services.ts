@@ -128,6 +128,10 @@ export class RenderingQueueServices {
         return null;
     }
 
+    hasViewer() : boolean {
+        return !!this.pdfViewer;
+    }
+
     /**
      * @param view
      */

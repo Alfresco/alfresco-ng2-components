@@ -36,7 +36,7 @@ import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
@@ -156,29 +156,29 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (blobFile && blobFile.currentValue) {
             const reader = new FileReader();
             reader.onload = async () => {
-                const pdfSource: PDFSource = {
+                const any: any = {
                     ...this.pdfjsDefaultOptions,
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
-                this.executePdf(pdfSource);
+                this.executePdf(any);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            const pdfSource: PDFSource = {
+            const any: any = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
             if (this.cacheType) {
-                pdfSource.httpHeaders = {
+                any.httpHeaders = {
                     'Cache-Control': this.cacheType
                 };
             }
-            this.executePdf(pdfSource);
+            this.executePdf(any);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -186,7 +186,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: PDFSource) {
+    executePdf(pdfOptions: any) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);

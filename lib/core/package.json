@@ -47,7 +47,7 @@
     "@ngx-translate/core": ">=14.0.0",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
-    "pdfjs-dist": ">=2.5.207"
+    "pdfjs-dist": ">=3.3.122"
   },
   "keywords": [
     "core",
