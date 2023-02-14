@@ -108,7 +108,6 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         if (!this.overlayRef.hasAttached()) {
             this.attachOverlay();
         } else {
-            console.log('inside detach condition')
             this.detachOverlay();
         }
     }
