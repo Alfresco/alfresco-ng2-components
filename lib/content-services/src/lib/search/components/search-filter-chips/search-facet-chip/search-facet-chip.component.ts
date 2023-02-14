@@ -46,7 +46,6 @@ export class SearchFacetChipComponent {
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
-            this.focusTrap.focusInitialElement();
         }
     }
 
@@ -66,6 +65,16 @@ export class SearchFacetChipComponent {
     }
 
     onEnterKeydown(): void {
-        this.menuTrigger.openMenu();
+        if (!this.menuTrigger.menuOpen) {
+            this.menuTrigger.openMenu();
+        } else {
+            this.menuTrigger.closeMenu();
+        }
+    }
+
+    onEscKeydown() {
+        if (this.menuTrigger.menuOpen) {
+            this.menuTrigger.closeMenu();
+        }
     }
 }

@@ -6,6 +6,7 @@
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"
+          (keydown.escape)="onEscKeydown()"
           [attr.title]="widget.getDisplayValue() | async"
           #menuTrigger="matMenuTrigger">
     <span class="adf-search-filter-placeholder">
