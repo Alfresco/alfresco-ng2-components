@@ -34,7 +34,6 @@ export class DatePickerPage {
     }
 
     async setTodayDateValue(): Promise<void> {
-        await this.clickDatePicker();
         await this.dateTime.selectTodayDate();
     }
 
