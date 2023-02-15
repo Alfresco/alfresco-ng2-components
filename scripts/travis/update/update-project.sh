@@ -17,7 +17,7 @@ show_help() {
     echo ""
     echo "-t or --token: Github ouath token"
     echo "-p or --pr: Originating jsapi PR number"
-    echo "-v or --version version to update"    
+    echo "-v or --version version to update"
     echo "-d or --dry-run: The script won't execute critical operation, just simulate them"
 }
 
@@ -146,8 +146,9 @@ if [ "$isSameADFSha" = 'true' ]; then
             update "generator-alfresco-adf-app"
             update "alfresco-content-app"
             update "alfresco-apps"
+            update "alfresco-applications"
         else
-            echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app' and 'alfresco-apps'"
+            echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app', 'alfresco-apps' and 'alfresco-applications'"
         fi
 fi
 
