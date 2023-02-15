@@ -89,7 +89,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto' = 'init';
-    currentScale: number = 1;
 
     MAX_AUTO_SCALE: number = 1.25;
     DEFAULT_SCALE_DELTA: number = 1.1;
@@ -103,7 +102,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     randomPdfId: string;
 
     get currentScaleText(): string {
-        return Math.round(this.currentScale * 100) + '%';
+        return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
     private eventBus = new pdfjsViewer.EventBus();
@@ -372,12 +371,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     setScaleUpdatePages(newScale: number) {
         if (this.pdfViewer) {
-            if (!this.isSameScale(this.currentScale, newScale)) {
-                this.currentScale = newScale;
-
-                this.pdfViewer._pages.forEach((currentPage) => {
-                    currentPage.update(newScale);
-                });
+            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
+                this.pdfViewer.currentScaleValue = newScale;
             }
 
             this.pdfViewer.update();
@@ -429,7 +424,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks
      */
     zoomIn(ticks?: number) {
-        let newScale: any = this.currentScale;
+        let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.ceil(newScale * 10) / 10;
@@ -445,7 +440,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks
      */
     zoomOut(ticks?: number) {
-        let newScale: any = this.currentScale;
+        let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.floor(newScale * 10) / 10;

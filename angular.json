@@ -167,7 +167,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "scripts": [
               "node_modules/pdfjs-dist/build/pdf.js",
@@ -357,7 +358,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -378,7 +380,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -478,7 +481,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -499,7 +503,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -648,7 +653,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -669,7 +675,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -966,7 +973,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -987,7 +995,8 @@
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
-              "node_modules/cropperjs/dist/cropper.min.css"
+              "node_modules/cropperjs/dist/cropper.min.css",
+              "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ]
           },
           "configurations": {
