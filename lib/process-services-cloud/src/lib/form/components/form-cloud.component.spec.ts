@@ -47,7 +47,8 @@ import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
     emptyFormRepresentationJSON,
-    fakeCloudForm, fakeMetadataForm, multilingualForm
+    fakeCloudForm, fakeMetadataForm, multilingualForm,
+    formDefinitionThreeColumnMock
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -1054,6 +1055,26 @@ describe('FormCloudComponent', () => {
                 done();
             }
         });
+    });
+
+    it('should render header and three text field columns', () => {
+        const formModel = formCloudService.parseForm(formDefinitionThreeColumnMock);
+        formComponent.form = formModel;
+        fixture.detectChanges();
+
+        const columns = fixture.debugElement.queryAll(By.css('.adf-grid-list-single-column'));
+
+        expect(columns.length).toEqual(3);
+        columns.forEach(column => expect(column.styles.width).toEqual('33.3333%'));
+        columns.forEach(column => {
+            const input = column.query(By.css('input[matinput]'));
+            expect(input.attributes.type).toEqual('text');
+        });
+
+        const header = fixture.debugElement.query(By.css('#container-header'));
+        expect(header.nativeElement.innerText).toEqual('Header');
+
+        expect(formComponent.showTitle).toBeTruthy();
     });
 
     describe('form validations', () => {

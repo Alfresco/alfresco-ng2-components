@@ -741,6 +741,90 @@ export const fakeCloudForm = {
     }
 };
 
+export const formDefinitionThreeColumnMock = {
+    formRepresentation: {
+        id: 'form-358ea9b1-7a14-4066-8313-bd84f14e1dbb',
+        name: 'HeaderColumns',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: 'Header',
+                    name: 'Header',
+                    type: 'group',
+                    tab: null,
+                    params: {
+                        allowCollapse: false,
+                        collapseByDefault: false
+                    },
+                    numberOfColumns: 3,
+                    fields: {
+                        1: [
+                            {
+                                id: 'Text',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'Text',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        3: [
+                            {
+                                id: 'Text',
+                                name: 'Text',
+                                type: 'text',
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
 export const emptyFormRepresentationJSON = {
     description: '',
     fields: [],
