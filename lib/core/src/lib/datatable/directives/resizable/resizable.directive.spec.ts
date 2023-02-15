@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { ElementRef, NgZone, Renderer2 } from '@angular/core';
-import { ResizableDirective } from './resizable.directive';
+import { TestBed } from "@angular/core/testing";
+import { ElementRef, NgZone, Renderer2 } from "@angular/core";
+import { ResizableDirective } from "./resizable.directive";
 
 describe('ResizableDirective', () => {
     let ngZone: NgZone;
@@ -36,13 +36,13 @@ describe('ResizableDirective', () => {
         height: 0,
         bottom: 0,
         scrollTop,
-        scrollLeft
-    };
+        scrollLeft,
+    }
 
     const rendererMock = {
         listen: jasmine.createSpy('listen'),
         setStyle: jasmine.createSpy('setStyle')
-    };
+    }
 
     const elementRefMock = {
         nativeElement: {
@@ -50,7 +50,7 @@ describe('ResizableDirective', () => {
             scrollLeft,
             getBoundingClientRect: () => boundingClientRectMock
         }
-    };
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({

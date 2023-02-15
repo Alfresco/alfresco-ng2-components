@@ -25,7 +25,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     &__resize-handle {
         align-self: stretch;
         border: 0.5px solid var(--theme-border-color);
-
         &:hover {
             cursor: col-resize;
         }

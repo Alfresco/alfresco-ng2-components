@@ -893,7 +893,7 @@ describe('DataTable', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }],
             [
-                new ObjectDataColumn({ key: 'column_1', sortable: true })
+                new ObjectDataColumn({ key: 'column_1', sortable: true }),
             ]
         );
         fixture.detectChanges();
@@ -913,7 +913,7 @@ describe('DataTable', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }],
             [
-                new ObjectDataColumn({ key: 'column_1', sortable: true })
+                new ObjectDataColumn({ key: 'column_1', sortable: true }),
             ]
         );
         fixture.detectChanges();
@@ -1945,7 +1945,7 @@ describe('Column Resizing', () => {
         fixture.detectChanges();
         const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
 
-        expect(headerColumns[0].style.flex).toBe('0 1 65px');
+        expect(headerColumns[0].style.flex).toBe('0 0 65px');
     });
 
     it('should set the style of all the table cells under the resizing header on resizing', () => {
@@ -1956,8 +1956,8 @@ describe('Column Resizing', () => {
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
-        expect(firstCell.style.flex).toBe('0 1 65px');
-        expect(secondCell.style.flex).toBe('0 1 65px');
+        expect(firstCell.style.flex).toBe('0 0 65px');
+        expect(secondCell.style.flex).toBe('0 0 65px');
     });
 
     it('should unblur the body and set the resizing to false upon resizing ends', () => {
