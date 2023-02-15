@@ -156,7 +156,7 @@ xdescribe('Test PdfViewer component', () => {
 
         component.showToolbar = true;
         component.inputPage('1');
-        component.currentScale = 1;
+        component.pdfViewer.currentScale = 1;
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -281,10 +281,10 @@ xdescribe('Test PdfViewer component', () => {
 
                 tick(250);
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
                 zoomInButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
                 expect(zoomBefore < currentZoom).toBe(true);
             }), 55000);
 
@@ -295,10 +295,10 @@ xdescribe('Test PdfViewer component', () => {
 
                 tick(250);
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
                 zoomOutButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
                 expect(zoomBefore > currentZoom).toBe(true);
             }), 55000);
 
@@ -458,7 +458,7 @@ xdescribe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(0.8);
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
                     done();
                 });
             });
@@ -498,7 +498,7 @@ xdescribe('Test PdfViewer component', () => {
                 fixtureUrlTestComponent.detectChanges();
 
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(0.25);
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.25);
                     done();
                 });
             });
@@ -538,7 +538,7 @@ xdescribe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.currentScale).toBe(10);
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(10);
                     done();
 
                 });
