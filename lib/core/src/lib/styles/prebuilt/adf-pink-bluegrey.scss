@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 @import '../theming';
 @import './all-theme';
-@include mat.core();
+@include mat.core;
 
 $primary: mat.define-palette(mat.$pink-palette, 700, 500, 900);
 $accent: mat.define-palette(mat.$blue-grey-palette, A200, A100, A400);
