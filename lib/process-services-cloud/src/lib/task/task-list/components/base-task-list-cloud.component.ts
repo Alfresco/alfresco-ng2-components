@@ -80,6 +80,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     @Input()
     showMainDatatableActions: boolean = false;
 
+    /** Toggles main datatable column resizing feature. */
+    @Input()
+    isResizingEnabled: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
