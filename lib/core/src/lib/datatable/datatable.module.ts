@@ -51,6 +51,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IconModule } from '../icon/icon.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
+import { ResizableModule } from './directives/resizable/resizable.module';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent
         DragDropModule,
         IconModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ResizableModule
     ],
     declarations: [
         DataTableComponent,

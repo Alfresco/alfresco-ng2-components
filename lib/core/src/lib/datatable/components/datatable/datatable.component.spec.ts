@@ -311,10 +311,12 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.ngOnChanges({});
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
-        dataTable.onColumnHeaderClick(column);
+        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+
+        hedaderColumns[0].click();
+        fixture.detectChanges();
     });
 
     it('should change the rows on changing of the data', () => {
@@ -867,54 +869,53 @@ describe('DataTable', () => {
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
-    it('should not sort if column is missing', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
-        const adapter = dataTable.data;
-        spyOn(adapter, 'setSorting').and.callThrough();
-        dataTable.onColumnHeaderClick(null);
-        expect(adapter.setSorting).not.toHaveBeenCalled();
-    });
-
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }, { name: '2' }],
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({ key: 'other', sortable: true })
+            ]
+        );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        const column = new ObjectDataColumn({
-            key: 'column_1'
-        });
+        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        hedaderColumns[0].click();
+        fixture.detectChanges();
 
-        dataTable.onColumnHeaderClick(column);
         expect(adapter.setSorting).not.toHaveBeenCalled();
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [
+                new ObjectDataColumn({ key: 'column_1', sortable: true }),
+            ]
+        );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc'));
 
-        const column = new ObjectDataColumn({
-            key: 'column_1',
-            sortable: true
-        });
+        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        hedaderColumns[0].click();
+        fixture.detectChanges();
 
-        dataTable.onColumnHeaderClick(column);
-        expect(adapter.setSorting).toHaveBeenCalledWith(
-            jasmine.objectContaining({
-                key: 'column_1',
-                direction: 'asc'
-            })
-        );
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [
+                new ObjectDataColumn({ key: 'column_1', sortable: true }),
+            ]
+        );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
@@ -922,30 +923,20 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc');
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
+        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
-        const column = new ObjectDataColumn({
-            key: 'column_1',
-            sortable: true
-        });
+        // // check first click on the header
+        hedaderColumns[0].click();
+        fixture.detectChanges();
 
-        // check first click on the header
-        dataTable.onColumnHeaderClick(column);
-        expect(adapter.setSorting).toHaveBeenCalledWith(
-            jasmine.objectContaining({
-                key: 'column_1',
-                direction: 'desc'
-            })
-        );
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc'));
 
         // check second click on the header
         sorting.direction = 'desc';
-        dataTable.onColumnHeaderClick(column);
-        expect(adapter.setSorting).toHaveBeenCalledWith(
-            jasmine.objectContaining({
-                key: 'column_1',
-                direction: 'asc'
-            })
-        );
+        hedaderColumns[0].click();
+        fixture.detectChanges();
+
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
    });
 
     it('should indicate column that has sorting applied', () => {
@@ -960,8 +951,10 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
+        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
-        dataTable.onColumnHeaderClick(col2);
+        hedaderColumns[1].click();
+        fixture.detectChanges();
 
         expect(dataTable.isColumnSortActive(col1)).toBe(false);
         expect(dataTable.isColumnSortActive(col2)).toBe(true);
@@ -1803,5 +1796,190 @@ describe('Show/hide columns', () => {
             dataTable.markRowAsContextMenuSource(row);
             expect(row.isContextMenuSource).toBeTrue();
         });
+    });
+});
+
+describe('Column Resizing', () => {
+    let fixture: ComponentFixture<DataTableComponent>;
+    let dataTable: DataTableComponent;
+    let data: { id: number; name: string }[] = [];
+    let dataTableSchema: DataColumn[] = [];
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
+        declarations: [CustomColumnTemplateComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        data = [
+            { id: 1, name: 'name1' },
+            { id: 2, name: 'name2' }
+        ];
+
+        dataTableSchema = [
+            new ObjectDataColumn({ key: 'id', title: 'ID', draggable: true }),
+            new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
+        ];
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [...data],
+            [...dataTableSchema]
+        );
+
+        dataTable.isResizingEnabled = false;
+        fixture.detectChanges();
+    });
+
+    it('should NOT display resize handle when the feature is Disabled [isResizingEnabled=false]', () => {
+        const resizeHandle = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+
+        expect(resizeHandle).toBeNull();
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+
+        headerColumns.forEach((header: HTMLElement) => {
+            expect(header.classList).toContain('adf-datatable__cursor--pointer');
+        });
+    });
+
+    it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {
+        dataTable.isResizingEnabled = true;
+
+        fixture.detectChanges();
+        const resizeHandle = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+
+        expect(resizeHandle).not.toBeNull();
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+
+        headerColumns.forEach((header: HTMLElement) => {
+            expect(header.classList).toContain('adf-datatable__cursor--pointer');
+        });
+    });
+
+    it('should NOT have the cursor pointer class in the header upon resizing starts', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+
+        expect(dataTable.isResizing).toBeTrue();
+        headerColumns.forEach((header: HTMLElement) => {
+            expect(header.classList).not.toContain('adf-datatable__cursor--pointer');
+        });
+    });
+
+    it('should NOT have the [adf-datatable-cell-header-content--hovered] class in the header upon resizing starts', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+
+        expect(dataTable.isResizing).toBeTrue();
+        headerColumns.forEach((header: HTMLElement) => {
+            expect(header.classList).not.toContain('adf-datatable-cell-header-content--hovered');
+        });
+    });
+
+    it('should NOT display drag icon upon resizing starts', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
+        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        fixture.detectChanges();
+        let dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
+
+        expect(dragIcon).not.toBeNull();
+
+        const resizeHandle: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable__resize-handle');
+        resizeHandle[0].dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
+
+        expect(dataTable.isResizing).toBeTrue();
+        expect(dragIcon).toBeNull();
+    });
+
+    it('should blur the table body upon resizing starts', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+
+        expect(dataTable.isResizing).toBeTrue();
+        expect(tableBody.classList).toContain('adf-blur-datatable-body');
+    });
+
+    it('should set column width on resizing', () => {
+        const adapter = dataTable.data;
+        spyOn(adapter, 'setColumns').and.callThrough();
+
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+        fixture.detectChanges();
+        const columns = dataTable.data.getColumns();
+
+        expect(columns[0].width).toBe(65);
+        expect(adapter.setColumns).toHaveBeenCalledWith(columns);
+    });
+
+    it('should set the column header style on resizing', () => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+        fixture.detectChanges();
+        const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+
+        expect(headerColumns[0].style.flex).toBe('0 0 65px');
+    });
+
+    it('should set the style of all the table cells under the resizing header on resizing', () => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+        fixture.detectChanges();
+
+        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
+        const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
+
+        expect(firstCell.style.flex).toBe('0 0 65px');
+        expect(secondCell.style.flex).toBe('0 0 65px');
+    });
+
+    it('should unblur the body and set the resizing to false upon resizing ends', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+
+        expect(dataTable.isResizing).toBeTrue();
+        expect(tableBody.classList).toContain('adf-blur-datatable-body');
+
+        resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
+        fixture.detectChanges();
+
+        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
+        fixture.detectChanges();
+
+        expect(dataTable.isResizing).toBeFalse();
+        expect(tableBody.classList).not.toContain('adf-blur-datatable-body');
     });
 });
