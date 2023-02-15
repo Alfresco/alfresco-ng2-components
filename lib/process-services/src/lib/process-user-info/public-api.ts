@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
-export * from './components/user-info.component';
-export * from './userinfo.module';
+export * from './process-user-info.component';
+
+export * from './process-user-info.module';

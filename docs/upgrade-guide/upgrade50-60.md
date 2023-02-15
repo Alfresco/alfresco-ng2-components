@@ -86,6 +86,7 @@ How to fix it:
 | Class | Before | After |
 | --- | -- | --- |
 | `LoginDialogService` | `@alfresco/adf-core`|
+| `UserInfoComponent` | `@alfresco/adf-core`|
 
 ### DataColumnModule
 
@@ -224,6 +225,16 @@ The ```adf-comments``` has now two specialization in :
 ### ViewerComponent
 From v.6.0.0 and after [`ViewerComponent`](../../docs/core/components/viewer.component.md) no longer show content from ACS, so instead of taking `nodeId` as `@Input`, it takes `blobFile` and `urlFile`. For more details check the [`PR`](https://github.com/Alfresco/alfresco-ng2-components/pull/7992).
 If you need to display content from ACS you can use instead the new [`AlfrescoViewerComponent`](../../docs/content-services/components/alfresco-viewer.component.md)
+
+### UserInfoComponent
+From v.6.0.0 and after ```UserInfoComponent``` is no longer active.
+
+In its place there are now 3 presentational components:
+- [`IdentityUserInfoComponent`](../../docs/core/components/identity-user-info.component.md) present in core
+- [`ContentUserInfoComponent`](../../docs/content-services/components/content-user-info.component.md) present in content-services
+- [`ProcessUserInfoComponent`](../../docs/process-services/components/process-user-info.component.md) present in process-services
+
+To build a similar logic to the one in ```UserInfoComponent``` check implementation on [`demo-shell`](../../demo-shell/src/app/components/app-layout/user-info/user-info.component.ts)
 
 ## Renamed items
 

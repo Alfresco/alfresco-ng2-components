@@ -31,7 +31,6 @@ import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
-import { UserInfoModule } from './userinfo/userinfo.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
@@ -64,6 +63,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.module';
 
 @NgModule({
     imports: [
@@ -74,11 +74,11 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         SidenavLayoutModule,
         PipeModule,
         CommonModule,
+        IdentityUserInfoModule,
         DirectiveModule,
         DownloadZipDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,
@@ -118,8 +118,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
         DownloadZipDialogModule,
         ClipboardModule,
         FormsModule,
+        IdentityUserInfoModule,
         ReactiveFormsModule,
-        UserInfoModule,
         MaterialModule,
         AppConfigModule,
         PaginationModule,

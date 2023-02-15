@@ -27,6 +27,7 @@ export * from './services/thumbnail.service';
 export * from './services/sort-by-category.service';
 
 export * from './models/log-levels.model';
+export * from './models/user-info-mode.enum';
 
 export * from './interface/search-component.interface';
 

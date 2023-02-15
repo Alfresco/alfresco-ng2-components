@@ -15,34 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../../auth/services/authentication.service';
-import { BpmUserModel } from '../../models/bpm-user.model';
-import { EcmUserModel } from '../../models/ecm-user.model';
-import { IdentityUserModel } from '../../auth/models/identity-user.model';
-import { BpmUserService } from '../../services/bpm-user.service';
-import { IdentityUserService } from '../../auth/services/identity-user.service';
-import { of, Observable, Subject } from 'rxjs';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { PeopleContentService } from '../../services/people-content.service';
+import { AuthenticationService, BpmUserModel, BpmUserService, EcmUserModel, IdentityUserModel, IdentityUserService, PeopleContentService, UserInfoMode } from '@alfresco/adf-core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { Observable, of } from 'rxjs';
 
 @Component({
-    selector: 'adf-userinfo',
-    templateUrl: './user-info.component.html',
-    styleUrls: ['./user-info.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'app-shell-user-info',
+    templateUrl: './user-info.component.html'
 })
-export class UserInfoComponent implements OnInit, OnDestroy {
-
-    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-
-    /** Custom path for the background banner image for ACS users. */
-    @Input()
-    ecmBackgroundImage: string = './assets/images/ecm-background.png';
-
-    /** Custom path for the background banner image for APS users. */
-    @Input()
-    bpmBackgroundImage: string = './assets/images/bpm-background.png';
+export class UserInfoComponent implements OnInit {
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
@@ -52,23 +34,12 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     @Input()
     menuPositionY: MenuPositionY = 'below';
 
-    /** Shows/hides the username next to the user info button. */
-    @Input()
-    showName: boolean = true;
-
-    /** When the username is shown, this defines its position relative to the user info button.
-     * Can be `right` or `left`.
-     */
-    @Input()
-    namePosition: string = 'right';
-
-    mode: string;
-
+    mode: UserInfoMode;
     ecmUser$: Observable<EcmUserModel>;
     bpmUser$: Observable<BpmUserModel>;
     identityUser$: Observable<IdentityUserModel>;
     selectedIndex: number;
-    private destroy$ = new Subject();
+    userInfoMode = UserInfoMode;
 
     constructor(private peopleContentService: PeopleContentService,
                 private bpmUserService: BpmUserService,
@@ -80,40 +51,26 @@ export class UserInfoComponent implements OnInit, OnDestroy {
         this.getUserInfo();
     }
 
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.complete();
-    }
-
     getUserInfo() {
         if (this.authService.isOauth()) {
             this.loadIdentityUserInfo();
-            this.mode = 'SSO';
+            this.mode = UserInfoMode.SSO;
 
             if (this.authService.isECMProvider() && this.authService.isEcmLoggedIn()) {
+                this.mode = UserInfoMode.CONTENT_SSO;
                 this.loadEcmUserInfo();
             }
 
         } else if (this.isAllLoggedIn()) {
             this.loadEcmUserInfo();
             this.loadBpmUserInfo();
-            this.mode = 'ALL';
+            this.mode = UserInfoMode.ALL;
         } else if (this.isEcmLoggedIn()) {
             this.loadEcmUserInfo();
-            this.mode = 'CONTENT';
+            this.mode = UserInfoMode.CONTENT;
         } else if (this.isBpmLoggedIn()) {
             this.loadBpmUserInfo();
-            this.mode = 'PROCESS';
-        }
-    }
-
-    onKeyPress(event: KeyboardEvent) {
-        this.closeUserModal(event);
-    }
-
-    private closeUserModal($event: KeyboardEvent) {
-        if ($event.keyCode === 27) {
-            this.trigger.closeMenu();
+            this.mode = UserInfoMode.PROCESS;
         }
     }
 
@@ -147,20 +104,5 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     private isEcmLoggedIn() {
         return this.authService.isEcmLoggedIn() || (this.authService.isECMProvider() && this.authService.isKerberosEnabled());
     }
-
-    stopClosing(event: Event) {
-        event.stopPropagation();
-    }
-
-    getEcmAvatar(avatarId: any): string {
-        return this.peopleContentService.getUserProfileImage(avatarId);
-    }
-
-    getBpmUserImage(): string {
-        return this.bpmUserService.getCurrentUserProfileImage();
-    }
-
-    get showOnRight(): boolean {
-        return this.namePosition === 'right';
-    }
 }
+

@@ -17,12 +17,12 @@
 
 export * from './lib/about/index';
 export * from './lib/viewer/index';
-export * from './lib/userinfo/index';
 export * from './lib/toolbar/index';
 export * from './lib/pagination/index';
 export * from './lib/login/index';
 export * from './lib/language-menu/index';
 export * from './lib/info-drawer/index';
+export * from './lib/identity-user-info/index';
 export * from './lib/datatable/data-column/index';
 export * from './lib/datatable/index';
 export * from './lib/context-menu/index';

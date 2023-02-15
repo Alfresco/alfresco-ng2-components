@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ContentUserInfoComponent } from './content-user-info.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '../pipes/pipe.module';
-import { UserInfoComponent } from './components/user-info.component';
+import { PipeModule } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
+    declarations: [ContentUserInfoComponent],
     imports: [
         CommonModule,
         MatButtonModule,
@@ -35,12 +36,6 @@ import { MatCardModule } from '@angular/material/card';
         TranslateModule,
         PipeModule
     ],
-    declarations: [
-        UserInfoComponent
-    ],
-    exports: [
-        UserInfoComponent
-    ]
+    exports: [ContentUserInfoComponent]
 })
-export class UserInfoModule {
-}
+export class ContentUserInfoModule {}
