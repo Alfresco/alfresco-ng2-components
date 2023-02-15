@@ -10,7 +10,7 @@
                 <button *ngIf="field.buckets.filterText" mat-button matSuffix mat-icon-button
                         [title]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate"
                         (click)="field.buckets.filterText = ''">
-                    <mat-icon role="button">clear</mat-icon>
+                    <mat-icon role="button" [attr.aria-label]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate">clear</mat-icon>
                 </button>
             </mat-form-field>
         </div>
