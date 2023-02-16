@@ -16,7 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CategoryEntry, CategoryPaging } from '@alfresco/js-api';
+import {
+    CategoryEntry,
+    CategoryPaging, Pagination, PathInfo, ResultNode,
+    ResultSetPaging,
+    ResultSetPagingList,
+    ResultSetRowEntry
+} from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -24,6 +30,29 @@ export class CategoryServiceMock {
 
     public getSubcategories(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
         return parentNodeId ? of(this.getChildrenLevelResponse(skipCount, maxItems)) : of(this.getRootLevelResponse(skipCount, maxItems));
+    }
+
+    public searchCategories(): Observable<ResultSetPaging> {
+        const result = new ResultSetPaging();
+        result.list = new ResultSetPagingList();
+        const category1 = new ResultSetRowEntry();
+        category1.entry = new ResultNode();
+        category1.entry.name = 'some name';
+        category1.entry.id = 'some id 1';
+        category1.entry.parentId = 'parent id 1';
+        category1.entry.path = new PathInfo();
+        category1.entry.path.name = '/categories/General';
+        const category2 = new ResultSetRowEntry();
+        category2.entry = new ResultNode();
+        category2.entry.name = 'some other name';
+        category2.entry.id = 'some id 2';
+        category2.entry.parentId = 'parent id 2';
+        category2.entry.path = new PathInfo();
+        category2.entry.path.name = '/categories/General/Language';
+        result.list.entries = [category1, category2];
+        result.list.pagination = new Pagination();
+        result.list.pagination.count = 2;
+        return of(result);
     }
 
     private getRootLevelResponse(skipCount?: number, maxItems?: number): CategoryPaging {
