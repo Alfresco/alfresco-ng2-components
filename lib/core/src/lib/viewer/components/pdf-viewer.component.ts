@@ -36,7 +36,7 @@ import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
@@ -48,7 +48,7 @@ declare const pdfjsViewer: any;
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],
-    host: { class: 'adf-pdf-viewer' },
+    host: {class: 'adf-pdf-viewer'},
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
@@ -89,7 +89,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto' = 'init';
-    currentScale: number = 1;
 
     MAX_AUTO_SCALE: number = 1.25;
     DEFAULT_SCALE_DELTA: number = 1.1;
@@ -99,11 +98,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingTask: any;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
-    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    pdfThumbnailsContext: { viewer: any } = {viewer: null};
     randomPdfId: string;
 
     get currentScaleText(): string {
-        return Math.round(this.currentScale * 100) + '%';
+        return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
     private eventBus = new pdfjsViewer.EventBus();
@@ -156,29 +155,30 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (blobFile && blobFile.currentValue) {
             const reader = new FileReader();
             reader.onload = async () => {
-                const pdfSource: PDFSource = {
+                const pdfOptions = {
                     ...this.pdfjsDefaultOptions,
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
-                this.executePdf(pdfSource);
+                this.executePdf(pdfOptions);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            const pdfSource: PDFSource = {
+            let pdfOptions = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
             if (this.cacheType) {
-                pdfSource.httpHeaders = {
+                // @ts-ignore
+                pdfOptions.httpHeaders = {
                     'Cache-Control': this.cacheType
                 };
             }
-            this.executePdf(pdfSource);
+            this.executePdf(pdfOptions);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -186,7 +186,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: PDFSource) {
+    executePdf(pdfOptions: any) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
@@ -371,12 +371,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      */
     setScaleUpdatePages(newScale: number) {
         if (this.pdfViewer) {
-            if (!this.isSameScale(this.currentScale, newScale)) {
-                this.currentScale = newScale;
-
-                this.pdfViewer._pages.forEach((currentPage) => {
-                    currentPage.update(newScale);
-                });
+            if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
+                this.pdfViewer.currentScaleValue = newScale;
             }
 
             this.pdfViewer.update();
@@ -428,7 +424,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks
      */
     zoomIn(ticks?: number) {
-        let newScale: any = this.currentScale;
+        let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.ceil(newScale * 10) / 10;
@@ -444,7 +440,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * @param ticks
      */
     zoomOut(ticks?: number) {
-        let newScale: any = this.currentScale;
+        let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.floor(newScale * 10) / 10;
@@ -511,7 +507,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.dialog
             .open(PdfPasswordDialogComponent, {
                 width: '400px',
-                data: { reason }
+                data: {reason}
             })
             .afterClosed().subscribe((password) => {
             if (password) {

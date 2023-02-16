@@ -81,6 +81,12 @@ Title
 Description
 How to fix it:
 
+## Library to update
+| Name | Version |
+| --- | -- |
+| `pdfjs-dist` | `3.3.122`|
+
+
 ## Deprecated items
 
 | Class | Before | After |
