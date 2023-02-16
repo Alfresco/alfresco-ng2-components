@@ -110,6 +110,5 @@ describe('CategoryTreeDatasourceService', () => {
                 });
                 done();
             });
-
     });
 });
