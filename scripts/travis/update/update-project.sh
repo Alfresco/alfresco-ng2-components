@@ -19,6 +19,7 @@ show_help() {
     echo "-p or --pr: Originating jsapi PR number"
     echo "-v or --version version to update"
     echo "-d or --dry-run: The script won't execute critical operation, just simulate them"
+    echo "-r or --repo: Repository to update"
 }
 
 set_token() {
@@ -41,6 +42,10 @@ set_dryrun() {
 
     DRY_RUN="true"
 
+}
+
+set_repo() {
+    REPO=$1
 }
 
 update_dependency() {
@@ -75,9 +80,9 @@ update_js_dependency() {
 
 update() {
     NAME_REPO=$1
-    PKG_VERSION=$(npm view $PKG@$VERSION version)
-    echo "Update dependencies $NAME_REPO"
+    PKG_VERSION=$(npm view @alfresco/adf-core@$VERSION version)
 
+    echo "Update dependencies for repo: $NAME_REPO"
     git clone https://$TOKEN@github.com/Alfresco/$NAME_REPO.git $TEMP_GENERATOR_DIR
     cd $TEMP_GENERATOR_DIR
 
@@ -93,13 +98,24 @@ update() {
     fi
 
     update_js_dependency "@alfresco/js-api" $JS_API_INSTALLED
-    update_dependency "@alfresco/adf-extensions"
-    update_dependency "@alfresco/adf-core"
-    update_dependency "@alfresco/adf-content-services"
-    update_dependency "@alfresco/adf-process-services"
-    update_dependency "@alfresco/adf-process-services-cloud"
-    update_dependency "@alfresco/adf-cli"
-    update_dependency "@alfresco/adf-testing"
+
+    if [ "$NAME_REPO" = "alfresco-apps" ]; then
+        update_dependency "@alfresco/adf-extensions"
+        update_dependency "@alfresco/adf-core"
+        update_dependency "@alfresco/adf-content-services"
+        update_dependency "@alfresco/adf-process-services-cloud"
+        update_dependency "@alfresco/adf-cli"
+        update_dependency "@alfresco/adf-testing"
+    else
+        update_dependency "@alfresco/adf-extensions"
+        update_dependency "@alfresco/adf-core"
+        update_dependency "@alfresco/adf-content-services"
+        update_dependency "@alfresco/adf-process-services"
+        update_dependency "@alfresco/adf-process-services-cloud"
+        update_dependency "@alfresco/adf-cli"
+        update_dependency "@alfresco/adf-testing"
+    fi
+   
 
     if [ "$BRANCH_CREATED" = true ]; then
         git push origin $BRANCH_TO_CREATE
@@ -121,6 +137,7 @@ while [[ $1 == -* ]]; do
       -v|--version)  version $2; shift 2;;
       -c|--commit) set_commit $2; shift 2;;
       -d|--dry-run) set_dryrun $2; shift; shift;;
+      -r|--repo) set_repo $2; shift; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -132,25 +149,19 @@ cd "$REPO_DIR"
 
 if [[ (-z "$TOKEN") || (-z "$VERSION") ]]
   then
-    echo "Each of 'branch name' (-b)  token (-t) and pr number (-p) have to be set. See -help."
+    echo "Each of token (-t) pr number (-p) and repo (-r) have to be set. See -help."
     exit 1;
 fi
 
 rm -rf $TEMP_GENERATOR_DIR
 
-isSameADFSha=$(node $BUILD_PIPELINE_DIR/adf-same-commit-verify.js --token=$TOKEN --head=$BRANCH_TO_CREATE --repo=$NAME_REPO --commit=$COMMIT )
-if [ "$isSameADFSha" = 'true' ]; then
-        echo 'ADF sha is the same. No need to create another pr'
-    else
-        if [ "$DRY_RUN" = "false" ]; then
-            update "generator-alfresco-adf-app"
-            update "alfresco-content-app"
-            update "alfresco-apps"
-            update "alfresco-applications"
-        else
-            echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app', 'alfresco-apps' and 'alfresco-applications'"
-        fi
-fi
 
+if [ "$DRY_RUN" = "false" ]; then
+    update "generator-alfresco-adf-app"
+    update "alfresco-content-app"
+    update $REPO
+else
+    echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app', $REPO"
+fi
 
 exit $?
