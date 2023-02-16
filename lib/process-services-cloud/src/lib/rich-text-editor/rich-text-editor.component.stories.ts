@@ -17,7 +17,7 @@
 
 import { RichTextEditorModule } from './rich-text-editor.module';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
+import { CoreStoryModule } from '../../../../core/src/lib/testing/core.story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
 import { exampleData } from './mocks/rich-text-editor.mock';
 

@@ -18,8 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
+import { FormService } from '../../../../../../../core/src/lib/form/services/form.service';
+import { WidgetComponent } from '../../../../../../../core/src/lib/form/components/widgets/widget.component';
 /* cspell:disable-next-line */
 import edjsHTML from 'editorjs-html';
 @Component({

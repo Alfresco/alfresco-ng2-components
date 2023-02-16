@@ -17,7 +17,7 @@
 
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OutputData } from '@editorjs/editorjs';
-import { RichTextEditorComponent as AdfRichTextEditorComponent } from '@alfresco/adf-core';
+import { RichTextEditorComponent as AdfRichTextEditorComponent } from '@alfresco/adf-process-services-cloud';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 

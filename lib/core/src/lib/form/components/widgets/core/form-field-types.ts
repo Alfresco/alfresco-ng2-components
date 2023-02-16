@@ -22,6 +22,8 @@ export class FormFieldTypes {
     static GROUP: string = 'group';
     static DYNAMIC_TABLE: string = 'dynamic-table';
     static TEXT: string = 'text';
+    static STRING: string = 'string';
+    static INTEGER: string = 'integer';
     static MULTILINE_TEXT: string = 'multi-line-text';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
@@ -42,6 +44,8 @@ export class FormFieldTypes {
     static PROPERTIES_VIEWER: string = 'properties-viewer';
     static ALFRESCO_FILE_VIEWER: string = 'file-viewer';
     static VIEWER: string = 'base-viewer';
+    static DISPLAY_RICH_TEXT: string = 'display-rich-text';
+    static JSON: string = 'json';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

@@ -140,6 +140,7 @@ v6.0.0 and after:
 | `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `RichTextEditorComponent` | `@alfresco/adf-core` | `@alfresco/adf-process-services-cloud` |
 
 
 ### Update Data-table a data change
