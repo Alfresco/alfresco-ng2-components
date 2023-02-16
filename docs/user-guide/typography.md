@@ -14,13 +14,16 @@ To get started you need to include your custom font in the `/src/index.html` hea
 ```html
   <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 ```
-
+When adding custom typography, please be aware of angular material version
+(there are two different versions of typography levels: 2014 and 2018). Current 
+version is 14.
 After you need to change your `/src/custom-style.scss` to include the new font:
 
 ```scss
 /*
  *  Include only packages that you are using (and core by default)
  */
+@use '@angular/material' as mat;
 @import '~@angular/material/theming';
 @import '~ng2-alfresco-core/styles/theming';
 @import '~ng2-alfresco-core/styles/index';
@@ -35,29 +38,38 @@ After you need to change your `/src/custom-style.scss` to include the new font:
 @import '~ng2-alfresco-upload/styles/index';
 @import '~ng2-alfresco-userinfo/styles/index';
 
-$custom-typography: mat-typography-config(
+$custom-typography: mat.define-typography-config(
     $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
-    $display-4:     mat-typography-level(112px, 112px, 300),
-    $display-3:     mat-typography-level(56px, 56px, 400),
-    $display-2:     mat-typography-level(45px, 48px, 400),
-    $display-1:     mat-typography-level(34px, 40px, 400),
-    $headline:      mat-typography-level(24px, 32px, 400),
-    $title:         mat-typography-level(20px, 32px, 500),
-    $subheading-2:  mat-typography-level(16px, 28px, 400),
-    $subheading-1:  mat-typography-level(15px, 24px, 400),
-    $body-2:        mat-typography-level(14px, 24px, 500),
-    $body-1:        mat-typography-level(14px, 20px, 400),
-    $caption:       mat-typography-level(12px, 20px, 400),
-    $button:        mat-typography-level(14px, 14px, 500),
-    $input:         mat-typography-level(16px, 1.25, 400)
+    $display-4:     mat.define-typography-level(112px, 112px, 300),
+    $display-3:     mat.define-typography-level(56px, 56px, 400),
+    $display-2:     mat.define-typography-level(45px, 48px, 400),
+    $display-1:     mat.define-typography-level(34px, 40px, 400),
+    $headline:      mat.define-typography-level(24px, 32px, 400),
+    $title:         mat.define-typography-level(20px, 32px, 500),
+    $subheading-2:  mat.define-typography-level(16px, 28px, 400),
+    $subheading-1:  mat.define-typography-level(15px, 24px, 400),
+    $body-2:        mat.define-typography-level(14px, 24px, 500),
+    $body-1:        mat.define-typography-level(14px, 20px, 400),
+    $caption:       mat.define-typography-level(12px, 20px, 400),
+    $button:        mat.define-typography-level(14px, 14px, 500),
+    $input:         mat.define-typography-level(16px, 1.25, 400)
 );
 
-@include mat-core($custom-typography);
+@include mat.core();
 
-$primary: mat-palette($alfresco-accent-orange);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+$primary: mat.define-palette($alfresco-accent-orange);
+$accent:  mat.define-palette($alfresco-accent-purple);
+$warn:    mat.define-palette($alfresco-warn);
+$theme:   mat.define-light-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        ),
+        typography: $custom-typography
+    )
+);
 
 @include angular-material-theme($theme);
 

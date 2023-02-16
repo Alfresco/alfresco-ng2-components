@@ -70,19 +70,22 @@ When you want more customization than a pre-built theme offers, you can create y
 /*
  *  Include only packages that you are using (and core by default)
  */
+@use '@angular/material' as mat;
 @import '~@angular/material/theming';
 @import '~@alfresco/adf-core/theming';
 
-@include mat-core($alfresco-typography);
+@include mat.core();
 
-$primary: mat-palette($alfresco-accent-orange);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme((
+$primary: mat.define-palette($alfresco-accent-orange);
+$accent:  mat.define-palette($alfresco-accent-purple);
+$warn:    mat.define-palette($alfresco-warn);
+$theme:   mat.define-light-theme((
     color: (
         primary: $primary,
         accent: $accent,
-    )
+        warn: $warn,
+    ),
+    typography: $alfresco-typography
 ));
 
 @include angular-material-theme($theme);
@@ -103,21 +106,25 @@ You can create multiple themes for your application:
 
 @include mat-core($alfresco-typography);
 
-$primary: mat-palette($alfresco-accent-orange);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme((
+$primary: mat.define-palette($alfresco-accent-orange);
+$accent:  mat.define-palette($alfresco-accent-purple);
+$warn:    mat.define-palette($alfresco-warn);
+$theme:   mat.define-light-theme((
     color: (
         primary: $primary,
         accent: $accent,
-    )
+        warn: $warn,
+    ),
+    typography: $alfresco-typography
 ));
 
-$dark-theme:   mat-dark-theme((
+$dark-theme:   mat.define-dark-theme((
     color: (
         primary: $primary,
         accent: $accent,
-    )
+        warn: $warn,
+    ),
+    typography: $alfresco-typography
 ));
 
 @include alfresco-material-theme($theme);
