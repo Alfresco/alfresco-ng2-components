@@ -893,7 +893,7 @@ describe('DataTable', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }],
             [
-                new ObjectDataColumn({ key: 'column_1', sortable: true }),
+                new ObjectDataColumn({ key: 'column_1', sortable: true })
             ]
         );
         fixture.detectChanges();
@@ -913,7 +913,7 @@ describe('DataTable', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }],
             [
-                new ObjectDataColumn({ key: 'column_1', sortable: true }),
+                new ObjectDataColumn({ key: 'column_1', sortable: true })
             ]
         );
         fixture.detectChanges();

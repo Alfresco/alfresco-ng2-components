@@ -22,7 +22,7 @@ import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, Ev
 
 @Directive({
   selector: '[adf-resizable]',
-  exportAs: 'adf-resizable',
+  exportAs: 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {
   /**
@@ -136,7 +136,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
             map(([previousCoords = {}, newCoords = {}]) =>
               [
                 { clientX: previousCoords.clientX - clientX },
-                { clientX: newCoords.clientX - clientX },
+                { clientX: newCoords.clientX - clientX }
               ]
             )
           )
@@ -145,9 +145,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
               Math.ceil(previousCoords.clientX) !== Math.ceil(newCoords.clientX))
           )
           .pipe(
-            map(([, { clientX }]) =>
+            map(([, newCoords]) =>
             ({
-              clientX: Math.round(clientX),
+              clientX: Math.round(newCoords.clientX)
             }))
           )
           .pipe(takeUntil(merge(mouseup$, mousedown$)))
@@ -187,7 +187,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         if (this.resizeStart.observers.length > 0) {
           this.zone.run(() => {
             this.resizeStart.emit({
-              rectangle: this.getNewBoundingRectangle(this.startingRect, 0),
+              rectangle: this.getNewBoundingRectangle(this.startingRect, 0)
             });
           });
         }
@@ -247,7 +247,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
       height,
       bottom,
       scrollTop: nativeElement.scrollTop,
-      scrollLeft: nativeElement.scrollLeft,
+      scrollLeft: nativeElement.scrollLeft
     };
   }
 

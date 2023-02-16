@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed } from "@angular/core/testing";
-import { ElementRef, NgZone, Renderer2 } from "@angular/core";
-import { ResizeHandleDirective } from "./resize-handle.directive";
+import { TestBed } from '@angular/core/testing';
+import { ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { ResizeHandleDirective } from './resize-handle.directive';
 
 describe('ResizeHandleDirective', () => {
     let ngZone: NgZone;
@@ -26,12 +26,12 @@ describe('ResizeHandleDirective', () => {
     let directive: ResizeHandleDirective;
 
     const rendererMock = {
-        listen: jasmine.createSpy('listen'),
-    }
+        listen: jasmine.createSpy('listen')
+    };
 
     const elementRefMock = {
         nativeElement: { dispatchEvent: () => { } }
-    }
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({

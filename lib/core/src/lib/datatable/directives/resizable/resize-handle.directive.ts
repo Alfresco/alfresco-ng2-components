@@ -20,7 +20,7 @@ import { ResizableDirective } from './resizable.directive';
 import { Input, OnInit, Directive, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
 
 @Directive({
-  selector: '[adf-resize-handle]',
+  selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
   /**
@@ -33,7 +33,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
   private unlistenMouseMove: () => void;
 
   private unlistenMouseUp: () => void;
-  
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -80,7 +80,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
         this.onMouseup(mouseUpEvent);
       }
     );
-  
+
     this.resizableContainer.mousedown.next({ ...event, resize: true });
   }
 
