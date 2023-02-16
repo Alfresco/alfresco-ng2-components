@@ -113,6 +113,7 @@ jobs:
           nx build demoshell --configuration production
           . ./scripts/travis/release/docker-tag.sh
           ./scripts/travis/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          echo ""
 
   release-storybook:
     needs: [setup]
