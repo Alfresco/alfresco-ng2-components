@@ -45,7 +45,7 @@ runs:
       run: |
         VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
         echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
-        if [[ ${{ inputs.branch_name }} =~ ^master(-patch.*)?$ ]]; then
+        if [[ ${{ inputs.base_ref }} =~ ^master(-patch.*)?$ ]]; then
             # Pre-release versions
             if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
             then
@@ -55,7 +55,7 @@ runs:
                 TAG_NPM=latest
             fi
         fi
-        if [[ ${{ inputs.branch_name }} =~ ^develop(-patch.*)?$ ]]; then
+        if [[ ${{ inputs.base_ref }} =~ ^develop(-patch.*)?$ ]]; then
             TAG_NPM=alpha
         fi
         echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
