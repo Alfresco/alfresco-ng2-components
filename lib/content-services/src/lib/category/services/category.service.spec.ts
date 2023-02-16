@@ -130,7 +130,7 @@ describe('CategoryService', () => {
                 },
                 paging: {
                     skipCount: 0,
-                    maxItems: defaultMaxItems,
+                    maxItems: defaultMaxItems
                 },
                 include: ['path']
             });
