@@ -22,7 +22,7 @@ runs:
         EVENT_TYPE=""
         TRAVIS_PULL_REQUEST_BRANCH=""
         TRAVIS_BRANCH=""
-        TAG_NPM=""
+        TAG_NPM="alpha"
         REGEX="(repository|workflow)_dispatch"
         if [[ "${{ inputs.event_name }}" == "schedule"  ]]; then 
             EVENT_TYPE="cron";
