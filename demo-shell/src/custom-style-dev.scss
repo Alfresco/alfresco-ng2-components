@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import '../../lib/core/src/lib/styles/index';
-@include mat.core($alfresco-typography);
+@import '../../lib/core/src/lib/styles/typography';
+@include mat.core;
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
@@ -10,21 +11,24 @@ $theme: mat.define-light-theme(
         color: (
             primary: $primary,
             accent: $accent,
-        )
+        ),
+        typography: $alfresco-typography
     )
 );
 
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
 
+$typography: map-get($theme, typography);
+
 body,
 html {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-size: mat.font-size($alfresco-typography, body-1);
-    font-family: mat.font-family($alfresco-typography);
-    line-height: mat.line-height($alfresco-typography, body-1);
+    font-size: mat.font-size($typography, body-1);
+    font-family: mat.font-family($typography);
+    line-height: mat.line-height($typography, body-1);
 }
 
 body {
