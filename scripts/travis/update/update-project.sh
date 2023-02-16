@@ -100,6 +100,7 @@ update() {
     update_js_dependency "@alfresco/js-api" $JS_API_INSTALLED
 
     if [ "$NAME_REPO" = "alfresco-apps" ]; then
+        export GH_PACKAGES_READ_ONLY_TOKEN=""
         update_dependency "@alfresco/adf-extensions"
         update_dependency "@alfresco/adf-core"
         update_dependency "@alfresco/adf-content-services"
@@ -157,9 +158,13 @@ rm -rf $TEMP_GENERATOR_DIR
 
 
 if [ "$DRY_RUN" = "false" ]; then
-    update "generator-alfresco-adf-app"
-    update "alfresco-content-app"
-    update $REPO
+    if [ "$REPO" = "alfresco-apps" ]; then
+        update $REPO
+    else
+        update "generator-alfresco-adf-app"
+        update "alfresco-content-app"
+        update $REPO
+    fi
 else
     echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app', $REPO"
 fi
