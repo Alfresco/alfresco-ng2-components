@@ -20,9 +20,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  push:
-    branches:
-      - AAE-11883-matrix-split
 
 env:
   BASE_REF: ${{ github.base_ref }}
@@ -86,7 +83,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
         env:
-          DEVEL_FLAG: true #${{ inputs.devel }}
+          DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
