@@ -58,7 +58,7 @@
                     #resizableElement="adf-resizable"
                     (resizing)="onResizing($event, columnIndex)"
                     (resizeStart)="isResizing = true"
-                    (resizeEnd)="isResizing = false"
+                    (resizeEnd)="onResizingEnd()"
                     [attr.data-automation-id]="'auto_header_content_id_' + col.key"
                     class="adf-datatable-cell-header-content"
                     [ngClass]="{ 'adf-datatable-cell-header-content--hovered':

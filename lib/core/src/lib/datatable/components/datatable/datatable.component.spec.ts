@@ -1982,4 +1982,27 @@ describe('Column Resizing', () => {
         expect(dataTable.isResizing).toBeFalse();
         expect(tableBody.classList).not.toContain('adf-blur-datatable-body');
     });
+
+    it('should emit on columns width change when resizing ends', () => {
+        spyOn(dataTable.columnsWidthChanged,'emit');
+
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        expect(dataTable.isResizing).toBeTrue();
+
+        resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
+        fixture.detectChanges();
+
+        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
+        fixture.detectChanges();
+
+        expect(dataTable.isResizing).toBeFalse();
+        expect(dataTable.columnsWidthChanged.emit).toHaveBeenCalled();
+
+    });
 });

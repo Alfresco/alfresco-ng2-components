@@ -168,19 +168,25 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
                 const preferencesList = preferences?.list?.entries ?? [];
                 const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
                 const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
+                const columnsWidths = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsWidths);
 
                 return {
                     columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined
+                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
+                    columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                 };
             }))
-        ).subscribe(({ columnsOrder, columnsVisibility }) => {
+        ).subscribe(({ columnsOrder, columnsVisibility,columnsWidths }) => {
                 if (columnsOrder) {
                     this.columnsOrder = columnsOrder;
                 }
 
                 if (columnsVisibility) {
                     this.columnsVisibility = columnsVisibility;
+                }
+
+                if (columnsWidths) {
+                    this.columnsWidths = columnsWidths;
                 }
 
                 this.createDatatableSchema();
@@ -290,6 +296,23 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         }
 
         this.reload();
+    }
+
+    onColumnsWidthChanged(columns: DataColumn[]): void {
+        this.columnsWidths = columns.reduce((widthsColumnsMap,column)=>{
+            if(column.width) {
+                widthsColumnsMap[column.id] = Math.ceil(column.width);
+            }
+            return widthsColumnsMap;
+        },{});
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                TasksListCloudPreferences.columnsWidths,
+                this.columnsWidths
+            );
+        }
     }
 
     setSorting(sortDetail) {

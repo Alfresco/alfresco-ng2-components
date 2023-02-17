@@ -36,6 +36,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     draggable: boolean;
     isHidden: boolean;
     customData?: T;
+    width?: number;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -54,5 +55,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.draggable = input.draggable ?? false;
         this.isHidden = input.isHidden ?? false;
         this.customData = input.customData;
+        this.width = input.width;
     }
 }
