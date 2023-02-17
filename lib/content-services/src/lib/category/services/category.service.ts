@@ -92,7 +92,7 @@ export class CategoryService {
     /**
      * Searches categories by their name.
      *
-     * @param name Value for name which should be used during searching tags.
+     * @param name Value for name which should be used during searching categories.
      * @param skipCount Specify how many first results should be skipped. Default 0.
      * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
      * @return Observable<ResultSetPaging> Found categories which name contains searched name.
