@@ -18,6 +18,7 @@ on:
         options:
           - alfresco-applications
           - alfresco-apps
+          - alfresco-content-app
         default: alfresco-applications
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
