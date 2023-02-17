@@ -15,4 +15,5 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export * from './services/security-controls-groups-marks-security.service';
+export * from './services/admin-cc-security-controls-services.module';
