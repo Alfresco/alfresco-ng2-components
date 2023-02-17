@@ -211,7 +211,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.mousedown.complete();
     this.mousemove.complete();
     this.mouseup.complete();
-    this.unlistenMouseDown();
+    this.unlistenMouseDown && this.unlistenMouseDown();
     this.unlistenMouseMove && this.unlistenMouseMove();
     this.unlistenMouseUp && this.unlistenMouseUp();
     this.destroy$.next();
