@@ -5,8 +5,7 @@
 
     <div class="adf-viewer-content"
          fxLayout="column"
-         [cdkTrapFocus]="overlayMode"
-         cdkTrapFocusAutoCapture>
+         [cdkTrapFocus]="overlayMode">
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
