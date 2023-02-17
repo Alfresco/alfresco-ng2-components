@@ -136,7 +136,7 @@ describe('CategoryService', () => {
             });
         });
 
-        it('should return observable which emits paging object for tags', (done) => {
+        it('should return observable which emits paging object for categories', (done) => {
             categoryService.searchCategories('name').subscribe((paging) => {
                 expect(paging).toBe(result);
                 done();
