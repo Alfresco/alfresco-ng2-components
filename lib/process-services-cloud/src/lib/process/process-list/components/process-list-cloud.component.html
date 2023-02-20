@@ -15,12 +15,15 @@
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (showRowContextMenu)="onShowRowContextMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)"
+        [isResizingEnabled]="true"
         (rowClick)="onRowClick($any($event))"
         (row-select)="onRowSelect($any($event))"
         (row-unselect)="onRowUnselect($any($event))"
         (row-keyup)="onRowKeyUp($any($event))"
         (sorting-changed)="onSortingChanged($any($event))"
-        (columnOrderChanged)="onColumnOrderChanged($event)">
+        (columnOrderChanged)="onColumnOrderChanged($event)"
+        (columnsWidthChanged)="onColumnsWidthChanged($event)"
+        >
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner

@@ -238,20 +238,27 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                     const preferencesList = preferences?.list?.entries ?? [];
                     const columnsOrder = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnOrder);
                     const columnsVisibility = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnsVisibility);
+                    const columnsWidths = preferencesList.find(preference => preference.entry.key === ProcessListCloudPreferences.columnsWidths);
 
                     return {
                         columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
+                        columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
                 }))
             )
-            .subscribe(({ columnsOrder, columnsVisibility }) => {
+            .subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
                 if (columnsVisibility) {
                     this.columnsVisibility = columnsVisibility;
                 }
 
                 if (columnsOrder) {
                     this.columnsOrder = columnsOrder;
+                }
+
+
+                if (columnsWidths) {
+                    this.columnsWidths = columnsWidths;
                 }
 
                 this.createDatatableSchema();
@@ -381,6 +388,23 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 this.appName,
                 ProcessListCloudPreferences.columnsVisibility,
                 this.columnsVisibility
+            );
+        }
+    }
+
+    onColumnsWidthChanged(columns: DataColumn[]): void {
+        this.columnsWidths = columns.reduce((widthsColumnsMap, column) => {
+            if (column.width) {
+                widthsColumnsMap[column.id] = Math.ceil(column.width);
+            }
+            return widthsColumnsMap;
+        }, {});
+
+        if (this.appName) {
+            this.cloudPreferenceService.updatePreference(
+                this.appName,
+                ProcessListCloudPreferences.columnsWidths,
+                this.columnsWidths
             );
         }
     }

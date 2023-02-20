@@ -18,5 +18,6 @@
 // eslint-disable-next-line no-shadow
 export enum ProcessListCloudPreferences {
     columnOrder = 'processes-cloud-list-columns-order',
-    columnsVisibility = 'processes-cloud-columns-visibility'
+    columnsVisibility = 'processes-cloud-columns-visibility',
+    columnsWidths = 'processes-cloud-columns-widths'
 }
