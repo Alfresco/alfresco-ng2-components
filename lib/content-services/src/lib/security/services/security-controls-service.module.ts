@@ -21,4 +21,4 @@ import { CommonModule } from '@angular/common';
 @NgModule({
     imports: [CommonModule]
 })
-export class AdminCcSecurityControlsServicesModule {}
+export class SecurityControlsServiceModule {}

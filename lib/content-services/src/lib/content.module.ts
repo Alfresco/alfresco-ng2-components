@@ -49,7 +49,7 @@ import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
-import { AdminCcSecurityControlsServicesModule } from './security/services/admin-cc-security-controls-services.module';
+import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
 
 @NgModule({
     imports: [
@@ -84,7 +84,7 @@ import { AdminCcSecurityControlsServicesModule } from './security/services/admin
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        AdminCcSecurityControlsServicesModule
+        SecurityControlsServiceModule
     ],
     providers: [
         {
@@ -123,7 +123,7 @@ import { AdminCcSecurityControlsServicesModule } from './security/services/admin
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        AdminCcSecurityControlsServicesModule
+        SecurityControlsServiceModule
     ]
 })
 export class ContentModule {

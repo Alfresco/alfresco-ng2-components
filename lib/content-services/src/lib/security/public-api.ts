@@ -16,4 +16,4 @@
  */
 
 export * from './services/security-controls-groups-marks-security.service';
-export * from './services/admin-cc-security-controls-services.module';
+export * from './services/security-controls-service.module';
