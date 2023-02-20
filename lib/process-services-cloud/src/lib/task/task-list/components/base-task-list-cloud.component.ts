@@ -130,10 +130,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     private onDestroy$ = new Subject<boolean>();
 
     constructor(appConfigService: AppConfigService,
-                private taskCloudService: TaskCloudService,
-                private userPreferences: UserPreferencesService,
-                presetKey: string,
-                private cloudPreferenceService: PreferenceCloudServiceInterface) {
+        private taskCloudService: TaskCloudService,
+        private userPreferences: UserPreferencesService,
+        presetKey: string,
+        private cloudPreferenceService: PreferenceCloudServiceInterface) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
@@ -180,21 +180,21 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
                     columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                 };
             }))
-        ).subscribe(({ columnsOrder, columnsVisibility,columnsWidths }) => {
-                if (columnsOrder) {
-                    this.columnsOrder = columnsOrder;
-                }
-
-                if (columnsVisibility) {
-                    this.columnsVisibility = columnsVisibility;
-                }
-
-                if (columnsWidths) {
-                    this.columnsWidths = columnsWidths;
-                }
-
-                this.createDatatableSchema();
+        ).subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
+            if (columnsOrder) {
+                this.columnsOrder = columnsOrder;
             }
+
+            if (columnsVisibility) {
+                this.columnsVisibility = columnsVisibility;
+            }
+
+            if (columnsWidths) {
+                this.columnsWidths = columnsWidths;
+            }
+
+            this.createDatatableSchema();
+        }
         );
     }
 
@@ -272,7 +272,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         this.columnsOrder = columnsWithNewOrder.map(column => column.id);
 
         if (this.appName) {
-                this.cloudPreferenceService.updatePreference(
+            this.cloudPreferenceService.updatePreference(
                 this.appName,
                 TasksListCloudPreferences.columnOrder,
                 this.columnsOrder
@@ -303,12 +303,12 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     onColumnsWidthChanged(columns: DataColumn[]): void {
-        this.columnsWidths = columns.reduce((widthsColumnsMap,column)=>{
-            if(column.width) {
+        this.columnsWidths = columns.reduce((widthsColumnsMap, column) => {
+            if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
             }
             return widthsColumnsMap;
-        },{});
+        }, {});
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
@@ -340,10 +340,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
     replacePriorityValues(row: DataRow, column: DataColumn) {
         return column.key.split('.').reduce((source, key) => {
-            if (key === 'priority' && source && typeof(source[key]) === 'number') {
+            if (key === 'priority' && source && typeof (source[key]) === 'number') {
                 return source[key] = this.taskCloudService.getPriorityLabel(source[key]);
             }
-            return source && typeof(source) === 'object' ? source[key] : undefined;
+            return source && typeof (source) === 'object' ? source[key] : undefined;
         }, row.obj);
     }
 
