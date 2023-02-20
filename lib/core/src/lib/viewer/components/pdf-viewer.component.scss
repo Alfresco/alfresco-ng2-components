@@ -137,3 +137,16 @@
         }
     }
 }
+
+@media screen and (max-width: 380px) {
+    .mat-icon-button {
+        width: 22px;
+    }
+    .adf-pdf-viewer__toolbar-page-selector > input {
+        padding: 0;
+    }
+
+    .adf-pdf-viewer__toolbar-page-scale {
+        width: 38px;
+    }
+}
