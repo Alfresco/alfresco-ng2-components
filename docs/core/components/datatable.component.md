@@ -388,6 +388,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | showMainDatatableActions | `boolean` | false | Toggles the main datatable action. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| isResizingEnabled | `boolean` | false | Toggles column resizing feature. |
 
 ### Events
 
@@ -873,3 +874,19 @@ You can define the tooltip format for cells of type date using a configuration i
 -   [Pagination component](pagination.component.md)
 -   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
 -   [Document list component](../../content-services/components/document-list.component.md)
+
+#### Column Resizing
+
+It is possible to have the ability to resize columns by clicking on the right border of each column and dragging it to the left.
+You can do this by setting the `isResizingEnabled` property of your datatable to `true`:
+
+```html
+<adf-datatable
+    [data]="data"
+    [isResizingEnabled]="true">
+</adf-datatable>
+```
+
+Once set up, the column resizing behaves as shown in the image below:
+
+![](../../docassets/images/datatable-column-resizing.png)

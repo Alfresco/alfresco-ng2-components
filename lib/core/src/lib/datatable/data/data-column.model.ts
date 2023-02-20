@@ -47,5 +47,6 @@ export interface DataColumn<T = unknown> {
     header?: TemplateRef<any>;
     draggable?: boolean;
     isHidden?: boolean;
+    width?: number;
     customData?: T;
 }

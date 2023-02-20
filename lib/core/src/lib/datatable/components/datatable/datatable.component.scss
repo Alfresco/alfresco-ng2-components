@@ -21,6 +21,21 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-full-width {
         width: 100%;
     }
+
+    &__resize-handle {
+        align-self: stretch;
+        border: 0.5px solid var(--theme-border-color);
+
+        &:hover {
+            cursor: col-resize;
+        }
+    }
+
+    &__cursor--pointer {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
 .adf-datatable-card {
@@ -564,7 +579,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 .adf-datatable-cell-header {
     @include adf-no-select;
 
-    cursor: pointer;
     position: relative;
     display: flex;
     align-items: center;
@@ -579,10 +593,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     &.adf-sortable {
         @include adf-no-select;
-
-        &:hover {
-            cursor: pointer;
-        }
 
         display: flex;
         align-items: center;

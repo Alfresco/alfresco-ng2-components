@@ -43,6 +43,7 @@ import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ResizeEvent } from '../../directives/resizable/types';
 
 // eslint-disable-next-line no-shadow
 export enum DisplayMode {
@@ -204,6 +205,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     allowFiltering: boolean = false;
 
+    /**
+     * Flag that indicates if the datatable allows column resizing.
+     */
+    @Input()
+    isResizingEnabled: boolean = false;
+
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
@@ -216,6 +223,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
+    isResizing = false;
 
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
@@ -591,8 +599,18 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         );
     }
 
-    onColumnHeaderClick(column: DataColumn) {
-        if (column && column.sortable) {
+    private isValidClickEvent(event: Event): boolean {
+        if (event instanceof MouseEvent) {
+            return event.eventPhase === event.BUBBLING_PHASE;
+        } else if (event instanceof KeyboardEvent) {
+            return event.eventPhase === event.AT_TARGET;
+        }
+
+        return false;
+    }
+
+    onColumnHeaderClick(column: DataColumn, event: Event) {
+        if (this.isValidClickEvent(event) && column && column.sortable) {
             const current = this.data.getSorting();
             let newDirection = 'asc';
             if (current && column.key === current.key) {
@@ -910,6 +928,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             'drag_indicator',
             iconUrl
         );
+    }
+
+    onResizing({ rectangle: { width } }: ResizeEvent, colIndex: number): void {
+        const allColumns = this.data.getColumns();
+        allColumns[colIndex].width = width;
+        this.data.setColumns(allColumns);
     }
 }
 
