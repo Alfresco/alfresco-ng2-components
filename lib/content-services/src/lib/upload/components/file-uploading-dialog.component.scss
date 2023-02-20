@@ -81,3 +81,23 @@
 
 [adfUploadDialogLeft] .adf-upload-dialog { left: 25px; }
 [adfUploadDialogRight] .adf-upload-dialog { right: 25px; }
+
+@media screen and (min-width: 380px) and (max-width: 768px) {
+    .adf-upload-dialog {
+        width: 60%;
+    }
+
+    .adf-file-uploading-row .adf-file-uploading-row__group {
+        min-width: 0;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .adf-upload-dialog {
+        width: 85%;
+    }
+
+    .adf-file-uploading-row .adf-file-uploading-row__group {
+        min-width: 0;
+    }
+}
