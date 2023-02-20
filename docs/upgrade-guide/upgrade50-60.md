@@ -34,6 +34,7 @@ project.
     -   [New Classes or Services](#new-classes-or-services)
     -   [Properties and methods](#properties-and-methods)
     -   [Component selectors](#component-selectors)
+-   [Theme changes](#theme-changes) 
 
 ## Library updates
 
@@ -251,3 +252,39 @@ To build a similar logic to the one in ```UserInfoComponent``` check implementat
 ### Properties and methods
 
 ### Component selectors
+
+## Theme changes
+
+v6.0.0 has improved the way that typography is injected into the ADF theme. Now the typography of ADF is taken from the material theme following the material design specifications : 
+
+before v6.0.0
+```
+@include mat-core($typography);
+$primary: mat.define-palette($primary);
+$accent: mat.define-palette($accent);
+$warn: mat.define-palette($warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+```
+typography was already predefined inside ADF theme but this will prevent to inject different typography.
+
+v6.0.0 and after 
+```
+$typography: mat.define-typography-config(
+   ...define your typography following material specifications
+);
+
+$primary: mat.define-palette($primary);
+$accent: mat.define-palette($accent);
+$warn: mat.define-palette($warn);
+$theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn
+        ),
+        typography: $typography
+    )
+);
+```
