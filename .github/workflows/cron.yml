@@ -58,3 +58,10 @@ jobs:
     name: trigger alpha test    
     uses: ./.github/workflows/adf_alpha.yml
     secrets: inherit
+
+  adf-upstream-alpha-hxp:
+    name: trigger upstream alpha for hxp monorepo
+    uses: ./.github/workflows/adf_alpha.yml
+    secrets: inherit
+    with:
+      repo_to_update: alfresco-apps

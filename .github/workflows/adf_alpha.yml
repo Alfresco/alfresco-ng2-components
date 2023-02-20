@@ -2,6 +2,12 @@ name: "upstream adf"
 
 on:  
   workflow_call:  
+    inputs:
+      repo_to_update:
+          description: Repository to update
+          type: string
+          required: false
+          default: alfresco-applications
   workflow_dispatch:
     inputs:
       cluster_operation:
