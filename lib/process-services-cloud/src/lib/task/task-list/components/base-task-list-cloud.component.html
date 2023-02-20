@@ -23,7 +23,9 @@
             (rowClick)="onRowClick($any($event))"
             (row-keyup)="onRowKeyUp($any($event))"
             (sorting-changed)="onSortingChanged($any($event))"
-            (columnOrderChanged)="onColumnOrderChanged($event)">
+            (columnOrderChanged)="onColumnOrderChanged($event)"
+            (columnsWidthChanged)="onColumnsWidthChanged($event)"
+            >
             <adf-loading-content-template>
                 <ng-template>
                     <!-- Add your custom loading template here -->
