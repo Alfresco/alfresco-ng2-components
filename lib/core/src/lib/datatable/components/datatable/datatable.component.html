@@ -31,7 +31,7 @@
                     let col of (data.getColumns() | filterOutEvery:'isHidden':true);
                     let columnIndex = index"
                  [attr.data-automation-id]="'auto_id_' + col.key"
-                 [ngClass]="{ 
+                 [ngClass]="{
                     'adf-sortable': col.sortable,
                     'adf-datatable__cursor--pointer': !isResizing,
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
@@ -58,7 +58,7 @@
                     #resizableElement="adf-resizable"
                     (resizing)="onResizing($event, columnIndex)"
                     (resizeStart)="isResizing = true"
-                    (resizeEnd)="isResizing = false"
+                    (resizeEnd)="onResizingEnd()"
                     [attr.data-automation-id]="'auto_header_content_id_' + col.key"
                     class="adf-datatable-cell-header-content"
                     [ngClass]="{ 'adf-datatable-cell-header-content--hovered':
@@ -93,7 +93,7 @@
                         [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
                     </span>
                 </div>
-                <div 
+                <div
                     *ngIf="isResizingEnabled"
                     adf-resize-handle
                     class="adf-datatable__resize-handle"

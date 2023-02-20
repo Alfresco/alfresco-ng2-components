@@ -18,5 +18,6 @@
 // eslint-disable-next-line no-shadow
 export enum TasksListCloudPreferences {
     columnOrder = 'tasks-list-cloud-columns-order',
-    columnsVisibility = 'tasks-list-cloud-columns-visibility'
+    columnsVisibility = 'tasks-list-cloud-columns-visibility',
+    columnsWidths = 'tasks-list-cloud-columns-widths'
 }

@@ -39,6 +39,7 @@ export abstract class DataTableSchema<T = unknown> {
     protected columnsOrderedByKey: string = 'id';
 
     protected columnsVisibility: { [columnId: string]: boolean } | undefined;
+    protected columnsWidths: { [columnId: string]: number} | undefined;
 
     private layoutPresets = {};
 
@@ -62,7 +63,8 @@ export abstract class DataTableSchema<T = unknown> {
 
     public createColumns(): void {
         const allColumns = this.mergeJsonAndHtmlSchema();
-        const columns = this.setHiddenColumns(allColumns);
+        const allColumnsWithWidth = this.setColumnsWidth(allColumns);
+        const columns = this.setHiddenColumns(allColumnsWithWidth);
         this.columns = this.sortColumnsByKey(columns);
     }
 
@@ -142,6 +144,16 @@ export abstract class DataTableSchema<T = unknown> {
             });
         }
 
+        return columns;
+    }
+
+    private setColumnsWidth(columns: DataColumn[]): DataColumn[] {
+        if(this.columnsWidths) {
+            return columns.map(column => {
+                const columnWidth = this.columnsWidths[column.id];
+                return columnWidth === undefined ? column : {...column, width:columnWidth};
+            });
+        }
         return columns;
     }
 }

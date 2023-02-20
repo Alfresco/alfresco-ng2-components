@@ -175,6 +175,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Output()
     columnOrderChanged = new EventEmitter<DataColumn[]>();
 
+    @Output()
+    columnsWidthChanged = new EventEmitter<DataColumn[]>();
+
     /** Flag that indicates if the datatable is in loading state and needs to show the
      * loading template (see the docs to learn how to configure a loading template).
      */
@@ -934,6 +937,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         const allColumns = this.data.getColumns();
         allColumns[colIndex].width = width;
         this.data.setColumns(allColumns);
+    }
+
+    onResizingEnd(): void {
+        this.isResizing = false;
+        const allColumns = this.data.getColumns();
+        this.columnsWidthChanged.emit(allColumns);
     }
 }
 
