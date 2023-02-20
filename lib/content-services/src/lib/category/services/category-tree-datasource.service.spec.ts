@@ -18,13 +18,15 @@
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from '../services/category.service';
-import { CategoryTreeDatasourceService } from './category-tree-datasource.service';
+import { CategoryNode, CategoryTreeDatasourceService } from '@alfresco/adf-content-services';
 import { CategoryServiceMock } from '../mock/category-mock.service';
 import { TreeNodeType, TreeResponse } from '../../tree';
-import { CategoryNode } from '../models/category-node.interface';
+import { EMPTY } from 'rxjs';
+import { Pagination } from '@alfresco/js-api';
 
 describe('CategoryTreeDatasourceService', () => {
   let categoryTreeDatasourceService: CategoryTreeDatasourceService;
+  let categoryService: CategoryService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,6 +39,7 @@ describe('CategoryTreeDatasourceService', () => {
         });
 
         categoryTreeDatasourceService = TestBed.inject(CategoryTreeDatasourceService);
+        categoryService = TestBed.inject(CategoryService);
     });
 
     it('should get root level categories', fakeAsync(() => {
@@ -69,4 +72,43 @@ describe('CategoryTreeDatasourceService', () => {
             expect(treeResponse.entries[1].nodeType).toBe(TreeNodeType.LoadMoreNode);
         });
     }));
+
+    it('should call searchCategories on CategoryService if value of name parameter is defined', () => {
+        spyOn(categoryService, 'searchCategories').and.returnValue(EMPTY);
+        const skipCount = 10;
+        const maxItems = 100;
+        const name = 'name';
+
+        categoryTreeDatasourceService.getSubNodes('id', skipCount, maxItems, name);
+        expect(categoryService.searchCategories).toHaveBeenCalledWith(name, skipCount, maxItems);
+    });
+
+    it('should return observable which emits correct categories', (done) => {
+        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name')
+            .subscribe((response) => {
+                const pagination = new Pagination();
+                pagination.count = 2;
+                expect(response).toEqual({
+                    pagination,
+                    entries: [{
+                        id: 'some id 1',
+                        nodeName: 'some name',
+                        parentId: 'parent id 1',
+                        level: 0,
+                        nodeType: TreeNodeType.RegularNode,
+                        hasChildren: false,
+                        isLoading: false
+                    }, {
+                        id: 'some id 2',
+                        nodeName: 'Language/some other name',
+                        parentId: 'parent id 2',
+                        level: 0,
+                        nodeType: TreeNodeType.RegularNode,
+                        hasChildren: false,
+                        isLoading: false
+                    }]
+                });
+                done();
+            });
+    });
 });

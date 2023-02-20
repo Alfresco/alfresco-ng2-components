@@ -18,7 +18,8 @@ Accesses the Content Services Search API.
     -   _term:_ `string`  - Term to search for
     -   _options:_ [`SearchOptions`](lib/content-services/src/lib/search/services/search.service.ts)  - (Optional) Options for delivery of the search results
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes resulting from the search
--   **search**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+-   **search**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`]
+- `>`<br/>
     Performs a search.
     -   _searchTerm:_ `string`  - Term to search for
     -   _maxResults:_ `number`  - Maximum number of items in the list of results

@@ -16,20 +16,34 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
-import { CategoriesApi, CategoryBody, CategoryEntry, CategoryPaging } from '@alfresco/js-api';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    CategoriesApi,
+    CategoryBody,
+    CategoryEntry,
+    CategoryPaging,
+    RequestQuery,
+    ResultSetPaging,
+    SearchApi
+} from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
     private _categoriesApi: CategoriesApi;
+    private _searchApi: SearchApi;
 
     get categoriesApi(): CategoriesApi {
         this._categoriesApi = this._categoriesApi ?? new CategoriesApi(this.apiService.getInstance());
         return this._categoriesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    get searchApi(): SearchApi {
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
+    }
+
+    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
 
     /**
      * Get subcategories of a given parent category
@@ -73,5 +87,28 @@ export class CategoryService {
      */
     deleteCategory(categoryId: string): Observable<void> {
         return from(this.categoriesApi.deleteCategory(categoryId));
+    }
+
+    /**
+     * Searches categories by their name.
+     *
+     * @param name Value for name which should be used during searching categories.
+     * @param skipCount Specify how many first results should be skipped. Default 0.
+     * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
+     * @return Observable<ResultSetPaging> Found categories which name contains searched name.
+     */
+    searchCategories(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
+        maxItems = maxItems || this.userPreferencesService.paginationSize;
+        return from(this.searchApi.search({
+            query: {
+                language: RequestQuery.LanguageEnum.Afts,
+                query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
+            },
+            paging: {
+                skipCount,
+                maxItems
+            },
+            include: ['path']
+        }));
     }
 }

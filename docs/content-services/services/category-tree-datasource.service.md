@@ -13,11 +13,12 @@ Datasource service for category tree.
 
 ### Methods
 
--   **getSubNodes**(parentNodeId: `string`, skipCount?: `number`, maxItems?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TreeResponse<CategoryNode>`](../../../lib/content-services/src/lib/tree/models/tree-response.interface.ts)`>`<br/>
+-   **getSubNodes**(parentNodeId: `string`, skipCount?: `number`, maxItems?: `number`, name?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TreeResponse<CategoryNode>`](../../../lib/content-services/src/lib/tree/models/tree-response.interface.ts)`>`<br/>
     Gets categories as nodes for category tree.
     -   _parentNodeId:_ `string`  - Identifier of a parent category
     -   _skipCount:_ `number`  - Number of top categories to skip
     -   _maxItems:_ `number`  - Maximum number of subcategories returned from Observable
+    -   _name:_ `string`  - Optional parameter which specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TreeResponse<CategoryNode>`](../../../lib/content-services/src/lib/tree/models/tree-response.interface.ts)`>` - TreeResponse object containing pagination object and list on nodes
 
 ## Details

@@ -33,6 +33,12 @@ Manages categories in Content Services.
     Deletes category.
     -   _categoryId:_ `string`  - Identifier of a category
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Null object when the operation completes
+-   **searchCategories**(name: `string`, skipCount: `number`, maxItems?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+    Searches categories by their name.
+    -   _name:_ `string` - Value for name which should be used during searching categories.
+    -   _skipCount:_ `number` - Specify how many first results should be skipped. Default 0.
+    -   _maxItems:_ `number` - Specify max number of returned categories. Default is specified by UserPreferencesService.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - Found categories which name contains searched name.
 
 ## Details
 

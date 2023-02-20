@@ -42,7 +42,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
         this.treeNodes = [];
     }
 
-    public abstract getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<T>>;
+    public abstract getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, searchTerm?: string): Observable<TreeResponse<T>>;
 
     /**
      * Expands node applying subnodes to it.

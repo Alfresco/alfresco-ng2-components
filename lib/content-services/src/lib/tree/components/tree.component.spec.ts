@@ -156,9 +156,9 @@ describe('TreeComponent', () => {
     it('should clear the selection and load root nodes on refresh', () => {
         const selectionSpy = spyOn(component.treeNodesSelection, 'clear');
         const getNodesSpy = spyOn(component.treeService, 'getSubNodes').and.callThrough();
-        component.refreshTree(0, 25);
+        component.refreshTree(0, 25, 'some term');
         expect(selectionSpy).toHaveBeenCalled();
-        expect(getNodesSpy).toHaveBeenCalledWith('-root-', 0, 25);
+        expect(getNodesSpy).toHaveBeenCalledWith('-root-', 0, 25, 'some term');
     });
 
     it('should call correct server method on collapsing node', () => {

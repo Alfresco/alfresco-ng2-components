@@ -122,11 +122,12 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
      *
      * @param skipCount Number of root nodes to skip.
      * @param maxItems Maximum number of nodes returned from Observable.
+     * @param searchTerm Specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
      */
-    public refreshTree(skipCount?: number, maxItems?: number): void {
+    public refreshTree(skipCount?: number, maxItems?: number, searchTerm?: string): void {
         this.loadingRootSource.next(true);
         this.treeNodesSelection.clear();
-        this.treeService.getSubNodes('-root-', skipCount, maxItems).subscribe((response: TreeResponse<T>) => {
+        this.treeService.getSubNodes('-root-', skipCount, maxItems, searchTerm).subscribe((response: TreeResponse<T>) => {
             this.treeService.treeNodes = response.entries;
             this.treeNodesSelection.deselect(...response.entries);
             this.paginationChanged.emit(response.pagination);

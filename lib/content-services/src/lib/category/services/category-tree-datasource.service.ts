@@ -16,9 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { TreeNodeType } from '../../tree/models/tree-node.interface';
-import { TreeResponse } from '../../tree/models/tree-response.interface';
-import { TreeService } from '../../tree/services/tree.service';
+import { TreeNodeType, TreeResponse, TreeService } from '../../tree';
 import { CategoryNode } from '../models/category-node.interface';
 import { CategoryService } from './category.service';
 import { CategoryEntry, CategoryPaging } from '@alfresco/js-api';
@@ -32,8 +30,8 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
         super();
     }
 
-    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<CategoryNode>> {
-        return this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
+    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
+        return !name ? this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
             const parentNode: CategoryNode = this.getParentNode(parentNodeId);
             const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => {
                 return {
@@ -60,6 +58,25 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
             }
             const treeResponse: TreeResponse<CategoryNode> = {entries: nodesList, pagination: response.list.pagination};
             return treeResponse;
+        })) : this.categoryService.searchCategories(name, skipCount, maxItems).pipe(map((pagingResult) => {
+            const nextAfterGeneralPathPartIndex = 3;
+            const pathSeparator = '/';
+            return {
+                entries: pagingResult.list.entries.map((category) => {
+                    const path = category.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex)
+                        .join(pathSeparator);
+                    return {
+                        id: category.entry.id,
+                        nodeName: path ? `${path}/${category.entry.name}` : category.entry.name,
+                        parentId: category.entry.parentId,
+                        level: 0,
+                        nodeType: TreeNodeType.RegularNode,
+                        hasChildren: false,
+                        isLoading: false
+                    };
+                }),
+                pagination: pagingResult.list.pagination
+            };
         }));
     }
 }
