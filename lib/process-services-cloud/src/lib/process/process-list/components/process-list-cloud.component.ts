@@ -166,6 +166,10 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     @Input()
     showMainDatatableActions: boolean = false;
 
+    /** Toggles main datatable column resizing feature. */
+    @Input()
+    isResizingEnabled: boolean = false;
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
