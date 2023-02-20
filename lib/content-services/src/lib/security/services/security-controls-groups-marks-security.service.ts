@@ -61,15 +61,15 @@ export class SecurityControlsService {
     private authorityClearance: AuthorityClearanceApi;
     constructor(private apiService: AlfrescoApiService) {}
 
-    get groupsApi() {
+    get groupsApi(): SecurityGroupsApi {
         return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));
     }
 
-    get marksApi() {
+    get marksApi(): SecurityMarksApi {
         return this.securityMark || (this.securityMark = new SecurityMarksApi(this.apiService.getInstance()));
     }
 
-    get authorityClearanceApi() {
+    get authorityClearanceApi(): AuthorityClearanceApi {
         return this.authorityClearance || (this.authorityClearance = new AuthorityClearanceApi(this.apiService.getInstance()));
     }
 
