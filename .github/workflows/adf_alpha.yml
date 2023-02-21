@@ -22,10 +22,11 @@ on:
         type: choice
         required: true
         options:
+          - all
+          - alfresco-content-app
           - alfresco-applications
           - alfresco-apps
-          - alfresco-content-app
-        default: alfresco-applications
+        default: all
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
