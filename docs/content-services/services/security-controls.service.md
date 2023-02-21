@@ -21,12 +21,12 @@ Manages security groups & marks in Content Services.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsGroupResponse>`
 -   **createSecurityGroup**(input: `SecurityGroupBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityGroupEntry>`<br/>
     Creates a security group.
-    -   _input:_ `SecurityGroupBody`  - SecurityGroupBody
+    -   _input:_ `SecurityGroupBody`  - Security group.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityGroupEntry>` 
 -   **createSecurityMarks**(securityGroupId: `string`, input: `SecurityMarkBody[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkEntry|SecurityMarkPaging>`<br/>
     Create security marks.
     -   _securityGroupId:_ `string`  - The key for the security group id.
-    -   _SecurityMarkBody:_ `SecurityMarkBody[]` 
+    -   _SecurityMarkBody:_ `SecurityMarkBody[]` - Node security marks list.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkEntry|SecurityMarkPaging>`
 -   **getSecurityMark**(securityGroupId: `string`, skipCount?: `number`, include?: `string`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>`<br/>
     Get security mark value.
@@ -36,15 +36,15 @@ Manages security groups & marks in Content Services.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>` 
 -   **updateSecurityGroup**(securityGroupId: `string`, input: `SecurityGroupBody`, opts?: `any`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityGroupEntry>`<br/>
     Update a security groups information.
-    -   _securityGroupId:_ `string`  - The Key of Security Group id for which info is required.
-    -   _input:_ `SecurityGroupBody`  - SecurityGroupBody.
-    -   _opts:_ `any`  - (Optional) Extra options supported by JS-API
+    -   _securityGroupId:_ `string`  - The key of security group id for which info is required.
+    -   _input:_ `SecurityGroupBody`  - Security group.
+    -   _opts:_ `any`  - (Optional) Extra options supported by JS-API.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityGroupEntry>` 
 -   **updateSecurityMark**(securityGroupId: `string`, securityMarkId: `string`, input: `SecurityMarkBody`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkEntry>`<br/>
     Updates Security Mark value.
     -   _securityGroupId:_ `string`  - The key for the security group id.
     -   _securityMarkId:_ `string`  - The key for the security mark is in use or not.
-    -   _input:_ `SecurityMarkBody`  - SecurityMarkBody.
+    -   _input:_ `SecurityMarkBody`  - Security mark.
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkEntry>`
 -   **deleteSecurityGroup**(securityGroupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityGroupEntry>`<br/>
     Delete security group.
@@ -64,7 +64,7 @@ Manages security groups & marks in Content Services.
 -   **updateClearancesForAuthority**(authorityName: `string`, securityMarksList: `NodeSecurityMarkBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityMarkEntry | SecurityMarkPaging>`<br/>
     Updates the authority clearance.
     -   _authorityName:_ `string`  - The name for the authority for which the clearance is to be updated.
-    -   _securityMarksList:_ `NodeSecurityMarkBody[]`  - Value for name which should be used during finding exact tag.
+    -   _securityMarksList:_ `NodeSecurityMarkBody[]` - Node security marks list.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityMarkEntry | SecurityMarkPaging>` 
 
 
