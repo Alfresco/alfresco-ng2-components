@@ -77,6 +77,13 @@ export class SecurityControlsService {
         return this._reloadAuthorityClearance;
     }
 
+    /**
+     * Get All security groups
+     * @param include Additional information about the security group
+     * @param skipCount The number of entities that exist in the collection before those included in this list.
+     * @param maxItems The maximum number of items to return in the list.
+     * @return Promise<SecurityControlsGroupResponse>
+     */
     getSecurityGroup(
         skipCount = DEFAULT_SKIP_COUNT,
         maxItems = DEFAULT_MAX_GROUPS,
@@ -105,6 +112,11 @@ export class SecurityControlsService {
         });
     }
 
+    /**
+     * Create security group
+     * @param input securityGroupBody.
+     * @return Observable<SecurityGroupEntry>
+     */
     createSecurityGroup(
         input: SecurityGroupBody
     ): Observable<SecurityGroupEntry> {
@@ -122,10 +134,16 @@ export class SecurityControlsService {
         );
     }
 
+    /**
+     * Create security marks
+     * @param securityGroupId The key for the security group id.
+     * @param input securityMarkBody[].
+     * @return Promise<SecurityMarkEntry|SecurityMarkPaging>
+     */
     createSecurityMarks(
         securityGroupId: string,
         input: SecurityMarkBody[]
-    ): Promise<any> {
+    ): Promise<SecurityMarkEntry|SecurityMarkPaging> {
         this.loadingSource.next(true);
         const promise = this.marksApi.createSecurityMarks(
             securityGroupId,
@@ -135,15 +153,23 @@ export class SecurityControlsService {
         return promise;
     }
 
+    /**
+     * Get security mark value
+     * Gets the value for a selected **securityGroupId**.
+     * @param securityGroupId The key for the security group id.
+     * @param skipCount The number of entities that exist in the collection before those included in this list.
+     * @param include The key for the security mark is in use or not
+     * @return Promise<SecurityControlsMarkResponse>
+     */
     getSecurityMark(
-        SecurityGroupId: string,
+        securityGroupId: string,
         skipCount = DEFAULT_SKIP_COUNT,
         include = DEFAULT_INCLUDE
     ): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
             this.marksApi
-                .getSecurityMarks(SecurityGroupId, {
+                .getSecurityMarks(securityGroupId, {
                     include,
                     skipCount
                 })
@@ -162,6 +188,13 @@ export class SecurityControlsService {
         });
     }
 
+    /**
+     * Update a security groups information
+     * @param securityGroupId The Key of Security Group id for which info is required
+     * @param input SecurityGroupBody
+     * @param opts additional information about the security group
+     * @return Promise<SecurityGroupEntry>
+     */
     updateSecurityGroup(
         securityGroupId: string,
         input: SecurityGroupBody,
@@ -185,6 +218,13 @@ export class SecurityControlsService {
         return promise;
     }
 
+    /**
+     * Updates Security Mark value
+     * @param securityGroupId The key for the security group id.
+     * @param securityMarkId The key for the security mark is in use or not.
+     * @param input securityMarkBody.
+     * @return Promise<SecurityMarkEntry>
+     */
     updateSecurityMark(
         securityGroupId: string,
         securityMarkId: string,
@@ -203,6 +243,11 @@ export class SecurityControlsService {
         return promise;
     }
 
+    /**
+     * Delete security group
+     * @param securityGroupId The key for the security group id.
+     * @return Observable<SecurityGroupEntry>
+     */
     deleteSecurityGroup(
         securityGroupId: string
     ): Observable<SecurityGroupEntry> {
@@ -214,6 +259,12 @@ export class SecurityControlsService {
         );
     }
 
+    /**
+     * Delete security mark
+     * @param securityGroupId The key for the security group id.
+     * @param securityMarkId The key for the security mark id.
+     * @return Promise<SecurityMarkEntry>
+     */
     deleteSecurityMark(
         securityGroupId: string,
         securityMarkId: string
@@ -227,6 +278,13 @@ export class SecurityControlsService {
         return promise;
     }
 
+    /**
+     * Get the authority clearances for a single user/group
+     * @param authorityName The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
+     * @param skipCount The number of entities that exist in the collection before those included in this list.
+     * @param maxItems The maximum number of items to return in the list.
+     * @return Observable<AuthorityClearanceGroupPaging>
+     */
     getClearancesForAuthority(authorityName: string, skipCount = DEFAULT_SKIP_COUNT, maxItems = DEFAULT_MAX_GROUPS): Observable<AuthorityClearanceGroupPaging> {
         this.loadingSource.next(true);
         const opts = {
@@ -241,6 +299,12 @@ export class SecurityControlsService {
 
     }
 
+    /**
+     * Updates the authority clearance.
+     * @param authorityName The name for the authority for which the clearance is to be updated
+     * @param securityMarksList NodeSecurityMarkBody[]
+     * @return Observable<SecurityMarkEntry | SecurityMarkPaging>
+     */
     updateClearancesForAuthority(authorityName: string, securityMarksList: NodeSecurityMarkBody[]): Observable<SecurityMarkEntry | SecurityMarkPaging> {
         this.loadingSource.next(true);
         const promise = this.authorityClearanceApi.updateAuthorityClearance(authorityName, securityMarksList);
