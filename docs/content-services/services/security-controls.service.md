@@ -28,12 +28,12 @@ Manages security groups & marks in Content Services.
     -   _securityGroupId:_ `string`  - The key for the security group id.
     -   _SecurityMarkBody:_ `SecurityMarkBody[]` 
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkEntry|SecurityMarkPaging>`
--   **getSecurityMark**(SecurityGroupId: `string`, skipCount?: `number`, include?: `string`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>`<br/>
+-   **getSecurityMark**(securityGroupId: `string`, skipCount?: `number`, include?: `string`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>`<br/>
     Get security mark value.
-    -   _SecurityGroupId:_ `string`  - The key for the security group id.
+    -   _securityGroupId:_ `string`  - The key for the security group id.
     -   _skipCount:_ `number`  - The number of entities that exist in the collection before those included in this list.
     -   _include:_ `string`  - The key for the security mark is in use or not.
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>` - Null object when the operation completes
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>` 
 -   **updateSecurityGroup**(securityGroupId: `string`, input: `SecurityGroupBody`, opts?: `any`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityGroupEntry>`<br/>
     Update a security groups information.
     -   _securityGroupId:_ `string`  - The Key of Security Group id for which info is required.
