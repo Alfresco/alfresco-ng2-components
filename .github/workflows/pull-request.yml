@@ -20,6 +20,9 @@ on:
       - master
       - develop-patch*
       - master-patch*
+  push:
+    branches:
+      - HXOR-109-json-checker
 
 env:
   BASE_REF: ${{ github.base_ref }}
