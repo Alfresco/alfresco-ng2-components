@@ -74,6 +74,20 @@ env:
 
 
 jobs:
+  check-package-lock:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Check package-lock.json version
+        run: |
+          if [[ $(jq '.lockfileVersion == 2' package-lock.json) == "true" ]] ; then
+            echo -e "\033[31mpackage-lock must be version 1\033[0m"
+            exit 1
+          else
+            echo -e "\033[32mpackage-lock.json has a correct version\033[0m"
+          fi
+
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
@@ -123,7 +137,7 @@ jobs:
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
-    needs: [check-if-pr-is-approved]
+    needs: [check-if-pr-is-approved, check-package-lock]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
