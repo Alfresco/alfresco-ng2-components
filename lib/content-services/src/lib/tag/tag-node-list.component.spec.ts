@@ -22,7 +22,7 @@ import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { TagEntry } from '@alfresco/js-api/typings/src/api/content-rest-api/model/tagEntry';
+import { TagEntry } from '@alfresco/js-api';
 
 describe('TagNodeList', () => {
 
@@ -152,7 +152,7 @@ describe('TagNodeList', () => {
             await fixture.whenStable();
         }
 
-        beforeEach(async () => {
+        beforeEach(() => {
             component.limitTagsDisplayed = true;
             element.style.maxWidth = '200px';
         });
