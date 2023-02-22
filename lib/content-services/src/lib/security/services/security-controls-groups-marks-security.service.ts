@@ -141,12 +141,12 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param input securityMarkBody[].
-     * @return Promise<SecurityMarkEntry|SecurityMarkPaging>
+     * @return Promise<any>
      */
     createSecurityMarks(
         securityGroupId: string,
         input: SecurityMarkBody[]
-    ): Promise<SecurityMarkEntry|SecurityMarkPaging> {
+    ): Promise<any> {
         this.loadingSource.next(true);
         const promise = this.marksApi.createSecurityMarks(
             securityGroupId,

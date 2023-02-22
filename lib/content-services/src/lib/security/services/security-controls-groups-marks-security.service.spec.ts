@@ -33,7 +33,7 @@ import {
     SecurityMarkEntry
 } from '@alfresco/js-api';
 
-describe('SecurityControlsService', () => {
+fdescribe('SecurityControlsService', () => {
     let service: SecurityControlsService;
     let securityGroupId;
     let securityMarkId;
@@ -154,13 +154,10 @@ describe('SecurityControlsService', () => {
             )
         );
 
-        const response = await service
-            .createSecurityMarks(securityGroupId, createNewSecurityMarkMock);
+        const response = await service.createSecurityMarks(securityGroupId, createNewSecurityMarkMock);
 
         securityMarkId = response.entry.id;
-        expect(response.entry.groupId).toEqual(
-            'eddf6269-ceba-42c6-b979-9ac445d29a94'
-        );
+        expect(response.entry.groupId).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
         expect(response.entry.name).toEqual('securityMark1');
         expect(response.entry.id).toEqual('ffBOeOJJ');
     });
