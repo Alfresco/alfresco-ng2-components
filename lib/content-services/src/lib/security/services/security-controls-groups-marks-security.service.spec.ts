@@ -155,7 +155,7 @@ describe('SecurityControlsService', () => {
         );
 
         const response = await service
-            .createSecurityMarks(securityGroupId, createNewSecurityMarkMock)
+            .createSecurityMarks(securityGroupId, createNewSecurityMarkMock);
 
         securityMarkId = response.entry.id;
         expect(response.entry.groupId).toEqual(
@@ -182,7 +182,7 @@ describe('SecurityControlsService', () => {
                 securityGroupId,
                 securityMarkId,
                 securityMarkBody
-            )
+            );
 
         securityGroupId = response.entry.groupId;
         securityMarkId = response.entry.id;
