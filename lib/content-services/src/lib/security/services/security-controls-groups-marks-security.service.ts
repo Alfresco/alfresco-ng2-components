@@ -32,10 +32,9 @@ import {
     AuthorityClearanceGroupPaging,
     NodeSecurityMarkBody
 } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { finalize } from 'rxjs/operators';
 
-const DEFAULT_MAX_GROUPS = 10;
 const DEFAULT_SKIP_COUNT = 0;
 const DEFAULT_INCLUDE = 'inUse';
 
@@ -59,7 +58,7 @@ export class SecurityControlsService {
     private securityGroup: SecurityGroupsApi;
     private securityMark: SecurityMarksApi;
     private authorityClearance: AuthorityClearanceApi;
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
 
     get groupsApi(): SecurityGroupsApi {
         return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));
@@ -82,12 +81,12 @@ export class SecurityControlsService {
      *
      * @param include Additional information about the security group
      * @param skipCount The number of entities that exist in the collection before those included in this list.
-     * @param maxItems The maximum number of items to return in the list.
+     * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
      * @return Promise<SecurityControlsGroupResponse>
      */
     getSecurityGroup(
         skipCount = DEFAULT_SKIP_COUNT,
-        maxItems = DEFAULT_MAX_GROUPS,
+        maxItems = this.userPreferencesService.paginationSize,
         include = DEFAULT_INCLUDE
     ): Promise<SecurityControlsGroupResponse> {
         let securityControlsGroupResponse: SecurityControlsGroupResponse;
@@ -291,10 +290,14 @@ export class SecurityControlsService {
      *
      * @param authorityName The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
      * @param skipCount The number of entities that exist in the collection before those included in this list.
-     * @param maxItems The maximum number of items to return in the list.
+     * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
      * @return Observable<AuthorityClearanceGroupPaging>
      */
-    getClearancesForAuthority(authorityName: string, skipCount = DEFAULT_SKIP_COUNT, maxItems = DEFAULT_MAX_GROUPS): Observable<AuthorityClearanceGroupPaging> {
+    getClearancesForAuthority(
+        authorityName: string,
+        skipCount = DEFAULT_SKIP_COUNT,
+        maxItems = this.userPreferencesService.paginationSize
+    ): Observable<AuthorityClearanceGroupPaging> {
         this.loadingSource.next(true);
         const opts = {
             skipCount, maxItems
