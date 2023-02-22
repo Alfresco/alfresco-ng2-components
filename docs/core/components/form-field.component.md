@@ -29,6 +29,12 @@ based on the field type or the metadata information.
 | ---- | ---- | ------------- | ----------- |
 | field | [`FormFieldModel`](../../core/models/form-field.model.md) | null | Contains all the necessary data needed to determine what UI Widget to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the [`FormFieldModel`](../../core/models/form-field.model.md) definitions. |
 
+### Events
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| valueChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the form field value changes |
+
 ## Details
 
 You would typically not use this component directly but instead use the `<adf-form>` component, which under the hood
