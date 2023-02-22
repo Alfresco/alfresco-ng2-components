@@ -71,7 +71,7 @@
     "@editorjs/editorjs": "^2.26.5",
     "@editorjs/header": "2.7.0",
     "@editorjs/list": "1.8.0",
-    "@editorjs/underline": "1.0.0",
+    "@editorjs/underline": "1.1.0",
     "@mat-datetimepicker/core": "^9.0.68",
     "@mat-datetimepicker/moment": "^9.0.68",
     "@ngx-translate/core": "^14.0.0",
