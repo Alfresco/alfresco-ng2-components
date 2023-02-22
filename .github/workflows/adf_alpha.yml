@@ -22,10 +22,11 @@ on:
         type: choice
         required: true
         options:
+          - all
+          - alfresco-content-app
           - alfresco-applications
           - alfresco-apps
-          - alfresco-content-app
-        default: alfresco-applications
+        default: all
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

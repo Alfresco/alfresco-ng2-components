@@ -1,0 +1,27 @@
+name: "cron upstream daily"
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  
+
+jobs:
+  adf-upstream-alpha-alfresco-aca:
+    name: trigger upstream alpha for alfresco-content-app    
+    uses: ./.github/workflows/adf_alpha.yml
+    secrets: inherit
+    with:
+      repo_to_update: alfresco-content-app
+
+  adf-upstream-alpha-alfresco-apps:
+    name: trigger upstream alpha for alfresco-applications    
+    uses: ./.github/workflows/adf_alpha.yml
+    secrets: inherit
+    with:
+      repo_to_update: alfresco-applications
+
+  adf-upstream-alpha-hxp:
+    name: trigger upstream alpha for hxp monorepo
+    uses: ./.github/workflows/adf_alpha.yml
+    secrets: inherit
+    with:
+      repo_to_update: alfresco-apps

@@ -157,15 +157,16 @@ rm -rf $TEMP_GENERATOR_DIR
 
 
 if [ "$DRY_RUN" = "false" ]; then
-    if [ "$REPO" = "alfresco-apps" ]; then
-        update $REPO
-    else
+    if [ "$REPO" = "all" ]; then
         update "generator-alfresco-adf-app"
         update "alfresco-content-app"
+        update "alfresco-applications"
+        update "alfresco-apps"
+    else
         update $REPO
     fi
 else
-    echo "[dry-run] it would have update repos: 'generator-alfresco-adf-app', 'alfresco-content-app', $REPO"
+    echo "[dry-run] it would have update repos: $REPO "
 fi
 
 exit $?

@@ -1,4 +1,4 @@
-name: "cron schedule"
+name: "cron e2e daily"
 
 on:
   schedule:
@@ -53,15 +53,3 @@ jobs:
     name: run e2e
     uses: ./.github/workflows/pull-request.yml
     secrets: inherit
-
-  adf-alpha-test:
-    name: trigger alpha test    
-    uses: ./.github/workflows/adf_alpha.yml
-    secrets: inherit
-
-  adf-upstream-alpha-hxp:
-    name: trigger upstream alpha for hxp monorepo
-    uses: ./.github/workflows/adf_alpha.yml
-    secrets: inherit
-    with:
-      repo_to_update: alfresco-apps
