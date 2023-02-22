@@ -297,7 +297,7 @@ describe('SecurityControlsService', () => {
 
     it('should reload security groups', doneCallback => {
         service.reloadSecurityControls$.subscribe(res => {
-            expect(res).toBeUndefined()
+            expect(res).toBeUndefined();
             doneCallback();
         });
 
