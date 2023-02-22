@@ -1,7 +1,7 @@
 name: "upstream adf"
 
-on:  
-  workflow_call:  
+on:
+  workflow_call:
     inputs:
       repo_to_update:
           description: Repository to update
@@ -15,7 +15,7 @@ on:
         type: choice
         required: true
         options:
-          - TRIGGER_ALPHA_ADF          
+          - TRIGGER_ALPHA_ADF
         default: TRIGGER_ALPHA_ADF
       repo_to_update:
         description: Repository to update
@@ -27,10 +27,6 @@ on:
           - alfresco-content-app
         default: alfresco-applications
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-  
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -80,8 +76,8 @@ env:
 jobs:
   trigger_adf:
     name: trigger adf
-    runs-on: ubuntu-latest  
-    steps:     
+    runs-on: ubuntu-latest
+    steps:
         - name: Checkout repository
           uses: actions/checkout@v3
           with:
@@ -94,7 +90,7 @@ jobs:
         - name: Trigger Alpha ADF child build
           shell: bash
           if: ${{ contains(github.event.head_commit.message, '[trigger adf]') || inputs.cluster_operation == 'TRIGGER_ALPHA_ADF' || github.event.schedule == '0 12 * * *'  }}
-          run: |                    
+          run: |
             npm install github-api
             ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GH_TOKEN -v alpha -c $TRAVIS_COMMIT -r ${{ inputs.repo_to_update }}
-          
+
