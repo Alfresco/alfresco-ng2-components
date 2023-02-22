@@ -32,8 +32,9 @@ import {
     SecurityMarkBody,
     SecurityMarkEntry
 } from '@alfresco/js-api';
+import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.mock';
 
-fdescribe('SecurityControlsService', () => {
+describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
     let securityGroupId;
     let securityMarkId;
@@ -246,5 +247,60 @@ fdescribe('SecurityControlsService', () => {
         expect(response.entry.groupName).toEqual('TestGroup');
         expect(response.entry.groupType).toEqual('HIERARCHICAL');
         expect(response.entry.id).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
+    });
+
+    it('should be able to get clearances for authority', async () => {
+        const getClearancesForAuthoritySpy = spyOn(
+            service.authorityClearanceApi,
+            'getAuthorityClearanceForAuthority'
+        ).and.returnValue(Promise.resolve(fakeAuthorityClearanceApiResponse));
+        const clearancePromise = service.getClearancesForAuthority('test-id', 0, 10);
+        const clearance = await clearancePromise.toPromise();
+
+        expect(getClearancesForAuthoritySpy).toHaveBeenCalledWith('test-id', {
+            skipCount: 0,
+            maxItems: 10
+        });
+
+        expect(clearance.list.pagination.skipCount).toBe(0);
+        expect(clearance.list.pagination.maxItems).toBe(10);
+        expect(clearance.list.entries[0].entry.id).toBe('test-id');
+        expect(clearance.list.entries[0].entry.displayLabel).toBe('test-displayLabel');
+        expect(clearance.list.entries[0].entry.systemGroup).toBe(false);
+        expect(clearance.list.entries[0].entry.type).toBe('test-type');
+    });
+
+    it('should update a clearances for authority', async () => {
+        spyOn(service.authorityClearanceApi, 'updateAuthorityClearance').and.returnValue(
+            Promise.resolve(
+                new SecurityMarkEntry({
+                    entry: {
+                        id: 'test-id',
+                        name: 'test-name',
+                        groupId: 'test-groupId'
+                    }
+                })
+            )
+        );
+        const response = await service.updateClearancesForAuthority('test-id', [{
+            groupId: 'test-group-id',
+            op: 'test-op',
+            id: 'test-id'
+        }]).toPromise();
+
+        if (response instanceof SecurityMarkEntry) {
+            expect(response.entry.id).toEqual('test-id');
+            expect(response.entry.groupId).toEqual('test-groupId');
+            expect(response.entry.name).toEqual('test-name');
+        }
+    });
+
+    it('should reload security groups', doneCallback => {
+        service.reloadSecurityControls$.subscribe(res => {
+            expect(res).toBeUndefined()
+            doneCallback();
+        });
+
+        service.reloadSecurityGroups();
     });
 });

@@ -305,7 +305,6 @@ export class SecurityControlsService {
         return from(promise).pipe(
             finalize(() => this.loadingSource.next(false))
         );
-
     }
 
     /**
