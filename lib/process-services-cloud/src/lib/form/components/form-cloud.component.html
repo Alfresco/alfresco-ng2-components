@@ -31,7 +31,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <adf-form-renderer [formDefinition]="form">
+            <adf-form-renderer [formDefinition]="form" (valueChanged)="disableSaveButton=false">
             </adf-form-renderer>
         </mat-card-content>
         <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">

@@ -20,11 +20,13 @@ import {
     Component, ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
+    EventEmitter,
     Input,
     ModuleWithComponentFactories,
     NgModule,
     OnDestroy,
     OnInit,
+    Output,
     ViewChild,
     ViewContainerRef,
     ViewEncapsulation
@@ -63,6 +65,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     @Input()
     field: FormFieldModel = null;
 
+    /** Emitted when the form field value changes. */
+    @Output()
+    valueChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     componentRef: ComponentRef<any>;
 
     focus: boolean = false;
@@ -99,6 +105,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
                             field.form.onFormFieldChanged(field);
+                            this.valueChanged.emit(true);
                         }
                     });
                 }

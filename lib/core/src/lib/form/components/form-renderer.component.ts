@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 import { ContainerModel, FormFieldModel, TabModel } from './widgets';
@@ -42,6 +42,10 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     @Input()
     formDefinition: FormModel;
+
+    /** Emitted when the form field value changes. */
+    @Output()
+    valueChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     debugMode: boolean;
 
@@ -76,6 +80,10 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
         return (content.json?.numberOfColumns || 1) > (content.columns?.length || 1) ?
             (content.json?.numberOfColumns || 1) :
             (content.columns?.length || 1);
+    }
+
+    onValueChanged(): void {
+        this.valueChanged.emit(true);
     }
 
     /**

@@ -1035,6 +1035,50 @@ describe('FormCloudComponent', () => {
         expect(formComponent.disableCompleteButton).toBeTrue();
     });
 
+    it('should disable save button on [save] outcome click', () => {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.SAVE_OUTCOME_ID,
+            name: 'SAVE',
+            isSystem: true
+        });
+        formComponent.form = formModel;
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+        expect(formComponent.disableCompleteButton).toBeFalse();
+    });
+
+    it('should enable save button when form field value changes', () => {
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
+        const formModel = new FormModel(fakeCloudForm);
+        const formId = '123';
+        const appName = 'test-app';
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.SAVE_OUTCOME_ID,
+            name: 'SAVE',
+            isSystem: true
+        });
+        formComponent.formId = formId;
+        formComponent.appVersion = 1;
+        formComponent.appName = appName;
+
+        formComponent.loadForm();
+        fixture.detectChanges();
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+
+        const inputElement = fixture.debugElement.query(By.css('[id="field-firstName-container"] input')).nativeElement;
+        inputElement.value = 'Hyland';
+        inputElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
+        expect(formComponent.disableSaveButton).toBeFalse();
+    });
+
     it('should ENABLE complete & save buttons when something goes wrong during completion process', (done) => {
         const errorMessage = 'Something went wrong.';
         spyOn(formCloudService, 'completeTaskForm').and.callFake(() => throwError(errorMessage));
