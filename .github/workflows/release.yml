@@ -16,10 +16,6 @@ on:
       - develop-patch*
       - master-patch*
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-  
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
