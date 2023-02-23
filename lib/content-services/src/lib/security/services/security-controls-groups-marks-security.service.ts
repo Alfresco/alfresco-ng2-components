@@ -150,7 +150,15 @@ export class SecurityControlsService {
         const promise = this.marksApi.createSecurityMarks(
             securityGroupId,
             input
-        );
+        )
+            .then((result) => {
+                this.loadingSource.next(false);
+                return result;
+            })
+            .catch((error) => {
+                this.loadingSource.next(false);
+                return error;
+            });
 
         return promise;
     }
@@ -217,7 +225,15 @@ export class SecurityControlsService {
             securityGroupId,
             payload,
             opts
-        );
+        )
+            .then((result) => {
+                this.loadingSource.next(false);
+                return result;
+            })
+            .catch((error) => {
+                this.loadingSource.next(false);
+                return error;
+            });
 
         return promise;
     }
@@ -243,7 +259,15 @@ export class SecurityControlsService {
             securityGroupId,
             securityMarkId,
             payload
-        );
+        )
+            .then((result) => {
+                this.loadingSource.next(false);
+                return result;
+            })
+            .catch((error) => {
+                this.loadingSource.next(false);
+                return error;
+            });
 
         return promise;
     }
@@ -280,7 +304,15 @@ export class SecurityControlsService {
         const promise = this.marksApi.deleteSecurityMark(
             securityGroupId,
             securityMarkId
-        );
+        )
+            .then((result) => {
+                this.loadingSource.next(false);
+                return result;
+            })
+            .catch((error) => {
+                this.loadingSource.next(false);
+                return error;
+            });
 
         return promise;
     }
