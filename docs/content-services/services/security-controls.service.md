@@ -23,11 +23,11 @@ Manages security groups & marks in Content Services.
     Creates a security group.
     -   _input:_ `SecurityGroupBody`  - Security group.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SecurityGroupEntry>` 
--   **createSecurityMarks**(securityGroupId: `string`, input: `SecurityMarkBody[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
+-   **createSecurityMarks**(securityGroupId: `string`, input: `SecurityMarkBody[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkPaging | SecurityMarkEntry>`<br/>
     Create security marks.
     -   _securityGroupId:_ `string`  - The key for the security group id.
     -   _SecurityMarkBody:_ `SecurityMarkBody[]` - Node security marks list.
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityMarkPaging | SecurityMarkEntry>`
 -   **getSecurityMark**(securityGroupId: `string`, skipCount?: `number`, include?: `string`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<SecurityControlsMarkResponse>`<br/>
     Get security mark value.
     -   _securityGroupId:_ `string`  - The key for the security group id.

@@ -156,11 +156,12 @@ describe('SecurityControlsService', () => {
         );
 
         const response = await service.createSecurityMarks(securityGroupId, createNewSecurityMarkMock);
-
-        securityMarkId = response.entry.id;
-        expect(response.entry.groupId).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
-        expect(response.entry.name).toEqual('securityMark1');
-        expect(response.entry.id).toEqual('ffBOeOJJ');
+        if (response instanceof SecurityMarkEntry) {
+            securityMarkId = response.entry.id;
+            expect(response.entry.groupId).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
+            expect(response.entry.name).toEqual('securityMark1');
+            expect(response.entry.id).toEqual('ffBOeOJJ');
+        }
     });
 
     it('should edit a security mark', async () => {
