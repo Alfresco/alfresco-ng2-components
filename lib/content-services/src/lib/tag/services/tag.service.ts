@@ -18,7 +18,7 @@
 import { AlfrescoApiService, LogService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import {
     RequestQuery,
     RequestSortDefinitionInner,
@@ -224,6 +224,20 @@ export class TagService {
         return this.getAllTheTags({ name }).pipe(
             map((result) => result.list.entries[0]),
             catchError((error) => this.handleError(error))
+        );
+    }
+
+    /**
+     * Deletes a tag with tagId.
+     * This will cause the tag to be removed from all nodes.
+     * You must have admin rights to delete a tag.
+     *
+     * @param tagId of the tag to be deleted
+     * @returns Null object when the operation completes
+     */
+    deleteTag(tagId: string): Observable<void> {
+        return from(this.tagsApi.deleteTag(tagId)).pipe(
+            tap((data) => this.refresh.emit(data))
         );
     }
 

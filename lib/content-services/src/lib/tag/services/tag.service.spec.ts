@@ -66,7 +66,7 @@ describe('TagService', () => {
 
     describe('Content tests', () => {
 
-        it('getTagsByNodeId catch errors call', async () => {
+        it('should catch errors on getTagsByNodeId  call', async () => {
             spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({error : 'error'}));
             await service.getTagsByNodeId('fake-node-id').subscribe(() => {
                 throwError('This call should fail');
@@ -75,7 +75,7 @@ describe('TagService', () => {
             });
         });
 
-        it('delete tag should trigger a refresh event', async () => {
+        it('should trigger a refresh event on removeTag() call', async () => {
             await service.refresh.subscribe((res) => {
                 expect(res).toBeDefined();
             });
@@ -83,12 +83,20 @@ describe('TagService', () => {
             service.removeTag('fake-node-id', 'fake-tag');
         });
 
-        it('add tag should trigger a refresh event', async () => {
+        it('should trigger a refresh event on addTag() call', async () => {
             await service.refresh.subscribe((res) => {
                 expect(res).toBeDefined();
             });
 
             service.addTag('fake-node-id', 'fake-tag');
+        });
+
+        it('should trigger a refresh event on deleteTag() call', async () => {
+            await service.refresh.subscribe((res) => {
+                expect(res).toBeDefined();
+            });
+
+            service.deleteTag('fake-tag-id');
         });
 
         describe('createTags', () => {
