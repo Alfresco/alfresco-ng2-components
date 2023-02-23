@@ -132,7 +132,8 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
             this.columnFlexDirection = tagsToDisplay === 1 && (containerWidth < (this.tagChips.get(0)._elementRef.nativeElement.offsetWidth + viewMoreBtnWidth));
             this.undisplayedTagsCount = this.tagsEntries.length - tagsToDisplay;
             this.tagsEntries = this.tagsEntries.slice(0, tagsToDisplay);
-        } else {
+        }
+        if (!this.undisplayedTagsCount) {
             this.limitTagsDisplayed = false;
         }
         this.calculationsDone = true;

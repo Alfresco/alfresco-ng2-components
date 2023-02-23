@@ -22,6 +22,7 @@ import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TagEntry } from '@alfresco/js-api';
 
 describe('TagNodeList', () => {
 
@@ -52,6 +53,14 @@ describe('TagNodeList', () => {
     let fixture: ComponentFixture<TagNodeListComponent>;
     let element: HTMLElement;
     let tagService: TagService;
+
+    function findViewMoreButton(): HTMLButtonElement {
+        return element.querySelector('.adf-view-more-button');
+    }
+
+    function findTagChips(): NodeListOf<Element> {
+        return element.querySelectorAll('.adf-tag-chips');
+    }
 
     setupTestBed({
         imports: [
@@ -128,60 +137,94 @@ describe('TagNodeList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const viewMoreButton = element.querySelector('.adf-view-more-button');
-            const tagChips = element.querySelectorAll('.adf-tag-chips');
-            expect(viewMoreButton).toBeNull();
-            expect(tagChips.length).toBe(3);
+            expect(findViewMoreButton()).toBeNull();
+            expect(findTagChips().length).toBe(3);
         });
     });
 
     describe('Limit tags display', () => {
-        beforeEach(async () => {
-            component.limitTagsDisplayed = true;
-            element.style.maxWidth = '200px';
+        async function renderTags(entries?: TagEntry[]): Promise<any> {
+            if (entries) {
+                dataTag.list.entries = entries;
+            }
             component.tagsEntries = dataTag.list.entries;
             fixture.detectChanges();
             await fixture.whenStable();
+        }
+
+        beforeEach(() => {
+            component.limitTagsDisplayed = true;
+            element.style.maxWidth = '200px';
         });
 
         it('should render view more button when limiting is enabled', async () => {
+            await renderTags();
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
-            const viewMoreButton = element.querySelector('.adf-view-more-button');
-            const tagChips = element.querySelectorAll('.adf-tag-chips');
-            expect(viewMoreButton).not.toBeNull();
-            expect(tagChips.length).toBe(component.tagsEntries.length);
+            expect(findViewMoreButton()).not.toBeNull();
+            expect(findTagChips().length).toBe(component.tagsEntries.length);
         });
 
         it('should not render view more button when limiting is enabled and all tags fits into container', async () => {
+            await renderTags();
             element.style.maxWidth = '800px';
 
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const viewMoreButton = element.querySelector('.adf-view-more-button');
-            const tagChips = element.querySelectorAll('.adf-tag-chips');
-            expect(viewMoreButton).toBeNull();
-            expect(tagChips.length).toBe(3);
+            expect(findViewMoreButton()).toBeNull();
+            expect(findTagChips().length).toBe(3);
         });
 
         it('should display all tags when view more button is clicked', async () => {
+            await renderTags();
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            let viewMoreButton: HTMLButtonElement = element.querySelector('.adf-view-more-button');
-            let tagChips = element.querySelectorAll('.adf-tag-chips');
+            let viewMoreButton = findViewMoreButton();
             viewMoreButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            viewMoreButton = element.querySelector('.adf-view-more-button');
-            tagChips = element.querySelectorAll('.adf-tag-chips');
+            viewMoreButton = findViewMoreButton();
             expect(viewMoreButton).toBeNull();
-            expect(tagChips.length).toBe(3);
+            expect(findTagChips().length).toBe(3);
+        });
+
+        it('should not render view more button when tag takes more than one line and there are no more tags', async () => {
+            await renderTags([{
+                entry: {
+                    tag: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                }
+            }]);
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(findViewMoreButton()).toBeNull();
+            expect(findTagChips().length).toBe(component.tagsEntries.length);
+        });
+
+        it('should render view more button when tag takes more than one line and there are more tags', async () => {
+            await renderTags([{
+                entry: {
+                    tag: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                }
+            }, {
+                entry: {
+                    tag: 'Some other tag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d3'
+                }
+            }]);
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(findViewMoreButton()).not.toBeNull();
+            expect(findTagChips().length).toBe(component.tagsEntries.length);
         });
     });
 });
