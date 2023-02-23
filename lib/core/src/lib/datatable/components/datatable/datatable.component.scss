@@ -793,3 +793,9 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 }
+
+@media screen and (max-width: 380px) {
+    .adf-datatable-header {
+        max-height: 50%;
+    }
+}
