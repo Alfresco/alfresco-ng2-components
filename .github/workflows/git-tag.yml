@@ -92,5 +92,5 @@ jobs:
       - name: "Release tag"
         run: |
           git fetch --all --quiet
-          TRAVIS_BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
 

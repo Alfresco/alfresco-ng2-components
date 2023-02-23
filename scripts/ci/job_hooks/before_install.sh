@@ -14,7 +14,7 @@ export GIT_HASH=$(git rev-parse HEAD)
 
 
 # Settings for Nx ---------------------------------------------------------------------
-export BASE_HASH="$(git merge-base origin/"$TRAVIS_BRANCH" HEAD)"
+export BASE_HASH="$(git merge-base origin/"$GITHUB_BASE_REF" HEAD)"
 export HEAD_HASH="HEAD"
 export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
 export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
@@ -24,11 +24,12 @@ export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
 #########################################################################################
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     # Settings for merges ---------------------------------------------------------------
-    if [[ "$TRAVIS_BRANCH" =~ ^master(-patch.*)?$ ]]; then
+    BRANCH=${GITHUB_REF##*/}
+    if [[ "$BRANCH" =~ ^master(-patch.*)?$ ]]; then
         # into master(-patch*)
         export NX_CALCULATION_FLAGS="--all"
         export BUILD_OPTS="--configuration production"
-    elif [[ "$TRAVIS_BRANCH" =~ ^develop-patch.*$ ]]; then
+    elif [[ "$BRANCH" =~ ^develop-patch.*$ ]]; then
         # into develop-patch*
         echo -e "\e[32mSetting up CI jobs for patch version creation.\e[0m"
         export NX_CALCULATION_FLAGS="--all"
@@ -40,7 +41,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     fi
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     # Settings for PRs ------------------------------------------------------------------
-    export NX_CALCULATION_FLAGS="--base=origin/$TRAVIS_BRANCH --head=$HEAD_HASH"
+    export NX_CALCULATION_FLAGS="--base=origin/$GITHUB_BASE_REF --head=$HEAD_HASH"
     export BUILD_OPTS="--configuration production"
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     # Settings for Cron -----------------------------------------------------------------
@@ -61,7 +62,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     echo "push"
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "pull_request"
-    export BASE_HASH="origin/$TRAVIS_BRANCH"
+    export BASE_HASH="origin/$GITHUB_BASE_REF"
     source "$PARENT_DIR/partials/_ci-flags-parser.sh"
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     echo "cron"

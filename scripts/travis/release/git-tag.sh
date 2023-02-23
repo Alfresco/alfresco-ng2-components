@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[  $TRAVIS_BRANCH == "master" ]]; then
+if [[  $BRANCH == "master" ]]; then
     VERSION=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
 else
     VERSION=$(npm view @alfresco/adf-core@beta version)

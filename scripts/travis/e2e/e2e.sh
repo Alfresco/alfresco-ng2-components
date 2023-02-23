@@ -27,7 +27,7 @@ if [ ${AFFECTED_LIB} == true ]; then
         echo "nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain"
         AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
         echo "Affected libs ${AFFECTED_LIBS}"
-        AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$FOLDER")";
+        AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $GITHUB_BASE_REF -f "e2e/$FOLDER")";
         echo "Affected e2e ${AFFECTED_E2E}"
     fi;
 
@@ -41,7 +41,7 @@ if [ ${AFFECTED_LIB} == true ]; then
     else if [[ $AFFECTED_E2E  == "e2e/$FOLDER" ]]; then
             echo "Run affected e2e"
 
-            HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
+            HEAD_SHA_BRANCH="$(git merge-base origin/$GITHUB_HEAD_REF HEAD)"
             LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$FOLDER" | paste -sd , -)"
 
             echo "Run $FOLDER e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
