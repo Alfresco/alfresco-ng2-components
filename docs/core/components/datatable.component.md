@@ -394,6 +394,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| columnsWidthChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted after a column width gets changed due to resizing. |
 | columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted after dragging and dropping column header. |
 | executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/src/lib/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
