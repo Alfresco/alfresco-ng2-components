@@ -245,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Close",
+        "CLEAR": "Clear",
         "REMOVE": "Remove",
         "APPLY": "Apply",
         "CLEAR-ALL": {
