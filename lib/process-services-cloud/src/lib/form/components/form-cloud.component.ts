@@ -133,8 +133,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        event.cancelBubble = true;
+    onKeyDown(event: KeyboardEvent): void {
+        event.stopPropagation();
     }
 
     ngOnChanges(changes: SimpleChanges) {

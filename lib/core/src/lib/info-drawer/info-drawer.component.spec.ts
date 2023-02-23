@@ -23,6 +23,7 @@ import { InfoDrawerComponent } from './info-drawer.component';
 import { of } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { ESCAPE } from '@angular/cdk/keycodes';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
@@ -63,6 +64,24 @@ describe('InfoDrawerComponent', () => {
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         expect(title.length).toBe(1);
         expect(title[0].nativeElement.innerText).toBe('FakeTitle');
+    });
+
+    it('should stop propagation on keydown event', () => {
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+        const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
+
+        fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
+    });
+
+    it('should stop propagation on keyup event', () => {
+        const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
+        const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
+
+        fixture.debugElement.triggerEventHandler('keyup', escapeKeyboardEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
     });
 });
 

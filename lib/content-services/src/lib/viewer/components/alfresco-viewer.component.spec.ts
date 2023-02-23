@@ -36,6 +36,7 @@ import {
 } from '@alfresco/adf-core';
 import { throwError } from 'rxjs';
 import { Component } from '@angular/core';
+import { ESCAPE } from '@angular/cdk/keycodes';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -407,6 +408,34 @@ describe('AlfrescoViewerComponent', () => {
             });
 
         });
+
+        it('should stop propagation on sidebar keydown event [keydown]', fakeAsync(() => {
+            const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
+            const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+            const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
+
+            customFixture.detectChanges();
+            const viewerSidebarElement = customElement.querySelector('adf-viewer-sidebar');
+
+            viewerSidebarElement.dispatchEvent(escapeKeyboardEvent);
+
+            expect(stopPropagationSpy).toHaveBeenCalled();
+        }));
+
+        it('should stop propagation on sidebar keyup event [keyup]', fakeAsync(() => {
+            const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
+            const customElement: HTMLElement = customFixture.nativeElement;
+            const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
+            const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
+
+            customFixture.detectChanges();
+            const viewerSidebarElement = customElement.querySelector('adf-viewer-sidebar');
+
+            viewerSidebarElement.dispatchEvent(escapeKeyboardEvent);
+
+            expect(stopPropagationSpy).toHaveBeenCalled();
+        }));
     });
 
     describe('error handling', () => {

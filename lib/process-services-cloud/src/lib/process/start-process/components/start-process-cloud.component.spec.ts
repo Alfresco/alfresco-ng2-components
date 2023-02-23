@@ -929,11 +929,13 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ appName: change });
         });
 
-        it('should cancel bubbling a keydown event ()', () => {
-            const escapeKeyboardEvent = new KeyboardEvent('keydown', { keyCode: ESCAPE } as any);
+        it('should stop propagation on keydown event', () => {
+            const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+            const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
+
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
 
-            expect(escapeKeyboardEvent.cancelBubble).toBe(true);
+            expect(stopPropagationSpy).toHaveBeenCalled();
         });
 
         it('should hide title', () => {
