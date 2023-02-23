@@ -16,11 +16,11 @@ export GIT_HASH=$(git rev-parse HEAD)
 # Settings for Nx ---------------------------------------------------------------------
 export BASE_HASH="$(git merge-base origin/"$GITHUB_BASE_REF" HEAD)"
 export HEAD_HASH="HEAD"
-export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
+export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${GH_COMMIT}}
 export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
 
 #########################################################################################
-# Settings based of Travis event type
+# Settings based of Github event type
 #########################################################################################
 if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     # Settings for merges ---------------------------------------------------------------

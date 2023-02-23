@@ -56,7 +56,7 @@ runs:
         with:
           yml_path: .travis.yml
       - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-env-var-facade
+        uses: ./.github/actions/set-npm-tag
       - name: before install script
         uses: ./.github/actions/before-install
         with:
