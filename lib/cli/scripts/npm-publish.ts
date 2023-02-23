@@ -96,7 +96,8 @@ function changeRegistry(args: PublishArgs, project: string) {
     const folder = `${args.pathProject}/dist/libs/${project}`;
     const content =
         `strict-ssl=true
-registry=https://${args.npmRegistry}
+always-auth=true
+@alfresco:registry=https://${args.npmRegistry}
 //${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
 
     try {
