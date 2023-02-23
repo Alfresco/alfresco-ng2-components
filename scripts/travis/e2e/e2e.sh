@@ -7,6 +7,7 @@ cd $DIR/../../../
 
 BASE_DIRECTORY=$(echo "$FOLDER" | cut -d "/" -f1)
 verifyLib=$1;
+REGEX="(repository|workflow)_dispatch"
 
 # set test-e2e params
 if [ -n "$2" ]; then
@@ -22,7 +23,7 @@ AFFECTED_LIB=$(./scripts/travis/affected-contains.sh $verifyLib )
 if [ ${AFFECTED_LIB} == true ]; then
     echo "Step2 - $verifyLib affected... will execute e2e"
 
-    if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
+    if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
         echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
         echo "nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain"
         AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
@@ -31,11 +32,11 @@ if [ ${AFFECTED_LIB} == true ]; then
         echo "Affected e2e ${AFFECTED_E2E}"
     fi;
 
-    if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+    if [ "${GITHUB_EVENT_NAME}" == "schedule" ]; then
         echo "CRON running everything "
     fi;
 
-    if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]]; then
+    if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${GITHUB_EVENT_NAME}" == "push" ||  "${GITHUB_EVENT_NAME}" == "$REGEX" ||  "${GITHUB_EVENT_NAME}" == "schedule" ]]; then
         echo "Run all e2e $FOLDER"
         ./scripts/test-e2e-lib.sh --use-dist $e2eParams
     else if [[ $AFFECTED_E2E  == "e2e/$FOLDER" ]]; then

@@ -6,9 +6,9 @@ BRANCH=${GITHUB_REF##*/}
 if [[ $BRANCH =~ ^master(-patch.*)?$ ]]; then
     export TAGS=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
 else
-    if [[ "${TRAVIS_PULL_REQUEST_BRANCH}" != "" ]];
+    if [[ "${GITHUB_BASE_REF}" != "" ]];
     then
-        export TAGS="$TRAVIS_PULL_REQUEST_BRANCH-$TRAVIS_BUILD_NUMBER"
+        export TAGS="${GITHUB_BASE_REF}-$TRAVIS_BUILD_NUMBER"
     else
         export TAGS="$GITHUB_BASE_REF-$TRAVIS_BUILD_NUMBER,$GITHUB_BASE_REF"
     fi;

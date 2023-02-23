@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 verifyLib=$1;
 cd $DIR/../../
 
-if [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+if [ "${GITHUB_EVENT_NAME}" == "schedule" ]; then
   #echo "Affected not check in case of cron"
   echo true
   exit 0

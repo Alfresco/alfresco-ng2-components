@@ -22,7 +22,7 @@ export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
 #########################################################################################
 # Settings based of Travis event type
 #########################################################################################
-if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
+if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     # Settings for merges ---------------------------------------------------------------
     BRANCH=${GITHUB_REF##*/}
     if [[ "$BRANCH" =~ ^master(-patch.*)?$ ]]; then
@@ -39,11 +39,11 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
         export NX_CALCULATION_FLAGS="--base=$(git describe --tags $(git rev-list --tags --max-count=1)) --head=$HEAD_HASH"
         export BUILD_OPTS="--configuration production"
     fi
-elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
+elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
     # Settings for PRs ------------------------------------------------------------------
     export NX_CALCULATION_FLAGS="--base=origin/$GITHUB_BASE_REF --head=$HEAD_HASH"
     export BUILD_OPTS="--configuration production"
-elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+elif [ "${GITHUB_EVENT_NAME}" == "schedule" ]; then
     # Settings for Cron -----------------------------------------------------------------
     export NX_CALCULATION_FLAGS="--all"
     export BUILD_OPTS="--configuration production"
@@ -58,13 +58,13 @@ fi
 # Settings for S3 caching -------------------------------------------------------------
 pip install --user awscli
 
-if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
+if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     echo "push"
-elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
+elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
     echo "pull_request"
     export BASE_HASH="origin/$GITHUB_BASE_REF"
     source "$PARENT_DIR/partials/_ci-flags-parser.sh"
-elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
+elif [ "${GITHUB_EVENT_NAME}" == "schedule" ]; then
     echo "cron"
 else
     echo "api"

@@ -15,34 +15,35 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Parse env global
-      shell: bash
-      run: |
-        echo "input branch_name='${{ inputs.branch_name }}'"
-        EVENT_TYPE=""
-        TRAVIS_PULL_REQUEST_BRANCH=""
-        #TRAVIS_BRANCH=""
-        TAG_NPM="alpha"
-        REGEX="(repository|workflow)_dispatch"
-        if [[ "${{ inputs.event_name }}" == "schedule"  ]]; then
-            EVENT_TYPE="cron";
-        elif [[ "${{ inputs.event_name }}" == "pull_request"  ]]; then
-            EVENT_TYPE="pull_request";
-            #TRAVIS_BRANCH=${GITHUB_BASE_REF}
-            TRAVIS_PULL_REQUEST_BRANCH=${GITHUB_BASE_REF}
-        elif [[ "${{ inputs.event_name }}" == "push"  ]]; then
-            EVENT_TYPE="push";
-            #TRAVIS_BRANCH=${GITHUB_REF##*/}
-        elif [[ "${{ inputs.event_name }}" =~ $REGEX ]]; then
-            EVENT_TYPE="api";
-        fi
-        echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
-        echo "TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}" >> $GITHUB_ENV
-        #echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV
+    # - name: Parse env global
+    #   shell: bash
+    #   run: |
+    #     echo "input branch_name='${{ inputs.branch_name }}'"
+    #     #EVENT_TYPE=""
+    #     #TRAVIS_PULL_REQUEST_BRANCH=""
+    #     #TRAVIS_BRANCH=""
+    #     #TAG_NPM="alpha"
+    #     REGEX="(repository|workflow)_dispatch"
+    #     if [[ "${{ inputs.event_name }}" == "schedule"  ]]; then
+    #         EVENT_TYPE="cron";
+    #     elif [[ "${{ inputs.event_name }}" == "pull_request"  ]]; then
+    #         EVENT_TYPE="pull_request";
+    #         #TRAVIS_BRANCH=${GITHUB_BASE_REF}
+    #         #TRAVIS_PULL_REQUEST_BRANCH=${GITHUB_BASE_REF}
+    #     elif [[ "${{ inputs.event_name }}" == "push"  ]]; then
+    #         EVENT_TYPE="push";
+    #         #TRAVIS_BRANCH=${GITHUB_REF##*/}
+    #     elif [[ "${{ inputs.event_name }}" =~ $REGEX ]]; then
+    #         EVENT_TYPE="api";
+    #     fi
+    #     #echo "TRAVIS_EVENT_TYPE=${EVENT_TYPE}" >> $GITHUB_ENV
+    #     #echo "TRAVIS_PULL_REQUEST_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH}" >> $GITHUB_ENV
+    #     #echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}" >> $GITHUB_ENV
 
     - name: set TAG_NPM
       shell: bash
       run: |
+        TAG_NPM="alpha"
         VERSION_IN_PACKAGE_JSON=$(node -p "require('./package.json')".version)
         echo "version in package.json=${VERSION_IN_PACKAGE_JSON}"
         if [[ ${{ inputs.branch_name }} =~ ^master(-patch.*)?$ ]]; then
