@@ -56,7 +56,7 @@ async function npmPublish(args: PublishArgs, project: string) {
     const exist = npmCheckExist(project, version);
 
     if (!exist) {
-        logger.info(`Publishing lib ${project} to npm`);
+        logger.info(`Publishing lib ${project} to registry ${args.npmRegistry}`);
         const options = ['publish'];
         if (args.tag) {
             options.push('-tag');
@@ -92,7 +92,7 @@ function npmCheckExist(project: string, version: string) {
 }
 
 function changeRegistry(args: PublishArgs, project: string) {
-    logger.info(`Change registry... `);
+    logger.info(`Change registry... to ${args.npmRegistry} `);
     const folder = `${args.pathProject}/dist/libs/${project}`;
     const content =
         `strict-ssl=true
