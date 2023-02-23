@@ -18,6 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { SecurityControlsService } from './security-controls-groups-marks-security.service';
+import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.mock';
 import {
     fakeGroupsApiResponse,
     createNewSecurityGroupMock
@@ -32,7 +33,6 @@ import {
     SecurityMarkBody,
     SecurityMarkEntry
 } from '@alfresco/js-api';
-import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.mock';
 
 describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
