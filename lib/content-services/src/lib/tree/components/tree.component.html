@@ -11,7 +11,7 @@
             class="adf-tree-body"
             [dataSource]="treeService"
             [treeControl]="treeService.treeControl">
-            <mat-tree-node
+                <mat-tree-node
                 class="adf-tree-load-more-row"
                 [attr.data-automation-id]="'loadMoreSubnodes_' + node.parentId"
                 *matTreeNodeDef="let node when isLoadMoreNode"
@@ -42,9 +42,12 @@
                 class="adf-tree-row"
                 [attr.data-automation-id]="'node_' + node.id"
                 *matTreeNodeDef="let node"
-                matTreeNodePadding>
+                matTreeNodePadding
+                [adf-context-menu]="contextMenuOptions"
+                [adf-context-menu-enabled]="!!contextMenuOptions"
+                (contextmenu)="contextMenuSource = node">
                 <div class="adf-tree-expand-collapse-container">
-                    <button *ngIf="node.hasChildren"
+                    <button *ngIf="node.hasChildren"x
                         class="adf-tree-expand-collapse-button"
                         mat-icon-button
                         matTreeNodeToggle>
@@ -80,7 +83,7 @@
                     </ng-template>
                 </ng-container>
                 <div class="adf-tree-cell">
-                    <span class="adf-tree-cell-value">
+                    <span class="adf-tree-cell-value" (click)="expandCollapseNode(node)">
                         {{ node.nodeName }}
                     </span>
                 </div>

@@ -21,7 +21,6 @@ $tree-header-font-size: 12px !default;
     transition-property: background-color;
     border-bottom: 1px solid var(--theme-border-color);
     min-height: $tree-row-height;
-    cursor: pointer;
     user-select: none;
 
     .adf-tree-expand-collapse-container {
@@ -55,11 +54,15 @@ $tree-header-font-size: 12px !default;
         width: 100%;
 
         .adf-tree-cell-value {
-            display: block;
+            display: inline-block;
             padding: 10px;
             word-break: break-word;
         }
     }
+}
+
+.adf-tree-load-more-row, .adf-tree-row .adf-tree-cell-value {
+    cursor: pointer;
 }
 
 .adf-tree-header {

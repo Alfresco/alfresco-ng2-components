@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreModule } from '@alfresco/adf-core';
+import { ContextMenuModule, CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,7 +27,8 @@ import { TreeComponent } from './components/tree.component';
         CommonModule,
         CoreModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule,
+        ContextMenuModule
     ],
     declarations: [
         TreeComponent
