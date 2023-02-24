@@ -68,7 +68,6 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
-    # if: github.event.pull_request.merged
     name: "Setup"
     runs-on: ubuntu-22.04
     steps:
@@ -86,59 +85,6 @@ jobs:
           nx run cli:bundle
           nx run testing:bundle
       - uses: ./.github/actions/upload-cache-and-artifacts
-
-  # release-demoshell:
-  #   needs: [setup]
-  #   timeout-minutes: 15
-  #   if: github.event.pull_request.merged
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 1
-  #     - run: git fetch --all
-  #     - id: set-dryrun
-  #       uses: ./.github/actions/enable-dryrun
-  #       with:
-  #         dry-run-flag: ${{ inputs.dry-run-release }}
-  #     - uses: ./.github/actions/setup
-  #       with:
-  #         enable-cache: false
-  #         enable-node-modules-cache: false
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - name: release Demoshell docker
-  #       run: |
-  #         nx build demoshell --configuration production
-  #         . ./scripts/travis/release/docker-tag.sh
-  #         ./scripts/travis/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
-
-  # release-storybook:
-  #   needs: [setup]
-  #   timeout-minutes: 15
-  #   if: github.event.pull_request.merged
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 1
-  #     - run: git fetch --all
-  #     - id: set-dryrun
-  #       uses: ./.github/actions/enable-dryrun
-  #       with:
-  #         dry-run-flag: ${{ inputs.dry-run-release }}
-  #     - uses: ./.github/actions/setup
-  #       with:
-  #         enable-cache: false
-  #         enable-node-modules-cache: false
-  #         act: ${{ inputs.dry-run-release }}
-  #     - uses: ./.github/actions/download-cache-and-artifacts
-  #     - name: release Storybook docker
-  #       run: |
-  #         nx run stories:build-storybook --configuration ci
-  #         . ./scripts/travis/release/docker-tag.sh
-  #         ./scripts/travis/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-npm:
     needs: [setup]
@@ -188,15 +134,6 @@ jobs:
         - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM --dry-run || exit 1
           env:
             NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: release libraries on NPM
-        # - uses: actions/setup-node@v3
-        #   with:
-        #     node-version: 14
-        #     registry-url: $NPM_REGISTRY_ADDRESS
-        #     scope: '@alfresco'
-        # - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM --dry-run || exit 1
-        #   env:
-        #     NODE_AUTH_TOKEN: $NPM_REGISTRY_TOKEN
 
   npm-check-bundle:
     needs: [release-npm]
