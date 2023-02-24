@@ -125,8 +125,7 @@ jobs:
           ./scripts/travis/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
-      - name: release libraries on GH
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
           registry-url: 'https://npm.pkg.github.com'
