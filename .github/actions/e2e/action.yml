@@ -149,9 +149,9 @@ runs:
             export DISPLAY=:99
             chromedriver --url-base=/wd/hub &
             sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
+            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
           else
-            bash ./scripts/travis/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
+            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
           fi
 
     - name: upload artifacts on gh

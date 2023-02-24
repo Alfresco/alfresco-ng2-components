@@ -110,8 +110,8 @@ jobs:
       - name: release Demoshell docker
         run: |
           nx build demoshell --configuration production
-          . ./scripts/travis/release/docker-tag.sh
-          ./scripts/travis/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          . ./scripts/github/release/docker-tag.sh
+          ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-storybook:
     needs: [setup]
@@ -137,8 +137,8 @@ jobs:
       - name: release Storybook docker
         run: |
           nx run stories:build-storybook --configuration ci
-          . ./scripts/travis/release/docker-tag.sh
-          ./scripts/travis/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          . ./scripts/github/release/docker-tag.sh
+          ./scripts/github/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-npm:
     needs: [setup]
@@ -176,11 +176,11 @@ jobs:
       - name: build libraries
         run: |
           set -u;
-          ./scripts/travis/build/bumpversion.sh
+          ./scripts/github/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - name: release libraries
-        run: ./scripts/travis/release/release-npm.sh ${{ steps.set-dryrun.outputs.dryrun }}
+        run: ./scripts/github/release/release-npm.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   npm-check-bundle:
     needs: [release-npm]

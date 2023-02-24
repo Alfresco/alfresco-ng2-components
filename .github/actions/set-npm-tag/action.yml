@@ -1,4 +1,3 @@
-# TRAVIS_EVENT_TYPE= Indicates how the build was triggered. One of push, pull_request, api, cron
 name: "set npm tag"
 description: "se NPM tag"
 
