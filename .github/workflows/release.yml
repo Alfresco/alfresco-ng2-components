@@ -195,8 +195,24 @@ jobs:
           ./scripts/github/build/bumpversion.sh
           nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           nx affected $NX_CALCULATION_FLAGS --target=pretheme
-      - name: release libraries
-        run: ./scripts/github/release/release-npm.sh ${{ steps.set-dryrun.outputs.dryrun }}
+      - uses: actions/setup-node@v3
+        name: release libraries GH registry
+        with:
+          node-version: 14
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@alfresco'
+      - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM  -- --access restricted || exit 1
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        name: release libraries Npm registry
+        with:
+          node-version: 14
+          registry-url: $NPM_REGISTRY_ADDRESS
+          scope: '@alfresco'
+      - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
+        env:
+          NODE_AUTH_TOKEN: $NPM_REGISTRY_TOKEN
 
   npm-check-bundle:
     needs: [release-npm]
