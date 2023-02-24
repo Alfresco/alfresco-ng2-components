@@ -19,11 +19,11 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}
-  GH_BUILD_DIR: ${{ github.workspace }}
-  GH_COMMIT: ${{ github.sha }}
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  TRAVIS_COMMIT: ${{ github.sha }}
   BUILD_ID: ${{ github.run_id }}
-  GH_RUN_NUMBER: ${{ github.run_attempt }}
-  TRAVIS_BUILD_NUMBER: ${{ github.run_id }}
+  TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
+  GH_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
@@ -92,5 +92,5 @@ jobs:
       - name: "Release tag"
         run: |
           git fetch --all --quiet
-          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          TRAVIS_BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
