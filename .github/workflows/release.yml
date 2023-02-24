@@ -132,6 +132,7 @@ jobs:
       - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM --dry-run || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NPM: 'alpha'
 
   npm-check-bundle:
     needs: [release-npm]
