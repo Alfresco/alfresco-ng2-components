@@ -70,6 +70,7 @@
     }
 }
 
-.mat-list-base .mat-list-item .mat-line {
+.mat-list-base .mat-list-item.adf-notification-history-menu-no-message .mat-line,
+.mat-list-base .mat-list-item .adf-notification-history-menu-message.mat-line {
     white-space: normal;
 }
