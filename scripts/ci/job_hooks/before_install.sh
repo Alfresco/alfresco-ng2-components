@@ -18,7 +18,6 @@ export BASE_HASH="$(git merge-base origin/"$GITHUB_BASE_REF" HEAD)"
 export HEAD_HASH="HEAD"
 export HEAD_COMMIT_HASH=${GH_COMMIT}
 export COMMIT_MESSAGE=$(git log --format=%B -n 1 "$HEAD_COMMIT_HASH")
-VERSION_IN_PACKAGE_JSON=`node -p "require('./package.json')".version;`;
 
 #########################################################################################
 # Settings based of Github event type
@@ -28,14 +27,6 @@ if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
     BRANCH=${GITHUB_REF##*/}
     if [[ "$BRANCH" =~ ^master(-patch.*)?$ ]]; then
         # into master(-patch*)
-        # Pre-release versions
-        if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
-        then
-            TAG_NPM=next
-        # Stable major versions
-        else
-            TAG_NPM=latest
-        fi
         export NX_CALCULATION_FLAGS="--all"
         export BUILD_OPTS="--configuration production"
     elif [[ "$BRANCH" =~ ^develop-patch.*$ ]]; then
