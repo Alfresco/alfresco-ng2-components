@@ -11,7 +11,7 @@ runs:
   using: "composite"
 
   steps:
-    - name: load "TRAVIS_EVENT_TYPE"
+    - name: load "NPM TAG"
       uses: ./.github/actions/set-npm-tag
       with:
         branch_name: ${{ inputs.branch_name }}
