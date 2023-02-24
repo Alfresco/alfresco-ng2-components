@@ -129,7 +129,7 @@ jobs:
           node-version: 14
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM  --access restricted || exit 1
+      - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM  -- --access restricted || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NPM: 'alpha'
