@@ -437,7 +437,7 @@
               "cwd": "dist/libs/core",
               "commands": [
                   {
-                      "command": "npm publish --access restricted --tag {args.tag}",
+                      "command": "npm publish --tag {args.tag}",
                       "forwardAllArgs": true
                   }
               ]
