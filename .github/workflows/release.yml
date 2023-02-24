@@ -9,7 +9,7 @@ on:
         type: boolean
         default: true
   pull_request:
-    types: [opened,closed]
+    types: [opened,syncronized,closed]
     branches:
       - develop
       - master
