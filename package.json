@@ -128,7 +128,7 @@
     "@typescript-eslint/typescript-estree": "5.47.1",
     "commander": "6.2.1",
     "cspell": "^5.5.1",
-    "css-loader": "^6.7.1",
+    "css-loader": "^6.7.3",
     "dotenv": "16.0.3",
     "editorjs-text-color-plugin": "1.13.1",
     "eslint": "^8.30.0",
