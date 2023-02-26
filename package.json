@@ -131,7 +131,7 @@
     "css-loader": "^6.7.1",
     "dotenv": "16.0.3",
     "editorjs-text-color-plugin": "1.13.1",
-    "eslint": "^8.30.0",
+    "eslint": "^8.34.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "40.0.0",
