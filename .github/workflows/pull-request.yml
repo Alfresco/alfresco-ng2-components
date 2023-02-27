@@ -115,7 +115,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
         env:
-          DEVEL_FLAG: true #${{ inputs.devel }}
+          DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |

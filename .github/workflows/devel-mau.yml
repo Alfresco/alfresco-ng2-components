@@ -1,0 +1,26 @@
+name: "devel-mau"
+
+on:
+  workflow_call:
+    inputs:
+      dry-run-release:
+        description: 'enable dry-run on release'
+        required: false
+        type: boolean
+        default: true
+      devel:
+        description: 'devel'
+        required: false
+        type: string
+        default: false
+  push:
+    branches:
+      - AAE-11918-remove-travis-var
+
+jobs:
+  general:
+    name: release.yml call
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      dry-run-release: true
