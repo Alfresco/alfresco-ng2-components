@@ -109,7 +109,10 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     set contextMenuOptions(contextMenuOptions: any[]) {
         merge(...contextMenuOptions.map((option) => {
             if (!option.subject) {
-                option.subject =  new Subject();
+                option = {
+                    ...option,
+                    subject: new Subject(),
+                };
             }
             return option.subject;
         })).pipe(takeUntil(this.onDestroy$)).subscribe((option) => {
@@ -191,21 +194,23 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
      * @param node node to be collapsed/expanded
      */
     public expandCollapseNode(node: T): void {
-        if (this.treeService.treeControl.isExpanded(node)) {
-            this.treeService.collapseNode(node);
-        } else {
-            node.isLoading = true;
-            this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
-                this.treeService.expandNode(node, response.entries);
-                this.paginationChanged.emit(response.pagination);
-                node.isLoading = false;
-                if (this.treeNodesSelection.isSelected(node)) {
-                    //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
-                    setTimeout(() => {
-                        this.treeNodesSelection.select(...response.entries);
-                    });
-                }
-            });
+        if (node.hasChildren) {
+            if (this.treeService.treeControl.isExpanded(node)) {
+                this.treeService.collapseNode(node);
+            } else {
+                node.isLoading = true;
+                this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
+                    this.treeService.expandNode(node, response.entries);
+                    this.paginationChanged.emit(response.pagination);
+                    node.isLoading = false;
+                    if (this.treeNodesSelection.isSelected(node)) {
+                        //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
+                        setTimeout(() => {
+                            this.treeNodesSelection.select(...response.entries);
+                        });
+                    }
+                });
+            }
         }
     }
 

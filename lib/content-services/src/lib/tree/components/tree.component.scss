@@ -61,7 +61,7 @@ $tree-header-font-size: 12px !default;
     }
 }
 
-.adf-tree-load-more-row, .adf-tree-row .adf-tree-cell-value {
+.adf-tree-load-more-row .adf-tree-cell-value, .adf-tree-clickable-cell-value {
     cursor: pointer;
 }
 

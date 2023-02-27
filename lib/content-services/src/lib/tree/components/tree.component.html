@@ -33,7 +33,9 @@
                     </button>
                 </div>
                 <div class="adf-tree-cell">
-                    <span class="adf-tree-cell-value">
+                    <span
+                        class="adf-tree-cell-value"
+                        (click)="loadMoreSubnodes(node)">
                         {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
                     </span>
                 </div>
@@ -47,7 +49,7 @@
                 [adf-context-menu-enabled]="!!contextMenuOptions"
                 (contextmenu)="contextMenuSource = node">
                 <div class="adf-tree-expand-collapse-container">
-                    <button *ngIf="node.hasChildren"x
+                    <button *ngIf="node.hasChildren"
                         class="adf-tree-expand-collapse-button"
                         mat-icon-button
                         matTreeNodeToggle>
@@ -83,7 +85,10 @@
                     </ng-template>
                 </ng-container>
                 <div class="adf-tree-cell">
-                    <span class="adf-tree-cell-value" (click)="expandCollapseNode(node)">
+                    <span
+                        class="adf-tree-cell-value"
+                        [class.adf-tree-clickable-cell-value]="node.hasChildren"
+                        (click)="expandCollapseNode(node)">
                         {{ node.nodeName }}
                     </span>
                 </div>
