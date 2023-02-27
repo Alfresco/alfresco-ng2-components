@@ -19,10 +19,10 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}
-  TRAVIS_BUILD_DIR: ${{ github.workspace }}
-  TRAVIS_COMMIT: ${{ github.sha }}
+  GH_BUILD_DIR: ${{ github.workspace }}
+  GH_COMMIT: ${{ github.sha }}
   BUILD_ID: ${{ github.run_id }}
-  TRAVIS_RUN_NUMBER: ${{ github.run_attempt }}
+  GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
@@ -34,7 +34,7 @@ env:
   E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
   PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
-  URL_HOST_ADF: ${{ secrets.URL_HOST_ADF }}
+  URL_HOST_ADF: "http://localhost:4200"
   IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
@@ -59,12 +59,8 @@ env:
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
-  NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
-  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  S3_DBP_PATH: "s3://alfresco-travis-builds/adf"
   DEMO_SHELL_DIR: "./dist/demo-shell"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
@@ -74,14 +70,6 @@ env:
   REDIRECT_URI: /
   BROWSER_RUN: false
   MAXINSTANCES: 2
-  PROXY_HOST_ECM: $E2E_HOST
-  PROXY_HOST_BPM: $E2E_HOST
-  HOST_SSO: $HOST_SSO
-  USERNAME_ADF: $E2E_USERNAME
-  PASSWORD_ADF: $E2E_PASSWORD
-  IDENTITY_ADMIN_EMAIL: $E2E_ADMIN_EMAIL_IDENTITY
-  IDENTITY_ADMIN_PASSWORD: $E2E_ADMIN_PASSWORD_IDENTITY
-  URL_HOST_ADF: "http://localhost:4200"
   PLAYWRIGHT_WORKERS: 2
   PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
   PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
@@ -115,5 +103,5 @@ jobs:
       - name: "Release tag"
         run: |
           git fetch --all --quiet
-          TRAVIS_BRANCH=${GITHUB_REF##*/} ./scripts/travis/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
+          BRANCH=${GITHUB_REF##*/} ./scripts/github/release/git-tag.sh ${{ steps.set-dryrun.outputs.dryrun }}
 

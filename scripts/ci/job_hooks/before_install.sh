@@ -51,8 +51,6 @@ else
     # Settings for API ------------------------------------------------------------------
     export NX_CALCULATION_FLAGS="--all"
     export BUILD_OPTS="--configuration production"
-    # In case of manual Travis run use the commit message from travis and not the one from git
-    #COMMIT_MESSAGE=$TRAVIS_COMMIT_MESSAGE
 fi
 
 # Settings for S3 caching -------------------------------------------------------------

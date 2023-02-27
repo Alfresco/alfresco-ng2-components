@@ -49,7 +49,7 @@ env:
   NODE_OPTIONS: "--max-old-space-size=5120"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  S3_DBP_PATH: "s3://alfresco-travis-builds/adf"
+  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   DEMO_SHELL_DIR: "./dist/demo-shell"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
