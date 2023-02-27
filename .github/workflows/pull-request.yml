@@ -20,7 +20,7 @@ on:
       - master
       - develop-patch*
       - master-patch*
-      
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -150,7 +150,7 @@ jobs:
           nx run cli:bundle
           nx run testing:bundle
       - run: nx print-affected $NX_CALCULATION_FLAGS
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   unit-tests:
     timeout-minutes: 30
@@ -176,7 +176,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
           /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
@@ -193,7 +193,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: nx affected --target=lint $NX_CALCULATION_FLAGS
 
   build-libs:
@@ -208,11 +208,11 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
       - run: nx build demoshell --configuration production
       - run: nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration ci
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   e2e-storybook:
     timeout-minutes: 20
@@ -225,13 +225,13 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Process Cloud Storybook Playwright
         run: |
           npx playwright install chromium
           sudo sysctl -w fs.inotify.max_user_watches=524288
           npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-      - uses: ./.github/actions/upload-cache-and-artifacts
+      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   e2e:
     timeout-minutes: 90
@@ -364,7 +364,7 @@ jobs:
         with:
           enable-cache: "true"
           enable-node-modules-cache: "true"
-      - uses: ./.github/actions/download-cache-and-artifacts
+      - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: setup chrome
         uses: ./.github/actions/setup-chrome
       - name: e2e
