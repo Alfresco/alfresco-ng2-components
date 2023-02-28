@@ -11,6 +11,11 @@ $tree-header-font-size: 12px !default;
     }
 }
 
+.adf-tree-load-more-row .adf-tree-cell-value,
+.adf-tree-clickable-cell-value {
+    cursor: pointer;
+}
+
 .adf-tree-row,
 .adf-tree-load-more-row {
     transition: all 0.3s ease;
@@ -59,10 +64,6 @@ $tree-header-font-size: 12px !default;
             word-break: break-word;
         }
     }
-}
-
-.adf-tree-load-more-row .adf-tree-cell-value, .adf-tree-clickable-cell-value {
-    cursor: pointer;
 }
 
 .adf-tree-header {

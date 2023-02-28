@@ -84,6 +84,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @Output()
     public paginationChanged: EventEmitter<PaginationModel> = new EventEmitter();
 
+    /** Emitted when any context menu option is selected */
     @Output()
     public contextMenuOptionSelected = new EventEmitter<TreeContextMenuResult<T>>();
 
@@ -104,6 +105,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         this._contextMenuSource = contextMenuSource;
     }
 
+    /** Array of context menu options which should be displayed for each row. */
     @Input()
     set contextMenuOptions(contextMenuOptions: any[]) {
         this.contextMenuOptionsChanged$.next();
@@ -112,7 +114,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
                 if (!option.subject) {
                     option = {
                         ...option,
-                        subject: new Subject(),
+                        subject: new Subject()
                     };
                 }
                 return option;
