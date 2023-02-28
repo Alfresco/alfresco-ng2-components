@@ -12,7 +12,7 @@ runs:
 
   steps:
     - name: load "NPM TAG"
-      uses: ./.github/actions/set-npm-tag
+      uses: ./.github/actions/travis-env-var-facade
       with:
         branch_name: ${{ inputs.branch_name }}
     - name: check npm bundle

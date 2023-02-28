@@ -51,7 +51,7 @@ runs:
           restore-keys: |
             ${{ runner.os }}
       - name: load "NPM TAG"
-        uses: ./.github/actions/set-npm-tag
+        uses: ./.github/actions/travis-env-var-facade
       - name: before install script
         uses: ./.github/actions/before-install
         with:
