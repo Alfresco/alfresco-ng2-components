@@ -11,7 +11,7 @@
             class="adf-tree-body"
             [dataSource]="treeService"
             [treeControl]="treeService.treeControl">
-                <mat-tree-node
+            <mat-tree-node
                 class="adf-tree-load-more-row"
                 [attr.data-automation-id]="'loadMoreSubnodes_' + node.parentId"
                 *matTreeNodeDef="let node when isLoadMoreNode"

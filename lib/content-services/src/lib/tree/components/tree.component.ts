@@ -80,7 +80,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     @Input()
     public collapseIcon: string = 'expand_more';
 
-
     /** Emitted when pagination has been changed */
     @Output()
     public paginationChanged: EventEmitter<PaginationModel> = new EventEmitter();
@@ -94,7 +93,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     private loadingRootSource = new BehaviorSubject<boolean>(false);
     private _contextMenuSource: T;
     private _contextMenuOptions: any[];
-    private onDestroy$ = new Subject<void>();
+    private contextMenuOptionsChanged$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
@@ -107,21 +106,27 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     @Input()
     set contextMenuOptions(contextMenuOptions: any[]) {
-        merge(...contextMenuOptions.map((option) => {
-            if (!option.subject) {
-                option = {
-                    ...option,
-                    subject: new Subject(),
-                };
-            }
-            return option.subject;
-        })).pipe(takeUntil(this.onDestroy$)).subscribe((option) => {
-            this.contextMenuOptionSelected.emit({
-                row: this._contextMenuSource,
-                contextMenuOption: option
+        this.contextMenuOptionsChanged$.next();
+        if (contextMenuOptions) {
+            this._contextMenuOptions = contextMenuOptions.map((option) => {
+                if (!option.subject) {
+                    option = {
+                        ...option,
+                        subject: new Subject(),
+                    };
+                }
+                return option;
             });
-        });
-        this._contextMenuOptions = contextMenuOptions;
+            merge(...this.contextMenuOptions.map((option) => option.subject)).pipe(takeUntil(this.contextMenuOptionsChanged$))
+                .subscribe((option) => {
+                    this.contextMenuOptionSelected.emit({
+                        row: this._contextMenuSource,
+                        contextMenuOption: option
+                    });
+                });
+        } else {
+            this._contextMenuOptions = contextMenuOptions;
+        }
     }
 
     get contextMenuOptions(): any[] {
@@ -136,9 +141,9 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+    ngOnDestroy() {
+        this.contextMenuOptionsChanged$.next();
+        this.contextMenuOptionsChanged$.complete();
     }
 
     /**

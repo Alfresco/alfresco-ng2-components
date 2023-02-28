@@ -17,32 +17,41 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
-import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded } from '../mock/tree-node.mock';
-import { of } from 'rxjs';
+import {
+    singleNode,
+    treeNodesChildrenMockExpanded,
+    treeNodesMock,
+    treeNodesMockExpanded,
+    treeNodesNoChildrenMock
+} from '../mock/tree-node.mock';
+import { of, Subject } from 'rxjs';
 import { TreeService } from '../services/tree.service';
 import { TreeServiceMock } from '../mock/tree-service.service.mock';
 import { By } from '@angular/platform-browser';
 import { SelectionChange } from '@angular/cdk/collections';
+import { DebugElement } from '@angular/core';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
     let component: TreeComponent<TreeNode>;
     let userPreferenceService: UserPreferencesService;
 
-    const getDisplayNameValue = (nodeId: string) =>
-        fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .adf-tree-cell-value`).innerText.trim();
+    const composeNodeSelector = (nodeId: string) => `.mat-tree-node[data-automation-id="node_${nodeId}"]`;
 
-    const getNodePadding = (nodeId: string) => {
-        const element = fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"]`);
-        return parseInt(window.getComputedStyle(element).paddingLeft, 10);
-    };
+    const getNode = (nodeId: string) => fixture.debugElement.query(By.css(composeNodeSelector(nodeId)));
 
-    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .mat-progress-spinner`);
+    const getDisplayNameElement = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-tree-cell-value`);
 
-    const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`.mat-tree-node[data-automation-id="node_${nodeId}"] .adf-icon`);
+    const getDisplayNameValue = (nodeId: string) => getDisplayNameElement(nodeId).innerText.trim();
+
+    const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
+
+    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-progress-spinner`);
+
+    const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
     const tickCheckbox = (index: number) => {
         const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
@@ -179,6 +188,56 @@ describe('TreeComponent', () => {
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
     });
 
+    it('should call collapseNode on TreeService when collapsing node by clicking at node label and node has children', () => {
+        component.refreshTree();
+        fixture.detectChanges();
+        spyOn(component.treeService, 'collapseNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
+        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(component.treeService.collapseNode).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
+    });
+
+    it('should call expandNode on TreeService when expanding node by clicking at node label and node has children', () => {
+        component.refreshTree();
+        fixture.detectChanges();
+        spyOn(component.treeService, 'expandNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
+        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(component.treeService.expandNode).toHaveBeenCalledWith(component.treeService.treeNodes[0], treeNodesMockExpanded);
+    });
+
+    it('should not call collapseNode on TreeService when collapsing node and node has not children', () => {
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
+            pagination: {
+                skipCount: 0,
+                maxItems: 25
+            },
+            entries: Array.from(treeNodesNoChildrenMock)
+        }));
+        component.refreshTree();
+        fixture.detectChanges();
+        spyOn(component.treeService, 'collapseNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
+        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(component.treeService.collapseNode).not.toHaveBeenCalled();
+    });
+
+    it('should not call expandNode on TreeService when expanding node by clicking at node label and node has not children', () => {
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
+            pagination: {
+                skipCount: 0,
+                maxItems: 25
+            },
+            entries: Array.from(treeNodesNoChildrenMock)
+        }));
+        component.refreshTree();
+        fixture.detectChanges();
+        spyOn(component.treeService, 'expandNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
+        getDisplayNameElement(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(component.treeService.expandNode).not.toHaveBeenCalled();
+    });
+
     it('should load more subnodes and remove load more button when load more button is clicked', () => {
         component.refreshTree();
         fixture.detectChanges();
@@ -191,6 +250,22 @@ describe('TreeComponent', () => {
         const loadMoreNodes = component.treeService.treeNodes.find((node: TreeNode) => node.nodeType === TreeNodeType.LoadMoreNode);
         expect(appendSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0], Array.from(singleNode));
         expect(loadMoreNodes).toBeUndefined();
+    });
+
+    it('should load more subnodes and remove load more button when label of load more button is clicked', () => {
+        component.refreshTree();
+        fixture.detectChanges();
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
+            pagination: {},
+            entries: Array.from(singleNode)
+        }));
+        spyOn(component.treeService, 'appendNodes');
+        fixture.debugElement.query(By.css('.adf-tree-load-more-row .adf-tree-cell-value')).nativeElement.click();
+        fixture.whenStable();
+        fixture.detectChanges();
+        expect(component.treeService.appendNodes).toHaveBeenCalledWith(component.treeService.treeNodes[0], Array.from(singleNode));
+        expect(component.treeService.treeNodes.find((node) => node.nodeType === TreeNodeType.LoadMoreNode))
+            .toBeUndefined();
     });
 
     it('selection should be disabled by default, no checkboxes should be displayed', () => {
@@ -255,6 +330,98 @@ describe('TreeComponent', () => {
             });
             component.loadMoreSubnodes(component.treeService.treeNodes.find((node: TreeNode) => node.nodeType === TreeNodeType.LoadMoreNode));
             fixture.detectChanges();
+        });
+    });
+
+    describe('Context menu', () => {
+        let contextMenu: ContextMenuDirective;
+        let contextMenuOption1: any;
+        let contextMenuOption2: any;
+        let node: DebugElement;
+
+        const optionTitle1 = 'option 1';
+        const optionTitle2 = 'option 2';
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            node = getNode('testId1');
+            contextMenu = node.injector.get(ContextMenuDirective);
+            contextMenuOption1 = {
+                title: optionTitle1,
+                subject: new Subject()
+            };
+            contextMenuOption2 = {
+                title: optionTitle2,
+                subject: new Subject()
+            };
+        });
+
+        it('should have assigned correct value to links property of context menu for row', () => {
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+
+            fixture.detectChanges();
+            expect(contextMenu.links).toEqual(component.contextMenuOptions);
+        });
+
+        it('should have assigned default subject to each context menu option', () => {
+            contextMenuOption1.subject = undefined;
+            contextMenuOption2.subject = undefined;
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+
+            fixture.detectChanges();
+            expect(contextMenu.links).toEqual([{
+                title: optionTitle1,
+                subject: jasmine.any(Subject)
+            }, {
+                title: optionTitle2,
+                subject: jasmine.any(Subject)
+            }]);
+        });
+
+        it('should have assigned false to enabled property of context menu for row by default', () => {
+            expect(contextMenu.enabled).toBeFalse();
+        });
+
+        it('should have assigned true to enabled property of context menu for row if contextMenuOptions is set', () => {
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+
+            fixture.detectChanges();
+            expect(contextMenu.enabled).toBeTrue();
+        });
+
+        it('should have assigned false to enabled property of context menu for row if contextMenuOptions is not set', () => {
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+            fixture.detectChanges();
+            component.contextMenuOptions = null;
+
+            fixture.detectChanges();
+            expect(contextMenu.enabled).toBeFalse();
+        });
+
+        it('should emit contextMenuOptionSelected with correct parameters when any context menu option has been selected', () => {
+            spyOn(component.contextMenuOptionSelected, 'emit');
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+
+            const option = component.contextMenuOptions[0];
+            component.contextMenuOptions[0].subject.next(option);
+            expect(component.contextMenuOptionSelected.emit).toHaveBeenCalledWith({
+                contextMenuOption: option,
+                row: undefined
+            });
+        });
+
+        it('should emit contextMenuOptionSelected including row when any context menu option has been selected and contextmenu event has been triggered earlier', () => {
+            spyOn(component.contextMenuOptionSelected, 'emit');
+            component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
+            fixture.detectChanges();
+            node.nativeElement.dispatchEvent(new MouseEvent('contextmenu'));
+
+            const option = component.contextMenuOptions[0];
+            component.contextMenuOptions[0].subject.next(option);
+            expect(component.contextMenuOptionSelected.emit).toHaveBeenCalledWith({
+                contextMenuOption: option,
+                row: treeNodesMockExpanded[0]
+            });
         });
     });
 });
