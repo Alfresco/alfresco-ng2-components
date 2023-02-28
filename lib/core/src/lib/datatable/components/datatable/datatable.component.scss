@@ -23,8 +23,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     &__resize-handle {
-        align-self: stretch;
-        border: 0.5px solid var(--theme-border-color);
+        padding: 0 2px;
+        &--divider {
+            padding: 24px 0;
+            border: 1px solid var(--theme-border-color);
+        }
 
         &:hover {
             cursor: col-resize;
