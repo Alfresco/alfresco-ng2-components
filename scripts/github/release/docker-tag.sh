@@ -2,15 +2,15 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
-
-if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]; then
+BRANCH=${GITHUB_REF##*/}
+if [[ $BRANCH =~ ^master(-patch.*)?$ ]]; then
     export TAGS=$(grep -m1 version package.json | awk '{ print $2 }' | sed 's/[", ]//g')
 else
-    if [[ "${TRAVIS_PULL_REQUEST_BRANCH}" != "" ]];
+    if [[ "${GITHUB_BASE_REF}" != "" ]];
     then
-        export TAGS="$TRAVIS_PULL_REQUEST_BRANCH-$TRAVIS_BUILD_NUMBER"
+        export TAGS="${GITHUB_BASE_REF}-$GH_BUILD_NUMBER"
     else
-        export TAGS="$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER,$TRAVIS_BRANCH"
+        export TAGS="$GITHUB_BASE_REF-$GH_BUILD_NUMBER,$GITHUB_BASE_REF"
     fi;
 fi;
 

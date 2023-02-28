@@ -5,8 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
 
 VERSION_IN_PACKAGE_JSON=`node -p "require('./package.json')".version;`;
-
-if [[ $TRAVIS_BRANCH =~ ^master(-patch.*)?$ ]]
+BRANCH=${GITHUB_REF##*/}
+if [[ $BRANCH =~ ^master(-patch.*)?$ ]]
 then
     # Pre-release versions
     if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
@@ -18,7 +18,7 @@ then
     fi
 fi
 
-if [[ $TRAVIS_BRANCH =~ ^develop(-patch.*)?$ ]]
+if [[ $BRANCH =~ ^develop(-patch.*)?$ ]]
 then
     TAG_NPM=alpha
 fi

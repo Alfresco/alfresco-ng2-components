@@ -8,7 +8,7 @@ inputs:
     default: 'false'
 runs:
   using: "composite"
-  steps:  
+  steps:
     - name: Before install
       if: ${{ ! env.ACT }}
       shell: bash
@@ -22,7 +22,7 @@ runs:
           echo "GIT_HASH=$(git rev-parse HEAD)";
           echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
           echo "HEAD_HASH=HEAD";
-          echo "HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}";
+          echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
           echo CI_FORCE_RUN=false;
@@ -35,7 +35,7 @@ runs:
       run: |
         echo "Setting up CI to run with commit flag [affected:*] flag."
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
-        
+
     - name: ci:force flag parser
       shell: bash
       if: ${{ contains(github.event.head_commit.message , '[ci:force]') }}
@@ -76,8 +76,8 @@ runs:
     - name: SCHEDULE event
       if: ${{ github.event_name == 'schedule' }}
       shell: bash
-      env: 
-        EV_NAME: ${{ github.event_name }}      
+      env:
+        EV_NAME: ${{ github.event_name }}
       run: |
         echo "Setting up CI to run on SCHEDULE"
         echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV

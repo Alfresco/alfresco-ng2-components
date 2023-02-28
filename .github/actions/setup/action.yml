@@ -50,13 +50,8 @@ runs:
           key: ${{ runner.os }}-pip-
           restore-keys: |
             ${{ runner.os }}
-# ENV LOAD
-      - name: load .travis.yml env.global variables
-        uses: Alfresco/alfresco-build-tools/.github/actions/travis-env-load@v1.17.0
-        with:
-          yml_path: .travis.yml
-      - name: load "TRAVIS_EVENT_TYPE"
-        uses: ./.github/actions/travis-env-var-facade
+      - name: load "NPM TAG"
+        uses: ./.github/actions/set-npm-tag
       - name: before install script
         uses: ./.github/actions/before-install
         with:
