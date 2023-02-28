@@ -127,7 +127,7 @@ export default function main(_args: string[], workingDir: string) {
         .description('Generate changelog report for two branches of git repository')
         .version('0.0.1', '-v, --version')
         .usage('changelog [options]')
-        .option('-r, --range <range>', 'Commit range, e.g. origin/master..develop', 'origin/qmaster..develop')
+        .option('-r, --range <range>', 'Commit range, e.g. origin/master..develop', 'origin/master..develop')
         .option('-d, --dir <dir>', 'Working directory (default: working directory)')
         .option('-m, --max <number>', 'Limit the number of commits to output')
         .option('-o, --output <dir>', 'Output directory, will use console output if not defined')
