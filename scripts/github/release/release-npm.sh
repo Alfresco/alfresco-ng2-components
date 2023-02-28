@@ -5,7 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../../../
 
 VERSION_IN_PACKAGE_JSON=`node -p "require('./package.json')".version;`;
-BRANCH=${GITHUB_REF##*/}
+#BRANCH=${GITHUB_REF##*/}
+BRANCH=${GITHUB_BASE_REF}
 if [[ $BRANCH =~ ^master(-patch.*)?$ ]]
 then
     # Pre-release versions
