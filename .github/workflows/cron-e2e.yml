@@ -5,6 +5,8 @@ on:
     - cron: '0 12 * * *'
 
 env:
+  BASE_REF: ${{ github.base_ref }}
+  HEAD_REF: ${{ github.head_ref }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GITHUB_BRANCH: ${{ github.ref_name }}
@@ -12,7 +14,7 @@ env:
   GH_COMMIT: ${{ github.sha }}
   BUILD_ID: ${{ github.run_id }}
   GH_RUN_NUMBER: ${{ github.run_attempt }}
-  GH_BUILD_NUMBER: github-run-${{ github.run_id }}
+  GH_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
   PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
   E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
@@ -21,9 +23,9 @@ env:
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
   E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
+  USERNAME_ADF: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
-  URL_HOST_ADF: ${{ secrets.URL_HOST_ADF }}
+  URL_HOST_ADF: "http://localhost:4200"
   IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
@@ -39,17 +41,17 @@ env:
   PASSWORD_SUPER_ADMIN_ADF: ${{ secrets.PASSWORD_SUPER_ADMIN_ADF }}
   HR_USER: ${{ secrets.HR_USER }}
   HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
-  NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
-  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+  SMART_RUNNER_PATH: ".protractor-smartrunner"
+  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
+  S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
+  NODE_OPTIONS: "--max-old-space-size=5120"
+  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
-  DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
-  NODE_OPTIONS: "--max-old-space-size=5120"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   DEMO_SHELL_DIR: "./dist/demo-shell"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
@@ -59,17 +61,10 @@ env:
   REDIRECT_URI: /
   BROWSER_RUN: false
   MAXINSTANCES: 2
-  PROXY_HOST_ECM: $E2E_HOST
-  PROXY_HOST_BPM: $E2E_HOST
-  HOST_SSO: $HOST_SSO
-  USERNAME_ADF: $E2E_USERNAME
-  PASSWORD_ADF: $E2E_PASSWORD
-  IDENTITY_ADMIN_EMAIL: $E2E_ADMIN_EMAIL_IDENTITY
-  IDENTITY_ADMIN_PASSWORD: $E2E_ADMIN_PASSWORD_IDENTITY
-  URL_HOST_ADF: "http://localhost:4200"
   PLAYWRIGHT_WORKERS: 2
   PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
   PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
+  PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
   run-e2e:

@@ -50,16 +50,6 @@ runs:
           key: ${{ runner.os }}-pip-
           restore-keys: |
             ${{ runner.os }}
-      # - name: load env.global variables
-      #   shell: bash
-      #   run: |
-      #     echo "PROXY_HOST_BPM=${E2E_HOST}" >> $GITHUB_ENV
-      #     echo "USERNAME_ADF=${E2E_USERNAME}" >> $GITHUB_ENV
-      #     echo "PASSWORD_ADF=${E2E_PASSWORD}" >> $GITHUB_ENV
-      #     echo "IDENTITY_ADMIN_EMAIL=${E2E_ADMIN_EMAIL_IDENTITY}" >> $GITHUB_ENV
-      #     echo "IDENTITY_ADMIN_PASSWORD=${E2E_ADMIN_PASSWORD_IDENTITY}" >> $GITHUB_ENV
-      #     echo "HOST_SSO=${HOST_SSO}" >> $GITHUB_ENV
-      #     echo "PROXY_HOST_ECM=${E2E_HOST}" >> $GITHUB_ENV
       - name: load "NPM TAG"
         uses: ./.github/actions/set-npm-tag
       - name: before install script

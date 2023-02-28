@@ -20,9 +20,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  push:
-    branches:
-      - AAE-11918-remove-travis-var
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -47,7 +44,6 @@ env:
   E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
   E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  #USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
   USERNAME_ADF: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
   URL_HOST_ADF: "http://localhost:4200"

@@ -22,7 +22,7 @@ runs:
           echo "GIT_HASH=$(git rev-parse HEAD)";
           echo "BASE_HASH=$(git merge-base origin/${GITHUB_BASE_REF} HEAD)";
           echo "HEAD_HASH=HEAD";
-          echo "HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${GH_COMMIT}}";
+          echo "HEAD_COMMIT_HASH=${GH_COMMIT}";
           echo "NX_CALCULATION_FLAGS=--all";
           echo "BUILD_OPTS=--configuration production";
           echo CI_FORCE_RUN=false;
