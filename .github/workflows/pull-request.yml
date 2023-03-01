@@ -21,6 +21,10 @@ on:
       - develop-patch*
       - master-patch*
 
+  push:
+    branches:
+      - AAE-11622-remove-scripts
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
