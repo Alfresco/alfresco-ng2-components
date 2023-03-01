@@ -270,6 +270,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
         this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+        this.createColumns();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
