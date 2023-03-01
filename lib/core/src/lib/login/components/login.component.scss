@@ -191,7 +191,7 @@
     }
 
     .mat-form-field .adf-login-password-icon.mat-icon {
-        color: var(--theme-text-fg-color);
+        color: var(--theme-foreground-text-color);
     }
 
     .adf-login__field .mat-form-field-wrapper {
@@ -202,7 +202,7 @@
     .adf-login__field input:-webkit-autofill {
         /* stylelint-disable */
         -webkit-box-shadow: 0 0 0 1000px var(--theme-dialog-bg-color) inset;
-        -webkit-text-fill-color: var(--theme-text-fg-color) !important;
+        -webkit-text-fill-color: var(--theme-foreground-text-color) !important;
         /* stylelint-enable */
     }
 
@@ -240,7 +240,7 @@
     }
 
     .adf-login-remember-me {
-        color: var(--theme-text-fg-color) !important;
+        color: var(--theme-foreground-text-color) !important;
     }
 
     .adf-login-action-container {

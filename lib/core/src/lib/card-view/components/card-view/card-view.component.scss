@@ -34,14 +34,14 @@
 
         .adf-property-label {
             font-size: var(--theme-caption-font-size);
-            color: var(--theme-text-color);
+            color: var(--theme-foreground-text-color-054);
             word-wrap: break-word;
         }
 
         .adf-property-value,
         .mat-form-field-label {
             font-size: var(--theme-body-1-font-size);
-            color: var(--theme-text-bold-color);
+            color: var(--theme-foreground-text-color-087);
         }
     }
 }

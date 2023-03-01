@@ -1,7 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 .adf-upload-dialog {
     background: var(--theme-dialog-bg-color);
-    color: var(--theme-text-color);
+    color: var(--theme-foreground-text-color-054);
     position: fixed;
     bottom: 20px;
     width: 40%;
@@ -33,7 +33,7 @@
             min-width: 0;
             padding: 0;
             line-height: 0;
-            color: var(--theme-text-color) !important;
+            color: var(--theme-foreground-text-color-054) !important;
         }
     }
 
@@ -49,8 +49,8 @@
     &__content {
         overflow: auto;
         max-height: 194px;
-        border-top: 1px solid var(--adf-upload-border-color);
-        border-bottom: 1px solid var(--adf-upload-border-color);
+        border-top: 1px solid var(--theme-foreground-text-color-014);
+        border-bottom: 1px solid var(--theme-foreground-text-color-014);
     }
 
     &__confirmation {
@@ -61,7 +61,7 @@
         font-size: var(--theme-subheading-2-font-size);
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: var(--theme-text-bold-color);
+        color: var(--theme-foreground-text-color-087);
     }
 
     &__confirmation--text {

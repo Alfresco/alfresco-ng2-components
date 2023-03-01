@@ -12,21 +12,21 @@
     .mat-calendar {
         .mat-calendar-header {
             button {
-                color: var(--theme-text-bold-color);
+                color: var(--theme-foreground-text-color-087);
 
                 &:disabled {
-                    color: var(--theme-text-color);
+                    color: var(--theme-foreground-text-color-054);
                 }
             }
         }
 
         .mat-calendar-content {
             .mat-calendar-table-header th {
-                color: var(--theme-text-color);
+                color: var(--theme-foreground-text-color-054);
             }
 
             .mat-calendar-body-disabled > div {
-                color: var(--theme-text-color) !important;
+                color: var(--theme-foreground-text-color-054) !important;
             }
         }
     }
@@ -48,11 +48,11 @@
 
         .mat-datetimepicker-calendar-content {
             .mat-datetimepicker-calendar-table-header th {
-                color: var(--theme-text-color);
+                color: var(--theme-foreground-text-color-054);
             }
 
             .mat-datetimepicker-calendar-body-disabled > div {
-                color: var(--theme-text-color);
+                color: var(--theme-foreground-text-color-054);
             }
         }
     }

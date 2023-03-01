@@ -5,12 +5,12 @@
     }
 
     &-array-item-action {
-        color: var(--adf-card-view-text-color);
+        color: var(--theme-foreground-text-color-025);
     }
 
     &-array-item-action:hover,
     &-array-item-action:focus {
-        color: var(--theme-text-fg-color);
+        color: var(--theme-foreground-text-color);
     }
 
     &-card-array-item-default {

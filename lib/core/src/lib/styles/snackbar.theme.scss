@@ -1,25 +1,25 @@
 @mixin adf-snackbar-theme() {
     .adf-error-snackbar {
-        background-color: var(--adf-snackbar-error-bg-color);
+        background-color: var(--theme-warn-color);
 
         .mat-simple-snackbar-action {
-            color: var(--adf-snackbar-error-action-color);
+            color: var(--theme-warn-contrast-500);
         }
     }
 
     .adf-warning-snackbar {
-        background-color: var(--adf-snackbar-warning-bg-color);
+        background-color: var(--theme-accent-color);
 
         .mat-simple-snackbar-action {
-            color: var(--adf-snackbar-warning-action-color);
+            color: var(--theme-accent-contrast-500);
         }
     }
 
     .adf-info-snackbar {
-        background-color: var(--adf-snackbar-info-bg-color);
+        background-color: var(--theme-primary-color);
 
         .mat-simple-snackbar-action {
-            color: var(--adf-snackbar-info-action-color);
+            color: var(--theme-primary-contrast-500);
         }
     }
 }

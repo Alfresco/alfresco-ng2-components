@@ -57,7 +57,7 @@
             justify-content: flex-end;
             align-items: flex-end;
             display: flex;
-            color: var(--theme-text-color);
+            color: var(--theme-foreground-text-color-054);
         }
     }
 
@@ -109,7 +109,7 @@
             font-size: var(--theme-body-1-font-size);
 
             & > input {
-                border: 1px solid var(--theme-border-color);
+                border: 1px solid var(--theme-foreground-text-color-007);
                 background-color: var(--theme-card-bg-color);
                 color: inherit;
                 font-size: var(--theme-body-1-font-size);
@@ -129,7 +129,7 @@
             width: 79px;
             height: 24px;
             font-size: var(--theme-body-1-font-size);
-            border: 1px solid var(--theme-border-color);
+            border: 1px solid var(--theme-foreground-text-color-007);
             text-align: center;
             line-height: 24px;
             margin-left: 4px;

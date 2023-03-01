@@ -5,7 +5,7 @@
     font-size: var(--theme-body-1-font-size);
     font-weight: 600;
     letter-spacing: -0.2px;
-    color: var(--theme-text-color);
+    color: var(--theme-foreground-text-color-054);
     overflow: hidden;
 
     &-container {
@@ -79,7 +79,7 @@
         font-weight: 600;
         letter-spacing: -0.2px;
         text-align: left;
-        color: var(--theme-text-color);
+        color: var(--theme-foreground-text-color-054);
         flex: 0 1 auto;
         min-width: 35px;
         margin-top: auto;
@@ -87,11 +87,11 @@
 
         &:hover,
         &.adf-active {
-            color: var(--adf-breadcrumb-item-active-hover-color);
+            color: var(--theme-foreground-text-color-064);
         }
 
         &.adf-active {
-            color: var(--adf-breadcrumb-item-active-color);
+            color: var(--theme-foreground-text-color-087);
         }
 
         &-chevron {
