@@ -21,10 +21,6 @@ on:
       - develop-patch*
       - master-patch*
 
-  push:
-    branches:
-      - AAE-11622-remove-scripts
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -121,7 +117,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
         env:
-          DEVEL_FLAG: true #${{ inputs.devel }}
+          DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
