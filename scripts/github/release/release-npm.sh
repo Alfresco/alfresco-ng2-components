@@ -24,14 +24,6 @@ then
     TAG_NPM=alpha
 fi
 
-echo "Publishing on GH PKG registry with tag $TAG_NPM"
-./node_modules/@alfresco/adf-cli/bin/adf-cli npm-publish \
-    --npmRegistry "npm.pkg.github.com" \
-    --tokenRegistry $github_token \
-    --tag $TAG_NPM \
-    --pathProject "$(pwd)" \
-    "$@"
-
 echo "Publishing on Public npm registry with tag $TAG_NPM"
 ./node_modules/@alfresco/adf-cli/bin/adf-cli npm-publish \
     --npmRegistry $NPM_REGISTRY_ADDRESS \
