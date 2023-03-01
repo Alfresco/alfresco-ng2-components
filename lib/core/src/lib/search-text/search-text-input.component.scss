@@ -21,10 +21,10 @@
 
     &-input-form-field-divider {
         .mat-form-field-underline {
-            background-color: var(--adf-search-input-bg-color);
+            background-color: var(--theme-primary-50);
 
             .mat-form-field-ripple {
-                background-color: var(--adf-search-input-bg-color);
+                background-color: var(--theme-primary-50);
             }
         }
 
@@ -33,5 +33,5 @@
 }
 
 .adf-highlight {
-    color: var(--adf-search-input-highlight-color);
+    color: var(--theme-primary-900);
 }

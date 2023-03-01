@@ -97,7 +97,7 @@
 
         .adf-toolbar .mat-toolbar {
             max-height: 48px;
-            background-color: var(--theme-card-bg-color);
+            background-color: var(--theme-background-card-color);
             border-width: 0;
             border-radius: 2px;
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 20.4), 0 0 2px 0 rgba(0, 0, 0, 0.12);
@@ -110,7 +110,7 @@
 
             & > input {
                 border: 1px solid var(--theme-foreground-text-color-007);
-                background-color: var(--theme-card-bg-color);
+                background-color: var(--theme-background-card-color);
                 color: inherit;
                 font-size: var(--theme-body-1-font-size);
                 padding: 5px;

@@ -1,5 +1,5 @@
 .adf-is-selected {
-    background: var(--adf-comment-list-primary-color);
+    background: var(--theme-primary-100);
 }
 
 .adf {
@@ -25,13 +25,13 @@
 
         &:hover {
             background:
-                var(--adf-comment-list-primary-color)
-                radial-gradient(circle, transparent 1%, var(--adf-comment-list-primary-color) 1%)
+                var(--theme-primary-100)
+                radial-gradient(circle, transparent 1%, var(--theme-primary-100) 1%)
                 center/15000%;
         }
 
         &:active {
-            background-color: var(--adf-comment-list-ripple-color);
+            background-color: var(--theme-primary-300);
             background-size: 100%;
             transition: background 0s;
         }

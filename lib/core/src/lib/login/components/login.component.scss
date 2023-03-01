@@ -63,7 +63,7 @@
 
     .adf-login-card-wide {
         border-radius: 8px;
-        background-color: var(--theme-dialog-bg-color);
+        background-color: var(--theme-background-dialog-color);
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
         width: 450px;
         min-width: 320px;
@@ -201,7 +201,7 @@
 
     .adf-login__field input:-webkit-autofill {
         /* stylelint-disable */
-        -webkit-box-shadow: 0 0 0 1000px var(--theme-dialog-bg-color) inset;
+        -webkit-box-shadow: 0 0 0 1000px var(--theme-background-dialog-color) inset;
         -webkit-text-fill-color: var(--theme-foreground-text-color) !important;
         /* stylelint-enable */
     }

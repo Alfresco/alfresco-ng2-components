@@ -127,7 +127,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
                     this.color = color;
                 } else {
                     this.color = undefined;
-                    document.documentElement.style.setProperty('--adf-header-background-color', color);
+                    document.documentElement.style.setProperty('--theme-primary-color', color);
                 }
             });
 
@@ -138,7 +138,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         this.headerService.headerTextColor
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(headerTextColor => {
-                document.documentElement.style.setProperty('--adf-header-text-color', headerTextColor);
+                document.documentElement.style.setProperty('--theme-primary-color-default-contrast', headerTextColor);
             });
 
         this.headerService.logo

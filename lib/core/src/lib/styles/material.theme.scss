@@ -4,7 +4,7 @@
         & .mat-expansion-panel-header.cdk-program-focused,
         &:not(.mat-expanded) .mat-expansion-panel-header:hover {
             &:not([aria-disabled='true']) {
-                background-color: var(--theme-hover-bg-color);
+                background-color: var(--theme-background-hover-color);
             }
         }
     }

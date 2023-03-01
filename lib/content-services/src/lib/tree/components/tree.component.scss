@@ -33,7 +33,7 @@ $tree-header-font-size: 12px !default;
     }
 
     &:hover {
-        background-color: var(--theme-bg-hover-color);
+        background-color: var(--theme-background-hover-color);
 
         .adf-tree-actions {
             display: flex;
@@ -41,7 +41,7 @@ $tree-header-font-size: 12px !default;
     }
 
     &:focus {
-        background-color: var(--theme-bg-hover-color);
+        background-color: var(--theme-background-hover-color);
         outline-offset: -1px;
         outline: 1px solid var(--theme-accent-color-a200);
     }

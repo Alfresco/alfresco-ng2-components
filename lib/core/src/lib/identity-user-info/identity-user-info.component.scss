@@ -18,7 +18,7 @@
     }
 
     &-userinfo-pic {
-        background: var(--adf-user-info-color);
+        background: var(--theme-primary-300);
         display: inline-block;
         width: 40px;
         height: 40px;
@@ -32,7 +32,7 @@
     }
 
     &-userinfo-profile-image {
-        background: var(--adf-user-info-color);
+        background: var(--theme-primary-300);
         text-align: center;
         border-radius: 90%;
         width: 40px;
@@ -132,7 +132,7 @@
     }
 
     &-userinfo-profile-picture {
-        background: var(--adf-user-info-color);
+        background: var(--theme-primary-300);
         background-size: cover;
         border-radius: 50%;
         height: 80px;
@@ -144,7 +144,7 @@
     &-userinfo-profile-initials {
         text-transform: uppercase;
         background-size: cover;
-        background-color: var(--adf-user-info-color);
+        background-color: var(--theme-primary-300);
         border-radius: 50%;
         height: 80px;
         width: 80px;

@@ -1,6 +1,6 @@
 adf-layout-header .mat-toolbar-single-row {
-    color: var(--adf-header-text-color) !important;
-    background-color: var(--adf-header-background-color);
+    color: var(--theme-primary-color-default-contrast) !important;
+    background-color: var(--theme-primary-color);
     position: relative;
     padding: 0 24px;
 
@@ -35,7 +35,7 @@ adf-layout-header .mat-toolbar-single-row {
         margin: 0 5px;
 
         & > div {
-            background-color: var(--theme-card-bg-color);
+            background-color: var(--theme-background-card-color);
         }
     }
 

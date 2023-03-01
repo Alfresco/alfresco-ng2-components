@@ -11,7 +11,7 @@
             }
 
             .mat-badge-active {
-                border: 2px solid var(--theme-card-bg-color) !important;
+                border: 2px solid var(--theme-background-card-color) !important;
             }
         }
 
@@ -38,7 +38,7 @@
         }
 
         input {
-            background: 2px solid var(--theme-card-bg-color) !important;
+            background: 2px solid var(--theme-background-card-color) !important;
         }
     }
 
@@ -52,7 +52,7 @@
         display: flex;
         justify-content: flex-end;
         padding: 15px;
-        background-color: var(--theme-hover-bg-color);
+        background-color: var(--theme-background-hover-color);
 
         > button {
             font-size: 0.9em;
