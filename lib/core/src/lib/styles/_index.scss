@@ -52,9 +52,15 @@
         --theme-foreground-text-color-014: mat.get-color-from-palette($foreground, text, 0.14),
         --theme-foreground-text-color-007: mat.get-color-from-palette($foreground, text, 0.07),
 
-        --adf-node-selector-icon-color: mat.get-color-from-palette($foreground, icon, 0.54),
-        --adf-node-selector-base-color: mat.get-color-from-palette($foreground, base, 0.45),
-        --adf-node-selector-base-bold-color: mat.get-color-from-palette($foreground, base, 0.65),
+        --theme-foreground-icon-color: mat.get-color-from-palette($foreground, icon),
+        --theme-foreground-icon-color-054: mat.get-color-from-palette($foreground, icon, 0.54),
+        --theme-foreground-base-color: mat.get-color-from-palette($foreground, base),
+        --theme-foreground-base-color-065: mat.get-color-from-palette($foreground, base, 0.65),
+        --theme-foreground-base-color-045: mat.get-color-from-palette($foreground, base, 0.45),
+        --theme-foreground-secondary-text-color: mat.get-color-from-palette($foreground, secondary-text),
+        --theme-foreground-divider-color: mat.get-color-from-palette($foreground, divider),
+        --theme-foreground-disabled-text-color: mat.get-color-from-palette($foreground, disabled-text),
+
         --adf-datatable-cell-link-hover-color: mat.get-color-from-palette($accent, 500),
         --adf-datatable-selected-color: mat.get-color-from-palette($primary, 100),
         --adf-user-info-color: mat.get-color-from-palette($primary, 300),
@@ -62,8 +68,6 @@
         --adf-comment-list-ripple-color: mat.get-color-from-palette($primary, 300),
         --adf-search-input-bg-color: mat.get-color-from-palette($primary, 50),
         --adf-search-input-highlight-color: mat.get-color-from-palette($primary, 900),
-
-
         --adf-header-background-color: mat.get-color-from-palette($primary),
         --adf-header-text-color: mat.get-color-from-palette($primary, default-contrast),
 
@@ -71,14 +75,9 @@
         --theme-background-color: mat.get-color-from-palette($background, background),
         --theme-card-bg-color: mat.get-color-from-palette($background, card),
         --theme-card-bg-bold-color: mat.get-color-from-palette($background, card, 0.87),
-        --theme-secondary-text-color: mat.get-color-from-palette($foreground, secondary-text),
         --theme-dialog-bg-color: mat.get-color-from-palette($background, dialog),
         --theme-bg-hover-color: mat.get-color-from-palette($background, hover),
-        --theme-fg-base-color: mat.get-color-from-palette($foreground, base),
-        --theme-fg-divider: mat.get-color-from-palette($foreground, divider),
-        --theme-disabled-text-color: mat.get-color-from-palette($foreground, disabled-text),
         --theme-selected-button-bg-color: mat.get-color-from-palette($background, selected-button),
-        --theme-icon-fg-color: mat.get-color-from-palette($foreground, icon),
         --theme-unselected-chip-bg-color: mat.get-color-from-palette($background, unselected-chip),
         --theme-status-bar-bg-color: mat.get-color-from-palette($background, status-bar),
         // fonts

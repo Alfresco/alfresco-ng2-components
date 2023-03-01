@@ -94,7 +94,7 @@ adf-content-node-selector {
 
         .adf-choose-action {
             &[disabled] {
-                color: var(--theme-secondary-text-color);
+                color: var(--theme-foreground-secondary-text-color);
             }
 
             &:enabled {

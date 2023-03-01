@@ -39,11 +39,11 @@ h2.adf-search-results-label {
             width: 100%;
 
             &-icon {
-                color: var(--adf-node-selector-icon-color);
+                color: var(--theme-foreground-icon-color-054);
                 cursor: pointer;
 
                 &:hover {
-                    color: var(--theme-fg-base-color);
+                    color: var(--theme-foreground-base-color);
                 }
             }
         }
@@ -74,10 +74,10 @@ h2.adf-search-results-label {
                 outline: none;
 
                 .mat-icon {
-                    color: var(--adf-node-selector-base-color);
+                    color: var(--theme-foreground-base-color-045);
 
                     &:hover {
-                        color: var(--adf-node-selector-base-bold-color);
+                        color: var(--theme-foreground-base-color-065);
                     }
                 }
 
@@ -87,7 +87,7 @@ h2.adf-search-results-label {
             }
 
             .adf-dropdown-breadcrumb-item-chevron {
-                color: var(--adf-node-selector-base-color);
+                color: var(--theme-foreground-base-color-045);
             }
         }
 

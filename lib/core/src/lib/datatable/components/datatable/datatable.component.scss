@@ -43,7 +43,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 }
 
 .adf-datatable-card {
-    border: 1px solid var(--theme-fg-divider);
+    border: 1px solid var(--theme-foreground-divider-color);
 
     .adf-datatable-body {
         flex-flow: row wrap;
@@ -159,7 +159,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             margin: 8px;
             padding: 4px;
             overflow: visible;
-            border-bottom: 1px solid var(--theme-fg-divider);
+            border-bottom: 1px solid var(--theme-foreground-divider-color);
 
             .adf-datatable-cell-container {
                 float: left;

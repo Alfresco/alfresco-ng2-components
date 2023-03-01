@@ -8,14 +8,14 @@
     padding: 10px 20px;
     font-size: var(--theme-body-1-font-size);
     font-weight: 600;
-    border-bottom: 1px solid var(--theme-fg-divider);
+    border-bottom: 1px solid var(--theme-foreground-divider-color);
     margin: 0;
 }
 
 .adf-comments-input-container {
     width: calc(100% - 30px);
     padding: 8px 15px 0;
-    border-bottom: 1px solid var(--theme-fg-divider);
+    border-bottom: 1px solid var(--theme-foreground-divider-color);
 
     textarea {
         resize: vertical;

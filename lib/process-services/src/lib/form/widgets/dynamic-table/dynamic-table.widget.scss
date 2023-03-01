@@ -133,7 +133,7 @@ dynamic-table-widget .adf-label {
                     cursor: pointer;
 
                     &::before {
-                        color: var(--theme-disabled-text-color);
+                        color: var(--theme-foreground-disabled-text-color);
                     }
                 }
             }
