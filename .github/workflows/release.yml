@@ -84,7 +84,7 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
-    if: github.event.pull_request.merged || ${{ inputs.dry-run-release }}
+    if: github.event.pull_request.merged == true
     name: "Setup"
     runs-on: ubuntu-22.04
     steps:
@@ -106,7 +106,7 @@ jobs:
   release-demoshell:
     needs: [setup]
     timeout-minutes: 15
-    if: github.event.pull_request.merged || ${{ inputs.dry-run-release }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -132,7 +132,7 @@ jobs:
   release-storybook:
     needs: [setup]
     timeout-minutes: 15
-    if: github.event.pull_request.merged || ${{ inputs.dry-run-release }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -159,7 +159,7 @@ jobs:
   release-npm:
     needs: [setup]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || ${{ inputs.dry-run-release }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -201,7 +201,7 @@ jobs:
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || ${{ inputs.dry-run-release }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
