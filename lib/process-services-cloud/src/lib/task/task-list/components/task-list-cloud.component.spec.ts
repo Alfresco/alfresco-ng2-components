@@ -286,6 +286,28 @@ describe('TaskListCloudComponent', () => {
         component.onRowClick(rowEvent);
     });
 
+    it('should re-create columns when a column width gets changed', () => {
+        component.isResizingEnabled = true;
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+
+        component.reload();
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));       
+        resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
+        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));       
+        
+        const firstColumnInitialWidth = component.columns[0].width ?? 0;
+        
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));       
+        resizeHandle.dispatchEvent(new MouseEvent('mousemove', { clientX: 25 }));        
+        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
+
+        expect(component.columns[0].width).toBe(firstColumnInitialWidth + 25);
+    });
+
     describe('component changes', () => {
 
         beforeEach(() => {

@@ -400,6 +400,8 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             return widthsColumnsMap;
         }, {});
 
+        this.createColumns();
+
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
                 this.appName,

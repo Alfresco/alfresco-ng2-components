@@ -310,6 +310,8 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             return widthsColumnsMap;
         }, {});
 
+        this.createColumns();
+
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
                 this.appName,
