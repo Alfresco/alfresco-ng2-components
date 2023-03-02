@@ -398,13 +398,12 @@ jobs:
 
   results:
     if: ${{ always() }}
+    # if: success() || failure()
     runs-on: ubuntu-latest
     name: Final Results
     needs: [check-if-pr-is-approved, check-package-lock, build-libs, e2e, e2e-storybook]
     steps:
       - run: exit 1
-        if: >-
-          ${{
-               contains(needs.*.result, 'failure')
-            || contains(needs.*.result, 'cancelled')
-          }}
+        if: ${{ contains(needs.*.result, 'failure') }}
+      - run: exit 1
+        if: ${{ contains(needs.*.result, 'cancelled') }}
