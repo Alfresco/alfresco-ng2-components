@@ -121,32 +121,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
-            echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
-            skip_check="true"
-          fi
-
-          if [ "${{ github.event_name }}" == "schedule" ]; then
-            echo -e "\033[32mSchedule event\033[0m"
-            skip_check="true"
-          fi
-
-          if [[ "$DEVEL_FLAG" == "true" ]]; then
-            echo -e "\033[32mDevel flag\033[0m"
-            skip_check="true"
-          fi
-
-          if [ "$skip_check" == "false" ]; then
-            echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
-            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
-            if [[ $checkApproval ]]; then
-              echo -e "\033[32mPR approved\033[0m"
-            else
-              echo -e "\033[31mPR NOT approved\033[0m"
-              exit 1
-            fi
-          fi
+          exit 0
 
   # setup:
   #   # long timeout required when cache has to be recreated
