@@ -396,15 +396,18 @@ jobs:
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
 
-  results:
+  finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, check-package-lock, build-libs, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, check-package-lock, unit-tests, build-libs, e2e, e2e-storybook]
     steps:
-      - run: exit 1
-        if: >-
-          ${{
-               contains(needs.*.result, 'failure')
-            || contains(needs.*.result, 'cancelled')
-          }}
+      - name: workflow failure
+        run: exit 1
+        if: ${{ contains(needs.*.result, 'failure') }}
+      - name: workflow canceled
+        run: exit 1
+        if: ${{ contains(needs.*.result, 'cancelled') }}
+      - name: workflow success
+        run: exit 0
+        if: ${{ contains(needs.*.result, 'success') }}
