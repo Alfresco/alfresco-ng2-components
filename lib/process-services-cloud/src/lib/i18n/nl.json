@@ -100,7 +100,8 @@
         "LOW": "Laag",
         "NORMAL": "Normaal",
         "HIGH": "Hoog"
-      }
+      },
+      "DESCRIPTION": "Beschrijving"
     },
     "LIST": {
       "MESSAGES": {

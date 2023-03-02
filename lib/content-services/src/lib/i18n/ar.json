@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "إدارة الإصدارات"
+      "TITLE": "إدارة الإصدارات",
+      "CLOSE": "إغلاق"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "تحميل إصدار جديد",
@@ -88,9 +89,9 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "إلغاء",
-    "CHOOSE": "اختيار",
+    "CHOOSE": "حدد",
     "ATTACH": "إرفاق",
-    "CHOOSE_ITEM": "اختيار محتوى لإرفاقه من '{{ name }}'",
+    "CHOOSE_ITEM": "حدد محتوى لإرفاقه من '{{ name }}'",
     "COPY": "نسخ",
     "COPY_ITEM": "نسخ '{{ name }}' إلى...",
     "MOVE": "نقل",
@@ -98,7 +99,7 @@
     "NO_RESULTS": "لم يتم العثور على نتائج",
     "SEARCH": "بحث",
     "SEARCH_RESULTS": "نتائج البحث",
-    "SELECT_LOCATION": "تحديد المكان",
+    "SELECT_LOCATION": "حدد المكان",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "لا يمكنك تحميل ملف أثناء تشغيل بحث",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "لا يملك المستخدم إذنًا لتحميل المحتوى إلى المجلد",
     "REPOSITORY": "مخزن",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "إغلاق",
+        "CLEAR": "مسح",
         "REMOVE": "إزالة",
         "APPLY": "تطبيق",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "من",
         "TO": "إلى",
         "FROM-DATE": "من",
-        "TO-DATE": "إلى"
+        "TO-DATE": "إلى",
+        "SELECT-FROM-DATE": "حدد من التاريخ",
+        "SELECT-TO-DATE": "حدد إلى التاريخ"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "القيمة المطلوبة",
@@ -409,7 +413,7 @@
       "TITLE": "إضافة إذن",
       "TYPE-MESSAGE": "اكتب شيئًا لبدء البحث في المجموعات أو الأشخاص",
       "NO-RESULT": "لم يتم العثور على نتيجة لهذا البحث",
-      "SELECT-ACTION": "تحديد",
+      "SELECT-ACTION": "حدد",
       "ADD-ACTION": "إضافة",
       "CLOSE-ACTION": "إلغاء",
       "BASE-DIALOG-TITLE": "بحث عن مجموعة أو أشخاص لإضافتهم...",
@@ -463,6 +467,9 @@
     "ACCESSIBILITY": {
       "ARIA_LABEL": "تبديل {{ name }}"
     }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "تحميل المزيد من {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "تم تحديد {{count}}"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "عرض {{ count }} المزيد"
   },
   "swsdp": "عينة: مشروع تصميم موقع الويب"
 }

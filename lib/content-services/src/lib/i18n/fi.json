@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Hallitse versioita"
+      "TITLE": "Hallitse versioita",
+      "CLOSE": "Sulje"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Lataa uusi versio",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Sulje",
+        "CLEAR": "Tyhjennä",
         "REMOVE": "Poista",
         "APPLY": "Käytä",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Alku",
         "TO": "Loppu",
         "FROM-DATE": "Alku",
-        "TO-DATE": "Loppu"
+        "TO-DATE": "Loppu",
+        "SELECT-FROM-DATE": "Valitse alkamispäivä",
+        "SELECT-TO-DATE": "Valitse päättymispäivä"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Pakollinen arvo",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Vaihda: {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Lataa lisää {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Luo kirjasto",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valittiin"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Katso {{ count }} lisää"
   },
   "swsdp": "Otos: Verkkosivuston suunnitteluprojekti"
 }

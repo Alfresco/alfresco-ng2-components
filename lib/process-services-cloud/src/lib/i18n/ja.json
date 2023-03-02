@@ -100,7 +100,8 @@
         "LOW": "低",
         "NORMAL": "中",
         "HIGH": "高"
-      }
+      },
+      "DESCRIPTION": "説明"
     },
     "LIST": {
       "MESSAGES": {
@@ -223,7 +224,7 @@
       "STATUS": "ステータス",
       "DIRECTION": "昇順/降順",
       "ACTIVITY_NAME": "アクティビティ名",
-      "ACTIVITY_TYPE": "アクティビティの種類",
+      "ACTIVITY_TYPE": "アクティビティタイプ",
       "SORT": "表示順",
       "STARTED_DATE": "開始日",
       "COMPLETED_DATE": "完了日"

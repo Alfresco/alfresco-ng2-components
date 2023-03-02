@@ -2,7 +2,7 @@
   "ANALYTICS": {
     "TITLE": "分析",
     "MESSAGES": {
-      "UNKNOWN-WIDGET-TYPE": "ウィジェットの種類が不明です",
+      "UNKNOWN-WIDGET-TYPE": "ウィジェットタイプが不明です",
       "FILL-PARAMETER": "レポートオプションから選択してください",
       "NO-DATA-FOUND": "データが見つかりません",
       "ZERO-DATA-FOUND": "ゼロ (0) の値しかありません",

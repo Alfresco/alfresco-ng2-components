@@ -9,7 +9,7 @@
       "NAME": "流程名称",
       "CREATED": "已创建",
       "STATUS": "状态",
-      "START_DATE": "启动日期",
+      "START_DATE": "开始日期",
       "COMPLETED_DATE": "完成日期",
       "COMPLETED_BY": "完成者",
       "ID": "ID",
@@ -100,7 +100,8 @@
         "LOW": "低",
         "NORMAL": "正常",
         "HIGH": "高"
-      }
+      },
+      "DESCRIPTION": "说明"
     },
     "LIST": {
       "MESSAGES": {
@@ -264,7 +265,7 @@
         "RANGE": "位于以下日期之间"
       },
       "DATE_RANGE_TITLE": "开始日期 - 结束日期",
-      "START_DATE": "启动日期",
+      "START_DATE": "开始日期",
       "END_DATE": "结束日期",
       "ID": "ID",
       "BUSINESS_KEY": "商业 Key"

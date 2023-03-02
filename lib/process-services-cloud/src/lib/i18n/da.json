@@ -100,7 +100,8 @@
         "LOW": "Lav",
         "NORMAL": "Medium",
         "HIGH": "Høj"
-      }
+      },
+      "DESCRIPTION": "Beskrivelse"
     },
     "LIST": {
       "MESSAGES": {

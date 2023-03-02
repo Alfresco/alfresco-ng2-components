@@ -1,5 +1,28 @@
 {
   "APP": {
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Type d'authentification",
+      "BASIC": "Authentification de base",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Flux implicite",
+      "PROVIDER": "Fournisseur",
+      "REQUIRED": "Ce champ est obligatoire",
+      "CS_URL_ERROR": "L'adresse Content Services ne correspond pas au format d'URL",
+      "PS_URL_ERROR": "L'adresse Process Services ne correspond pas au format d'URL",
+      "TITLE": "Paramètres",
+      "CS-HOST": "URL de Content Services",
+      "BP-HOST": "URL de Process Services",
+      "BACK": "Retour",
+      "APPLY": "Appliquer",
+      "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL.",
+      "REDIRECT": "URI de redirection",
+      "REDIRECT_LOGOUT": "Déconnexion URI de redirection",
+      "SILENT": "Connexion en mode silencieux",
+      "SCOPE": "Etendue",
+      "CLIENT": "ID client",
+      "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux",
+      "SECRET": "Secret"
+    },
     "ABOUT": {
       "DEVELOPMENT": "Mode développement"
     },
@@ -83,7 +106,7 @@
     "FORM_LOADING": "Chargement du formulaire",
     "UPLOADER": "Chargeur",
     "WEBSCRIPT": "Script Web",
-    "TAG": "Balise",
+    "TAG": "Tag",
     "PIPES": "Tuyaux",
     "TRASHCAN": "Corbeille",
     "SOCIAL": "Réseaux sociaux",
@@ -146,7 +169,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "Nom affiché",
       "IS_LOCKED": "Verrouiller",
-      "TAG": "Balise",
+      "TAG": "Tag",
       "NODE_ID": "ID du nœud",
       "CREATED_BY": "Créé par",
       "CREATED_ON": "Créé le",
@@ -271,9 +294,9 @@
     "RATING": "Composant d'évaluation"
   },
   "TAG": {
-    "LIST": "Liste de balises Content Services",
+    "LIST": "Liste des tags Content Services",
     "INSERT": "Insérer l'ID du nœud",
-    "NODE_LIST": "Liste de balises par ID de nœud"
+    "NODE_LIST": "Liste des tags par ID de nœud"
   },
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Hériter des droits d'accès",

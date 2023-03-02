@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Håndtere versjoner"
+      "TITLE": "Håndtere versjoner",
+      "CLOSE": "Lukk"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Last opp ny versjon",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Lukk",
+        "CLEAR": "Fjern",
         "REMOVE": "Fjern",
         "APPLY": "Bruk",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Fra",
         "TO": "Til",
         "FROM-DATE": "Fra",
-        "TO-DATE": "Til"
+        "TO-DATE": "Til",
+        "SELECT-FROM-DATE": "Velg fra-dato",
+        "SELECT-TO-DATE": "Velg til-dato"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Påkrevd verdi",
@@ -410,7 +414,7 @@
       "TYPE-MESSAGE": "Skriv inn tekst for å starte søk etter grupper eller personer",
       "NO-RESULT": "Ingen resultater funnet for dette søket",
       "SELECT-ACTION": "VELG",
-      "ADD-ACTION": "LEGG TIL",
+      "ADD-ACTION": "Legg til",
       "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
       "EVERYONE": "Alle",
@@ -463,6 +467,9 @@
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Bytt {{ name }}"
     }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Last inn flere {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valgt"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Vis {{ count }} til"
   },
   "swsdp": "Eksempel: Prosjekt for nettsteddesign"
 }

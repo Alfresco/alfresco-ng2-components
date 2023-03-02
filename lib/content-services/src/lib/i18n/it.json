@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gestione versioni"
+      "TITLE": "Gestione versioni",
+      "CLOSE": "Chiudi"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Caricare la nuova versione",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Chiudi",
+        "CLEAR": "Cancella",
         "REMOVE": "Rimuovi",
         "APPLY": "Applica",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Da",
         "TO": "A",
         "FROM-DATE": "Da",
-        "TO-DATE": "A"
+        "TO-DATE": "A",
+        "SELECT-FROM-DATE": "Seleziona data di inizio",
+        "SELECT-TO-DATE": "Seleziona data di fine"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Valore obbligatorio",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Attiva/Disattiva {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Carica altri {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Crea libreria",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} selezionati"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Visualizza altri {{ count }}"
   },
   "swsdp": "Esempio: Progetto di sviluppo di sito Web"
 }

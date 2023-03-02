@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Spravovat verze"
+      "TITLE": "Spravovat verze",
+      "CLOSE": "Zavřít"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Odeslat novou verzi",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Zavřít",
+        "CLEAR": "Vymazat",
         "REMOVE": "Odstranit",
         "APPLY": "Použít",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Od",
         "TO": "Do",
         "FROM-DATE": "Od",
-        "TO-DATE": "Do"
+        "TO-DATE": "Do",
+        "SELECT-FROM-DATE": "Vybrat od Data",
+        "SELECT-TO-DATE": "Vybrat do Data"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Požadovaná hodnota",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Přepnout {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Načíst další {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Vytvořit knihovnu",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "Vybráno: {{ count }}"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Zobrazit dalších {{ count }}"
   },
   "swsdp": "Ukázka: Projekt návrhu webové stránky"
 }
