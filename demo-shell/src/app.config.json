@@ -4,7 +4,7 @@
   "bpmHost": "{protocol}//{hostname}{:port}",
   "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
   "loginRoute": "login",
-  "providers": "ALL",
+  "providers": "ECM",
   "contextRootBpm": "activiti-app",
   "authType": "BASIC",
   "locale": "en",

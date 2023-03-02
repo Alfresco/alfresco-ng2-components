@@ -68,6 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     @Input()
     showRememberMe: boolean = true;
 
+    /** Should the Forgot Password link be shown? */
+    @Input()
+    showForgotPassword: boolean = true;
+
     /** Should the extra actions (`Need Help`, `Register`, etc) be shown? */
     @Input()
     showLoginActions: boolean = true;
@@ -190,6 +194,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     forgotPassword() {
         this.router.navigate(['./forgot-password']);
+    }
+
+    isECMProvider() {
+        return this.authService.isECMProvider();
     }
 
     redirectToImplicitLogin() {

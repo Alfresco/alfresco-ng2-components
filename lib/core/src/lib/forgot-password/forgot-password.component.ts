@@ -9,7 +9,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeopleApi, ClientBody } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Router } from '@angular/router';
 
 @Component({

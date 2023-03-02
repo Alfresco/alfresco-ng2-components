@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
-
 describe('ResetPasswordComponent', () => {
     let component: ForgotPasswordComponent;
     let fixture: ComponentFixture<ForgotPasswordComponent>;
@@ -30,7 +29,6 @@ describe('ResetPasswordComponent', () => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule],
             declarations: [ForgotPasswordComponent],
-            providers: []
         });
 
         fixture = TestBed.createComponent(ForgotPasswordComponent);
@@ -39,37 +37,27 @@ describe('ResetPasswordComponent', () => {
         router = TestBed.inject(Router);
     });
 
-    it('should be created', () => {
-        expect(component).toBeTruthy();
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('send instructions button should be disabled by default', async () => {
-        component.ngOnInit();
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
         expect(component.isButtonDisabled).toBeTruthy();
     });
 
     it('send instructions button should be disabled if username field is empty', async () => {
-        component.ngOnInit();
         component.forgotPasswordForm.controls['userName'].setValue('');
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.isButtonDisabled).toBeTruthy();
     });
 
     it('send instructions button should be enabled when username field is not empty', async () => {
-        component.ngOnInit();
         fixture.detectChanges();
         await fixture.whenStable();
 
         component.forgotPasswordForm.controls['userName'].setValue('userABC');
         spyOn(component, 'isButtonDisabled').and.callThrough();
-        const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.send-instructions-button');
+        const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.adf-send-instructions-button');
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -79,36 +67,27 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should send instructions to the email id corresponding to the username when the send instructions button is clicked', async () => {
-        component.ngOnInit();
         component.forgotPasswordForm.controls['userName'].setValue('userABC');
         spyOn(component, 'sendInstructions').and.callThrough();
 
-
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.send-instructions-button');
+        const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.adf-send-instructions-button');
         sendInstructionsBtn.dispatchEvent(new Event('click'));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.sendInstructions).toHaveBeenCalled();
     });
 
     it('should route user back to login page when the close button is clicked', async () => {
-        component.ngOnInit();
         spyOn(component, 'close').and.callThrough();
         spyOn(router, 'navigate');
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const closeBtn = fixture.debugElement.nativeElement.querySelector('.close-button');
+        const closeBtn = fixture.debugElement.nativeElement.querySelector('.adf-close-button');
         closeBtn.dispatchEvent(new Event('click'));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.close).toHaveBeenCalled();
         expect(router.navigate).toHaveBeenCalledWith(['./login']);

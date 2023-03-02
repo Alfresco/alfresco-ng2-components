@@ -30,6 +30,15 @@
     </p>
     <p class="app-toggle">
         <mat-slide-toggle
+            id="adf-toggle-show-forgot-password"
+            color="primary"
+            (change)="toggleForgotPassword()"
+            [checked]="showForgotPassword">
+            {{ 'LOGIN.FORGOT-PASSWORD.FORGOT-PASSWORD' | translate }}
+        </mat-slide-toggle>
+    </p>
+    <p class="app-toggle">
+        <mat-slide-toggle
             id="adf-toggle-show-successRoute"
             color="primary"
             (change)="toggleSuccessRoute()"
@@ -81,6 +90,7 @@
     [logoImageUrl]="customLogoImageURL"
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter && showRememberMe"
+    [showForgotPassword]="showForgotPassword"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin()"
     (error)="onError($event)">

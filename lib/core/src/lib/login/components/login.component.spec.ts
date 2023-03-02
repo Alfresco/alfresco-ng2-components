@@ -306,6 +306,20 @@ describe('LoginComponent', () => {
         }));
     });
 
+    describe('Forgot password', () => {
+
+        it('should route user to forgot password component', async () => {
+            spyOn(component, 'forgotPassword').and.callThrough();
+            spyOn(router, 'navigate');
+
+            const forgotPasswordLink = fixture.debugElement.nativeElement.querySelector('.adf-login-forgot-password-link');
+            forgotPasswordLink.dispatchEvent(new Event('click'));
+
+            expect(component.forgotPassword).toHaveBeenCalled();
+            expect(router.navigate).toHaveBeenCalledWith(['./forgot-password']);
+        });
+    });
+
     it('should render Login form with all the keys to be translated', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
