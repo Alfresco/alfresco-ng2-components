@@ -15,7 +15,7 @@ on:
         default: true
   push:
     branches:
-      - "HXP-164*"
+      - "HXOR-164-*"
 
 
 jobs:
