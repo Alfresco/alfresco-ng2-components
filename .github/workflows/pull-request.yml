@@ -129,7 +129,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          echo "ci force var: ${CI_FORCE_RUN}"
+          echo "ci force var: ${{ env.CI_FORCE_RUN }}"
           if [ "${CI_FORCE_RUN}" == "true" ]; then
               echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
               skip_check="true"
