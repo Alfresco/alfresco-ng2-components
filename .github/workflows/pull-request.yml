@@ -110,21 +110,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Get commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.35.2
+        run: |
+          message=$(git log --format=%B -n 1 ${{github.event.after}})
+          echo COMMIT_MESSAGE=\"$message\" >> $GITHUB_ENV
 
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
+    needs: [get-commit-message]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: ci:force flag parser
         shell: bash
-        if: ${{ contains(github.event.head_commit.message , '[ci:force]') }}
         run: |
-          echo "Forcing CI to run with commit flag [ci:force]."
-          echo CI_FORCE_RUN=true >> $GITHUB_ENV
-          echo "BREAK_ACTION=true" >> $GITHUB_ENV
+          if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo "Forcing CI to run with commit flag [ci:force]."
+            echo CI_FORCE_RUN=true >> $GITHUB_ENV
+            echo "BREAK_ACTION=true" >> $GITHUB_ENV
+          fi
 
       - name: Get PR number
         id: action
@@ -138,8 +142,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          echo "commit message: $COMMIT_MESSAGE"
-          echo "ci force var: ${{ env.CI_FORCE_RUN }}"
+          echo "ci force run: $CI_FORCE_RUN"
           if [ "${CI_FORCE_RUN}" == "true" ]; then
               echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
               skip_check="true"
