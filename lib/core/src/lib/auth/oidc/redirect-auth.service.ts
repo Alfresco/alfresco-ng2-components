@@ -100,8 +100,9 @@ export class RedirectAuthService extends AuthService {
     let stateKey: string | undefined;
 
     if (currentUrl) {
-      stateKey = `auth_state_${Math.random()}${Date.now()}`;
-      this._oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || {}));
+        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
+        stateKey = `auth_state_${randomValue}${Date.now()}`;
+        this._oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || {}));
     }
 
     // initLoginFlow will initialize the login flow in either code or implicit depending on the configuration
