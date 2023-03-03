@@ -960,13 +960,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         const allColumns = this.data.getColumns();
 
         const headerContainer: HTMLElement = document.querySelector('.adf-datatable-header');
-        const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header');
 
-        headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
-            if (allColumns[index]) {
-                allColumns[index].width = column.offsetWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
-            }
-        });
+        if (headerContainer) {
+            const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header');
+    
+            headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
+                if (allColumns[index]) {
+                    allColumns[index].width = column.offsetWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
+                }
+            });
+        }
         this.data.setColumns(allColumns);
 
         this.columnsWidthChanged.emit(allColumns);
