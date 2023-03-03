@@ -302,7 +302,7 @@ describe('TaskListCloudComponent', () => {
         const firstColumnInitialWidth = component.columns[0].width ?? 0;
 
         resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        resizeHandle.dispatchEvent(new MouseEvent('mousemove', { clientX: 25 }));  
+        resizeHandle.dispatchEvent(new MouseEvent('mousemove', { clientX: 25 }));
         resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
 
         expect(component.columns[0].width).toBe(firstColumnInitialWidth + 25);
