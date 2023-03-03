@@ -104,11 +104,20 @@ jobs:
             echo -e "\033[32mpackage-lock.json has a correct version\033[0m"
           fi
 
+  get-commit-message:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Get commit message
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.35.2
+
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: ci:force flag parser
         shell: bash
         if: ${{ contains(github.event.head_commit.message , '[ci:force]') }}
@@ -117,7 +126,7 @@ jobs:
           echo CI_FORCE_RUN=true >> $GITHUB_ENV
           echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
-      - name: Check if PR is approved
+      - name: Get PR number
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
@@ -129,6 +138,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
+          echo "commit message: $COMMIT_MESSAGE"
           echo "ci force var: ${{ env.CI_FORCE_RUN }}"
           if [ "${CI_FORCE_RUN}" == "true" ]; then
               echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
