@@ -66,6 +66,7 @@ export enum ShowHeaderMode {
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
+    private static MINIMUM_COLUMN_SIZE = 100;
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -934,14 +935,40 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onResizing({ rectangle: { width } }: ResizeEvent, colIndex: number): void {
-        const allColumns = this.data.getColumns();
-        allColumns[colIndex].width = width;
-        this.data.setColumns(allColumns);
+        const timeoutId = setTimeout(() => {
+            const allColumns = this.data.getColumns();
+            allColumns[colIndex].width = width;
+            this.data.setColumns(allColumns);
+
+            if (!this.isResizing) {
+                clearTimeout(timeoutId);
+            }
+        });
     }
 
     onResizingEnd(): void {
         this.isResizing = false;
+
+        this.updateColumnsWidths();
+    }
+
+    getFlexValue(column: DataColumn): string {
+        return `0 1 ${column?.width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : column.width}px`;
+    }
+
+    private updateColumnsWidths(): void {
         const allColumns = this.data.getColumns();
+
+        const headerContainer: HTMLElement = document.querySelector('.adf-datatable-header');
+        const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header');
+
+        headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
+            if (allColumns[index]) {
+                allColumns[index].width = column.offsetWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
+            }
+        });
+        this.data.setColumns(allColumns);
+
         this.columnsWidthChanged.emit(allColumns);
     }
 }

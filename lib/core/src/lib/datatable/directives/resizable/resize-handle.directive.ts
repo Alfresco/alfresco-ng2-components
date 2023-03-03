@@ -65,16 +65,19 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
     if (event.cancelable) {
       event.preventDefault();
     }
-    this.unlistenMouseMove = this.renderer.listen(
-      this.element.nativeElement,
-      'mousemove',
-      (mouseMoveEvent: MouseEvent) => {
-        this.onMousemove(mouseMoveEvent);
-      }
-    );
+
+    if (!this.unlistenMouseMove) {
+      this.unlistenMouseMove = this.renderer.listen(
+        this.element.nativeElement,
+        'mousemove',
+        (mouseMoveEvent: MouseEvent) => {
+          this.onMousemove(mouseMoveEvent);
+        }
+      );
+    }
 
     this.unlistenMouseUp = this.renderer.listen(
-      this.element.nativeElement,
+      'document',
       'mouseup',
       (mouseUpEvent: MouseEvent) => {
         this.onMouseup(mouseUpEvent);
