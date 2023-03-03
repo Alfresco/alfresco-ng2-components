@@ -361,6 +361,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
         this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+        this.createColumns();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
@@ -399,6 +400,8 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             }
             return widthsColumnsMap;
         }, {});
+
+        this.createColumns();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
