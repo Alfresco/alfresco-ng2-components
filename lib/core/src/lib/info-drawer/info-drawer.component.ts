@@ -63,13 +63,13 @@ export class InfoDrawerComponent {
     contentBlocks: QueryList<InfoDrawerTabComponent>;
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        event.cancelBubble = true;
+    onKeyDown(event: KeyboardEvent): void {
+        event.stopPropagation();
     }
 
     @HostListener('keyup', ['$event'])
-    onKeyUp(event: KeyboardEvent) {
-        event.cancelBubble = true;
+    onKeyUp(event: KeyboardEvent): void {
+        event.stopPropagation();
     }
 
     showTabLayout(): boolean {

@@ -147,8 +147,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        event.cancelBubble = true;
+    onKeyDown(event: KeyboardEvent): void {
+        event.stopPropagation();
     }
 
     hasForm(): boolean {
