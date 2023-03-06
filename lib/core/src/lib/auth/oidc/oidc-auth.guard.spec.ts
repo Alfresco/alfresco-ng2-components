@@ -16,21 +16,57 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { OidcAuthGuard } from './oidc-auth.guard';
 
-describe('OidcAuthGuard', () => {
-  let guard: OidcAuthGuard;
+const state: RouterStateSnapshot = {
+  root: new ActivatedRouteSnapshot(),
+  url: 'http://example.com',
+};
+const routeSnapshot = new ActivatedRouteSnapshot();
 
+describe('OidcAuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [OidcAuthGuard, MockProvider(AuthService)]
+      imports: [RouterTestingModule],
+      providers: [OidcAuthGuard],
     });
-    guard = TestBed.inject(OidcAuthGuard);
   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
+  describe('#canActivate', () => {
+    it('should return false if the user is not authenticated, and call login method', () => {
+      const authService = { authenticated: false, login: jasmine.createSpy() } as unknown as AuthService;
+      const authGuard = new OidcAuthGuard(authService);
+
+      expect(authGuard.canActivate(routeSnapshot, state)).toEqual(false);
+      expect(authService.login).toHaveBeenCalled();
+    });
+
+    it('should return true if the user is authenticated', () => {
+      const authService = { authenticated: true } as unknown as AuthService;
+      const authGuard = new OidcAuthGuard(authService);
+
+      expect(authGuard.canActivate(routeSnapshot, state)).toEqual(true);
+    });
+  })
+
+  describe('#canActivateChild', () => {
+    it('should return false if the user is not authenticated, and call login method', () => {
+      const authService = { authenticated: false, login: jasmine.createSpy() } as unknown as AuthService;
+      const authGuard = new OidcAuthGuard(authService);
+
+      expect(authGuard.canActivateChild(routeSnapshot, state)).toEqual(false);
+      expect(authService.login).toHaveBeenCalled();
+    });
+
+    it('should return true if the user is authenticated', () => {
+      const authService = { authenticated: true } as unknown as AuthService;
+      const authGuard = new OidcAuthGuard(authService);
+
+      expect(authGuard.canActivateChild(routeSnapshot, state)).toEqual(true);
+    });
+  })
+
 });
