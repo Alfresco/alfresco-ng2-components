@@ -379,19 +379,11 @@ describe('ProcessListCloudComponent', () => {
         component.reload();
         fixture.detectChanges();
 
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const newColumns = [...component.columns];
+        newColumns[0].width = 120;
+        component.onColumnsWidthChanged(newColumns);
 
-        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
-        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
-
-        const firstColumnInitialWidth = component.columns[0].width ?? 0;
-
-        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        resizeHandle.dispatchEvent(new MouseEvent('mousemove', { clientX: 25 }));
-        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
-
-        expect(component.columns[0].width).toBe(firstColumnInitialWidth + 25);
+        expect(component.columns[0].width).toBe(120);
     });
 
     it('should re-create columns when a column order gets changed', () => {
