@@ -991,7 +991,7 @@
             "build"
           ],
           "options": {
-            "cwd": "dist/libs/extensions",
+            "cwd": "dist/libs/testing",
             "commands": [
               {
                 "command": "npm publish --tag {args.tag}",
