@@ -1,5 +1,28 @@
 {
   "APP": {
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "認証タイプ",
+      "BASIC": "基本認証",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "暗黙的フロー",
+      "PROVIDER": "プロバイダ",
+      "REQUIRED": "このフィールドは必須です",
+      "CS_URL_ERROR": "Content Services のアドレスが URL 形式と一致しません",
+      "PS_URL_ERROR": "Process Services のアドレスが URL 形式と一致しません",
+      "TITLE": "設定",
+      "CS-HOST": "Content Services の URL",
+      "BP-HOST": "Process Services の URL",
+      "BACK": "戻る",
+      "APPLY": "適用",
+      "NOT_VALID": "http(s)://host|ip:port(/path) が認識されません。別の URL を指定してください。",
+      "REDIRECT": "リダイレクト URI",
+      "REDIRECT_LOGOUT": "リダイレクト URI のログアウト",
+      "SILENT": "サイレントログイン",
+      "SCOPE": "範囲",
+      "CLIENT": "クライアント ID",
+      "PUBLIC_URLS": "サイレントログインのパブリック URL",
+      "SECRET": "シークレット"
+    },
     "ABOUT": {
       "DEVELOPMENT": "開発モード"
     },
@@ -248,7 +271,7 @@
     "RESULTS": "検索結果",
     "NO_RESULT": "一致するアイテムはありません",
     "FACET_FIELDS": {
-      "TYPE": "1:種類",
+      "TYPE": "1:タイプ",
       "SIZE": "2:サイズ",
       "CREATOR": "3:作成者",
       "MODIFIER": "4:変更者",
@@ -257,7 +280,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "あなたのファセットクエリ",
       "CREATED_THIS_YEAR": "1.今年作成",
-      "MIMETYPE": "2.種類: HTML",
+      "MIMETYPE": "2.タイプ: HTML",
       "XTRASMALL": "3.サイズ: 極小",
       "SMALL": "4.サイズ: 小",
       "MEDIUM": "5.サイズ: 中",
@@ -293,7 +316,7 @@
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入してください",
+      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
       "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
       "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
     },

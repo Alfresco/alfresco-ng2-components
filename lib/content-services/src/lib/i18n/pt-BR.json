@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gerenciar versões"
+      "TITLE": "Gerenciar versões",
+      "CLOSE": "Fechar"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Carregar nova versão",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Fechar",
+        "CLEAR": "Limpar",
         "REMOVE": "Excluir",
         "APPLY": "Aplicar",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "De",
         "TO": "a",
         "FROM-DATE": "De",
-        "TO-DATE": "a"
+        "TO-DATE": "a",
+        "SELECT-FROM-DATE": "Selecionar data inicial",
+        "SELECT-TO-DATE": "Selecionar data final"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Valor obrigatório",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Alternar {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Carregar mais {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Criar biblioteca",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} selecionado(s)"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Visualizar{{ count }} mais"
   },
   "swsdp": "Amostra: Projeto de design do site da Web"
 }

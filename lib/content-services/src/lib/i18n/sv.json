@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Hantera versioner"
+      "TITLE": "Hantera versioner",
+      "CLOSE": "Stäng"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Ladda upp ny version",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Stäng",
+        "CLEAR": "Rensa",
         "REMOVE": "Ta bort",
         "APPLY": "Tillämpa",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Från",
         "TO": "Till",
         "FROM-DATE": "Från",
-        "TO-DATE": "Till"
+        "TO-DATE": "Till",
+        "SELECT-FROM-DATE": "Välj Från-datum",
+        "SELECT-TO-DATE": "Välj Till-datum"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Obligatoriskt värde",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Växla {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Ladda fler {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Skapa bibliotek",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} vald"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Visa {{ count }} till"
   },
   "swsdp": "Sampel: Webbplatsdesignprojekt"
 }

@@ -100,7 +100,8 @@
         "LOW": "Niska",
         "NORMAL": "Średni",
         "HIGH": "Wysoki"
-      }
+      },
+      "DESCRIPTION": "Opis"
     },
     "LIST": {
       "MESSAGES": {

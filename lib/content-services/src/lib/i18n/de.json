@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Versionen verwalten"
+      "TITLE": "Versionen verwalten",
+      "CLOSE": "Schließen"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Neue Version hochladen",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Schließen",
+        "CLEAR": "Löschen",
         "REMOVE": "Entfernen",
         "APPLY": "Anwenden",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Von",
         "TO": "Bis",
         "FROM-DATE": "Von",
-        "TO-DATE": "Bis"
+        "TO-DATE": "Bis",
+        "SELECT-FROM-DATE": "Von-Datum auswählen",
+        "SELECT-TO-DATE": "Bis-Datum auswählen"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Erforderlicher Wert",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "{{ name }} wechseln"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Mehr laden {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Bibliothek erstellen",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} ausgewählt"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "{{ count }} mehr anzeigen"
   },
   "swsdp": "Beispiel: Website-Design-Projekt"
 }

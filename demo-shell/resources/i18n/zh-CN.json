@@ -1,5 +1,28 @@
 {
   "APP": {
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "身份验证类型",
+      "BASIC": "基本身份验证",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "隐式流",
+      "PROVIDER": "提供程序",
+      "REQUIRED": "此字段为必填字段",
+      "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",
+      "PS_URL_ERROR": "Process Services 地址与 URL 格式不匹配",
+      "TITLE": "设置",
+      "CS-HOST": "Content Services URL",
+      "BP-HOST": "Process Services URL",
+      "BACK": "返回",
+      "APPLY": "应用",
+      "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL。",
+      "REDIRECT": "重定向 URI",
+      "REDIRECT_LOGOUT": "重定向 URI 注销",
+      "SILENT": "静默登录",
+      "SCOPE": "范围",
+      "CLIENT": "客户端 ID",
+      "PUBLIC_URLS": "用于静默登录的公共 URL",
+      "SECRET": "机密"
+    },
     "ABOUT": {
       "DEVELOPMENT": "Dev 模式"
     },
@@ -103,7 +126,7 @@
     "PEOPLE_GROUPS_CLOUD": "人员/一组云",
     "TASK_HEADER_CLOUD": {
       "COMPONENT_NAME": "云的任务标题",
-      "APP_NAME_INPUT": "应用程序名称",
+      "APP_NAME_INPUT": "App 名称",
       "TASK_ID_INPUT": "任务 id",
       "FIND_TASK_BUTTON": "查找任务"
     },
@@ -281,8 +304,8 @@
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
-      "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
+      "APP_ID_REQUIRED_ERROR": "插入 App ID",
+      "APP_ID_TYPE_ERROR": "App ID 必须为数字",
       "NUMBER_TYPE_ERROR": "值必须是数字",
       "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
     },
@@ -293,8 +316,8 @@
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
-      "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
+      "APP_ID_REQUIRED_ERROR": "插入 App ID",
+      "APP_ID_TYPE_ERROR": "App ID 必须为数字",
       "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
     },
     "PROCESS_CONTEXT_MENU": "流程列表上下文菜单"

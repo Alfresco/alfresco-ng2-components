@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Administrer versioner"
+      "TITLE": "Administrer versioner",
+      "CLOSE": "Luk"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Upload ny version",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Luk",
+        "CLEAR": "Ryd",
         "REMOVE": "Fjern",
         "APPLY": "Anvend",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Fra",
         "TO": "Til",
         "FROM-DATE": "Fra",
-        "TO-DATE": "Til"
+        "TO-DATE": "Til",
+        "SELECT-FROM-DATE": "Vælg fra dato",
+        "SELECT-TO-DATE": "Vælg indtil dato"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Påkrævet værdi",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Skift {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Indlæs flere {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Opret bibliotek",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valgt"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Vis {{ count }} mere"
   },
   "swsdp": "Prøve: Websted Design Projekt"
 }

@@ -100,7 +100,8 @@
         "LOW": "Nízká",
         "NORMAL": "Střední",
         "HIGH": "Vysoká"
-      }
+      },
+      "DESCRIPTION": "Popis"
     },
     "LIST": {
       "MESSAGES": {

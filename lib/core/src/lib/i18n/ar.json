@@ -21,7 +21,7 @@
   "UNCLAIM": "تحرير",
   "START PROCESS": "بدء العملية",
   "DATA_LOADING": "يتم تحميل البيانات",
-  "CLOSE": "أغلق",
+  "CLOSE": "إغلاق",
   "NOTIFICATIONS": {
     "NO_MESSAGE": "ليس لديك إعلامات في هذا الوقت.",
     "TITLE": "إعلامات",
@@ -39,7 +39,7 @@
     },
     "FIELD": {
       "LOCALSTORAGE": "التخزين المحلي",
-      "SOURCE": "تحديد المصدر من ",
+      "SOURCE": "حدد المصدر من ",
       "VIEW_FILE": "عرض",
       "DOWNLOAD_FILE": "تنزيل",
       "REMOVE_FILE": "إزالة",
@@ -305,8 +305,8 @@
     },
     "ACCESSIBILITY": {
       "ACTIONS": "إجراءات",
-      "SELECT_ALL": "تحديد الكل",
-      "SELECT_FILE": "تحديد ملف",
+      "SELECT_ALL": "حدد الكل",
+      "SELECT_FILE": "حدد ملف",
       "SORT_ASCENDING": "تصاعدي",
       "SORT_DESCENDING": "تنازلي",
       "SORT_NONE": "بلا",

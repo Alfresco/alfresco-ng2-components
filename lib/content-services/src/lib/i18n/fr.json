@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gérer les versions"
+      "TITLE": "Gérer les versions",
+      "CLOSE": "Fermer"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Importer une nouvelle version",
@@ -123,13 +124,13 @@
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "Nouvelle balise"
+      "NEWTAG": "Nouveau tag"
     },
     "MESSAGES": {
-      "EXIST": "La balise existe déjà"
+      "EXIST": "Le tag existe déjà"
     },
     "BUTTON": {
-      "ADD": "Ajouter une balise"
+      "ADD": "Ajouter un tag"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Fermer",
+        "CLEAR": "Supprimer",
         "REMOVE": "Supprimer",
         "APPLY": "Appliquer",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "De",
         "TO": "A",
         "FROM-DATE": "De",
-        "TO-DATE": "A"
+        "TO-DATE": "A",
+        "SELECT-FROM-DATE": "Sélectionner De la date",
+        "SELECT-TO-DATE": "Sélectionner À la date"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Valeur requise",
@@ -353,7 +357,7 @@
       "CREATOR": "Créateur",
       "CREATED_DATE": "Date de création",
       "MODIFIER": "Modificateur",
-      "MODIFIED_DATE": "Date de Modification",
+      "MODIFIED_DATE": "Date de modification",
       "CONTENT_TYPE": "Type de contenu"
     },
     "CONTENT_TYPE": {
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Activer/désactiver {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Charger plus de {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Créer une Bibliothèque",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} sélectionné(s)"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Afficher {{ count }} de plus"
   },
   "swsdp": "Exemple : projet de conception de site Web"
 }

@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Управление версиями"
+      "TITLE": "Управление версиями",
+      "CLOSE": "Закрыть"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Загрузить новую версию",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Закрыть",
+        "CLEAR": "Очистить",
         "REMOVE": "Удалить",
         "APPLY": "Применить",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "От",
         "TO": "До",
         "FROM-DATE": "От",
-        "TO-DATE": "До"
+        "TO-DATE": "До",
+        "SELECT-FROM-DATE": "Выбрать с даты",
+        "SELECT-TO-DATE": "Выбрать по дату"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Обязательное значение",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Переключить {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Загрузить еще {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Создание библиотеки",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "Выбрано {{ count }}"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Просмотреть еще {{ count }}"
   },
   "swsdp": "Пример: проект дизайна веб-сайта"
 }

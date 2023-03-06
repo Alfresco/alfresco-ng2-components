@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "管理版本"
+      "TITLE": "管理版本",
+      "CLOSE": "关闭"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "上传新版本",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "关闭",
+        "CLEAR": "清除",
         "REMOVE": "删除",
         "APPLY": "应用",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "从",
         "TO": "到",
         "FROM-DATE": "从",
-        "TO-DATE": "到"
+        "TO-DATE": "到",
+        "SELECT-FROM-DATE": "选择开始日期",
+        "SELECT-TO-DATE": "选择结束日期"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "必需值",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "切换 {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "加载更多 {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "创建库",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "已选择 {{ count }} 个"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "查看 {{ count }} 更多"
   },
   "swsdp": "示例: 网站设计项目"
 }

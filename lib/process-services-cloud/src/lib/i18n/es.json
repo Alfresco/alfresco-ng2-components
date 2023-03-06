@@ -39,8 +39,7 @@
         "ACTION": {
           "START": "Iniciar proceso",
           "CANCEL": "Cancelar"
-        },
-        "SELECT_PROCESS_DROPDOWN": "Botón de menú desplegable para seleccionar proceso"
+        }
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",

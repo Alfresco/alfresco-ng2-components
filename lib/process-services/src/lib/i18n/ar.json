@@ -280,8 +280,8 @@
       "FORM": {
         "TITLE": "بدء العملية",
         "LABEL": {
-          "SELECT_APPLICATION": "تحديد التطبيق",
-          "TYPE": "تحديد عملية",
+          "SELECT_APPLICATION": "حدد التطبيق",
+          "TYPE": "حدد عملية",
           "NAME": "اسم العملية"
         },
         "TYPE_PLACEHOLDER": "اختر واحدة...",
@@ -325,7 +325,7 @@
   "APP": {
     "DIALOG": {
       "START": "متابعة",
-      "TITLE": "تحديد تطبيق عملية",
+      "TITLE": "حدد تطبيق عملية",
       "LIST": "قائمة تطبيقات العمليات",
       "ERROR": "توجد مشكلة في الاتصال Process Services"
     }
@@ -337,8 +337,8 @@
     "ACTIONS": {
       "LOGIN": "دخول",
       "CANCEL": "إلغاء",
-      "CHOOSE": "اختيار",
-      "CHOOSE_ITEM": "اختيار محتوى لإرفاقه من '{{ name }}'"
+      "CHOOSE": "حدد",
+      "CHOOSE_ITEM": "حدد محتوى لإرفاقه من '{{ name }}'"
     }
   },
   "ADF_TASK_FORM": {

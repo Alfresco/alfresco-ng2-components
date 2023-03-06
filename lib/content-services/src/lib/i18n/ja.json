@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "バージョンの管理"
+      "TITLE": "バージョンの管理",
+      "CLOSE": "閉じる"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "新しいバージョンのアップロード",
@@ -42,7 +43,7 @@
     }
   },
   "ADF_CONFIRM_DIALOG": {
-    "TITLE": "確定",
+    "TITLE": "確認",
     "ACTION": "作業を続けますか?",
     "YES_LABEL": "はい",
     "NO_LABEL": "いいえ"
@@ -167,7 +168,7 @@
       "STOP_FILE_UPLOAD": "ファイルアップロード{{ file }}の停止",
       "UPLOAD_FILE_ERROR": "アップロードエラー: {{ error }}",
       "CONFIRMATION": {
-        "CANCEL": "キャンセルを確定",
+        "CANCEL": "キャンセルを確認",
         "CONTINUE": "アップロードを続行"
       }
     }
@@ -180,8 +181,8 @@
     },
     "VERSION": {
       "MESSAGES": {
-        "NO_ACCEPTED_FILE_TYPES": "\"acceptedFilesType\" の設定は新しいバージョンのアップロードにまったく影響しません。ファイルの種類は、元のファイルと同じになります。",
-        "INCOMPATIBLE_VERSION": "同じ種類のファイルだけが、新しいバージョンとしてアップロードされます。"
+        "NO_ACCEPTED_FILE_TYPES": "\"acceptedFilesType\" の設定は新しいバージョンのアップロードにまったく影響しません。ファイルタイプは、元のファイルと同じになります。",
+        "INCOMPATIBLE_VERSION": "同じタイプのファイルだけが、新しいバージョンとしてアップロードされます。"
       }
     },
     "MESSAGES": {
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "閉じる",
+        "CLEAR": "消去",
         "REMOVE": "削除",
         "APPLY": "適用",
         "CLEAR-ALL": {
@@ -257,9 +259,11 @@
       },
       "RANGE": {
         "FROM": "開始",
-        "TO": "終了",
-        "FROM-DATE": "開始日",
-        "TO-DATE": "終了日"
+        "TO": "終了日",
+        "FROM-DATE": "開始",
+        "TO-DATE": "終了日",
+        "SELECT-FROM-DATE": "開始日の選択",
+        "SELECT-TO-DATE": "終了日の選択"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "必須の値",
@@ -311,7 +315,7 @@
     "UNKNOWN_CONFIGURATION": "不明な設定",
     "SEARCH_HEADER": {
       "TITLE": "フィルタ",
-      "TYPE": "種類",
+      "TYPE": "タイプ",
       "FILTER_BY": "{{ category }} でフィルタ",
       "CLEAR": "消去",
       "APPLY": "適用",
@@ -321,7 +325,7 @@
           "PLACEHOLDER": "名前を入力してください"
         },
         "TYPE": {
-          "TITLE": "種類を選択してください",
+          "TITLE": "確認タイプ",
           "FOLDER": "フォルダ",
           "DOCUMENT": "文書"
         },
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "{{ name }} を切り替えます"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "もっと読み込む {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "ライブラリの作成",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }}を選択"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "もっと {{ count }} 表示する"
   },
   "swsdp": "サンプル：Webサイトデザインプロジェクト"
 }

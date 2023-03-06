@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Zarządzaj wersjami"
+      "TITLE": "Zarządzaj wersjami",
+      "CLOSE": "Zamknij"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Prześlij nową wersję",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Zamknij",
+        "CLEAR": "Wyczyść",
         "REMOVE": "Usuń",
         "APPLY": "Zastosuj",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Od",
         "TO": "Do",
         "FROM-DATE": "Od",
-        "TO-DATE": "Do"
+        "TO-DATE": "Do",
+        "SELECT-FROM-DATE": "Wybierz Datę od",
+        "SELECT-TO-DATE": "Wybierz Datę do"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Wymagana wartość",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "Przełącz {{ name }}"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Wczytaj {{ name }}"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Utwórz bibliotekę",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "Liczba zaznaczonych: {{ count }}"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Wyświetl {{ count }} więcej"
   },
   "swsdp": "Przykład: projekt układu witryny internetowej"
 }

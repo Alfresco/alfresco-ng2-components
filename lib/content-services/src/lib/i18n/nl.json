@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Versies beheren"
+      "TITLE": "Versies beheren",
+      "CLOSE": "Sluiten"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Nieuwe versie uploaden",
@@ -244,6 +245,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Sluiten",
+        "CLEAR": "Wissen",
         "REMOVE": "Verwijderen",
         "APPLY": "Toepassen",
         "CLEAR-ALL": {
@@ -259,7 +261,9 @@
         "FROM": "Van",
         "TO": "Tot",
         "FROM-DATE": "Van",
-        "TO-DATE": "Tot"
+        "TO-DATE": "Tot",
+        "SELECT-FROM-DATE": "Van-datum selecteren",
+        "SELECT-TO-DATE": "Tot-datum selecteren"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Vereiste waarde",
@@ -464,6 +468,9 @@
       "ARIA_LABEL": "{{ name }} in-/uitschakelen"
     }
   },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Meer {{ name }} laden"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Bibliotheek maken",
@@ -537,6 +544,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} geselecteerd"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "{{ count }} meer weergeven"
   },
   "swsdp": "Voorbeeld: Websiteontwerpproject"
 }

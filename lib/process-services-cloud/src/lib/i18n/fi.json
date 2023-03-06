@@ -100,7 +100,8 @@
         "LOW": "Matala",
         "NORMAL": "Normaali",
         "HIGH": "Korkea"
-      }
+      },
+      "DESCRIPTION": "Kuvaus"
     },
     "LIST": {
       "MESSAGES": {

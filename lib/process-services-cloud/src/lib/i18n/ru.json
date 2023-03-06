@@ -100,7 +100,8 @@
         "LOW": "Низкий",
         "NORMAL": "Средний",
         "HIGH": "Высокий"
-      }
+      },
+      "DESCRIPTION": "Описание"
     },
     "LIST": {
       "MESSAGES": {

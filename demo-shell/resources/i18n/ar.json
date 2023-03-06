@@ -1,5 +1,28 @@
 {
   "APP": {
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "نوع المصادقة",
+      "BASIC": "مصادقة أساسية",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "تدفق ضمني",
+      "PROVIDER": "موفر",
+      "REQUIRED": "هذا الحقل مطلوب",
+      "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",
+      "PS_URL_ERROR": "لا يتطابق عنوان Process Services مع تنسيق URL",
+      "TITLE": "الإعدادات",
+      "CS-HOST": "عنوان URL لـ Content Services",
+      "BP-HOST": "عنوان URL لـ Process Services",
+      "BACK": "عودة",
+      "APPLY": "تطبيق",
+      "NOT_VALID": "لم يتم التعرف على http(s)://host|ip:port(/path)، جرّب عنوان URL مختلفًا.",
+      "REDIRECT": "إعادة توجيه URI",
+      "REDIRECT_LOGOUT": "إعادة توجيه خروج URI",
+      "SILENT": "دخول صامت",
+      "SCOPE": "نطاق",
+      "CLIENT": "معرف العميل",
+      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت",
+      "SECRET": "سر"
+    },
     "ABOUT": {
       "DEVELOPMENT": "وضع التطوير"
     },
@@ -44,7 +67,7 @@
   "VERSION": {
     "NO_PERMISSION": "ليس لديك إذن لإدارة إصدارات هذا المحتوى",
     "NO_PERMISSION_EVENT": "ليس لديك إذن ${event.permission} ل${event.action} ${event.type}",
-    "CHOOSE_FILE": "تحديد ملف لرؤية إصداراته",
+    "CHOOSE_FILE": "حدد ملف لرؤية إصداراته",
     "DIALOG": {
       "CLOSE": "إغلاق",
       "TITLE": "إدارة الإصدارات"
@@ -164,7 +187,7 @@
       "DELETE": "حذف",
       "FAVORITES": "إضافة إلى المفضلات",
       "SHARE": "مشاركة",
-      "THEME": "تحديد نسق",
+      "THEME": "حدد نسق",
       "SHOW_VERSION": "إظهار الإصدار",
       "HIDE_VERSION": "إخفاء الإصدار",
       "LISTVIEW": "وضع عرض القائمة",
