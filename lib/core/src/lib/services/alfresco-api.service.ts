@@ -113,7 +113,7 @@ export class AlfrescoApiService {
     }
 
     createInstance(config: AlfrescoApiConfig): AlfrescoApi {
-        return (this.alfrescoApi = new AlfrescoApi(config));
+        return new AlfrescoApi(config);
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
