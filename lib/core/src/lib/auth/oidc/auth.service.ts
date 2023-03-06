@@ -31,9 +31,6 @@ export abstract class AuthService {
   /** Subscribe to errors reaching the IdP. */
   abstract idpUnreachable$: Observable<Error>;
 
-  /** Get user profile, if authenticated. */
-  abstract getUserProfile<T>(): Promise<T>;
-
   /**
    * Initiate the IdP login flow.
    */

@@ -77,12 +77,6 @@ export class RedirectAuthService extends AuthService {
     this.oauthService.logOut();
   }
 
-  async getUserProfile<T = unknown>(): Promise<T> {
-    await this.ensureDiscoveryDocument();
-    const userProfile = await this.oauthService.loadUserProfile();
-    return (userProfile as any).info;
-  }
-
   ensureDiscoveryDocument(): Promise<boolean> {
     this._loadDiscoveryDocumentPromise = this._loadDiscoveryDocumentPromise
       .catch(() => false)
