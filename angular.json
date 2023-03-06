@@ -429,6 +429,21 @@
                   }
               ]
           }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/core",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
         }
       }
     },
@@ -532,6 +547,21 @@
                   }
               ]
           }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/content-services",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
         }
       }
     },
@@ -601,6 +631,21 @@
                   }
               ]
           }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/process-services",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+        }
         }
       }
     },
@@ -715,6 +760,21 @@
                   }
               ]
           }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/process-services-cloud",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
         }
       }
     },
@@ -774,6 +834,21 @@
                   }
               ]
           }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/insights",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
         }
       }
     },
@@ -822,6 +897,21 @@
                       "command": "$(npm bin)/cspell 'lib/extensions/**/*.ts'"
                   }
               ]
+          }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/extensions",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
           }
         }
       }
@@ -894,6 +984,21 @@
               "target": "build"
             }
           ]
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/extensions",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
         }
       }
     },
@@ -951,6 +1056,21 @@
             "lintFilePatterns": [
               "lib/cli/**/*.ts",
               "lib/cli/**/*.html"
+            ]
+          }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/cli",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
             ]
           }
         }
