@@ -54,8 +54,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         EditJsonDialogModule,
-        ViewerModule,
-
+        ViewerModule
     ],
     declarations: [
         FormFieldComponent,

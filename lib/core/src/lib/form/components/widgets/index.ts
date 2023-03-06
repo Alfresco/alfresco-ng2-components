@@ -30,7 +30,6 @@ import { TextWidgetComponent } from './text/text.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { BaseViewerWidgetComponent } from './base-viewer/base-viewer.widget';
-import { DisplayRichTextWidgetComponent } from '../../../../../../process-services-cloud/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget';
 
 // core
 export * from './widget.component';
@@ -65,8 +64,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     ErrorWidgetComponent,
     DateTimeWidgetComponent,
     JsonWidgetComponent,
-    BaseViewerWidgetComponent,
-    DisplayRichTextWidgetComponent
+    BaseViewerWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [
