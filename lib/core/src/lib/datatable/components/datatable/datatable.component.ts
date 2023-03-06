@@ -963,7 +963,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (headerContainer) {
             const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header');
-    
+
             headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
                 if (allColumns[index]) {
                     allColumns[index].width = column.offsetWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
