@@ -464,7 +464,8 @@
               "project": "lib/content-services/ng-package.json",
               "tsConfig": "lib/content-services/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -582,7 +583,8 @@
               "project": "lib/process-services/ng-package.json",
               "tsConfig": "lib/process-services/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -666,7 +668,8 @@
               "project": "lib/process-services-cloud/ng-package.json",
               "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -795,7 +798,8 @@
               "project": "lib/insights/ng-package.json",
               "tsConfig": "lib/insights/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -868,7 +872,8 @@
             "production": {
               "tsConfig": "lib/extensions/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -945,7 +950,8 @@
               "generatePackageJson" : true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1019,7 +1025,8 @@
             "production": {
               "tsConfig": "lib/cli/tsconfig.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "bundle": {
           "executor": "nx:run-commands",
