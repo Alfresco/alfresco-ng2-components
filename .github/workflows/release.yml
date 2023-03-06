@@ -208,11 +208,11 @@ jobs:
         name: release libraries Npm registry
         with:
           node-version: 14
-          registry-url: $NPM_REGISTRY_ADDRESS
+          registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
       - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
         env:
-          NODE_AUTH_TOKEN: $NPM_REGISTRY_TOKEN
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
   npm-check-bundle:
     needs: [release-npm]
