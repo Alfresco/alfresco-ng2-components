@@ -23,7 +23,7 @@ import { OidcAuthGuard } from './oidc-auth.guard';
 
 const state: RouterStateSnapshot = {
   root: new ActivatedRouteSnapshot(),
-  url: 'http://example.com',
+  url: 'http://example.com'
 };
 const routeSnapshot = new ActivatedRouteSnapshot();
 
@@ -31,7 +31,7 @@ describe('OidcAuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [OidcAuthGuard],
+      providers: [OidcAuthGuard]
     });
   });
 
@@ -50,7 +50,7 @@ describe('OidcAuthGuard', () => {
 
       expect(authGuard.canActivate(routeSnapshot, state)).toEqual(true);
     });
-  })
+  });
 
   describe('#canActivateChild', () => {
     it('should return false if the user is not authenticated, and call login method', () => {
@@ -67,6 +67,6 @@ describe('OidcAuthGuard', () => {
 
       expect(authGuard.canActivateChild(routeSnapshot, state)).toEqual(true);
     });
-  })
+  });
 
 });
