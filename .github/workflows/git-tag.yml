@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - master
+      - master-patch-*
 env:
   BASE_REF: ${{ github.base_ref }}
   HEAD_REF: ${{ github.head_ref }}
