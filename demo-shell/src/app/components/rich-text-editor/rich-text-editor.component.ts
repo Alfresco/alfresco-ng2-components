@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-cloud-rich-text-editor',
+    selector: 'app-rich-text-editor',
     templateUrl: './rich-text-editor.component.html',
     styleUrls: ['./rich-text-editor.component.scss']
 })

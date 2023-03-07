@@ -22,7 +22,7 @@ import { Subject } from 'rxjs';
 import { editorJsConfig } from './editorjs-config';
 
 @Component({
-    selector: 'adf-rich-text-editor',
+    selector: 'adf-cloud-rich-text-editor',
     templateUrl: './rich-text-editor.component.html',
     styleUrls: ['./rich-text-editor.component.scss'],
     encapsulation: ViewEncapsulation.None
