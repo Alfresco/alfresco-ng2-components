@@ -20,8 +20,7 @@ import {
     FormFieldTypes,
     UnknownWidgetComponent,
     TextWidgetComponent,
-    JsonWidgetComponent,
-    DisplayRichTextWidgetComponent
+    JsonWidgetComponent
 } from '../components/widgets';
 import { FormRenderingService } from './form-rendering.service';
 
@@ -101,9 +100,4 @@ describe('FormRenderingService', () => {
         expect(type).toBe(JsonWidgetComponent);
     });
 
-    it('should resolve Display Rich Text widget for display-rich-text field type', () => {
-        const resolver = service.getComponentTypeResolver('display-rich-text');
-        const type = resolver(null);
-        expect(type).toBe(DisplayRichTextWidgetComponent);
-    });
 });

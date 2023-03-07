@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { OutputData } from '@editorjs/editorjs';
 import { RichTextEditorComponent as AdfRichTextEditorComponent } from '@alfresco/adf-process-services-cloud';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-rich-text-editor',
+    selector: 'adf-cloud-rich-text-editor',
     templateUrl: './rich-text-editor.component.html',
     styleUrls: ['./rich-text-editor.component.scss']
 })
-export class RichTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RichTextEditorComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('textEditor')
     textEditor: AdfRichTextEditorComponent;
@@ -90,11 +90,6 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit, OnDestroy
             }
         ]
     };
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     ngAfterViewInit(): void {
         this.textEditor.outputData$.pipe(
