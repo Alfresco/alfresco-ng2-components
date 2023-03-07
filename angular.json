@@ -205,6 +205,14 @@
                 }
               ]
             },
+            "canary": {
+              "fileReplacements": [
+                {
+                  "replace": "demo-shell/src/environments/environment.ts",
+                  "with": "demo-shell/src/environments/environment.canary.ts"
+                }
+              ]
+            },
             "e2e": {
               "budgets": [
                 {
@@ -241,6 +249,9 @@
           "configurations": {
             "production": {
               "browserTarget": "demoshell:build:production"
+            },
+            "canary": {
+              "browserTarget": "demoshell:build:canary"
             },
             "e2e": {
               "browserTarget": "demoshell:build:e2e"

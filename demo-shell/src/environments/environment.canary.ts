@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export * from './api-client.factory';
-export * from './api-clients.service';
-export * from './clients';
-export * from './types';
-export * from './alfresco-api/alfresco-api.http-client';
+export const environment = {
+  production: true,
+  e2e: false,
+  oidc: true
+};

@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-export * from './activiti/activiti-client.types';
-export * from './alfresco-js-clients.module';
-export * from './discovery/discovery-client.types';
+import { InjectionToken } from '@angular/core';
 
+export interface AuthModuleConfig {
+    readonly useHash: boolean;
+}
+
+export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');

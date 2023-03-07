@@ -48,7 +48,6 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
 import { TranslationService } from './translation/translation.service';
-import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -64,6 +63,18 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.module';
+import { AuthBearerInterceptor } from './auth/authentication-interceptor/auth-bearer.interceptor';
+import { loadAppConfig } from './app-config/app-config.loader';
+import { AppConfigService } from './app-config/app-config.service';
+import { StorageService } from './common/services/storage.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
+import { AlfrescoApiServiceWithAngularBasedHttpClient } from './api-factories/alfresco-api-service-with-angular-based-http-client';
+
+interface Config {
+    readonly useAngularBasedHttpClientInAlfrescoJs: boolean;
+}
+
+const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
 
 @NgModule({
     imports: [
@@ -145,7 +156,7 @@ import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot(config: Config = defaultConfig): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -154,11 +165,8 @@ export class CoreModule {
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
                 {
                     provide: APP_INITIALIZER,
-                    useFactory: startupServiceFactory,
-                    deps: [
-                        AlfrescoApiService
-                    ],
-                    multi: true
+                    useFactory: loadAppConfig,
+                    deps: [ AppConfigService, StorageService ], multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
@@ -173,7 +181,18 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                }
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: createAlfrescoApiInstance,
+                    deps: [ AlfrescoApiLoaderService ],
+                    multi: true
+                },
+                { provide: HTTP_INTERCEPTORS, useClass: AuthBearerInterceptor, multi: true },
+                ...(config.useAngularBasedHttpClientInAlfrescoJs
+                    ? [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceWithAngularBasedHttpClient }]
+                    : []
+                )
             ]
         };
     }

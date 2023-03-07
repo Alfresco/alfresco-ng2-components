@@ -15,19 +15,11 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
+import { AppConfigService, AppConfigValues } from './app-config.service';
+import { StorageService } from '../common/services/storage.service';
 
-export interface AbstractAuthentication {
-    TYPE: string;
-    alfrescoApi: any;
-
-    login(username: string, password: string): Observable<any>;
-
-    logout(): Observable<any>;
-
-    isLoggedIn(): boolean ;
-
-    getTicket(): string;
-
-    saveTicket(ticket: any): void;
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+    return () => appConfigService.load().then(() => {
+        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
+    });
 }

@@ -192,8 +192,8 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
+                        resolve(data);
                         this.onDataLoaded(data);
-                        resolve(this.config);
                     },
                     () => {
                         resolve(this.config);
