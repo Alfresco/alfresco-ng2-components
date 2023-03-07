@@ -36,7 +36,7 @@
                     'adf-datatable__cursor--pointer': !isResizing,
                     'adf-datatable__header--sorted-asc': isColumnSorted(col, 'asc'),
                     'adf-datatable__header--sorted-desc': isColumnSorted(col, 'desc')}"
-                 [ngStyle]="{'flex': getFlexValue(col)}"
+                 [ngStyle]="(col.width) && {'flex': getFlexValue(col)}"
                  [attr.aria-label]="col.title | translate"
                  (click)="onColumnHeaderClick(col, $event)"
                  (keyup.enter)="onColumnHeaderClick(col, $event)"
@@ -214,7 +214,7 @@
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"
                      adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row"
-                     [ngStyle]="{'flex': getFlexValue(col)}">
+                     [ngStyle]="(col.width) && {'flex': getFlexValue(col)}">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="data.getColumnType(row, col)">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">

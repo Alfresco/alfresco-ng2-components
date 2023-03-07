@@ -952,8 +952,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.updateColumnsWidths();
     }
 
-    getFlexValue(column: DataColumn): string {
-        return `0 1 ${column?.width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : column.width}px`;
+    getFlexValue({ width = 0 }: DataColumn): string {
+        return `0 1 ${width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : width}px`;
     }
 
     private updateColumnsWidths(): void {
