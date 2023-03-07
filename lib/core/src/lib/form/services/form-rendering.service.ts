@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../common/services/dynamic-component-mapper.service';
+import {
+    DynamicComponentMapper,
+    DynamicComponentResolveFunction,
+    DynamicComponentResolver
+} from '../../common/services/dynamic-component-mapper.service';
 import { Injectable, Type } from '@angular/core';
 import * as widgets from '../components/widgets';
+import { FormFieldTypes } from '../components/widgets';
 
 /* eslint-disable id-blacklist */
 @Injectable({
@@ -27,19 +32,18 @@ export class FormRenderingService extends DynamicComponentMapper {
 
     protected defaultValue: Type<any> = widgets.UnknownWidgetComponent;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
-        text: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
-        string: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
-        integer: DynamicComponentResolver.fromType(widgets.NumberWidgetComponent),
-        'multi-line-text': DynamicComponentResolver.fromType(widgets.MultilineTextWidgetComponentComponent),
-        boolean: DynamicComponentResolver.fromType(widgets.CheckboxWidgetComponent),
-        date: DynamicComponentResolver.fromType(widgets.DateWidgetComponent),
-        amount: DynamicComponentResolver.fromType(widgets.AmountWidgetComponent),
-        hyperlink: DynamicComponentResolver.fromType(widgets.HyperlinkWidgetComponent),
-        'readonly-text': DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
-        json: DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
-        readonly: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
-        datetime:  DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
-        'base-viewer': DynamicComponentResolver.fromType(widgets.BaseViewerWidgetComponent),
-        'display-rich-text': DynamicComponentResolver.fromType(widgets.DisplayRichTextWidgetComponent)
+        [FormFieldTypes.TEXT]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        [FormFieldTypes.STRING]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        [FormFieldTypes.INTEGER]: DynamicComponentResolver.fromType(widgets.NumberWidgetComponent),
+        [FormFieldTypes.MULTILINE_TEXT]: DynamicComponentResolver.fromType(widgets.MultilineTextWidgetComponentComponent),
+        [FormFieldTypes.BOOLEAN]: DynamicComponentResolver.fromType(widgets.CheckboxWidgetComponent),
+        [FormFieldTypes.DATE]: DynamicComponentResolver.fromType(widgets.DateWidgetComponent),
+        [FormFieldTypes.AMOUNT]: DynamicComponentResolver.fromType(widgets.AmountWidgetComponent),
+        [FormFieldTypes.HYPERLINK]: DynamicComponentResolver.fromType(widgets.HyperlinkWidgetComponent),
+        [FormFieldTypes.READONLY_TEXT]: DynamicComponentResolver.fromType(widgets.DisplayTextWidgetComponent),
+        [FormFieldTypes.JSON]: DynamicComponentResolver.fromType(widgets.JsonWidgetComponent),
+        [FormFieldTypes.DISPLAY_VALUE]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
+        [FormFieldTypes.DATETIME]: DynamicComponentResolver.fromType(widgets.DateTimeWidgetComponent),
+        [FormFieldTypes.VIEWER]: DynamicComponentResolver.fromType(widgets.BaseViewerWidgetComponent)
     };
 }

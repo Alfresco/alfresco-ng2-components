@@ -89,7 +89,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Radio buttons | radio-buttons | [`RadioButtonsWidgetComponent`](lib/process-services/src/lib/form/widgets/radio-buttons/radio-buttons.widget.ts) |
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](lib/core/src/lib/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Display value | readonly | DisplayValueWidgetComponent |
-| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/core/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
+| Display Rich text | display-rich-text | [`DisplayRichTextWidgetComponent`](lib/process-services-cloud/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](lib/core/src/lib/form/components/widgets/display-text/display-text.widget.ts) |
 | Typeahead | typeahead | [`TypeaheadWidgetComponent`](lib/process-services/src/lib/form/widgets/typeahead/typeahead.widget.ts) |
 | People | people | [`PeopleWidgetComponent`](lib/process-services/src/lib/form/widgets/people/people.widget.ts) |

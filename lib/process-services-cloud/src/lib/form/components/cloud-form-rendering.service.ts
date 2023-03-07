@@ -25,6 +25,7 @@ import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 import { PropertiesViewerWidgetComponent } from './widgets/properties-viewer/properties-viewer.widget';
 import { RadioButtonsCloudWidgetComponent } from './widgets/radio-buttons/radio-buttons-cloud.widget';
 import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
+import { DisplayRichTextWidgetComponent } from './widgets/display-rich-text/display-rich-text.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,8 @@ export class CloudFormRenderingService extends FormRenderingService {
             [FormFieldTypes.FUNCTIONAL_GROUP]: () => GroupCloudWidgetComponent,
             [FormFieldTypes.PROPERTIES_VIEWER]: () => PropertiesViewerWidgetComponent,
             [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
-            [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent
+            [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent,
+            [FormFieldTypes.DISPLAY_RICH_TEXT]: () => DisplayRichTextWidgetComponent
         }, true);
     }
 }

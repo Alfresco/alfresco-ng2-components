@@ -58,7 +58,6 @@ import { SearchTextModule } from './search-text/search-text-input.module';
 import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
-import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
@@ -112,7 +111,6 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         BlankPageModule,
         LegacyApiClientModule,
         AlfrescoJsClientsModule,
-        RichTextEditorModule,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
             cookieName: 'CSRF-TOKEN',
@@ -151,8 +149,7 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
         IconModule,
         NotificationHistoryModule,
         SearchTextModule,
-        BlankPageModule,
-        RichTextEditorModule
+        BlankPageModule
     ]
 })
 export class CoreModule {

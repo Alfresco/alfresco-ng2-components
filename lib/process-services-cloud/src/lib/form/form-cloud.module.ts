@@ -40,6 +40,7 @@ import { PropertiesViewerWrapperComponent } from './components/widgets/propertie
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
+import { RichTextEditorModule } from '../rich-text-editor';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file
         GroupCloudModule,
         ContentMetadataModule,
         UploadModule,
-        AlfrescoViewerModule
+        AlfrescoViewerModule,
+        RichTextEditorModule
     ],
     declarations: [
         FormCloudComponent,

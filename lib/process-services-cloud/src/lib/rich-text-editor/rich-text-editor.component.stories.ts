@@ -17,7 +17,7 @@
 
 import { RichTextEditorModule } from './rich-text-editor.module';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
+import { ProcessServicesCloudStoryModule } from '../testing/process-services-cloud-story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
 import { exampleData } from './mocks/rich-text-editor.mock';
 
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Rich Text Editor/Rich Text Editor',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, RichTextEditorModule]
+            imports: [ProcessServicesCloudStoryModule, RichTextEditorModule]
         })
     ],
     argTypes: {
