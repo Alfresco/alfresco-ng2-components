@@ -27,23 +27,25 @@ Shows the nodes in tree structure, each node containing children is collapsible/
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| emptyContentTemplate | `TemplateRef` |  | Template that will be rendered when no nodes are loaded. |
-| nodeActionsMenuTemplate | `TemplateRef` |  | Template that will be rendered when context menu for given node is opened. |
-| stickyHeader | `boolean` | false | If set to true header will be sticky. |
-| selectableNodes | `boolean` | false | If set to true nodes will be selectable. |
-| displayName | `string` | | Display name for tree title. |
-| loadMoreSuffix | `string` | | Suffix added to `Load more` string inside load more node. |
-| expandIcon | `string` | `chevron_right` | Icon shown when node is collapsed. |
-| collapseIcon | `string` | `expand_more` | Icon showed when node is expanded. |
+| Name | Type          | Default value | Description |
+| ---- |---------------| --------- | ----------- |
+| emptyContentTemplate | `TemplateRef` | | Template that will be rendered when no nodes are loaded. |
+| nodeActionsMenuTemplate | `TemplateRef` | | Template that will be rendered when context menu for given node is opened. |
+| stickyHeader | `boolean`     | false | If set to true header will be sticky. |
+| selectableNodes | `boolean`     | false | If set to true nodes will be selectable. |
+| displayName | `string`      | | Display name for tree title. |
+| loadMoreSuffix | `string`      | | Suffix added to `Load more` string inside load more node. |
+| expandIcon | `string`      | `chevron_right` | Icon shown when node is collapsed. |
+| collapseIcon | `string`      | `expand_more` | Icon showed when node is expanded. |
+| contextMenuOptions | `any[]`       | | Array of context menu options which should be displayed for each row. |
 
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| paginationChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PaginationModel>` | Emitted when during loading additional nodes pagination changes. |
+| Name | Type                                                                                   | Description                                                      |
+| ---- |----------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| paginationChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PaginationModel>`          | Emitted when during loading additional nodes pagination changes. |
+| contextMenuOptionSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<TreeContextMenuResult<T>>` | Emitted when any context menu option is selected.                |
 
 ## Details
 

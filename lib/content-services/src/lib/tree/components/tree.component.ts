@@ -15,14 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, HostBinding, Input, OnInit, Output, QueryList, TemplateRef, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+    Component,
+    EventEmitter,
+    HostBinding,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    TemplateRef,
+    ViewChildren,
+    ViewEncapsulation
+} from '@angular/core';
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { TreeService } from '../services/tree.service';
 import { PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { TreeContextMenuResult } from '../models/tree-context-menu-result.interface';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-tree',
@@ -31,7 +45,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
     host: { class: 'adf-tree' },
     encapsulation: ViewEncapsulation.None
 })
-export class TreeComponent<T extends TreeNode> implements OnInit {
+export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /** TemplateRef to provide empty template when no nodes are loaded */
     @Input()
@@ -70,15 +84,56 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
     @Output()
     public paginationChanged: EventEmitter<PaginationModel> = new EventEmitter();
 
+    /** Emitted when any context menu option is selected */
+    @Output()
+    public contextMenuOptionSelected = new EventEmitter<TreeContextMenuResult<T>>();
+
     @ViewChildren(MatCheckbox)
     public nodeCheckboxes: QueryList<MatCheckbox>;
 
     private loadingRootSource = new BehaviorSubject<boolean>(false);
+    private _contextMenuSource: T;
+    private _contextMenuOptions: any[];
+    private contextMenuOptionsChanged$ = new Subject<void>();
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
     constructor(public treeService: TreeService<T>,
                 private userPreferenceService: UserPreferencesService) {}
+
+    set contextMenuSource(contextMenuSource: T) {
+        this._contextMenuSource = contextMenuSource;
+    }
+
+    /** Array of context menu options which should be displayed for each row. */
+    @Input()
+    set contextMenuOptions(contextMenuOptions: any[]) {
+        this.contextMenuOptionsChanged$.next();
+        if (contextMenuOptions) {
+            this._contextMenuOptions = contextMenuOptions.map((option) => {
+                if (!option.subject) {
+                    option = {
+                        ...option,
+                        subject: new Subject()
+                    };
+                }
+                return option;
+            });
+            merge(...this.contextMenuOptions.map((option) => option.subject)).pipe(takeUntil(this.contextMenuOptionsChanged$))
+                .subscribe((option) => {
+                    this.contextMenuOptionSelected.emit({
+                        row: this._contextMenuSource,
+                        contextMenuOption: option
+                    });
+                });
+        } else {
+            this._contextMenuOptions = contextMenuOptions;
+        }
+    }
+
+    get contextMenuOptions(): any[] {
+        return this._contextMenuOptions;
+    }
 
     ngOnInit(): void {
         this.loadingRoot$ = this.loadingRootSource.asObservable();
@@ -86,6 +141,11 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
         this.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<T>) => {
             this.onTreeSelectionChange(selectionChange);
         });
+    }
+
+    ngOnDestroy() {
+        this.contextMenuOptionsChanged$.next();
+        this.contextMenuOptionsChanged$.complete();
     }
 
     /**
@@ -141,21 +201,23 @@ export class TreeComponent<T extends TreeNode> implements OnInit {
      * @param node node to be collapsed/expanded
      */
     public expandCollapseNode(node: T): void {
-        if (this.treeService.treeControl.isExpanded(node)) {
-            this.treeService.collapseNode(node);
-        } else {
-            node.isLoading = true;
-            this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
-                this.treeService.expandNode(node, response.entries);
-                this.paginationChanged.emit(response.pagination);
-                node.isLoading = false;
-                if (this.treeNodesSelection.isSelected(node)) {
-                    //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
-                    setTimeout(() => {
-                        this.treeNodesSelection.select(...response.entries);
-                    });
-                }
-            });
+        if (node.hasChildren) {
+            if (this.treeService.treeControl.isExpanded(node)) {
+                this.treeService.collapseNode(node);
+            } else {
+                node.isLoading = true;
+                this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
+                    this.treeService.expandNode(node, response.entries);
+                    this.paginationChanged.emit(response.pagination);
+                    node.isLoading = false;
+                    if (this.treeNodesSelection.isSelected(node)) {
+                        //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
+                        setTimeout(() => {
+                            this.treeNodesSelection.select(...response.entries);
+                        });
+                    }
+                });
+            }
         }
     }
 
