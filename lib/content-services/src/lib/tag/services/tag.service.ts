@@ -19,17 +19,7 @@ import { AlfrescoApiService, LogService, UserPreferencesService } from '@alfresc
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import {
-    RequestQuery,
-    RequestSortDefinitionInner,
-    SearchApi,
-    Tag,
-    TagBody,
-    TagEntry,
-    TagPaging,
-    TagPagingList,
-    TagsApi
-} from '@alfresco/js-api';
+import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -40,12 +30,6 @@ export class TagService {
     get tagsApi(): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
         return this._tagsApi;
-    }
-
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
     }
 
     /** Emitted when tag information is updated. */
@@ -75,9 +59,11 @@ export class TagService {
      * @param opts Options supported by JS-API
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
-    getAllTheTags(opts?: any): Observable<TagPaging> {
-        return from(this.tagsApi.listTags(opts))
-            .pipe(catchError((err) => this.handleError(err)));
+    getAllTheTags(opts?: any, includedCounts?: boolean): Observable<TagPaging> {
+        return from(this.tagsApi.listTags({
+            include: includedCounts ? ['count'] : undefined,
+            ...opts
+        })).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -160,48 +146,18 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, skipCount = 0, maxItems?: number): Observable<TagPaging> {
+    searchTags(name: string, sorting = {
+        orderBy: 'tag',
+        direction: 'asc'
+    }, includedCounts?: boolean, skipCount = 0, maxItems?: number): Observable<TagPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
-        const sortingByName: RequestSortDefinitionInner = new RequestSortDefinitionInner();
-        sortingByName.field = 'cm:name';
-        sortingByName.ascending = true;
-        sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
-        return from(this.searchApi.search({
-            query: {
-                language: RequestQuery.LanguageEnum.Afts,
-                query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"*${name}*"`
-            },
-            paging: {
-                skipCount,
-                maxItems
-            },
-            sort: [sortingByName]
-        })).pipe(map((resultSetPaging) => {
-            const tagPaging = new TagPaging();
-            tagPaging.list = new TagPagingList();
-            tagPaging.list.pagination = resultSetPaging.list.pagination;
-            tagPaging.list.entries = resultSetPaging.list.entries.map((resultEntry) => {
-                const tagEntry = new TagEntry();
-                tagEntry.entry = new Tag();
-                tagEntry.entry.tag = resultEntry.entry.name;
-                tagEntry.entry.id = resultEntry.entry.id;
-                return tagEntry;
-            });
-            return tagPaging;
-        }), catchError((error) => this.handleError(error)));
-    }
-
-    /**
-     * Get list of tags matched to passed name.
-     *
-     * @param names Array of tags names for which there should be returned whole tag objects.
-     * @returns Array of tags objects for specified names.
-     */
-    findTagsByNames(names: string[]): Observable<TagPaging> {
         return this.getAllTheTags({
-            tags: names,
-            include: ['count']
-        }).pipe(catchError((err) => this.handleError(err)));
+            tag: `*${name}*`,
+            skipCount,
+            maxItems,
+            sorting,
+            matching: true
+        }, includedCounts).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -211,7 +167,7 @@ export class TagService {
      * @returns Found tag which name matches exactly to passed name.
      */
     findTagByName(name: string): Observable<TagEntry> {
-        return this.getAllTheTags({ tags: [name] }).pipe(
+        return this.getAllTheTags({ tag: name }).pipe(
             map((result) => result.list.entries[0]),
             catchError((error) => this.handleError(error))
         );
