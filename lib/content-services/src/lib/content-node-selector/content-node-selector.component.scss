@@ -60,7 +60,7 @@ adf-content-node-selector {
         font-stretch: normal;
         line-height: 1.6;
         letter-spacing: -0.5px;
-        color: var(--theme-text-bold-color);
+        color: var(--theme-foreground-text-color-087);
 
         h2 {
             margin: unset;
@@ -94,7 +94,7 @@ adf-content-node-selector {
 
         .adf-choose-action {
             &[disabled] {
-                color: var(--theme-secondary-text-color);
+                color: var(--theme-foreground-secondary-text-color);
             }
 
             &:enabled {

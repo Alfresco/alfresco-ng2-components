@@ -56,7 +56,7 @@
     }
 
     &--text {
-        color: var(--theme-text-fg-color);
+        color: var(--theme-foreground-text-color);
         font-size: var(--theme-subheading-2-font-size);
     }
 }
@@ -67,7 +67,7 @@
     font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
 }
 
 .adf-document-list__drag-drop {
@@ -76,7 +76,7 @@
     font-size: 56px;
     line-height: 1;
     letter-spacing: -2px;
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
     margin-top: 40px;
 }
 
@@ -86,7 +86,7 @@
     font-size: var(--theme-subheading-2-font-size);
     line-height: 1.5;
     letter-spacing: -0.4px;
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
     margin-top: 17px;
 }
 
@@ -114,11 +114,11 @@
     font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
 }
 
 .adf-documentlist-pagination {
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
 
     .adf-pagination__block {
         border-right: none;
@@ -131,7 +131,7 @@
         font-size: var(--theme-headline-font-size);
         line-height: 1.33;
         letter-spacing: -1px;
-        color: var(--theme-text-color);
+        color: var(--theme-foreground-text-color-054);
     }
 
     &-drag-drop {

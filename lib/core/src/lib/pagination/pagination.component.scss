@@ -11,7 +11,7 @@ $adf-pagination-empty-border: none !default;
     border-top: $adf-pagination-border;
     height: $adf-pagination-height;
     line-height: 20px;
-    color: var(--theme-text-fg-color);
+    color: var(--theme-foreground-text-color);
 
     &__block {
         display: flex;
@@ -60,7 +60,7 @@ $adf-pagination-empty-border: none !default;
 
         &,
         & + button {
-            color: var(--theme-text-fg-color);
+            color: var(--theme-foreground-text-color);
         }
 
         & + button {

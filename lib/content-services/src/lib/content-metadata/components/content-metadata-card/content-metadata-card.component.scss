@@ -10,13 +10,13 @@
     &-footer.mat-card-footer {
         margin: 0;
         padding: 8px 12px;
-        border-top: 1px solid var(--theme-border-color);
+        border-top: 1px solid var(--theme-foreground-text-color-007);
 
         button {
-            color: var(--theme-text-color);
+            color: var(--theme-foreground-text-color-054);
 
             &:hover {
-                color: var(--theme-text-bold-color);
+                color: var(--theme-foreground-text-color-087);
             }
         }
     }

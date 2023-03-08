@@ -24,7 +24,7 @@ $tree-header-font-size: 12px !default;
     padding-left: 15px;
     padding-right: 15px;
     transition-property: background-color;
-    border-bottom: 1px solid var(--theme-border-color);
+    border-bottom: 1px solid var(--theme-foreground-text-color-007);
     min-height: $tree-row-height;
     user-select: none;
 
@@ -33,7 +33,7 @@ $tree-header-font-size: 12px !default;
     }
 
     &:hover {
-        background-color: var(--theme-bg-hover-color);
+        background-color: var(--theme-background-hover-color);
 
         .adf-tree-actions {
             display: flex;
@@ -41,7 +41,7 @@ $tree-header-font-size: 12px !default;
     }
 
     &:focus {
-        background-color: var(--theme-bg-hover-color);
+        background-color: var(--theme-background-hover-color);
         outline-offset: -1px;
         outline: 1px solid var(--theme-accent-color-a200);
     }
@@ -55,7 +55,7 @@ $tree-header-font-size: 12px !default;
     }
 
     .adf-tree-cell {
-        color: var(--theme-text-fg-color);
+        color: var(--theme-foreground-text-color);
         width: 100%;
 
         .adf-tree-cell-value {
@@ -82,7 +82,7 @@ $tree-header-font-size: 12px !default;
         letter-spacing: 0;
         min-height: $tree-row-height !important;
         font-size: $tree-header-font-size;
-        color: var(--theme-text-fg-color);
+        color: var(--theme-foreground-text-color);
         box-sizing: border-box;
         padding-top: 12px !important;
 
