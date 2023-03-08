@@ -114,7 +114,7 @@ jobs:
           git fetch --all
           message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
           echo "commit message: $message"
-          echo COMMIT_MESSAGE=\"$message\" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
           echo "env var: $COMMIT_MESSAGE"
 
   check-if-pr-is-approved:
