@@ -104,18 +104,17 @@ jobs:
             echo -e "\033[32mpackage-lock.json has a correct version\033[0m"
           fi
 
-  get-commit-message:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Get commit message
-        run: |
-          git fetch --all
-          message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
-          echo "commit message: $message"
-          echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
-          echo "env var: env.COMMIT_MESSAGE"
+  # get-commit-message:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Get commit message
+  #       run: |
+  #         git fetch --all
+  #         message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+  #         echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
+  #         export COMMIT_MESSAGE=$message
 
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
@@ -127,6 +126,10 @@ jobs:
       - name: ci:force flag parser
         shell: bash
         run: |
+          git fetch --all
+          message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+          echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
+          export COMMIT_MESSAGE=$message
           if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
             echo "Forcing CI to run with commit flag [ci:force]."
             echo CI_FORCE_RUN=true >> $GITHUB_ENV
