@@ -118,7 +118,6 @@ jobs:
 
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
-    needs: [get-commit-message]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
