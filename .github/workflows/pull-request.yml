@@ -104,18 +104,6 @@ jobs:
             echo -e "\033[32mpackage-lock.json has a correct version\033[0m"
           fi
 
-  # get-commit-message:
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #     - name: Get commit message
-  #       run: |
-  #         git fetch --all
-  #         message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
-  #         echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
-  #         export COMMIT_MESSAGE=$message
-
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
     steps:

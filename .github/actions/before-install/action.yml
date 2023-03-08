@@ -31,18 +31,15 @@ runs:
 
     - name: affected:* flag parser
       shell: bash
-      if: ${{ contains(github.event.head_commit.message , '[affected:*]') }}
       run: |
-        echo "Setting up CI to run with commit flag [affected:*] flag."
-        echo "BREAK_ACTION=true" >> $GITHUB_ENV
-
-    # - name: ci:force flag parser
-    #   shell: bash
-    #   if: ${{ contains(github.event.head_commit.message , '[ci:force]') }}
-    #   run: |
-    #     echo "Forcing CI to run with commit flag [ci:force]."
-    #     echo CI_FORCE_RUN=true >> $GITHUB_ENV
-    #     echo "BREAK_ACTION=true" >> $GITHUB_ENV
+        git fetch --all
+        message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+        echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
+        export COMMIT_MESSAGE=$message
+        if [[ "$COMMIT_MESSAGE" == [affected:*] ]]; then
+          echo "Setting up CI to run with commit flag [affected:*] flag."
+          echo "BREAK_ACTION=true" >> $GITHUB_ENV
+        fi
 
     - name: PULL_REQUEST event
       if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
