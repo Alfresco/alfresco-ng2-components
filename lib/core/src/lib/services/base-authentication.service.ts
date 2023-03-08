@@ -64,7 +64,10 @@ export abstract class BaseAuthenticationService {
     abstract logout(): Observable<any>;
     abstract isEcmLoggedIn(): boolean;
     abstract isBpmLoggedIn(): boolean;
+    abstract getEcmUsername(): string;
+    abstract getBpmUsername(): string;
     abstract reset(): void;
+    abstract once(event: string): Observable<any>;
 
     getBearerExcludedUrls(): readonly string[] {
         return this.bearerExcludedUrls;
@@ -124,24 +127,6 @@ export abstract class BaseAuthenticationService {
         }
 
         return header.set('Authorization', ticket);
-    }
-
-    /**
-     * Gets the ECM username.
-     *
-     * @returns The ECM username
-     */
-    getEcmUsername(): string {
-        return this.alfrescoApi.getInstance().getEcmUsername();
-    }
-
-    /**
-     * Gets the BPM username
-     *
-     * @returns The BPM username
-     */
-    getBpmUsername(): string {
-        return this.alfrescoApi.getInstance().getBpmUsername();
     }
 
     isPublicUrl(): boolean {

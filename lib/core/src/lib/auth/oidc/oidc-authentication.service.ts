@@ -16,10 +16,10 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { EMPTY, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 import { AppConfigValues } from '../../app-config/app-config.service';
+import { OAuthEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 import { BaseAuthenticationService } from '../../services/base-authentication.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
@@ -87,6 +87,14 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         );
     }
 
+    getEcmUsername(): string {
+        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+    }
+
+    getBpmUsername(): string {
+        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+    }
+
     ssoImplicitLogin() {
         this.oauthService.initLoginFlow();
     }
@@ -116,5 +124,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         if (config.oidc && oauth2.silentLogin) {
             this.auth.login();
         }
+    }
+
+    once(event: string): Observable<OAuthEvent> {
+        return this.oauthService.events.pipe(filter(_event => _event.type === event));
     }
 }

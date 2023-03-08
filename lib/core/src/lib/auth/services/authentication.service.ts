@@ -152,6 +152,24 @@ export class AuthenticationService extends BaseAuthenticationService {
         return false;
     }
 
+    /**
+     * Gets the ECM username.
+     *
+     * @returns The ECM username
+     */
+    getEcmUsername(): string {
+        return this.alfrescoApi.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Gets the BPM username
+     *
+     * @returns The BPM username
+     */
+    getBpmUsername(): string {
+        return this.alfrescoApi.getInstance().getBpmUsername();
+    }
+
     isImplicitFlow(): boolean {
         return !!this.appConfig.oauth2?.implicitFlow;
     }
@@ -169,5 +187,11 @@ export class AuthenticationService extends BaseAuthenticationService {
         return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
-    reset() {}
+    reset() { }
+
+    once(event: string): Observable<any> {
+        return new Observable((subscriber) => {
+            this.alfrescoApi.getInstance().once(event, () => subscriber.next());
+        });
+    }
 }
