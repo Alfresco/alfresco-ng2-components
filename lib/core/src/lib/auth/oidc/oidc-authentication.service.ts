@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { OAuthEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, filter, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -46,11 +46,6 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         private readonly auth: AuthService
     ) {
         super(alfrescoApi, appConfig, cookie, logService);
-        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.onLogin.next();
-            });
-        });
     }
 
     isEcmLoggedIn(): boolean {
@@ -97,6 +92,14 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         );
     }
 
+    getEcmUsername(): string {
+        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+    }
+
+    getBpmUsername(): string {
+        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+    }
+
     ssoImplicitLogin() {
         this.oauthService.initLoginFlow();
     }
@@ -126,5 +129,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         if (config.oidc && oauth2.silentLogin) {
             this.auth.login();
         }
+    }
+
+    once(event: string): Observable<OAuthEvent> {
+        return this.oauthService.events.pipe(filter(_event => _event.type === event));
     }
 }
