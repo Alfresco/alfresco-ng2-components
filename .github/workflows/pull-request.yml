@@ -112,7 +112,7 @@ jobs:
       - name: Get commit message
         run: |
           git fetch --all
-          message=$(git log --format=%B -n 1 ${{ github.head_ref }})
+          message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
           echo COMMIT_MESSAGE=\"$message\" >> $GITHUB_ENV
 
   check-if-pr-is-approved:
