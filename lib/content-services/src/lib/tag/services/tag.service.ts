@@ -22,7 +22,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {
     RequestQuery,
     RequestSortDefinitionInner,
-    ResultSetContextFacetQueries,
     SearchApi,
     Tag,
     TagBody,
@@ -193,25 +192,16 @@ export class TagService {
     }
 
     /**
-     * Get usage counters for passed tags.
+     * Get list of tags matched to passed name.
      *
-     * @param tags Array of tags names for which there should be returned counters.
-     * @returns Array of usage counters for specified tags.
+     * @param names Array of tags names for which there should be returned whole tag objects.
+     * @returns Array of tags objects for specified names.
      */
-    getCountersForTags(tags: string[]): Observable<ResultSetContextFacetQueries[]> {
-        return from(this.searchApi.search({
-            query: {
-                language: RequestQuery.LanguageEnum.Afts,
-                query: `*`
-            },
-            facetQueries: tags.map((tag) => ({
-                query: `TAG:"${tag}"`,
-                label: tag
-            }))
-        })).pipe(
-            map((paging) => paging.list?.context?.facetQueries),
-            catchError((error) => this.handleError(error))
-        );
+    findTagsByNames(names: string[]): Observable<TagPaging> {
+        return this.getAllTheTags({
+            tags: names,
+            include: ['count']
+        }).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -221,7 +211,7 @@ export class TagService {
      * @returns Found tag which name matches exactly to passed name.
      */
     findTagByName(name: string): Observable<TagEntry> {
-        return this.getAllTheTags({ name }).pipe(
+        return this.getAllTheTags({ tags: [name] }).pipe(
             map((result) => result.list.entries[0]),
             catchError((error) => this.handleError(error))
         );
