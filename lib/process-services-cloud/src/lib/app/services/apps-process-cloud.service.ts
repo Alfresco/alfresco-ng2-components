@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { Oauth2Auth } from '@alfresco/js-api';
+import { AlfrescoApi } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { Environment } from '../../common/interface/environment.interface';
 
@@ -73,7 +73,7 @@ export class AppsProcessCloudService {
         if (status === '') {
             return of([]);
         }
-        const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
+        const api: AlfrescoApi = this.apiService.getInstance();
         const path = this.getApplicationUrl();
         const pathParams = {};
         const queryParams = { status, roles : role, sort: 'name' };
@@ -83,7 +83,7 @@ export class AppsProcessCloudService {
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
-        return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return from(api.callCustomApiWithoutAuth(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
                 map((applications: any) => applications.list.entries.map((application) => application.entry)),
