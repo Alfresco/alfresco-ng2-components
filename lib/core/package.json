@@ -28,7 +28,9 @@
     "@quanzo/change-font-size": "1.0.0",
     "editorjs-text-color-plugin": "1.13.1",
     "editorjs-html": "3.4.2",
-    "editorjs-paragraph-with-alignment": "3.0.0"
+    "editorjs-paragraph-with-alignment": "3.0.0",
+    "angular-oauth2-oidc": "^13.0.1",
+    "angular-oauth2-oidc-jwks": "^13.0.1"
   },
   "peerDependencies": {
     "@angular/animations": ">=14.1.3",
