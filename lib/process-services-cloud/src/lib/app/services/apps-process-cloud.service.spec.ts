@@ -32,9 +32,7 @@ describe('AppsProcessCloudService', () => {
     let apiService: AlfrescoApiService;
 
     const apiMock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }})
-        },
+        callCustomApiWithoutAuth: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }}),
         isEcmLoggedIn: () => false,
         reply: jasmine.createSpy('reply')
     };
