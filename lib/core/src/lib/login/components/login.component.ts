@@ -25,7 +25,6 @@ import { AuthenticationService } from '../../auth/services/authentication.servic
 import { OauthConfigModel } from '../../auth/models/oauth-config.model';
 import { TranslationService } from '../../translation/translation.service';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -137,8 +136,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute,
-        private sanitizer: DomSanitizer,
-        private alfrescoApiService: AlfrescoApiService
+        private sanitizer: DomSanitizer
     ) {
     }
 
@@ -189,7 +187,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     redirectToImplicitLogin() {
-        this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
+        this.authService.ssoImplicitLogin();
     }
 
     /**
