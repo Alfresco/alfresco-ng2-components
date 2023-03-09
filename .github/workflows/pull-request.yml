@@ -109,7 +109,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Check if PR is approved
+
+      - name: ci:force flag parser
+        shell: bash
+        run: |
+          git fetch --all
+          message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+          echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
+          export COMMIT_MESSAGE=$message
+          if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo "Forcing CI to run with commit flag [ci:force]."
+            echo CI_FORCE_RUN=true >> $GITHUB_ENV
+            echo "BREAK_ACTION=true" >> $GITHUB_ENV
+          fi
+
+      - name: Get PR number
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
@@ -121,6 +135,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
+          echo "ci force run: $CI_FORCE_RUN"
+          if [ "${CI_FORCE_RUN}" == "true" ]; then
+              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+              skip_check="true"
+          fi
+
           if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
             echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
             skip_check="true"
