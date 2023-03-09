@@ -72,7 +72,7 @@ env:
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   NODE_OPTIONS: "--max-old-space-size=5120"
-  GH_PACKAGES_READ_ONLY_TOKEN: ""
+  GH_PACKAGES_READ_ONLY_TOKEN: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
 
 jobs:
   trigger_adf:
