@@ -57,6 +57,7 @@ export class TagService {
      * Gets a list of all the tags already defined in the repository.
      *
      * @param opts Options supported by JS-API
+     * @param includedCounts True if count field should be included in response object for each tag, false otherwise.
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getAllTheTags(opts?: any, includedCounts?: boolean): Observable<TagPaging> {
@@ -142,6 +143,9 @@ export class TagService {
      * Find tags which name contains searched name.
      *
      * @param name Value for name which should be used during searching tags.
+     * @param sorting Object which configures sorting. OrderBy field specifies field used for sorting, direction specified ascending or descending direction.
+     * Default sorting is ascending by tag field.
+     * @param includedCounts True if count field should be included in response object for each tag, false otherwise.
      * @param skipCount Specify how many first results should be skipped. Default 0.
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
