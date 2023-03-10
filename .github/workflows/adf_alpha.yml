@@ -94,4 +94,5 @@ jobs:
           run: |
             npm install github-api
             ./scripts/github/update/update-project.sh -p $GH_BUILD_NUMBER -t $GH_TOKEN -v alpha -c $GH_COMMIT -r ${{ inputs.repo_to_update }}
+            exit $?
 
