@@ -52,6 +52,7 @@ import { IconModule } from '../icon/icon.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
 import { ResizableModule } from './directives/resizable/resizable.module';
+import { DataColumnModule } from './data-column/data-column.module';
 
 @NgModule({
     imports: [
@@ -67,7 +68,8 @@ import { ResizableModule } from './directives/resizable/resizable.module';
         IconModule,
         FormsModule,
         ReactiveFormsModule,
-        ResizableModule
+        ResizableModule,
+        DataColumnModule
     ],
     declarations: [
         DataTableComponent,
@@ -90,10 +92,7 @@ import { ResizableModule } from './directives/resizable/resizable.module';
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective,
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
+        DropZoneDirective
     ],
     exports: [
         DataTableComponent,
