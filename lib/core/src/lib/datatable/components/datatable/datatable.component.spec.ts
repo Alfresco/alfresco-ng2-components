@@ -1928,37 +1928,61 @@ describe('Column Resizing', () => {
         expect(tableBody.classList).toContain('adf-blur-datatable-body');
     });
 
-    it('should set column width on resizing', () => {
+    it('should set column width on resizing', fakeAsync(() => {
         const adapter = dataTable.data;
         spyOn(adapter, 'setColumns').and.callThrough();
 
         dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
-        fixture.detectChanges();
-        const columns = dataTable.data.getColumns();
+        tick();
 
+        const columns = dataTable.data.getColumns();
         expect(columns[0].width).toBe(65);
         expect(adapter.setColumns).toHaveBeenCalledWith(columns);
-    });
+    }));
 
-    it('should set the column header style on resizing', () => {
-        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+    it('should set the column header style on resizing', fakeAsync(() => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 125 } }, 0);
+        tick();
         fixture.detectChanges();
+
         const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+        expect(headerColumns[0].style.flex).toBe('0 1 125px');
+    }));
 
-        expect(headerColumns[0].style.flex).toBe('0 1 65px');
-    });
+    it('should set the column header to 100px on resizing when its width goes below 100', fakeAsync(() => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 85 } }, 0);
+        tick();
+        fixture.detectChanges();
 
-    it('should set the style of all the table cells under the resizing header on resizing', () => {
-        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+        const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
+        expect(headerColumns[0].style.flex).toBe('0 1 100px');
+    }));
+
+    it('should set the style of all the table cells under the resizing header on resizing', fakeAsync(() => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 130 } }, 0);
+        tick();
         fixture.detectChanges();
 
         const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
-        expect(firstCell.style.flex).toBe('0 1 65px');
-        expect(secondCell.style.flex).toBe('0 1 65px');
-    });
+        expect(firstCell.style.flex).toBe('0 1 130px');
+        expect(secondCell.style.flex).toBe('0 1 130px');
+    }));
+
+    it('should set the style of all the table cells under the resizing header to 100px on resizing when its width goes below 100', fakeAsync(() => {
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 85 } }, 0);
+        tick();
+        fixture.detectChanges();
+
+        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
+        const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
+
+        expect(firstCell.style.flex).toBe('0 1 100px');
+        expect(secondCell.style.flex).toBe('0 1 100px');
+    }));
 
     it('should unblur the body and set the resizing to false upon resizing ends', () => {
         dataTable.isResizingEnabled = true;
@@ -1976,7 +2000,7 @@ describe('Column Resizing', () => {
         resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
         fixture.detectChanges();
 
-        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
+        document.dispatchEvent(new MouseEvent('mouseup'));
         fixture.detectChanges();
 
         expect(dataTable.isResizing).toBeFalse();
@@ -1998,12 +2022,11 @@ describe('Column Resizing', () => {
         resizeHandle.dispatchEvent(new MouseEvent('mousemove'));
         fixture.detectChanges();
 
-        resizeHandle.dispatchEvent(new MouseEvent('mouseup'));
+        document.dispatchEvent(new MouseEvent('mouseup'));
         fixture.detectChanges();
 
         expect(dataTable.isResizing).toBeFalse();
         expect(dataTable.columnsWidthChanged.emit).toHaveBeenCalled();
-
     });
 
 });

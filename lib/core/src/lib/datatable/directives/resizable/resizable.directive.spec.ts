@@ -139,16 +139,4 @@ describe('ResizableDirective', () => {
 
         expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 120, width: 120 } });
     });
-
-    it('should NOT emit resizing on mousemove when movement goes under the minimum allowed size [100]', () => {
-        spyOn(directive.resizing, 'emit');
-        directive.resizing.subscribe();
-        const mouseDownEvent = new MouseEvent('mousedown');
-        const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 99 });
-
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
-        directive.mousemove.next(mouseMoveEvent);
-
-        expect(directive.resizing.emit).not.toHaveBeenCalled();
-    });
 });

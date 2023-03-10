@@ -17,7 +17,7 @@
 
 import { Subject, Observable, Observer, merge } from 'rxjs';
 import { BoundingRectangle, ResizeEvent, IResizeMouseEvent, ICoordinateX } from './types';
-import { map, tap, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/operators';
+import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/operators';
 import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter } from '@angular/core';
 
 @Directive({
@@ -63,8 +63,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
   private unlistenMouseUp: () => void;
 
   private destroy$ = new Subject<void>();
-
-  private static MINIMUM_COLUMN_SIZE = 100;
 
   constructor(
     private readonly renderer: Renderer2,
@@ -118,11 +116,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     const mousedown$: Observable<IResizeMouseEvent> = merge(this.pointerDown, this.mousedown);
 
-    const mousemove$: Observable<IResizeMouseEvent> = merge(this.pointerMove, this.mousemove)
-      .pipe(
-        tap((event) => this.preventDefaultEvent(event)),
-        share()
-      );
+    const mousemove$: Observable<IResizeMouseEvent> = merge(this.pointerMove, this.mousemove);
 
     const mouseup$: Observable<IResizeMouseEvent> = merge(this.pointerUp, this.mouseup);
 
@@ -158,9 +152,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
     mousedrag
       .pipe(
         map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX))
-      )
-      .pipe(
-        filter(this.minimumAllowedSize)
       )
       .subscribe((rectangle: BoundingRectangle) => {
         if (this.resizing.observers.length > 0) {
@@ -217,14 +208,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  private preventDefaultEvent(event: MouseEvent): void {
-    if ((this.currentRect || this.startingRect) && event.cancelable) {
-      event.preventDefault();
-    }
-  }
-
   private getNewBoundingRectangle({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {
-    const updatedRight = right += clientX;
+    const updatedRight = Math.round(right + clientX);
 
     return {
       top,
@@ -249,9 +234,5 @@ export class ResizableDirective implements OnInit, OnDestroy {
       scrollTop: nativeElement.scrollTop,
       scrollLeft: nativeElement.scrollLeft
     };
-  }
-
-  private minimumAllowedSize({ width = 0 }: BoundingRectangle): boolean {
-    return width > ResizableDirective.MINIMUM_COLUMN_SIZE;
   }
 }
