@@ -18,7 +18,7 @@
             font-style: normal;
             font-stretch: normal;
             font-size: var(--theme-subheading-2-font-size);
-            color: var(--theme-foreground-text-color-087);
+            color: var(--adf-theme-foreground-text-color-087);
         }
 
         &__label {
@@ -26,7 +26,7 @@
         }
 
         &__info {
-            color: var(--theme-foreground-text-color-054);
+            color: var(--adf-theme-foreground-text-color-054);
             font-size: var(--theme-caption-font-size);
         }
 
@@ -39,7 +39,7 @@
         }
 
         &__input {
-            color: var(--theme-foreground-text-color-087);
+            color: var(--adf-theme-foreground-text-color-087);
         }
     }
 

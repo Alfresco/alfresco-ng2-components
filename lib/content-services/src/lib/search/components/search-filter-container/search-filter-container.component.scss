@@ -4,14 +4,14 @@
 
         .adf-icon {
             opacity: 1;
-            color: var(--theme-foreground-icon-color);
+            color: var(--adf-theme-foreground-icon-color);
 
             &-active {
                 color: var(--theme-primary-color);
             }
 
             .mat-badge-active {
-                border: 2px solid var(--theme-background-card-color) !important;
+                border: 2px solid var(--adf-theme-background-card-color) !important;
             }
         }
 
@@ -27,7 +27,7 @@
         display: flex;
         flex-direction: column;
         padding: 15px 15px 10px;
-        color: var(--theme-foreground-text-color-087) !important;
+        color: var(--adf-theme-foreground-text-color-087) !important;
 
         .adf-facet-buttons {
             display: none;
@@ -38,25 +38,25 @@
         }
 
         input {
-            background: 2px solid var(--theme-background-card-color) !important;
+            background: 2px solid var(--adf-theme-background-card-color) !important;
         }
     }
 
     &-title {
         font-size: 1.1em;
         padding-bottom: 5px;
-        color: var(--theme-foreground-text-color-087);
+        color: var(--adf-theme-foreground-text-color-087);
     }
 
     &-actions {
         display: flex;
         justify-content: flex-end;
         padding: 15px;
-        background-color: var(--theme-background-hover-color);
+        background-color: var(--adf-theme-background-hover-color);
 
         > button {
             font-size: 0.9em;
-            color: var(--theme-foreground-text-color-087);
+            color: var(--adf-theme-foreground-text-color-087);
         }
     }
 }

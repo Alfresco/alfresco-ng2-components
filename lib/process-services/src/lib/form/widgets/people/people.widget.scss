@@ -25,7 +25,7 @@
         width: 40px;
         height: 40px;
         border-radius: 100px;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
         font-weight: bolder;
         font-size: var(--theme-adf-picture-1-font-size);
         text-transform: uppercase;
@@ -34,7 +34,7 @@
     &-people-widget-image {
         margin-left: -44px;
         left: 21px;
-        background: var(--theme-background-dialog-color);
+        background: var(--adf-theme-background-dialog-color);
         border-radius: 100px;
         width: 40px;
         height: 40px;

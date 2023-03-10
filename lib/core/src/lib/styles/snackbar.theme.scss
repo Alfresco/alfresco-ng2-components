@@ -3,7 +3,7 @@
         background-color: var(--theme-warn-color);
 
         .mat-simple-snackbar-action {
-            color: var(--theme-warn-contrast-500);
+            color: var(--adf-theme-warn-contrast-500);
         }
     }
 
@@ -19,7 +19,7 @@
         background-color: var(--theme-primary-color);
 
         .mat-simple-snackbar-action {
-            color: var(--theme-primary-contrast-500);
+            color: var(--adf-theme-primary-contrast-500);
         }
     }
 }

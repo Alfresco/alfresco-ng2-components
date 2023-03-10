@@ -18,11 +18,11 @@
 
         &-item:focus {
             outline: none;
-            background: var(--theme-background-hover-color);
+            background: var(--adf-theme-background-hover-color);
         }
 
         &-item:hover {
-            background-color: var(--theme-background-hover-color);
+            background-color: var(--adf-theme-background-hover-color);
         }
 
         &-message,
@@ -51,7 +51,7 @@
         text-transform: uppercase;
         vertical-align: middle;
         line-height: 40px;
-        color: var(--theme-mat-grey-color-a200);
+        color: var(--adf-theme-mat-grey-color-a200);
     }
 
     &-notification-history-load-more {

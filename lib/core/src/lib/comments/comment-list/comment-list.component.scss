@@ -1,5 +1,5 @@
 .adf-is-selected {
-    background: var(--theme-primary-100);
+    background: var(--adf-theme-primary-100);
 }
 
 .adf {
@@ -25,13 +25,13 @@
 
         &:hover {
             background:
-                var(--theme-primary-100)
-                radial-gradient(circle, transparent 1%, var(--theme-primary-100) 1%)
+                var(--adf-theme-primary-100)
+                radial-gradient(circle, transparent 1%, var(--adf-theme-primary-100) 1%)
                 center/15000%;
         }
 
         &:active {
-            background-color: var(--theme-primary-300);
+            background-color: var(--adf-theme-primary-300);
             background-size: 100%;
             transition: background 0s;
         }
@@ -68,7 +68,7 @@
         font-size: var(--theme-body-1-font-size);
         letter-spacing: -0.2px;
         line-height: 1.43;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 
     &-comment-message-time {
@@ -76,7 +76,7 @@
         width: calc(100% - 10%);
         padding: 2px 10px;
         font-size: var(--theme-caption-font-size) !important;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 
     &-comment-contents {

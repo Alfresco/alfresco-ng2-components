@@ -34,8 +34,8 @@ $adf-inplace-input-padding: 7px;
         }
 
         &:hover:not(:focus) {
-            border: 1px solid var(--theme-background-hover-color);
-            background-color: var(--theme-background-hover-color);
+            border: 1px solid var(--adf-theme-background-hover-color);
+            background-color: var(--adf-theme-background-hover-color);
         }
     }
 }

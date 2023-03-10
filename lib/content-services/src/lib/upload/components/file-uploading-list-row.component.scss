@@ -2,7 +2,7 @@ $file-uploading-row-hover-color: #eee !default;
 
 adf-file-uploading-list-row:not(:first-child) {
     display: block;
-    border-top: 1px solid var(--theme-foreground-text-color-014);
+    border-top: 1px solid var(--adf-theme-foreground-text-color-014);
 }
 
 .adf-file-uploading-row {

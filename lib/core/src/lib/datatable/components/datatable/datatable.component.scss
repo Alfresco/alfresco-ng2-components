@@ -27,7 +27,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
         &--divider {
             padding: 24px 0;
-            border: 1px solid var(--theme-foreground-text-color-007);
+            border: 1px solid var(--adf-theme-foreground-text-color-007);
         }
 
         &:hover {
@@ -43,7 +43,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 }
 
 .adf-datatable-card {
-    border: 1px solid var(--theme-foreground-divider-color);
+    border: 1px solid var(--adf-theme-foreground-divider-color);
 
     .adf-datatable-body {
         flex-flow: row wrap;
@@ -80,7 +80,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
 
         .adf-is-selected {
-            background: var(--theme-primary-100);
+            background: var(--adf-theme-primary-100);
             padding-bottom: 31px;
         }
 
@@ -128,7 +128,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
                 margin-left: 10px;
                 text-align: left;
                 content: attr(title);
-                color: var(--theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-color-054);
                 float: left;
                 width: 140px;
                 white-space: nowrap;
@@ -159,7 +159,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             margin: 8px;
             padding: 4px;
             overflow: visible;
-            border-bottom: 1px solid var(--theme-foreground-divider-color);
+            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
 
             .adf-datatable-cell-container {
                 float: left;
@@ -191,8 +191,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 .adf-datatable-list {
     display: flex;
     flex-direction: column;
-    background-color: var(--theme-background-card-color);
-    border: 1px solid var(--theme-foreground-text-color-007);
+    background-color: var(--adf-theme-background-card-color);
+    border: 1px solid var(--adf-theme-foreground-text-color-007);
     box-sizing: border-box;
     overflow-x: auto;
 
@@ -237,13 +237,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-datatable-cell {
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 
     .adf-datatable-row {
         &:hover,
         &:focus {
-            background-color: var(--theme-background-hover-color);
+            background-color: var(--adf-theme-background-hover-color);
         }
 
         &:focus {
@@ -275,7 +275,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             @include material-animation-default(0.28s);
 
             transition-property: background-color;
-            border-top: 1px solid var(--theme-foreground-text-color-007);
+            border-top: 1px solid var(--adf-theme-foreground-text-color-007);
             min-height: $data-table-row-height;
             cursor: pointer;
 
@@ -283,11 +283,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
             &.adf-is-selected,
             &.adf-is-selected:hover {
-                background-color: var(--theme-background-selected-button-color);
+                background-color: var(--adf-theme-background-selected-button-color);
             }
 
             &:last-child {
-                border-bottom: 1px solid var(--theme-foreground-text-color-007);
+                border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
             }
         }
     }
@@ -438,7 +438,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-location-cell {
         a {
             text-decoration: none;
-            color: var(--theme-foreground-text-color);
+            color: var(--adf-theme-foreground-text-color);
 
             &:hover {
                 color: var(--theme-accent-500);
@@ -460,12 +460,12 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     }
 
     .adf-is-selected {
-        background: var(--theme-primary-100);
+        background: var(--adf-theme-primary-100);
     }
 
     .adf-datatable-link {
         text-decoration: none;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
 
         &:hover {
             color: var(--theme-accent-500);
@@ -592,7 +592,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     letter-spacing: 0;
     min-height: $data-table-row-height !important;
     font-size: $data-table-header-font-size;
-    color: var(--theme-foreground-text-color);
+    color: var(--adf-theme-foreground-text-color);
     box-sizing: border-box;
 
     &.adf-sortable {
@@ -604,7 +604,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
 
         &::after {
             @include typo-icon;
@@ -646,7 +646,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
 
         &--hovered {
-            background-color: var(--theme-background-hover-color);
+            background-color: var(--adf-theme-background-hover-color);
             border-radius: 6px;
         }
     }
@@ -674,7 +674,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     display: flex;
     flex: 1;
     flex-grow: 1;
-    background: var(--theme-background-hover-color);
+    background: var(--adf-theme-background-hover-color);
     border: dotted 1px rgba(0, 0, 0, 0.25);
     min-height: 55px;
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -724,8 +724,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-header {
         display: block;
         margin-right: 0;
-        border-top: 1px solid var(--theme-foreground-text-color-007);
-        border-bottom: 1px solid var(--theme-foreground-text-color-007);
+        border-top: 1px solid var(--adf-theme-foreground-text-color-007);
+        border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
     }
 
     .adf-datatable-body {
@@ -761,7 +761,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-body {
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--theme-background-card-color);
+            background-color: var(--adf-theme-background-card-color);
             border: none !important;
 
             &:hover,
@@ -775,7 +775,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
 .adf-datatable--empty--header-visible {
     .adf-datatable-header {
-        border: 1px solid var(--theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-color-007);
     }
 
     .adf-datatable-body {
@@ -786,7 +786,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
         .adf-datatable-row {
             height: 100%;
-            background-color: var(--theme-background-card-color);
+            background-color: var(--adf-theme-background-card-color);
             border: none !important;
 
             &:hover,

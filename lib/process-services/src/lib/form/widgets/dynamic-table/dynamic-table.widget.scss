@@ -26,7 +26,7 @@ dynamic-table-widget .adf-label {
     &-dynamic-table {
         width: 100%;
         position: relative;
-        border: 1px solid var(--theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-color-007);
         white-space: nowrap;
         font-size: $dynamic-table-font-size;
 
@@ -78,12 +78,12 @@ dynamic-table-widget .adf-label {
         }
 
         td {
-            color: var(--theme-foreground-text-color);
+            color: var(--adf-theme-foreground-text-color);
             position: relative;
             vertical-align: middle;
             height: $dynamic-table-row-height;
-            border-top: 1px solid var(--theme-foreground-text-color-007);
-            border-bottom: 1px solid var(--theme-foreground-text-color-007);
+            border-top: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
             padding-top: $dynamic-table-cell-top;
             box-sizing: border-box;
 
@@ -104,7 +104,7 @@ dynamic-table-widget .adf-label {
             letter-spacing: 0;
             height: $dynamic-table-row-height;
             font-size: $dynamic-table-header-font-size;
-            color: var(--theme-foreground-text-color);
+            color: var(--adf-theme-foreground-text-color);
             padding-bottom: 8px;
             box-sizing: border-box;
 
@@ -118,7 +118,7 @@ dynamic-table-widget .adf-label {
 
             &.adf-dynamic-table__header--sorted-asc,
             &.adf-dynamic-table__header--sorted-desc {
-                color: var(--theme-foreground-text-color);
+                color: var(--adf-theme-foreground-text-color);
 
                 &::before {
                     @include typo-icon;
@@ -133,7 +133,7 @@ dynamic-table-widget .adf-label {
                     cursor: pointer;
 
                     &::before {
-                        color: var(--theme-foreground-disabled-text-color);
+                        color: var(--adf-theme-foreground-disabled-text-color);
                     }
                 }
             }

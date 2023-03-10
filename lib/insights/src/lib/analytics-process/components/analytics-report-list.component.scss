@@ -75,16 +75,16 @@
         }
 
         &-actions {
-            border-top: 1px solid var(--theme-foreground-divider-color);
+            border-top: 1px solid var(--adf-theme-foreground-divider-color);
             padding: 8px;
             box-sizing: border-box;
             height: 40px;
 
             &-icon {
-                color: var(--theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-color-054);
 
                 &:hover {
-                    color: var(--theme-foreground-text-color-087);
+                    color: var(--adf-theme-foreground-text-color-087);
                 }
             }
         }

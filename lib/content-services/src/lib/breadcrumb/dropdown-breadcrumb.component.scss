@@ -8,7 +8,7 @@ $dropdown-horizontal-offset: 30px;
         font-size: var(--theme-body-1-font-size);
         font-weight: 600;
         letter-spacing: -0.2px;
-        color: var(--theme-foreground-text-color-054);
+        color: var(--adf-theme-foreground-text-color-054);
         overflow: hidden;
         margin-top: 10px;
 
@@ -60,7 +60,7 @@ $dropdown-horizontal-offset: 30px;
         text-overflow: ellipsis;
         display: inline-block;
         width: 75%;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 
     &-dropdown-breadcrumb-path-option.mat-option {

@@ -8,7 +8,7 @@
         font-stretch: normal;
         line-height: 1.6;
         letter-spacing: -0.5px;
-        color: var(--theme-foreground-text-color-087);
+        color: var(--adf-theme-foreground-text-color-087);
     }
 
     .mat-dialog-container {
@@ -36,7 +36,7 @@
         background-color: var(--theme-background-color);
         display: flex;
         justify-content: flex-end;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
 
         button {
             text-transform: uppercase;
@@ -45,7 +45,7 @@
 
         .adf-choose-action {
             &[disabled] {
-                color: var(--theme-foreground-secondary-text-color);
+                color: var(--adf-theme-foreground-secondary-text-color);
             }
 
             &:enabled {
