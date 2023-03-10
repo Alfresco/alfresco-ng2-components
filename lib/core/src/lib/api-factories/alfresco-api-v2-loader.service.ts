@@ -36,7 +36,7 @@ export class AlfrescoApiLoaderService {
         return this.initAngularAlfrescoApi();
     }
 
-    private initAngularAlfrescoApi() {
+    private async initAngularAlfrescoApi() {
         const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
 
         if (oauth) {
@@ -57,6 +57,6 @@ export class AlfrescoApiLoaderService {
             oauth2: oauth
         });
 
-        this.apiService.load(config);
+        await this.apiService.load(config);
     }
 }
