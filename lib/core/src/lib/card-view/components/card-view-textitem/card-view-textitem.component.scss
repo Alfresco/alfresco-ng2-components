@@ -166,14 +166,33 @@
         display: none;
     }
 
+    &-property-field {
+        .adf-property-clear-value,
+        .adf-textitem-edit-value {
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .adf-textitem-edit-value {
+            display: flex;
+        }
+
+        .adf-property-field-content {
+            display: flex;
+        }
+    }
+
     &-property-field.adf-card-textitem-field:hover {
+        .adf-textitem-edit-value,
         .adf-textitem-edit-icon {
             display: none;
         }
 
         .adf-property-clear-value {
             color: var(--theme-foreground-text-color-025);
-            display: inline;
+            display: flex;
         }
 
         .adf-property-clear-value:hover {
