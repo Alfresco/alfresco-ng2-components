@@ -72,7 +72,7 @@ env:
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   NODE_OPTIONS: "--max-old-space-size=5120"
-  GH_PACKAGES_READ_ONLY_TOKEN: ""
+  GH_PACKAGES_READ_ONLY_TOKEN: "${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}"
 
 jobs:
   trigger_adf:
@@ -94,4 +94,5 @@ jobs:
           run: |
             npm install github-api
             ./scripts/github/update/update-project.sh -p $GH_BUILD_NUMBER -t $GH_TOKEN -v alpha -c $GH_COMMIT -r ${{ inputs.repo_to_update }}
+            exit $?
 

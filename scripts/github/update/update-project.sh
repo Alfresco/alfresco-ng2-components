@@ -71,7 +71,7 @@ update_js_dependency() {
     for i in $(find . ! -path "*/node_modules/*" -name "package-lock.json" | xargs grep -l $PKG); do
         directory=$(dirname $i)
         echo "Update $PKG in  $directory"
-        ( cd $directory ; npm i --ignore-scripts $PKG@$PKG_VERSION --save-exact)
+        ( cd $directory ; npm i --ignore-scripts --save-exact $PKG@$PKG_VERSION)
     done
 
     git add .
@@ -115,7 +115,7 @@ update() {
         update_dependency "@alfresco/adf-cli"
         update_dependency "@alfresco/adf-testing"
     fi
-   
+
 
     if [ "$BRANCH_CREATED" = true ]; then
         git push origin $BRANCH_TO_CREATE
