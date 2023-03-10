@@ -21,11 +21,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
 
-import { ContentService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentService } from '../common/services/content.service';
 
 @Component({
     template: `

@@ -22,12 +22,12 @@ import {
     GroupModel,
     CoreTestingModule,
     setupTestBed,
-    FormFieldTypes,
-    PeopleProcessService
+    FormFieldTypes
 } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;

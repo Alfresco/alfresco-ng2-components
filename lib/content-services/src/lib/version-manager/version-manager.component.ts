@@ -18,8 +18,10 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { ContentService, FileUploadErrorEvent, NodesApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ContentService } from '../common/services/content.service';
+import { NodesApiService } from '../common/services/nodes-api.service';
+import { FileUploadErrorEvent } from '../common/events/file.event';
 
 @Component({
     selector: 'adf-version-manager',

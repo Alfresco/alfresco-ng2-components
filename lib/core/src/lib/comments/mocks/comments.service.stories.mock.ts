@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { CommentModel, EcmUserModel } from '../../models';
+import { CommentModel } from '../../models';
 import { Observable, of } from 'rxjs';
 import { CommentsService } from '../interfaces';
 import { testUser } from './comments.stories.mock';
+import { UserLike } from '../../pipes/user-like.interface';
 
 export class CommentsServiceStoriesMock implements Partial<CommentsService> {
 
@@ -58,7 +59,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as UserLike,
             isSelected: false
         } as CommentModel,
         {
@@ -85,7 +86,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as UserLike,
             isSelected: false
         } as CommentModel,
         {
@@ -112,7 +113,7 @@ export const commentsResponseMock = {
                 id: 'hruser',
                 email: 'test',
                 isAdmin: () => false
-            } as EcmUserModel,
+            } as UserLike,
             isSelected: false
         } as CommentModel
     ]),

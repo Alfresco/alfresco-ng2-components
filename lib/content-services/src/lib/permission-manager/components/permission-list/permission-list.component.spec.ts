@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,6 +36,7 @@ import {
 } from '../../../mock/permission-list.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { MinimalNode } from '@alfresco/js-api';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 
 describe('PermissionListComponent', () => {
 

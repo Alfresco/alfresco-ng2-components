@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadStatus, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
+import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;

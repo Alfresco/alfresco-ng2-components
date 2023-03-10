@@ -20,12 +20,13 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataService } from '../../services/content-metadata.service';
+import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
 
 describe('ContentMetadataCardComponent', () => {

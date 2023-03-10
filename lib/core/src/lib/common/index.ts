@@ -25,6 +25,8 @@ export * from './services/highlight-transform.service';
 export * from './services/page-title.service';
 export * from './services/thumbnail.service';
 export * from './services/sort-by-category.service';
+export * from './services/download.service';
+export * from './services/url.service';
 
 export * from './models/log-levels.model';
 export * from './models/user-info-mode.enum';

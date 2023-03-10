@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { UrlService } from '../../services/url.service';
+import { UrlService } from '../../common/services/url.service';
 import { ImgViewerComponent } from './img-viewer.component';
 import { setupTestBed, CoreTestingModule } from '../../testing';
 import { AppConfigService } from '../../app-config/app-config.service';

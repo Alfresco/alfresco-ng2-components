@@ -17,11 +17,13 @@
 
 import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
-import { PeopleProcessService, UserProcessModel, LogService, TranslationService } from '@alfresco/adf-core';
+import { LogService, TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
 import { getDisplayUser } from '../../helpers/get-display-user';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 
 const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 

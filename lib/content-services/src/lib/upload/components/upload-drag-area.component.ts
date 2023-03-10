@@ -16,12 +16,16 @@
  */
 
 import {
-    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils,
-    NotificationService, TranslationService, UploadService, ContentService, AllowableOperationsEnum
+    EXTENDIBLE_COMPONENT, FileInfo, FileUtils,
+    NotificationService, TranslationService
 } from '@alfresco/adf-core';
 import { Component, forwardRef, ViewEncapsulation, NgZone } from '@angular/core';
 import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 import { UploadBase } from './base-upload/upload-base';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
+import { UploadService } from '../../common/services/upload.service';
+import { ContentService } from '../../common/services/content.service';
+import { FileModel } from '../../common/models/file.model';
 
 @Component({
     selector: 'adf-upload-drag-area',

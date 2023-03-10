@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from  '../../common/services/nodes-api.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';

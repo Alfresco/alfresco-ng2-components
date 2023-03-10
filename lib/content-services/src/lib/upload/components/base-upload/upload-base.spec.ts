@@ -17,12 +17,15 @@
 
 import { Component, NgZone } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslationService, UploadService, setupTestBed, FileModel, FileUploadErrorEvent } from '@alfresco/adf-core';
+import { TranslationService, setupTestBed } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise } from '../../../mock/upload.service.mock';
+import { UploadService } from '../../../common/services/upload.service';
+import { FileModel } from '../../../common/models/file.model';
+import { FileUploadErrorEvent } from '../../../common/events/file.event';
 
 @Component({
     selector: 'adf-upload-button-test',

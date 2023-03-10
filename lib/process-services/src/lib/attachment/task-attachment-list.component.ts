@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentService, ThumbnailService, EmptyListComponent } from '@alfresco/adf-core';
+import { ThumbnailService, EmptyListComponent, DownloadService } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ContentChild,
@@ -72,7 +72,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     isLoading: boolean = false;
 
     constructor(private activitiContentService: ProcessContentService,
-                private contentService: ContentService,
+                private downloadService: DownloadService,
                 private thumbnailService: ThumbnailService,
                 private ngZone: NgZone) {
     }
@@ -188,7 +188,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
 
     downloadContent(content: any): void {
         this.activitiContentService.getFileRawContent(content.id).subscribe(
-            (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
+            (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (err) => {
                 this.error.emit(err);
             }

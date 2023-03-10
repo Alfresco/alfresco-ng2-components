@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { NodesApiService, NotificationService, setupTestBed } from '@alfresco/adf-core';
+import { NotificationService, setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';

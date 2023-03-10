@@ -18,8 +18,8 @@
 /**
  * This object represent the details of a task.
  */
-import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { UserProcessModel } from '../../common/models/user-process.model';
 import { UserGroupModel } from './user-group.model';
 
 export class TaskDetailsModel implements TaskRepresentation {

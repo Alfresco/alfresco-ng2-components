@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { CommentModel, EcmCompanyModel, EcmUserModel } from '../../models';
+import { CommentModel } from '../../models';
 
-const fakeCompany: EcmCompanyModel = {
+const fakeCompany: any = {
     organization: '',
     address1: '',
     address2: '',
@@ -30,7 +30,7 @@ const fakeCompany: EcmCompanyModel = {
 
 export const getDateXMinutesAgo = (minutes: number) => new Date(new Date().getTime() - minutes * 60000);
 
-const johnDoe: EcmUserModel = {
+const johnDoe: any = {
     id: '1',
     email: 'john.doe@alfresco.com',
     firstName: 'John',
@@ -41,7 +41,7 @@ const johnDoe: EcmUserModel = {
     avatarId: '001'
 };
 
-const janeEod: EcmUserModel = {
+const janeEod: any = {
     id: '2',
     email: 'jane.eod@alfresco.com',
     firstName: 'Jane',
@@ -51,7 +51,7 @@ const janeEod: EcmUserModel = {
     isAdmin: undefined
 };
 
-const robertSmith: EcmUserModel = {
+const robertSmith: any = {
     id: '3',
     email: 'robert.smith@alfresco.com',
     firstName: 'Robert',
@@ -61,7 +61,7 @@ const robertSmith: EcmUserModel = {
     isAdmin: undefined
 };
 
-export const testUser: EcmUserModel = {
+export const testUser: any = {
     id: '44',
     email: 'test.user@hyland.com',
     firstName: 'Test',

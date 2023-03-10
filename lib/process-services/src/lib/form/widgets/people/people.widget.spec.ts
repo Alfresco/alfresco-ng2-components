@@ -18,16 +18,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
-    UserProcessModel,
     FormFieldTypes,
     FormFieldModel,
     FormModel,
     setupTestBed,
-    CoreTestingModule, PeopleProcessService
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 
 describe('PeopleWidgetComponent', () => {
 

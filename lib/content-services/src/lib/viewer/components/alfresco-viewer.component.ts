@@ -30,12 +30,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {
-    AlfrescoApiService, ContentService,
-    FileModel,
+    AlfrescoApiService,
     LogService,
-    NodesApiService,
     Track,
-    UploadService,
     ViewerComponent,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
@@ -56,9 +53,13 @@ import {
     VersionEntry,
     VersionsApi
 } from '@alfresco/js-api';
-import { RenditionViewerService } from '../services/rendition-viewer.service';
+import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, takeUntil } from 'rxjs/operators';
+import { ContentService } from '../../common/services/content.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel } from '../../common/models/file.model';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -71,7 +72,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     @ViewChild('adfViewer')
-    adfViewer: ViewerComponent<{node: Node}>;
+    adfViewer: ViewerComponent<{ node: Node }>;
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -231,14 +232,14 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(private apiService: AlfrescoApiService,
                 private nodesApiService: NodesApiService,
-                private renditionViewerService: RenditionViewerService,
+                private renditionService: RenditionService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private contentService: ContentService,
                 private uploadService: UploadService,
                 public dialog: MatDialog,
                 private cdr: ChangeDetectorRef) {
-        renditionViewerService.maxRetries = this.maxRetries;
+        renditionService.maxRetries = this.maxRetries;
 
     }
 
@@ -320,16 +321,16 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         if (viewerType === 'unknown') {
             let nodeRendition;
             if (versionData) {
-                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id, versionData.id);
+                nodeRendition = await this.renditionService.getNodeRendition(nodeData.id, versionData.id);
             } else {
-                nodeRendition = await this.renditionViewerService.getNodeRendition(nodeData.id);
+                nodeRendition = await this.renditionService.getNodeRendition(nodeData.id);
             }
-            if(nodeRendition){
+            if (nodeRendition) {
                 urlFileContent = nodeRendition.url;
                 mimeType = nodeRendition.mimeType;
             }
         } else if (viewerType === 'media') {
-            this.tracks = await this.renditionViewerService.generateMediaTracksRendition(this.nodeId);
+            this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
         }
 
         this.mimeType = mimeType;
@@ -394,7 +395,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     onPrintContent(event: MouseEvent) {
         if (this.allowPrint) {
             if (!event.defaultPrevented) {
-                this.renditionViewerService.printFileGeneric(this.nodeId, this.mimeType);
+                this.renditionService.printFileGeneric(this.nodeId, this.mimeType);
             }
         }
     }

@@ -20,7 +20,6 @@ import { Node } from '@alfresco/js-api';
 import { Observable, Subject, of, zip } from 'rxjs';
 import {
     CardViewItem,
-    NodesApiService,
     LogService,
     TranslationService,
     AppConfigService,
@@ -31,6 +30,7 @@ import { ContentMetadataService } from '../../services/content-metadata.service'
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
+import { NodesApiService } from '../../../common/services/nodes-api.service';
 
 const DEFAULT_SEPARATOR = ', ';
 

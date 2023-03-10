@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, CommentModel, CommentsService, PeopleProcessService, UserProcessModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, CommentModel, CommentsService } from '@alfresco/adf-core';
 import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { UserProcessModel } from '../../common/models/user-process.model';
+import { PeopleProcessService } from '../../common/services/people-process.service';
 
 @Injectable({
   providedIn: 'root'

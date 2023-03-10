@@ -18,10 +18,8 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { AboutComponent } from './about.component';
 import { AboutModule } from './about.module';
-import { DiscoveryApiService } from '../services';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { AuthenticationMock } from '../auth/mock/authentication.service.mock';
-import { DiscoveryApiServiceMock } from '../mock/discovery-api.service.mock';
 import { AppExtensionService, AppExtensionServiceMock } from '@alfresco/adf-extensions';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
@@ -35,7 +33,6 @@ export default {
             imports: [CoreStoryModule, AboutModule],
             providers: [
                 { provide: AuthenticationService, useClass: AuthenticationMock },
-                { provide: DiscoveryApiService, useClass: DiscoveryApiServiceMock },
                 { provide: AppExtensionService, useClass: AppExtensionServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]

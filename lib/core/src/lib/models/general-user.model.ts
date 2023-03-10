@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { EcmUserModel } from './ecm-user.model';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
-import { UserProcessModel } from './user-process.model';
 
-export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string } & { username?: string };
+export type User = (IdentityUserModel) & { displayName?: string } & { username?: string };

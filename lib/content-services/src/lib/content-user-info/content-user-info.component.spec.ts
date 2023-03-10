@@ -17,9 +17,6 @@
 
 import {
     CoreTestingModule,
-    fakeEcmEditedUser,
-    fakeEcmUser,
-    fakeEcmUserNoImage,
     IdentityUserModel,
     InitialUsernamePipe,
     setupTestBed,
@@ -29,6 +26,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../common/mocks/ecm-user.service.mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 import { ContentUserInfoComponent } from './content-user-info.component';
@@ -238,7 +236,6 @@ describe('ContentUserInfoComponent', () => {
                     fixture.detectChanges();
                     const pipe = new InitialUsernamePipe(new FakeSanitizer());
                     const expected = pipe.transform({
-                        id: 13,
                         firstName: 'Wilbur',
                         lastName: 'Adams',
                         email: 'wilbur@app.com'

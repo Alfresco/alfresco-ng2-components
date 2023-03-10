@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProcessModel, setupTestBed, DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { setupTestBed, DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { UserProcessModel } from '../../../common/models/user-process.model';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 1,

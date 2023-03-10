@@ -19,7 +19,8 @@
 
 import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { ContentService, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
+import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
+import { ContentService } from '../common/services/content.service';
 import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Directive({

@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService, ContentService, LogService, PaginationModel
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
+import { MinimalNode, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -40,7 +39,7 @@ export class DocumentListService implements DocumentListLoader {
         return this._nodesApi;
     }
 
-    constructor(private contentService: ContentService,
+    constructor(private nodesApiService: NodesApiService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private customResourcesService: CustomResourcesService) {
@@ -135,7 +134,7 @@ export class DocumentListService implements DocumentListLoader {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
+    getNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNode> {
         const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'definition', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
@@ -144,7 +143,7 @@ export class DocumentListService implements DocumentListLoader {
             include: includeFieldsRequest
         };
 
-        return this.contentService.getNode(nodeId, opts);
+        return this.nodesApiService.getNode(nodeId, opts);
     }
 
     /**

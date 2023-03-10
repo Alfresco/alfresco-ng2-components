@@ -17,7 +17,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { User } from '../models/general-user.model';
+import { UserLike } from './user-like.interface';
 
 @Pipe({
     name: 'usernameInitials'
@@ -27,7 +27,7 @@ export class InitialUsernamePipe implements PipeTransform {
     constructor(private sanitized: DomSanitizer) {
     }
 
-    transform(user: User, className: string = '', delimiter: string = ''): SafeHtml {
+    transform(user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
 import { Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { RoleModel } from '../../models/role.model';
+import { ContentService } from '../../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 
 @Component({
     selector: 'adf-add-permission',

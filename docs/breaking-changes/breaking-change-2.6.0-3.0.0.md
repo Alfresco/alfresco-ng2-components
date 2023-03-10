@@ -25,7 +25,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
     classes without the **adf-** prefix, you will now need to update them. For example, `.card-view`
     is now `.adf-card-view`.
 
--   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): [`DownloadZipDialogComponent`](../../lib/core/src/lib/dialogs/download-zip/download-zip.dialog.ts)
+-   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): [`DownloadZipDialogComponent`](lib/content-services/src/lib/dialogs/download-zip/download-zip.dialog.ts)
     and [`NodeDownloadDirective`](../core/directives/node-download.directive.md) have been moved from the Content Services module to the Core module.
     This modification has enabled us to remove some code duplication between the two modules.
 

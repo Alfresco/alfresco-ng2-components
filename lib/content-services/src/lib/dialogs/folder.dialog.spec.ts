@@ -17,7 +17,9 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
+
 import { FolderDialogComponent } from './folder.dialog';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { ContentService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
+import { ContentService } from '../../common/services/content.service';
 import { Injectable } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, throwError, of } from 'rxjs';

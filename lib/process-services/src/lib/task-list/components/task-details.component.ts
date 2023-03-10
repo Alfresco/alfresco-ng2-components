@@ -16,7 +16,6 @@
  */
 
 import {
-    PeopleProcessService, UserProcessModel,
     CardViewUpdateService,
     ClickNotification,
     LogService,
@@ -43,6 +42,8 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { UserProcessModel } from '../../common/models/user-process.model';
+import { PeopleProcessService } from '../../common/services/people-process.service';
 
 @Component({
     selector: 'adf-task-details',

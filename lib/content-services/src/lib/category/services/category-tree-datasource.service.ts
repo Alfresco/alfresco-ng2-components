@@ -33,8 +33,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
     public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
         return !name ? this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
             const parentNode: CategoryNode = this.getParentNode(parentNodeId);
-            const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => {
-                return {
+            const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => ({
                     id: entry.entry.id,
                     nodeName: entry.entry.name,
                     parentId: entry.entry.parentId,
@@ -42,8 +41,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
                     level: parentNode ? parentNode.level + 1 : 0,
                     isLoading: false,
                     nodeType: TreeNodeType.RegularNode
-                };
-            });
+                }));
             if (response.list.pagination.hasMoreItems && parentNode) {
                 const loadMoreNode: CategoryNode = {
                     id: 'loadMore',

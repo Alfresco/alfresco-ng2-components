@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { CommentModel, EcmCompanyModel, EcmUserModel } from '@alfresco/adf-core';
+import { CommentModel } from '@alfresco/adf-core';
+import { EcmCompanyModel } from '../../common/models/ecm-company.model';
+import { EcmUserModel } from '../../common/models/ecm-user.model';
 
 export const fakeUser1 = {
     enabled: true,

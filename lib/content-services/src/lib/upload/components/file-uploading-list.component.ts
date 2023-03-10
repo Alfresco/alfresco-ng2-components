@@ -16,11 +16,11 @@
  */
 
 import {
-    FileModel,
-    FileUploadStatus,
-    TranslationService,
-    UploadService
+    TranslationService
 } from '@alfresco/adf-core';
+import { UploadService } from '../../common/services/upload.service';
+import { FileModel, FileUploadStatus } from '../../common/models/file.model';
+
 import {
     Component,
     ContentChild,

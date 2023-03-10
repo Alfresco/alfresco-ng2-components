@@ -22,13 +22,13 @@ import {
     FormFieldValidator,
     FormOutcomeEvent,
     TranslationService,
-    FormFieldModel,
-    BpmUserService
+    FormFieldModel
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation, LightGroupRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 @Component({
   selector: 'adf-task-form',
@@ -134,13 +134,13 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   constructor(
     private taskListService: TaskListService,
-    private bpmUserService: BpmUserService,
+    private peopleProcessService: PeopleProcessService,
     private translationService: TranslationService
   ) {
   }
 
   ngOnInit() {
-    this.bpmUserService.getCurrentUserInfo().subscribe(user => {
+    this.peopleProcessService.getCurrentUserInfo().subscribe(user => {
       this.currentLoggedUser = user;
     });
     this.loadTask(this.taskId);

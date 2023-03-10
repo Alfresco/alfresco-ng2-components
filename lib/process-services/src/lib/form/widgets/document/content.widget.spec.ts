@@ -19,10 +19,10 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
-    ContentService,
     ContentLinkModel,
     CoreTestingModule,
-    setupTestBed
+    setupTestBed,
+    DownloadService
 } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
@@ -38,7 +38,7 @@ describe('ContentWidgetComponent', () => {
     let element: HTMLElement;
 
     let processContentService: ProcessContentService;
-    let serviceContent: ContentService;
+    let downloadService: DownloadService;
 
     const createFakeImageBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -71,7 +71,7 @@ describe('ContentWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        serviceContent = TestBed.inject(ContentService);
+        downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);
     });
 
@@ -253,7 +253,7 @@ describe('ContentWidgetComponent', () => {
         it('should download the pdf when the download button is clicked', () => {
             const blob = createFakePdfBlob();
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
-            spyOn(serviceContent, 'downloadBlob').and.callThrough();
+            spyOn(downloadService, 'downloadBlob').and.callThrough();
 
             component.content = new ContentLinkModel({
                 id: 4004,
@@ -278,7 +278,7 @@ describe('ContentWidgetComponent', () => {
             const downloadButton: any = element.querySelector('#download');
             downloadButton.click();
 
-            expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
+            expect(downloadService.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
         });
     });
 });

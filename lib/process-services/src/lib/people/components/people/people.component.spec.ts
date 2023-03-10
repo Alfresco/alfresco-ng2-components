@@ -16,11 +16,13 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { LogService, PeopleProcessService, setupTestBed, UserProcessModel } from '@alfresco/adf-core';
+import { LogService, setupTestBed } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
+import { UserProcessModel } from '../../../common/models/user-process.model';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 declare let jasmine: any;
 

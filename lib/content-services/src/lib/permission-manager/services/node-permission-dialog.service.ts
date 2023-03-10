@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
@@ -25,6 +24,8 @@ import { NodePermissionService } from './node-permission.service';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
 import { RoleModel } from '../models/role.model';
+import { ContentService } from '../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 
 @Injectable({
     providedIn: 'root'

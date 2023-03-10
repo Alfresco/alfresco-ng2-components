@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-export * from './file.model';
-export * from './allowable-operations.enum';
-export * from './permissions.enum';
 export * from './product-version.model';
-export * from './user-process.model';
 export * from './comment.model';
-export * from './ecm-company.model';
 export * from './pagination.model';
 export * from './request-pagination.model';
 export * from './decimal-number.model';
-export * from './bpm-user.model';
-export * from './ecm-user.model';
-export * from './node-metadata.model';
-export * from './application-access.model';
-export * from './user-access.model';
 export * from './general-user.model';

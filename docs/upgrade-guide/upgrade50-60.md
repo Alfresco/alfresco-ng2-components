@@ -90,10 +90,13 @@ How to fix it:
 
 ## Deprecated items
 
-| Class | Before | After |
+| Class | Before | Description |
 | --- | -- | --- |
-| `LoginDialogService` | `@alfresco/adf-core`|
-| `UserInfoComponent` | `@alfresco/adf-core`|
+| `LoginDialogService` | `@alfresco/adf-core`||
+| `DeletedNodesApiService` | `@alfresco/adf-core`||
+| `BpmUserService` | `@alfresco/adf-core`| you can use instead the PeopleProcessService|
+| `UserContentAccessService` | `@alfresco/adf-core`| you can use instead the PeopleContentService|
+| `EcmUserService` | `@alfresco/adf-core`| you can use instead the PeopleContentService|
 
 ### DataColumnModule
 
@@ -137,13 +140,35 @@ v6.0.0 and after:
 | [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `NodeDownloadDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
 | `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `SearchConfigurationInterface` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `NodeDownloadDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `DownloadZipDialogComponent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `RenditionService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `UploadService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `NodesApiService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `ContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `ContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `PeopleContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `PeopleProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| `PermissionsEnum` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `AllowableOperationsEnum` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileModel` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadStatus` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadProgress` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadOptions` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadCompleteEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadDeleteEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `FileUploadErrorEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| `NodeMetadata` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `RichTextEditorComponent` | `@alfresco/adf-core` | `@alfresco/adf-process-services-cloud` |
 
-
+   
 ### Update Data-table a data change
 
 v6.0.0 and after You will need to provide a ```DataTableService``` to update a row of your table.

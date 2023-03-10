@@ -16,7 +16,8 @@
  */
 
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
-import { ContentService, CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { ContentService } from '../common/services/content.service';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';

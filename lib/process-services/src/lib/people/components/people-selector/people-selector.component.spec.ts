@@ -16,12 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService, PeopleProcessService, setupTestBed } from '@alfresco/adf-core';
+import { LogService, setupTestBed } from '@alfresco/adf-core';
 import { PeopleSelectorComponent } from './people-selector.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 describe('PeopleSelectorComponent', () => {
 

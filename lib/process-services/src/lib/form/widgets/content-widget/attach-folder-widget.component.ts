@@ -20,10 +20,9 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
     WidgetComponent,
-    FormService,
-    NodesApiService
+    FormService
 } from '@alfresco/adf-core';
-import { ContentNodeDialogService } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 
 @Component({

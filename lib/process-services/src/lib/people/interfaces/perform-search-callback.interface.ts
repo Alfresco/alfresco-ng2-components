@@ -16,6 +16,6 @@
  */
 
 import { Observable } from 'rxjs';
-import { UserProcessModel } from '@alfresco/adf-core';
+import { UserProcessModel } from '../../common/models/user-process.model';
 
 export type PerformSearchCallback = (searchWord: string) => Observable<UserProcessModel[]>;

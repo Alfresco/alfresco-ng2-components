@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Ecm User model](../../../lib/core/src/lib/models/ecm-user.model.ts "Defined in ecm-user.model.ts")
+# [Ecm User model](lib/content-services/src/lib/common/models/ecm-user.model.ts "Defined in ecm-user.model.ts")
 
 Contains information about a Content Services user.
 

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { ContentService } from '@alfresco/adf-core';
+import { DownloadService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -60,7 +60,7 @@ export class TaskAuditDirective implements OnChanges {
 
     public audit: any;
 
-    constructor(private contentService: ContentService,
+    constructor(private downloadService: DownloadService,
                 private taskListService: TaskListService) {
     }
 
@@ -87,7 +87,7 @@ export class TaskAuditDirective implements OnChanges {
                 (blob: Blob) => {
                     this.audit = blob;
                     if (this.download) {
-                        this.contentService.downloadBlob(this.audit, this.fileName + '.pdf');
+                        this.downloadService.downloadBlob(this.audit, this.fileName + '.pdf');
                     }
                     this.clicked.emit({ format: this.format, value: this.audit, fileName: this.fileName });
                 },

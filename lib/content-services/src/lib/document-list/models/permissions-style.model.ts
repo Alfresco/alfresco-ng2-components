@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AllowableOperationsEnum } from '@alfresco/adf-core';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 
 export class PermissionStyleModel {
     css: string;

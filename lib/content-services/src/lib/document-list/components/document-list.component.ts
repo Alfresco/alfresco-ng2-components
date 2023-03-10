@@ -22,9 +22,9 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
+import { ContentService } from '../../common/services/content.service';
 
 import {
-    ContentService,
     DataCellEvent,
     DataColumn,
     DataRowActionEvent,
@@ -46,9 +46,9 @@ import {
     AlfrescoApiService,
     UserPreferenceValues,
     DataRow,
-    DataTableService,
-    NodesApiService
+    DataTableService
 } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';

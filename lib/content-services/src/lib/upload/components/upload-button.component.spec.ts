@@ -17,13 +17,15 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
+import { UploadService } from '../../common/services/upload.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { FileUploadErrorEvent } from '../../common/events/file.event';
 
 describe('UploadButtonComponent', () => {
 
@@ -50,7 +52,7 @@ describe('UploadButtonComponent', () => {
     let component: UploadButtonComponent;
     let fixture: ComponentFixture<UploadButtonComponent>;
     let uploadService: UploadService;
-    let contentService: ContentService;
+    let nodesApiService: NodesApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -61,7 +63,7 @@ describe('UploadButtonComponent', () => {
         });
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.inject(UploadService);
-        contentService = TestBed.inject(ContentService);
+        nodesApiService = TestBed.inject(NodesApiService);
 
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -124,7 +126,7 @@ describe('UploadButtonComponent', () => {
 
     it('should call uploadFile with the default root folder', () => {
         component.rootFolderId = '-root-';
-        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
         spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
@@ -136,7 +138,7 @@ describe('UploadButtonComponent', () => {
 
     it('should call uploadFile with a custom root folder', () => {
         component.rootFolderId = '-my-';
-        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
         spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
@@ -159,7 +161,7 @@ describe('UploadButtonComponent', () => {
     it('should create a folder and emit an File uploaded event', async () => {
         component.rootFolderId = '-my-';
 
-        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
@@ -343,14 +345,13 @@ describe('UploadButtonComponent', () => {
         beforeEach(() => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
             fakeNodeWithNoPermission = {
-                entry: {}
             };
         });
 
         it('should not call uploadFiles for node without permission', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission));
+            spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
 
@@ -361,7 +362,7 @@ describe('UploadButtonComponent', () => {
         it('should not call uploadFiles when getNode fails', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
+            spyOn(nodesApiService, 'getNode').and.returnValue(throwError('error'));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
 
@@ -372,7 +373,7 @@ describe('UploadButtonComponent', () => {
         it('should emit an error message when getNode fails', async () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
+            spyOn(nodesApiService, 'getNode').and.returnValue(throwError('error'));
 
             await component.error.subscribe((value: FileUploadErrorEvent) => {
                 expect(value.error).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
@@ -387,9 +388,9 @@ describe('UploadButtonComponent', () => {
         it('should not call uploadFiles for node with other permissions', () => {
             component.rootFolderId = 'nodeId';
 
-            fakeNodeWithNoPermission.entry.allowableOperations = ['other'];
+            fakeNodeWithNoPermission.allowableOperations = ['other'];
 
-            spyOn(contentService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission));
+            spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithNoPermission.entry));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
 
@@ -400,7 +401,7 @@ describe('UploadButtonComponent', () => {
         it('should call uploadFiles when node has CREATE', () => {
             component.rootFolderId = 'nodeId';
 
-            spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+            spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
 
@@ -411,7 +412,7 @@ describe('UploadButtonComponent', () => {
 
     describe('Events', () => {
         beforeEach(() => {
-            spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
+            spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
             component.rootFolderId = 'nodeId';
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();

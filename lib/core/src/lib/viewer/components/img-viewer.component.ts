@@ -26,7 +26,7 @@ import {
     EventEmitter, AfterViewInit, ViewChild, HostListener, OnDestroy
 } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { UrlService } from '../../services/url.service';
+import { UrlService } from '../../common/services/url.service';
 import Cropper from 'cropperjs';
 
 @Component({

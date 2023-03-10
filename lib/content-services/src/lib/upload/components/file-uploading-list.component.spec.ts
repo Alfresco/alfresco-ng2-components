@@ -16,11 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileUploadStatus, NodesApiService, UploadService, setupTestBed, FileModel } from '@alfresco/adf-core';
+import { TranslationService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { UploadService } from '../../common/services/upload.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
 describe('FileUploadingListComponent', () => {
     let fixture: ComponentFixture<FileUploadingListComponent>;

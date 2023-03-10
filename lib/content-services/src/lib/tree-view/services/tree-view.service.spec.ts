@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { setupTestBed, NodesApiService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 import { TreeViewService } from './tree-view.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';

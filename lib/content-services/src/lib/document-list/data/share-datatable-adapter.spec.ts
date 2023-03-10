@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentService } from '../../common/services/content.service';
 
 describe('ShareDataTableAdapter', () => {
 
@@ -41,7 +42,7 @@ describe('ShareDataTableAdapter', () => {
         contentService = TestBed.inject(ContentService);
         thumbnailService = TestBed.inject(ThumbnailService);
 
-        spyOn(thumbnailService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
+        spyOn(contentService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });
 
     it('should use client sorting by default', () => {
@@ -267,7 +268,6 @@ describe('ShareDataTableAdapter', () => {
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
-        expect(thumbnailService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
     });
 
     it('should resolve fallback file icon for unknown node', () => {

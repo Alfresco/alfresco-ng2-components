@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2022-06-05
 ---
 
-# [User access service](../../../lib/core/src/lib/services/user-access.service.ts "Defined in user-access.service.ts")
+# [User access service](lib/core/src/lib/auth/services/user-access.service.ts "Defined in user-access.service.ts")
 
 Checks the global and application access of a user
 

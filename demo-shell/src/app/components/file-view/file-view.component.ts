@@ -18,13 +18,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import {
+    NotificationService
+} from '@alfresco/adf-core';
+import {
     ContentService,
     AllowableOperationsEnum,
     PermissionsEnum,
     NodesApiService,
-    FileUploadErrorEvent,
-    NotificationService
-} from '@alfresco/adf-core';
+    FileUploadErrorEvent
+} from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({

@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, BpmUserService, BpmUserModel } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     completedTaskDetailsMock,
@@ -33,13 +33,15 @@ import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PeopleProcessService } from '../../common/services/people-process.service';
+import { BpmUserModel } from '../../common/models/bpm-user.model';
 
 describe('TaskHeaderComponent', () => {
 
     let service: TaskListService;
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
-    let userBpmService: BpmUserService;
+    let peopleProcessService: PeopleProcessService;
     let appConfigService: AppConfigService;
 
     const fakeBpmAssignedUser = new BpmUserModel({
@@ -67,8 +69,8 @@ describe('TaskHeaderComponent', () => {
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(TaskListService);
-        userBpmService = TestBed.inject(BpmUserService);
-        spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmAssignedUser));
+        peopleProcessService = TestBed.inject(PeopleProcessService);
+        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
         appConfigService = TestBed.inject(AppConfigService);
     });

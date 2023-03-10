@@ -30,17 +30,17 @@ import {
 } from '@alfresco/js-api';
 import {
     AppConfigService,
-    FileModel,
-    FileUploadStatus,
-    NodesApiService,
     setupTestBed,
-    UploadService,
-    FileUploadCompleteEvent,
     DataRow,
     ThumbnailService,
-    ContentService,
     DataColumn
 } from '@alfresco/adf-core';
+import { ContentService } from '../common/services/content.service';
+import { UploadService } from '../common/services/upload.service';
+import { NodesApiService } from '../common/services/nodes-api.service';
+import { FileModel, FileUploadStatus } from '../common/models/file.model';
+import { FileUploadCompleteEvent } from '../common/events/file.event';
+
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';

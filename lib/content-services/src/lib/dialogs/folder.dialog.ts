@@ -22,7 +22,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Node } from '@alfresco/js-api';
-import { NodesApiService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
+import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
 

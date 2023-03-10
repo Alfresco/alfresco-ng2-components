@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { DataRow, ObjectUtils, ThumbnailService, ContentService } from '@alfresco/adf-core';
+import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
 import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
+import { ContentService } from './../../common/services/content.service';
 
 export const ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
 

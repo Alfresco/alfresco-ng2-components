@@ -18,7 +18,8 @@
 import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProcessInstance, ProcessService ,
     ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService, DiscoveryApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { UploadService, DiscoveryApiService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

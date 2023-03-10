@@ -17,10 +17,11 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}, allowableOperations: ['updatePermissions']};
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}, allowableOperations: ['updatePermissions']};

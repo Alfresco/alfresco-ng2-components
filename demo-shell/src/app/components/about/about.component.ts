@@ -17,7 +17,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
-import { AuthenticationService, BpmProductVersionModel, DiscoveryApiService, RepositoryInfo } from '@alfresco/adf-core';
+import { AuthenticationService, BpmProductVersionModel, RepositoryInfo } from '@alfresco/adf-core';
+import { DiscoveryApiService } from '@alfresco/adf-content-services';
 import pkg from '../../../../../package.json';
 import { Observable } from 'rxjs';
 
@@ -34,32 +35,32 @@ export class AboutComponent implements OnInit {
     bpmVersion: BpmProductVersionModel = null;
 
     constructor(
-        private authService: AuthenticationService,
-        private appExtensions: AppExtensionService,
-        private discovery: DiscoveryApiService
+        private authenticationService: AuthenticationService,
+        private appExtensionService: AppExtensionService,
+        private discoveryApiService: DiscoveryApiService
     ) {
         this.pkg = pkg;
-        this.extensions$ = this.appExtensions.references$;
+        this.extensions$ = this.appExtensionService.references$;
     }
 
     ngOnInit(): void {
-        if (this.authService.isEcmLoggedIn()) {
+        if (this.authenticationService.isEcmLoggedIn()) {
             this.setECMInfo();
         }
 
-        if (this.authService.isBpmLoggedIn()) {
+        if (this.authenticationService.isBpmLoggedIn()) {
             this.setBPMInfo();
         }
     }
 
     setECMInfo() {
-        this.discovery.getEcmProductInfo().subscribe((repository) => {
+        this.discoveryApiService.getEcmProductInfo().subscribe((repository) => {
             this.repository = repository as RepositoryInfo;
         });
     }
 
     setBPMInfo() {
-        this.discovery.getBpmProductInfo().subscribe((bpmVersion) => {
+        this.discoveryApiService.getBpmProductInfo().subscribe((bpmVersion) => {
             this.bpmVersion = bpmVersion;
         });
     }

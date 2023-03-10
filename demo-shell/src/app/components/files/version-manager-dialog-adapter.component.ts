@@ -19,7 +19,8 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
-import { FileUploadErrorEvent, NotificationService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
+import { FileUploadErrorEvent } from '@alfresco/adf-content-services';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',

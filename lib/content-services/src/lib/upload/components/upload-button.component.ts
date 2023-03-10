@@ -16,13 +16,17 @@
  */
 
 import {
-    ContentService, EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, TranslationService, UploadService, AllowableOperationsEnum
+    EXTENDIBLE_COMPONENT, FileUtils,
+    LogService, TranslationService
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
+import { UploadService } from '../../common/services/upload.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { ContentService } from '../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
@@ -70,6 +74,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     constructor(protected uploadService: UploadService,
                 private contentService: ContentService,
+                private nodesApiService: NodesApiService,
                 protected translationService: TranslationService,
                 protected logService: LogService,
                 protected ngZone: NgZone) {
@@ -135,8 +140,8 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
                 include: ['allowableOperations']
             };
 
-            this.contentService.getNode(this.rootFolderId, opts).subscribe(
-                (res) => this.permissionValue.next(this.nodeHasPermission(res.entry, AllowableOperationsEnum.CREATE)),
+            this.nodesApiService.getNode(this.rootFolderId, opts).subscribe(
+                (res) => this.permissionValue.next(this.nodeHasPermission(res, AllowableOperationsEnum.CREATE)),
                 (error: { error: Error }) => {
                     if (error && error.error) {
                         this.error.emit({ error: error.error.message } as any);

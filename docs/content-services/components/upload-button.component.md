@@ -48,7 +48,7 @@ Activates a file upload.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/core/src/lib/events/file.event.ts)`>` | Emitted when an error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](lib/content-services/src/lib/common/events/file.event.ts)`>` | Emitted when an error occurs. |
 | permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/src/lib/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
 | updateFileVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |

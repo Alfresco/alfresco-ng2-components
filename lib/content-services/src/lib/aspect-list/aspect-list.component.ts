@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { NodesApiService } from '@alfresco/adf-core';
+import { NodesApiService } from  '../common/services/nodes-api.service';
 import { Observable, Subject, zip } from 'rxjs';
 import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './services/aspect-list.service';

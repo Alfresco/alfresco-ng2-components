@@ -20,13 +20,13 @@ import {
     DataRow,
     DataSorting,
     DataTableAdapter,
-    ThumbnailService,
-    ContentService
+    ThumbnailService
 } from '@alfresco/adf-core';
 import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
 import { RowFilter } from './row-filter.model';
+import { ContentService } from '../../common/services/content.service';
 
 export const ERR_ROW_NOT_FOUND: string = 'Row not found';
 export const ERR_COL_NOT_FOUND: string = 'Column not found';
@@ -122,7 +122,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             if (node.entry.isFile) {
                 if (this.thumbnails) {
-                    return this.thumbnailService.getDocumentThumbnailUrl(node);
+                    return this.getDocumentThumbnailUrl(node);
                 }
             }
 
@@ -147,6 +147,33 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         return dataRow.cacheValue(col.key, value);
+    }
+
+
+    /**
+     * Gets a thumbnail URL for the given document node.
+     *
+     * @param node Node or Node ID to get URL for.
+     * @param attachment Toggles whether to retrieve content as an attachment for download
+     * @param ticket Custom ticket to use for authentication
+     * @returns URL string
+     */
+    private getDocumentThumbnailUrl(node: NodeEntry, attachment?: boolean, ticket?: string): string {
+        let resultUrl: string;
+
+        if (node) {
+            let nodeId: string;
+
+            if (typeof node === 'string') {
+                nodeId = node;
+            } else if (node.entry) {
+                nodeId = node.entry.id;
+            }
+
+            resultUrl = this.contentService.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+        }
+
+        return resultUrl || this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
     }
 
     getSorting(): DataSorting {

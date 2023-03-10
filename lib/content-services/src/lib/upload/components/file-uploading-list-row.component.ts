@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus } from '@alfresco/adf-core';
+import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({

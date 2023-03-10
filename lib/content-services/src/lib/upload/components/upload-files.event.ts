@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { FileModel, UploadService } from '@alfresco/adf-core';
+import { FileModel } from '../../common/models/file.model';
+import { UploadService } from '../../common/services/upload.service';
 import { EventEmitter } from '@angular/core';
 
 export class UploadFilesEvent {

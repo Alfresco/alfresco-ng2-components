@@ -17,10 +17,12 @@
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { VersionCompatibilityService } from '../../../version-compatibility/version-compatibility.service';
+import { ContentService } from '../../../common/services/content.service';
+import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
+
 @Component({
     selector: 'adf-content-metadata-card',
     templateUrl: './content-metadata-card.component.html',

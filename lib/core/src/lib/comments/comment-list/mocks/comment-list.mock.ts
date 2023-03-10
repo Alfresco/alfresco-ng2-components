@@ -16,14 +16,13 @@
  */
 
 import { CommentModel } from '../../../models/comment.model';
-import { UserProcessModel } from '../../../models/user-process.model';
 
-export const testUser = new UserProcessModel({
+export const testUser = {
     id: '1',
     firstName: 'Test',
     lastName: 'User',
     email: 'tu@domain.com'
-});
+};
 
 export const mockCommentOne = new CommentModel({
     id: 1,

@@ -17,19 +17,18 @@
 
 import {
     CoreTestingModule,
-    fakeBpmUser,
-    BpmUserModel,
     setupTestBed,
-    fakeEcmUser,
-    fakeEcmUserNoImage,
     UserInfoMode
 } from '@alfresco/adf-core';
+import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { BpmUserModel } from '../common/models/bpm-user.model';
 
 import { ProcessUserInfoComponent } from './process-user-info.component';
+import { fakeBpmUser } from './mocks/bpm-user.service.mock';
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';

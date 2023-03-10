@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { LogService, UserProcessModel, PeopleProcessService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
 import { share } from 'rxjs/operators';
+import { UserProcessModel } from '../../../common/models/user-process.model';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 @Component({
     selector: 'adf-people',
