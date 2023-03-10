@@ -185,14 +185,16 @@ export class ResizableDirective implements OnInit, OnDestroy {
       });
 
     mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.renderer.setStyle(document.body, 'cursor', '');
-      if (this.resizeEnd.observers.length > 0) {
-        this.zone.run(() => {
-          this.resizeEnd.emit({ rectangle: this.currentRect });
-        });
+      if (this.currentRect) {
+        this.renderer.setStyle(document.body, 'cursor', '');
+        if (this.resizeEnd.observers.length > 0) {
+          this.zone.run(() => {
+            this.resizeEnd.emit({ rectangle: this.currentRect });
+          });
+        }
+        this.startingRect = null;
+        this.currentRect = null;
       }
-      this.startingRect = null;
-      this.currentRect = null;
     });
   }
 
